@@ -1,0 +1,7 @@
+{
+  "INVALID_EMAIL": "Email is invalid",
+  "REQUIRED_FIELD": "Field is required",
+  "PASSWORD_MATCH": "Password does not match",
+  "INVALID_PASSWORD_LENGTH": "Invalid password length",
+  "PASSWORD_ERROR": "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+}
