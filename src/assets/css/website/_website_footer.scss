@@ -8,8 +8,16 @@
 .signup-today-wrapper {
   padding: 4rem;
   position: absolute;
-  height: 290px;
+  min-height: 290px;
   left: 100px;
   right: 100px;
   top: -145px;
+}
+
+@media (max-width: 768px) {
+  .signup-today-wrapper {
+    padding: 2rem;
+    left: 2rem;
+    right: 2rem;
+  }
 }

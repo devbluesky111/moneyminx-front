@@ -7,6 +7,7 @@ import resourceList from '@mm/data/resource.list.json';
 import featureList from '@mm/data/feature.list.json';
 import companyInfoList from '@mm/data/company-info.list.json';
 import SignupToday from 'website/partials/signup-today.footer';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaPinterest } from 'react-icons/fa';
 
 interface ListType {
   title: string;
@@ -50,6 +51,45 @@ const FooterList = () => {
   );
 };
 
+const social = [
+  {
+    icon: <FaFacebook />,
+    link: 'https://fb.com',
+  },
+  {
+    icon: <FaTwitter />,
+    link: 'https://twitter.com',
+  },
+  {
+    icon: <FaInstagram />,
+    link: 'https://instagram.com',
+  },
+  {
+    icon: <FaLinkedin />,
+    link: 'https://instagram.com',
+  },
+  {
+    icon: <FaYoutube />,
+    link: 'https://instagram.com',
+  },
+  {
+    icon: <FaPinterest />,
+    link: 'https://instagram.com',
+  },
+];
+
+const SocialList: React.FC = () => (
+  <ul className='navbar-nav'>
+    {social.map(({ icon }, idx) => {
+      return (
+        <li key={idx} className='px-2'>
+          {icon}
+        </li>
+      );
+    })}
+  </ul>
+);
+
 const footerListComponent = <FooterList />;
 const WebsiteFooter = () => {
   return (
@@ -83,7 +123,9 @@ const WebsiteFooter = () => {
             <div className='col-lg-6'>
               <div className='info-copy-right-wrapper'>
                 <div className='info-wrapper light py-2'>{footerData.moneyminxInfo}</div>
-                <div className='social-links-wrapper py-2'>social links here</div>
+                <div className='social-links-wrapper py-2 d-flex flex-row'>
+                  <SocialList />
+                </div>
                 <div className='copy-right-wrapper py-2'>{footerData.copyRightText.replace(':year', '2020')}</div>
               </div>
             </div>
