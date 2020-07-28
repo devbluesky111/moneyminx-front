@@ -1,8 +1,8 @@
 import React from 'react';
 import Website from 'website/website';
 import AuthRoute from 'auth/auth.route';
+import NotFound from 'website/views/not-found';
 import { Switch, Route } from 'react-router-dom';
-import NotFound from 'common/components/not-found';
 
 import { appRouteConstants } from './app-route.constant';
 
