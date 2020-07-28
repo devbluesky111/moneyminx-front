@@ -1,15 +1,15 @@
 import React from 'react';
-import { WebsiteProps } from './website.type';
 import WebsiteHeader from './inc/website.header';
 import WebsiteFooter from './inc/website.footer';
 
-const Website: React.FC<WebsiteProps> = () => {
+const WebsiteLayout: React.FC = ({ children }) => {
   return (
     <>
       <WebsiteHeader />
+      {children}
       <WebsiteFooter />
     </>
   );
 };
 
-export default Website;
+export default WebsiteLayout;

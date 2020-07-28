@@ -1,0 +1,13 @@
+{
+  "title": "Resources",
+  "list": [
+    {
+      "name": "Learn To Invest",
+      "link": "/learn-to-invest"
+    },
+    {
+      "name": "Security",
+      "link": "/security"
+    }
+  ]
+}

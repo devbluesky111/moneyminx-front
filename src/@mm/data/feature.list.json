@@ -1,0 +1,25 @@
+{
+  "title": "Features",
+  "list": [
+    {
+      "name": "Holdings",
+      "link": "/holdings"
+    },
+    {
+      "name": "Allocations",
+      "link": "/allocations"
+    },
+    {
+      "name": "Performance",
+      "link": "/performance"
+    },
+    {
+      "name": "Income",
+      "link": "/income"
+    },
+    {
+      "name": "AboutDetails",
+      "link": "/about"
+    }
+  ]
+}

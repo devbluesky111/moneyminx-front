@@ -1,0 +1,13 @@
+.bg-light {
+  background-color: $lightBg !important;
+}
+
+.b-primary-light {
+  color: $primary;
+  background-color: lighten($color: $primary, $amount: 20);
+  border: 1px solid $primary;
+  &:hover {
+    background-color: lighten($primary, 25);
+    color: $primary;
+  }
+}

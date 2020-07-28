@@ -1,0 +1,26 @@
+.website-footer {
+  margin-top: 145px;
+  position: relative;
+}
+.website-footer-wrapper {
+  padding: 290px $s4 $s4 $s4;
+}
+.signup-today-wrapper {
+  padding: 4rem;
+  position: absolute;
+  min-height: 290px;
+  left: 100px;
+  right: 100px;
+  top: -145px;
+}
+
+@media (max-width: 768px) {
+  .signup-today-wrapper {
+    padding: 2rem;
+    left: 2rem;
+    right: 2rem;
+  }
+  .wf-list-wrapper {
+    text-align: center;
+  }
+}
