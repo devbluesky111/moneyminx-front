@@ -1,7 +1,9 @@
-@import 'bootstrap';
-@import 'custom';
 @import 'variables';
+@import 'custom';
 @import 'normalize';
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+
 @import 'common';
 @import 'nav';
 @import 'website/website';

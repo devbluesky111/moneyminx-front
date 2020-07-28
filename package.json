@@ -5,6 +5,7 @@
   "dependencies": {
     "add": "^2.0.6",
     "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
     "dotenv": "^8.2.0",
     "formik": "^2.1.4",
     "google-maps-react": "^2.0.6",

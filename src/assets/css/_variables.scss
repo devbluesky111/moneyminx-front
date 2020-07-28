@@ -9,7 +9,7 @@ $black: #000000;
 $purple: #534cea;
 $yellow: #ffbc02;
 $redAlert: #5c5555;
-$darkDrop: #081833;
+$darkBg: #081833;
 $darkGray: #434a55;
 $darkBlue: #1f32ad;
 $lightBg: #e5e5e5;
@@ -17,3 +17,11 @@ $white: #ffffff;
 
 // theme colors
 $primary: $purple;
+$secondary: $darkBg;
+
+// spacing
+$s: 0.5rem;
+$s1: 1rem;
+$s2: 2rem;
+$s3: 3rem;
+$s4: 4rem;

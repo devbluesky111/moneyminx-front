@@ -23,6 +23,11 @@
     position: absolute;
     background-color: lighten($color: #000000, $amount: 40);
 
+    .btn-outline-primary {
+      color: $white;
+      background-color: $primary;
+    }
+
     .menu-btn-wrapper {
       width: 100%;
       display: block;
@@ -103,10 +108,13 @@
   }
 }
 
-// hide for larger screen than 788
+// greater than 768
 @media (min-width: 769px) {
   .navbar-expand-lg .navbar-toggler {
     display: none;
+  }
+  .navbar-expand-lg {
+    padding: $s $s4;
   }
 }
 
