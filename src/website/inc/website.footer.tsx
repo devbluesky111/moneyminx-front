@@ -28,7 +28,7 @@ const List = ({ data }: Data) => {
     </p>
   ));
   return (
-    <div className='list-wrapper py-2'>
+    <div className='wf-list-wrapper py-2'>
       <h5>{data.title}</h5>
       {list}
     </div>
@@ -109,7 +109,7 @@ const WebsiteFooter = () => {
             <div className='col-lg-6'>
               <div className='download-btn-wrapper'>
                 <AppStoreLogo />
-                <GooglePlayLogo className='ml-3' />
+                <GooglePlayLogo className='ml-3 text-white' color='white' />
               </div>
             </div>
           </div>
@@ -121,9 +121,9 @@ const WebsiteFooter = () => {
               <div className='mm-links-wrapper'>{footerListComponent}</div>
             </div>
             <div className='col-lg-6'>
-              <div className='info-copy-right-wrapper'>
+              <div className='info-copy-right-wrapper text-center'>
                 <div className='info-wrapper light py-2'>{footerData.moneyminxInfo}</div>
-                <div className='social-links-wrapper py-2 d-flex flex-row'>
+                <div className='social-links-wrapper py-2 d-flex flex-row justify-content-center'>
                   <SocialList />
                 </div>
                 <div className='copy-right-wrapper py-2'>{footerData.copyRightText.replace(':year', '2020')}</div>
