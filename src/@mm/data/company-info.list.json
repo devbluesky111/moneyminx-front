@@ -3,23 +3,23 @@
   "list": [
     {
       "name": "About",
-      "link": "/about"
+      "link": "/w/about"
     },
     {
       "name": "Pricing",
-      "link": "/pricing"
+      "link": "/w/pricing"
     },
     {
       "name": "Notices",
-      "link": "/notices"
+      "link": "/w/notice"
     },
     {
       "name": "Privacy",
-      "link": "/privacy"
+      "link": "/w/privacy"
     },
     {
       "name": "Terms and Conditions",
-      "link": "/terms"
+      "link": "/w/terms"
     }
   ]
 }

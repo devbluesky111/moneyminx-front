@@ -4,6 +4,7 @@ import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
 import { Switch, Route } from 'react-router-dom';
 
+import WebsiteRoute from 'website/website.route';
 import { appRouteConstants } from './app-route.constant';
 
 const {
@@ -19,8 +20,10 @@ function AppRoute() {
         <Route path={def}>
           <AuthRoute />
         </Route>
-
         <Route exact path={dashboardPath} component={Website} />
+        <Route path='/w'>
+          <WebsiteRoute />
+        </Route>
         <Route exact path={'/404'} component={NotFound} />
       </Switch>
     </>
