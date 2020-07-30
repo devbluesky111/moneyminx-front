@@ -18,6 +18,11 @@
   p {
     color: $gray;
   }
+  ul {
+    li {
+      color: $gray;
+    }
+  }
 }
 .notice-content-title {
   color: $darkGray;
