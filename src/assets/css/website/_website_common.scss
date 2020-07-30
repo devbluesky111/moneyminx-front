@@ -4,10 +4,9 @@
 
 .b-primary-light {
   color: $primary;
-  background-color: lighten($color: $primary, $amount: 20);
-  border: 1px solid $primary;
+  background-color: $primaryLight;
   &:hover {
-    background-color: lighten($primary, 25);
+    border: 1px solid $primary;
     color: $primary;
   }
 }
