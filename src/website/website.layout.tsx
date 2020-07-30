@@ -4,11 +4,11 @@ import WebsiteFooter from './inc/website.footer';
 
 const WebsiteLayout: React.FC = ({ children }) => {
   return (
-    <>
+    <div className='bg-lightBg'>
       <WebsiteHeader />
       {children}
       <WebsiteFooter />
-    </>
+    </div>
   );
 };
 
