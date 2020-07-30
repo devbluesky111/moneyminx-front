@@ -11,3 +11,23 @@
     color: $primary;
   }
 }
+
+// notice
+.notice-wrapper {
+  padding: 2rem;
+  p {
+    color: $gray;
+  }
+}
+.notice-content-title {
+  color: $darkGray;
+}
+.notice-header {
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .notice-wrapper {
+    padding: 4rem;
+  }
+}

@@ -2,22 +2,25 @@ import React from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
 
 import Website from './website';
+import { NotFound, Notice, Privacy, TermNService } from './views';
 import { WebsiteProvider } from './website.context';
+import { websiteRouteConstant } from './website.constant';
+
+const { DEF, NOTICE, NOT_FOUND, PRIVACY, TERMS } = websiteRouteConstant;
 
 function WebsiteRoute() {
   return (
     <WebsiteProvider>
       <Switch>
-        <Route exact path='/website' component={Website} />
-        <Route exact path='/website/404' component={NotFound} />
-        <Redirect to='/website/404' />
+        <Route exact path={DEF} component={Website} />
+        <Route exact path={NOTICE} component={Notice} />
+        <Route exact path={PRIVACY} component={Privacy} />
+        <Route exact path={TERMS} component={TermNService} />
+        <Route exact path={NOT_FOUND} component={NotFound} />
+        <Redirect to={NOT_FOUND} />
       </Switch>
     </WebsiteProvider>
   );
-}
-
-function NotFound() {
-  return <div>NOT FOUND </div>;
 }
 
 export default WebsiteRoute;

@@ -8,6 +8,7 @@ import featureList from '@mm/data/feature.list.json';
 import companyInfoList from '@mm/data/company-info.list.json';
 import SignupToday from 'website/partials/signup-today.footer';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaPinterest } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface ListType {
   title: string;
@@ -24,7 +25,9 @@ interface Data {
 const List = ({ data }: Data) => {
   const list = data.list.map((item, idx) => (
     <p key={idx} className='light'>
-      {item.name}
+      <Link to={item.link} className='text-white'>
+        {item.name}
+      </Link>
     </p>
   ));
   return (
