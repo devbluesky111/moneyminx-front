@@ -43,7 +43,12 @@ const WebsiteHeader = () => {
                   </a>
                 </li>
                 <li className='nav-item active'>
-                  <a className='nav-link' target="_blank" rel="noopener noreferrer" href='https://velocity.moneyminx.com'>
+                  <a
+                    className='nav-link'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href='https://velocity.moneyminx.com'
+                  >
                     Velocity
                   </a>
                 </li>
