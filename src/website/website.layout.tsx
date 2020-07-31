@@ -6,7 +6,7 @@ const WebsiteLayout: React.FC = ({ children }) => {
   return (
     <div className='bg-lightBg'>
       <WebsiteHeader />
-      {children}
+      <main>{children}</main>
       <WebsiteFooter />
     </div>
   );

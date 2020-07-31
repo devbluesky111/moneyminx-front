@@ -4,9 +4,8 @@
 
 .b-primary-light {
   color: $primary;
-  background-color: $primaryLight;
+  background-color: rgba(83, 76, 234, 0.13);
   &:hover {
-    border: 1px solid $primary;
     color: $primary;
   }
 }
