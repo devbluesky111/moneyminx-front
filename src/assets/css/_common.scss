@@ -1,3 +1,74 @@
+body {
+  font-family: 'Mulish', sans-serif, Arial, Helvetica;
+}
+h1 {
+  font-size: 3rem !important;
+}
+
+h6 {
+  font-weight: 300 !important;
+}
+
 .light {
   opacity: 0.9;
+}
+
+.mm-container {
+  margin-left: 8.33%;
+  margin-right: 8.33%;
+}
+
+@media (min-width: 1400px) {
+  .mm-container {
+    width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 769px) {
+  .mm-container {
+    margin-left: 2.6%;
+    margin-right: 2.6%;
+  }
+}
+
+// Buttons
+
+.mm-btn {
+  @extend .btn;
+  width: 180px;
+  height: 48px;
+}
+
+.mm-btn-xs {
+  @extend .btn;
+  width: 76px;
+  height: 29px;
+  padding: 3px;
+  font-size: 18px;
+  line-height: 23px;
+}
+
+.mm-btn-signup {
+  @extend .mm-btn;
+  width: 160px;
+}
+
+.mm-btn-animate {
+  @extend .mm-btn;
+  transition: 0.3s;
+  &:hover {
+    transform: translateY(-6px);
+  }
+}
+
+.mm-btn-primary-outline {
+  color: $white;
+  border-color: $white;
+  &:hover {
+    color: $primary;
+    border-color: $white;
+    background-color: $white;
+  }
 }

@@ -11,7 +11,7 @@ const NotFound = () => {
         </div>
         <div className='nf-text-btn-wrapper'>
           <p>Sorry page not found :) </p>
-          <button className='btn btn-primary'>Go Back</button>
+          <button className='mm-btn btn-primary'>Go Back</button>
         </div>
       </div>
     </WebsiteLayout>

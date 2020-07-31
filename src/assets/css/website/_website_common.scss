@@ -1,20 +1,20 @@
+.wrapper {
+  padding: 1rem;
+}
+
 .bg-light {
   background-color: $lightBg !important;
 }
 
 .b-primary-light {
   color: $primary;
-  background-color: lighten($color: $primary, $amount: 20);
-  border: 1px solid $primary;
+  background-color: rgba(83, 76, 234, 0.13);
   &:hover {
-    background-color: lighten($primary, 25);
     color: $primary;
   }
 }
 
-// notice
 .notice-wrapper {
-  padding: 2rem;
   p {
     color: $gray;
   }
@@ -29,10 +29,4 @@
 }
 .notice-header {
   padding-bottom: 2rem;
-}
-
-@media (min-width: 768px) {
-  .notice-wrapper {
-    padding: 4rem;
-  }
 }

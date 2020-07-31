@@ -1,6 +1,6 @@
 import React from 'react';
-import WebsiteLayout from 'website/website.layout';
 import privacyData from '@mm/data/privacy.json';
+import WebsiteLayout from 'website/website.layout';
 
 const { privacy } = privacyData;
 
@@ -19,7 +19,7 @@ const privacyContentSection = () => {
 const Privacy = () => {
   return (
     <WebsiteLayout>
-      <div className='notice-wrapper'>
+      <div className='mm-container wrapper notice-wrapper'>
         <div className='notice-header'>
           <h1>{privacy.title}</h1>
           <h6>{privacy.subTitle}</h6>
