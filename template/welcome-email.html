@@ -1,16 +1,186 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Welcome Email Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome Email</title>
     <style>
-      body {
+      table {
+        border-spacing: 0;
+      }
+      .outer-table {
+        max-width: 720px;
         background-color: #fafbfd;
+        margin: 0 auto;
+        outline: 1px solid red;
+      }
+      .hero,
+      .why-table,
+      .header-table,
+      .security-trust-table {
+        border-spacing: 0;
+        margin-left: 60px;
+        margin-right: 60px;
+      }
+      tr {
+        width: 100%;
+      }
+
+      td {
+        padding: 0;
+      }
+
+      a {
+        text-decoration: none;
+      }
+      .link {
+        color: #534cea;
+        text-align: end;
+      }
+      .social-icon {
+        background-color: #534cea;
       }
     </style>
   </head>
-  <body>
-    This is welcome email template
+  <body style="margin: 0; padding: 0;">
+    <table class="outer-table" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+          <table class="header-table">
+            <tr>
+              <td class="logo">
+                <a href="https://app.moneyminx.com" target="_blank">
+                  <img src="../public/email/images/logo.svg" alt="moneyminx log" />
+                </a>
+              </td>
+              <td>&nbsp;</td>
+              <td><a href="https://app.moneyminx.com" class="link">moneyminx.com</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="hero">
+            <tr>
+              <td>Welcome abroad!</td>
+            </tr>
+            <tr>
+              <td>
+                We’re here to help you track your investment portfolio and connect with other investors so you can
+                achieve your investment goals. Get started by completing your profile and syncing your investment
+                accounts.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://app.moneyminx.com" class="btn-primary">Get Started</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="why-table">
+            <tr>
+              <td>Investors are using Money Minx to:</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://app.moneyminx.com">
+                  <img src="../public/email/images/img1.svg" alt="Skip monthly spreadsheet update" />
+                </a>
+                <span class="img-desc">Skip monthly spreadsheet update</span>
+              </td>
+              <td>
+                <a href="https://app.moneyminx.com">
+                  <img src="../public/email/images/img2.svg" alt="Visualize data" />
+                </a>
+                <span class="img-desc">Visualize their data in awesome charts, graphs and tools.</span>
+              </td>
+              <td></td>
+              <td>
+                <a href="https://app.moneyminx.com">
+                  <img src="../public/email/images/img3.svg" alt="Check and balance" />
+                </a>
+                <span class="img-desc">See where they are doing good or where they are falling short.</span>
+              </td>
+              <td></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="security-trust-table">
+            <tr>
+              <td>
+                <h5 class="sec-title">Serious about security</h5>
+                <a href="https://app.moneyminx.com">
+                  <img src="../public/email/images/security.svg" alt="Security" />
+                </a>
+                <span class="sec-text">The security of your information is our top priority</span>
+              </td>
+              <td>
+                <h5 class="sec-title">Trusted by investors</h5>
+                <a href="https://app.moneyminx.com">
+                  <img src="../public/email/images/trust.svg" alt="Security" />
+                </a>
+                <span class="sec-text">Investors from all over the world are using Money Minx</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://app.moneyminx.com" class="btn-primary">Get Started</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="footer-table">
+            <tr>
+              <td>
+                Money Minx is a financial publisher that does not offer any personal financial advice or advocate the
+                purchase or sale of any security or investment for any specific individual. Members should be aware that
+                investment markets have inherent risks, and past performance does not assure future results. Money Minx
+                has advertising relationships with some of the offers listed on this website. Money Minx does not
+                attempt to take a reasonable and good faith approach to maintaining objectivity towards providing
+                referrals that are in the best interest of readers. Money Minx strives to keep its information accurate
+                and up to date.
+              </td>
+            </tr>
+            <tr>
+              <td>Unsubscribe</td>
+            </tr>
+            <tr>
+              <td>© 2020 Money Minx. All rights reserved.</td>
+              <td>
+                <a href="https://www.facebook.com/moneyminx" target="_blank"
+                  ><img class="social-icon" src="../public/email/images/fb.svg" alt="FacebookLink"
+                /></a>
+                <a href="https://twitter.com/getmoneyminx" target="_blank"
+                  ><img class="social-icon" src="../public/email/images/twitter.svg" alt="Twitter Link"
+                /></a>
+                <a href="https://instagram.com/moneyminxapp" target="_blank"
+                  ><img class="social-icon" src="../public/email/images/insta.svg" alt="Instagram Link"
+                /></a>
+                <a href="https://linkedin.com/company/moneyminx" target="_blank"
+                  ><img class="social-icon" src="../public/email/images/linkedin.svg" alt="Linkedin Link"
+                /></a>
+                <a href="https://www.youtube.com/channel/UCmWuUaetlK3fABjglo9cEaQ" target="_blank"
+                  ><img class="social-icon" src="../public/email/images/youtube.svg" alt="Youtube Link"
+                /></a>
+                <a href="https://www.pinterest.com/moneyminx/" target="_blank"
+                  ><img class="social-icon" src="../public/email/images/pinterest.svg" alt="Pinterest Link"
+                /></a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
