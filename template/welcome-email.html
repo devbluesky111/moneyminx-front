@@ -4,17 +4,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Welcome Email Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;700&display=swap" rel="stylesheet" />
     <style>
       table {
         border-spacing: 0;
-        font-family: 'Muli', Arial, Helvetica, sans-serif;
+        font-family: 'Mulish', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
       .outer-table {
         max-width: 720px;
         background-color: #fafbfd;
         margin: 0 auto;
         padding-top: 1rem;
-        outline: 1px solid red;
       }
       .hero,
       .why-table,
@@ -37,7 +37,6 @@
       }
       .col-2 {
         width: 360px;
-        padding: 1rem;
       }
       .col-3 {
         padding: 1rem;
@@ -91,9 +90,58 @@
       .text-right {
         margin-left: 1rem;
       }
-
-      .social-icon {
+      .footer-text {
+        font-size: 14px;
+        line-height: 150%;
+        font-weight: 500;
+      }
+      ul {
+        list-style-type: none;
+      }
+      li {
         float: left;
+      }
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+      }
+      .social-icon {
+        padding-right: 1rem;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .col-2 {
+          width: 100%;
+          display: inline-block;
+          text-align: left;
+        }
+        .text-right {
+          width: 300px;
+          display: table-cell;
+          text-align: right;
+        }
+        .col-3 {
+          vertical-align: top;
+        }
+      }
+
+      @media only screen and (max-width: 375px) {
+        .col-3 {
+          width: 100%;
+          display: inline-block;
+          text-align: left;
+        }
+        .copy {
+          padding-top: 1rem;
+          display: block;
+        }
+        .links {
+          padding-top: 1rem;
+          display: block;
+        }
       }
     </style>
   </head>
@@ -127,7 +175,7 @@
               </td>
             </tr>
             <tr>
-              <td style="padding: 1.5rem 0;">
+              <td style="padding: 2rem 0;">
                 <a href="https://app.moneyminx.com" class="btn-primary">Get Started</a>
               </td>
             </tr>
@@ -181,7 +229,8 @@
                         <img src="../public/email/images/security.svg" alt="Security" />
                       </a>
                     </td>
-                    <td class="text-right">
+                    <td>&nbsp;&nbsp;</td>
+                    <td>
                       <span class="sec-text">The security of your information is our top priority</span>
                     </td>
                   </tr>
@@ -196,7 +245,8 @@
                         <img src="../public/email/images/trust.svg" alt="Security" />
                       </a>
                     </td>
-                    <td class="text-right">
+                    <td>&nbsp;&nbsp;</td>
+                    <td>
                       <span class="sec-text">Investors from all over the world are using Money Minx</span>
                     </td>
                   </tr>
@@ -204,7 +254,7 @@
               </td>
             </tr>
             <tr>
-              <td>
+              <td style="padding-top: 2rem;">
                 <a href="https://app.moneyminx.com" class="btn-primary">Get Started</a>
               </td>
             </tr>
@@ -215,47 +265,60 @@
         <td>
           <table class="footer-table">
             <tr>
-              <td>
-                Money Minx is a financial publisher that does not offer any personal financial advice or advocate the
-                purchase or sale of any security or investment for any specific individual. Members should be aware that
-                investment markets have inherent risks, and past performance does not assure future results. Money Minx
-                has advertising relationships with some of the offers listed on this website. Money Minx does not
-                attempt to take a reasonable and good faith approach to maintaining objectivity towards providing
-                referrals that are in the best interest of readers. Money Minx strives to keep its information accurate
-                and up to date.
+              <td class="footer-text" colspan="2">
+                <p>
+                  Money Minx is a financial publisher that does not offer any personal financial advice or advocate the
+                  purchase or sale of any security or investment for any specific individual. Members should be aware
+                  that investment markets have inherent risks, and past performance does not assure future results.
+                  Money Minx has advertising relationships with some of the offers listed on this website.
+                </p>
+                <p>
+                  Money Minx does not attempt to take a reasonable and good faith approach to maintaining objectivity
+                  towards providing referrals that are in the best interest of readers. Money Minx strives to keep its
+                  information accurate and up to date.
+                </p>
               </td>
             </tr>
             <tr>
-              <td>Unsubscribe</td>
+              <td style="padding-top: 1rem;">Unsubscribe</td>
             </tr>
             <tr>
-              <td>© 2020 Money Minx. All rights reserved.</td>
-              <td>
-                <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                </ul>
-                <a href="https://www.facebook.com/moneyminx" target="_blank"
-                  ><img class="social-icon" src="../public/email/images/fb.svg" alt="FacebookLink"
-                /></a>
-                <a href="https://twitter.com/getmoneyminx" target="_blank"
-                  ><img class="social-icon" src="../public/email/images/twitter.svg" alt="Twitter Link"
-                /></a>
-                <a href="https://instagram.com/moneyminxapp" target="_blank"
-                  ><img class="social-icon" src="../public/email/images/insta.svg" alt="Instagram Link"
-                /></a>
-                <a href="https://linkedin.com/company/moneyminx" target="_blank"
-                  ><img class="social-icon" src="../public/email/images/linkedin.svg" alt="Linkedin Link"
-                /></a>
-                <a href="https://www.youtube.com/channel/UCmWuUaetlK3fABjglo9cEaQ" target="_blank"
-                  ><img class="social-icon" src="../public/email/images/youtube.svg" alt="Youtube Link"
-                /></a>
-                <a href="https://www.pinterest.com/moneyminx/" target="_blank"
-                  ><img class="social-icon" src="../public/email/images/pinterest.svg" alt="Pinterest Link"
-                /></a>
+              <td class="copy">© 2020 Money Minx. All rights reserved.</td>
+              <td class="links">
+                <table>
+                  <tr>
+                    <td>
+                      <a href="https://www.facebook.com/moneyminx" target="_blank"
+                        ><img class="social-icon" src="../public/email/images/fb.svg" alt="FacebookLink"
+                      /></a>
+                    </td>
+                    <td>
+                      <a href="https://twitter.com/getmoneyminx" target="_blank"
+                        ><img class="social-icon" src="../public/email/images/twitter.svg" alt="Twitter Link"
+                      /></a>
+                    </td>
+                    <td>
+                      <a href="https://instagram.com/moneyminxapp" target="_blank"
+                        ><img class="social-icon" src="../public/email/images/insta.svg" alt="Instagram Link"
+                      /></a>
+                    </td>
+                    <td>
+                      <a href="https://linkedin.com/company/moneyminx" target="_blank"
+                        ><img class="social-icon" src="../public/email/images/linkedin.svg" alt="Linkedin Link"
+                      /></a>
+                    </td>
+                    <td>
+                      <a href="https://www.youtube.com/channel/UCmWuUaetlK3fABjglo9cEaQ" target="_blank"
+                        ><img class="social-icon" src="../public/email/images/youtube.svg" alt="Youtube Link"
+                      /></a>
+                    </td>
+                    <td>
+                      <a href="https://www.pinterest.com/moneyminx/" target="_blank"
+                        ><img class="social-icon" src="../public/email/images/pinterest.svg" alt="Pinterest Link"
+                      /></a>
+                    </td>
+                  </tr>
+                </table>
               </td>
             </tr>
           </table>
