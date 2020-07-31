@@ -7,11 +7,13 @@
     <style>
       table {
         border-spacing: 0;
+        font-family: 'Muli', Arial, Helvetica, sans-serif;
       }
       .outer-table {
         max-width: 720px;
         background-color: #fafbfd;
         margin: 0 auto;
+        padding-top: 1rem;
         outline: 1px solid red;
       }
       .hero,
@@ -33,12 +35,65 @@
       a {
         text-decoration: none;
       }
-      .link {
-        color: #534cea;
+      .col-2 {
+        width: 360px;
+        padding: 1rem;
+      }
+      .col-3 {
+        padding: 1rem;
+        width: 240px;
+      }
+      .text-right {
         text-align: end;
       }
-      .social-icon {
+      .link {
+        color: #534cea;
+      }
+      .title {
+        font-size: 28px;
+        line-height: 38px;
+        padding-top: 2rem;
+      }
+      .text {
+        padding-top: 1rem;
+        color: #969eac;
+      }
+      .btn-primary {
+        width: 160px;
+        height: 48px;
+        color: #ffffff;
+        padding: 16px 40px;
+        line-height: 48px;
+        border-radius: 4px;
         background-color: #534cea;
+      }
+
+      .img-desc {
+        padding-top: 1rem;
+        display: block;
+        color: #969eac;
+      }
+      .sec-title {
+        font-size: 20px;
+        color: #434a55;
+        line-height: 25px;
+      }
+      .sec-text {
+        color: #969eac;
+        text-align: left;
+      }
+      .footer-table {
+        background-color: #969eac;
+        margin-top: 60px;
+        padding: 40px 60px;
+        color: #ffffff;
+      }
+      .text-right {
+        margin-left: 1rem;
+      }
+
+      .social-icon {
+        float: left;
       }
     </style>
   </head>
@@ -48,13 +103,12 @@
         <td>
           <table class="header-table">
             <tr>
-              <td class="logo">
+              <td class="logo col-2">
                 <a href="https://app.moneyminx.com" target="_blank">
                   <img src="../public/email/images/logo.svg" alt="moneyminx log" />
                 </a>
               </td>
-              <td>&nbsp;</td>
-              <td><a href="https://app.moneyminx.com" class="link">moneyminx.com</a></td>
+              <td class="col-2 text-right"><a href="https://app.moneyminx.com" class="link">moneyminx.com</a></td>
             </tr>
           </table>
         </td>
@@ -63,17 +117,17 @@
         <td>
           <table class="hero">
             <tr>
-              <td>Welcome abroad!</td>
+              <td class="title">Welcome abroad!</td>
             </tr>
             <tr>
-              <td>
+              <td class="text">
                 We’re here to help you track your investment portfolio and connect with other investors so you can
                 achieve your investment goals. Get started by completing your profile and syncing your investment
                 accounts.
               </td>
             </tr>
             <tr>
-              <td>
+              <td style="padding: 1.5rem 0;">
                 <a href="https://app.moneyminx.com" class="btn-primary">Get Started</a>
               </td>
             </tr>
@@ -84,29 +138,32 @@
         <td>
           <table class="why-table">
             <tr>
-              <td>Investors are using Money Minx to:</td>
+              <td class="sec-title" colspan="3">Investors are using Money Minx to:</td>
             </tr>
             <tr>
-              <td>
+              <td class="col-3">
                 <a href="https://app.moneyminx.com">
                   <img src="../public/email/images/img1.svg" alt="Skip monthly spreadsheet update" />
                 </a>
                 <span class="img-desc">Skip monthly spreadsheet update</span>
               </td>
-              <td>
+              <td class="col-3">
                 <a href="https://app.moneyminx.com">
                   <img src="../public/email/images/img2.svg" alt="Visualize data" />
                 </a>
                 <span class="img-desc">Visualize their data in awesome charts, graphs and tools.</span>
               </td>
-              <td></td>
-              <td>
+              <td class="col-3">
                 <a href="https://app.moneyminx.com">
                   <img src="../public/email/images/img3.svg" alt="Check and balance" />
                 </a>
                 <span class="img-desc">See where they are doing good or where they are falling short.</span>
               </td>
-              <td></td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <hr />
+              </td>
             </tr>
           </table>
         </td>
@@ -115,19 +172,35 @@
         <td>
           <table class="security-trust-table">
             <tr>
-              <td>
+              <td class="col-2">
                 <h5 class="sec-title">Serious about security</h5>
-                <a href="https://app.moneyminx.com">
-                  <img src="../public/email/images/security.svg" alt="Security" />
-                </a>
-                <span class="sec-text">The security of your information is our top priority</span>
+                <table>
+                  <tr>
+                    <td>
+                      <a href="https://app.moneyminx.com">
+                        <img src="../public/email/images/security.svg" alt="Security" />
+                      </a>
+                    </td>
+                    <td class="text-right">
+                      <span class="sec-text">The security of your information is our top priority</span>
+                    </td>
+                  </tr>
+                </table>
               </td>
-              <td>
+              <td class="col-2">
                 <h5 class="sec-title">Trusted by investors</h5>
-                <a href="https://app.moneyminx.com">
-                  <img src="../public/email/images/trust.svg" alt="Security" />
-                </a>
-                <span class="sec-text">Investors from all over the world are using Money Minx</span>
+                <table>
+                  <tr>
+                    <td>
+                      <a href="https://app.moneyminx.com">
+                        <img src="../public/email/images/trust.svg" alt="Security" />
+                      </a>
+                    </td>
+                    <td class="text-right">
+                      <span class="sec-text">Investors from all over the world are using Money Minx</span>
+                    </td>
+                  </tr>
+                </table>
               </td>
             </tr>
             <tr>
@@ -158,6 +231,13 @@
             <tr>
               <td>© 2020 Money Minx. All rights reserved.</td>
               <td>
+                <ul>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
                 <a href="https://www.facebook.com/moneyminx" target="_blank"
                   ><img class="social-icon" src="../public/email/images/fb.svg" alt="FacebookLink"
                 /></a>
