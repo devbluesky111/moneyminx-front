@@ -19,7 +19,7 @@ const noticeContentSection = () => {
 const Notice = () => {
   return (
     <WebsiteLayout>
-      <div className='notice-wrapper'>
+      <div className='mm-container wrapper notice-wrapper'>
         <div className='notice-header'>
           <h1>{notice.title}</h1>
           <p>{notice.update.replace(':date', 'July 29 2020')}</p>

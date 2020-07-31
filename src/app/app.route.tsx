@@ -2,7 +2,7 @@ import React from 'react';
 import Website from 'website/website';
 import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import WebsiteRoute from 'website/website.route';
 import { appRouteConstants } from './app-route.constant';
@@ -25,6 +25,7 @@ function AppRoute() {
           <WebsiteRoute />
         </Route>
         <Route exact path={'/404'} component={NotFound} />
+        <Redirect to='/404' />
       </Switch>
     </>
   );
