@@ -9,7 +9,7 @@ const privacyContentSection = () => {
     return (
       <div key={i}>
         <h3 className='notice-content-title'>{d.title}</h3>
-        <div dangerouslySetInnerHTML={{ __html: d.content }} />
+        <div className='notice-content' dangerouslySetInnerHTML={{ __html: d.content }} />
       </div>
     );
   });
@@ -22,7 +22,6 @@ const Privacy = () => {
       <div className='mm-container wrapper notice-wrapper'>
         <div className='notice-header'>
           <h1>{privacy.title}</h1>
-          <h6>{privacy.subTitle}</h6>
           <p>{privacy.update}</p>
           <div dangerouslySetInnerHTML={{ __html: privacy.info }} />
         </div>
