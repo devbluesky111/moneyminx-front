@@ -30,7 +30,7 @@ const WebsiteHeader = () => {
           <a className='navbar-brand' href='/'>
             <Logo />
           </a>
-          <button className='mm-btn-xs b-primary-light'>Beta</button>
+          <div className='mm-label b-primary-light'>Beta</div>
         </div>
 
         <div className='right-menu-wrapper'>
@@ -70,7 +70,7 @@ const WebsiteHeader = () => {
                   </li>
                   <li>
                     <a className='mm-nav-link' href='/signup'>
-                      <button className='mm-btn-signup btn-outline-primary'>Sign Up</button>
+                      <button className='mm-btn-signup btn-outline-primary mm-btn-animate'>Sign Up</button>
                     </a>
                   </li>
                 </ul>

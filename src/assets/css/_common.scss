@@ -1,10 +1,22 @@
 body {
   font-family: 'Mulish', sans-serif, Arial, Helvetica;
+  font-size: 1rem;
+  font-weight: 300;
+}
+p {
+  font-weight: 300;
+  font-size: 1.25rem;
+  line-height: 150%;
 }
 h1 {
   font-size: 3rem !important;
+  font-weight: 300;
 }
-
+h3 {
+  font-weight: 300;
+  font-size: 2.25rem;
+  line-height: 2.8125rem;
+}
 h6 {
   font-weight: 300 !important;
 }
@@ -53,6 +65,9 @@ h6 {
 .mm-btn-signup {
   @extend .mm-btn;
   width: 160px;
+  &:hover {
+    box-shadow: 0 4px 12px #b9b8e0;
+  }
 }
 
 .mm-btn-animate {
@@ -71,4 +86,21 @@ h6 {
     border-color: $white;
     background-color: $white;
   }
+}
+
+// Labels
+
+.mm-label {
+  width: 76px;
+  height: 29px;
+  padding: 3px;
+  font-size: 18px;
+  line-height: 23px;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
