@@ -14,23 +14,14 @@ h6 {
 }
 
 .mm-container {
-  margin-left: 8.33%;
-  margin-right: 8.33%;
+  padding: 0;
+  margin-left: 120px;
+  margin-right: 120px;
 }
 
-@media (min-width: 1400px) {
-  .mm-container {
-    width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-@media (max-width: 769px) {
-  .mm-container {
-    margin-left: 2.6%;
-    margin-right: 2.6%;
-  }
+//
+.mm-container-right {
+  margin-left: 120px;
 }
 
 // Buttons
@@ -70,5 +61,38 @@ h6 {
     color: $primary;
     border-color: $white;
     background-color: $white;
+  }
+}
+
+// media queries
+@media (max-width: $sm) {
+  h1 {
+    font-size: 36px !important;
+  }
+
+  .mm-container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: $md) {
+  .mm-container {
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+}
+
+@media (min-width: $lg+1) {
+  .mm-container {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .mm-container-right {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 36px 120px 36px 120px;
   }
 }

@@ -10,18 +10,36 @@
   border-radius: 0.4rem;
   position: absolute;
   min-height: 290px;
-  left: 100px;
-  right: 100px;
+  left: 120px;
+  right: 120px;
   top: -145px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: $md) {
   .signup-today-wrapper {
     padding: 2rem;
-    left: 2rem;
-    right: 2rem;
+    left: 80px;
+    right: 80px;
   }
   .wf-list-wrapper {
     text-align: center;
+  }
+}
+
+@media (max-width: $sm) {
+  .website-footer-wrapper {
+    padding: 245px $s4 $s4 $s4;
+  }
+  .signup-today-wrapper {
+    padding: 1rem;
+    left: 20px;
+    right: 20px;
+  }
+  .signup-btn-wrapper {
+    width: 100%;
+  }
+  .btn-xs-block {
+    width: 100%;
+    margin: 0.5rem 0 !important;
   }
 }
