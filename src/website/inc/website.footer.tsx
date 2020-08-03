@@ -104,7 +104,7 @@ const WebsiteFooter = () => {
             <div className='col-lg-6'>
               <div className='coming-soon-wrapper'>
                 <h1>Coming Soon</h1>
-                <p className='light'>
+                <p className='light-80'>
                   Money Minx is currently available online and coming soon to iOS and Android devices.
                 </p>
               </div>
@@ -118,18 +118,18 @@ const WebsiteFooter = () => {
           </div>
         </div>
 
-        <div className='footer-end-section'>
+        <div className='footer-end-section p-t-176'>
           <div className='row'>
             <div className='col-lg-6'>
               <div className='mm-links-wrapper'>{footerListComponent}</div>
             </div>
             <div className='col-lg-6'>
-              <div className='info-copy-right-wrapper text-center'>
+              <div className='info-copy-right-wrapper'>
                 <div className='info-wrapper light py-2'>{footerData.moneyminxInfo}</div>
-                <div className='social-links-wrapper py-2 d-flex flex-row justify-content-center'>
+                <div className='social-links-wrapper py-2 d-flex flex-row'>
                   <SocialList />
                 </div>
-                <div className='copy-right-wrapper py-2'>{footerData.copyRightText.replace(':year', '2020')}</div>
+                <div className='copy-right-wrapper light py-2'>{footerData.copyRightText.replace(':year', '2020')}</div>
               </div>
             </div>
           </div>
