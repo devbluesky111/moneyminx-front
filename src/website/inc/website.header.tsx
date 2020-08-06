@@ -24,66 +24,64 @@ const WebsiteHeader = () => {
   };
 
   return (
-    <div className='mm-container'>
-      <nav className='navbar navbar-expand-lg navbar-light bg-light'>
-        <div className='logo-btn-wrapper'>
-          <a className='navbar-brand' href='/'>
-            <Logo />
-          </a>
-          <div className='mm-label b-primary-light'>Beta</div>
-        </div>
+    <nav className='mm-navbar navbar-expand-lg navbar-light bg-light'>
+      <div className='logo-btn-wrapper'>
+        <a className='navbar-brand' href='/'>
+          <Logo />
+        </a>
+        <div className='mm-label b-primary-light'>Beta</div>
+      </div>
 
-        <div className='right-menu-wrapper'>
-          <div className={`${expand === 'all' ? 'expand-all' : ''}`}>
-            <div className={`menu-btn-wrapper`}>
-              <div className={`menu-list-wrapper ${expand === 'menus' ? 'expand-menu' : ''}`}>
-                <ul className='navbar-nav mr-auto navbar-menu-list'>
-                  <li className='mm-nav-item active'>
-                    <a className='mm-nav-link' href='/pricing'>
-                      Pricing
-                    </a>
-                  </li>
+      <div className='right-menu-wrapper'>
+        <div className={`${expand === 'all' ? 'expand-all' : ''}`}>
+          <div className={`menu-btn-wrapper`}>
+            <div className={`menu-list-wrapper ${expand === 'menus' ? 'expand-menu' : ''}`}>
+              <ul className='navbar-nav mr-auto navbar-menu-list'>
+                <li className='mm-nav-item active'>
+                  <a className='mm-nav-link' href='/pricing'>
+                    Pricing
+                  </a>
+                </li>
 
-                  <li className='mm-nav-item'>
-                    <a
-                      className='mm-nav-link'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      href='https://velocity.moneyminx.com'
-                    >
-                      Velocity
-                    </a>
-                  </li>
-                  <li className='mm-nav-item'>
-                    <a className='mm-nav-link' href='/about'>
-                      About
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className='auth-btn-wrapper mr-1'>
-                <ul className='navbar-nav'>
-                  <li className='mm-nav-item'>
-                    <a className='mm-nav-link' href='/login'>
-                      Login
-                    </a>
-                  </li>
-                  <li>
-                    <a className='mm-nav-link' href='/signup'>
-                      <button className='mm-btn-signup btn-outline-primary mm-btn-animate'>Sign Up</button>
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                <li className='mm-nav-item'>
+                  <a
+                    className='mm-nav-link'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href='https://velocity.moneyminx.com'
+                  >
+                    Velocity
+                  </a>
+                </li>
+                <li className='mm-nav-item'>
+                  <a className='mm-nav-link' href='/about'>
+                    About
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className='auth-btn-wrapper mr-1'>
+              <ul className='navbar-nav'>
+                <li className='mm-nav-item'>
+                  <a className='mm-nav-link' href='/login'>
+                    Login
+                  </a>
+                </li>
+                <li>
+                  <a className='mm-nav-link' href='/signup'>
+                    <button className='mm-btn-signup btn-outline-primary mm-btn-animate'>Sign Up</button>
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
+      </div>
 
-        <button className='navbar-toggler' type='button' onClick={handleToggleMenu}>
-          <span className='navbar-toggler-icon' />
-        </button>
-      </nav>
-    </div>
+      <button className='navbar-toggler' type='button' onClick={handleToggleMenu}>
+        <span className='navbar-toggler-icon' />
+      </button>
+    </nav>
   );
 };
 
