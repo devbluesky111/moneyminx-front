@@ -4,4 +4,5 @@ export const websiteRouteConstant = {
   NOT_FOUND: '/w/404',
   NOTICE: '/w/notice',
   PRIVACY: '/w/privacy',
+  SECURITY: '/w/security',
 };
