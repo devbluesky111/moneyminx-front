@@ -1,3 +1,11 @@
+.main-content {
+  padding: 40px 0 200px 0;
+
+  @media (max-width: 768px) {
+    padding: 40px 0 100px 0;
+  }
+}
+
 .wrapper {
   padding: 1rem;
 }
@@ -24,9 +32,17 @@
     }
   }
 }
+.notice-content {
+  padding-top: 1.25rem;
+}
 .notice-content-title {
   color: $darkGray;
+  padding-top: 2.5rem;
 }
 .notice-header {
   padding-bottom: 2rem;
+  
+  p {
+    font-size: 1rem;
+  }
 }

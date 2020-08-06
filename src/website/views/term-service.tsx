@@ -9,7 +9,7 @@ const termContentSection = () => {
     return (
       <div key={i}>
         <h3 className='notice-content-title'>{d.title}</h3>
-        <div dangerouslySetInnerHTML={{ __html: d.content }} />
+        <div className='notice-content' dangerouslySetInnerHTML={{ __html: d.content }} />
       </div>
     );
   });
