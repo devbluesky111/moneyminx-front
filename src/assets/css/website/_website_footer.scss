@@ -14,8 +14,17 @@
   right: 120px;
   top: -145px;
 }
-
-@media (max-width: $md) {
+.wf-list-wrapper p {
+  opacity: 0.8;
+  line-height: 1.4375rem;
+  margin-top: 2.25rem;
+  font-size: 1.1rem;
+}
+.info-wrapper {
+  font-size: 0.9375rem;
+  line-height: 170%;
+}
+@media (max-width: 768px) {
   .signup-today-wrapper {
     padding: 2rem;
     left: 80px;
