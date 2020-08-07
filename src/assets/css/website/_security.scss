@@ -10,6 +10,21 @@
 .security-chart-wrapper {
   padding-top: 3rem;
 }
+
+.website-hero-wrapper {
+  color: $white;
+  position: relative;
+  background-color: $darkBg;
+  padding: 200px 0 200px 324px;
+  overflow: hidden;
+}
+
+.security-pie-wrapper {
+  position: absolute;
+  left: 0;
+  top: 72px;
+}
+
 @media (max-width: $lg+1) {
   .security-chart-wrapper {
     overflow: hidden;

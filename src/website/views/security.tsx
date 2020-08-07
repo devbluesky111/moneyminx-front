@@ -2,11 +2,13 @@ import React from 'react';
 import WebsiteLayout from 'website/website.layout';
 
 import { ReactComponent as SecurityChart } from 'assets/images/security/chart.svg';
+import { ReactComponent as SecurityPieChart } from 'assets/images/security/pie-chart.svg';
 
 const Security = () => {
   return (
     <WebsiteLayout>
       <SecurityTopSection />
+      <SecurityHeroSection />
     </WebsiteLayout>
   );
 };
@@ -39,5 +41,16 @@ export const SecurityTopSection = () => {
 };
 
 export const SecurityHeroSection = () => {
-  return <div />;
+  return (
+    <div className='website-hero-wrapper'>
+      <div className='security-pie-wrapper'>
+        <SecurityPieChart />
+      </div>
+      <div className='row'>
+        <div className='col-12'>Title Here</div>
+        <div className='col-lg-6'>trust </div>
+        <div className='col-lg-6'>security</div>
+      </div>
+    </div>
+  );
 };
