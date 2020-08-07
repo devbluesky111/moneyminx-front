@@ -36,12 +36,9 @@ h6 {
   margin-right: 120px;
 }
 
-//
 .mm-container-right {
   margin-left: 120px;
 }
-
-// Buttons
 
 .mm-btn {
   @extend .btn;
@@ -114,18 +111,16 @@ h6 {
 
 @media (min-width: $lg+1) {
   .mm-container {
-    max-width: 100%;
+    max-width: $lg + 1;
     margin-left: auto;
     margin-right: auto;
   }
   .mm-container-right {
-    max-width: 100%;
+    max-width: $lg + 1;
     margin-left: auto;
     margin-right: auto;
-    padding: 36px 120px 36px 120px;
   }
 }
-// Labels
 
 .mm-label {
   width: 76px;

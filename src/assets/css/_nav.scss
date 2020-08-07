@@ -12,9 +12,10 @@
 
 @media (min-width: $lg) {
   .mm-navbar {
-    max-width: 100%;
+    max-width: 1400px;
     margin-left: auto;
-    padding-right: auto;
+    margin-right: auto;
+    padding: 36px 0;
   }
 }
 
