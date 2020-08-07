@@ -94,12 +94,21 @@ h6 {
     margin-left: 20px;
     margin-right: 20px;
   }
+  .mm-container-right {
+    margin-left: 20px;
+  }
 }
 
 @media (max-width: $md) {
   .mm-container {
     margin-left: 80px;
     margin-right: 80px;
+  }
+}
+
+@media (max-width: $lg) {
+  .mm-container-right {
+    overflow: hidden;
   }
 }
 

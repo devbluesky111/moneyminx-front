@@ -1,8 +1,17 @@
-.security-top-wrapper {
-  width: 100%;
+.security-top {
+  h1 {
+    padding-bottom: 2rem;
+  }
+  p {
+    color: $gray;
+  }
 }
-@media (min-width: 1400px) {
-  .security-top-wrapper {
-    width: 1400px;
+
+.security-chart-wrapper {
+  padding-top: 3rem;
+}
+@media (max-width: $lg+1) {
+  .security-chart-wrapper {
+    overflow: hidden;
   }
 }
