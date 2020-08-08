@@ -1,12 +1,12 @@
 import React from 'react';
 import WebsiteLayout from 'website/website.layout';
 import { ReactComponent as SecurityChart } from 'assets/images/security/chart.svg';
-import { ReactComponent as SecurityPieChart } from 'assets/images/security/pie-chart.svg';
-import { ReactComponent as SecurityTickIcon } from 'assets/images/security/tick-icon.svg';
 import { ReactComponent as SecurityLockIcon } from 'assets/images/security/lock.svg';
 import { ReactComponent as SecurityShieldIcon } from 'assets/images/security/shield.svg';
-import { ReactComponent as SecurityPartnerChart } from 'assets/images/security/partner-chart.svg';
+import { ReactComponent as SecurityPieChart } from 'assets/images/security/pie-chart.svg';
+import { ReactComponent as SecurityTickIcon } from 'assets/images/security/tick-icon.svg';
 import { ReactComponent as SecurityYodleeLogo } from 'assets/images/security/yodlee-logo.svg';
+import { ReactComponent as SecurityPartnerChart } from 'assets/images/security/partner-chart.svg';
 const Security = () => {
   return (
     <WebsiteLayout>
@@ -48,6 +48,7 @@ export const SecurityTopSection = () => {
     </div>
   );
 };
+
 export const SecurityHeroSection = () => {
   return (
     <div className='website-hero-wrapper'>
@@ -169,8 +170,9 @@ export const SecurityInvestmentSection = () => {
               <h1>No One Can Access Your Money or Your Investments</h1>
               <p className='text'>
                 Your Money Minx account only has read access to your data. Money Minx can’t trigger transfers,
-                transactons or any other events with your banks, brokerages and investment sites. In the event that your
-                Money Minx account is ever compromised, we’ve design our application to ensure that you are still safe.
+                transactions or any other events with your banks, brokerages and investment sites. In the event that
+                your Money Minx account is ever compromised, we’ve design our application to ensure that you are still
+                safe.
               </p>
               <p className='text'>
                 We never send your credentials to your browser, in fact we never even see your credentials. The popup
