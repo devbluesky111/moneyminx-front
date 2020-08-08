@@ -2,6 +2,7 @@ body {
   font-family: 'Mulish', sans-serif, Arial, Helvetica;
   font-size: 1rem;
   font-weight: 300;
+  overflow-x: hidden;
 }
 p {
   font-weight: 300;
@@ -9,7 +10,7 @@ p {
   line-height: 150%;
 }
 h1 {
-  font-size: 3rem !important;
+  font-size: 3.3rem !important;
   font-weight: 300;
 }
 h3 {
@@ -36,9 +37,12 @@ h6 {
   margin-right: 120px;
 }
 
+//
 .mm-container-right {
   margin-left: 120px;
 }
+
+// Buttons
 
 .mm-btn {
   @extend .btn;
@@ -80,7 +84,11 @@ h6 {
     background-color: $white;
   }
 }
-
+.container-mm {
+  max-width: 1200px;
+  width: auto !important;
+  margin: auto;
+}
 // media queries
 @media (max-width: $sm) {
   h1 {
@@ -111,16 +119,18 @@ h6 {
 
 @media (min-width: $lg+1) {
   .mm-container {
-    max-width: $lg + 1;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
   }
   .mm-container-right {
-    max-width: $lg + 1;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+    padding: 36px 120px 74px 120px;
   }
 }
+// Labels
 
 .mm-label {
   width: 76px;
