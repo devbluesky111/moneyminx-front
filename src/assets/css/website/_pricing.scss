@@ -43,7 +43,7 @@ ul.features-list {
 }
 .price-table {
   padding: 25px 25px 32px;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 18px;
   box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
   background: #fff;
@@ -81,7 +81,7 @@ ul.features-list {
   margin-bottom: 21px;
 }
 .price-heading h2 {
-  font-size: 20px;
+  font-size: 1.25rem;
   line-height: 25px;
 }
 .trial-btn {
@@ -100,7 +100,7 @@ ul.features-list {
 .second-table::before {
   content: 'RECOMMENDED';
   position: absolute;
-  font-size: 11px;
+  font-size: 0.6875rem;
   top: -20px;
   left: 0;
   color: #534cea;
@@ -113,7 +113,7 @@ ul.features-list {
 .save-text::before {
   position: absolute;
   content: 'Save 10%';
-  font-size: 10px;
+  font-size: 0.625rem;
   color: #534cea;
   text-transform: uppercase;
   top: -16px;
