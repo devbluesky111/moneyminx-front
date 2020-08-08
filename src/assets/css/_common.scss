@@ -2,6 +2,7 @@ body {
   font-family: 'Mulish', sans-serif, Arial, Helvetica;
   font-size: 1rem;
   font-weight: 300;
+  overflow-x: hidden;
 }
 p {
   font-weight: 300;
@@ -9,7 +10,7 @@ p {
   line-height: 150%;
 }
 h1 {
-  font-size: 3rem !important;
+  font-size: 3.3rem !important;
   font-weight: 300;
 }
 h3 {
@@ -83,40 +84,12 @@ h6 {
     background-color: $white;
   }
 }
-
+.container-mm {
+  max-width: 1200px;
+  width: auto !important;
+  margin: auto;
+}
 // media queries
-@media (max-width: $sm) {
-  h1 {
-    font-size: 36px !important;
-  }
-
-  .mm-container {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-}
-
-@media (max-width: $md) {
-  .mm-container {
-    margin-left: 80px;
-    margin-right: 80px;
-  }
-}
-
-@media (min-width: $lg+1) {
-  .mm-container {
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .mm-container-right {
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 36px 120px 36px 120px;
-  }
-}
-// Labels
 
 .mm-label {
   width: 76px;
@@ -132,4 +105,43 @@ h6 {
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
+}
+
+@media (max-width: $lg) {
+  .mm-container-right {
+    overflow: hidden;
+  }
+}
+
+@media (min-width: $lg+1) {
+  .mm-container {
+    max-width: 100%;
+  }
+  .mm-container-right {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 36px 120px 74px 120px;
+  }
+}
+
+@media (max-width: $md) {
+  .mm-container {
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+}
+
+@media (max-width: $sm) {
+  h1 {
+    font-size: 36px !important;
+  }
+
+  .mm-container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .mm-container-right {
+    margin-left: 20px;
+  }
 }

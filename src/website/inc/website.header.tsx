@@ -29,7 +29,7 @@ const WebsiteHeader = () => {
         <a className='navbar-brand' href='/'>
           <Logo />
         </a>
-        <button className='mm-btn-xs b-primary-light'>Beta</button>
+        <div className='mm-label b-primary-light'>Beta</div>
       </div>
 
       <div className='right-menu-wrapper'>
@@ -76,11 +76,11 @@ const WebsiteHeader = () => {
             </div>
           </div>
         </div>
-
-        <button className='navbar-toggler' type='button' onClick={handleToggleMenu}>
-          <span className='navbar-toggler-icon' />
-        </button>
       </div>
+
+      <button className='navbar-toggler' type='button' onClick={handleToggleMenu}>
+        <span className='navbar-toggler-icon' />
+      </button>
     </nav>
   );
 };
