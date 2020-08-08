@@ -5,4 +5,5 @@ export const websiteRouteConstant = {
   NOTICE: '/w/notice',
   PRIVACY: '/w/privacy',
   SECURITY: '/w/security',
+  PRICING: '/w/pricing',
 };
