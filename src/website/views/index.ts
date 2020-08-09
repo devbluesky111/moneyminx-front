@@ -1,3 +1,4 @@
+export { default as About } from './about';
 export { default as Notice } from './notice';
 export { default as Privacy } from './privacy';
 export { default as Pricing } from './pricing';

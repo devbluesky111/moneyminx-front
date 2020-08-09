@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import useSize from 'common/hooks/useSize';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 
@@ -54,9 +55,9 @@ const WebsiteHeader = () => {
                   </a>
                 </li>
                 <li className='mm-nav-item'>
-                  <a className='mm-nav-link' href='/about'>
+                  <Link className='mm-nav-link' to='/w/about'>
                     About
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
