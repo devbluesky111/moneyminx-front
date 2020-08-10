@@ -1,5 +1,6 @@
 export const websiteRouteConstant = {
   DEF: '/w',
+  HOME: '/w/home',
   TERMS: '/w/terms',
   ABOUT: '/w/about',
   NOT_FOUND: '/w/404',
