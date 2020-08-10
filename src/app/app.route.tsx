@@ -6,9 +6,11 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import WebsiteRoute from 'website/website.route';
 import { appRouteConstants } from './app-route.constant';
+import { Home } from 'website/views';
 
 const {
   auth: { def },
+  home,
 } = appRouteConstants;
 
 function AppRoute() {
@@ -17,13 +19,18 @@ function AppRoute() {
   return (
     <>
       <Switch>
+        <Route path={home} component={Home} />
+
         <Route path={def}>
           <AuthRoute />
         </Route>
+
         <Route exact path={dashboardPath} component={Website} />
+
         <Route path='/w'>
           <WebsiteRoute />
         </Route>
+
         <Route exact path={'/404'} component={NotFound} />
         <Redirect to='/404' />
       </Switch>

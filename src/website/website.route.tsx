@@ -1,18 +1,18 @@
 import React from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
 
-import Website from './website';
 import { WebsiteProvider } from './website.context';
 import { websiteRouteConstant } from './website.constant';
-import { NotFound, Notice, Privacy, TermNService, Security, Pricing, About } from './views';
+import { NotFound, Notice, Privacy, TermNService, Security, Pricing, About, Home } from './views';
 
-const { DEF, NOTICE, NOT_FOUND, PRIVACY, TERMS, SECURITY, PRICING, ABOUT } = websiteRouteConstant;
+const { DEF, NOTICE, NOT_FOUND, PRIVACY, TERMS, SECURITY, PRICING, ABOUT, HOME } = websiteRouteConstant;
 
 function WebsiteRoute() {
   return (
     <WebsiteProvider>
       <Switch>
-        <Route exact path={DEF} component={Website} />
+        <Route exact path={DEF} component={Home} />
+        <Route exact path={HOME} component={Home} />
         <Route exact path={ABOUT} component={About} />
         <Route exact path={NOTICE} component={Notice} />
         <Route exact path={PRIVACY} component={Privacy} />
