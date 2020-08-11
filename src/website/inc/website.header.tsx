@@ -27,9 +27,9 @@ const WebsiteHeader = () => {
   return (
     <nav className='mm-navbar navbar-expand-lg navbar-light bg-light'>
       <div className='logo-btn-wrapper'>
-        <a className='navbar-brand' href='/'>
+        <Link className='navbar-brand' to='/'>
           <Logo />
-        </a>
+        </Link>
         <div className='mm-label b-primary-light'>Beta</div>
       </div>
 

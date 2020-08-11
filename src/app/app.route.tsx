@@ -1,5 +1,4 @@
 import React from 'react';
-import Website from 'website/website';
 import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -14,21 +13,19 @@ const {
 } = appRouteConstants;
 
 function AppRoute() {
-  const dashboardPath = '(/|/dashboard)';
-
   return (
     <>
       <Switch>
-        <Route path={home} component={Home} />
-
-        <Route path={def}>
-          <AuthRoute />
+        <Route exact path={home}>
+          <Home />
         </Route>
-
-        <Route exact path={dashboardPath} component={Website} />
 
         <Route path='/w'>
           <WebsiteRoute />
+        </Route>
+
+        <Route path={def}>
+          <AuthRoute />
         </Route>
 
         <Route exact path={'/404'} component={NotFound} />
