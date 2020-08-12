@@ -1,21 +1,21 @@
 import React from 'react';
-
-import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
-import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
-import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
-import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
-import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { AuthLayout } from 'layouts/auth.layout';
 
-const Login = () => {
+import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
+import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
+import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
+
+const ForgotPassword = () => {
   return (
     <AuthLayout>
-      <LoginMainSection />
+      <ForgotPasswordMainSection />
     </AuthLayout>
   );
 };
-export default Login;
-export const LoginMainSection = () => {
+
+export default ForgotPassword;
+
+export const ForgotPasswordMainSection = () => {
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -55,36 +55,14 @@ export const LoginMainSection = () => {
               <div className='logo-img-wrapper'>
                 <LogoImg />
               </div>
-              <h2>Welcome back</h2>
-              <p>Your accounts are ready for you. Hope you will reach your goals</p>
+              <h2>Forgot Password?</h2>
+              <p>Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
               <div className='form-wrap'>
                 <form>
-                  <input type='text' id='email' name='email' value='' placeholder='Email' />
-
-                  <input type='Password' id='password' name='password' value='' placeholder='Password' />
-                  <span className='visibility-icon'>
-                    <LoginVisibilityIcon />
-                  </span>
+                  <input type='text' id='email' name='email' value='' placeholder='Your Email' />
                 </form>
-                <p>
-                  <span className='forgot-pass'>
-                    <a href='link7'>Forgot Password?</a>
-                  </span>
-                </p>
-                <button className='bg-primary mm-btn-primary-outline'>Log in</button>
-                <div className='facebook-login'>
-                  <p>
-                    Or, log in with:
-                    <div className='fb-icon-wrap'>
-                      <a href='link6'>
-                        <LoginFacebookIcon />
-                      </a>
-                    </div>
-                  </p>
-                </div>
-                <p>
-                  Don’t have an account? <a href='moneyminx'>Sign Up</a>
-                </p>
+
+                <button className='bg-primary mm-btn-primary-outline'>Reset Password</button>
               </div>
             </div>
           </div>

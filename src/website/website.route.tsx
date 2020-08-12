@@ -6,7 +6,6 @@ import { websiteRouteConstant } from './website.constant';
 import {
   Home,
   About,
-  Login,
   Notice,
   Privacy,
   Pricing,
@@ -27,7 +26,6 @@ const {
   HOME,
   TERMS,
   ABOUT,
-  LOGIN,
   NOTICE,
   PRIVACY,
   PRICING,
@@ -49,7 +47,6 @@ function WebsiteRoute() {
         <Route exact path={DEF} component={Home} />
         <Route exact path={HOME} component={Home} />
         <Route exact path={ABOUT} component={About} />
-        <Route exact path={LOGIN} component={Login} />
         <Route exact path={NOTICE} component={Notice} />
         <Route exact path={PRIVACY} component={Privacy} />
         <Route exact path={PRICING} component={Pricing} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import WebsiteLayout from 'website/website.layout';
+import { AuthLayout } from 'layouts/auth.layout';
 
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
@@ -7,16 +7,17 @@ import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visib
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 
-const Login = () => {
+const LoginSessionExpired = () => {
   return (
-    <WebsiteLayout>
-      <LoginMainSection />
-      <SecondFooterSection />
-    </WebsiteLayout>
+    <AuthLayout>
+      <LoginSessionExpiredMainSection />
+    </AuthLayout>
   );
 };
-export default Login;
-export const LoginMainSection = () => {
+
+export default LoginSessionExpired;
+
+export const LoginSessionExpiredMainSection = () => {
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -58,6 +59,9 @@ export const LoginMainSection = () => {
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
+              <div className='session-expired'>
+                <p>We thought you left, so we logged you out to protect your account.</p>
+              </div>
               <div className='form-wrap'>
                 <form>
                   <input type='text' id='email' name='email' value='' placeholder='Email' />
@@ -88,36 +92,6 @@ export const LoginMainSection = () => {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const SecondFooterSection = () => {
-  return (
-    <div className='container-fluid mm-container-final footer-second'>
-      <div className='row'>
-        <div className='footer-table-wrapper'>
-          <div className='footer-content'>
-            <div className='copyright-text'>© 2020 Money Minx. All rights reserved.</div>
-          </div>
-          <div className='footer-content right-content'>
-            <ul className='footer-list'>
-              <li>
-                <a href='link2'>Privacy Policy</a>
-              </li>
-              <li>
-                <a href='link3'>Terms of Service</a>
-              </li>
-              <li>
-                <a href='link4'>Notices</a>
-              </li>
-              <li>
-                <a href='link5'>Resources</a>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
