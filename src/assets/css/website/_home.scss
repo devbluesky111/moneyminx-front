@@ -53,6 +53,19 @@
   margin-bottom: 58px;
 }
 
+.home-left-banner button:hover {
+  background: #fff !important;
+  border-color: #534cea !important;
+}
+
+.home-left-banner .scroll-down-btn a .scroll-dot {
+  transition: 0.3s;
+}
+
+.home-left-banner .scroll-down-btn a:hover .scroll-dot {
+  transform: translateY(15px);
+}
+
 .home-left-banner .scroll-down-btn {
   padding-top: 44px;
 }
@@ -184,6 +197,11 @@
   width: 30.33%;
 }
 
+.blog-content-right button:hover {
+  background: #fff !important;
+  border-color: #534cea !important;
+}
+
 //allocation section
 
 .allocation-section .networth-section {
@@ -261,6 +279,14 @@ span.above-tag-text {
     margin-left: 0;
     padding-left: 120px;
   }
+
+  .allocation-section .networth-text {
+    padding-right: 25px;
+  }
+
+  .home-blog-section .blog-top-content {
+    padding-right: 15px;
+  }
 }
 
 @media (max-width: $md) {
@@ -287,18 +313,40 @@ span.above-tag-text {
     flex: auto;
     margin-bottom: 31px;
   }
+
   .mm-container-right.home-feature-section {
     margin-right: 0px;
   }
+
+  .mm-container-right.home-feature-section {
+    margin: 0 !important;
+  }
+
+  .mm-container-right {
+    margin: 0 20px !important;
+  }
+
+  .minxmeasure-section .networth-chart {
+    float: none;
+    width: 100%;
+  }
+
+  .performance-section .networth-chart {
+    width: 100%;
+  }
+
   .home-blog-section .blog-top-content {
     display: block;
   }
+
   .home-blog-section ul li:last-child {
     display: none;
   }
+
   .home-blog-section .blog-content-left {
     width: 100%;
   }
+
   .home-blog-section .blog-content-left h1 {
     max-width: none;
   }

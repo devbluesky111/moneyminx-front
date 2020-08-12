@@ -21,7 +21,7 @@ const Security = () => {
 export default Security;
 export const SecurityTopSection = () => {
   return (
-    <div className='mm-container-right'>
+    <div className='mm-container-right security-container'>
       <div className='row security-top'>
         <div className='col-lg-6'>
           <div className='security-left-banner'>

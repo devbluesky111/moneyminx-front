@@ -38,6 +38,12 @@
   margin-top: 26px;
   margin-bottom: 11px;
 }
+
+.about-left-banner button:hover {
+  background: #fff !important;
+  border-color: #534cea !important;
+}
+
 ul.account-list {
   padding-left: 0;
 }
@@ -179,6 +185,15 @@ span.twitter-icon {
   .mm-container-right.owner-section {
     padding: 20px;
   }
+
+  .mm-container-right.about-banner-container {
+    margin: 0 20px;
+  }
+
+  .mm-container-right.networth-section {
+    margin: 0 20px;
+  }
+
   ul.owner-list {
     display: block;
   }

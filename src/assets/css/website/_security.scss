@@ -151,9 +151,12 @@
   .security-chart-wrapper {
     overflow: hidden;
   }
+  .mm-container-right.security-container {
+    padding-bottom: 75px;
+  }
 }
 
-@media (max-width: 1024px) and (min-width: 768px) {
+@media (max-width: $md) {
   .security-chart-wrapper {
     overflow: visible !important;
   }
@@ -182,18 +185,55 @@
     position: static;
     display: none;
   }
-}
-
-@media (max-width: 960px) {
   .security-chart-wrapper {
     margin-bottom: 90px;
   }
   ul.security-list {
     padding-left: 0;
   }
+  .security-chart-wrapper {
+    overflow: visible !important;
+  }
+  .mm-container-right {
+    margin: 0 80px;
+    overflow: visible !important;
+  }
+  .website-hero-wrapper {
+    padding: 100px 80px;
+  }
+  .protected-div {
+    margin-bottom: 60px;
+  }
+  .security-pie-wrapper {
+    right: 0;
+    bottom: 91px;
+    transform: rotate(180deg);
+  }
+  .security-list li {
+    margin-bottom: 32px;
+  }
+  .text.text-gap {
+    margin-bottom: 51px;
+  }
+  .security-partner-chart {
+    position: static;
+    display: none;
+  }
+  .security-left-banner {
+    max-width: none;
+  }
+  .security-chart-wrapper {
+    margin-bottom: 90px;
+  }
+  ul.security-list {
+    padding-left: 0;
+  }
+  .block {
+    display: inline;
+  }
 }
 
-@media (max-width: 375px) {
+@media (max-width: $sm) {
   .website-hero-wrapper {
     padding: 100px 20px;
   }
@@ -204,5 +244,25 @@
   .security-pie-wrapper {
     position: static;
     display: none;
+  }
+  .website-hero-wrapper {
+    padding: 100px 20px;
+  }
+  .security-partner-chart {
+    display: none;
+    position: static;
+  }
+  .security-pie-wrapper {
+    position: static;
+    display: none;
+  }
+  .mm-container-right.security-container {
+    margin: 0 20px;
+  }
+  .mm-container-right.SecurityPractice {
+    margin: 0 20px;
+  }
+  .investment-section.minimized-gap .mm-container-right {
+    margin: 0 20px;
   }
 }

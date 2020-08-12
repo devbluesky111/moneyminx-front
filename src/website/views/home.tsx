@@ -330,7 +330,7 @@ export const MinxWinksSection = () => {
           <div className='col-lg-5'>
             <div className='networth-text'>
               <h1>
-                Minx Winks<span className='above-tag-text'>Coming Soon!</span>
+                Minx Winks<span className='above-tag-text'>!Coming Soon</span>
               </h1>
               <p className='text'>
                 Get inside insights, recommendations, and tips from Money Minx. Get inside insights, recommendations,
