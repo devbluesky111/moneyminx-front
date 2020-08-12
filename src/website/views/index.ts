@@ -6,3 +6,7 @@ export { default as Pricing } from './pricing';
 export { default as Security } from './security';
 export { default as NotFound } from './not-found';
 export { default as TermNService } from './term-service';
+
+export { default as SubscriptionEnded } from './subscription-ended-one';
+export { default as SubscriptionEndedTwo } from './subscription-ended-two';
+export { default as SubscriptionEndedThree } from './subscription-ended-three';

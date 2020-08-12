@@ -1,21 +1,19 @@
 import React from 'react';
-
+import { AuthLayout } from 'layouts/auth.layout';
+import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
-import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
-import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import { AuthLayout } from 'layouts/auth.layout';
 
-const Login = () => {
+const CreateNewPassword = () => {
   return (
     <AuthLayout>
-      <LoginMainSection />
+      <CreateNewPasswordMainSection />
     </AuthLayout>
   );
 };
-export default Login;
-export const LoginMainSection = () => {
+
+export const CreateNewPasswordMainSection = () => {
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -51,40 +49,27 @@ export const LoginMainSection = () => {
           </div>
 
           <div className='bg-white credintials-wrapper'>
-            <div className='credintials-content'>
+            <div className='credintials-content create-new-password'>
               <div className='logo-img-wrapper'>
                 <LogoImg />
               </div>
-              <h2>Welcome back</h2>
-              <p>Your accounts are ready for you. Hope you will reach your goals</p>
+              <h2>Create new Password</h2>
+              <p>One last step. Enter a new password below and you should be good to go.</p>
               <div className='form-wrap'>
                 <form>
-                  <input type='text' id='email' name='email' value='' placeholder='Email' />
+                  <input type='Password' id='password' name='password' value='' placeholder='Set Password' />
 
-                  <input type='Password' id='password' name='password' value='' placeholder='Password' />
+                  <span className='visibility-icon'>
+                    <LoginVisibilityIcon />
+                  </span>
+                  <input type='Password' id='password' name='password' value='' placeholder='Confirm Password' />
+
                   <span className='visibility-icon'>
                     <LoginVisibilityIcon />
                   </span>
                 </form>
-                <p>
-                  <span className='forgot-pass'>
-                    <a href='link7'>Forgot Password?</a>
-                  </span>
-                </p>
-                <button className='bg-primary mm-btn-primary-outline'>Log in</button>
-                <div className='facebook-login'>
-                  <p>
-                    Or, log in with:
-                    <div className='fb-icon-wrap'>
-                      <a href='link6'>
-                        <LoginFacebookIcon />
-                      </a>
-                    </div>
-                  </p>
-                </div>
-                <p>
-                  Don’t have an account? <a href='moneyminx'>Sign Up</a>
-                </p>
+
+                <button className='bg-primary mm-btn-primary-outline'>Save Password</button>
               </div>
             </div>
           </div>
@@ -93,3 +78,5 @@ export const LoginMainSection = () => {
     </div>
   );
 };
+
+export default CreateNewPassword;

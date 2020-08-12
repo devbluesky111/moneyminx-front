@@ -139,12 +139,12 @@ ul.features-list {
   margin-bottom: 40px;
 }
 
-@media (max-width: 1324px) and (min-width: 1024px) {
+@media (max-width: $lg+1) {
   .banner-piechart {
-    max-width: 92%;
-    float: right;
+    max-width: 87%;
   }
 }
+
 @media (max-width: 1024px) and (min-width: 768px) {
   .banner-piechart {
     max-width: none;
@@ -157,7 +157,8 @@ ul.features-list {
     margin-bottom: 27px;
   }
 }
-@media (max-width: 375px) {
+
+@media (max-width: $sm) {
   .pricing-table-wrapper {
     display: block;
     width: 100%;
@@ -174,5 +175,8 @@ ul.features-list {
   }
   .mm-container-right {
     overflow: visible;
+  }
+  .mm-container-right.pricing-banner-container {
+    margin: 0 20px;
   }
 }

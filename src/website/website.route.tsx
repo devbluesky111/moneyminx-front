@@ -3,9 +3,34 @@ import { Switch, Redirect, Route } from 'react-router-dom';
 
 import { WebsiteProvider } from './website.context';
 import { websiteRouteConstant } from './website.constant';
-import { NotFound, Notice, Privacy, TermNService, Security, Pricing, About, Home } from './views';
+import {
+  Home,
+  About,
+  Notice,
+  Privacy,
+  Pricing,
+  NotFound,
+  Security,
+  TermNService,
+  SubscriptionEnded,
+  SubscriptionEndedTwo,
+  SubscriptionEndedThree,
+} from './views';
 
-const { DEF, NOTICE, NOT_FOUND, PRIVACY, TERMS, SECURITY, PRICING, ABOUT, HOME } = websiteRouteConstant;
+const {
+  DEF,
+  HOME,
+  TERMS,
+  ABOUT,
+  NOTICE,
+  PRIVACY,
+  PRICING,
+  SECURITY,
+  NOT_FOUND,
+  SUBSCRIPTION_ENDED,
+  SUBSCRIPTION_ENDED_TWO,
+  SUBSCRIPTION_ENDED_THREE,
+} = websiteRouteConstant;
 
 function WebsiteRoute() {
   return (
@@ -20,6 +45,9 @@ function WebsiteRoute() {
         <Route exact path={SECURITY} component={Security} />
         <Route exact path={TERMS} component={TermNService} />
         <Route exact path={NOT_FOUND} component={NotFound} />
+        <Route exact path={SUBSCRIPTION_ENDED} component={SubscriptionEnded} />
+        <Route exact path={SUBSCRIPTION_ENDED_TWO} component={SubscriptionEndedTwo} />
+        <Route exact path={SUBSCRIPTION_ENDED_THREE} component={SubscriptionEndedThree} />
         <Redirect to={NOT_FOUND} />
       </Switch>
     </WebsiteProvider>

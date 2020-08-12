@@ -1,21 +1,23 @@
 import React from 'react';
+import { AuthLayout } from 'layouts/auth.layout';
 
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import { AuthLayout } from 'layouts/auth.layout';
 
-const Login = () => {
+const LoginSessionExpired = () => {
   return (
     <AuthLayout>
-      <LoginMainSection />
+      <LoginSessionExpiredMainSection />
     </AuthLayout>
   );
 };
-export default Login;
-export const LoginMainSection = () => {
+
+export default LoginSessionExpired;
+
+export const LoginSessionExpiredMainSection = () => {
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -57,6 +59,9 @@ export const LoginMainSection = () => {
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
+              <div className='session-expired'>
+                <p>We thought you left, so we logged you out to protect your account.</p>
+              </div>
               <div className='form-wrap'>
                 <form>
                   <input type='text' id='email' name='email' value='' placeholder='Email' />

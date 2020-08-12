@@ -3,13 +3,13 @@ import WebsiteLayout from 'website/website.layout';
 import OwnerOneImg from 'assets/images/about/hussein.png';
 import OwnerTwoImg from 'assets/images/about/jessica.png';
 import OwnerLeftImg from 'assets/images/about/owner-left-img.png';
+import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
 import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
-import { ReactComponent as AboutPeerstreetIcon } from 'assets/images/about/peerstreet.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
 import { ReactComponent as OwnerTwitterIcon } from 'assets/images/about/owner-twitter-icon.svg';
 
-const Pricing = () => {
+const About = () => {
   return (
     <WebsiteLayout>
       <AboutTopSection />
@@ -18,7 +18,7 @@ const Pricing = () => {
     </WebsiteLayout>
   );
 };
-export default Pricing;
+export default About;
 export const AboutTopSection = () => {
   return (
     <div className='mm-container-right about-banner-container'>
@@ -77,7 +77,7 @@ export const AboutTopSection = () => {
             <div className='account-wrap bg-white border small-box'>
               <h2>
                 <span className='logo-icon'>
-                  <AboutPeerstreetIcon />
+                  <img alt='Peer Street' src={PeerStreetLogo} />
                 </span>
                 Peer Street
               </h2>

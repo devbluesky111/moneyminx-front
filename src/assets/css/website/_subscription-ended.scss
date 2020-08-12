@@ -1,0 +1,231 @@
+a {
+  cursor: pointer;
+}
+.subs-ended-msg-box {
+  background: #ffffff;
+  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  border-radius: 6px;
+  padding: 17px 42px 15px;
+  border-left: 4px solid #ec5555;
+  width: 797px;
+  margin: auto;
+  margin-bottom: 65px;
+
+  max-width: 100%;
+}
+.subs-ended-msg-box p {
+  margin: 0;
+  color: $gray;
+}
+.subs-ended-msg-box h4 {
+  font-size: 1.25rem;
+}
+.subs-ended-msg-box p {
+  font-size: 0.87rem;
+}
+span.warning-icon {
+  float: right;
+  margin-top: -53px;
+}
+.subs-ended-left {
+  max-width: 395px;
+}
+.subscription-account-wrap {
+  display: table;
+  width: 797px;
+  margin: auto;
+  max-width: 100%;
+}
+.subscription-account-wrap h3 {
+  font-weight: 600;
+  padding: 26px 41px;
+  font-size: 1.25rem;
+  background: #ffffff;
+  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  border-radius: 6px;
+}
+ul.subscribed-list {
+  padding-left: 0;
+}
+ul.subscribed-list li {
+  list-style: none;
+}
+.delete-btn {
+  float: right;
+  margin-top: -45px;
+}
+ul.subscribed-list li .account-wrap {
+  padding: 41px 40px;
+}
+ul.subscribed-list li .account-wrap p {
+  margin: 0;
+}
+ul.subscribed-list li .account-wrap p {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+ul.subscribed-list li .account-wrap {
+  background: #ffffff;
+  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+}
+ul.subscribed-list li:last-child {
+  margin-bottom: 41px;
+}
+.delete-btn {
+  float: right;
+  margin-top: -46px;
+  font-size: 0.87rem;
+  width: 159px;
+  height: 49px;
+  border: 1.5px solid #ec5555;
+  box-sizing: border-box;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 12px;
+  background: none;
+  text-align: center;
+}
+.delete-btn a {
+  color: #ec5555;
+  font-size: 0.87rem;
+  font-weight: 400;
+  text-decoration: none;
+}
+.container-fluid.subscription-ended {
+  background: #fff;
+}
+
+// subscription bottom
+.subscription-bottom-text {
+  display: table;
+  width: 100%;
+  border: 1px solid #e2e5ea;
+  box-shadow: 0px 2px 8px #e2e8f3;
+  padding: 9px 113px;
+}
+
+.subscription-bottom-text p {
+  display: inline-block;
+  vertical-align: middle;
+  color: #ec5555;
+  margin-right: 27px;
+  margin-bottom: 0px;
+}
+.back-btn {
+  margin-right: 100px;
+}
+.finish-btn {
+  background: rgba(150, 158, 172, 0.4);
+  height: 48px;
+  width: 186px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 9px;
+  margin-top: 9px;
+  outline: none;
+  border: none;
+}
+.container-fluid.subscription-ended.bottom {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.finish-btn a {
+  color: #fff;
+}
+.subs-content-left {
+  font-size: 1.5rem;
+}
+.subs-content.three p {
+  font-size: 1rem;
+}
+.subs-content.four .finish-btn {
+  float: right;
+}
+.subs-content.four {
+  display: table-cell;
+  width: 23%;
+  vertical-align: middle;
+}
+.subs-content.three {
+  display: table-cell;
+  width: 51%;
+  vertical-align: middle;
+}
+.subs-content.two {
+  display: table-cell;
+  width: 15%;
+  vertical-align: middle;
+}
+.subs-content.one {
+  display: table-cell;
+  width: 12%;
+  vertical-align: middle;
+}
+
+//Subscription three
+.subs-ended-msg-box.positive {
+  border-color: #10c273;
+}
+.subscription-bottom-text.positive p {
+  color: #10c273;
+}
+.subscription-bottom-text.positive .finish-btn {
+  background: #534cea;
+}
+.subscription-bottom-text.positive .subs-content.three {
+  width: 63%;
+}
+.subscription-bottom-text.positive .subs-content.two {
+  width: 3%;
+}
+@media (max-width: $lg+1) {
+  .back-btn {
+    margin-right: 14px;
+  }
+  .subscription-bottom-text {
+    padding: 9px 34px;
+  }
+}
+
+@media (max-width: $md) {
+  .hidden-text {
+    display: none;
+  }
+  .container-fluid.subscription-ended.bottom {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: $sm) {
+  .subs-ended-msg-box {
+    padding: 14px;
+  }
+  span.warning-icon {
+    float: none;
+    margin-top: 0;
+    position: static;
+    display: none;
+  }
+  .delete-btn {
+    float: none;
+    margin-top: 21px;
+
+    width: 100%;
+  }
+  ul.subscribed-list li .account-wrap {
+    padding: 20px;
+  }
+  .container-fluid.subscription-ended {
+    padding: 0 20px;
+  }
+  .subscription-bottom-text {
+    position: static;
+    display: none;
+  }
+  .subscription-bottom-text.positive {
+    display: block;
+  }
+  .subscription-bottom-text.positive .subs-content.three {
+    display: none;
+  }
+}
