@@ -1,22 +1,21 @@
 import React from 'react';
-import WebsiteLayout from 'website/website.layout';
+import { AuthLayout } from 'layouts/auth.layout';
 
+import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
-import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import { ReactComponent as TickIcon } from 'assets/images/login/tick-icon.svg';
-import { ReactComponent as CrossIcon } from 'assets/images/login/cross-icon.svg';
 
-const ForgotPassword = () => {
+const ExpiredLink = () => {
   return (
-    <WebsiteLayout>
-      <ForgotPasswordMainSection />
-      <SecondFooterSection />
-    </WebsiteLayout>
+    <AuthLayout>
+      <ExpiredLinkMainSection />
+    </AuthLayout>
   );
 };
-export default ForgotPassword;
-export const ForgotPasswordMainSection = () => {
+
+export default ExpiredLink;
+
+export const ExpiredLinkMainSection = () => {
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -56,8 +55,8 @@ export const ForgotPasswordMainSection = () => {
               <div className='logo-img-wrapper'>
                 <LogoImg />
               </div>
-              <h2>Forgot Password?</h2>
-              <p>Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
+              <h2>Expired Link</h2>
+              <p>The reset password link you are using already expired. Please request a new one below.</p>
               <div className='form-wrap'>
                 <form>
                   <input type='text' id='email' name='email' value='' placeholder='Your Email' />
@@ -68,52 +67,6 @@ export const ForgotPasswordMainSection = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
-};
-
-export const SecondFooterSection = () => {
-  return (
-    <div className='container-fluid mm-container-final footer-second'>
-      <div className='row'>
-        <div className='footer-table-wrapper'>
-          <div className='footer-content'>
-            <div className='copyright-text'>© 2020 Money Minx. All rights reserved.</div>
-          </div>
-          <div className='footer-content right-content'>
-            <ul className='footer-list'>
-              <li>
-                <a href='link2'>Privacy Policy</a>
-              </li>
-              <li>
-                <a href='link3'>Terms of Service</a>
-              </li>
-              <li>
-                <a href='link4'>Notices</a>
-              </li>
-              <li>
-                <a href='link5'>Resources</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div className='bottom-popup-message confirmation'>
-        <p>
-          <span className='popup-tick-icon'>
-            <TickIcon />
-          </span>
-          Check your email for password recovery link!
-        </p>
-      </div>
-      <div className='bottom-popup-message failure'>
-        <p>
-          <span className='popup-tick-icon'>
-            <CrossIcon />
-          </span>
-          No internet connection. Please try again later.
-        </p>
       </div>
     </div>
   );

@@ -1,20 +1,18 @@
 import React from 'react';
-import WebsiteLayout from 'website/website.layout';
-
+import { AuthLayout } from 'layouts/auth.layout';
+import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
-import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 
 const CreateNewPassword = () => {
   return (
-    <WebsiteLayout>
+    <AuthLayout>
       <CreateNewPasswordMainSection />
-      <SecondFooterSection />
-    </WebsiteLayout>
+    </AuthLayout>
   );
 };
-export default CreateNewPassword;
+
 export const CreateNewPasswordMainSection = () => {
   return (
     <div className='main-table-wrapper'>
@@ -81,32 +79,4 @@ export const CreateNewPasswordMainSection = () => {
   );
 };
 
-export const SecondFooterSection = () => {
-  return (
-    <div className='container-fluid mm-container-final footer-second'>
-      <div className='row'>
-        <div className='footer-table-wrapper'>
-          <div className='footer-content'>
-            <div className='copyright-text'>© 2020 Money Minx. All rights reserved.</div>
-          </div>
-          <div className='footer-content right-content'>
-            <ul className='footer-list'>
-              <li>
-                <a href='link2'>Privacy Policy</a>
-              </li>
-              <li>
-                <a href='link3'>Terms of Service</a>
-              </li>
-              <li>
-                <a href='link4'>Notices</a>
-              </li>
-              <li>
-                <a href='link5'>Resources</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+export default CreateNewPassword;

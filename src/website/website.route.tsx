@@ -11,12 +11,8 @@ import {
   Pricing,
   NotFound,
   Security,
-  ExpiredLink,
   TermNService,
-  ForgotPassword,
-  CreateNewPassword,
   SubscriptionEnded,
-  LoginSessionExpired,
   SubscriptionEndedTwo,
   SubscriptionEndedThree,
 } from './views';
@@ -31,11 +27,7 @@ const {
   PRICING,
   SECURITY,
   NOT_FOUND,
-  EXPIRED_LINK,
-  FORGOT_PASSWORD,
   SUBSCRIPTION_ENDED,
-  CREATE_NEW_PASSWORD,
-  LOGIN_SESSION_EXPIRED,
   SUBSCRIPTION_ENDED_TWO,
   SUBSCRIPTION_ENDED_THREE,
 } = websiteRouteConstant;
@@ -53,11 +45,7 @@ function WebsiteRoute() {
         <Route exact path={SECURITY} component={Security} />
         <Route exact path={TERMS} component={TermNService} />
         <Route exact path={NOT_FOUND} component={NotFound} />
-        <Route exact path={EXPIRED_LINK} component={ExpiredLink} />
-        <Route exact path={FORGOT_PASSWORD} component={ForgotPassword} />
         <Route exact path={SUBSCRIPTION_ENDED} component={SubscriptionEnded} />
-        <Route exact path={CREATE_NEW_PASSWORD} component={CreateNewPassword} />
-        <Route exact path={LOGIN_SESSION_EXPIRED} component={LoginSessionExpired} />
         <Route exact path={SUBSCRIPTION_ENDED_TWO} component={SubscriptionEndedTwo} />
         <Route exact path={SUBSCRIPTION_ENDED_THREE} component={SubscriptionEndedThree} />
         <Redirect to={NOT_FOUND} />
