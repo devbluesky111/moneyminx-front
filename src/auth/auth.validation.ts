@@ -6,8 +6,7 @@ const { REQUIRED_FIELD, INVALID_EMAIL, INVALID_PASSWORD_LENGTH, PASSWORD_ERROR, 
 export const loginValidationSchema = Yup.object({
   email: Yup.string().email(INVALID_EMAIL).required(REQUIRED_FIELD),
   password: Yup.string()
-    .min(8, INVALID_PASSWORD_LENGTH)
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, PASSWORD_ERROR)
+    .matches(/^(?=.*[A-Za-z])(?=.*\d{2,})(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, PASSWORD_ERROR)
     .required(REQUIRED_FIELD),
 });
 

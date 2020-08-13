@@ -7,6 +7,7 @@ import { auth } from './auth-context.types';
 import { AuthType, AuthState } from './auth.types';
 
 const initialState: AuthType = {
+  expires: undefined,
   user: undefined,
   token: undefined,
   roles: undefined,
@@ -20,24 +21,23 @@ const AuthDispatchContext = createContext<Dispatch | undefined>(undefined);
 
 function authReducer(state: AuthType = initialState, action: any) {
   switch (action.type) {
-    case auth.SIGN_IN: {
+    case auth.LOGIN: {
       return { ...state, state: AuthState.AUTHENTICATING };
     }
 
-    case auth.SIGN_IN_SUCCESS: {
+    case auth.LOGIN_SUCCESS: {
       storage.set(StorageKey.AUTH, action.payload);
       return {
         ...state,
         isSigningIn: false,
         isAuthenticated: true,
-        user: action.payload.user,
         token: action.payload.token,
-        roles: action.payload.roles,
+        expires: action.payload.expires,
         authState: AuthState.AUTHENTICATED,
       };
     }
 
-    case auth.SIGN_IN_FAILURE: {
+    case auth.LOGIN_FAILURE: {
       return { ...state, authState: AuthState.SIGN_IN_REJECTED, isAuthenticated: false };
     }
 
@@ -66,7 +66,6 @@ function authReducer(state: AuthType = initialState, action: any) {
 
     default: {
       return { ...state };
-      // throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
 }

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import env from 'app/app.env';
 import { storage } from 'app/app.storage';
 import { StorageKey } from 'app/app.types';
 import { STATUS_CODE } from 'app/app.status';
@@ -9,7 +8,7 @@ import { withError, withData } from 'common/common-helper';
 import { urls } from './api.url';
 
 const axiosInstance = axios.create({
-  baseURL: env.BASE_URL,
+  baseURL: 'https://api.moneyminx.com/',
   headers: {
     'Content-Type': 'application/json',
   },

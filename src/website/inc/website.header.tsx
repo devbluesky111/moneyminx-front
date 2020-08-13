@@ -64,9 +64,9 @@ const WebsiteHeader = () => {
             <div className='auth-btn-wrapper mr-1'>
               <ul className='navbar-nav'>
                 <li className='mm-nav-item'>
-                  <a className='mm-nav-link' href='/login'>
+                  <Link className='mm-nav-link' to='/auth/login'>
                     Login
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a className='mm-nav-link' href='/signup'>
