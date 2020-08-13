@@ -3,9 +3,6 @@ import { Formik } from 'formik';
 import ProfileForm from './profile-form';
 import { ProfilePayload } from 'auth/auth.types';
 import DashboardLayout from 'layouts/dashboard.layout';
-import { completeProfile } from 'auth/auth.service';
-import { useAuthDispatch } from 'auth/auth.context';
-import { toast } from 'react-toastify';
 
 const initialValue: ProfilePayload = {
   name: '',
@@ -24,7 +21,7 @@ const initialValue: ProfilePayload = {
   },
 };
 const Profile = () => {
-  const dispatch = useAuthDispatch();
+  // const dispatch = useAuthDispatch();
   return (
     <DashboardLayout>
       <div className='pl-2 pt-2'>
@@ -33,20 +30,7 @@ const Profile = () => {
             <div className='card'>
               <h4 className='card-header'>{'Complete Your Profile'}</h4>
               <div className='card-body'>
-                <Formik
-                  initialValues={initialValue}
-                  onSubmit={async (values, actions) => {
-                    const { error } = await completeProfile({ dispatch, payload: values });
-                    if (!error) {
-                      actions.resetForm();
-                      toast('Profile Updated Successfully', { type: 'success' });
-                    } else {
-                      toast(error.message ? JSON.stringify(error.message) : 'Something went wrong!!', {
-                        type: 'error',
-                      });
-                    }
-                  }}
-                >
+                <Formik initialValues={initialValue} onSubmit={async (values, actions) => {}}>
                   {(props) => <ProfileForm props={props} />}
                 </Formik>
               </div>

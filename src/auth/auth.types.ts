@@ -33,6 +33,7 @@ export enum AuthState {
 }
 
 export interface AuthType {
+  expires?: number;
   token?: string;
   user?: UserType;
   roles?: RoleEnum[];

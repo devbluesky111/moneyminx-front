@@ -5,7 +5,6 @@ import RegisterForm from './register-form';
 import { useTranslation } from 'react-i18next';
 import { AuthLayout } from 'layouts/auth.layout';
 import { RegisterPayload } from 'auth/auth.types';
-import { registerRestaurant } from 'api/request.api';
 import { useModal, Modal } from 'common/components/modal';
 import { registerValidationSchema } from 'auth/auth.validation';
 
@@ -29,13 +28,7 @@ const Register = () => {
           validateOnBlur
           initialValues={initialValues}
           validationSchema={registerValidationSchema}
-          onSubmit={async (values, actions) => {
-            const { data, error } = await registerRestaurant(values);
-            if (error || !data) {
-              actions.setFieldError('confirmPassword', error?.message || at('SOMETHING_WENT_WRONG'));
-            }
-            actions.setSubmitting(false);
-          }}
+          onSubmit={async (values, actions) => {}}
         >
           {(props) => {
             return <RegisterForm props={props} />;
