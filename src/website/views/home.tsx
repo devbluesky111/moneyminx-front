@@ -215,7 +215,7 @@ export const HomeBlogSection = () => {
               </p>
             </div>
             <div className='blog-content-right'>
-              <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Get Started</button>
+              <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Visit Blog</button>
             </div>
           </div>
 
@@ -227,7 +227,7 @@ export const HomeBlogSection = () => {
                     <div className='blog-img'>
                       <img
                         alt={blog?.slug}
-                        src={blog?.featured_image_src_square || blog.featured_image_src || HomeBlogImgOne}
+                        src={blog?.featured_image_src || HomeBlogImgOne}
                       />
                     </div>
                     <h2>

@@ -15,7 +15,7 @@
   position: relative;
   list-style: none;
   padding-left: 58px;
-  color: #534cea;
+  color: $purple;
   font-size: 1.25rem;
   margin-bottom: 32px;
   font-weight: 600;
@@ -29,9 +29,9 @@
   height: 40px;
   width: 40px;
   border-radius: 100%;
-  background: #534cea;
-  box-shadow: 0px 4px 12px rgba(83, 76, 234, 0.3);
-  color: #fff;
+  background: $purple;
+  box-shadow: 0 4px 12px rgba(83, 76, 234, 0.3);
+  color: $white;
   padding: 8px 14px;
   font-size: 1rem;
 }
@@ -85,7 +85,7 @@
 //Credintials Content
 
 .credintials-wrapper {
-  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
   border-radius: 6px;
 }
 
@@ -117,7 +117,7 @@
 }
 span.forgot-pass {
   font-size: 0.875rem;
-  color: #534cea;
+  color: $purple;
   float: right;
   font-weight: bold;
   padding-top: 5px;
@@ -133,7 +133,7 @@ span.forgot-pass {
   margin-bottom: 31px;
 }
 .credintials-content .form-wrap button:hover {
-  color: #ffffff;
+  color: $white;
 }
 .credintials-content h2 {
   font-size: 1.75rem;
@@ -214,14 +214,14 @@ ul.footer-list li {
 //session Expired
 .session-expired {
   font-size: 0.87rem;
-  color: #000000;
+  color: $white;
   background: rgba(83, 76, 234, 0.1);
   border-radius: 4px;
   padding: 25px;
   margin-bottom: 30px;
 }
 .session-expired p {
-  color: #000000;
+  color: $black;
   margin-bottom: 0;
 }
 //Create New password
@@ -234,21 +234,21 @@ ul.footer-list li {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: #10c273;
+  background: $green;
   border: 1px solid #e2e5ea;
-  box-shadow: 0px 2px 8px #e2e8f3;
-  top: 0px;
-  left: 0px;
+  box-shadow: 0 2px 8px #e2e8f3;
+  top: 0;
+  left: 0;
   padding-top: 29px;
   padding-left: 199px;
 }
 .bottom-popup-message p {
-  color: #ffffff;
+  color: $white;
 }
 .bottom-popup-message.failure {
-  background: #ec5555;
+  background: $redAlert;
   border: 1px solid #e2e5ea;
-  box-shadow: 0px 2px 8px #e2e8f3;
+  box-shadow: 0 2px 8px #e2e8f3;
 }
 @media (max-width: $lg+1px) {
   .guide-content {

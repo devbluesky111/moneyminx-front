@@ -59,7 +59,7 @@ ul.account-list li {
 }
 .account-wrap {
   padding: 11px 38px 26px;
-  box-shadow: 0px 2px 30px #c9d5e8, inset 0px -1px 0px #ebecf1;
+  box-shadow: 0 2px 30px #c9d5e8, inset 0px -1px 0px #ebecf1;
   border-radius: 6px;
   margin-bottom: 13px;
 }
@@ -69,11 +69,11 @@ ul.account-list li {
   line-height: 23px;
 }
 .account-wrap.border {
-  border-left: 6px solid #10c273 !important;
+  border-left: 6px solid $green !important;
 }
 .account-wrap.small-box {
   margin-left: 19px;
-  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
 }
 .account-wrap h3 {
   font-size: 1.25rem;
@@ -86,7 +86,7 @@ ul.account-list li {
 }
 .account-wrap.bg-white.top-box {
   padding: 21px 40px 6px;
-  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
   margin-left: 19px;
 }
 .account-list li:nth-child(2n + 1) {
@@ -118,7 +118,7 @@ ul.owner-list li a {
   }
 }
 ul.owner-list li a:hover span svg {
-  fill: #00acee;
+  fill: $twitter;
 }
 .mm-container-right.owner-section {
   overflow: visible !important;
@@ -155,7 +155,7 @@ span.twitter-icon {
   font-size: 0.875rem;
   line-height: 18px;
   letter-spacing: 0.3em;
-  color: #534cea;
+  color: $purple;
   text-transform: uppercase;
   font-weight: normal;
 }

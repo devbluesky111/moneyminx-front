@@ -2,11 +2,11 @@ a {
   cursor: pointer;
 }
 .subs-ended-msg-box {
-  background: #ffffff;
-  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  background: $white;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
   border-radius: 6px;
   padding: 17px 42px 15px;
-  border-left: 4px solid #ec5555;
+  border-left: 4px solid $redAlert;
   width: 797px;
   margin: auto;
   margin-bottom: 65px;
@@ -40,8 +40,8 @@ span.warning-icon {
   font-weight: 600;
   padding: 26px 41px;
   font-size: 1.25rem;
-  background: #ffffff;
-  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  background: $white;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
   border-radius: 6px;
 }
 ul.subscribed-list {
@@ -65,8 +65,8 @@ ul.subscribed-list li .account-wrap p {
   font-weight: 600;
 }
 ul.subscribed-list li .account-wrap {
-  background: #ffffff;
-  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  background: $white;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
 }
 ul.subscribed-list li:last-child {
   margin-bottom: 41px;
@@ -77,7 +77,7 @@ ul.subscribed-list li:last-child {
   font-size: 0.87rem;
   width: 159px;
   height: 49px;
-  border: 1.5px solid #ec5555;
+  border: 1.5px solid $redAlert;
   box-sizing: border-box;
   border-radius: 4px;
   display: inline-block;
@@ -86,13 +86,13 @@ ul.subscribed-list li:last-child {
   text-align: center;
 }
 .delete-btn a {
-  color: #ec5555;
+  color: $redAlert;
   font-size: 0.87rem;
   font-weight: 400;
   text-decoration: none;
 }
 .container-fluid.subscription-ended {
-  background: #fff;
+  background: $white;
 }
 
 // subscription bottom
@@ -100,14 +100,14 @@ ul.subscribed-list li:last-child {
   display: table;
   width: 100%;
   border: 1px solid #e2e5ea;
-  box-shadow: 0px 2px 8px #e2e8f3;
+  box-shadow: 0 2px 8px #e2e8f3;
   padding: 9px 113px;
 }
 
 .subscription-bottom-text p {
   display: inline-block;
   vertical-align: middle;
-  color: #ec5555;
+  color: $redAlert;
   margin-right: 27px;
   margin-bottom: 0px;
 }
@@ -130,7 +130,7 @@ ul.subscribed-list li:last-child {
   padding-right: 0px;
 }
 .finish-btn a {
-  color: #fff;
+  color: $white;
 }
 .subs-content-left {
   font-size: 1.5rem;
@@ -164,13 +164,13 @@ ul.subscribed-list li:last-child {
 
 //Subscription three
 .subs-ended-msg-box.positive {
-  border-color: #10c273;
+  border-color: $green;
 }
 .subscription-bottom-text.positive p {
-  color: #10c273;
+  color: $green;
 }
 .subscription-bottom-text.positive .finish-btn {
-  background: #534cea;
+  background: $purple;
 }
 .subscription-bottom-text.positive .subs-content.three {
   width: 63%;
