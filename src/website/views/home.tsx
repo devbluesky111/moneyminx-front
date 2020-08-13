@@ -1,11 +1,11 @@
 // tslint:disable: react-a11y-accessible-headings
 
-import React from 'react';
-import WebsiteLayout from 'website/website.layout';
+import React, { useEffect, useState } from 'react';
 
+import WebsiteLayout from 'website/website.layout';
+import { fetchBlogs } from 'website/website.service';
 import HomeBlogImgOne from 'assets/images/home/home-blog-img1.png';
-import HomeBlogImgTwo from 'assets/images/home/home-blog-img2.png';
-import HomeBlogImgThree from 'assets/images/home/home-blog-img3.png';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as FeatureIconOne } from 'assets/images/home/feature-icon1.svg';
 import { ReactComponent as FeatureIconTwo } from 'assets/images/home/feature-icon2.svg';
 import { ReactComponent as FeatureIconSix } from 'assets/images/home/feature-icon6.svg';
@@ -36,6 +36,7 @@ const Home = () => {
     </WebsiteLayout>
   );
 };
+
 export default Home;
 export const HomeTopSection = () => {
   return (
@@ -182,6 +183,25 @@ export const HomeFeatureSection = () => {
 };
 
 export const HomeBlogSection = () => {
+  const [blogs, setBlogs] = useState<any[]>();
+  const [loading, setLoading] = useState<boolean>();
+
+  useEffect(() => {
+    setLoading(true);
+    fetchBlogs()
+      .then((res) => {
+        setBlogs(res.data);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading || !blogs?.length) {
+    return <CircularSpinner />;
+  }
+
   return (
     <div className='mm-container-right home-blog-section'>
       <div className='row'>
@@ -198,43 +218,28 @@ export const HomeBlogSection = () => {
               <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Get Started</button>
             </div>
           </div>
+
           <ul>
-            <li>
-              <div className='blog-content'>
-                <div className='blog-img'>
-                  <img alt='Blog_IMG' src={HomeBlogImgOne} />
-                </div>
-                <h2>On Minimalism and Personal Finance</h2>
-                <p>
-                  There is a strong connection between minimalism and personal finance. For popular minimalist advocates
-                  such as...
-                </p>
-              </div>
-            </li>
-            <li>
-              <div className='blog-content'>
-                <div className='blog-img'>
-                  <img alt='Blog_IMG' src={HomeBlogImgTwo} />
-                </div>
-                <h2>The New Rules of Personal Finance</h2>
-                <p>
-                  Some money rules — the most obvious, most important standbys — will never change. Save for retirement.
-                  Stick to a...
-                </p>
-              </div>
-            </li>
-            <li>
-              <div className='blog-content'>
-                <div className='blog-img'>
-                  <img alt='Blog_IMG' src={HomeBlogImgThree} />
-                </div>
-                <h2>Home Budget App. UI for Finance.</h2>
-                <p>
-                  Benjamin Franklin once said: “Beware of little expenses; a small leak will sink a great ship.”
-                  Management of finance and...
-                </p>
-              </div>
-            </li>
+            {blogs.map((blog: any, index: number) => {
+              return (
+                <li key={index}>
+                  <div className='blog-content'>
+                    <div className='blog-img'>
+                      <img
+                        alt={blog?.slug}
+                        src={blog?.featured_image_src_square || blog.featured_image_src || HomeBlogImgOne}
+                      />
+                    </div>
+                    <h2>
+                      <a href={blog?.link || '/'} target='_blank' rel='noopener noreferrer'>
+                        {blog?.title.rendered || ''}
+                      </a>
+                    </h2>
+                    <p dangerouslySetInnerHTML={{ __html: blog?.excerpt.rendered || '' }} />
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

@@ -184,6 +184,12 @@
 
 .home-blog-section .blog-img {
   margin-bottom: 23px;
+  width: 384px;
+  height: 257px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .home-blog-section .blog-content {
