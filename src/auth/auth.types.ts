@@ -7,10 +7,9 @@ export interface LoginPayload {
 }
 
 export interface RegisterPayload {
-  name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  mailChimpSubscription: boolean;
 }
 
 export interface UserType {
@@ -53,6 +52,10 @@ export interface RegisterFormProps {
 export interface LoginServicePayload {
   dispatch: (args: StringKeyObject) => void;
   payload: LoginPayload;
+}
+export interface RegisterServicePayload {
+  dispatch: (args: StringKeyObject) => void;
+  payload: RegisterPayload;
 }
 
 export interface AddressPayload {

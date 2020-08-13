@@ -1,10 +1,10 @@
 export const urls = {
   auth: {
-    PROFILE: '/auth/me',
-    TOKEN: '/auth/token',
+    PROFILE: '/me',
+    TOKEN: '/token',
     LOGIN_IN: '/login',
-    SIGN_OUT: '/auth/signout',
-    REGISTER_RESTAURANT: '/auth/users',
-    COMPLETE_SIGNUP: '/auth/signup/complete',
+    SIGN_OUT: '/signout',
+    REGISTER: '/register',
+    COMPLETE_SIGNUP: '/complete',
   },
 };

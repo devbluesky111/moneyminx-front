@@ -9,10 +9,9 @@ import { useModal, Modal } from 'common/components/modal';
 import { registerValidationSchema } from 'auth/auth.validation';
 
 const initialValues: RegisterPayload = {
-  name: '',
   email: '',
   password: '',
-  confirmPassword: '',
+  mailChimpSubscription: false,
 };
 
 const Register = () => {

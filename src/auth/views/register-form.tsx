@@ -20,16 +20,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ props }) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <Input
-        name='name'
-        type='text'
-        error={!!error('name')}
-        title={at('RESTAURANT_NAME')}
-        helperText={helpText('name')}
-        handleOnBlur={props.handleBlur}
-        handleChange={props.handleChange}
-        placeholder={at('ENTER_RESTAURANT_NAME')}
-      />
-      <Input
         name='email'
         type='email'
         title={at('EMAIL')}
@@ -48,16 +38,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ props }) => {
         helperText={helpText('password')}
         handleChange={props.handleChange}
         placeholder={at('ENTER_PASSWORD')}
-      />
-      <Input
-        type='password'
-        name='confirmPassword'
-        title={at('CONFIRM_PASSWORD')}
-        handleOnBlur={props.handleBlur}
-        handleChange={props.handleChange}
-        error={!!error('confirmPassword')}
-        placeholder={at('CONFIRM_PASSWORD')}
-        helperText={helpText('confirmPassword')}
       />
       <SubmitButton loading={props.isSubmitting} text={at('REGISTER')} disabled={!isValid()} />
     </form>
