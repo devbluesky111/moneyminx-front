@@ -49,7 +49,7 @@
     display: flex;
     padding: 1rem;
     position: absolute;
-    background-color: lighten($color: #000000, $amount: 40);
+    background-color: lighten($color: $black, $amount: 40);
 
     .btn-outline-primary {
       color: $white;
@@ -96,7 +96,7 @@
     display: flex;
     padding: 1rem;
     position: absolute;
-    background-color: lighten($color: #000000, $amount: 40);
+    background-color: lighten($color: $black, $amount: 40);
     .navbar-menu-list {
       display: block;
       .nav-item {
