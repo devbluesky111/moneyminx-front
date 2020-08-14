@@ -66,10 +66,12 @@ export const LoginSessionExpiredMainSection = () => {
                 <form>
                   <input type='text' id='email' name='email' value='' placeholder='Email' />
 
-                  <input type='Password' id='password' name='password' value='' placeholder='Password' />
-                  <span className='visibility-icon'>
-                    <LoginVisibilityIcon />
-                  </span>
+                  <div id='password-wrap'>
+                    <input type='Password' id='password' name='password' value='' placeholder='Password' />
+                    <span className='visibility-icon'>
+                      <LoginVisibilityIcon />
+                    </span>
+                  </div>
                 </form>
                 <p>
                   <span className='forgot-pass'>

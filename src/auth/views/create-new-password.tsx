@@ -57,16 +57,20 @@ export const CreateNewPasswordMainSection = () => {
               <p>One last step. Enter a new password below and you should be good to go.</p>
               <div className='form-wrap'>
                 <form>
-                  <input type='Password' id='password' name='password' value='' placeholder='Set Password' />
+                  <div id='password-wrap'>
+                    <input type='Password' id='password' name='password' value='' placeholder='Set Password' />
 
-                  <span className='visibility-icon'>
-                    <LoginVisibilityIcon />
-                  </span>
-                  <input type='Password' id='password' name='password' value='' placeholder='Confirm Password' />
+                    <span className='visibility-icon'>
+                      <LoginVisibilityIcon />
+                    </span>
+                  </div>
+                  <div id='password-wrap'>
+                    <input type='Password' id='password' name='password' value='' placeholder='Confirm Password' />
 
-                  <span className='visibility-icon'>
-                    <LoginVisibilityIcon />
-                  </span>
+                    <span className='visibility-icon'>
+                      <LoginVisibilityIcon />
+                    </span>
+                  </div>
                 </form>
 
                 <button className='bg-primary mm-btn-primary-outline'>Save Password</button>

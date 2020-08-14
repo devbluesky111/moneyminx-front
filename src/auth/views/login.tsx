@@ -79,27 +79,33 @@ export const LoginMainSection = () => {
                 >
                   {(props) => (
                     <form onSubmit={props.handleSubmit}>
-                      <input
-                        type='email'
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
-                        value={props.values.email}
-                        name='email'
-                        placeholder='Email'
-                      />
-                      {props.errors.email && <div id='feedback'>{props.errors.email}</div>}
-                      <input
-                        type='password'
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
-                        value={props.values.password}
-                        name='password'
-                        placeholder='Password'
-                      />
-                      {props.errors.password && <div id='feedback'>{props.errors.password}</div>}
-                      <span className='visibility-icon'>
-                        <LoginVisibilityIcon />
-                      </span>
+                      <div id='email-wrap'>
+                        <input
+                          type='email'
+                          id='email'
+                          onChange={props.handleChange}
+                          onBlur={props.handleBlur}
+                          value={props.values.email}
+                          name='email'
+                          placeholder='Email'
+                        />
+                        {props.errors.email && <div id='feedback'>{props.errors.email}</div>}
+                      </div>
+                      <div id='password-wrap'>
+                        <input
+                          type='password'
+                          id='password'
+                          onChange={props.handleChange}
+                          onBlur={props.handleBlur}
+                          value={props.values.password}
+                          name='password'
+                          placeholder='Password'
+                        />
+                        {props.errors.password && <div id='feedback'>{props.errors.password}</div>}
+                        <span className='visibility-icon'>
+                          <LoginVisibilityIcon />
+                        </span>
+                      </div>
                       <p>
                         <span className='forgot-pass'>
                           <a href='link7'>Forgot Password?</a>
