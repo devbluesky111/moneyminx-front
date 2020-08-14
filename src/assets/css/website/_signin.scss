@@ -151,11 +151,6 @@ span.forgot-pass {
   display: inline-block;
   padding-left: 80px;
 }
-.visibility-icon {
-  margin-left: -37px;
-  display: inline-block;
-  cursor: pointer;
-}
 
 //Footer Second
 .footer-second {
@@ -312,4 +307,27 @@ ul.footer-list li {
   .bottom-popup-message {
     height: 69%;
   }
+}
+
+//Recently Added
+#password-wrap {
+  position: relative;
+}
+
+span.visibility-icon {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+}
+#email-wrap #feedback {
+  margin-top: -17px;
+  margin-bottom: 15px;
+}
+#feedback {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+#password-wrap #feedback {
+  margin-top: 11px;
 }
