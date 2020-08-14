@@ -75,13 +75,13 @@ export const PricingTable = () => {
                   {type === 'yearly' ? <span className='save-percentage'>{pt.pricing.yearlySave}</span> : null}
                 </div>
                 <ul className='features-list'>
-                  {pt.features.map((f, i) => {
+                  {pt.features.map((feature, i) => {
                     return (
                       <li key={i}>
                         <div className='tick-icon'>
                           <PricingTickIcon />
                         </div>
-                        {f}
+                        {feature}
                       </li>
                     );
                   })}
