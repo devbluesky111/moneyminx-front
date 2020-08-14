@@ -225,10 +225,7 @@ export const HomeBlogSection = () => {
                 <li key={index}>
                   <div className='blog-content'>
                     <div className='blog-img'>
-                      <img
-                        alt={blog?.slug}
-                        src={blog?.featured_image_src || HomeBlogImgOne}
-                      />
+                      <img alt={blog?.slug} src={blog?.featured_image_src || HomeBlogImgOne} />
                     </div>
                     <h2>
                       <a href={blog?.link || '/'} target='_blank' rel='noopener noreferrer'>
