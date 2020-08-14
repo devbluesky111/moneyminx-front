@@ -1,13 +1,18 @@
 import React from 'react';
 import { ReactComponent as AppStoreLogo } from 'assets/icons/app-store-black.svg';
 import { ReactComponent as GooglePlayLogo } from 'assets/icons/google-play-black.svg';
+import { ReactComponent as FaFacebook } from 'assets/icons/facebook.svg';
+import { ReactComponent as FaTwitter } from 'assets/icons/twitter.svg';
+import { ReactComponent as FaInstagram } from 'assets/icons/instagram.svg';
+import { ReactComponent as FaLinkedin } from 'assets/icons/linkedin.svg';
+import { ReactComponent as FaYoutube } from 'assets/icons/youtube.svg';
+import { ReactComponent as FaPinterest } from 'assets/icons/pinterest.svg';
 
 import footerData from '@mm/data/footer.data.json';
 import resourceList from '@mm/data/resource.list.json';
 import featureList from '@mm/data/feature.list.json';
 import companyInfoList from '@mm/data/company-info.list.json';
 import SignupToday from 'website/partials/signup-today.footer';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaPinterest } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 interface ListType {
