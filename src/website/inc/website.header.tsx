@@ -39,9 +39,9 @@ const WebsiteHeader = () => {
             <div className={`menu-list-wrapper ${expand === 'menus' ? 'expand-menu' : ''}`}>
               <ul className='navbar-nav mr-auto navbar-menu-list'>
                 <li className='mm-nav-item active'>
-                  <a className='mm-nav-link' href='/pricing'>
+                  <Link className='mm-nav-link' to='/pricing'>
                     Pricing
-                  </a>
+                  </Link>
                 </li>
 
                 <li className='mm-nav-item'>
@@ -55,7 +55,7 @@ const WebsiteHeader = () => {
                   </a>
                 </li>
                 <li className='mm-nav-item'>
-                  <Link className='mm-nav-link' to='/w/about'>
+                  <Link className='mm-nav-link' to='/about'>
                     About
                   </Link>
                 </li>
@@ -64,7 +64,7 @@ const WebsiteHeader = () => {
             <div className='auth-btn-wrapper mr-1'>
               <ul className='navbar-nav'>
                 <li className='mm-nav-item'>
-                  <Link className='mm-nav-link' to='/auth/login'>
+                  <Link className='mm-nav-link' to='login'>
                     Login
                   </Link>
                 </li>
