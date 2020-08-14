@@ -6,12 +6,12 @@ import featureList from '@mm/data/feature.list.json';
 import resourceList from '@mm/data/resource.list.json';
 import companyInfoList from '@mm/data/company-info.list.json';
 import SignupToday from 'website/partials/signup-today.footer';
-import { ReactComponent as FaTwitter } from 'assets/icons/twitter.svg';
-import { ReactComponent as FaYoutube } from 'assets/icons/youtube.svg';
-import { ReactComponent as FaFacebook } from 'assets/icons/facebook.svg';
-import { ReactComponent as FaLinkedin } from 'assets/icons/linkedin.svg';
-import { ReactComponent as FaInstagram } from 'assets/icons/instagram.svg';
-import { ReactComponent as FaPinterest } from 'assets/icons/pinterest.svg';
+import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg';
+import { ReactComponent as YoutubeIcon } from 'assets/icons/youtube.svg';
+import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg';
+import { ReactComponent as LinkedinIcon } from 'assets/icons/linkedin.svg';
+import { ReactComponent as InstagramIcon } from 'assets/icons/instagram.svg';
+import { ReactComponent as PinterestIcon } from 'assets/icons/pinterest.svg';
 import { ReactComponent as AppStoreLogo } from 'assets/icons/app-store-black.svg';
 import { ReactComponent as GooglePlayLogo } from 'assets/icons/google-play-black.svg';
 
@@ -61,28 +61,28 @@ const FooterList = () => {
 
 const social = [
   {
-    icon: <FaFacebook />,
-    link: 'https://fb.com',
+    icon: <FacebookIcon />,
+    link: 'https://www.facebook.com/moneyminx',
   },
   {
-    icon: <FaTwitter />,
-    link: 'https://twitter.com',
+    icon: <TwitterIcon />,
+    link: 'https://twitter.com/getmoneyminx',
   },
   {
-    icon: <FaInstagram />,
-    link: 'https://instagram.com',
+    icon: <InstagramIcon />,
+    link: 'https://instagram.com/moneyminxapp',
   },
   {
-    icon: <FaLinkedin />,
-    link: 'https://instagram.com',
+    icon: <LinkedinIcon />,
+    link: 'https://linkedin.com/company/moneyminx',
   },
   {
-    icon: <FaYoutube />,
-    link: 'https://instagram.com',
+    icon: <YoutubeIcon />,
+    link: 'https://www.youtube.com/channel/UCmWuUaetlK3fABjglo9cEaQ',
   },
   {
-    icon: <FaPinterest />,
-    link: 'https://instagram.com',
+    icon: <PinterestIcon />,
+    link: 'https://www.pinterest.com/moneyminx/',
   },
 ];
 
