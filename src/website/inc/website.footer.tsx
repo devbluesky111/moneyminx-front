@@ -88,10 +88,12 @@ const social = [
 
 const SocialList: React.FC = () => (
   <ul className='navbar-nav'>
-    {social.map(({ icon }, idx) => {
+    {social.map(({ icon, link }, idx) => {
       return (
         <li key={idx} className='px-2'>
-          {icon}
+          <a href={link} target='_blank' rel='noopener noreferrer'>
+            {icon}
+          </a>
         </li>
       );
     })}
