@@ -97,15 +97,16 @@ ul.features-list {
 .second-table {
   position: relative;
 }
-.second-table::before {
+.price-table:nth-child(2)::after {
   content: 'RECOMMENDED';
   position: absolute;
   font-size: 0.6875rem;
-  top: -20px;
-  left: 0;
+  top: 8px;
+  left: 29px;
   color: $purple;
   opacity: 0.4;
   letter-spacing: 0.2em;
+  font-weight: 600;
 }
 .save-text {
   position: relative;
@@ -137,7 +138,13 @@ ul.features-list {
   padding-right: 15px;
   margin-bottom: 40px;
 }
-
+.save-percentage {
+  font-size: 0.87rem;
+  color: $primary;
+  font-weight: 600;
+  float: right;
+  margin-top: -42px;
+}
 @media (max-width: $lg+1) {
   .banner-piechart {
     max-width: 87%;
