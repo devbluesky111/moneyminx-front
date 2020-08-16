@@ -15,7 +15,8 @@
   .nf-text-btn-wrapper {
     position: absolute;
     bottom: 30%;
-    left: 45%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
@@ -37,7 +38,15 @@
     .nf-text-btn-wrapper {
       position: absolute;
       bottom: 30%;
-      left: 35%;
     }
+  }
+}
+
+//Recently added
+@media (max-width: $lg+1) and (min-width: $md+1) {
+  .not-found-content-wrapper .nf-text-btn-wrapper {
+    position: absolute;
+    bottom: 16%;
+    left: 50%;
   }
 }
