@@ -6,5 +6,9 @@ export const urls = {
     SIGN_OUT: '/signout',
     REGISTER: '/register',
     COMPLETE_SIGNUP: '/complete',
+    FACEBOOK_LOGIN: '/facebook/login',
+  },
+  subscription: {
+    SUB: '/subscription/stripe/subscriptions',
   },
 };
