@@ -7,6 +7,10 @@
     color: $gray;
   }
 }
+.fb-login-icon {
+  cursor: pointer;
+}
+
 .guide-content ul {
   counter-reset: section;
   padding-left: 0;
