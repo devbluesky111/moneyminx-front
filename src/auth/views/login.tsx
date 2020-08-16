@@ -1,10 +1,13 @@
-import React from 'react';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 import { login } from 'auth/auth.service';
 import { AuthLayout } from 'layouts/auth.layout';
+import FacebookLogin from 'react-facebook-login';
 import { useAuthDispatch } from 'auth/auth.context';
+import { postFacebookLogin } from 'api/request.api';
 import { loginValidationSchema } from 'auth/auth.validation';
+import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
@@ -21,6 +24,23 @@ const Login = () => {
 export default Login;
 export const LoginMainSection = () => {
   const dispatch = useAuthDispatch();
+  const [fbLoggingIn, setFBLoggingIn] = useState<boolean>(false);
+
+  useGetSubscription();
+
+  const responseFacebook = async (response: any) => {
+    if (response.accessToken) {
+      const { error } = await postFacebookLogin({
+        accessToken: response.accessToken,
+        mailChimpSubscription: true,
+        subscriptionPriceId: 'price_1H9iXSAjc68kwXCHsFEhWShL',
+      });
+      if (!error) {
+        toast('Successfully logged in', { type: 'success' });
+      }
+    }
+  };
+
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -122,9 +142,16 @@ export const LoginMainSection = () => {
                   <p>
                     Or, log in with:
                     <div className='fb-icon-wrap'>
-                      <a href='link6'>
-                        <LoginFacebookIcon />
-                      </a>
+                      {fbLoggingIn ? (
+                        <FacebookLogin
+                          autoLoad={true}
+                          appId='332341647785015'
+                          callback={responseFacebook}
+                          buttonStyle={{ display: 'none' }}
+                        />
+                      ) : null}
+
+                      <LoginFacebookIcon onClick={() => setFBLoggingIn(true)} className='fb-login-icon' />
                     </div>
                   </p>
                 </div>
