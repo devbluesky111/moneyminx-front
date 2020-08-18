@@ -127,6 +127,10 @@
   .navbar-menu-list {
     display: none;
   }
+  .right-menu-wrapper .nav-item,
+  .right-menu-wrapper .mm-nav-item {
+    padding: 0 0.3rem;
+  }
 }
 
 @media (min-width: 769px) {
