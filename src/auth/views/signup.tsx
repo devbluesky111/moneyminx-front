@@ -1,10 +1,14 @@
-import React from 'react';
+import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { login } from 'auth/auth.service';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { signup } from 'auth/auth.service';
 import { AuthLayout } from 'layouts/auth.layout';
+import FacebookLogin from 'react-facebook-login';
 import { useAuthDispatch } from 'auth/auth.context';
-import { loginValidationSchema } from 'auth/auth.validation';
+import { postFacebookLogin } from 'api/request.api';
+import { registerValidationSchema } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
@@ -21,6 +25,22 @@ const Signup = () => {
 export default Signup;
 export const SignupMainSection = () => {
   const dispatch = useAuthDispatch();
+  const [fbLoggingIn, setFBLoggingIn] = useState();
+  const [visible, setVisible] = useState<boolean>(false);
+
+  const responseFacebook = async (response: any) => {
+    if (response.accessToken) {
+      const { error } = await postFacebookLogin({
+        accessToken: response.accessToken,
+        mailChimpSubscription: true,
+        subscriptionPriceId: 'price_1H9iXSAjc68kwXCHsFEhWShL',
+      });
+      if (!error) {
+        toast('Successfully logged in', { type: 'success' });
+      }
+    }
+  };
+
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -67,88 +87,120 @@ export const SignupMainSection = () => {
               </p>
               <div className='form-wrap'>
                 <Formik
-                  initialValues={{ email: '', password: '' }}
-                  validationSchema={loginValidationSchema}
+                  initialValues={{
+                    email: '',
+                    password: '',
+                    termsAccepted: false,
+                    mailChimpSubscription: false,
+                    subscriptionPriceId: 'price_1H9iXSAjc68kwXCHsFEhWShL',
+                  }}
+                  validationSchema={registerValidationSchema}
                   onSubmit={async (values, actions) => {
-                    const { error } = await login({ dispatch, payload: values });
+                    const { error } = await signup({ dispatch, payload: values });
                     actions.setSubmitting(false);
 
                     if (!error) {
-                      toast('Sign up Success', { type: 'success' });
+                      toast('Signup Success', { type: 'success' });
                     } else {
-                      toast('Sign up Failed', { type: 'error' });
+                      toast('Sign up failed', { type: 'error' });
                     }
                   }}
                 >
-                  {(props) => (
-                    <form onSubmit={props.handleSubmit}>
-                      <div id='email-wrap'>
-                        <input
-                          type='email'
-                          id='email'
-                          onChange={props.handleChange}
-                          onBlur={props.handleBlur}
-                          value={props.values.email}
-                          name='email'
-                          placeholder='Email'
-                        />
-                        {props.errors.email && (
-                          <div id='feedback' className='signup'>
-                            {props.errors.email}
-                          </div>
-                        )}
-                      </div>
-                      <div id='password-wrap'>
-                        <input
-                          type='password'
-                          id='password'
-                          onChange={props.handleChange}
-                          onBlur={props.handleBlur}
-                          value={props.values.password}
-                          name='password'
-                          placeholder='Password'
-                        />
-                        {props.errors.password && (
-                          <div id='feedback' className='signup'>
-                            {props.errors.password}
-                          </div>
-                        )}
-                        <span className='visibility-icon'>
-                          <LoginVisibilityIcon />
-                        </span>
-                      </div>
-                      <div className='credintials-checkbox'>
-                        <span className='checkbox-item'>
-                          <label className='check-box'>
-                            I accept the <a href='/terms'>Terms of Service</a>
-                            <input type='checkbox' id='termsandservices' name='termsandservices' value='' />
-                            <span className='geekmark'></span>
-                          </label>
-                        </span>
+                  {(props) => {
+                    return (
+                      <form onSubmit={props.handleSubmit}>
+                        <div id='email-wrap'>
+                          <input
+                            type='email'
+                            id='email'
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                            value={props.values.email}
+                            name='email'
+                            placeholder='Email'
+                          />
+                          {props.errors.email && (
+                            <div id='feedback' className='signup'>
+                              {props.errors.email}
+                            </div>
+                          )}
+                        </div>
+                        <div id='password-wrap'>
+                          <input
+                            type={visible ? 'text' : 'password'}
+                            id='password'
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                            value={props.values.password}
+                            name='password'
+                            placeholder='Password'
+                          />
+                          {props.errors.password && (
+                            <div id='feedback' className='signup'>
+                              {props.errors.password}
+                            </div>
+                          )}
+                          <span className='visibility-icon'>
+                            <LoginVisibilityIcon onClick={() => setVisible(!visible)} />
+                          </span>
+                        </div>
+                        <div className='credintials-checkbox'>
+                          <span className='checkbox-item'>
+                            <label className='check-box'>
+                              I accept the <Link to='/terms'>Terms of Service</Link>
+                              <input
+                                type='checkbox'
+                                id='terms'
+                                name='termsAccepted'
+                                aria-checked={props.values.termsAccepted}
+                                checked={props.values.termsAccepted}
+                                value={`${props.values.termsAccepted}`}
+                                onChange={props.handleChange}
+                              />
+                              <span className='geekmark' />
+                            </label>
+                          </span>
 
-                        <span className='checkbox-item'>
-                          <label className='check-box'>
-                            Sign up for the newsletter
-                            <input type='checkbox' id='newsletter-checkbox' name='newsletter-checkbox' value='' />
-                            <span className='geekmark'></span>
-                          </label>
-                        </span>
-                      </div>
+                          <span className='checkbox-item'>
+                            <label className='check-box'>
+                              Sign up for the newsletter
+                              <input
+                                type='checkbox'
+                                id='newsletter-checkbox'
+                                name='mailChimpSubscription'
+                                placeholder=''
+                                aria-checked={props.values.mailChimpSubscription}
+                                checked={props.values.mailChimpSubscription}
+                                value={`${props.values.mailChimpSubscription}`}
+                                onChange={props.handleChange}
+                              />
+                              <span className='geekmark' />
+                            </label>
+                          </span>
+                        </div>
 
-                      <button className='bg-primary mm-btn-primary-outline' type='submit'>
-                        Sign Up
-                      </button>
-                    </form>
-                  )}
+                        <button className='bg-primary mm-btn-primary-outline' type='submit' disabled={!props.isValid}>
+                          Sign Up
+                        </button>
+                      </form>
+                    );
+                  }}
                 </Formik>
 
                 <div className='facebook-login'>
                   <p>
                     Or, sign up with:
                     <div className='fb-icon-wrap'>
-                      <a href='link6'>
-                        <LoginFacebookIcon />
-                      </a>
+                      {fbLoggingIn ? (
+                        <FacebookLogin
+                          autoLoad={true}
+                          appId={env.FACEBOOK_APP_ID || ''}
+                          callback={responseFacebook}
+                          buttonStyle={{ display: 'none' }}
+                        />
+                      ) : null}
+
+                      <LoginFacebookIcon onClick={() => setFBLoggingIn(true)} className='fb-login-icon' />
                     </div>
                   </p>
                 </div>

@@ -1,6 +1,6 @@
 import { storage } from 'app/app.storage';
 import { ApiResponse } from 'api/api.types';
-import { postLogin } from 'api/request.api';
+import { postLogin, postRegister } from 'api/request.api';
 
 import { auth } from './auth-context.types';
 import { LoginServicePayload, RegisterServicePayload } from './auth.types';
@@ -24,10 +24,8 @@ export const login = async ({ dispatch, payload }: LoginServicePayload): Promise
 
 export const signup = async ({ dispatch, payload }: RegisterServicePayload): Promise<ApiResponse> => {
   dispatch({ type: auth.REGISTER });
-
-  const { data, error } = await postLogin(payload);
+  const { data, error } = await postRegister(payload);
   if (error) {
-    storage.clear();
     dispatch({ type: auth.REGISTER_FAILURE });
   } else {
     dispatch({

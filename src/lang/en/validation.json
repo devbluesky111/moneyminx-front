@@ -5,5 +5,6 @@
   "INVALID_PASSWORD_LENGTH": "Invalid password length",
   "PASSWORD_ERROR": "Password must be at least 8 characters long and include at least 1 special character and at least 2 numbers.",
   "EMAIL_IS_EMPTY": "You forgot to share your email",
-  "PWD_IS_EMPTY": "You forgot to include a password"
+  "PWD_IS_EMPTY": "You forgot to include a password",
+  "FORGOT_TERMS": "You forgot to accept our terms of service"
 }

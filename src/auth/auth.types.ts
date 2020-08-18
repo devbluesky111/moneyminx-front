@@ -9,6 +9,7 @@ export interface LoginPayload {
 export interface RegisterPayload {
   email: string;
   password: string;
+  subscriptionPriceId: string;
   mailChimpSubscription: boolean;
 }
 

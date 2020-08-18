@@ -20,7 +20,7 @@ export const postFacebookLogin = (payload: {
 };
 
 export const postRegister = (payload: RegisterPayload) => {
-  return http.post(urls.auth.LOGIN_IN, payload);
+  return http.post(urls.auth.REGISTER, payload);
 };
 
 export const getSubscription = () => {
