@@ -7,6 +7,7 @@ export const urls = {
     REGISTER: '/register',
     COMPLETE_SIGNUP: '/complete',
     FACEBOOK_LOGIN: '/facebook/login',
+    ASSOCIATE_LOGIN: '/facebook/associate',
   },
   subscription: {
     SUB: '/subscription/stripe/subscriptions',

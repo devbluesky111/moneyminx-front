@@ -54,6 +54,11 @@ export interface LoginServicePayload {
   dispatch: (args: StringKeyObject) => void;
   payload: LoginPayload;
 }
+
+export interface FBAssociationPayload {
+  dispatch: (args: StringKeyObject) => void;
+  token: string;
+}
 export interface RegisterServicePayload {
   dispatch: (args: StringKeyObject) => void;
   payload: RegisterPayload;

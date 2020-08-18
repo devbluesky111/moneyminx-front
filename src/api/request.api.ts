@@ -23,6 +23,10 @@ export const postRegister = (payload: RegisterPayload) => {
   return http.post(urls.auth.REGISTER, payload);
 };
 
+export const postFacebookAssociation = (token: string) => {
+  return http.post(urls.auth.ASSOCIATE_LOGIN, {}, false, { access_token: token });
+};
+
 export const getSubscription = () => {
   return http.get(urls.subscription.SUB);
 };

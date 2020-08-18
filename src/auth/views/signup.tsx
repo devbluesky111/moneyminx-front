@@ -3,17 +3,20 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { signup } from 'auth/auth.service';
 import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
+import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
 import { registerValidationSchema } from 'auth/auth.validation';
+import { signup, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
+
+import AssociateEmailModal from './associate-email';
 
 const Signup = () => {
   return (
@@ -24,21 +27,40 @@ const Signup = () => {
 };
 export default Signup;
 export const SignupMainSection = () => {
+  const associateModal = useModal();
   const dispatch = useAuthDispatch();
-  const [fbLoggingIn, setFBLoggingIn] = useState();
   const [visible, setVisible] = useState<boolean>(false);
+  const [fbLoggingIn, setFBLoggingIn] = useState<boolean>(false);
+  const [associateMessage, setAssociateMessage] = useState<string>('');
+  const [fbToken, setFBToken] = useState<string>('');
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
+      setFBToken(response.accessToken);
       const { error } = await postFacebookLogin({
         accessToken: response.accessToken,
         mailChimpSubscription: true,
         subscriptionPriceId: 'price_1H9iXSAjc68kwXCHsFEhWShL',
       });
+
       if (!error) {
         toast('Successfully logged in', { type: 'success' });
       }
+      if (error.statusCode === 409 && error.message) {
+        setAssociateMessage(error.message);
+        associateModal.open();
+      }
     }
+  };
+
+  const handleFacebookAssociation = async () => {
+    const { error } = await associateFacebookUser({ dispatch, token: fbToken });
+    if (error) {
+      toast('Association Failed', { type: 'error' });
+    } else {
+      toast('Association Success', { type: 'success' });
+    }
+    associateModal.close();
   };
 
   return (
@@ -213,6 +235,11 @@ export const SignupMainSection = () => {
           </div>
         </div>
       </div>
+      <AssociateEmailModal
+        message={associateMessage}
+        associateModal={associateModal.props}
+        handleSuccess={handleFacebookAssociation}
+      />
     </div>
   );
 };

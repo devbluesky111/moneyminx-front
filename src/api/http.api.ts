@@ -107,11 +107,12 @@ export function get(url: string, params: object = {}): any {
   });
 }
 
-export function post(url: string, data: any, auth: boolean = true): any {
+export function post(url: string, data: any, auth: boolean = true, params?: any): any {
   return axiosInstance({
     method: 'post',
     url,
     data,
+    params,
     headers: auth
       ? {
           authorization: `Bearer ${storage.accessToken()}`,
