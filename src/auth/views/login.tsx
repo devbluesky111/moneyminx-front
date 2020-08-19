@@ -14,6 +14,8 @@ import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-ic
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 
+import env from 'app/app.env';
+
 const Login = () => {
   return (
     <AuthLayout>
@@ -145,7 +147,7 @@ export const LoginMainSection = () => {
                       {fbLoggingIn ? (
                         <FacebookLogin
                           autoLoad={true}
-                          appId='332341647785015'
+                          appId={env.FACEBOOK_APP_ID || ''}
                           callback={responseFacebook}
                           buttonStyle={{ display: 'none' }}
                         />

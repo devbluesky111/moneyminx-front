@@ -9,6 +9,7 @@ export interface LoginPayload {
 export interface RegisterPayload {
   email: string;
   password: string;
+  subscriptionPriceId: string;
   mailChimpSubscription: boolean;
 }
 
@@ -52,6 +53,11 @@ export interface RegisterFormProps {
 export interface LoginServicePayload {
   dispatch: (args: StringKeyObject) => void;
   payload: LoginPayload;
+}
+
+export interface FBAssociationPayload {
+  dispatch: (args: StringKeyObject) => void;
+  token: string;
 }
 export interface RegisterServicePayload {
   dispatch: (args: StringKeyObject) => void;
