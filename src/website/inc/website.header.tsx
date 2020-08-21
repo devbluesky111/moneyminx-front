@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useSize from 'common/hooks/useSize';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 
@@ -9,6 +9,7 @@ interface LeftMenuType {
 }
 const WebsiteHeader = () => {
   const { width } = useSize();
+  const { pathname } = useLocation();
   const [expand, setExpand] = useState<keyof LeftMenuType>();
 
   const handleToggleMenu = () => {
@@ -24,6 +25,8 @@ const WebsiteHeader = () => {
     }
   };
 
+  const navClass = (label: string) => (pathname.includes(label) ? 'mm-nav-item active' : 'mm-nav-item');
+
   return (
     <nav className='mm-navbar navbar-expand-lg navbar-light bg-light'>
       <div className='logo-btn-wrapper'>
@@ -38,13 +41,13 @@ const WebsiteHeader = () => {
           <div className={`menu-btn-wrapper`}>
             <div className={`menu-list-wrapper ${expand === 'menus' ? 'expand-menu' : ''}`}>
               <ul className='navbar-nav mr-auto navbar-menu-list'>
-                <li className='mm-nav-item active'>
+                <li className={navClass('pricing')}>
                   <Link className='mm-nav-link' to='/pricing'>
                     Pricing
                   </Link>
                 </li>
 
-                <li className='mm-nav-item'>
+                <li className={navClass('velocity')}>
                   <a
                     className='mm-nav-link'
                     target='_blank'
@@ -54,7 +57,7 @@ const WebsiteHeader = () => {
                     Velocity
                   </a>
                 </li>
-                <li className='mm-nav-item'>
+                <li className={navClass('about')}>
                   <Link className='mm-nav-link' to='/about'>
                     About
                   </Link>
@@ -63,7 +66,7 @@ const WebsiteHeader = () => {
             </div>
             <div className='auth-btn-wrapper mr-1'>
               <ul className='navbar-nav'>
-                <li className='mm-nav-item'>
+                <li className={navClass('login')}>
                   <Link className='mm-nav-link' to='login'>
                     Login
                   </Link>
