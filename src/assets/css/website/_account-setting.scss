@@ -1,0 +1,567 @@
+.bg-white.credintials-wrapper.account-setting .credintials-content {
+  max-width: 665px;
+}
+
+.credintials-wrapper li {
+  list-style: none;
+}
+
+ul.bank-list {
+  padding-left: 0;
+  margin-bottom: 38px;
+}
+
+ul.bank-list li {
+  list-style: none;
+  border: 1px solid rgba(150, 158, 172, 0.4);
+  box-sizing: border-box;
+  border-radius: 4px;
+  display: inline-block;
+  margin-right: 22px;
+  height: 80px;
+  width: 125px;
+  padding: 26px 15px;
+}
+
+ul.bank-list li a {
+  outline: none;
+}
+
+.flex-box {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.form-heading button {
+  margin-right: 59px;
+  font-size: 1.25rem;
+  padding-bottom: 10px;
+  display: inline-block;
+  color: $gray;
+  position: relative;
+}
+
+.form-heading button:hover {
+  text-decoration: none;
+  color: initial;
+}
+.form-heading button:hover {
+  color: $gray !important;
+}
+
+.form-heading button:active {
+  color: $darkGray;
+}
+
+.form-heading button:active::before {
+  border-bottom: 2.5px solid $primary;
+  position: absolute;
+  height: 100%;
+  width: 93%;
+  content: '';
+  bottom: 0px;
+}
+
+.form-heading {
+  border-bottom: 1px solid rgba(150, 158, 172, 0.24);
+}
+
+.credintials-wrapper.account-setting .form-wrap input {
+  color: $darkGray;
+}
+
+.form-heading {
+  margin-bottom: 40px;
+}
+
+.account-setting .credintials-content .form-wrap .setting-button-wrap button {
+  width: auto;
+  display: inline-block;
+  width: 142px;
+  margin-right: 22px;
+}
+
+span.form-subheading {
+  font-size: 0.87rem;
+  color: black;
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: inline-block;
+  margin-right: 20px;
+}
+.credintials-content .form-wrap .form-heading button {
+  width: auto;
+  display: inline;
+  margin-bottom: 0;
+  background: none;
+}
+.form-subheading svg {
+  margin-left: 20px;
+}
+
+.category-list {
+}
+
+.category-list li {
+  float: left;
+  width: 33%;
+  text-align: center;
+}
+
+.account-category .category-list {
+  display: table;
+  border: 1.5px solid rgba(150, 158, 172, 0.24);
+  width: 100%;
+  border-radius: 6px;
+
+  padding-left: 0;
+}
+
+.account-category .category-list a {
+  color: #969eac;
+  height: 48px;
+  display: inline-block;
+  padding-top: 12px;
+  width: 100%;
+  position: relative;
+}
+
+.account-category .category-list a:active {
+  color: $primary;
+}
+
+.account-category .category-list a:active::before {
+  position: absolute;
+  border: 1.9px solid $primary;
+  height: 100%;
+  width: 100%;
+  content: '';
+  border-radius: 6px;
+  left: -1px;
+  top: 0;
+  z-index: 999;
+}
+
+.account-category .category-list a:hover {
+  text-decoration: none;
+}
+
+.account-type-list li {
+  width: 50%;
+  float: left;
+  margin-bottom: 33px;
+}
+
+.account-type-list {
+  margin-bottom: 0px;
+}
+
+.account-type select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Some browsers will not display the caret when using calc, so we put the fallback first */
+  background: url('../../images/signup/arrow.svg') white no-repeat 98.5% !important; /* !important used for overriding all other customisations */
+  background: url('../../images/signup/arrow.svg') white no-repeat calc(100% - 10px) !important; /* Better placement regardless of input width */
+  display: table;
+  width: 93%;
+  height: 48px;
+  padding: 1px 16px;
+  border: 1px solid rgba(150, 158, 172, 0.24);
+  border-radius: 4px;
+  font-size: 0.87rem;
+  color: gray;
+}
+
+.account-type-list {
+  display: table;
+  width: 100%;
+  padding-left: 0;
+}
+
+.form-wrap .estimated-annual-return input {
+  width: 20px;
+  height: 20px;
+  margin-right: 23px;
+}
+
+.form-wrap .right-input input {
+  width: 20px;
+  height: 20px;
+}
+
+.middle-input-wrap {
+  position: relative;
+}
+
+.middle-input-wrap .input-wrap {
+  position: relative;
+  margin-bottom: 38px;
+}
+
+.right-input {
+  position: absolute;
+  right: 0;
+  top: -2%;
+}
+
+.right-input.radio {
+  top: 16%;
+}
+
+.account-setting #feedback {
+  display: block;
+  margin-bottom: 10px;
+  margin-top: -15px;
+}
+
+.input-wrap .left-input input {
+  height: auto;
+  width: auto;
+  display: inline-block;
+  margin-left: 32px;
+}
+
+.credintials-wrapper.account-setting .form-wrap input[type='radio'] {
+  margin-right: 8px;
+  margin-left: 29px;
+  height: 20px;
+  width: 20px;
+}
+
+.estimated-annual-return input[type='text'] {
+  float: right;
+  width: 100%;
+  height: 48px;
+}
+
+.form-wrap .right-input input[type='text'] {
+  height: 48px;
+  width: 263px;
+}
+
+.estimated-annual-return .estimate-right {
+  width: 48%;
+  float: right;
+}
+
+.estimated-annual-return .estimate-left {
+  width: 52%;
+}
+
+.account-setting .top-content-wrap {
+  max-width: 372px;
+}
+
+.credintials-wrapper.account-setting .form-wrap .estimated-annual-return input[type='radio'] {
+  margin-left: 0;
+}
+
+.left-input span.form-subheading {
+  margin-top: 14px;
+}
+
+.account-type-list li .account-list-content {
+  float: right;
+  width: 93%;
+}
+
+.account-type-list li .account-list-content select {
+  width: 100%;
+}
+
+.left-input.employer-match input {
+  margin-left: 9px !important;
+}
+
+.left-input.employer-match p {
+  color: $darkGray;
+}
+
+.estimated-annual-return {
+  border-top: 1px solid rgba(150, 158, 172, 0.24);
+  padding-top: 41px;
+}
+
+.estimated-top-content .form-subheading-right {
+  width: 67%;
+  font-size: 0.87rem;
+  text-align: right;
+  color: $gray;
+}
+
+.estimated-top-content.flex-box {
+  align-items: baseline;
+}
+
+.estimated-annual-return span.form-subheading {
+  margin-bottom: 32px;
+}
+
+.right-input.symbol input {
+  position: relative;
+}
+
+.symbol-icon {
+  position: absolute;
+  right: 7%;
+  top: 20%;
+  color: $gray;
+  background: $white;
+}
+
+.middle-input-wrap p {
+  margin-bottom: 0;
+}
+
+.cancel-btn.mm-btn-primary-outline {
+  color: $primary;
+  border: 1.5px solid $primary !important;
+}
+
+.cancel-btn.mm-btn-primary-outline:hover {
+  color: $white;
+  border: 1.5px solid $primary !important;
+  background: $primary !important;
+}
+
+.submit.mm-btn-primary-outline:hover {
+  background: $white;
+  color: $primary;
+}
+
+.submit.mm-btn-primary-outline {
+  margin-right: 0 !important;
+}
+
+.learn-more-security a {
+  margin-left: 19px;
+}
+
+.setting-button-wrap.flex-box {
+  justify-content: right !important;
+  border-bottom: 1px solid rgba(150, 158, 172, 0.24);
+  padding-bottom: 28px;
+  margin-bottom: 30px;
+}
+
+.estimated-top-content span.form-heading {
+  margin-bottom: 0px !important;
+}
+
+.flex-box.learn-more-security {
+  margin-bottom: 61px;
+}
+
+.estimated-annual-return p {
+  font-size: 14px;
+}
+
+.estimated-annual-return input[type='radio'] + label::after {
+  content: '';
+  height: 8px;
+  width: 8px;
+  top: 6px;
+  left: 6px;
+  background: $primary;
+  position: absolute;
+  border-radius: 100%;
+  opacity: 0;
+  z-index: 999;
+  transition: opacity 0.2s ease-in-out;
+}
+.estimated-annual-return input[type='radio'] {
+  height: 20px !important;
+  left: 0;
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  width: 20px !important;
+  z-index: 999;
+}
+.estimated-annual-return .estimate-left input[type='radio'] {
+  top: 8px;
+}
+.estimated-annual-return label {
+  position: relative;
+  padding-left: 40px;
+}
+
+.estimated-annual-return input[type='radio'] + label::before {
+  height: 20px;
+  width: 20px;
+  border: 1px solid $primary;
+  position: absolute;
+  left: 0;
+  top: 0px;
+  content: '';
+  border-radius: 100%;
+  opacity: 0.24;
+}
+
+.estimated-annual-return label {
+  position: relative;
+}
+
+.estimated-annual-return input[type='radio']:checked + label::after {
+  opacity: 1;
+}
+
+.credintials-wrapper.account-setting .form-wrap .estimated-annual-return input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  z-index: 9999;
+}
+
+.estimated-annual-return p {
+  position: relative;
+}
+
+.submit.mm-btn-primary-outline:hover {
+  background-color: $white !important;
+  color: $primary !important;
+  border: 1px solid $primary !important;
+}
+
+.middle-input-wrap .input-wrap input[type='radio'] {
+  opacity: 0;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  z-index: 999;
+}
+
+.middle-input-wrap .input-wrap label {
+  position: relative;
+  padding-left: 55px;
+}
+
+.middle-input-wrap .input-wrap input + label::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border: 1px solid $primary;
+  border-radius: 100%;
+  left: 28px;
+  opacity: 0.24;
+  top: 3px;
+}
+
+.middle-input-wrap .input-wrap input + label::after {
+  background: $primary;
+  height: 8px;
+  width: 8px;
+  content: '';
+  position: absolute;
+  left: 34px;
+  border-radius: 100%;
+
+  opacity: 0;
+  top: 9px;
+}
+
+.middle-input-wrap .input-wrap input:checked + label::after {
+  opacity: 1;
+}
+
+.left-input.employer-match label {
+  padding-left: 35px;
+  margin-right: 23px;
+}
+
+.left-input.employer-match label::before {
+  left: 7px;
+  top: 3px;
+}
+
+.input-wrap.flex-box .left-input.employer-match label::before {
+  top: 3px;
+  left: 8px;
+}
+
+.input-wrap.flex-box .left-input.employer-match label::after {
+  left: 14px;
+}
+
+.input-wrap.flex-box .left-input.employer-match input {
+  top: 14px;
+}
+
+//Responsive
+@media (max-width: $lg + 1) {
+  .bg-white.credintials-wrapper.account-setting .credintials-content {
+    padding-left: 50px;
+    padding-right: 40px;
+  }
+}
+
+@media (max-width: $sm) {
+  ul.bank-list li {
+    margin-right: 11px;
+    height: 76px;
+    width: 93px;
+    padding: 26px 8px;
+    overflow: hidden;
+  }
+
+  ul.bank-list li svg {
+    width: 100%;
+  }
+
+  .form-heading button {
+    font-size: 1rem;
+    margin-right: 2px;
+  }
+
+  .account-type-list li {
+    width: 100%;
+    float: none;
+  }
+
+  .account-type select {
+    width: 100%;
+  }
+
+  .account-type-list li .account-list-content {
+    float: none;
+    width: 100%;
+  }
+
+  .flex-box {
+    display: block;
+  }
+
+  .estimated-annual-return .estimate-right {
+    display: block;
+    float: none;
+    width: 100%;
+  }
+
+  .estimated-annual-return input[type='text'] {
+    float: none;
+  }
+
+  .right-input {
+    position: static;
+    display: block;
+  }
+
+  .estimated-annual-return span.form-subheading {
+    margin-bottom: 11px;
+    display: block;
+  }
+
+  .symbol-icon {
+    top: 63%;
+  }
+
+  .form-wrap .right-input input[type='text'] {
+    width: 100%;
+    display: block;
+  }
+  .right-input.radio {
+    margin-left: -28px;
+  }
+}

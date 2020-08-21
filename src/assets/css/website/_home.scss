@@ -1,0 +1,373 @@
+.rtl {
+  direction: rtl;
+}
+.home-top {
+  h1 {
+    padding-bottom: 1.3rem;
+  }
+  p {
+    color: $gray;
+  }
+}
+.networth-section {
+  h1 {
+    padding-bottom: 1.3rem;
+  }
+  p {
+    color: $gray;
+  }
+}
+.home-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+}
+.home-list ul li {
+  margin: 0 10px;
+  list-style: none;
+  flex: 1 0 31.5%;
+  font-size: 1.25rem;
+  color: $gray;
+}
+
+.home-list ul li h2 {
+  font-size: 1.75rem;
+  line-height: 2.1875rem;
+  color: $black;
+}
+
+.mm-container-right.home-banner-container {
+  padding-top: 7px;
+}
+
+//Banner section
+.home-left-banner {
+  max-width: 602px;
+}
+
+.home-left-banner p {
+  margin-bottom: 58px;
+}
+
+.home-left-banner .scroll-down-btn a .scroll-dot {
+  transition: 0.3s;
+}
+
+.home-left-banner .scroll-down-btn a:hover .scroll-dot {
+  transform: translateY(15px);
+}
+
+.home-left-banner .scroll-down-btn {
+  padding-top: 44px;
+}
+
+.home-banner-right {
+  margin-top: -57px;
+}
+
+//Adapter Section
+.early-adapter-section {
+  padding-top: 115px;
+  padding-bottom: 181px;
+}
+.early-adapter-section .adopter-top-wrap {
+  max-width: 500px;
+  margin-bottom: 116px;
+}
+
+.early-adapter-section .earlyadopter-list li {
+  padding: 56px 33px 46px;
+}
+
+.early-adapter-section .adopter-content h2 {
+  margin-bottom: 29px;
+}
+
+.early-adapter-section .early-adapter-tag svg {
+  background: linear-gradient(180deg, $purple 41.07%, #3e37d7 100%);
+  box-shadow: 5px 10px 16px rgba(81, 84, 233, 0.2);
+}
+.early-adapter-tag {
+  position: absolute;
+  top: -21px;
+  left: 34px;
+}
+.early-adapter-tag span {
+  background: linear-gradient(180deg, $purple 41.07%, #3e37d7 100%);
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 6px;
+}
+.earlyadopter-list li {
+  position: relative;
+}
+
+//Feature Section
+.mm-container-right.home-feature-section {
+  background-color: $darkBg;
+  padding-top: 107px;
+  padding-bottom: 0px;
+}
+.home-feature-section .feature-content h2 {
+  margin-bottom: 16px;
+  color: $white;
+}
+
+.home-feature-section .feature-content {
+  max-width: 85%;
+}
+
+.home-feature-section .feature-content p {
+  color: $white;
+}
+
+.home-feature-section li {
+  margin-bottom: 89px !important;
+}
+
+.home-feature-section li .feature-icon {
+  margin-bottom: 29px;
+}
+
+//Blog Section
+.home-blog-section {
+  padding-top: 104px;
+  padding-bottom: 6px;
+}
+.home-blog-section .blog-top-content {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 44px;
+}
+
+.home-blog-section .blog-content-left {
+  width: 85%;
+}
+
+.home-blog-section .blog-content-left h1 {
+  max-width: 748px;
+  line-height: 55px;
+  margin-bottom: 49px;
+}
+
+.home-blog-section .blog-content-left p {
+  color: $gray;
+}
+
+.home-blog-section .blog-content h2 {
+  font-size: 2rem;
+  line-height: 2.56rem;
+  letter-spacing: 0.02em;
+  font-weight: 200;
+  margin-bottom: 18px;
+}
+
+.home-blog-section .blog-content {
+  max-width: 369px;
+}
+
+.home-blog-section .blog-img {
+  margin-bottom: 23px;
+  width: 384px;
+  height: 257px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.home-blog-section .blog-content {
+  max-width: 384px;
+  overflow: hidden;
+}
+.home-list.blog-list li {
+  flex: auto;
+  float: left;
+  width: 30.33%;
+}
+
+.blog-content-right button:hover {
+  background: $white !important;
+  border-color: $primary !important;
+}
+
+//allocation section
+
+.allocation-section .networth-section {
+  padding-top: 73px;
+}
+.allocation-section .networth-text {
+  padding-top: 155px;
+}
+
+//performance section
+.performance-section .networth-section {
+  padding-top: 70px;
+}
+.performance-section .networth-text {
+  padding-top: 100px;
+}
+.performance-section .networth-chart {
+  width: 86%;
+}
+span.above-tag-text {
+  color: $primary;
+  font-size: 1.125rem;
+  line-height: 1.437rem;
+  background: rgba(83, 76, 234, 0.2);
+  padding: 0px 7px;
+  border-radius: 6px;
+  position: absolute;
+  top: 8px;
+  right: -141px;
+}
+.performance-section .networth-section h1,
+.minxwinks-section .networth-section h1,
+.minxmeasure-section .networth-section h1 {
+  position: relative;
+  display: inline-block;
+}
+//maxwinks section
+.minxwinks-section .networth-section {
+  padding-top: 93px;
+}
+.minxwinks-section .networth-text {
+  padding-top: 155px;
+}
+.mm-container-right.minxwinks-section {
+  padding-left: 1px;
+}
+.minxwinks-section .networth-chart {
+  width: 95%;
+}
+
+//minx measure section
+.minxmeasure-section .networth-section {
+  padding-top: 84px;
+}
+.minxmeasure-section .networth-text {
+  padding-top: 90px;
+}
+.minxmeasure-section .networth-chart {
+  float: right;
+  width: 72%;
+}
+.home-networth.networth-section .networth-text p span {
+  position: absolute;
+  top: -94px;
+}
+
+// coming soon
+.home-coming-soon {
+  text-align: center;
+  margin: auto;
+  padding-top: 78px;
+}
+@media (max-width: $lg+1) {
+  .mm-container-right.home-feature-section {
+    margin-left: 0;
+    padding-left: 120px;
+  }
+
+  .allocation-section .networth-text {
+    padding-right: 25px;
+  }
+
+  .home-blog-section .blog-top-content {
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: $md) {
+  .scroll-down-btn {
+    position: static;
+    display: none;
+  }
+  .mm-container-right.home-banner-container {
+    margin-right: 0px;
+  }
+  .mm-container-right.home-feature-section {
+    padding-left: 80px;
+  }
+  .home-feature-section .feature-content {
+    max-width: none;
+  }
+  .home-feature-list ul li {
+    flex: 1 0 47% !important;
+  }
+  .home-banner-right {
+    float: right;
+  }
+  .home-list ul li {
+    flex: auto;
+    margin-bottom: 31px;
+  }
+
+  .mm-container-right.home-feature-section {
+    margin-right: 0px;
+  }
+
+  .mm-container-right.home-feature-section {
+    margin: 0 !important;
+  }
+
+  .mm-container-right {
+    margin: 0 20px !important;
+  }
+
+  .minxmeasure-section .networth-chart {
+    float: none;
+    width: 100%;
+  }
+
+  .performance-section .networth-chart {
+    width: 100%;
+  }
+
+  .home-blog-section .blog-top-content {
+    display: block;
+  }
+
+  .home-blog-section ul li:last-child {
+    display: none;
+  }
+
+  .home-blog-section .blog-content-left {
+    width: 100%;
+  }
+
+  .home-blog-section .blog-content-left h1 {
+    max-width: none;
+  }
+}
+
+@media (max-width: $sm) {
+  .early-adapter-section .earlyadopter-list li {
+    padding: 51px 28px;
+  }
+  .home-list ul li {
+    margin-right: 27px;
+  }
+  .home-feature-list ul li {
+    flex: auto !important;
+  }
+  .mm-container-right.home-feature-section {
+    padding-left: 21px;
+  }
+  .home-feature-section .feature-content {
+    max-width: 100%;
+  }
+  .home-list.blog-list ul {
+    margin-right: 20px;
+  }
+  .home-list ul li {
+    margin: 0;
+  }
+  .home-list.blog-list li {
+    float: none;
+    width: 100%;
+  }
+  .home-networth.networth-section .networth-text p span {
+    top: -44px;
+  }
+}

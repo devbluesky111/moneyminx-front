@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import useSize from 'common/hooks/useSize';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 
@@ -15,10 +16,10 @@ const WebsiteHeader = () => {
       setExpand(undefined);
       return;
     }
-    if (width > 576 && width <= 768) {
+    if (width > 605 && width <= 768) {
       setExpand('menus');
     }
-    if (width <= 575) {
+    if (width <= 604) {
       setExpand('all');
     }
   };
@@ -26,9 +27,9 @@ const WebsiteHeader = () => {
   return (
     <nav className='mm-navbar navbar-expand-lg navbar-light bg-light'>
       <div className='logo-btn-wrapper'>
-        <a className='navbar-brand' href='/'>
+        <Link className='navbar-brand' to='/'>
           <Logo />
-        </a>
+        </Link>
         <div className='mm-label b-primary-light'>Beta</div>
       </div>
 
@@ -38,9 +39,9 @@ const WebsiteHeader = () => {
             <div className={`menu-list-wrapper ${expand === 'menus' ? 'expand-menu' : ''}`}>
               <ul className='navbar-nav mr-auto navbar-menu-list'>
                 <li className='mm-nav-item active'>
-                  <a className='mm-nav-link' href='/pricing'>
+                  <Link className='mm-nav-link' to='/pricing'>
                     Pricing
-                  </a>
+                  </Link>
                 </li>
 
                 <li className='mm-nav-item'>
@@ -54,18 +55,18 @@ const WebsiteHeader = () => {
                   </a>
                 </li>
                 <li className='mm-nav-item'>
-                  <a className='mm-nav-link' href='/about'>
+                  <Link className='mm-nav-link' to='/about'>
                     About
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
             <div className='auth-btn-wrapper mr-1'>
               <ul className='navbar-nav'>
                 <li className='mm-nav-item'>
-                  <a className='mm-nav-link' href='/login'>
+                  <Link className='mm-nav-link' to='login'>
                     Login
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a className='mm-nav-link' href='/signup'>

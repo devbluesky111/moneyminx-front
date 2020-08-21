@@ -1,7 +1,10 @@
 {
-  "INVALID_EMAIL": "Email is invalid",
+  "INVALID_EMAIL": "Please enter a valid email",
   "REQUIRED_FIELD": "Field is required",
   "PASSWORD_MATCH": "Password does not match",
   "INVALID_PASSWORD_LENGTH": "Invalid password length",
-  "PASSWORD_ERROR": "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+  "PASSWORD_ERROR": "Password must be at least 8 characters long and include at least 1 special character and at least 2 numbers.",
+  "EMAIL_IS_EMPTY": "You forgot to share your email",
+  "PWD_IS_EMPTY": "You forgot to include a password",
+  "FORGOT_TERMS": "You forgot to accept our terms of service"
 }

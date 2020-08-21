@@ -1,14 +1,19 @@
 import React from 'react';
-import { ReactComponent as AppStoreLogo } from 'assets/icons/app-store-black.svg';
-import { ReactComponent as GooglePlayLogo } from 'assets/icons/google-play-black.svg';
+import { Link } from 'react-router-dom';
 
 import footerData from '@mm/data/footer.data.json';
-import resourceList from '@mm/data/resource.list.json';
 import featureList from '@mm/data/feature.list.json';
+import resourceList from '@mm/data/resource.list.json';
 import companyInfoList from '@mm/data/company-info.list.json';
 import SignupToday from 'website/partials/signup-today.footer';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaPinterest } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg';
+import { ReactComponent as YoutubeIcon } from 'assets/icons/youtube.svg';
+import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg';
+import { ReactComponent as LinkedinIcon } from 'assets/icons/linkedin.svg';
+import { ReactComponent as InstagramIcon } from 'assets/icons/instagram.svg';
+import { ReactComponent as PinterestIcon } from 'assets/icons/pinterest.svg';
+import { ReactComponent as AppStoreLogo } from 'assets/icons/app-store-black.svg';
+import { ReactComponent as GooglePlayLogo } from 'assets/icons/google-play-black.svg';
 
 interface ListType {
   title: string;
@@ -56,37 +61,39 @@ const FooterList = () => {
 
 const social = [
   {
-    icon: <FaFacebook />,
-    link: 'https://fb.com',
+    icon: <FacebookIcon />,
+    link: 'https://www.facebook.com/moneyminx',
   },
   {
-    icon: <FaTwitter />,
-    link: 'https://twitter.com',
+    icon: <TwitterIcon />,
+    link: 'https://twitter.com/getmoneyminx',
   },
   {
-    icon: <FaInstagram />,
-    link: 'https://instagram.com',
+    icon: <InstagramIcon />,
+    link: 'https://instagram.com/moneyminxapp',
   },
   {
-    icon: <FaLinkedin />,
-    link: 'https://instagram.com',
+    icon: <LinkedinIcon />,
+    link: 'https://linkedin.com/company/moneyminx',
   },
   {
-    icon: <FaYoutube />,
-    link: 'https://instagram.com',
+    icon: <YoutubeIcon />,
+    link: 'https://www.youtube.com/channel/UCmWuUaetlK3fABjglo9cEaQ',
   },
   {
-    icon: <FaPinterest />,
-    link: 'https://instagram.com',
+    icon: <PinterestIcon />,
+    link: 'https://www.pinterest.com/moneyminx/',
   },
 ];
 
 const SocialList: React.FC = () => (
   <ul className='navbar-nav'>
-    {social.map(({ icon }, idx) => {
+    {social.map(({ icon, link }, idx) => {
       return (
         <li key={idx} className='px-2'>
-          {icon}
+          <a href={link} target='_blank' rel='noopener noreferrer'>
+            {icon}
+          </a>
         </li>
       );
     })}

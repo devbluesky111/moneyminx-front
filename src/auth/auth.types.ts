@@ -7,10 +7,10 @@ export interface LoginPayload {
 }
 
 export interface RegisterPayload {
-  name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  subscriptionPriceId: string;
+  mailChimpSubscription: boolean;
 }
 
 export interface UserType {
@@ -33,6 +33,7 @@ export enum AuthState {
 }
 
 export interface AuthType {
+  expires?: number;
   token?: string;
   user?: UserType;
   roles?: RoleEnum[];
@@ -52,6 +53,15 @@ export interface RegisterFormProps {
 export interface LoginServicePayload {
   dispatch: (args: StringKeyObject) => void;
   payload: LoginPayload;
+}
+
+export interface FBAssociationPayload {
+  dispatch: (args: StringKeyObject) => void;
+  token: string;
+}
+export interface RegisterServicePayload {
+  dispatch: (args: StringKeyObject) => void;
+  payload: RegisterPayload;
 }
 
 export interface AddressPayload {

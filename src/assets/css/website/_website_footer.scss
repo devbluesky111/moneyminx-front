@@ -24,6 +24,9 @@
   font-size: 0.9375rem;
   line-height: 170%;
 }
+.signup-btn-wrapper {
+  margin: auto;
+}
 @media (max-width: 768px) {
   .signup-today-wrapper {
     padding: 2rem;
@@ -33,8 +36,27 @@
   .wf-list-wrapper {
     text-align: center;
   }
+  .signup-btn-wrapper {
+    margin: auto;
+  }
 }
 
+@media (max-width: $sm + $md) {
+  .website-footer-wrapper {
+    padding-top: 315px;
+  }
+}
+
+@media (min-width: $sm) and (max-width: $md) {
+  .signup-today-wrapper {
+    padding: 2rem;
+    left: 35px;
+    right: 35px;
+  }
+  .signup-today-wrapper h1 {
+    font-size: 2.3rem !important;
+  }
+}
 @media (max-width: $sm) {
   .website-footer-wrapper {
     padding: 245px $s4 $s4 $s4;
@@ -51,4 +73,11 @@
     width: 100%;
     margin: 0.5rem 0 !important;
   }
+}
+
+//Recently Added
+.signup-btn-wrapper button {
+  display: block;
+  margin-bottom: 20px;
+  margin-left: 0px !important;
 }

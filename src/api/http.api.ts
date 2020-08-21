@@ -1,5 +1,4 @@
 import axios from 'axios';
-import env from 'app/app.env';
 import { storage } from 'app/app.storage';
 import { StorageKey } from 'app/app.types';
 import { STATUS_CODE } from 'app/app.status';
@@ -9,7 +8,7 @@ import { withError, withData } from 'common/common-helper';
 import { urls } from './api.url';
 
 const axiosInstance = axios.create({
-  baseURL: env.BASE_URL,
+  baseURL: 'https://api.moneyminx.com/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -108,11 +107,12 @@ export function get(url: string, params: object = {}): any {
   });
 }
 
-export function post(url: string, data: any, auth: boolean = true): any {
+export function post(url: string, data: any, auth: boolean = true, params?: any): any {
   return axiosInstance({
     method: 'post',
     url,
     data,
+    params,
     headers: auth
       ? {
           authorization: `Bearer ${storage.accessToken()}`,

@@ -6,10 +6,12 @@ interface Props {
   backdrop?: boolean;
   canBeClosed?: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
+  onError?: () => void;
 }
 
 const Modal: React.FC<Props> = ({ title, children, open, backdrop = true, onClose, canBeClosed = false }) => {
-  const classNames = `${backdrop ? 'modal modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
+  const classNames = `${backdrop ? 'modal mm-modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
   return (
     <div className={classNames} tabIndex={-1} role='dialog' aria-hidden='true'>
       <div className='modal-dialog modal-dialog-centered modal-lg' role='document'>
