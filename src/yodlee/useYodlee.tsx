@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { TokenType, YodleeHookType } from './yodlee.type';
 
 const useYodlee: YodleeHookType = ({
-  containerId,
+  containerId = 'fastlinkContainer',
   createScriptTag = true,
   fastLinkOptions: { fastLinkURL, token, userExperienceFlow = 'Verification' },
   onSuccess,
@@ -11,7 +11,7 @@ const useYodlee: YodleeHookType = ({
   onEvent,
 }) => {
   const [ready, setReady] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
   const [data, setData] = useState(null);
   const [active, setActive] = useState(false);
 
@@ -36,10 +36,14 @@ const useYodlee: YodleeHookType = ({
         document.body.removeChild(script);
       }
     };
-  }, []);
+  }, [createScriptTag, fastLinkURL]);
 
   const init = (currentToken?: TokenType) => {
-    const getTokenString = (t: TokenType) => {
+    const getTokenString = (t?: TokenType) => {
+      if (!t) {
+        return {};
+      }
+
       switch (t.tokenType) {
         case 'AccessToken': {
           return { accessToken: `Bearer ${t.tokenValue}` };
@@ -59,10 +63,12 @@ const useYodlee: YodleeHookType = ({
         ...getTokenString(currentToken || token),
         onSuccess: (customerData: any) => {
           setData(customerData);
+          // tslint:disable-next-line: no-unused-expression
           onSuccess && onSuccess(customerData);
         },
         onError: (fastLinkError: any) => {
           setError(fastLinkError);
+          // tslint:disable-next-line: no-unused-expression
           onError && onError(fastLinkError);
         },
         onExit,

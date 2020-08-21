@@ -15,6 +15,7 @@ import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/faceboo
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 
 import env from 'app/app.env';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   return (
@@ -25,6 +26,7 @@ const Login = () => {
 };
 export default Login;
 export const LoginMainSection = () => {
+  const history = useHistory();
   const dispatch = useAuthDispatch();
   const [fbLoggingIn, setFBLoggingIn] = useState<boolean>(false);
 
@@ -94,6 +96,7 @@ export const LoginMainSection = () => {
 
                     if (!error) {
                       toast('Sign in Success', { type: 'success' });
+                      history.push('/auth/connect-account');
                     } else {
                       toast('Sign in Failed', { type: 'error' });
                     }

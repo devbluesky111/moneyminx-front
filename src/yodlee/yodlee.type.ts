@@ -14,7 +14,7 @@ export interface FastLinkOptionsType {
 }
 
 export interface YodleeHookPropsType {
-  containerId: string;
+  containerId?: string;
   createScriptTag?: boolean;
   fastLinkOptions: FastLinkOptionsType;
   onSuccess?: (args: any) => void;

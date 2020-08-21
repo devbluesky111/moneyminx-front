@@ -1,29 +1,52 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { AuthLayout } from 'layouts/auth.layout';
+import { useModal } from 'common/components/modal';
+import FastLinkModal from 'yodlee/fast-link.modal';
+import useGetFastlink from 'auth/hooks/useGetFastlink';
+import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
-import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
-import { ReactComponent as CircleIcon } from 'assets/images/signup/circle-icon.svg';
 import { ReactComponent as CheckIcon } from 'assets/images/signup/check-icon.svg';
 import { ReactComponent as SelectedIcon } from 'assets/images/signup/selected.svg';
-const Connectaccount = () => {
+import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
+import { ReactComponent as CircleIcon } from 'assets/images/signup/circle-icon.svg';
+import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
+
+const ConnectAccount = () => {
   return (
     <AuthLayout>
-      <ConnectaccountMainSection />
+      <ConnectAccountMainSection />
     </AuthLayout>
   );
 };
-export default Connectaccount;
-export const ConnectaccountMainSection = () => {
+export default ConnectAccount;
+export const ConnectAccountMainSection = () => {
+  const { error, data, loading } = useGetFastlink();
+  const fastlinkModal = useModal();
+
+  const handleConnectAccount = () => {
+    fastlinkModal.open();
+  };
+
+  if (loading || error || !data) {
+    return <CircularSpinner />;
+  }
+
+  const fastLinkOptions: FastLinkOptionsType = {
+    fastLinkURL: data?.fastLinkUrl || '',
+    token: data?.accessToken || '',
+  };
+
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <div className='logo-img-wrap'>
+            <Link className='logo-img-wrap' to='/'>
               <LogoImg />
-            </div>
+            </Link>
             <h1>
               <span className='block'>Three easy steps to get </span>started with Money Minx
             </h1>
@@ -59,7 +82,11 @@ export const ConnectaccountMainSection = () => {
                 Money Minx partnered with Yodlee, a financial technology industry veteran, to facilitate aggregation of
                 your accounts. Your account details are only stored at Yodlee, not in Money Minx’ database.
               </p>
-              <button className='connect-account-btn bg-primary mm-btn-primary-outline' type='submit'>
+              <button
+                className='connect-account-btn bg-primary mm-btn-primary-outline'
+                type='button'
+                onClick={handleConnectAccount}
+              >
                 Connect an Account
               </button>
               <div className='manual-account-section'>
@@ -127,6 +154,7 @@ export const ConnectaccountMainSection = () => {
           </div>
         </div>
       </div>
+      <FastLinkModal fastLinkModal={fastlinkModal} fastLinkOptions={fastLinkOptions} />
     </div>
   );
 };

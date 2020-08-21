@@ -2,7 +2,7 @@ import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
 import { useModal } from 'common/components/modal';
@@ -16,7 +16,7 @@ import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-ic
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 
-import AssociateEmailModal from './associate-email';
+import AssociateEmailModal from './inc/associate-email.modal';
 
 const Signup = () => {
   return (
@@ -27,12 +27,13 @@ const Signup = () => {
 };
 export default Signup;
 export const SignupMainSection = () => {
+  const history = useHistory();
   const associateModal = useModal();
   const dispatch = useAuthDispatch();
+  const [fbToken, setFBToken] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
   const [fbLoggingIn, setFBLoggingIn] = useState<boolean>(false);
   const [associateMessage, setAssociateMessage] = useState<string>('');
-  const [fbToken, setFBToken] = useState<string>('');
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
@@ -68,9 +69,9 @@ export const SignupMainSection = () => {
       <div className='mm-container mm-container-final'>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <div className='logo-img-wrap'>
+            <Link className='logo-img-wrap' to='/'>
               <LogoImg />
-            </div>
+            </Link>
             <h1>
               <span className='block'>Three easy steps to get </span>started with Money Minx
             </h1>
@@ -123,6 +124,7 @@ export const SignupMainSection = () => {
 
                     if (!error) {
                       toast('Signup Success', { type: 'success' });
+                      history.push('/auth/connect-account');
                     } else {
                       toast('Sign up failed', { type: 'error' });
                     }
@@ -201,7 +203,11 @@ export const SignupMainSection = () => {
                           </span>
                         </div>
 
-                        <button className='bg-primary mm-btn-primary-outline' type='submit' disabled={!props.isValid}>
+                        <button
+                          className='bg-primary mm-btn-primary-outline'
+                          type='submit'
+                          disabled={!props.isValid && props.isSubmitting}
+                        >
                           Sign Up
                         </button>
                       </form>

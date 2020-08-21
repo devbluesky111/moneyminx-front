@@ -83,6 +83,9 @@ h6 {
     border-color: $white;
     background-color: $white;
   }
+  &:disabled {
+    opacity: 0.7;
+  }
 }
 .container-mm {
   max-width: 1200px;

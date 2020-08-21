@@ -31,6 +31,10 @@ export const getSubscription = () => {
   return http.get(urls.subscription.SUB);
 };
 
+export const getFastlink = () => {
+  return http.get(urls.yodlee.FAST_LINK);
+};
+
 export const refreshAccessToken = ({ referenceToken }: { referenceToken: string }): Promise<any> => {
   return Promise.resolve({ referenceToken });
 };

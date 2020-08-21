@@ -3,6 +3,7 @@ import { StorageKey } from './app.types';
 import { serialize, parse, withError, withData } from 'common/common-helper';
 
 const hasLocalStorage = localStorage || window.localStorage;
+
 export const storage = {
   get(key: string) {
     const { error, data } = parse(localStorage.getItem(key) || '');

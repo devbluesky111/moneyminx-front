@@ -12,4 +12,7 @@ export const urls = {
   subscription: {
     SUB: '/subscription/stripe/subscriptions',
   },
+  yodlee: {
+    FAST_LINK: '/account/yodlee/fastlink',
+  },
 };
