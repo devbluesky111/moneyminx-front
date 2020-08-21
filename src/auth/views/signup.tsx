@@ -216,6 +216,7 @@ export const SignupMainSection = () => {
                       {fbLoggingIn ? (
                         <FacebookLogin
                           autoLoad={true}
+                          reAuthenticate={true}
                           appId={env.FACEBOOK_APP_ID || ''}
                           callback={responseFacebook}
                           buttonStyle={{ display: 'none' }}
