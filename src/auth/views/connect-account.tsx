@@ -4,8 +4,9 @@ import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
-import { ReactComponent as ConnectSteps } from 'assets/images/signup/connect-steps.svg';
-
+import { ReactComponent as CircleIcon } from 'assets/images/signup/circle-icon.svg';
+import { ReactComponent as CheckIcon } from 'assets/images/signup/check-icon.svg';
+import { ReactComponent as SelectedIcon } from 'assets/images/signup/selected.svg';
 const Connectaccount = () => {
   return (
     <AuthLayout>
@@ -48,7 +49,6 @@ export const ConnectaccountMainSection = () => {
               </div>
             </div>
           </div>
-
           <div className='bg-white credintials-wrapper connect-wrap'>
             <div className='credintials-content connect-account'>
               <div className='logo-img-wrapper'>
@@ -99,9 +99,27 @@ export const ConnectaccountMainSection = () => {
                 2/3
               </p>
             </div>
-            <ConnectSteps />
+            <div className='connect-steps-wrap'>
+              <div className='step-content left-border'>
+                <div className='step-icon'>
+                  <CheckIcon />
+                </div>
+                <span className='connect-text text-left'>Sign up</span>
+              </div>
+              <div className='step-content'>
+                <div className='step-icon icon-two'>
+                  <SelectedIcon />
+                </div>
+                <span className='connect-text'>Connect banks </span>
+              </div>
+              <div className='step-content right-border'>
+                <div className='step-icon icon-three'>
+                  <CircleIcon />
+                </div>
+                <span className='connect-text text-right'>Link accounts</span>
+              </div>
+            </div>
           </div>
-
           <div className='subs-content four'>
             <button className='finish-btn'>
               <a href='link11'>Next Step</a>

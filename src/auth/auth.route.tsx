@@ -3,7 +3,16 @@ import { NotFound } from 'website/views';
 import { Switch, Redirect, Route } from 'react-router-dom';
 
 import { authRouteConstants } from './authRouteConstants';
-import { Login, SessionExpired, ForgotPassword, CreateNewPassword, ExpiredLink, Signup, ConnectAccount } from './views';
+import {
+  Login,
+  SessionExpired,
+  ForgotPassword,
+  CreateNewPassword,
+  ExpiredLink,
+  Signup,
+  ConnectAccount,
+  AccountSetting,
+} from './views';
 
 const {
   LOGIN,
@@ -14,6 +23,7 @@ const {
   EXPIRED_LINK,
   SIGNUP,
   CONNECT_ACCOUNT,
+  ACCOUNT_SETTING,
 } = authRouteConstants;
 const AuthRoute = () => {
   return (
@@ -24,6 +34,7 @@ const AuthRoute = () => {
       <Route exact path={CREATE_NEW_PASSWORD} component={CreateNewPassword} />
       <Route exact path={EXPIRED_LINK} component={ExpiredLink} />
       <Route exact path={CONNECT_ACCOUNT} component={ConnectAccount} />
+      <Route exact path={ACCOUNT_SETTING} component={AccountSetting} />
       <Route exact path={NOT_FOUND} component={NotFound} />
       <Route exact path={SIGNUP} component={Signup} />
       <Redirect to={NOT_FOUND} />
