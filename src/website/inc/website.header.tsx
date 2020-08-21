@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import useSize from 'common/hooks/useSize';
+import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 
 interface LeftMenuType {
