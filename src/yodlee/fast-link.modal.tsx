@@ -1,35 +1,45 @@
 import { Modal } from 'common/components/modal';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import useYodlee from './useYodlee';
 import { FastLinkOptionsType } from './yodlee.type';
+import { toast } from 'react-toastify';
+import { getRefreshedProfile } from 'auth/auth.service';
+import { useAuthDispatch } from 'auth/auth.context';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 interface Props {
   fastLinkModal: any;
-  handleSuccess?: () => void;
+  handleSuccess: () => void;
   fastLinkOptions: FastLinkOptionsType;
 }
 const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLinkOptions }) => {
   const initRef = useRef<any>();
+  const dispatch = useAuthDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const onSuccess = (args: any) => {
-    console.log('_____________args on success__________', args);
+  const onSuccess = () => {
+    toast('Successfully Logged in with Yodlee', { type: 'success' });
   };
-  const onError = (args: any) => {
-    console.log('_____________args on error__________', args);
+
+  const onError = () => {
+    toast('Error Occurred', { type: 'error' });
   };
-  const onExit = (args: any) => {
-    console.log('_____________args onExit __________', args);
-  };
-  const onEvent = (args: any) => {
-    console.log('_____________args onEvent  __________', args);
+
+  const onExit = async (args: any) => {
+    setLoading(true);
+    const { error } = await getRefreshedProfile({ dispatch });
+    if (error) {
+      toast('Error Occurred on Fetching user Details', { type: 'error' });
+    }
+    setLoading(false);
+    handleSuccess();
   };
 
   const { init } = useYodlee({
     fastLinkOptions,
     onSuccess,
     onError,
-    onEvent,
     onExit,
   });
 
@@ -45,8 +55,9 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   };
 
   return (
-    <Modal {...fastLinkModal.props} title='' onSuccess={handleSuccess} canBeClosed>
+    <Modal {...fastLinkModal.props} title='' canBeClosed>
       <div id='fastlinkContainer' />
+      {loading ? <CircularSpinner /> : null}
       <button ref={initRef} onClick={handleInit} className='hidden' />
     </Modal>
   );

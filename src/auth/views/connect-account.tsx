@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import FastLinkModal from 'yodlee/fast-link.modal';
+import { Link, useHistory } from 'react-router-dom';
 import useGetFastlink from 'auth/hooks/useGetFastlink';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
+import { authRouteConstants } from 'auth/authRouteConstants';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
@@ -25,9 +26,14 @@ export default ConnectAccount;
 export const ConnectAccountMainSection = () => {
   const { error, data, loading } = useGetFastlink();
   const fastlinkModal = useModal();
+  const history = useHistory();
 
   const handleConnectAccount = () => {
     fastlinkModal.open();
+  };
+
+  const handleConnectAccountSuccess = () => {
+    history.push(authRouteConstants.ACCOUNT_SETTING);
   };
 
   if (loading || error || !data) {
@@ -154,7 +160,12 @@ export const ConnectAccountMainSection = () => {
           </div>
         </div>
       </div>
-      <FastLinkModal fastLinkModal={fastlinkModal} fastLinkOptions={fastLinkOptions} />
+
+      <FastLinkModal
+        fastLinkModal={fastlinkModal}
+        fastLinkOptions={fastLinkOptions}
+        handleSuccess={handleConnectAccountSuccess}
+      />
     </div>
   );
 };

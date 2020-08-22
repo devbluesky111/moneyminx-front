@@ -1,28 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
-import { SapphireFormSection } from '../sapphire-form';
-import { ChaseMortgageForm } from '../chase-form';
+import { groupByProviderName } from 'auth/auth.helper';
+import { getRefreshedProfile } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
-import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
-import { ReactComponent as UsBankLogo } from 'assets/images/signup/usbank.svg';
+import { useAuthState, useAuthDispatch } from 'auth/auth.context';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ChaseLogo } from 'assets/images/signup/chase.svg';
-import { ReactComponent as WellsFargoLogo } from 'assets/images/signup/wellsfargo.svg';
+import { ReactComponent as UsBankLogo } from 'assets/images/signup/usbank.svg';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
+import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
+import { ReactComponent as WellsFargoLogo } from 'assets/images/signup/wellsfargo.svg';
+import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
-const Accountsetting = () => {
+import { SapphireFormSection } from '../sapphire-form';
+
+const AccountSetting = () => {
+  const { user } = useAuthState();
+  const dispatch = useAuthDispatch();
+  useEffect(() => {
+    if (!user) {
+      const getUser = async () => {
+        await getRefreshedProfile({ dispatch });
+      };
+      getUser();
+    }
+  }, [user, dispatch]);
+
   return (
     <AuthLayout>
-      <AccountsettingMainSection />
+      <AccountSettingMainSection />
     </AuthLayout>
   );
 };
-export default Accountsetting;
-export const AccountsettingMainSection = () => {
-  const [type, setType] = React.useState<string>('saphhire');
-  const btnClasses = 'account-btn';
-  const saphhireCard = `${btnClasses} ${type === 'first' ? '' : 'saphhireCard'}`;
-  const chaseMortage = `${btnClasses} ${type === 'second' ? '' : 'chaseMortage'}`;
+export default AccountSetting;
+export const AccountSettingMainSection = () => {
+  const { user } = useAuthState();
+
+  if (!user) {
+    return <CircularSpinner />;
+  }
+
+  const groupedUserProfileByAccountName = groupByProviderName(user, 'accountName');
+  const accountNames = Object.keys(groupedUserProfileByAccountName);
 
   return (
     <div className='main-table-wrapper'>
@@ -89,16 +108,20 @@ export const AccountsettingMainSection = () => {
                     </a>
                   </li>
                 </ul>
+
                 <div className='form-heading'>
-                  <button className={saphhireCard} onClick={() => setType('first')}>
-                    Sapphire Credit Card
-                  </button>
-                  <button className={chaseMortage} onClick={() => setType('second')}>
-                    Chase Mortgage
-                  </button>
+                  <ul className='nav'>
+                    {accountNames.map((accountName, index) => {
+                      return (
+                        <li key={index}>
+                          <button className='account-btn'>{accountName}</button>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
 
-                {type !== 'second' ? <SapphireFormSection /> : <ChaseMortgageForm />}
+                <SapphireFormSection />
 
                 <p className='flex-box learn-more-security'>
                   <SecurityIcon />

@@ -1,6 +1,8 @@
 import { FormikProps } from 'formik';
 import { StringKeyObject } from 'common/common.types';
 
+export type Dispatch = (args: StringKeyObject) => void;
+
 export interface LoginPayload {
   email: string;
   password: string;
@@ -15,6 +17,16 @@ export interface RegisterPayload {
 
 export interface UserType {
   [key: string]: any;
+}
+
+export interface Account {
+  id: number;
+  yodleeId: number;
+  accountName: string;
+  providerName: string;
+  profileId: number;
+  category: any;
+  formField: any;
 }
 
 export enum RoleEnum {
@@ -35,7 +47,7 @@ export enum AuthState {
 export interface AuthType {
   expires?: number;
   token?: string;
-  user?: UserType;
+  user?: Account[];
   roles?: RoleEnum[];
   authState: AuthState;
   isSigningIn: boolean;
@@ -51,16 +63,16 @@ export interface RegisterFormProps {
 }
 
 export interface LoginServicePayload {
-  dispatch: (args: StringKeyObject) => void;
+  dispatch: Dispatch;
   payload: LoginPayload;
 }
 
 export interface FBAssociationPayload {
-  dispatch: (args: StringKeyObject) => void;
+  dispatch: Dispatch;
   token: string;
 }
 export interface RegisterServicePayload {
-  dispatch: (args: StringKeyObject) => void;
+  dispatch: Dispatch;
   payload: RegisterPayload;
 }
 
@@ -88,6 +100,6 @@ export interface ProfileFormPayload {
 }
 
 export interface ProfileServicePayload {
-  dispatch: (args: StringKeyObject) => void;
+  dispatch: Dispatch;
   payload: ProfilePayload;
 }

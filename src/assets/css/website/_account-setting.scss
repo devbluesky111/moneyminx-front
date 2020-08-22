@@ -33,6 +33,14 @@ ul.bank-list li a {
   justify-content: left;
 }
 
+.form-heading .nav {
+  overflow-x: scroll;
+  flex-wrap: nowrap;
+  li {
+    white-space: nowrap;
+  }
+}
+
 .form-heading button {
   margin-right: 59px;
   font-size: 1.25rem;

@@ -9,7 +9,9 @@ import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 const Sapphireform = () => {
   return <SapphireFormSection />;
 };
+
 export default Sapphireform;
+
 export const SapphireFormSection = () => {
   const dispatch = useAuthDispatch();
   return (
