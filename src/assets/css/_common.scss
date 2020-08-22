@@ -113,6 +113,11 @@ h6 {
     box-shadow 0.15s ease-in-out;
 }
 
+// message wrapper
+.message-container {
+  background-color: $success;
+}
+
 @media (max-width: $lg) {
   .mm-container-right {
     overflow: hidden;

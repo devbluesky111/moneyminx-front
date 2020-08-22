@@ -27,6 +27,10 @@ export const postFacebookAssociation = (token: string) => {
   return http.post(urls.auth.ASSOCIATE_LOGIN, {}, false, { access_token: token });
 };
 
+export const postForgotPassword = (email: string): Promise<ApiResponse> => {
+  return http.post(urls.auth.FORGOT_PASSWORD, { email }, false);
+};
+
 export const getSubscription = () => {
   return http.get(urls.subscription.SUB);
 };

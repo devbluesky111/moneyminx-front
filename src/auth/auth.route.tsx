@@ -16,14 +16,17 @@ import {
 
 const {
   LOGIN,
+  SIGNUP,
   NOT_FOUND,
+  EXPIRED_LINK,
   SESSION_EXPIRED,
   FORGOT_PASSWORD,
-  CREATE_NEW_PASSWORD,
-  EXPIRED_LINK,
-  SIGNUP,
   CONNECT_ACCOUNT,
+<<<<<<< HEAD
   ACCOUNT_SETTING,
+=======
+  CREATE_NEW_PASSWORD,
+>>>>>>> mm-frontend#22: forgot password api integration
 } = authRouteConstants;
 const AuthRoute = () => {
   return (

@@ -17,3 +17,7 @@ export const registerValidationSchema = Yup.object({
     .required(REQUIRED_FIELD),
   termsAccepted: Yup.bool().oneOf([true], FORGOT_TERMS),
 });
+
+export const forgotPasswordValidation = Yup.object({
+  email: Yup.string().email(INVALID_EMAIL).required(REQUIRED_FIELD),
+});
