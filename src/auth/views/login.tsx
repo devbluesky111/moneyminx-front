@@ -1,7 +1,9 @@
+import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { login } from 'auth/auth.service';
+import { useHistory } from 'react-router-dom';
 import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
 import { useAuthDispatch } from 'auth/auth.context';
@@ -13,9 +15,6 @@ import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.s
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
-
-import env from 'app/app.env';
-import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   return (
