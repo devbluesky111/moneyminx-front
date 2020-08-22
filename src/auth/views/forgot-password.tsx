@@ -107,9 +107,18 @@ export const ForgotPasswordMainSection = () => {
           </div>
         </div>
       </div>
-      <Message />
-      {status === 'error' ? <div>{message}</div> : null}
-      {status === 'success' ? <div>{message}</div> : null}
+
+      {status === 'error' ? (
+        <div>
+          <Message type={status} message={message} />
+        </div>
+      ) : null}
+
+      {status === 'success' ? (
+        <div>
+          <Message type={status} message={message} />
+        </div>
+      ) : null}
     </div>
   );
 };

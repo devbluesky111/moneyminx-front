@@ -115,7 +115,20 @@ h6 {
 
 // message wrapper
 .message-container {
-  background-color: $success;
+  color: $white;
+  border: 1px solid $borderAlert;
+  box-shadow: 0px 2px 8px #e2e8f3;
+}
+.message-container.success {
+  background-color: $green;
+}
+
+.message-container.error {
+  background-color: $redAlert;
+}
+
+.message-wrapper {
+  padding: 1.25rem 0;
 }
 
 @media (max-width: $lg) {

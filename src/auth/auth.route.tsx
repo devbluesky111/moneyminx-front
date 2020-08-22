@@ -5,13 +5,13 @@ import { Switch, Redirect, Route } from 'react-router-dom';
 import { authRouteConstants } from './authRouteConstants';
 import {
   Login,
+  Signup,
+  ExpiredLink,
   SessionExpired,
   ForgotPassword,
-  CreateNewPassword,
-  ExpiredLink,
-  Signup,
   ConnectAccount,
   AccountSetting,
+  CreateNewPassword,
 } from './views';
 
 const {
@@ -22,11 +22,8 @@ const {
   SESSION_EXPIRED,
   FORGOT_PASSWORD,
   CONNECT_ACCOUNT,
-<<<<<<< HEAD
   ACCOUNT_SETTING,
-=======
   CREATE_NEW_PASSWORD,
->>>>>>> mm-frontend#22: forgot password api integration
 } = authRouteConstants;
 const AuthRoute = () => {
   return (
