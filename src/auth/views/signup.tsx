@@ -235,7 +235,7 @@ export const SignupMainSection = () => {
                 </div>
 
                 <p>
-                  Already have an account? <a href='/login'>Log In</a>
+                  Already have an account? <Link to='/login'>Log In</Link>
                 </p>
               </div>
             </div>

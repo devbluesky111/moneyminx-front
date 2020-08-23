@@ -1,6 +1,11 @@
-import React from 'react';
+import { Formik } from 'formik';
+import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
+import { postResetPassword } from 'api/request.api';
+import { resetPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
+import { useParams, Redirect, useHistory } from 'react-router-dom';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
@@ -14,6 +19,27 @@ const CreateNewPassword = () => {
 };
 
 export const CreateNewPasswordMainSection = () => {
+  const { token } = useParams();
+  const history = useHistory();
+
+  const [visible, setVisible] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+
+  const togglePasswordVisibility = () => {
+    setVisible({ ...visible, password: !visible.password });
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setVisible({ ...visible, confirmPassword: !visible.confirmPassword });
+  };
+
+  if (!token) {
+    toast('Token Not found', { type: 'error' });
+    return <Redirect to='/signin' />;
+  }
+
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -55,26 +81,64 @@ export const CreateNewPasswordMainSection = () => {
               </div>
               <h2>Create new Password</h2>
               <p>One last step. Enter a new password below and you should be good to go.</p>
-              <div className='form-wrap'>
-                <form>
-                  <div id='password-wrap'>
-                    <input type='Password' id='password' name='password' value='' placeholder='Set Password' />
+              <Formik
+                initialValues={{ password: '', confirmPassword: '' }}
+                validationSchema={resetPasswordValidation}
+                onSubmit={async (values, actions) => {
+                  const { error } = await postResetPassword({ password: values.password, token });
+                  if (error) {
+                    history.push('/password/token-expired');
+                  } else {
+                    toast('Password reset successful, Please login with new credentials', { type: 'success' });
+                    history.push('/login');
+                  }
+                }}
+              >
+                {(props) => {
+                  return (
+                    <div className='form-wrap'>
+                      <form onSubmit={props.handleSubmit}>
+                        <div id='password-wrap'>
+                          <input
+                            type={visible.password ? 'text' : 'password'}
+                            id='password'
+                            name='password'
+                            placeholder='Set Password'
+                            value={props.values.password}
+                            onChange={props.handleChange}
+                          />
+                          <span className='visibility-icon'>
+                            <LoginVisibilityIcon onClick={togglePasswordVisibility} />
+                          </span>
+                          <div>{props.errors.password ? props.errors.password : null}</div>
+                        </div>
+                        <div id='password-wrap'>
+                          <input
+                            type={visible.confirmPassword ? 'text' : 'password'}
+                            id='password'
+                            name='confirmPassword'
+                            onChange={props.handleChange}
+                            placeholder='Confirm Password'
+                            value={props.values.confirmPassword}
+                          />
+                          <span className='visibility-icon'>
+                            <LoginVisibilityIcon onClick={toggleConfirmPasswordVisibility} />
+                          </span>
+                          <div>{props.errors.confirmPassword ? props.errors.confirmPassword : null}</div>
+                        </div>
 
-                    <span className='visibility-icon'>
-                      <LoginVisibilityIcon />
-                    </span>
-                  </div>
-                  <div id='password-wrap'>
-                    <input type='Password' id='password' name='password' value='' placeholder='Confirm Password' />
-
-                    <span className='visibility-icon'>
-                      <LoginVisibilityIcon />
-                    </span>
-                  </div>
-                </form>
-
-                <button className='bg-primary mm-btn-primary-outline'>Save Password</button>
-              </div>
+                        <button
+                          className='bg-primary mm-btn-primary-outline'
+                          disabled={!props.isValid || props.isSubmitting}
+                          type='submit'
+                        >
+                          Save Password
+                        </button>
+                      </form>
+                    </div>
+                  );
+                }}
+              </Formik>
             </div>
           </div>
         </div>

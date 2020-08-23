@@ -7,9 +7,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { Home, TermNService, Notice, Privacy, About, Pricing } from 'website/views';
 
 import { appRouteConstants } from './app-route.constant';
+import { ResetPassword, TokenExpired } from './app.view';
 
 const {
-  auth: { def },
+  auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED },
   home,
 } = appRouteConstants;
 
@@ -25,7 +26,7 @@ function AppRoute() {
           <WebsiteRoute />
         </Route>
 
-        <Route path={def}>
+        <Route path={DEF}>
           <AuthRoute />
         </Route>
 
@@ -36,6 +37,8 @@ function AppRoute() {
         <Route exact path={'/privacy'} component={Privacy} />
         <Route exact path={'/pricing'} component={Pricing} />
         <Route exact path={'/terms'} component={TermNService} />
+        <Route exact path={RESET_PASSWORD} component={ResetPassword} />
+        <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
 
         <Route exact path={'/404'} component={NotFound} />
         <Redirect to='/404' />

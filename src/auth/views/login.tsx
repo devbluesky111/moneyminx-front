@@ -3,9 +3,9 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { login } from 'auth/auth.service';
-import { useHistory } from 'react-router-dom';
 import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
+import { useHistory, Link } from 'react-router-dom';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
 import { loginValidationSchema } from 'auth/auth.validation';
@@ -132,7 +132,7 @@ export const LoginMainSection = () => {
                       </div>
                       <p>
                         <span className='forgot-pass'>
-                          <a href='link7'>Forgot Password?</a>
+                          <Link to='/auth/forgot-password'>Forgot Password?</Link>
                         </span>
                       </p>
                       <button className='bg-primary mm-btn-primary-outline' type='submit'>
@@ -162,7 +162,7 @@ export const LoginMainSection = () => {
                 </div>
 
                 <p>
-                  Don’t have an account? <a href='moneyminx'>Sign Up</a>
+                  Don’t have an account? <Link to='/signup'>Sign Up</Link>
                 </p>
               </div>
             </div>

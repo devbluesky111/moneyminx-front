@@ -131,6 +131,10 @@ h6 {
   padding: 1.25rem 0;
 }
 
+.icon {
+  cursor: pointer;
+}
+
 @media (max-width: $lg) {
   .mm-container-right {
     overflow: hidden;

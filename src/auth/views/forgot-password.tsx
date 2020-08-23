@@ -1,12 +1,12 @@
+import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
-
+import { postForgotPassword } from 'api/request.api';
+import { forgotPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
-import { Formik } from 'formik';
-import { postForgotPassword } from 'api/request.api';
-import { forgotPasswordValidation } from 'auth/auth.validation';
+
 import Message from './inc/message';
 
 const ForgotPassword = () => {
@@ -22,6 +22,15 @@ export default ForgotPassword;
 export const ForgotPasswordMainSection = () => {
   const [status, setStatus] = useState<string>('initial');
   const [message, setMessage] = useState<string>('');
+  const [isMessage, setIsMessage] = useState<boolean>(false);
+
+  const handleDismiss = () => {
+    setIsMessage(false);
+  };
+
+  const isErrorMessage = status === 'error' && isMessage;
+  const isSuccessMessage = status === 'success' && isMessage;
+
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -70,9 +79,11 @@ export const ForgotPasswordMainSection = () => {
                   const { error, data } = await postForgotPassword(values.email);
                   if (error) {
                     setStatus('error');
+                    setIsMessage(true);
                     setMessage(error.message || '');
                   } else {
                     setStatus('success');
+                    setIsMessage(true);
                     setMessage(data.message || '');
                   }
                   actions.setSubmitting(false);
@@ -108,15 +119,15 @@ export const ForgotPasswordMainSection = () => {
         </div>
       </div>
 
-      {status === 'error' ? (
+      {isErrorMessage ? (
         <div>
-          <Message type={status} message={message} />
+          <Message type={status} message={message} onDismiss={handleDismiss} />
         </div>
       ) : null}
 
-      {status === 'success' ? (
+      {isSuccessMessage ? (
         <div>
-          <Message type={status} message={message} />
+          <Message type={status} message={message} onDismiss={handleDismiss} />
         </div>
       ) : null}
     </div>

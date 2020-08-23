@@ -15,6 +15,11 @@ export interface RegisterPayload {
   mailChimpSubscription: boolean;
 }
 
+export interface ResetPasswordPayload {
+  password: string;
+  token: string;
+}
+
 export interface UserType {
   [key: string]: any;
 }
