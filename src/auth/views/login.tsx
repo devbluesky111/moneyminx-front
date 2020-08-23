@@ -148,6 +148,8 @@ export const LoginMainSection = () => {
                     <div className='fb-icon-wrap'>
                       {fbLoggingIn ? (
                         <FacebookLogin
+                          fields='email'
+                          scope='email'
                           autoLoad={true}
                           reAuthenticate={true}
                           appId={env.FACEBOOK_APP_ID || ''}
