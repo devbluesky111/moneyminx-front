@@ -1,7 +1,7 @@
+import React from 'react';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
 import { login } from 'auth/auth.service';
 import { useHistory } from 'react-router-dom';
 import { AuthLayout } from 'layouts/auth.layout';
@@ -27,7 +27,6 @@ export default Login;
 export const LoginMainSection = () => {
   const history = useHistory();
   const dispatch = useAuthDispatch();
-  const [fbLoggingIn, setFBLoggingIn] = useState<boolean>(false);
 
   useGetSubscription();
 
@@ -146,20 +145,22 @@ export const LoginMainSection = () => {
                   <p>
                     Or, log in with:
                     <div className='fb-icon-wrap'>
-                      {fbLoggingIn ? (
-                        <FacebookLogin
-                          isMobile={false}
-                          fields='email'
-                          scope='email'
-                          autoLoad={true}
-                          reAuthenticate={true}
-                          appId={env.FACEBOOK_APP_ID || ''}
-                          callback={responseFacebook}
-                          buttonStyle={{ display: 'none' }}
-                        />
-                      ) : null}
-
-                      <LoginFacebookIcon onClick={() => setFBLoggingIn(true)} className='fb-login-icon' />
+                      <FacebookLogin
+                        authType='reauthenticate'
+                        textButton=''
+                        fields='email'
+                        isMobile={false}
+                        autoLoad={false}
+                        reAuthenticate={true}
+                        callback={responseFacebook}
+                        scope='public_profile,email'
+                        icon={<LoginFacebookIcon />}
+                        appId={env.FACEBOOK_APP_ID || ''}
+                        buttonStyle={{
+                          background: 'transparent',
+                          padding: 0,
+                        }}
+                      />
                     </div>
                   </p>
                 </div>
