@@ -1,28 +1,58 @@
 import React from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
+import { useModal } from 'common/components/modal';
+import FastLinkModal from 'yodlee/fast-link.modal';
+import { Link, useHistory } from 'react-router-dom';
+import useGetFastlink from 'auth/hooks/useGetFastlink';
+import { FastLinkOptionsType } from 'yodlee/yodlee.type';
+import { authRouteConstants } from 'auth/authRouteConstants';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
-import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
-import { ReactComponent as ConnectSteps } from 'assets/images/signup/connect-steps.svg';
+import { ReactComponent as CheckIcon } from 'assets/images/signup/check-icon.svg';
+import { ReactComponent as SelectedIcon } from 'assets/images/signup/selected.svg';
+import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
+import { ReactComponent as CircleIcon } from 'assets/images/signup/circle-icon.svg';
+import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
-const Connectaccount = () => {
+const ConnectAccount = () => {
   return (
     <AuthLayout>
-      <ConnectaccountMainSection />
+      <ConnectAccountMainSection />
     </AuthLayout>
   );
 };
-export default Connectaccount;
-export const ConnectaccountMainSection = () => {
+export default ConnectAccount;
+export const ConnectAccountMainSection = () => {
+  const { error, data, loading } = useGetFastlink();
+  const fastlinkModal = useModal();
+  const history = useHistory();
+
+  const handleConnectAccount = () => {
+    fastlinkModal.open();
+  };
+
+  const handleConnectAccountSuccess = () => {
+    history.push(authRouteConstants.ACCOUNT_SETTING);
+  };
+
+  if (loading || error || !data) {
+    return <CircularSpinner />;
+  }
+
+  const fastLinkOptions: FastLinkOptionsType = {
+    fastLinkURL: data?.fastLinkUrl || '',
+    token: data?.accessToken || '',
+  };
+
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <div className='logo-img-wrap'>
+            <Link className='logo-img-wrap' to='/'>
               <LogoImg />
-            </div>
+            </Link>
             <h1>
               <span className='block'>Three easy steps to get </span>started with Money Minx
             </h1>
@@ -48,7 +78,6 @@ export const ConnectaccountMainSection = () => {
               </div>
             </div>
           </div>
-
           <div className='bg-white credintials-wrapper connect-wrap'>
             <div className='credintials-content connect-account'>
               <div className='logo-img-wrapper'>
@@ -59,7 +88,11 @@ export const ConnectaccountMainSection = () => {
                 Money Minx partnered with Yodlee, a financial technology industry veteran, to facilitate aggregation of
                 your accounts. Your account details are only stored at Yodlee, not in Money Minx’ database.
               </p>
-              <button className='connect-account-btn bg-primary mm-btn-primary-outline' type='submit'>
+              <button
+                className='connect-account-btn bg-primary mm-btn-primary-outline'
+                type='button'
+                onClick={handleConnectAccount}
+              >
                 Connect an Account
               </button>
               <div className='manual-account-section'>
@@ -99,9 +132,27 @@ export const ConnectaccountMainSection = () => {
                 2/3
               </p>
             </div>
-            <ConnectSteps />
+            <div className='connect-steps-wrap'>
+              <div className='step-content left-border'>
+                <div className='step-icon'>
+                  <CheckIcon />
+                </div>
+                <span className='connect-text text-left'>Sign up</span>
+              </div>
+              <div className='step-content'>
+                <div className='step-icon icon-two'>
+                  <SelectedIcon />
+                </div>
+                <span className='connect-text'>Connect banks </span>
+              </div>
+              <div className='step-content right-border'>
+                <div className='step-icon icon-three'>
+                  <CircleIcon />
+                </div>
+                <span className='connect-text text-right'>Link accounts</span>
+              </div>
+            </div>
           </div>
-
           <div className='subs-content four'>
             <button className='finish-btn'>
               <a href='link11'>Next Step</a>
@@ -109,6 +160,12 @@ export const ConnectaccountMainSection = () => {
           </div>
         </div>
       </div>
+
+      <FastLinkModal
+        fastLinkModal={fastlinkModal}
+        fastLinkOptions={fastLinkOptions}
+        handleSuccess={handleConnectAccountSuccess}
+      />
     </div>
   );
 };

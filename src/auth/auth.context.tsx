@@ -41,6 +41,30 @@ function authReducer(state: AuthType = initialState, action: any) {
       return { ...state, authState: AuthState.SIGN_IN_REJECTED, isAuthenticated: false };
     }
 
+    case auth.REGISTER: {
+      return { ...state, isSigningIn: true };
+    }
+
+    case auth.REGISTER_SUCCESS: {
+      storage.set(StorageKey.AUTH, action.payload);
+      return {
+        ...state,
+        isSigningIn: false,
+        isAuthenticated: true,
+        token: action.payload.token,
+        expires: action.payload.expires,
+        authState: AuthState.AUTHENTICATED,
+      };
+    }
+
+    case auth.REGISTER_FAILURE: {
+      return { ...state, authState: AuthState.SIGN_IN_REJECTED, isAuthenticated: false };
+    }
+
+    case auth.PROFILE_REFRESH_SUCCESS: {
+      return { ...state, user: action.payload.user };
+    }
+
     case auth.SIGN_OUT: {
       return { ...state, authState: AuthState.LOGGING_OUT };
     }

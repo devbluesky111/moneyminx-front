@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 import { storage } from 'app/app.storage';
 import { StorageKey } from 'app/app.types';
 import { STATUS_CODE } from 'app/app.status';
 import { refreshAccessToken } from 'api/request.api';
 import { withError, withData } from 'common/common-helper';
-
-import { urls } from './api.url';
 
 const axiosInstance = axios.create({
   baseURL: 'https://api.moneyminx.com/',
@@ -51,15 +50,9 @@ axiosInstance.interceptors.response.use(
     const errorResponse = error.response?.data ? error.response.data : error;
 
     if (status === STATUS_CODE.UNAUTHORIZED && isSignedIn) {
-      const url = error.config?.url;
-
-      if (url === urls.auth.TOKEN) {
-        storage.clear();
-        window.location.replace('/login');
-        return withError(errorResponse);
-      }
-
-      return handle401Error(error);
+      storage.clear();
+      window.location.replace('/login');
+      return withError(errorResponse);
     }
 
     return withError(errorResponse);

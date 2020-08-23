@@ -1,7 +1,9 @@
+import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { login } from 'auth/auth.service';
+import { useHistory } from 'react-router-dom';
 import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
 import { useAuthDispatch } from 'auth/auth.context';
@@ -14,8 +16,6 @@ import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-ic
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 
-import env from 'app/app.env';
-
 const Login = () => {
   return (
     <AuthLayout>
@@ -25,6 +25,7 @@ const Login = () => {
 };
 export default Login;
 export const LoginMainSection = () => {
+  const history = useHistory();
   const dispatch = useAuthDispatch();
   const [fbLoggingIn, setFBLoggingIn] = useState<boolean>(false);
 
@@ -94,6 +95,7 @@ export const LoginMainSection = () => {
 
                     if (!error) {
                       toast('Sign in Success', { type: 'success' });
+                      history.push('/auth/connect-account');
                     } else {
                       toast('Sign in Failed', { type: 'error' });
                     }

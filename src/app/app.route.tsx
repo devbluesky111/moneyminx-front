@@ -1,5 +1,5 @@
 import React from 'react';
-import { Login } from 'auth';
+import { Login, Signup } from 'auth';
 import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
@@ -31,6 +31,7 @@ function AppRoute() {
 
         <Route exact path={'/about'} component={About} />
         <Route exact path={'/login'} component={Login} />
+        <Route exact path={'/signup'} component={Signup} />
         <Route exact path={'/notices'} component={Notice} />
         <Route exact path={'/privacy'} component={Privacy} />
         <Route exact path={'/pricing'} component={Pricing} />

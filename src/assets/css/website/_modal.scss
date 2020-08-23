@@ -4,7 +4,7 @@
 
 .mm-modal-backdrop {
   @extend .modal-backdrop;
-  background-color: lighten($color: $primary, $amount: 20);
+  background-color: transparent;
 }
 
 .modal-btn-wrapper {
@@ -12,4 +12,17 @@
   padding: 1rem;
   display: flex;
   justify-content: space-between;
+}
+
+.mm-modal-backdrop {
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.mm-modal-backdrop.in {
+  opacity: 1 !important;
+}
+
+button.hidden {
+  display: none;
 }

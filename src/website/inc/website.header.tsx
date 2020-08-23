@@ -72,9 +72,9 @@ const WebsiteHeader = () => {
                   </Link>
                 </li>
                 <li>
-                  <a className='mm-nav-link' href='/signup'>
+                  <Link className='mm-nav-link' to='/signup'>
                     <button className='mm-btn-signup btn-outline-primary mm-btn-animate'>Sign Up</button>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

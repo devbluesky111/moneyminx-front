@@ -1,9 +1,9 @@
 import { storage } from 'app/app.storage';
 import { ApiResponse } from 'api/api.types';
-import { postLogin, postRegister, postFacebookAssociation } from 'api/request.api';
+import { postLogin, postRegister, postFacebookAssociation, getRefreshedAccount } from 'api/request.api';
 
 import { auth } from './auth-context.types';
-import { LoginServicePayload, RegisterServicePayload, FBAssociationPayload } from './auth.types';
+import { LoginServicePayload, RegisterServicePayload, FBAssociationPayload, Dispatch } from './auth.types';
 
 export const login = async ({ dispatch, payload }: LoginServicePayload): Promise<ApiResponse> => {
   dispatch({ type: auth.LOGIN });
@@ -48,6 +48,21 @@ export const signup = async ({ dispatch, payload }: RegisterServicePayload): Pro
     dispatch({
       type: auth.REGISTER_SUCCESS,
       payload: { token: data.token, expires: data.expires },
+    });
+  }
+
+  return { data, error };
+};
+
+export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }): Promise<ApiResponse> => {
+  dispatch({ type: auth.PROFILE_REFRESH });
+  const { data, error } = await getRefreshedAccount();
+  if (error) {
+    dispatch({ type: auth.PROFILE_REFRESH_FAILURE });
+  } else {
+    dispatch({
+      type: auth.PROFILE_REFRESH_SUCCESS,
+      payload: { user: data },
     });
   }
 
