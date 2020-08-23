@@ -1,8 +1,8 @@
-import * as http from './http.api';
+import { ApiResponse } from 'app/app.types';
+import { RegisterPayload, ResetPasswordPayload } from 'auth/auth.types';
 
 import { urls } from './api.url';
-import { RegisterPayload } from 'auth/auth.types';
-import { ApiResponse } from 'app/app.types';
+import * as http from './http.api';
 
 export const postLogin = (payload: { email: string; password: string }) => {
   return http.post(urls.auth.LOGIN_IN, payload);
@@ -25,6 +25,14 @@ export const postRegister = (payload: RegisterPayload) => {
 
 export const postFacebookAssociation = (token: string) => {
   return http.post(urls.auth.ASSOCIATE_LOGIN, {}, false, { access_token: token });
+};
+
+export const postForgotPassword = (email: string): Promise<ApiResponse> => {
+  return http.post(urls.auth.FORGOT_PASSWORD, { email }, false);
+};
+
+export const postResetPassword = (payload: ResetPasswordPayload): Promise<ApiResponse> => {
+  return http.post(urls.auth.RESET_PASSWORD, payload, false);
 };
 
 export const getSubscription = () => {

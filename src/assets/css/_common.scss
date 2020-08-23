@@ -113,6 +113,28 @@ h6 {
     box-shadow 0.15s ease-in-out;
 }
 
+// message wrapper
+.message-container {
+  color: $white;
+  border: 1px solid $borderAlert;
+  box-shadow: 0px 2px 8px #e2e8f3;
+}
+.message-container.success {
+  background-color: $green;
+}
+
+.message-container.error {
+  background-color: $redAlert;
+}
+
+.message-wrapper {
+  padding: 1.25rem 0;
+}
+
+.icon {
+  cursor: pointer;
+}
+
 @media (max-width: $lg) {
   .mm-container-right {
     overflow: hidden;

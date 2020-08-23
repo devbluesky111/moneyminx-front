@@ -1,9 +1,13 @@
-import React from 'react';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
-
+import { postForgotPassword } from 'api/request.api';
+import { forgotPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
+
+import Message from './inc/message';
 
 const ForgotPassword = () => {
   return (
@@ -16,6 +20,17 @@ const ForgotPassword = () => {
 export default ForgotPassword;
 
 export const ForgotPasswordMainSection = () => {
+  const [status, setStatus] = useState<string>('initial');
+  const [message, setMessage] = useState<string>('');
+  const [isMessage, setIsMessage] = useState<boolean>(false);
+
+  const handleDismiss = () => {
+    setIsMessage(false);
+  };
+
+  const isErrorMessage = status === 'error' && isMessage;
+  const isSuccessMessage = status === 'success' && isMessage;
+
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -29,7 +44,7 @@ export const ForgotPasswordMainSection = () => {
             </h1>
             <ul>
               <li>Find your institutions</li>
-              <li>Connect it securily to Money Minx</li>
+              <li>Connect it securely to Money Minx</li>
               <li>Let Money Minx to the rest</li>
             </ul>
             <div className='guide-bottom'>
@@ -57,17 +72,64 @@ export const ForgotPasswordMainSection = () => {
               </div>
               <h2>Forgot Password?</h2>
               <p>Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
-              <div className='form-wrap'>
-                <form>
-                  <input type='text' id='email' name='email' value='' placeholder='Your Email' />
-                </form>
-
-                <button className='bg-primary mm-btn-primary-outline'>Reset Password</button>
-              </div>
+              <Formik
+                initialValues={{ email: '' }}
+                validationSchema={forgotPasswordValidation}
+                onSubmit={async (values, actions) => {
+                  const { error, data } = await postForgotPassword(values.email);
+                  if (error) {
+                    setStatus('error');
+                    setIsMessage(true);
+                    setMessage(error.message || '');
+                  } else {
+                    setStatus('success');
+                    setIsMessage(true);
+                    setMessage(data.message || '');
+                  }
+                  actions.setSubmitting(false);
+                }}
+              >
+                {(props) => (
+                  <div className='form-wrap'>
+                    <form onSubmit={props.handleSubmit}>
+                      <div id='email-wrap'>
+                        <input
+                          type='text'
+                          id='email'
+                          name='email'
+                          value={props.values.email}
+                          placeholder='Your Email'
+                          onChange={props.handleChange}
+                        />
+                        {props.errors.email && <div id='feedback'>{props.errors.email}</div>}
+                      </div>
+                      <button
+                        className='bg-primary mm-btn-primary-outline'
+                        type='submit'
+                        disabled={!props.isValid || props.isSubmitting}
+                      >
+                        Reset Password
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </Formik>
             </div>
           </div>
         </div>
       </div>
+
+      {isErrorMessage ? (
+        <div>
+          <Message type={status} message={message} onDismiss={handleDismiss} />
+        </div>
+      ) : null}
+
+      {isSuccessMessage ? (
+        <div>
+          <Message type={status} message={message} onDismiss={handleDismiss} />
+        </div>
+      ) : null}
     </div>
   );
 };

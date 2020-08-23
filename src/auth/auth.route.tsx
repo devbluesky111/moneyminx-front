@@ -5,25 +5,25 @@ import { Switch, Redirect, Route } from 'react-router-dom';
 import { authRouteConstants } from './authRouteConstants';
 import {
   Login,
+  Signup,
+  ExpiredLink,
   SessionExpired,
   ForgotPassword,
-  CreateNewPassword,
-  ExpiredLink,
-  Signup,
   ConnectAccount,
   AccountSetting,
+  CreateNewPassword,
 } from './views';
 
 const {
   LOGIN,
+  SIGNUP,
   NOT_FOUND,
+  EXPIRED_LINK,
   SESSION_EXPIRED,
   FORGOT_PASSWORD,
-  CREATE_NEW_PASSWORD,
-  EXPIRED_LINK,
-  SIGNUP,
   CONNECT_ACCOUNT,
   ACCOUNT_SETTING,
+  CREATE_NEW_PASSWORD,
 } = authRouteConstants;
 const AuthRoute = () => {
   return (

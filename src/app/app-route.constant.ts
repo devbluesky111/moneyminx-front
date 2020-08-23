@@ -1,13 +1,15 @@
 export const appRouteConstants = {
   home: '/',
   auth: {
-    def: '/auth',
-    me: '/auth/me',
-    login: '/auth/login',
-    signup: '/auth/signup',
-    logout: '/auth/logout',
+    DEF: '/auth',
+    ME: '/auth/me',
+    LOGIN: '/auth/login',
+    SIGNUP: '/auth/signup',
+    LOGOUT: '/auth/logout',
+    RESET_PASSWORD: '/password_reset/:token',
+    TOKEN_EXPIRED: '/password/token-expired',
   },
   misc: {
-    notFound: '/404',
+    NOT_FOUND: '/404',
   },
 };

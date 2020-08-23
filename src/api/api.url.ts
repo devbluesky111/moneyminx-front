@@ -9,6 +9,8 @@ export const urls = {
     FACEBOOK_LOGIN: '/facebook/login',
     ASSOCIATE_LOGIN: '/facebook/associate',
     PROFILE_REFRESH: '/account/me?refresh=true',
+    RESET_PASSWORD: '/profile/password/reset',
+    FORGOT_PASSWORD: '/profile/password/forgot',
   },
   subscription: {
     SUB: '/subscription/stripe/subscriptions',
