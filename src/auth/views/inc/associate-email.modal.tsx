@@ -8,7 +8,7 @@ interface Props {
 }
 const AssociateEmailModal: React.FC<Props> = ({ associateModal, message, handleSuccess }) => {
   return (
-    <Modal {...associateModal} open={true} title='' onSuccess={handleSuccess}>
+    <Modal {...associateModal} title='' onSuccess={handleSuccess} size='sm'>
       <div className='modal-wrapper modal-sm'>
         <h4>Existing Account Found</h4>
         <p>

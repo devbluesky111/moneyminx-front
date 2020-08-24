@@ -50,7 +50,9 @@ export const LoginMainSection = () => {
         <div className='row login-wrapper'>
           <div className='guide-content'>
             <div className='logo-img-wrap'>
-              <LogoImg />
+              <Link to='/'>
+                <LogoImg className='icon' />
+              </Link>
             </div>
             <h1>
               <span className='block'>Three easy steps to get </span>started with Money Minx

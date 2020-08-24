@@ -142,7 +142,7 @@ export const SignupMainSection = () => {
                             name='email'
                             placeholder='Email'
                           />
-                          {props.errors.email && <div className='feedback signup'>{props.errors.email}</div>}
+                          {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
                         </div>
                         <div className='password-wrap'>
                           <input
@@ -154,7 +154,7 @@ export const SignupMainSection = () => {
                             name='password'
                             placeholder='Password'
                           />
-                          {props.errors.password && <div className='feedback signup'>{props.errors.password}</div>}
+                          {props.errors.password && <div className='feedback'>{props.errors.password}</div>}
                           <span className='visibility-icon'>
                             <LoginVisibilityIcon onClick={() => setVisible(!visible)} />
                           </span>
@@ -197,7 +197,7 @@ export const SignupMainSection = () => {
                         <button
                           className='bg-primary mm-btn-primary-outline'
                           type='submit'
-                          disabled={!props.isValid && props.isSubmitting}
+                          disabled={!props.isValid || props.isSubmitting}
                         >
                           Sign Up
                         </button>

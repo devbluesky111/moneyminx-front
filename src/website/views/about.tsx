@@ -8,6 +8,7 @@ import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.sv
 import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
 import { ReactComponent as OwnerTwitterIcon } from 'assets/images/about/owner-twitter-icon.svg';
+import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
@@ -40,8 +41,9 @@ export const AboutTopSection = () => {
               ultra wealthy, Money Minx aims to transform the way every day investors track and see their investments -
               and in turn plan for bright futures.
             </p>
-
-            <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Get Started</button>
+            <Link to='/signup'>
+              <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Get Started</button>
+            </Link>
             <p className='info-text'>No credit card needed.</p>
           </div>
         </div>
