@@ -14,7 +14,7 @@ const Modal: React.FC<Props> = ({ title, children, open, backdrop = true, onClos
   const classNames = `${backdrop ? 'modal mm-modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
   return (
     <div className={classNames} tabIndex={-1} role='dialog' aria-hidden='true'>
-      <div className='modal-dialog modal-dialog-centered modal-lg' role='document'>
+      <div className='modal-dialog modal-dialog-centered modal-md' role='document'>
         <div className='modal-content'>
           <div className='modal-header'>
             <h5 className='modal-title'>{title}</h5>

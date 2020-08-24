@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
 import { groupByProviderName } from 'auth/auth.helper';
 import { getRefreshedProfile } from 'auth/auth.service';
+import { ConnectAccountStepsSection } from './inc/connect-steps';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { useAuthState, useAuthDispatch } from 'auth/auth.context';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ChaseLogo } from 'assets/images/signup/chase.svg';
+
 import { ReactComponent as UsBankLogo } from 'assets/images/signup/usbank.svg';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
@@ -132,6 +134,7 @@ export const AccountSettingMainSection = () => {
           </div>
         </div>
       </div>
+      <ConnectAccountStepsSection />
     </div>
   );
 };

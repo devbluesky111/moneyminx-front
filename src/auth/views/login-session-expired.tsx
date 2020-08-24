@@ -64,10 +64,10 @@ export const LoginSessionExpiredMainSection = () => {
               </div>
               <div className='form-wrap'>
                 <form>
-                  <input type='text' id='email' name='email' value='' placeholder='Email' />
+                  <input type='text' className='email' name='email' value='' placeholder='Email' />
 
-                  <div id='password-wrap'>
-                    <input type='Password' id='password' name='password' value='' placeholder='Password' />
+                  <div className='password-wrap'>
+                    <input type='Password' className='password' name='password' value='' placeholder='Password' />
                     <span className='visibility-icon'>
                       <LoginVisibilityIcon />
                     </span>

@@ -133,37 +133,29 @@ export const SignupMainSection = () => {
                   {(props) => {
                     return (
                       <form onSubmit={props.handleSubmit}>
-                        <div id='email-wrap'>
+                        <div className='email-wrap'>
                           <input
                             type='email'
-                            id='email'
+                            className='email'
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                             value={props.values.email}
                             name='email'
                             placeholder='Email'
                           />
-                          {props.errors.email && (
-                            <div id='feedback' className='signup'>
-                              {props.errors.email}
-                            </div>
-                          )}
+                          {props.errors.email && <div className='feedback signup'>{props.errors.email}</div>}
                         </div>
-                        <div id='password-wrap'>
+                        <div className='password-wrap'>
                           <input
                             type={visible ? 'text' : 'password'}
-                            id='password'
+                            className='password'
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                             value={props.values.password}
                             name='password'
                             placeholder='Password'
                           />
-                          {props.errors.password && (
-                            <div id='feedback' className='signup'>
-                              {props.errors.password}
-                            </div>
-                          )}
+                          {props.errors.password && <div className='feedback signup'>{props.errors.password}</div>}
                           <span className='visibility-icon'>
                             <LoginVisibilityIcon onClick={() => setVisible(!visible)} />
                           </span>
@@ -174,7 +166,7 @@ export const SignupMainSection = () => {
                               I accept the <Link to='/terms'>Terms of Service</Link>
                               <input
                                 type='checkbox'
-                                id='terms'
+                                className='terms'
                                 name='termsAccepted'
                                 aria-checked={props.values.termsAccepted}
                                 checked={props.values.termsAccepted}
@@ -190,7 +182,7 @@ export const SignupMainSection = () => {
                               Sign up for the newsletter
                               <input
                                 type='checkbox'
-                                id='newsletter-checkbox'
+                                className='newsletter-checkbox'
                                 name='mailChimpSubscription'
                                 placeholder=''
                                 aria-checked={props.values.mailChimpSubscription}
@@ -242,6 +234,7 @@ export const SignupMainSection = () => {
           </div>
         </div>
       </div>
+
       <AssociateEmailModal
         message={associateMessage}
         associateModal={associateModal.props}

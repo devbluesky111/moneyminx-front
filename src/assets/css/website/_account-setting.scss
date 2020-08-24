@@ -573,3 +573,80 @@ span.form-subheading {
     margin-left: -28px;
   }
 }
+
+//Newly added
+
+ul.weekday,
+ul.weekdate {
+  display: table;
+  width: 100%;
+  padding-left: 0;
+
+  li {
+    float: left;
+    width: 14.28%;
+    display: table-cell;
+    color: $white;
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 3px;
+  }
+
+  li.active {
+    background: $primary;
+    border-radius: 3px;
+  }
+}
+
+.weekday li {
+  color: $gray !important;
+}
+
+.weekdate li {
+  margin-bottom: 4px;
+}
+
+.calender-wrap {
+  max-width: 301px;
+  background: $darkBg;
+  padding: 21px 17px 1px;
+  border-radius: 6px;
+  box-shadow: 0px 4px 28px rgba(8, 24, 51, 0.44);
+  position: relative;
+
+  &::before {
+    position: absolute;
+    left: 26px;
+    top: -7px;
+    z-index: 999;
+    border-color: black transparent;
+    border-style: solid;
+    border-width: 0px 9px 9px 9px;
+    height: 0px;
+    width: 0px;
+    content: '';
+  }
+}
+.calender-header h2 {
+  font-size: 0.87rem;
+  color: #fff;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+span.prev-icon {
+  position: absolute;
+  left: 11px;
+  top: -1px;
+}
+span.next-icon {
+  position: absolute;
+  right: 11px;
+  top: -1px;
+  transform: rotate(180deg);
+}
+
+.next-icon.active path {
+  stroke: $gray;
+}

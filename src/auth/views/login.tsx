@@ -102,29 +102,29 @@ export const LoginMainSection = () => {
                 >
                   {(props) => (
                     <form onSubmit={props.handleSubmit}>
-                      <div id='email-wrap'>
+                      <div className='email-wrap'>
                         <input
                           type='email'
-                          id='email'
+                          className='email'
                           onChange={props.handleChange}
                           onBlur={props.handleBlur}
                           value={props.values.email}
                           name='email'
                           placeholder='Email'
                         />
-                        {props.errors.email && <div id='feedback'>{props.errors.email}</div>}
+                        {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
                       </div>
-                      <div id='password-wrap'>
+                      <div className='password-wrap'>
                         <input
                           type='password'
-                          id='password'
+                          className='password'
                           onChange={props.handleChange}
                           onBlur={props.handleBlur}
                           value={props.values.password}
                           name='password'
                           placeholder='Password'
                         />
-                        {props.errors.password && <div id='feedback'>{props.errors.password}</div>}
+                        {props.errors.password && <div className='feedback'>{props.errors.password}</div>}
                         <span className='visibility-icon'>
                           <LoginVisibilityIcon />
                         </span>

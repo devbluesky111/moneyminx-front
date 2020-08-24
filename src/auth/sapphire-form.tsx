@@ -33,14 +33,14 @@ export const SapphireFormSection = () => {
         <form onSubmit={props.handleSubmit}>
           <input
             type='email'
-            id='email'
+            className='email'
             onChange={props.handleChange}
             onBlur={props.handleBlur}
             value={props.values.email}
             name='email'
             placeholder='Sapphire Credit Card'
           />
-          {props.errors.email && <div id='feedback'>{props.errors.email}</div>}
+          {props.errors.email && <div className='feedback card-list'>{props.errors.email}</div>}
           <div className='account-category'>
             <span className='form-subheading'>
               Account Category
@@ -64,7 +64,7 @@ export const SapphireFormSection = () => {
             <ul className='account-type-list'>
               <li>
                 <span className='form-subheading'>Account Type</span>
-                <select name='retirement' id='retirement'>
+                <select name='retirement' className='retirement'>
                   <option value='retirement'>Retirement</option>
                   <option value='retirement'>Retirement</option>
                 </select>
@@ -72,7 +72,7 @@ export const SapphireFormSection = () => {
               <li>
                 <div className='account-list-content'>
                   <span className='form-subheading'>Account Subtype</span>
-                  <select name='401k' id='401k'>
+                  <select name='401k' className='401k'>
                     <option value='401k'>401k</option>
                     <option value='401k'>401k</option>
                   </select>
@@ -80,7 +80,7 @@ export const SapphireFormSection = () => {
               </li>
               <li>
                 <span className='form-subheading'>Currency</span>
-                <select name='USD' id='USD'>
+                <select name='USD' className='USD'>
                   <option value='USD'>USD</option>
                   <option value='USD'>USD</option>
                 </select>

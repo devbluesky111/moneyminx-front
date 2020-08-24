@@ -8,15 +8,21 @@ interface Props {
 }
 const AssociateEmailModal: React.FC<Props> = ({ associateModal, message, handleSuccess }) => {
   return (
-    <Modal {...associateModal} title='Associate with Facebook' onSuccess={handleSuccess}>
-      <h4>{message}</h4>
-      <div className='modal-btn-wrapper'>
-        <button className='mm-btn bg-primary mm-btn-primary-outline text-white' onClick={handleSuccess}>
-          Yes
-        </button>
-        <button className='mm-btn btn-warning' onClick={() => associateModal.close()}>
-          No
-        </button>
+    <Modal {...associateModal} open={true} title='' onSuccess={handleSuccess}>
+      <div className='modal-wrapper modal-sm'>
+        <h4>Existing Account Found</h4>
+        <p>
+          Looks like you are trying to sign in with a new login method. Do you want to associate your xxxx with your
+          yyyy account?
+        </p>
+        <div className='modal-btn-wrapper'>
+          <button className='mm-btn bg-primary mm-btn-primary-outline text-white' onClick={handleSuccess}>
+            Yes, I want 1 account
+          </button>
+        </div>
+        <div className='create-new-btn text-center'>
+          <a href='/signup'>Create a new account instead</a>
+        </div>
       </div>
     </Modal>
   );

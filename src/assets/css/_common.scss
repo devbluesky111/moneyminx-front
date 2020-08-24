@@ -131,6 +131,12 @@ h6 {
   padding: 1.25rem 0;
 }
 
+#fastlinkContainer {
+  iframe {
+    height: 600px !important;
+  }
+}
+
 .icon {
   cursor: pointer;
 }
