@@ -32,7 +32,6 @@ export const SignupMainSection = () => {
   const dispatch = useAuthDispatch();
   const [fbToken, setFBToken] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
-  const [fbLoggingIn, setFBLoggingIn] = useState<boolean>(false);
   const [associateMessage, setAssociateMessage] = useState<string>('');
 
   const responseFacebook = async (response: any) => {
@@ -211,17 +210,22 @@ export const SignupMainSection = () => {
                   <p>
                     Or, sign up with:
                     <div className='fb-icon-wrap'>
-                      {fbLoggingIn ? (
-                        <FacebookLogin
-                          autoLoad={true}
-                          reAuthenticate={true}
-                          appId={env.FACEBOOK_APP_ID || ''}
-                          callback={responseFacebook}
-                          buttonStyle={{ display: 'none' }}
-                        />
-                      ) : null}
-
-                      <LoginFacebookIcon onClick={() => setFBLoggingIn(true)} className='fb-login-icon' />
+                      <FacebookLogin
+                        authType='reauthenticate'
+                        textButton=''
+                        fields='email'
+                        isMobile={false}
+                        autoLoad={false}
+                        reAuthenticate={true}
+                        callback={responseFacebook}
+                        scope='public_profile,email'
+                        icon={<LoginFacebookIcon />}
+                        appId={env.FACEBOOK_APP_ID || ''}
+                        buttonStyle={{
+                          background: 'transparent',
+                          padding: 0,
+                        }}
+                      />
                     </div>
                   </p>
                 </div>

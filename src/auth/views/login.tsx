@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
@@ -27,6 +27,7 @@ export default Login;
 export const LoginMainSection = () => {
   const history = useHistory();
   const dispatch = useAuthDispatch();
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
   useGetSubscription();
 
@@ -116,17 +117,17 @@ export const LoginMainSection = () => {
                       </div>
                       <div className='password-wrap'>
                         <input
-                          type='password'
-                          className='password'
-                          onChange={props.handleChange}
-                          onBlur={props.handleBlur}
-                          value={props.values.password}
                           name='password'
+                          className='password'
                           placeholder='Password'
+                          onBlur={props.handleBlur}
+                          onChange={props.handleChange}
+                          value={props.values.password}
+                          type={passwordVisible ? 'text' : 'password'}
                         />
                         {props.errors.password && <div className='feedback'>{props.errors.password}</div>}
                         <span className='visibility-icon'>
-                          <LoginVisibilityIcon />
+                          <LoginVisibilityIcon onClick={() => setPasswordVisible(!passwordVisible)} />
                         </span>
                       </div>
                       <p>
