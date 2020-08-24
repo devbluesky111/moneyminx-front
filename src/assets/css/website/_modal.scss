@@ -1,3 +1,11 @@
+.modal-md {
+  max-width: 696px;
+}
+
+.modal-sm {
+  max-width: 431px;
+}
+
 .modal-show {
   display: block;
 }
@@ -25,4 +33,96 @@
 
 button.hidden {
   display: none;
+}
+
+//Associate modal
+.modal-body {
+  padding-top: 0;
+}
+.modal-content {
+  border: none;
+  background: #ffffff;
+  box-shadow: 2px 2px 16px #c2c9d6, inset 0px -1px 0px #ebecf1;
+  border-radius: 6px;
+  margin: 0 auto;
+  padding: 30px 25px;
+}
+
+.modal-wrapper .modal-btn-wrapper {
+  padding: 0px;
+  margin: 0px;
+}
+
+.modal-wrapper .modal-btn-wrapper button {
+  width: 100%;
+  display: block;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+}
+
+.modal-wrapper p {
+  font-size: 1rem !important;
+  color: $gray;
+}
+
+.modal-wrapper .create-new-btn a {
+  font-size: 0.87rem;
+  color: $gray;
+  text-align: center;
+  margin-top: 28px;
+  display: inline-block;
+  font-weight: 400;
+}
+
+//signup modal
+
+.modal-wrapper.signup-modal .modal-btn-wrapper button {
+  display: inline-block;
+  width: auto;
+  padding: 11px 22px;
+  border-radius: 4px;
+}
+.modal-header {
+  padding: 0;
+}
+.signup-done-modal-logo {
+  margin-bottom: 32px;
+}
+.modal-wrapper.signup-modal h4 {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 25px;
+}
+.modal-wrapper.signup-modal .modal-btn-wrapper {
+  padding: 0px;
+  margin: 0px;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+.modal-wrapper.signup-modal .modal-btn-wrapper button {
+  margin-right: 40px;
+}
+
+@media (max-width: $sm) {
+  .modal-wrapper.signup-modal .modal-btn-wrapper {
+    display: block;
+    width: 100%;
+  }
+  .modal-wrapper.signup-modal .modal-btn-wrapper button {
+    margin-right: 0;
+    width: 100%;
+  }
+  .modal-content {
+    padding: 40px 12px;
+  }
+  .modal-dialog {
+    width: 94%;
+  }
 }

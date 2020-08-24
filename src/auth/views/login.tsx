@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
@@ -27,6 +27,7 @@ export default Login;
 export const LoginMainSection = () => {
   const history = useHistory();
   const dispatch = useAuthDispatch();
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
   useGetSubscription();
 
@@ -49,7 +50,9 @@ export const LoginMainSection = () => {
         <div className='row login-wrapper'>
           <div className='guide-content'>
             <div className='logo-img-wrap'>
-              <LogoImg />
+              <Link to='/'>
+                <LogoImg className='icon' />
+              </Link>
             </div>
             <h1>
               <span className='block'>Three easy steps to get </span>started with Money Minx
@@ -102,31 +105,31 @@ export const LoginMainSection = () => {
                 >
                   {(props) => (
                     <form onSubmit={props.handleSubmit}>
-                      <div id='email-wrap'>
+                      <div className='email-wrap'>
                         <input
                           type='email'
-                          id='email'
+                          className='email'
                           onChange={props.handleChange}
                           onBlur={props.handleBlur}
                           value={props.values.email}
                           name='email'
                           placeholder='Email'
                         />
-                        {props.errors.email && <div id='feedback'>{props.errors.email}</div>}
+                        {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
                       </div>
-                      <div id='password-wrap'>
+                      <div className='password-wrap'>
                         <input
-                          type='password'
-                          id='password'
-                          onChange={props.handleChange}
-                          onBlur={props.handleBlur}
-                          value={props.values.password}
                           name='password'
+                          className='password'
                           placeholder='Password'
+                          onBlur={props.handleBlur}
+                          onChange={props.handleChange}
+                          value={props.values.password}
+                          type={passwordVisible ? 'text' : 'password'}
                         />
-                        {props.errors.password && <div id='feedback'>{props.errors.password}</div>}
+                        {props.errors.password && <div className='feedback'>{props.errors.password}</div>}
                         <span className='visibility-icon'>
-                          <LoginVisibilityIcon />
+                          <LoginVisibilityIcon onClick={() => setPasswordVisible(!passwordVisible)} />
                         </span>
                       </div>
                       <p>

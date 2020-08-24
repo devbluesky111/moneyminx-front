@@ -32,7 +32,6 @@ export const SignupMainSection = () => {
   const dispatch = useAuthDispatch();
   const [fbToken, setFBToken] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
-  const [fbLoggingIn, setFBLoggingIn] = useState<boolean>(false);
   const [associateMessage, setAssociateMessage] = useState<string>('');
 
   const responseFacebook = async (response: any) => {
@@ -133,37 +132,29 @@ export const SignupMainSection = () => {
                   {(props) => {
                     return (
                       <form onSubmit={props.handleSubmit}>
-                        <div id='email-wrap'>
+                        <div className='email-wrap'>
                           <input
                             type='email'
-                            id='email'
+                            className='email'
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                             value={props.values.email}
                             name='email'
                             placeholder='Email'
                           />
-                          {props.errors.email && (
-                            <div id='feedback' className='signup'>
-                              {props.errors.email}
-                            </div>
-                          )}
+                          {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
                         </div>
-                        <div id='password-wrap'>
+                        <div className='password-wrap'>
                           <input
                             type={visible ? 'text' : 'password'}
-                            id='password'
+                            className='password'
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                             value={props.values.password}
                             name='password'
                             placeholder='Password'
                           />
-                          {props.errors.password && (
-                            <div id='feedback' className='signup'>
-                              {props.errors.password}
-                            </div>
-                          )}
+                          {props.errors.password && <div className='feedback'>{props.errors.password}</div>}
                           <span className='visibility-icon'>
                             <LoginVisibilityIcon onClick={() => setVisible(!visible)} />
                           </span>
@@ -174,7 +165,7 @@ export const SignupMainSection = () => {
                               I accept the <Link to='/terms'>Terms of Service</Link>
                               <input
                                 type='checkbox'
-                                id='terms'
+                                className='terms'
                                 name='termsAccepted'
                                 aria-checked={props.values.termsAccepted}
                                 checked={props.values.termsAccepted}
@@ -190,7 +181,7 @@ export const SignupMainSection = () => {
                               Sign up for the newsletter
                               <input
                                 type='checkbox'
-                                id='newsletter-checkbox'
+                                className='newsletter-checkbox'
                                 name='mailChimpSubscription'
                                 placeholder=''
                                 aria-checked={props.values.mailChimpSubscription}
@@ -206,7 +197,7 @@ export const SignupMainSection = () => {
                         <button
                           className='bg-primary mm-btn-primary-outline'
                           type='submit'
-                          disabled={!props.isValid && props.isSubmitting}
+                          disabled={!props.isValid || props.isSubmitting}
                         >
                           Sign Up
                         </button>
@@ -219,17 +210,22 @@ export const SignupMainSection = () => {
                   <p>
                     Or, sign up with:
                     <div className='fb-icon-wrap'>
-                      {fbLoggingIn ? (
-                        <FacebookLogin
-                          autoLoad={true}
-                          reAuthenticate={true}
-                          appId={env.FACEBOOK_APP_ID || ''}
-                          callback={responseFacebook}
-                          buttonStyle={{ display: 'none' }}
-                        />
-                      ) : null}
-
-                      <LoginFacebookIcon onClick={() => setFBLoggingIn(true)} className='fb-login-icon' />
+                      <FacebookLogin
+                        authType='reauthenticate'
+                        textButton=''
+                        fields='email'
+                        isMobile={false}
+                        autoLoad={false}
+                        reAuthenticate={true}
+                        callback={responseFacebook}
+                        scope='public_profile,email'
+                        icon={<LoginFacebookIcon />}
+                        appId={env.FACEBOOK_APP_ID || ''}
+                        buttonStyle={{
+                          background: 'transparent',
+                          padding: 0,
+                        }}
+                      />
                     </div>
                   </p>
                 </div>
@@ -242,6 +238,7 @@ export const SignupMainSection = () => {
           </div>
         </div>
       </div>
+
       <AssociateEmailModal
         message={associateMessage}
         associateModal={associateModal.props}

@@ -92,16 +92,16 @@ export const ForgotPasswordMainSection = () => {
                 {(props) => (
                   <div className='form-wrap'>
                     <form onSubmit={props.handleSubmit}>
-                      <div id='email-wrap'>
+                      <div className='email-wrap'>
                         <input
                           type='text'
-                          id='email'
+                          className='email'
                           name='email'
                           value={props.values.email}
                           placeholder='Your Email'
                           onChange={props.handleChange}
                         />
-                        {props.errors.email && <div id='feedback'>{props.errors.email}</div>}
+                        {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
                       </div>
                       <button
                         className='bg-primary mm-btn-primary-outline'

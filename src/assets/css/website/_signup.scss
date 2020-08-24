@@ -22,12 +22,16 @@
 .form-wrap .checkbox-item label {
   margin-bottom: 0;
 }
-#feedback.signup {
+.feedback.signup {
   position: absolute;
   right: -46%;
   top: 7%;
   width: 40%;
   color: $yellow;
+}
+.feedback.card-list {
+  margin-bottom: 15px;
+  margin-top: -15px;
 }
 .form-wrap .checkbox-item .check-box {
   display: block;
@@ -74,7 +78,7 @@
 }
 
 @media (max-width: $sm) {
-  #feedback.signup {
+  .feedback.signup {
     position: static;
     display: block;
     text-align: right;

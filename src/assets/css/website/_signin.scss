@@ -116,9 +116,14 @@
   max-width: 450px;
   padding-left: 100px;
 }
-.credintials-content input#email {
+.credintials-content input.email {
   margin: 0 0 31px;
 }
+
+.form-wrap .bg-primary.mm-btn-primary-outline {
+  background: #271ee5 !important;
+}
+
 span.forgot-pass {
   font-size: 0.875rem;
   color: $purple;
@@ -314,7 +319,7 @@ ul.footer-list li {
 }
 
 //Recently Added
-#password-wrap {
+.password-wrap {
   position: relative;
 }
 
@@ -324,14 +329,15 @@ span.visibility-icon {
   right: 20px;
   cursor: pointer;
 }
-#email-wrap #feedback {
+.email-wrap .feedback {
   margin-top: -17px;
   margin-bottom: 15px;
 }
-#feedback {
+.feedback {
   font-size: 0.75rem;
   font-weight: 500;
+  color: $red;
 }
-#password-wrap #feedback {
+.password-wrap .feedback {
   margin-top: 11px;
 }

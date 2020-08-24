@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 import { storage } from 'app/app.storage';
-import { StorageKey } from 'app/app.types';
 import { STATUS_CODE } from 'app/app.status';
 import { refreshAccessToken } from 'api/request.api';
 import { withError, withData } from 'common/common-helper';
@@ -45,11 +44,9 @@ axiosInstance.interceptors.response.use(
 
     const status = error.response?.status;
 
-    const isSignedIn = storage.get(StorageKey.AUTH).data;
-
     const errorResponse = error.response?.data ? error.response.data : error;
 
-    if (status === STATUS_CODE.UNAUTHORIZED && isSignedIn) {
+    if (status === STATUS_CODE.UNAUTHORIZED) {
       storage.clear();
       window.location.replace('/login');
       return withError(errorResponse);
