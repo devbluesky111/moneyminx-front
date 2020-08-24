@@ -8,5 +8,5 @@ export const authRouteConstants = {
   EXPIRED_LINK: '/auth/expired-link',
   SIGNUP: '/auth/signup',
   CONNECT_ACCOUNT: '/auth/connect-account',
-  ACCOUNT_SETTING: '/auth/account-setting',
+  ACCOUNT_SETTING: '/auth/account-settings',
 };
