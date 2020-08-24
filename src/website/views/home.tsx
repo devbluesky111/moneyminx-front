@@ -221,18 +221,24 @@ export const HomeBlogSection = () => {
 
           <ul>
             {blogs.map((blog: any, index: number) => {
+              const span = document.createElement('span');
+              span.innerHTML = blog?.title?.rendered;
+              const title = span.textContent || span.innerText;
+              span.innerHTML = blog?.excerpt?.rendered;
+              const excerpt = span.textContent || span.innerText;
+
               return (
                 <li key={index}>
                   <div className='blog-content'>
                     <div className='blog-img'>
-                      <img alt={blog?.slug} src={blog?.featured_image_src || HomeBlogImgOne} />
+                      <img alt={blog?.slug} src={blog?.jetpack_featured_media_url || HomeBlogImgOne} />
                     </div>
                     <h2>
                       <a href={blog?.link || '/'} target='_blank' rel='noopener noreferrer'>
-                        {blog?.title.rendered || ''}
+                        {title || ''}
                       </a>
                     </h2>
-                    <p dangerouslySetInnerHTML={{ __html: blog?.excerpt.rendered || '' }} />
+                    <p>{excerpt}</p>
                   </div>
                 </li>
               );

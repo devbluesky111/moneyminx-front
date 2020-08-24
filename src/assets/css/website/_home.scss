@@ -156,10 +156,15 @@
 
 .home-blog-section .blog-content h2 {
   font-size: 2rem;
-  line-height: 2.56rem;
-  letter-spacing: 0.02em;
   font-weight: 200;
+  overflow: hidden;
   margin-bottom: 18px;
+  line-height: 2.56rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
 }
 
 .home-blog-section .blog-content {
@@ -189,6 +194,16 @@
 .blog-content-right button:hover {
   background: $white !important;
   border-color: $primary !important;
+}
+
+.blog-content {
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
 }
 
 //allocation section
