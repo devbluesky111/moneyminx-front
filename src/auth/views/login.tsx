@@ -10,7 +10,6 @@ import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
 import { appRouteConstants } from 'app/app-route.constant';
 import { loginValidationSchema } from 'auth/auth.validation';
-import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
@@ -29,8 +28,6 @@ export const LoginMainSection = () => {
   const history = useHistory();
   const dispatch = useAuthDispatch();
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-
-  useGetSubscription();
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
