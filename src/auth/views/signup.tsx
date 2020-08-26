@@ -129,7 +129,7 @@ export const SignupMainSection = () => {
                       toast('Signup Success', { type: 'success' });
                       history.push('/auth/connect-account');
                     } else {
-                      toast('Sign up failed', { type: 'error' });
+                      actions.setFieldError('password', error?.message || 'Sign up failed');
                     }
                   }}
                 >
