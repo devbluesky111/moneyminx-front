@@ -329,15 +329,22 @@ span.visibility-icon {
   right: 20px;
   cursor: pointer;
 }
+
 .email-wrap .feedback {
   margin-top: -17px;
   margin-bottom: 15px;
 }
+
 .feedback {
   font-size: 0.75rem;
   font-weight: 500;
   color: $red;
 }
+
 .password-wrap .feedback {
   margin-top: 11px;
+}
+
+.password-wrap.confirm .feedback {
+  margin-top: -17px;
 }
