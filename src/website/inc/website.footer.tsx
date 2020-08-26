@@ -20,6 +20,7 @@ interface ListType {
   list: {
     name: string;
     link: string;
+    external?: boolean;
   }[];
 }
 
@@ -30,9 +31,15 @@ interface Data {
 const List = ({ data }: Data) => {
   const list = data.list.map((item, idx) => (
     <p key={idx} className='light'>
-      <Link to={item.link} className='text-white'>
-        {item.name}
-      </Link>
+      {item.external ? (
+        <a href={item.link} target='_blank' rel='noopener noreferrer' className='text-white'>
+          {item.name}
+        </a>
+      ) : (
+        <Link to={item.link} className='text-white'>
+          {item.name}
+        </Link>
+      )}
     </p>
   ));
   return (

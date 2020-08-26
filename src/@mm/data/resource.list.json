@@ -3,11 +3,13 @@
   "list": [
     {
       "name": "Learn To Invest",
-      "link": "/learn-to-invest"
+      "link": "https://velocity.moneyminx.com",
+      "external": true
     },
     {
       "name": "Security",
-      "link": "/security"
+      "link": "/w/security",
+      "external": false
     }
   ]
 }
