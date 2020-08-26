@@ -5,14 +5,14 @@ import FastLinkModal from 'yodlee/fast-link.modal';
 import { Link, useHistory } from 'react-router-dom';
 import useGetFastlink from 'auth/hooks/useGetFastlink';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
-import { authRouteConstants } from 'auth/authRouteConstants';
-import { ConnectAccountStepsSection } from './inc/connect-steps';
+import { appRouteConstants } from 'app/app-route.constant';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
-
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
+
+import { ConnectAccountStepsSection } from './inc/connect-steps';
 
 const ConnectAccount = () => {
   return (
@@ -32,7 +32,7 @@ export const ConnectAccountMainSection = () => {
   };
 
   const handleConnectAccountSuccess = () => {
-    history.push(authRouteConstants.ACCOUNT_SETTING);
+    history.push(appRouteConstants.auth.ACCOUNT_SETTING);
   };
 
   if (loading || error || !data) {

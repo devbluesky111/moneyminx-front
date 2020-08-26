@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 import { login } from 'auth/auth.service';
 import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
 import { useHistory, Link } from 'react-router-dom';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
+import { appRouteConstants } from 'app/app-route.constant';
 import { loginValidationSchema } from 'auth/auth.validation';
 import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -97,7 +98,7 @@ export const LoginMainSection = () => {
 
                     if (!error) {
                       toast('Sign in Success', { type: 'success' });
-                      history.push('/auth/connect-account');
+                      history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                     } else {
                       toast('Sign in Failed', { type: 'error' });
                     }

@@ -8,6 +8,8 @@ export const appRouteConstants = {
     LOGOUT: '/auth/logout',
     RESET_PASSWORD: '/password_reset/:token?',
     TOKEN_EXPIRED: '/password/token-expired',
+    CONNECT_ACCOUNT: '/connect-account',
+    ACCOUNT_SETTING: '/account-settings',
   },
   misc: {
     NOT_FOUND: '/404',
