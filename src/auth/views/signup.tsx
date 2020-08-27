@@ -16,6 +16,7 @@ import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-ic
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 
+import EmailNeededModal from './inc/email-needed.modal';
 import AssociateEmailModal from './inc/associate-email.modal';
 
 const Signup = () => {
@@ -29,6 +30,7 @@ export default Signup;
 export const SignupMainSection = () => {
   const history = useHistory();
   const associateModal = useModal();
+  const emailNeededModal = useModal();
   const dispatch = useAuthDispatch();
   const [fbToken, setFBToken] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
@@ -37,6 +39,7 @@ export const SignupMainSection = () => {
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
       setFBToken(response.accessToken);
+
       const { error } = await postFacebookLogin({
         accessToken: response.accessToken,
         mailChimpSubscription: true,
@@ -45,10 +48,16 @@ export const SignupMainSection = () => {
 
       if (!error) {
         toast('Successfully logged in', { type: 'success' });
-      }
-      if (error.statusCode === 409 && error.message) {
-        setAssociateMessage(error.message);
-        associateModal.open();
+        history.push('/connect-account');
+      } else {
+        if (error.statusCode === 400 && error.message) {
+          emailNeededModal.open();
+        }
+
+        if (error.statusCode === 409 && error.message) {
+          setAssociateMessage(error.message);
+          associateModal.open();
+        }
       }
     }
   };
@@ -123,7 +132,7 @@ export const SignupMainSection = () => {
 
                     if (!error) {
                       toast('Signup Success', { type: 'success' });
-                      history.push('/auth/connect-account');
+                      history.push('/connect-account');
                     } else {
                       toast('Sign up failed', { type: 'error' });
                     }
@@ -211,7 +220,7 @@ export const SignupMainSection = () => {
                     Or, sign up with:
                     <div className='fb-icon-wrap'>
                       <FacebookLogin
-                        authType='reauthenticate'
+                        authType='rerequest'
                         textButton=''
                         fields='email'
                         isMobile={false}
@@ -244,6 +253,8 @@ export const SignupMainSection = () => {
         associateModal={associateModal.props}
         handleSuccess={handleFacebookAssociation}
       />
+
+      <EmailNeededModal emailNeededModal={emailNeededModal} />
     </div>
   );
 };

@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { login } from 'auth/auth.service';
+import React, { useState } from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
+import { useModal } from 'common/components/modal';
 import { useHistory, Link } from 'react-router-dom';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
 import { loginValidationSchema } from 'auth/auth.validation';
 import useGetSubscription from 'auth/hooks/useGetSubscription';
+import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
+
+import EmailNeededModal from './inc/email-needed.modal';
+import AssociateEmailModal from './inc/associate-email.modal';
 
 const Login = () => {
   return (
@@ -23,25 +27,54 @@ const Login = () => {
     </AuthLayout>
   );
 };
+
 export default Login;
+
 export const LoginMainSection = () => {
   const history = useHistory();
+  const associateModal = useModal();
   const dispatch = useAuthDispatch();
+  const emailNeededModal = useModal();
+  const [fbToken, setFBToken] = useState<string>('');
+  const [associateMessage, setAssociateMessage] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
   useGetSubscription();
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
+      setFBToken(response.accessToken);
       const { error } = await postFacebookLogin({
         accessToken: response.accessToken,
         mailChimpSubscription: true,
         subscriptionPriceId: 'price_1H9iXSAjc68kwXCHsFEhWShL',
       });
+
       if (!error) {
+        history.push('/connect-account');
         toast('Successfully logged in', { type: 'success' });
+      } else {
+        if (error?.statusCode === 400 && error?.message) {
+          emailNeededModal.open();
+        }
+
+        if (error?.statusCode === 409 && error?.message) {
+          setAssociateMessage(error.message);
+          associateModal.open();
+        }
       }
     }
+  };
+
+  const handleFacebookAssociation = async () => {
+    const { error } = await associateFacebookUser({ dispatch, token: fbToken });
+    if (error) {
+      toast('Association Failed', { type: 'error' });
+    } else {
+      history.push('/connect-account');
+      toast('Association Success', { type: 'success' });
+    }
+    associateModal.close();
   };
 
   return (
@@ -98,8 +131,10 @@ export const LoginMainSection = () => {
                     if (!error) {
                       toast('Sign in Success', { type: 'success' });
                       history.push('/auth/connect-account');
-                    } else {
-                      toast('Sign in Failed', { type: 'error' });
+                    }
+                    if (error?.statusCode === 409 && error?.message) {
+                      setAssociateMessage(error.message);
+                      associateModal.open();
                     }
                   }}
                 >
@@ -149,7 +184,7 @@ export const LoginMainSection = () => {
                     Or, log in with:
                     <div className='fb-icon-wrap'>
                       <FacebookLogin
-                        authType='reauthenticate'
+                        authType='rerequest'
                         textButton=''
                         fields='email'
                         isMobile={false}
@@ -176,6 +211,14 @@ export const LoginMainSection = () => {
           </div>
         </div>
       </div>
+
+      <AssociateEmailModal
+        message={associateMessage}
+        associateModal={associateModal.props}
+        handleSuccess={handleFacebookAssociation}
+      />
+
+      <EmailNeededModal emailNeededModal={emailNeededModal} />
     </div>
   );
 };
