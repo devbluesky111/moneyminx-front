@@ -7,11 +7,11 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { Home, TermNService, Notice, Privacy, About, Pricing, Security } from 'website/views';
 
 import { appRouteConstants } from './app-route.constant';
-import { ResetPassword, TokenExpired } from './app.view';
+import { ResetPassword, TokenExpired, AccountSetting, ConnectAccount } from './app.view';
 
 const {
-  auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED },
   web: { SECURITY },
+  auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
   home,
 } = appRouteConstants;
 
@@ -41,6 +41,8 @@ function AppRoute() {
         <Route exact path={SECURITY} component={Security} />
         <Route exact path={RESET_PASSWORD} component={ResetPassword} />
         <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
+        <Route exact path={CONNECT_ACCOUNT} component={ConnectAccount} />
+        <Route exact path={ACCOUNT_SETTING} component={AccountSetting} />
 
         <Route exact path={'/404'} component={NotFound} />
         <Redirect to='/404' />
