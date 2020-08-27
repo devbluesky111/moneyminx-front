@@ -9,7 +9,7 @@ import { ReactComponent as PricingPieChart } from 'assets/images/pricing/pricing
 
 const Pricing = () => {
   return (
-    <WebsiteLayout>
+    <WebsiteLayout isSignupToday={false}>
       <PricingTopSection />
       <PricingTable />
     </WebsiteLayout>
