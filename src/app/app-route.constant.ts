@@ -9,6 +9,9 @@ export const appRouteConstants = {
     RESET_PASSWORD: '/password_reset/:token',
     TOKEN_EXPIRED: '/password/token-expired',
   },
+  web: {
+    SECURITY: '/security',
+  },
   misc: {
     NOT_FOUND: '/404',
   },
