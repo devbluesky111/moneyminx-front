@@ -11,9 +11,11 @@ export const appRouteConstants = {
     CONNECT_ACCOUNT: '/connect-account',
     ACCOUNT_SETTING: '/account-settings',
   },
+
   web: {
     SECURITY: '/security',
   },
+
   misc: {
     NOT_FOUND: '/404',
   },

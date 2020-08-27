@@ -1,6 +1,5 @@
 import { Formik } from 'formik';
 import React, { useState } from 'react';
-import { AuthLayout } from 'layouts/auth.layout';
 import { postForgotPassword } from 'api/request.api';
 import { forgotPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -8,13 +7,10 @@ import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.s
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
 import Message from './inc/message';
+import AuthFooter from './auth.footer';
 
 const ForgotPassword = () => {
-  return (
-    <AuthLayout>
-      <ForgotPasswordMainSection />
-    </AuthLayout>
-  );
+  return <ForgotPasswordMainSection />;
 };
 
 export default ForgotPassword;
@@ -30,6 +26,9 @@ export const ForgotPasswordMainSection = () => {
 
   const isErrorMessage = status === 'error' && isMessage;
   const isSuccessMessage = status === 'success' && isMessage;
+
+  const isFeedback = isErrorMessage || isSuccessMessage;
+  const footerClass = isFeedback ? 'd-md-none d-lg-none d-xl-none' : '';
 
   return (
     <div className='main-table-wrapper'>
@@ -117,6 +116,9 @@ export const ForgotPasswordMainSection = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className={footerClass}>
+        <AuthFooter />
       </div>
 
       {isErrorMessage ? (

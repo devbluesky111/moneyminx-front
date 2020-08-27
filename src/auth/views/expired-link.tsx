@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import React, { useState } from 'react';
-import { AuthLayout } from 'layouts/auth.layout';
+import { Link } from 'react-router-dom';
+
 import { postForgotPassword } from 'api/request.api';
 import { forgotPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -8,13 +9,10 @@ import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.s
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
 import Message from './inc/message';
+import AuthFooter from './auth.footer';
 
 const ExpiredLink = () => {
-  return (
-    <AuthLayout>
-      <ExpiredLinkMainSection />
-    </AuthLayout>
-  );
+  return <ExpiredLinkMainSection />;
 };
 
 export default ExpiredLink;
@@ -31,13 +29,18 @@ export const ExpiredLinkMainSection = () => {
   const isErrorMessage = status === 'error' && isMessage;
   const isSuccessMessage = status === 'success' && isMessage;
 
+  const isFeedback = isErrorMessage || isSuccessMessage;
+  const footerClass = isFeedback ? 'd-md-none d-lg-none d-xl-none' : '';
+
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
         <div className='row login-wrapper'>
           <div className='guide-content'>
             <div className='logo-img-wrap'>
-              <LogoImg />
+              <Link to='/'>
+                <LogoImg />
+              </Link>
             </div>
             <h1>
               <span className='block'>Three easy steps to get </span>started with Money Minx
@@ -93,6 +96,7 @@ export const ExpiredLinkMainSection = () => {
                   <div className='form-wrap'>
                     <form onSubmit={props.handleSubmit}>
                       <input
+                        className='email email-wrap'
                         type='email'
                         name='email'
                         value={props.values.email}
@@ -100,7 +104,7 @@ export const ExpiredLinkMainSection = () => {
                         onChange={props.handleChange}
                       />
 
-                      <div>{props.errors.email ? props.errors.email : null}</div>
+                      <div className='feedback'>{props.errors.email ? props.errors.email : null}</div>
 
                       <button
                         className='bg-primary mm-btn-primary-outline mt-4'
@@ -116,6 +120,10 @@ export const ExpiredLinkMainSection = () => {
           </div>
         </div>
       </div>
+      <div className={footerClass}>
+        <AuthFooter />
+      </div>
+
       {isErrorMessage ? (
         <div>
           <Message type={status} message={message} onDismiss={handleDismiss} />

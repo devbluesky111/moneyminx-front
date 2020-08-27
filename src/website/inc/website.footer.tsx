@@ -108,10 +108,15 @@ const SocialList: React.FC = () => (
 );
 
 const footerListComponent = <FooterList />;
-const WebsiteFooter = () => {
+
+interface WebsiteFooter {
+  isSignupToday?: boolean;
+}
+const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
   return (
     <div className='website-footer'>
-      <SignupToday />
+      {isSignupToday ? <SignupToday /> : null}
+
       <div className='website-footer-wrapper bg-secondary text-white'>
         <div className='footer-hero-wrapper pb-4'>
           <div className='row'>

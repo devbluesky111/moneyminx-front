@@ -104,7 +104,6 @@
 }
 .credintials-content .form-wrap input {
   width: 100%;
-
   height: 48px;
   font-size: 0.875rem;
   border: 1px solid rgba(150, 158, 172, 0.24);
@@ -112,6 +111,11 @@
   padding: 0 20px;
   color: $gray;
 }
+
+.credintials-content input.invalid {
+  border: 1px solid $redAlert;
+}
+
 .credintials-content {
   max-width: 450px;
   padding-left: 100px;
@@ -333,18 +337,21 @@ span.visibility-icon {
 .email-wrap .feedback {
   margin-top: -17px;
   margin-bottom: 15px;
+  text-align: right;
 }
 
 .feedback {
   font-size: 0.75rem;
   font-weight: 500;
-  color: $red;
+  color: $redAlert;
 }
 
 .password-wrap .feedback {
   margin-top: 11px;
+  text-align: right;
 }
 
 .password-wrap.confirm .feedback {
   margin-top: -17px;
+  text-align: right;
 }
