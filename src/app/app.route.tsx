@@ -12,7 +12,6 @@ import { ResetPassword, TokenExpired, AccountSetting, ConnectAccount } from './a
 const {
   web: { SECURITY },
   auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
-  web: { SECURITY },
   home,
 } = appRouteConstants;
 
