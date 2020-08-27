@@ -1,5 +1,7 @@
 import { Formik } from 'formik';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import { postForgotPassword } from 'api/request.api';
 import { forgotPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -36,7 +38,9 @@ export const ExpiredLinkMainSection = () => {
         <div className='row login-wrapper'>
           <div className='guide-content'>
             <div className='logo-img-wrap'>
-              <LogoImg />
+              <Link to='/'>
+                <LogoImg />
+              </Link>
             </div>
             <h1>
               <span className='block'>Three easy steps to get </span>started with Money Minx
