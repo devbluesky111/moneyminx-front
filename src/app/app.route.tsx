@@ -4,13 +4,14 @@ import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { Home, TermNService, Notice, Privacy, About, Pricing } from 'website/views';
+import { Home, TermNService, Notice, Privacy, About, Pricing, Security } from 'website/views';
 
 import { appRouteConstants } from './app-route.constant';
 import { ResetPassword, TokenExpired, AccountSetting, ConnectAccount } from './app.view';
 
 const {
   auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
+  web: { SECURITY },
   home,
 } = appRouteConstants;
 
@@ -37,6 +38,7 @@ function AppRoute() {
         <Route exact path={'/privacy'} component={Privacy} />
         <Route exact path={'/pricing'} component={Pricing} />
         <Route exact path={'/terms'} component={TermNService} />
+        <Route exact path={SECURITY} component={Security} />
         <Route exact path={RESET_PASSWORD} component={ResetPassword} />
         <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
         <Route exact path={CONNECT_ACCOUNT} component={ConnectAccount} />

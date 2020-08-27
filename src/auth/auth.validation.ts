@@ -7,12 +7,12 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d+)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&
 
 export const loginValidationSchema = Yup.object({
   email: Yup.string().email(INVALID_EMAIL).required(REQUIRED_FIELD),
-  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR).required(REQUIRED_FIELD),
+  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR).required(''),
 });
 
 export const registerValidationSchema = Yup.object({
   email: Yup.string().email(INVALID_EMAIL).required(REQUIRED_FIELD),
-  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR).required(REQUIRED_FIELD),
+  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR).required(''),
   termsAccepted: Yup.bool().oneOf([true], FORGOT_TERMS),
 });
 
