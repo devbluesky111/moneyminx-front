@@ -120,6 +120,7 @@ export const LoginMainSection = () => {
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
               <div className='form-wrap'>
                 <Formik
+                  validateOnChange={false}
                   initialValues={{ email: '', password: '' }}
                   validationSchema={loginValidationSchema}
                   onSubmit={async (values, actions) => {
@@ -133,45 +134,53 @@ export const LoginMainSection = () => {
                     }
                   }}
                 >
-                  {(props) => (
-                    <form onSubmit={props.handleSubmit}>
-                      <div className='email-wrap'>
-                        <input
-                          type='email'
-                          className='email'
-                          onChange={props.handleChange}
-                          onBlur={props.handleBlur}
-                          value={props.values.email}
-                          name='email'
-                          placeholder='Email'
-                        />
-                        {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
-                      </div>
-                      <div className='password-wrap'>
-                        <input
-                          name='password'
-                          className='password'
-                          placeholder='Password'
-                          onBlur={props.handleBlur}
-                          onChange={props.handleChange}
-                          value={props.values.password}
-                          type={passwordVisible ? 'text' : 'password'}
-                        />
-                        {props.errors.password && <div className='feedback'>{props.errors.password}</div>}
-                        <span className='visibility-icon'>
-                          <LoginVisibilityIcon onClick={() => setPasswordVisible(!passwordVisible)} />
-                        </span>
-                      </div>
-                      <p>
-                        <span className='forgot-pass'>
-                          <Link to='/auth/forgot-password'>Forgot Password?</Link>
-                        </span>
-                      </p>
-                      <button className='bg-primary mm-btn-primary-outline' type='submit'>
-                        Log in
-                      </button>
-                    </form>
-                  )}
+                  {(props) => {
+                    const { errors, values } = props;
+                    const hasError = (field: 'email' | 'password') => errors[field] && values[field];
+
+                    const emailClass = hasError('email') ? 'email invalid' : 'email';
+                    const passClass = hasError('password') ? 'password invalid' : 'password';
+
+                    return (
+                      <form onSubmit={props.handleSubmit}>
+                        <div className='email-wrap'>
+                          <input
+                            type='email'
+                            className={emailClass}
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                            value={props.values.email}
+                            name='email'
+                            placeholder='Email'
+                          />
+                          {hasError('email') ? <div className='feedback'>{props.errors.email}</div> : null}
+                        </div>
+                        <div className='password-wrap'>
+                          <input
+                            name='password'
+                            className={passClass}
+                            placeholder='Password'
+                            onBlur={props.handleBlur}
+                            onChange={props.handleChange}
+                            value={props.values.password}
+                            type={passwordVisible ? 'text' : 'password'}
+                          />
+                          {hasError('password') ? <div className='feedback'>{props.errors.password}</div> : null}
+                          <span className='visibility-icon'>
+                            <LoginVisibilityIcon onClick={() => setPasswordVisible(!passwordVisible)} />
+                          </span>
+                        </div>
+                        <p>
+                          <span className='forgot-pass'>
+                            <Link to='/auth/forgot-password'>Forgot Password?</Link>
+                          </span>
+                        </p>
+                        <button className='bg-primary mm-btn-primary-outline' type='submit'>
+                          Log in
+                        </button>
+                      </form>
+                    );
+                  }}
                 </Formik>
 
                 <div className='facebook-login'>
