@@ -17,6 +17,7 @@ import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-ic
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
 import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 
+import { StringKeyObject } from 'common/common.types';
 import AssociateEmailModal from './inc/associate-email.modal';
 
 const Signup = () => {
@@ -37,6 +38,23 @@ export const SignupMainSection = () => {
   const [associateMessage, setAssociateMessage] = useState<string>('');
 
   const priceId = queryString.parse(location.search).priceId as string;
+
+  const [validator, setValidator] = useState<number>(0);
+
+  const reg1 = /^.{8,}$/;
+  const reg2 = /(^.*\d+.*$)/;
+  const reg3 = /(^.*[@$!%*#?&].*$)/;
+  const reg4 = /(^.*[A-Z].*$)/;
+
+  const getValidationText = () => {
+    if (validator < 3) {
+      return 'Weak';
+    }
+    if (validator < 4) {
+      return 'Medium';
+    }
+    return 'Strong';
+  };
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
@@ -120,7 +138,18 @@ export const SignupMainSection = () => {
                     mailChimpSubscription: false,
                     subscriptionPriceId: priceId || 'price_1H9iXSAjc68kwXCHsFEhWShL',
                   }}
-                  validationSchema={registerValidationSchema}
+                  validate={(values) => {
+                    let a = 0;
+                    [reg1, reg2, reg3, reg4].forEach((reg) => (reg.test(values.password) ? (a += 1) : a));
+                    setValidator(a);
+
+                    return registerValidationSchema.validate(values, { abortEarly: false }).catch((err) => {
+                      return err.inner.reduce((obj: StringKeyObject, cur: any) => {
+                        obj[cur.path] = cur.message;
+                        return obj;
+                      }, {});
+                    });
+                  }}
                   onSubmit={async (values, actions) => {
                     const { error } = await signup({ dispatch, payload: values });
                     actions.setSubmitting(false);
@@ -158,7 +187,9 @@ export const SignupMainSection = () => {
                             name='password'
                             placeholder='Password'
                           />
-                          {props.errors.password && <div className='feedback'>{props.errors.password}</div>}
+
+                          <div className='feedback'>{getValidationText()}</div>
+
                           <span className='visibility-icon'>
                             <LoginVisibilityIcon onClick={() => setVisible(!visible)} />
                           </span>
