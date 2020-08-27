@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/query-string": "^6.3.0",
     "add": "^2.0.6",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
@@ -12,6 +13,7 @@
     "i18next": "^19.4.4",
     "lodash": "^4.17.20",
     "node-sass": "^4.14.1",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-facebook-login": "^4.1.1",

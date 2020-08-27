@@ -1,14 +1,15 @@
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
+import queryString from 'query-string';
 import React, { useState } from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
 import { useModal } from 'common/components/modal';
-import { Link, useHistory } from 'react-router-dom';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
 import { registerValidationSchema } from 'auth/auth.validation';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { signup, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
@@ -29,12 +30,15 @@ const Signup = () => {
 export default Signup;
 export const SignupMainSection = () => {
   const history = useHistory();
+  const location = useLocation();
   const associateModal = useModal();
   const emailNeededModal = useModal();
   const dispatch = useAuthDispatch();
   const [fbToken, setFBToken] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
   const [associateMessage, setAssociateMessage] = useState<string>('');
+
+  const priceId = queryString.parse(location.search).priceId as string;
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
@@ -50,11 +54,11 @@ export const SignupMainSection = () => {
         toast('Successfully logged in', { type: 'success' });
         history.push('/connect-account');
       } else {
-        if (error.statusCode === 400 && error.message) {
+        if (error?.statusCode === 400 && error?.message) {
           emailNeededModal.open();
         }
 
-        if (error.statusCode === 409 && error.message) {
+        if (error?.statusCode === 409 && error?.message) {
           setAssociateMessage(error.message);
           associateModal.open();
         }
@@ -123,7 +127,7 @@ export const SignupMainSection = () => {
                     password: '',
                     termsAccepted: false,
                     mailChimpSubscription: false,
-                    subscriptionPriceId: 'price_1H9iXSAjc68kwXCHsFEhWShL',
+                    subscriptionPriceId: priceId || 'price_1H9iXSAjc68kwXCHsFEhWShL',
                   }}
                   validationSchema={registerValidationSchema}
                   onSubmit={async (values, actions) => {
@@ -134,7 +138,7 @@ export const SignupMainSection = () => {
                       toast('Signup Success', { type: 'success' });
                       history.push('/connect-account');
                     } else {
-                      toast('Sign up failed', { type: 'error' });
+                      actions.setFieldError('password', error?.message || 'Sign up failed');
                     }
                   }}
                 >

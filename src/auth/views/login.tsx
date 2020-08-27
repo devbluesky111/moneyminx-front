@@ -8,8 +8,8 @@ import { useModal } from 'common/components/modal';
 import { useHistory, Link } from 'react-router-dom';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
+import { appRouteConstants } from 'app/app-route.constant';
 import { loginValidationSchema } from 'auth/auth.validation';
-import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
@@ -39,8 +39,6 @@ export const LoginMainSection = () => {
   const [associateMessage, setAssociateMessage] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
-  useGetSubscription();
-
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
       setFBToken(response.accessToken);
@@ -51,7 +49,7 @@ export const LoginMainSection = () => {
       });
 
       if (!error) {
-        history.push('/connect-account');
+        history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
         toast('Successfully logged in', { type: 'success' });
       } else {
         if (error?.statusCode === 400 && error?.message) {
@@ -71,7 +69,7 @@ export const LoginMainSection = () => {
     if (error) {
       toast('Association Failed', { type: 'error' });
     } else {
-      history.push('/connect-account');
+      history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
       toast('Association Success', { type: 'success' });
     }
     associateModal.close();
@@ -127,14 +125,11 @@ export const LoginMainSection = () => {
                   onSubmit={async (values, actions) => {
                     const { error } = await login({ dispatch, payload: values });
                     actions.setSubmitting(false);
-
                     if (!error) {
                       toast('Sign in Success', { type: 'success' });
                       history.push('/auth/connect-account');
-                    }
-                    if (error?.statusCode === 409 && error?.message) {
-                      setAssociateMessage(error.message);
-                      associateModal.open();
+                    } else {
+                      actions.setFieldError('password', error.message || 'Please enter valid credentials');
                     }
                   }}
                 >

@@ -36,8 +36,7 @@ export const CreateNewPasswordMainSection = () => {
   };
 
   if (!token) {
-    toast('Token Not found', { type: 'error' });
-    return <Redirect to='/signin' />;
+    return <Redirect to='/auth/forgot-password' />;
   }
 
   return (
@@ -98,7 +97,7 @@ export const CreateNewPasswordMainSection = () => {
                   return (
                     <div className='form-wrap'>
                       <form onSubmit={props.handleSubmit}>
-                        <div id='password-wrap'>
+                        <div className='email-wrap'>
                           <input
                             type={visible.password ? 'text' : 'password'}
                             id='password'
@@ -110,12 +109,11 @@ export const CreateNewPasswordMainSection = () => {
                           <span className='visibility-icon'>
                             <LoginVisibilityIcon onClick={togglePasswordVisibility} />
                           </span>
-                          <div>{props.errors.password ? props.errors.password : null}</div>
+                          <div className='feedback'>{props.errors.password ? props.errors.password : null}</div>
                         </div>
-                        <div id='password-wrap'>
+                        <div className='password-wrap confirm'>
                           <input
                             type={visible.confirmPassword ? 'text' : 'password'}
-                            id='password'
                             name='confirmPassword'
                             onChange={props.handleChange}
                             placeholder='Confirm Password'
@@ -124,11 +122,13 @@ export const CreateNewPasswordMainSection = () => {
                           <span className='visibility-icon'>
                             <LoginVisibilityIcon onClick={toggleConfirmPasswordVisibility} />
                           </span>
-                          <div>{props.errors.confirmPassword ? props.errors.confirmPassword : null}</div>
+                          <div className='feedback'>
+                            {props.errors.confirmPassword ? props.errors.confirmPassword : null}
+                          </div>
                         </div>
 
                         <button
-                          className='bg-primary mm-btn-primary-outline'
+                          className='bg-primary mm-btn-primary-outline mt-2'
                           disabled={!props.isValid || props.isSubmitting}
                           type='submit'
                         >

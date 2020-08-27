@@ -183,7 +183,7 @@ export const SecurityInvestmentSection = () => {
               </p>
               <p className='text'>
                 For questions or concerns about security, please{' '}
-                <a href='/w/contact' target='_blank' rel='noopener noreferrer'>
+                <a href='/contact' target='_blank' rel='noopener noreferrer'>
                   Contact us
                 </a>
                 .
