@@ -10,8 +10,8 @@ import { appRouteConstants } from './app-route.constant';
 import { ResetPassword, TokenExpired, AccountSetting, ConnectAccount } from './app.view';
 
 const {
-  auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
   web: { SECURITY },
+  auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
   home,
 } = appRouteConstants;
 

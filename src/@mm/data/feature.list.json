@@ -3,23 +3,23 @@
   "list": [
     {
       "name": "Holdings",
-      "link": "/holdings"
+      "link": "#"
     },
     {
       "name": "Allocations",
-      "link": "/allocations"
+      "link": "#"
     },
     {
       "name": "Performance",
-      "link": "/performance"
+      "link": "#"
     },
     {
       "name": "Income",
-      "link": "/income"
+      "link": "#"
     },
     {
       "name": "Account Details",
-      "link": "/about"
+      "link": "#"
     }
   ]
 }

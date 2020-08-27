@@ -24,6 +24,12 @@ h5 {
 h6 {
   font-weight: 300 !important;
 }
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
 
 .light {
   opacity: 0.6;
