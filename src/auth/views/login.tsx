@@ -128,7 +128,7 @@ export const LoginMainSection = () => {
                     actions.setSubmitting(false);
                     if (!error) {
                       toast('Sign in Success', { type: 'success' });
-                      history.push('/auth/connect-account');
+                      history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                     } else {
                       actions.setFieldError('password', error.message || 'Please enter valid credentials');
                     }
