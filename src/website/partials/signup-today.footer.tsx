@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { appRouteConstants } from 'app/app-route.constant';
 
 const SignupToday = () => {
   return (
@@ -15,8 +17,12 @@ const SignupToday = () => {
         </div>
         <div className='col-lg-6 d-flex flex-lg-row flex-md-column align-items-center'>
           <div className='signup-btn-wrapper'>
-            <button className='mm-btn-animate mm-btn-primary-outline btn-xs-block'>Compare Plans</button>
-            <button className='mm-btn-animate bg-white text-primary ml-3 btn-xs-block'>Sign Up Free</button>
+            <Link to='/pricing'>
+              <button className='mm-btn-animate mm-btn-primary-outline btn-xs-block'>Compare Plans</button>
+            </Link>
+            <Link to={appRouteConstants.auth.SIGNUP}>
+              <button className='mm-btn-animate bg-white text-primary ml-3 btn-xs-block'>Sign Up Free</button>
+            </Link>
           </div>
         </div>
       </div>

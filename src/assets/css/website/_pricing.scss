@@ -68,6 +68,10 @@ ul.features-list {
   display: none;
   transition: 0.8s ease;
 }
+.price-table:nth-child(2)::before {
+  display: block;
+}
+
 .price-table:hover {
   box-shadow: 0 2px 20px #c6d2e7, inset 0px -1px 0px #ebecf1;
 }
@@ -94,6 +98,11 @@ ul.features-list {
   background-color: $purple !important;
   color: $white !important;
 }
+.price-table:nth-child(2) .trial-btn {
+  background-color: $purple !important;
+  color: $white !important;
+}
+
 .second-table {
   position: relative;
 }
@@ -163,6 +172,11 @@ ul.features-list {
     margin-bottom: 27px;
   }
 }
+@media (max-width: $md) {
+  .trial-btn {
+    height: 65px;
+  }
+}
 
 @media (max-width: $sm) {
   .pricing-table-wrapper {
@@ -178,11 +192,19 @@ ul.features-list {
   }
   .plan-section {
     margin-top: 60px;
+    text-align: center;
+    padding-right: 0;
   }
   .mm-container-right {
     overflow: visible;
   }
   .mm-container-right.pricing-banner-container {
     margin: 0 20px;
+  }
+  .save-text::before {
+    top: -95px;
+  }
+  .download-btn-wrapper svg:nth-child(2) {
+    margin-left: 0 !important;
   }
 }

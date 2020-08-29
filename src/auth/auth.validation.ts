@@ -1,19 +1,18 @@
 import * as Yup from 'yup';
 import validation from 'lang/en/validation.json';
 
-const { REQUIRED_FIELD, INVALID_EMAIL, PASSWORD_ERROR, FORGOT_TERMS, PASSWORD_MATCH } = validation;
+const { REQUIRED_FIELD, INVALID_EMAIL, PASSWORD_ERROR, PASSWORD_MATCH } = validation;
 
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d+)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 export const loginValidationSchema = Yup.object({
   email: Yup.string().email(INVALID_EMAIL).required(REQUIRED_FIELD),
-  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR).required(REQUIRED_FIELD),
+  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR).required(''),
 });
 
 export const registerValidationSchema = Yup.object({
   email: Yup.string().email(INVALID_EMAIL).required(REQUIRED_FIELD),
-  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR).required(REQUIRED_FIELD),
-  termsAccepted: Yup.bool().oneOf([true], FORGOT_TERMS),
+  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR).required(''),
 });
 
 export const forgotPasswordValidation = Yup.object({

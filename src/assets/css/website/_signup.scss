@@ -1,6 +1,7 @@
 .form-wrap {
   position: relative;
 }
+
 .form-wrap .credintials-checkbox input {
   width: 29px;
   display: inline;
@@ -9,10 +10,12 @@
   height: 28px;
   outline: none;
 }
+
 .form-wrap .credintials-checkbox {
   font-size: 0.75rem;
   padding: 28px 0 14px;
 }
+
 .form-wrap .checkbox-item {
   margin-bottom: 11px;
   display: inline-block;
@@ -22,6 +25,7 @@
 .form-wrap .checkbox-item label {
   margin-bottom: 0;
 }
+
 .feedback.signup {
   position: absolute;
   right: -46%;
@@ -29,10 +33,12 @@
   width: 40%;
   color: $yellow;
 }
+
 .feedback.card-list {
   margin-bottom: 15px;
   margin-top: -15px;
 }
+
 .form-wrap .checkbox-item .check-box {
   display: block;
   position: relative;

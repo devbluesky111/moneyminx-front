@@ -1,9 +1,11 @@
 // tslint:disable: react-a11y-accessible-headings
 
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-
 import WebsiteLayout from 'website/website.layout';
 import { fetchBlogs } from 'website/website.service';
+import { appRouteConstants } from 'app/app-route.constant';
+
 import HomeBlogImgOne from 'assets/images/home/home-blog-img1.png';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as FeatureIconOne } from 'assets/images/home/feature-icon1.svg';
@@ -50,7 +52,9 @@ export const HomeTopSection = () => {
               dashboard.
             </p>
 
-            <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Get Started</button>
+            <Link to={appRouteConstants.auth.SIGNUP}>
+              <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Get Started</button>
+            </Link>
             <p className='info-text'>No credit card needed.</p>
             <div className='scroll-down-btn'>
               <a href='link'>
@@ -215,7 +219,14 @@ export const HomeBlogSection = () => {
               </p>
             </div>
             <div className='blog-content-right'>
-              <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Visit Blog</button>
+              <a
+                className='mm-nav-link'
+                target='_blank'
+                rel='noopener noreferrer'
+                href='https://velocity.moneyminx.com'
+              >
+                <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Visit Blog</button>
+              </a>
             </div>
           </div>
 
