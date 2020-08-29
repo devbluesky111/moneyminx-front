@@ -1,14 +1,16 @@
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
+import { useParams, Redirect, useHistory } from 'react-router-dom';
+
 import { AuthLayout } from 'layouts/auth.layout';
 import { postResetPassword } from 'api/request.api';
 import { resetPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
+import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
-import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 
 const CreateNewPassword = () => {
   return (
@@ -38,6 +40,13 @@ export const CreateNewPasswordMainSection = () => {
   if (!token) {
     return <Redirect to='/auth/forgot-password' />;
   }
+
+  const getVisibilityIcon = (field: 'password' | 'confirmPassword') => {
+    if (visible[field]) {
+      return <VisibleIcon />;
+    }
+    return <HiddenIcon />;
+  };
 
   return (
     <div className='main-table-wrapper'>
@@ -106,8 +115,8 @@ export const CreateNewPasswordMainSection = () => {
                             value={props.values.password}
                             onChange={props.handleChange}
                           />
-                          <span className='visibility-icon'>
-                            <LoginVisibilityIcon onClick={togglePasswordVisibility} />
+                          <span className='visibility-icon' onClick={togglePasswordVisibility} role='button'>
+                            {getVisibilityIcon('password')}
                           </span>
                           <div className='feedback'>{props.errors.password ? props.errors.password : null}</div>
                         </div>
@@ -119,8 +128,8 @@ export const CreateNewPasswordMainSection = () => {
                             placeholder='Confirm Password'
                             value={props.values.confirmPassword}
                           />
-                          <span className='visibility-icon'>
-                            <LoginVisibilityIcon onClick={toggleConfirmPasswordVisibility} />
+                          <span className='visibility-icon' onClick={toggleConfirmPasswordVisibility} role='button'>
+                            {getVisibilityIcon('confirmPassword')}
                           </span>
                           <div className='feedback'>
                             {props.errors.confirmPassword ? props.errors.confirmPassword : null}

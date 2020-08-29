@@ -3,19 +3,22 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import queryString from 'query-string';
 import React, { useState } from 'react';
-import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
+
+import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
+import { StringKeyObject } from 'common/common.types';
 import { registerValidationSchema } from 'auth/auth.validation';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { signup, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
+import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
+import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
-import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 
 import EmailNeededModal from './inc/email-needed.modal';
 import AssociateEmailModal from './inc/associate-email.modal';
@@ -39,6 +42,34 @@ export const SignupMainSection = () => {
   const [associateMessage, setAssociateMessage] = useState<string>('');
 
   const priceId = queryString.parse(location.search).priceId as string;
+
+  const [validator, setValidator] = useState<number>(0);
+
+  const reg1 = /^.{8,}$/;
+  const reg2 = /(^.*\d+.*$)/;
+  const reg3 = /(^.*[@$!%*#?&].*$)/;
+  const reg4 = /(^.*[A-Z].*$)/;
+
+  const visibilityIcon = visible ? <VisibleIcon /> : <HiddenIcon />;
+
+  const getValidationText = () => {
+    if (validator < 3) {
+      return {
+        text: 'Weak, please choose another',
+        classNames: 'text-danger ',
+      };
+    }
+    if (validator < 4) {
+      return {
+        text: 'Medium',
+        classNames: 'text-warning',
+      };
+    }
+    return {
+      text: 'Strong',
+      classNames: 'text-success',
+    };
+  };
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
@@ -129,8 +160,27 @@ export const SignupMainSection = () => {
                     mailChimpSubscription: false,
                     subscriptionPriceId: priceId || 'price_1H9iXSAjc68kwXCHsFEhWShL',
                   }}
-                  validationSchema={registerValidationSchema}
+                  validate={async (values) => {
+                    let a = 0;
+                    let errors: StringKeyObject = {};
+                    [reg1, reg2, reg3, reg4].forEach((reg) => (reg.test(values.password) ? (a += 1) : a));
+                    setValidator(a);
+                    try {
+                      await registerValidationSchema.validate(values, { abortEarly: false });
+                    } catch (errs) {
+                      const mappedError = errs.inner.reduce((obj: StringKeyObject, cur: any) => {
+                        obj[cur.path] = cur.message;
+                        return obj;
+                      }, {});
+                      errors = mappedError;
+                    }
+                    return errors;
+                  }}
                   onSubmit={async (values, actions) => {
+                    if (!values.termsAccepted) {
+                      actions.setFieldError('termsAccepted', 'You forgot to accept our terms of service');
+                      return;
+                    }
                     const { error } = await signup({ dispatch, payload: values });
                     actions.setSubmitting(false);
 
@@ -155,27 +205,43 @@ export const SignupMainSection = () => {
                             name='email'
                             placeholder='Email'
                           />
+
                           {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
                         </div>
-                        <div className='password-wrap'>
-                          <input
-                            type={visible ? 'text' : 'password'}
-                            className='password'
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                            value={props.values.password}
-                            name='password'
-                            placeholder='Password'
-                          />
-                          {props.errors.password && <div className='feedback'>{props.errors.password}</div>}
-                          <span className='visibility-icon'>
-                            <LoginVisibilityIcon onClick={() => setVisible(!visible)} />
-                          </span>
+                        <div className='d-md-flex align-items-center'>
+                          <div className='password-wrap'>
+                            <input
+                              type={visible ? 'text' : 'password'}
+                              className='password'
+                              onChange={props.handleChange}
+                              onBlur={props.handleBlur}
+                              value={props.values.password}
+                              name='password'
+                              placeholder='Password'
+                            />
+                            <span className='visibility-icon' onClick={() => setVisible(!visible)} role='button'>
+                              {visibilityIcon}
+                            </span>
+                          </div>
+                          {props.values.password ? (
+                            <div
+                              className={`ml-2 mt-2 mt-md-0 text-right text-nowrap ${getValidationText().classNames}`}
+                            >
+                              {getValidationText().text}
+                            </div>
+                          ) : null}
                         </div>
+                        {props.errors.password && (
+                          <div className='feedback mt-2 text-right'>{props.errors.password}</div>
+                        )}
+
                         <div className='credintials-checkbox'>
                           <span className='checkbox-item'>
                             <label className='check-box'>
-                              I accept the <Link to='/terms'>Terms of Service</Link>
+                              I accept the{' '}
+                              <a href='/terms' target='_blank'>
+                                Terms of Service
+                              </a>
                               <input
                                 type='checkbox'
                                 className='terms'
@@ -206,6 +272,10 @@ export const SignupMainSection = () => {
                             </label>
                           </span>
                         </div>
+
+                        {props.errors.termsAccepted && (
+                          <div className='feedback mb-4 text-right'>{props.errors.termsAccepted}</div>
+                        )}
 
                         <button
                           className='bg-primary mm-btn-primary-outline'

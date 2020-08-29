@@ -2,20 +2,22 @@ import env from 'app/app.env';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
-import { AuthLayout } from 'layouts/auth.layout';
 import FacebookLogin from 'react-facebook-login';
-import { useModal } from 'common/components/modal';
 import { useHistory, Link } from 'react-router-dom';
+
+import { AuthLayout } from 'layouts/auth.layout';
+import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
 import { appRouteConstants } from 'app/app-route.constant';
 import { loginValidationSchema } from 'auth/auth.validation';
 import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
+import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
+import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
-import { ReactComponent as LoginVisibilityIcon } from 'assets/images/login/visibility-icon.svg';
 
 import EmailNeededModal from './inc/email-needed.modal';
 import AssociateEmailModal from './inc/associate-email.modal';
@@ -38,6 +40,8 @@ export const LoginMainSection = () => {
   const [fbToken, setFBToken] = useState<string>('');
   const [associateMessage, setAssociateMessage] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+
+  const visibilityIcon = passwordVisible ? <VisibleIcon /> : <HiddenIcon />;
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
@@ -166,8 +170,12 @@ export const LoginMainSection = () => {
                             type={passwordVisible ? 'text' : 'password'}
                           />
                           {hasError('password') ? <div className='feedback'>{props.errors.password}</div> : null}
-                          <span className='visibility-icon'>
-                            <LoginVisibilityIcon onClick={() => setPasswordVisible(!passwordVisible)} />
+                          <span
+                            className='visibility-icon'
+                            onClick={() => setPasswordVisible(!passwordVisible)}
+                            role='button'
+                          >
+                            {visibilityIcon}
                           </span>
                         </div>
                         <p>
