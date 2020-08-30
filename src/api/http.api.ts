@@ -5,6 +5,8 @@ import { STATUS_CODE } from 'app/app.status';
 import { refreshAccessToken } from 'api/request.api';
 import { withError, withData } from 'common/common-helper';
 
+import { urls } from './api.url';
+
 const axiosInstance = axios.create({
   baseURL: 'https://api.moneyminx.com/',
   headers: {
@@ -43,10 +45,12 @@ axiosInstance.interceptors.response.use(
     }
 
     const status = error.response?.status;
+    const url = error.response?.url;
+    const isAuthenticating = url === urls.auth.LOGIN_IN || urls.auth.REGISTER;
 
     const errorResponse = error.response?.data ? error.response.data : error;
 
-    if (status === STATUS_CODE.UNAUTHORIZED) {
+    if (status === STATUS_CODE.UNAUTHORIZED && !isAuthenticating) {
       storage.clear();
       window.location.replace('/login');
       return withError(errorResponse);
