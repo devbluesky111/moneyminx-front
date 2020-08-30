@@ -6,8 +6,8 @@ const { REQUIRED_FIELD, INVALID_EMAIL, PASSWORD_ERROR, PASSWORD_MATCH } = valida
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d+)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 export const loginValidationSchema = Yup.object({
-  email: Yup.string().email(INVALID_EMAIL).required(REQUIRED_FIELD),
-  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR).required(''),
+  email: Yup.string().email(INVALID_EMAIL),
+  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR),
 });
 
 export const registerValidationSchema = Yup.object({
