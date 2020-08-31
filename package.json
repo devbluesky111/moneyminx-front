@@ -22,6 +22,7 @@
     "react-scripts": "^3.4.3",
     "react-toastify": "^6.0.8",
     "react-transition-group": "^4.4.1",
+    "recharts": "^1.8.5",
     "typescript": "~3.7.2",
     "yarn": "^1.22.4",
     "yup": "^0.28.5"
@@ -58,7 +59,6 @@
     ]
   },
   "devDependencies": {
-    "@types/query-string": "^6.3.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -67,6 +67,7 @@
     "@types/lodash": "^4.14.159",
     "@types/node": "^12.0.0",
     "@types/node-sass": "^4.11.1",
+    "@types/query-string": "^6.3.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-facebook-login": "^4.1.2",
@@ -75,6 +76,7 @@
     "@types/react-test-renderer": "^16.9.2",
     "@types/react-toastify": "^4.1.0",
     "@types/react-transition-group": "^4.2.4",
+    "@types/recharts": "^1.8.14",
     "@types/yup": "^0.28.3",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.2",
