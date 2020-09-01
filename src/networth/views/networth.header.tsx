@@ -19,14 +19,14 @@ const NetworthHeader = () => {
           >
             <span className='navbar-toggler-icon' />
           </button>
-          <Link to='#' className='navbar-brand'>
+          <Link to='/' className='navbar-brand'>
             <img src={Logo} alt='Money Minx logo' />
           </Link>
           <div className='headtab'>
             <Link to='#' className='active'>
               Net Worth
             </Link>
-            <Link to='/'>Allocation</Link>
+            <Link to='#'>Allocation</Link>
           </div>
           <div className='head-right'>
             <button type='button' className='upgrader-btn' data-toggle='modal' data-target='#upgradeModal'>
