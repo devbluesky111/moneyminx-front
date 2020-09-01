@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NetworthSidebar = () => {
   return (
@@ -6,52 +7,54 @@ const NetworthSidebar = () => {
       <aside className='profilemenu'>
         <ul className='prlist-up'>
           <li>
-            <a href='/abc'>
+            <Link to='/abc'>
               <i className='icon-upgrade' /> Upgrade
-            </a>
+            </Link>
           </li>
         </ul>
         <ul className='prlist-pro'>
           <li>
-            <a href='#'>
-              <i className='icon-profile'></i> Profile
-            </a>
+            <Link to='#'>
+              <i className='icon-profile' />
+              Profile
+            </Link>
           </li>
           <li>
-            <a href='#'>
-              <i className='icon-settings'></i> Settings
-            </a>
+            <Link to='#'>
+              <i className='icon-settings' />
+              Settings
+            </Link>
           </li>
           <li>
-            <a href='#'>
-              <i className='icon-manage-connections'></i> Manage Connections
-            </a>
+            <Link to='#'>
+              <i className='icon-manage-connections' /> Manage Connections
+            </Link>
           </li>
           <li>
-            <a href='#'>
-              <i className='icon-support'></i> Support
-            </a>
+            <Link to='#'>
+              <i className='icon-support' /> Support
+            </Link>
           </li>
           <li>
-            <a href='#'>
-              <i className='icon-resource-center'></i> Resource Center
-            </a>
+            <Link to='#'>
+              <i className='icon-resource-center' /> Resource Center
+            </Link>
           </li>
         </ul>
         <ul className='prlist-log'>
           <li>
-            <a href='#'>
-              <i className='icon-logout'></i> Logout
-            </a>
+            <Link to='#'>
+              <i className='icon-logout' /> Logout
+            </Link>
           </li>
         </ul>
       </aside>
       <aside className='mobmenu collapse' id='headerMenu'>
         <div className='headtab'>
-          <a href='#' className='active'>
+          <Link to='#' className='active'>
             Net Worth
-          </a>
-          <a href='#'>Allocation</a>
+          </Link>
+          <Link to='#'>Allocation</Link>
         </div>
       </aside>
     </>
