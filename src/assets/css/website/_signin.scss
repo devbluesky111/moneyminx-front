@@ -308,13 +308,25 @@ ul.footer-list li {
     padding-left: 79px;
   }
 }
+
+@media(max-width: $md) and (min-width:$sm){
+  .credintials-wrapper{
+    min-height: 90vh;
+  }
+}
+
 @media (max-width: $sm) {
   .credintials-content {
     max-width: none;
     padding-left: 40px;
     padding-right: 38px;
+    
     input {
       width: 100%;
+    }
+
+    .credintials-wrapper{
+      min-height: 90vh;
     }
   }
   ul.footer-list {
@@ -343,6 +355,7 @@ ul.footer-list li {
   .bottom-popup-message {
     height: 69%;
   }
+  
 }
 
 //Recently Added
