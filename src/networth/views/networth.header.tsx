@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Logo from 'assets/icons/logo.svg';
+import ProBadge from 'assets/images/networth/pro-badge.svg';
+import ProfileAvatar from 'assets/images/networth/profile-avatar.png';
+
 const NetworthHeader = () => {
   return (
     <header>
@@ -16,7 +20,7 @@ const NetworthHeader = () => {
             <span className='navbar-toggler-icon' />
           </button>
           <Link to='#' className='navbar-brand'>
-            <img src='../src/assets/images/networth/money-mix-logo.svg' alt='Money Minx logo' />
+            <img src={Logo} alt='Money Minx logo' />
           </Link>
           <div className='headtab'>
             <Link to='#' className='active'>
@@ -30,13 +34,13 @@ const NetworthHeader = () => {
             </button>
             <div className='badge-box'>
               <Link to='#'>
-                <img src='../src/assets/images/networth/pro-badge.svg' alt='Pro badge' />
+                <img src={ProBadge} alt='Pro badge' />
               </Link>
             </div>
             <div className='btn-group'>
               <button type='button' className='profile-toggle'>
                 <span>
-                  <img src='../src/assets/images/networth/profile-avatar.png' alt='Profile avatar' />
+                  <img src={ProfileAvatar} alt='Profile avatar' />
                 </span>
                 <span>Amy</span>
               </button>
