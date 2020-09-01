@@ -128,17 +128,19 @@
   margin: 0 0 31px;
 }
 
-.form-wrap .bg-primary.mm-btn-primary-outline {
-  background: #271ee5 !important;
-}
+// .form-wrap .bg-primary.mm-btn-primary-outline {
+//   background: #271ee5 !important;
+// }
 
 span.forgot-pass {
   font-size: 0.875rem;
   color: $purple;
   float: right;
-  font-weight: bold;
+  font-weight: 600;
   padding-top: 5px;
   padding-bottom: 18px;
+  line-height: 1.125rem;
+
 }
 .credintials-content .form-wrap button {
   width: 100%;
@@ -153,20 +155,37 @@ span.forgot-pass {
   color: $white;
 }
 .credintials-content h2 {
+ 
+  font-weight: normal;
   font-size: 1.75rem;
   margin-bottom: 17px;
+  line-height: 2.1875rem;
+  color: $black;
 }
 .credintials-content p {
   margin-bottom: 37px;
-}
+  font-weight:500;
+  }
 .credintials-content .facebook-login {
   font-size: 0.87rem;
   border-top: 1px solid rgba(156, 159, 165, 0.24);
   padding-top: 34px;
+  font-weight: 500;
+  
+     p span{
+      font-size: 0.875rem;
+      line-height: 1.125rem;
+ 
+    }
+  
 }
 .credintials-content .fb-icon-wrap {
   display: inline-block;
   padding-left: 80px;
+}
+
+.credintials-content p > .loginPage-end-element{
+color:$darkGray;
 }
 
 //Footer Second
@@ -174,9 +193,9 @@ span.forgot-pass {
   border-top: 1px solid rgba(150, 158, 172, 0.25);
   padding: 31px 0;
   position: relative;
-}
+ }
 ul.footer-list {
-  padding-left: 0;
+padding-left: 0;
   text-align: right;
 }
 ul.footer-list li {
@@ -206,10 +225,11 @@ ul.footer-list li {
   width: 60%;
   vertical-align: middle;
 }
+
 .footer-table-wrapper {
   display: table;
   width: 100%;
-}
+ }
 
 //login img wrap
 .guide-content {
@@ -280,7 +300,7 @@ ul.footer-list li {
   }
   .credintials-wrapper {
     width: 100%;
-  }
+     }
   .mm-container.mm-container-final {
     margin-left: 0 !important;
   }

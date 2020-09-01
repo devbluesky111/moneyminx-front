@@ -193,7 +193,9 @@ export const LoginMainSection = () => {
 
                 <div className='facebook-login'>
                   <p>
-                    Or, log in with:
+                   <span>
+                      Or, log in with:
+                      </span>
                     <div className='fb-icon-wrap'>
                       <FacebookLogin
                         authType='rerequest'
@@ -216,7 +218,9 @@ export const LoginMainSection = () => {
                 </div>
 
                 <p>
-                  Don’t have an account? <Link to='/signup'>Sign Up</Link>
+                 <div className ="loginPage-end-element">
+                   Don’t have an account?  <Link to='/signup'>Sign Up</Link> 
+                 </div>
                 </p>
               </div>
             </div>
