@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import NetworthLayout from 'networth/networth.layout';
 import SimpleBarChart from './simple-bar-chart';
@@ -23,12 +24,12 @@ const Networth = () => {
                 account instead.
               </p>
               <div className='btnbox'>
-                <a href='#' className='btn-com'>
+                <Link to='#' className='btn-com'>
                   Compare Plans
-                </a>
-                <a href='#' className='btn-normal'>
+                </Link>
+                <Link to='#' className='btn-normal'>
                   Add Manual Account
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -68,42 +69,42 @@ const Networth = () => {
                   <div className='dropdown-box'>
                     <ul className='pending'>
                       <li>
-                        <a href='/kkkk'>
+                        <Link to='/kkkk'>
                           <div>
                             <h5>Robinhood</h5>
                             <span>10 days ago</span>
                           </div>
                           <div>$2,343</div>
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href='/abc'>
+                        <Link to='/abc'>
                           <div>
                             <h5>Yieldstreet</h5>
                             <span>12 days ago</span>
                           </div>
                           <div>$2,343</div>
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                     <ul className='success'>
                       <li>
-                        <a href='/Robinhood'>
+                        <Link to='/Robinhood'>
                           <div>
                             <h5>Robinhood</h5>
                             <span>10 days ago</span>
                           </div>
                           <div>$2,343</div>
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href='/yieldstreet'>
+                        <Link to='/yieldstreet'>
                           <div>
                             <h5>Yieldstreet</h5>
                             <span>12 days ago</span>
                           </div>
                           <div>$2,343</div>
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
@@ -138,25 +139,57 @@ const Networth = () => {
                       <ul className='checkbox-list'>
                         <li>
                           <label>
-                            <input type='checkbox' area-checked='' />
+                            <input
+                              type='checkbox'
+                              aria-describedby='Investment assets'
+                              value='investmentAsset'
+                              aria-checked={false}
+                              placeholder=''
+                              defaultChecked={false}
+                              checked={false}
+                            />
                             <span>Investment Assets</span>
                           </label>
                         </li>
                         <li>
                           <label>
-                            <input type='checkbox' />
+                            <input
+                              type='checkbox'
+                              aria-describedby='Investment assets'
+                              value='otherAssets'
+                              aria-checked={false}
+                              placeholder=''
+                              defaultChecked={false}
+                              checked={false}
+                            />
                             <span>Other Assets</span>
                           </label>
                         </li>
                         <li>
                           <label>
-                            <input type='checkbox' />
+                            <input
+                              type='checkbox'
+                              aria-describedby='Investment assets'
+                              value='liabilities'
+                              aria-checked={false}
+                              placeholder=''
+                              defaultChecked={false}
+                              checked={false}
+                            />
                             <span>Liabilities</span>
                           </label>
                         </li>
                         <li>
                           <label>
-                            <input type='checkbox' />
+                            <input
+                              type='checkbox'
+                              aria-describedby='Investment assets'
+                              value='netWorth'
+                              aria-checked={false}
+                              placeholder=''
+                              defaultChecked={false}
+                              checked={false}
+                            />
                             <span>Net Worth</span>
                           </label>
                         </li>
@@ -181,8 +214,17 @@ const Networth = () => {
                         <ul className='pending'>
                           <li>
                             <label>
-                              <input type='checkbox' name='accbox' />
-                              <span></span>
+                              <input
+                                name='accBox'
+                                type='checkbox'
+                                aria-describedby='Investment assets'
+                                value='accBox'
+                                aria-checked={false}
+                                placeholder=''
+                                defaultChecked={false}
+                                checked={false}
+                              />
+                              <span />
                             </label>
                             <div>
                               <h5>Robinhood</h5>
@@ -192,8 +234,17 @@ const Networth = () => {
                           </li>
                           <li>
                             <label>
-                              <input type='checkbox' name='accbox' />
-                              <span></span>
+                              <input
+                                name='accBox'
+                                type='checkbox'
+                                aria-describedby='Investment assets'
+                                value='accBox'
+                                aria-checked={false}
+                                placeholder=''
+                                defaultChecked={false}
+                                checked={false}
+                              />
+                              <span />
                             </label>
                             <div>
                               <h5>Yieldstreet</h5>
@@ -205,8 +256,17 @@ const Networth = () => {
                         <ul className='success'>
                           <li>
                             <label>
-                              <input type='checkbox' name='accbox' />
-                              <span></span>
+                              <input
+                                name='accBox'
+                                type='checkbox'
+                                aria-describedby='Investment assets'
+                                value='accBox'
+                                aria-checked={false}
+                                placeholder=''
+                                defaultChecked={false}
+                                checked={false}
+                              />
+                              <span />
                             </label>
                             <div>
                               <h5>Robinhood</h5>
@@ -216,8 +276,17 @@ const Networth = () => {
                           </li>
                           <li>
                             <label>
-                              <input type='checkbox' name='accbox' />
-                              <span></span>
+                              <input
+                                name='accBox'
+                                type='checkbox'
+                                aria-describedby='Investment assets'
+                                value='accBox'
+                                aria-checked={false}
+                                placeholder=''
+                                defaultChecked={false}
+                                checked={false}
+                              />
+                              <span />
                             </label>
                             <div>
                               <h5>Yieldstreet</h5>
@@ -243,32 +312,32 @@ const Networth = () => {
                     <div className='dropdown-menu'>
                       <ul className='droplist'>
                         <li>
-                          <a href='#'>401K</a>
+                          <Link to='#'>401K</Link>
                         </li>
                         <li>
-                          <a href='#'>Cash Management</a>
+                          <Link to='#'>Cash Management</Link>
                         </li>
                         <li>
-                          <a href='#'>IRA</a>
+                          <Link to='#'>IRA</Link>
                         </li>
                         <li>
-                          <a className='subdrop-toggle' href='#'>
+                          <Link to='#' className='subdrop-toggle'>
                             Loan
-                          </a>
+                          </Link>
                           <ol className='subdrop-m'>
                             <li>
-                              <a href='#'>Credit</a>
+                              <Link to='#'>Credit</Link>
                             </li>
                             <li>
-                              <a href='#'>Mortgage</a>
+                              <Link to='#'>Mortgage</Link>
                             </li>
                             <li>
-                              <a href='#'>Car Loan</a>
+                              <Link to='#'>Car Loan</Link>
                             </li>
                           </ol>
                         </li>
                         <li>
-                          <a href='#'>Investment Non-Retirement</a>
+                          <Link to='#'>Investment Non-Retirement</Link>
                         </li>
                       </ul>
                     </div>
@@ -296,19 +365,19 @@ const Networth = () => {
                       <ul className='radiolist'>
                         <li>
                           <label>
-                            <input type='radio' name='m-list' />
+                            <input type='radio' name='m-list' aria-checked={false} checked={false} value='monthly' />
                             <span>Monthly</span>
                           </label>
                         </li>
                         <li>
                           <label>
-                            <input type='radio' name='m-list' />
+                            <input type='radio' name='m-list' value='quarterly' aria-checked={false} />
                             <span>Quarterly</span>
                           </label>
                         </li>
                         <li>
                           <label>
-                            <input type='radio' name='m-list' />
+                            <input type='radio' name='m-list' value='yearly' aria-checked={false} />
                             <span>Yearly</span>
                           </label>
                         </li>
@@ -369,7 +438,7 @@ const Networth = () => {
                 <div className='ct-box padd-20'>
                   <div className='measure-box'>
                     <h2>
-                      <img src='../src/assets/images/networth/measure-up-icon.svg' alt='' /> Minx Measure-up
+                      <img src='../src/assets/images/networth/measure-up-icon.svg' alt='Measure UP' /> Minx Measure-up
                     </h2>
                     <div
                       className='bgbox'
@@ -378,9 +447,9 @@ const Networth = () => {
                       }}
                     >
                       <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
-                      <a href='#' className='btn-blue btn-full'>
+                      <Link to='#' className='btn-blue btn-full'>
                         Complete Profile
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -489,7 +558,8 @@ const Networth = () => {
                       <tfoot>
                         <tr data-href='#'>
                           <td>
-                            <a
+                            <Link
+                              to='#'
                               className='warning-popover'
                               data-className='warning-pop'
                               data-container='body'
@@ -499,9 +569,9 @@ const Networth = () => {
                               data-content=''
                             >
                               Total
-                            </a>
+                            </Link>
                           </td>
-                          <td className='tab-hide'></td>
+                          <td className='tab-hide'>{''}</td>
                           <td className='tab-hide'>$95,000</td>
                           <td className='tab-hide'>$74,000</td>
                           <td className='tab-hide'>$34,000</td>
@@ -546,7 +616,7 @@ const Networth = () => {
                       <tfoot>
                         <tr data-href='#'>
                           <td>Total</td>
-                          <td className='tab-hide'></td>
+                          <td className='tab-hide'>{''}</td>
                           <td className='tab-hide'>$95,000</td>
                           <td className='tab-hide'>$74,000</td>
                           <td className='tab-hide'>$34,000</td>
@@ -653,7 +723,7 @@ const Networth = () => {
                       <tfoot>
                         <tr>
                           <td>Total</td>
-                          <td className='tab-hide'></td>
+                          <td className='tab-hide'>{''}</td>
                           <td className='tab-hide'>$95,000</td>
                           <td className='tab-hide'>$74,000</td>
                           <td className='tab-hide'>$34,000</td>
@@ -683,7 +753,7 @@ const Networth = () => {
                           <th>
                             <span>Net Worth</span>
                           </th>
-                          <th className='tab-hide'></th>
+                          <th className='tab-hide'>{''}</th>
                           <th className='tab-hide'>Jan 2020</th>
                           <th className='tab-hide'>Feb 2020</th>
                           <th className='tab-hide'>Mar 2020</th>
@@ -698,7 +768,7 @@ const Networth = () => {
                       <tbody>
                         <tr data-href='#'>
                           <td>Investment Assets</td>
-                          <td className='tab-hide'></td>
+                          <td className='tab-hide'>{''}</td>
                           <td className='tab-hide'>$75,000</td>
                           <td className='tab-hide'>$13,000</td>
                           <td className='tab-hide'>$78,000</td>
@@ -713,7 +783,7 @@ const Networth = () => {
                         </tr>
                         <tr data-href='#'>
                           <td>Other Assets</td>
-                          <td className='tab-hide'></td>
+                          <td className='tab-hide'>{''}</td>
                           <td className='tab-hide'>$73,000</td>
                           <td className='tab-hide'>$64,000</td>
                           <td className='tab-hide'>$83,000</td>
@@ -728,7 +798,7 @@ const Networth = () => {
                         </tr>
                         <tr data-href='#'>
                           <td>Liabilities</td>
-                          <td className='tab-hide'></td>
+                          <td className='tab-hide'>{''}</td>
                           <td className='tab-hide'>$62,000</td>
                           <td className='tab-hide'>$75,000</td>
                           <td className='tab-hide'>$66,000</td>
@@ -745,7 +815,7 @@ const Networth = () => {
                       <tfoot>
                         <tr>
                           <td>Net Worth</td>
-                          <td className='tab-hide'></td>
+                          <td className='tab-hide'>{''}</td>
                           <td className='tab-hide'>$95,000</td>
                           <td className='tab-hide'>$74,000</td>
                           <td className='tab-hide'>$34,000</td>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NetworthFooter = () => {
   return (
@@ -11,16 +12,16 @@ const NetworthFooter = () => {
           <div className='col-md-7'>
             <ul className='foot-link'>
               <li>
-                <a href='#'>Privacy Policy</a>
+                <Link to='#'>Privacy Policy</Link>
               </li>
               <li>
-                <a href='#'>Terms of Service</a>
+                <Link to='#'>Terms of Service</Link>
               </li>
               <li>
-                <a href='#'>Notices</a>
+                <Link to='#'>Notices</Link>
               </li>
               <li>
-                <a href='#'>Resources</a>
+                <Link to='#'>Resources</Link>
               </li>
             </ul>
           </div>

@@ -13,15 +13,15 @@ const NetworthHeader = () => {
             data-target='#headerMenu'
             aria-expanded='false'
           >
-            <span className='navbar-toggler-icon'></span>
+            <span className='navbar-toggler-icon' />
           </button>
-          <a className='navbar-brand' href='#'>
-            <img src='../src/assets/images/networth/money-mix-logo.svg' alt='' />
-          </a>
+          <Link to='#' className='navbar-brand'>
+            <img src='../src/assets/images/networth/money-mix-logo.svg' alt='Money Minx logo' />
+          </Link>
           <div className='headtab'>
-            <a href='#' className='active'>
+            <Link to='#' className='active'>
               Net Worth
-            </a>
+            </Link>
             <Link to='/'>Allocation</Link>
           </div>
           <div className='head-right'>
@@ -29,14 +29,14 @@ const NetworthHeader = () => {
               Upgrade
             </button>
             <div className='badge-box'>
-              <a href='#'>
-                <img src='../src/assets/images/networth/pro-badge.svg' alt='' />
-              </a>
+              <Link to='#'>
+                <img src='../src/assets/images/networth/pro-badge.svg' alt='Pro badge' />
+              </Link>
             </div>
             <div className='btn-group'>
               <button type='button' className='profile-toggle'>
                 <span>
-                  <img src='../src/assets/images/networth/profile-avatar.png' alt='' />
+                  <img src='../src/assets/images/networth/profile-avatar.png' alt='Profile avatar' />
                 </span>
                 <span>Amy</span>
               </button>
