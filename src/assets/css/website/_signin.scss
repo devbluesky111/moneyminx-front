@@ -22,7 +22,7 @@
   color: $purple;
   font-size: 1.25rem;
   margin-bottom: 32px;
-  font-weight: 600;
+  font-weight: $bolder;
 }
 .guide-content li:before {
   counter-increment: section;
@@ -128,15 +128,11 @@
   margin: 0 0 31px;
 }
 
-// .form-wrap .bg-primary.mm-btn-primary-outline {
-//   background: #271ee5 !important;
-// }
-
 span.forgot-pass {
   font-size: 0.875rem;
   color: $purple;
   float: right;
-  font-weight: 600;
+  font-weight: $bolder;
   padding-top: 5px;
   padding-bottom: 18px;
   line-height: 1.125rem;
@@ -164,13 +160,13 @@ span.forgot-pass {
 }
 .credintials-content p {
   margin-bottom: 37px;
-  font-weight:500;
+  font-weight: $bold;
   }
 .credintials-content .facebook-login {
   font-size: 0.87rem;
   border-top: 1px solid rgba(156, 159, 165, 0.24);
   padding-top: 34px;
-  font-weight: 500;
+  font-weight: $bold;
   
      p span{
       font-size: 0.875rem;
@@ -369,7 +365,7 @@ span.visibility-icon {
 
 .feedback {
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: $bold;
   color: $redAlert;
 }
 
