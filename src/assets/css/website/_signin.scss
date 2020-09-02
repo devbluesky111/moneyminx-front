@@ -124,7 +124,7 @@
   }
 }
 
-.credintials-content input.email {
+.input-wrapper {
   margin: 0 0 31px;
 }
 
@@ -136,7 +136,6 @@ span.forgot-pass {
   padding-top: 5px;
   padding-bottom: 18px;
   line-height: 1.125rem;
-
 }
 .credintials-content .form-wrap button {
   width: 100%;
@@ -151,7 +150,6 @@ span.forgot-pass {
   color: $white;
 }
 .credintials-content h2 {
- 
   font-weight: normal;
   font-size: 1.75rem;
   margin-bottom: 17px;
@@ -161,27 +159,25 @@ span.forgot-pass {
 .credintials-content p {
   margin-bottom: 37px;
   font-weight: $bold;
-  }
+}
 .credintials-content .facebook-login {
   font-size: 0.87rem;
   border-top: 1px solid rgba(156, 159, 165, 0.24);
   padding-top: 34px;
   font-weight: $bold;
-  
-     p span{
-      font-size: 0.875rem;
-      line-height: 1.125rem;
- 
-    }
-  
+
+  p span {
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+  }
 }
 .credintials-content .fb-icon-wrap {
   display: inline-block;
   padding-left: 80px;
 }
 
-.credintials-content p > .loginPage-end-element{
-color:$darkGray;
+.credintials-content p > .loginPage-end-element {
+  color: $darkGray;
 }
 
 //Footer Second
@@ -189,9 +185,9 @@ color:$darkGray;
   border-top: 1px solid rgba(150, 158, 172, 0.25);
   padding: 31px 0;
   position: relative;
- }
+}
 ul.footer-list {
-padding-left: 0;
+  padding-left: 0;
   text-align: right;
 }
 ul.footer-list li {
@@ -225,7 +221,7 @@ ul.footer-list li {
 .footer-table-wrapper {
   display: table;
   width: 100%;
- }
+}
 
 //login img wrap
 .guide-content {
@@ -296,7 +292,7 @@ ul.footer-list li {
   }
   .credintials-wrapper {
     width: 100%;
-     }
+  }
   .mm-container.mm-container-final {
     margin-left: 0 !important;
   }
@@ -309,8 +305,8 @@ ul.footer-list li {
   }
 }
 
-@media(max-width: $md) and (min-width:$sm){
-  .credintials-wrapper{
+@media (max-width: $md) and (min-width: $sm) {
+  .credintials-wrapper {
     min-height: 90vh;
   }
 }
@@ -325,7 +321,7 @@ ul.footer-list li {
       width: 100%;
     }
 
-    .credintials-wrapper{
+    .credintials-wrapper {
       min-height: 90vh;
     }
   }
@@ -355,7 +351,6 @@ ul.footer-list li {
   .bottom-popup-message {
     height: 69%;
   }
-  
 }
 
 //Recently Added
@@ -369,7 +364,7 @@ span.visibility-icon {
   right: 20px;
   cursor: pointer;
 }
-.email-wrap{
+.email-wrap {
   display: inline;
 }
 .email-wrap .feedback {
