@@ -159,6 +159,7 @@ export const LoginMainSection = () => {
                           />
                           {hasError('email') ? <div className='feedback'>{props.errors.email}</div> : null}
                         </div>
+                        <div className='d-md-flex align-items-center'>
                         <div className='password-wrap'>
                           <input
                             name='password'
@@ -169,7 +170,6 @@ export const LoginMainSection = () => {
                             value={props.values.password}
                             type={passwordVisible ? 'text' : 'password'}
                           />
-                          {hasError('password') ? <div className='feedback'>{props.errors.password}</div> : null}
                           <span
                             className='visibility-icon'
                             onClick={() => setPasswordVisible(!passwordVisible)}
@@ -178,6 +178,8 @@ export const LoginMainSection = () => {
                             {visibilityIcon}
                           </span>
                         </div>
+                          {hasError('password') ? <div className='ml-2 mt-2 mt-md-0 text-right feedback'>{props.errors.password}</div> : null}
+                      </div>
                         <p>
                           <span className='forgot-pass'>
                             <Link to='/auth/forgot-password'>Forgot Password?</Link>
