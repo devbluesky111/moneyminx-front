@@ -7,6 +7,7 @@
     color: $gray;
   }
 }
+
 .fb-login-icon {
   cursor: pointer;
 }
@@ -15,6 +16,7 @@
   counter-reset: section;
   padding-left: 0;
 }
+
 .guide-content li {
   position: relative;
   list-style: none;
@@ -24,6 +26,7 @@
   margin-bottom: 32px;
   font-weight: $bolder;
 }
+
 .guide-content li:before {
   counter-increment: section;
   content: counter(section);
@@ -39,50 +42,62 @@
   padding: 8px 14px;
   font-size: 1rem;
 }
+
 .guide-content span.locked-icon {
   margin-right: 15px;
   margin-top: 12px;
 }
+
 .guide-content span.shield-icon {
   margin-right: 15px;
   margin-top: 12px;
 }
+
 .guide-content h4 {
   font-size: 1.25rem;
   margin-bottom: 23px;
 }
+
 .guide-bottom p {
   margin-bottom: 57px;
 }
+
 .guide-icon-wrap {
   display: flex;
 }
+
 .guide-content ul {
   margin-bottom: 73px;
 }
+
 .guide-content h1 {
   font-size: 2rem !important;
   font-weight: 200;
 }
+
 .guide-bottom {
   max-width: 352px;
 }
+
 .main-table-wrapper {
   display: table;
   width: 100%;
 }
+
 .guide-content {
   width: 42%;
   display: table-cell;
   vertical-align: middle;
   padding-left: 102px;
 }
+
 .credintials-wrapper {
   width: 58%;
   display: table-cell;
   vertical-align: middle;
   padding-top: 55px;
 }
+
 .mm-container.mm-container-final {
   margin-right: 0px;
 }
@@ -102,6 +117,7 @@
     font-size: 1rem;
   }
 }
+
 .credintials-content .form-wrap input {
   height: 48px;
   font-size: 0.875rem;

@@ -1,5 +1,6 @@
 import env from 'app/app.env';
 import { Formik } from 'formik';
+import { isEmpty } from 'lodash';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import FacebookLogin from 'react-facebook-login';
@@ -13,6 +14,7 @@ import { appRouteConstants } from 'app/app-route.constant';
 import { loginValidationSchema } from 'auth/auth.validation';
 import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
+import { EMAIL_IS_EMPTY, PWD_IS_EMPTY } from 'lang/en/validation.json';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
 import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
@@ -128,8 +130,23 @@ export const LoginMainSection = () => {
                   initialValues={{ email: '', password: '' }}
                   validationSchema={loginValidationSchema}
                   onSubmit={async (values, actions) => {
+                    const isEmailEmpty = isEmpty(values.email);
+                    const isPasswordEmpty = isEmpty(values.password);
+                    const hasEmptyFields = isEmailEmpty || isPasswordEmpty;
+
+                    if (hasEmptyFields) {
+                      if (isEmailEmpty) {
+                        actions.setFieldError('email', EMAIL_IS_EMPTY);
+                      }
+                      if (isPasswordEmpty) {
+                        actions.setFieldError('password', PWD_IS_EMPTY);
+                      }
+                      return false;
+                    }
+
                     const { error } = await login({ dispatch, payload: values });
                     actions.setSubmitting(false);
+
                     if (!error) {
                       toast('Sign in Success', { type: 'success' });
                       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
@@ -139,8 +156,9 @@ export const LoginMainSection = () => {
                   }}
                 >
                   {(props) => {
-                    const { errors, values } = props;
-                    const hasError = (field: 'email' | 'password') => errors[field] && values[field];
+                    const { errors } = props;
+
+                    const hasError = (field: 'email' | 'password') => errors[field];
 
                     const emailClass = hasError('email') ? 'email invalid' : 'email';
                     const passClass = hasError('password') ? 'password invalid' : 'password';
@@ -241,8 +259,9 @@ export const LoginMainSection = () => {
       </div>
 
       <AssociateEmailModal
+        source='login'
         message={associateMessage}
-        associateModal={associateModal.props}
+        associateModal={associateModal}
         handleSuccess={handleFacebookAssociation}
       />
 
