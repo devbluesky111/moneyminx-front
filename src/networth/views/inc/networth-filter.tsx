@@ -22,7 +22,7 @@ const NetworthFilter = () => {
         <div className='d-flex dropdowns-holder mb-15'>
           <Dropdown className='drop-box'>
             <Dropdown.Toggle className='dropdown-toggle'>All Categories</Dropdown.Toggle>
-            <Dropdown.Menu>
+            <Dropdown.Menu className='mm-dropdown-menu'>
               <ul className='checkbox-list'>
                 <li>
                   <label>
@@ -93,7 +93,7 @@ const NetworthFilter = () => {
             >
               All Accounts
             </Dropdown.Toggle>
-            <Dropdown.Menu className='dropdown-menu'>
+            <Dropdown.Menu className='mm-dropdown-menu'>
               <div className='dropdown-head'>
                 <h4>Needs Attention</h4>
               </div>
@@ -196,7 +196,7 @@ const NetworthFilter = () => {
             >
               All Types
             </Dropdown.Toggle>
-            <Dropdown.Menu className='dropdown-menu'>
+            <Dropdown.Menu className='mm-dropdown-menu'>
               <ul className='droplist'>
                 <li>
                   <Link to='#'>401K</Link>
@@ -250,8 +250,8 @@ const NetworthFilter = () => {
             }
           />
 
-          <div className='drop-box'>
-            <button
+          <Dropdown className='drop-box'>
+            <Dropdown.Toggle
               type='button'
               className='dropdown-toggle'
               data-toggle='dropdown'
@@ -259,12 +259,12 @@ const NetworthFilter = () => {
               aria-expanded='false'
             >
               Monthly
-            </button>
-            <div className='dropdown-menu dropsm'>
+            </Dropdown.Toggle>
+            <Dropdown.Menu className='mm-dropdown-menu dropsm'>
               <ul className='radiolist'>
                 <li>
                   <label>
-                    <input type='radio' name='m-list' aria-checked={false} checked={false} value='monthly' />
+                    <input type='radio' name='m-list' aria-checked={false} value='monthly' />
                     <span>Monthly</span>
                   </label>
                 </li>
@@ -281,8 +281,8 @@ const NetworthFilter = () => {
                   </label>
                 </li>
               </ul>
-            </div>
-          </div>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </div>
     </div>

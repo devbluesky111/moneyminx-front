@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NetworthSidebar = () => {
+interface NetworthSidebarProps {
+  open: boolean;
+}
+const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
   return (
     <>
-      <aside className='profilemenu'>
+      <aside className='profilemenu' style={{ right: open ? 0 : -300 }}>
         <ul className='prlist-up'>
           <li>
             <Link to='/abc'>

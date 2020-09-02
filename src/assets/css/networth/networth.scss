@@ -1947,6 +1947,11 @@ footer p {
   }
 }
 
+.mm-dropdown-menu {
+  @extend .dropdown-menu;
+  background-color: #081833 !important;
+}
+
 /****************************/
 /** bootstrap custom ***/
 /***************************/
@@ -1962,6 +1967,7 @@ $start-width: 100%;
     -webkit-flex: 0 0 $start-width / $var;
   }
 }
+
 @media (min-width: 576px) {
   .#{$class-name}-sm-#{$class-auto} {
     width: 0 0 $class-auto;
@@ -1972,6 +1978,7 @@ $start-width: 100%;
     }
   }
 }
+
 @media (min-width: 768px) {
   .#{$class-name}-md-#{$class-auto} {
     width: 0 0 $class-auto;
@@ -1982,6 +1989,7 @@ $start-width: 100%;
     }
   }
 }
+
 @media (min-width: 992px) {
   .#{$class-name}-lg-#{$class-auto} {
     width: 0 0 $class-auto;

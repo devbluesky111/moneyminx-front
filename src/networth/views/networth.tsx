@@ -15,7 +15,6 @@ const Networth = () => {
     <NetworthLayout>
       <section className='content-container'>
         <NetworthHead />
-
         <div className='content-wraper'>
           <div className='container'>
             <NetworthFilter />

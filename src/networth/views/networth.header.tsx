@@ -5,7 +5,10 @@ import Logo from 'assets/icons/logo.svg';
 import ProBadge from 'assets/images/networth/pro-badge.svg';
 import ProfileAvatar from 'assets/images/networth/profile-avatar.png';
 
-const NetworthHeader = () => {
+interface NetworthHeaderProps {
+  toggleMenu: () => void;
+}
+const NetworthHeader: React.FC<NetworthHeaderProps> = ({ toggleMenu }) => {
   return (
     <header>
       <nav className='navbar navbar-expand-lg money-minx-header'>
@@ -38,7 +41,7 @@ const NetworthHeader = () => {
               </Link>
             </div>
             <div className='btn-group'>
-              <button type='button' className='profile-toggle'>
+              <button type='button' className='profile-toggle' onClick={toggleMenu}>
                 <span>
                   <img src={ProfileAvatar} alt='Profile avatar' />
                 </span>
