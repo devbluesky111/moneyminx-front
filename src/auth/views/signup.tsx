@@ -194,7 +194,8 @@ export const SignupMainSection = () => {
                 >
                   {(props) => {
                     return (
-                      <form onSubmit={props.handleSubmit}>
+                      <form onSubmit={props.handleSubmit}> 
+                       <div className='d-md-flex align-items-start input-wrapper'>
                         <div className='email-wrap'>
                           <input
                             type='email'
@@ -206,8 +207,9 @@ export const SignupMainSection = () => {
                             placeholder='Email'
                           />
 
-                          {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
                         </div>
+                          {props.errors.email && <div className='ml-2 mt-1 mt-md-3 text-right feedback text-nowrap'>{props.errors.email}</div>}
+                       </div>
                         <div className='d-md-flex align-items-center'>
                           <div className='password-wrap'>
                             <input
@@ -291,7 +293,7 @@ export const SignupMainSection = () => {
 
                 <div className='facebook-login'>
                   <p>
-                    Or, sign up with:
+                    <span> Or, sign up with: </span>
                     <div className='fb-icon-wrap'>
                       <FacebookLogin
                         authType='rerequest'
@@ -314,7 +316,9 @@ export const SignupMainSection = () => {
                 </div>
 
                 <p>
+                <div className='loginPage-end-element'>
                   Already have an account? <Link to='/login'>Log In</Link>
+                </div>
                 </p>
               </div>
             </div>
