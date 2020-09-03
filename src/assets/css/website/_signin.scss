@@ -105,6 +105,8 @@
   display: table-cell;
   vertical-align: middle;
   padding-top: 55px;
+  min-height: 90vh;
+
 }
 
 .mm-container.mm-container-final {
@@ -336,12 +338,6 @@ ul.footer-list li {
   }
 }
 
-@media (max-width: $md) and (min-width: $sm) {
-  .credintials-wrapper {
-    min-height: 90vh;
-  }
-}
-
 @media (max-width: $sm) {
   .credintials-content {
     max-width: none;
@@ -352,10 +348,7 @@ ul.footer-list li {
       width: 100%;
     }
 
-    .credintials-wrapper {
-      min-height: 90vh;
-    }
-  }
+      }
   ul.footer-list {
     text-align: left;
   }
