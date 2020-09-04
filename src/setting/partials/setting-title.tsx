@@ -1,38 +1,39 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const SettingTitleSection = () => {
   return (
     <div className='mm-setting-title'>
       <ul className='mm-setting-title--list'>
         <li className='mm-setting-title--type active'>
-          <a className='mm-setting-title--link' href='#'>
+          <Link className='mm-setting-title--link' to="#">
             Settings
-          </a>
+          </Link>
         </li>
         <li className='mm-setting-title--type'>
-          <a className='mm-setting-title--link' href='#'>
+          <Link className='mm-setting-title--link' to="#">
             Profile
-          </a>
+          </Link>
         </li>
         <li className='mm-setting-title--type'>
-          <a className='mm-setting-title--link' href='#'>
+          <Link className='mm-setting-title--link' to="#">
             Plan
-          </a>
+          </Link>
         </li>
         <li className='mm-setting-title--type'>
-          <a className='mm-setting-title--link' href='#'>
+          <Link className='mm-setting-title--link' to="#">
             Accounts
-          </a>
+          </Link>
         </li>
         <li className='mm-setting-title--type'>
-          <a className='mm-setting-title--link' href='#'>
+          <Link className='mm-setting-title--link' to="#">
             Billing
-          </a>
+          </Link>
         </li>
         <li className='mm-setting-title--type'>
-          <a className='mm-setting-title--link' href='#'>
+          <Link className='mm-setting-title--link' to="#">
             Invite
-          </a>
+          </Link>
         </li>
       </ul>
       <div className='mm-setting-title--bar'></div>

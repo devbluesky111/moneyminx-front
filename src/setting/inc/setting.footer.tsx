@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import footerData from '@mm/data/footer.data.json';
 
 export const FooterSection = () => {
@@ -9,16 +10,16 @@ export const FooterSection = () => {
         <div>
           <ul className='mm-setting-footer--list'>
             <li>
-              <a href='#'>Privacy Policy</a>
+              <Link to="#">Privacy Policy</Link>
+            </li> 
+            <li>
+              <Link to="#">Terms of Service</Link>
             </li>
             <li>
-              <a href='#'>Terms of Service</a>
+              <Link to="#">Notices</Link>
             </li>
             <li>
-              <a href='#'>Notices</a>
-            </li>
-            <li>
-              <a href='#'>Resources</a>
+              <Link to="#">Resources</Link>
             </li>
           </ul>
         </div>

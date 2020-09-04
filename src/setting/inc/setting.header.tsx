@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import OwnerOneImg from 'assets/images/about/hussein.png';
 import { ReactComponent as ProBadage } from 'assets/images/about/pro-badage.svg';
@@ -25,14 +25,14 @@ export const NavBarSection = () => {
         <ul className='navbar-nav mm-setting-nav'>
           <div className='d-flex align-items-center'>
             <li className='nav-item mm-setting-nav--item'>
-              <a className='nav-link' href='#'>
+              <Link className='nav-link' to="#">
                 Net Worth <span className='sr-only'>(current)</span>
-              </a>
+              </Link> 
             </li>
             <li className='nav-item'>
-              <a className='nav-link' href='#'>
+              <Link className='nav-link' to="#">
                 Allocation
-              </a>
+              </Link> 
             </li>
           </div>
           <div className='d-flex align-items-center'>
@@ -46,9 +46,9 @@ export const NavBarSection = () => {
               <ProBadage />
             </li>
             <li className='nav-item dropdown'>
-              <a
+              <Link
                 className='nav-link dropdown-toggle'
-                href='#'
+                to="#"
                 id='navbarDropdownMenuLink'
                 data-toggle='dropdown'
                 aria-haspopup='true'
@@ -56,17 +56,17 @@ export const NavBarSection = () => {
               >
                 <img alt='Owner' src={OwnerOneImg} className='rounded-circle mr-2' width='38' height='38' />
                 Hussein
-              </a>
+              </Link> 
               <div className='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
-                <a className='dropdown-item' href='#'>
+                <Link className='dropdown-item' to="#">
                   Action
-                </a>
-                <a className='dropdown-item' href='#'>
+                </Link> 
+                <Link className='dropdown-item' to="#">
                   Another action
-                </a>
-                <a className='dropdown-item' href='#'>
+                </Link> 
+                <Link className='dropdown-item' to="#">
                   Something else here
-                </a>
+                </Link> 
               </div>
             </li>
           </div>
