@@ -4,6 +4,7 @@ import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import Setting from 'setting/setting';
 import { Home, TermNService, Notice, Privacy, About, Pricing, Security } from 'website/views';
 
 import { appRouteConstants } from './app-route.constant';
@@ -33,6 +34,7 @@ function AppRoute() {
 
         <Route exact path={'/about'} component={About} />
         <Route exact path={'/login'} component={Login} />
+        <Route exact path={'/setting'} component={Setting} />
         <Route exact path={'/signup'} component={Signup} />
         <Route exact path={'/notices'} component={Notice} />
         <Route exact path={'/privacy'} component={Privacy} />
