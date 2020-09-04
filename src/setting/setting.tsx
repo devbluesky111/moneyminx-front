@@ -4,7 +4,7 @@ import NavBarSection from './inc/setting.header';
 import FooterSection from './inc/setting.footer';
 import SettingTitleSection from './partials/setting-title';
 import SettingOverview from './pages/setting-overview';
-import ProfileOverview from './pages/profile-overview';
+// import ProfileOverview from './pages/profile-overview';
 
 const Settings: React.FC<SettingsProps> = () => {
   return (
