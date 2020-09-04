@@ -316,7 +316,7 @@ export const SignupMainSection = () => {
                 </div>
 
                 <p>
-                <div className='loginPage-end-element'>
+                <div className='auth-end-element'>
                   Already have an account? <Link to='/login'>Log In</Link>
                 </div>
                 </p>
