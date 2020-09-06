@@ -250,9 +250,9 @@ a {
 .mm-radio-block {
   .mm-radio {
     position: relative;
-    padding-left: 35px;
+    padding-left: 2.188rem;
     cursor: pointer;
-    margin: 8px;
+    margin: 0.5rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -288,8 +288,8 @@ a {
     position: absolute;
     top: 3px;
     left: 0;
-    height: 20px;
-    width: 20px;
+    height: 1.25rem;
+    width: 1.25rem;
     background-color: $white;
     border: 1px solid rgba($primary, 0.2);
     border-radius: 50%;

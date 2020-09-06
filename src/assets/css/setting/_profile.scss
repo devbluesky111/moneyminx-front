@@ -58,7 +58,7 @@
 
     .mm-form-textarea {
       resize: none;
-      height: 124px;
+      height: 7.75rem;
     }
 
     .mm-form-website {
@@ -75,14 +75,14 @@
   .mm-radial {
     &__progress-bar {
       border-radius: 50%;
-      width: 60px;
-      height: 60px;
+      width: 3.75rem;
+      height: 3.75rem;
       display: flex;
 
       &--overlay {
         border-radius: 50%;
-        width: 55px;
-        height: 55px;
+        width: 3.438rem;
+        height: 3.438rem;
         margin: 2px 3px;
         background: $white;
         text-align: center;
