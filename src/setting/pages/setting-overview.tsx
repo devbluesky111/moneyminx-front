@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const SettingOverview = () => {
   return (
@@ -70,9 +71,9 @@ export const SettingOverview = () => {
       </div>
       <div className='card mm-setting-card'>
         <div className='card-body'>
-          <a className='mm-setting-card--subscription' href='#'>
+          <Link className='mm-setting-card--subscription' to='#'>
             Cancle subscription
-          </a>
+          </Link>
         </div>
       </div>
     </section>
