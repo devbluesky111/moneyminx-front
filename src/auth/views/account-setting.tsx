@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
 import { groupByProviderName } from 'auth/auth.helper';
 import { getRefreshedProfile } from 'auth/auth.service';
@@ -6,15 +6,13 @@ import { ConnectAccountStepsSection } from './inc/connect-steps';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { useAuthState, useAuthDispatch } from 'auth/auth.context';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as ChaseLogo } from 'assets/images/signup/chase.svg';
 
-import { ReactComponent as UsBankLogo } from 'assets/images/signup/usbank.svg';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
-import { ReactComponent as WellsFargoLogo } from 'assets/images/signup/wellsfargo.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
-import { SapphireFormSection } from '../sapphire-form';
+import AccountSettingForm from './inc/account-setting-form';
+import { Link } from 'react-router-dom';
 
 const AccountSetting = () => {
   const { user } = useAuthState();
@@ -37,12 +35,17 @@ const AccountSetting = () => {
 export default AccountSetting;
 export const AccountSettingMainSection = () => {
   const { user } = useAuthState();
+  const [providerIndex, setSelectedProviderIndex] = useState(0);
 
   if (!user) {
     return <CircularSpinner />;
   }
 
-  const groupedUserProfileByAccountName = groupByProviderName(user, 'accountName');
+  const groupedUserProfileByProviderName = groupByProviderName(user);
+  const providerNames = Object.keys(groupedUserProfileByProviderName);
+  const providers = Object.values(groupedUserProfileByProviderName)[providerIndex];
+
+  const groupedUserProfileByAccountName = groupByProviderName(providers, 'accountName');
   const accountNames = Object.keys(groupedUserProfileByAccountName);
 
   return (
@@ -94,21 +97,13 @@ export const AccountSettingMainSection = () => {
 
               <div className='form-wrap'>
                 <ul className='bank-list'>
-                  <li>
-                    <a href='/account-setting'>
-                      <ChaseLogo />
-                    </a>
-                  </li>
-                  <li>
-                    <a href='/account-setting'>
-                      <WellsFargoLogo />
-                    </a>
-                  </li>
-                  <li>
-                    <a href='/account-setting'>
-                      <UsBankLogo />
-                    </a>
-                  </li>
+                  {providerNames.map((provider, index) => {
+                    return (
+                      <li key={index} onClick={() => setSelectedProviderIndex(index)} role='button'>
+                        <Link to='#'>{provider}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
 
                 <div className='form-heading'>
@@ -123,7 +118,7 @@ export const AccountSettingMainSection = () => {
                   </ul>
                 </div>
 
-                <SapphireFormSection />
+                <AccountSettingForm />
 
                 <p className='flex-box learn-more-security'>
                   <SecurityIcon />

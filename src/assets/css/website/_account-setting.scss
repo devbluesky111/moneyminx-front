@@ -12,15 +12,16 @@ ul.bank-list {
 }
 
 ul.bank-list li {
-  list-style: none;
-  border: 1px solid rgba(150, 158, 172, 0.4);
-  box-sizing: border-box;
-  border-radius: 4px;
-  display: inline-block;
-  margin-right: 22px;
   height: 80px;
-  width: 125px;
+  list-style: none;
+  min-width: 125px;
+  border-radius: 4px;
+  margin-right: 22px;
   padding: 26px 15px;
+  text-align: center;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid rgba(150, 158, 172, 0.4);
 }
 
 ul.bank-list li a {

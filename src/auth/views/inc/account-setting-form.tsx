@@ -6,14 +6,9 @@ import { useAuthDispatch } from 'auth/auth.context';
 import { loginValidationSchema } from 'auth/auth.validation';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 
-const Sapphireform = () => {
-  return <SapphireFormSection />;
-};
-
-export default Sapphireform;
-
-export const SapphireFormSection = () => {
+const AccountSettingForm = () => {
   const dispatch = useAuthDispatch();
+
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -181,3 +176,5 @@ export const SapphireFormSection = () => {
     </Formik>
   );
 };
+
+export default AccountSettingForm;
