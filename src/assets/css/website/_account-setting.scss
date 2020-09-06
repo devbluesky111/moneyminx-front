@@ -293,6 +293,11 @@ span.form-subheading {
   padding-top: 41px;
 }
 
+.form-divider {
+  border-top: 1px solid rgba(150, 158, 172, 0.24);
+  padding-top: 41px;
+}
+
 .estimated-top-content .form-subheading-right {
   width: 67%;
   font-size: 0.87rem;
@@ -365,6 +370,57 @@ span.form-subheading {
 
 .estimated-annual-return p {
   font-size: 14px;
+}
+
+.account-setting-form {
+  .form-row {
+    margin-top: 40px;
+  }
+  .form-divider,
+  .form-row {
+    font-size: 14px;
+    input[type='radio'] + label::after {
+      content: '';
+      height: 8px;
+      width: 8px;
+      top: 6px;
+      left: 6px;
+      background: $primary;
+      position: absolute;
+      border-radius: 100%;
+      opacity: 0;
+      z-index: 999;
+      transition: opacity 0.2s ease-in-out;
+    }
+    input[type='radio'] {
+      height: 20px !important;
+      left: 0;
+      opacity: 0.2;
+      position: absolute;
+      top: 0;
+      width: 20px !important;
+      z-index: 999;
+    }
+    input[type='radio'] + label::before {
+      height: 20px;
+      width: 20px;
+      border: 1px solid $primary;
+      position: absolute;
+      left: 0;
+      top: 0;
+      content: '';
+      border-radius: 100%;
+      opacity: 0.24;
+    }
+    input[type='radio']:checked + label::after {
+      opacity: 1;
+    }
+    input[type='radio'] {
+      position: absolute;
+      opacity: 0;
+      z-index: 9999;
+    }
+  }
 }
 
 .estimated-annual-return input[type='radio'] + label::after {

@@ -15,6 +15,7 @@ export const urls = {
     FORGOT_PASSWORD: '/profile/password/forgot',
     ACCOUNT_SUBTYPE: '/account/account-subtype?accountType=:accountType',
     FORM_FIELD_FILTER: '/account/form-fields-filter?accountType=:accountType&accountSubType=:accountSubType',
+    ASSOCIATE_MORTGAGE: '/account/me/mortgage-accounts',
   },
   subscription: {
     SUB: '/subscription/stripe/subscriptions',
