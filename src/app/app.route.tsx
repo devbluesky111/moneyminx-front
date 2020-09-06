@@ -1,10 +1,10 @@
 import React from 'react';
 import { Login, Signup } from 'auth';
+import Setting from 'setting/setting';
 import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Setting from 'setting/setting';
 import { Home, TermNService, Notice, Privacy, About, Pricing, Security } from 'website/views';
 
 import { appRouteConstants } from './app-route.constant';

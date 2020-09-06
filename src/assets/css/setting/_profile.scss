@@ -1,13 +1,13 @@
 .mm-profile-overview {
   p {
-    font-weight: 500;
+    font-weight: $lighter;
     font-size: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
 
   &__title {
-    font-weight: 600;
+    font-weight: $normal;
     font-size: 1.25rem;
 
     span {
@@ -33,7 +33,7 @@
     &--tag {
       background: rgba($primary, 0.2);
       border-radius: 6px;
-      font-weight: 600 !important;
+      font-weight: $normal !important;
       display: inline-block;
 
       @media (max-width: $md - 1) {
@@ -43,7 +43,7 @@
   }
 
   &__form {
-    font-weight: 500;
+    font-weight: $lighter;
     font-size: 1rem;
 
     .mm-prepend-text {

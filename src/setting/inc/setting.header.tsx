@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import OwnerOneImg from 'assets/images/about/hussein.png';
+import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { ReactComponent as ProBadage } from 'assets/images/about/pro-badage.svg';
 
 export const NavBarSection = () => {
