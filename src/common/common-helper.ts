@@ -86,3 +86,31 @@ export const makeTypes = (type: string) => {
 export const al = (word: string): string => {
   return word.split(' ').join('_').toUpperCase();
 };
+
+/**
+ * Enumerates values of an enum.
+ * Example:
+ *    enum Colors { RED = 0, GREEN = 5 }
+ *    enumerate(Colors) === [0, 5]
+ *
+ * @param {any} e
+ * @returns {number[]}
+ */
+export function enumerate(e: any): number[] {
+  return Object.keys(e).reduce((acc: any, value: string) => (isNaN(+value) ? acc : [...acc, +value]), []);
+}
+
+/**
+ * Enumerates values of an enum. The assumption is that the enum is always strictly homogeneous
+ * over the 'string' type.
+ *
+ * Example:
+ *    enum Colors { RED = 'red', GREEN = 'green' }
+ *    enumerate(Colors) === ['red', 'green']
+ *
+ * @param {any} e
+ * @returns {string[]}
+ */
+export function enumerateStr(e: any) {
+  return Object.keys(e).map((k) => e[k as any]);
+}
