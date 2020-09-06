@@ -59,6 +59,10 @@ export const getAccountSubType = (accountType: string): Promise<ApiResponse> => 
   return http.get(urls.auth.ACCOUNT_SUBTYPE.replace(':accountType', accountType));
 };
 
+export const getAssociateMortgage = (): Promise<ApiResponse> => {
+  return http.get(urls.auth.ASSOCIATE_MORTGAGE);
+};
+
 export const getFormFieldFilter = (accountType: string, accountSubtype: string): Promise<ApiResponse> => {
   return http.get(
     urls.auth.FORM_FIELD_FILTER.replace(':accountType', accountType).replace(':accountSubType', accountSubtype)
