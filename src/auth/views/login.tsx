@@ -165,43 +165,57 @@ export const LoginMainSection = () => {
 
                     return (
                       <form onSubmit={props.handleSubmit}>
-                        <div className='email-wrap'>
-                          <input
-                            type='email'
-                            className={emailClass}
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                            value={props.values.email}
-                            name='email'
-                            placeholder='Email'
-                          />
-                          {hasError('email') ? <div className='feedback'>{props.errors.email}</div> : null}
+                        <div className='d-md-flex align-items-start input-wrapper'>
+                          <div className='email-wrap'>
+                            <input
+                              type='email'
+                              className={emailClass}
+                              onChange={props.handleChange}
+                              onBlur={props.handleBlur}
+                              value={props.values.email}
+                              name='email'
+                              placeholder='Email'
+                            />
+                          </div>
+                          {hasError('email') ? (
+                            <div className='ml-2 mt-1 mt-md-3 text-right feedback text-nowrap'>
+                              {props.errors.email}
+                            </div>
+                          ) : null}
                         </div>
-                        <div className='password-wrap'>
-                          <input
-                            name='password'
-                            className={passClass}
-                            placeholder='Password'
-                            onBlur={props.handleBlur}
-                            onChange={props.handleChange}
-                            value={props.values.password}
-                            type={passwordVisible ? 'text' : 'password'}
-                          />
-                          {hasError('password') ? <div className='feedback'>{props.errors.password}</div> : null}
-                          <span
-                            className='visibility-icon'
-                            onClick={() => setPasswordVisible(!passwordVisible)}
-                            role='button'
-                          >
-                            {visibilityIcon}
-                          </span>
+
+                        <div className='d-md-flex align-items-center'>
+                          <div className='password-wrap'>
+                            <input
+                              name='password'
+                              className={passClass}
+                              placeholder='Password'
+                              onBlur={props.handleBlur}
+                              onChange={props.handleChange}
+                              value={props.values.password}
+                              type={passwordVisible ? 'text' : 'password'}
+                            />
+                            <span
+                              className='visibility-icon'
+                              onClick={() => setPasswordVisible(!passwordVisible)}
+                              role='button'
+                            >
+                              {visibilityIcon}
+                            </span>
+                          </div>
+                          {hasError('password') ? (
+                            <div className='ml-2 mt-2 mt-md-0 text-right feedback text-nowrap'>
+                              {props.errors.password}
+                            </div>
+                          ) : null}
                         </div>
+
                         <p>
                           <span className='forgot-pass'>
                             <Link to='/auth/forgot-password'>Forgot Password?</Link>
                           </span>
                         </p>
-                        <button className='bg-primary mm-btn-primary-outline' type='submit'>
+                        <button className='bg-primary mm-btn-primary-outline' type='submit' disabled={!props.isValid}>
                           Log in
                         </button>
                       </form>
@@ -211,7 +225,7 @@ export const LoginMainSection = () => {
 
                 <div className='facebook-login'>
                   <p>
-                    Or, log in with:
+                    <span>Or, log in with:</span>
                     <div className='fb-icon-wrap'>
                       <FacebookLogin
                         authType='rerequest'
@@ -234,7 +248,9 @@ export const LoginMainSection = () => {
                 </div>
 
                 <p>
-                  Don’t have an account? <Link to='/signup'>Sign Up</Link>
+                  <div className='loginPage-end-element'>
+                    Don’t have an account? <Link to='/signup'>Sign Up</Link>
+                  </div>
                 </p>
               </div>
             </div>

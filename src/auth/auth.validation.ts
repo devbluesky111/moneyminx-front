@@ -1,13 +1,13 @@
 import * as Yup from 'yup';
 import validation from 'lang/en/validation.json';
 
-const { REQUIRED_FIELD, INVALID_EMAIL, PASSWORD_ERROR, PASSWORD_MATCH } = validation;
+const { REQUIRED_FIELD, INVALID_EMAIL, INVALID_PASSWORD, PASSWORD_ERROR, PASSWORD_MATCH } = validation;
 
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d+)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 export const loginValidationSchema = Yup.object({
   email: Yup.string().email(INVALID_EMAIL),
-  password: Yup.string().matches(passwordRegex, PASSWORD_ERROR),
+  password: Yup.string().matches(passwordRegex, INVALID_PASSWORD),
 });
 
 export const registerValidationSchema = Yup.object({

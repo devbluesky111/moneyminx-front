@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AuthFooter = () => {
   return (
@@ -11,16 +12,16 @@ const AuthFooter = () => {
           <div className='footer-content right-content'>
             <ul className='footer-list'>
               <li>
-                <a href='link2'>Privacy Policy</a>
+                <Link to='/privacy'>Privacy Policy</Link>
               </li>
               <li>
-                <a href='link3'>Terms of Service</a>
+                <Link to='/terms'>Terms of Service</Link>
               </li>
               <li>
-                <a href='link4'>Notices</a>
+                <Link to='/notices'>Notices</Link>
               </li>
               <li>
-                <a href='link5'>Resources</a>
+                <Link to='#'>Resources</Link>
               </li>
             </ul>
           </div>

@@ -2,6 +2,7 @@
   "REQUIRED_FIELD": "Field is required",
   "PASSWORD_MATCH": "Password does not match",
   "INVALID_EMAIL": "Please enter a valid email",
+  "INVALID_PASSWORD": "Please enter a valid password",
   "EMAIL_IS_EMPTY": "You forgot to share your email",
   "PWD_IS_EMPTY": "You forgot to include a password",
   "INVALID_PASSWORD_LENGTH": "Invalid password length",
