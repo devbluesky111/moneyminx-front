@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
 
     const status = error.response?.status;
     const url = error.response?.url;
-    const isAuthenticating = url === urls.auth.LOGIN_IN || urls.auth.REGISTER;
+    const isAuthenticating = url === urls.auth.LOGIN_IN || url === urls.auth.REGISTER;
 
     const errorResponse = error.response?.data ? error.response.data : error;
 

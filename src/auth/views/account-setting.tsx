@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { AuthLayout } from 'layouts/auth.layout';
 import { groupByProviderName } from 'auth/auth.helper';
@@ -12,7 +13,6 @@ import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.s
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
 import AccountSettingForm from './inc/account-setting-form';
-import { Link } from 'react-router-dom';
 
 const AccountSetting = () => {
   const { user } = useAuthState();

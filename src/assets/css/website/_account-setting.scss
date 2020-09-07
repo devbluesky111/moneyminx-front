@@ -376,6 +376,19 @@ span.form-subheading {
   .form-row {
     margin-top: 40px;
   }
+
+  .hidden {
+    // comment this code to see all form fields
+    display: none;
+  }
+
+  .account-type-list {
+    input[type='text'],
+    input[type='date'],
+    input[type='number'] {
+      width: 93%;
+    }
+  }
   .form-divider,
   .form-row {
     font-size: 14px;

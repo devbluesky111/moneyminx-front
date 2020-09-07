@@ -1,19 +1,23 @@
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
 import React, { useState, useEffect } from 'react';
+
+import { makeFormFields } from 'auth/auth.helper';
 import { enumerateStr } from 'common/common-helper';
 import useAccountType from 'auth/hooks/useAccountType';
+import useLoanAccount from 'auth/hooks/useLoanAccount';
 import useAccountFilter from 'auth/hooks/useAccountFilter';
 import { loginValidationSchema } from 'auth/auth.validation';
 import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 import { CurrencyOptions } from 'auth/enum/currency-options';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
-import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
-import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
+import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
+import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
 
 const AccountSettingForm = () => {
@@ -24,8 +28,9 @@ const AccountSettingForm = () => {
     accountType
   );
 
-  const { fetchingFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
+  const { fetchingFilters, error: filterError, accountFilters } = useAccountFilter(accountType, accountSubtype);
   const { fetchingMortgage, mortgageAccounts, mortgageError } = useAssociateMortgage();
+  const { fetchingLoanAccount, loanAccounts, loanAccountError } = useLoanAccount();
 
   useEffect(() => {
     if (accountTypes) {
@@ -39,8 +44,9 @@ const AccountSettingForm = () => {
     }
   }, [accountSubTypes]);
 
-  const hasError = error || subTypeError || filterError || mortgageError;
-  const isLoading = fetchingAccountSubType || fetchingAccountType || fetchingFilters || fetchingMortgage;
+  const hasError = error || subTypeError || filterError || mortgageError || loanAccountError;
+  const isLoading =
+    fetchingAccountSubType || fetchingAccountType || fetchingFilters || fetchingMortgage || fetchingLoanAccount;
 
   if (hasError) {
     toast('Error occurred');
@@ -49,6 +55,12 @@ const AccountSettingForm = () => {
   if (isLoading) {
     return <CircularSpinner />;
   }
+
+  const formFields = accountFilters ? makeFormFields(accountFilters) : [];
+
+  const hasField = (field: string) => formFields.includes(field);
+
+  const hc = (field: string) => (hasField(field) ? '' : 'hidden');
 
   return (
     <Formik
@@ -207,7 +219,8 @@ const AccountSettingForm = () => {
                     })}
                   </select>
                 </li>
-                <li>
+
+                <li className={hc('liquidity')}>
                   <span className='form-subheading'>Liquidity</span>
                   <select
                     name='liquidity'
@@ -227,8 +240,169 @@ const AccountSettingForm = () => {
                 </li>
               </ul>
             </div>
+            {/* loan section */}
+            <div className='account-type'>
+              <ul className='account-type-list'>
+                <li className={hc('interestRate')}>
+                  <span className='form-subheading'>Interest Rate</span>
+                  <input
+                    onChange={handleChange}
+                    type='text'
+                    defaultChecked={false}
+                    name='interestRate'
+                    value={values.interestRate}
+                  />
+                </li>
+                <li className={hc('originationDate')}>
+                  <span className='form-subheading'>Origination Date</span>
+                  <input
+                    onChange={handleChange}
+                    type='date'
+                    defaultChecked={false}
+                    name='originationDate'
+                    value={values.originationDate}
+                  />
+                </li>
+                <li className={hc('originalBalance')}>
+                  <span className='form-subheading'>Origination Balance</span>
+                  <input
+                    onChange={handleChange}
+                    type='text'
+                    defaultChecked={false}
+                    name='originalBalance'
+                    value={values.originalBalance}
+                  />
+                  <span>Term length: 72 months</span>
+                </li>
+                <li className={hc('maturityDate')}>
+                  <span className='form-subheading'>Maturity Date</span>
+                  <input onChange={handleChange} type='date' name='maturityDate' value={values.maturityDate} />
+                </li>
+                <li className={hc('termForInvestment')}>
+                  {/* This is optional will be calculated if there are originated date and maturity date */}
+                  <span className='form-subheading'>Term Length</span>
+                  <Form.Control
+                    onChange={handleChange}
+                    type='number'
+                    name='termForInvestment'
+                    value={values.termForInvestment}
+                  />
+                </li>
+
+                <li className={hc('loanBalance')}>
+                  <span className='form-subheading'>Loan Balance</span>
+                  <Form.Control onChange={handleChange} type='number' name='loanBalance' value={values.loanBalance} />
+                </li>
+                <li className={hc('paymentsPerYear')}>
+                  <span className='form-subheading'>Payment per year</span>
+                  <Form.Control
+                    type='number'
+                    onChange={handleChange}
+                    name='paymentsPerYear'
+                    value={values.paymentsPerYear}
+                  />
+                </li>
+              </ul>
+            </div>
+            {/* loan section ends */}
+
+            {/* startup and investment section */}
+            <div className='account-type'>
+              <ul className='account-type-list'>
+                <li className={hc('investedDate')}>
+                  <span className='form-subheading'>When did you invest?</span>
+                  <Form.Control onChange={handleChange} type='date' name='investedDate' value={values.investedDate} />
+                </li>
+                <li className={hc('amountInvested')}>
+                  <span className='form-subheading'>How much did you invest?</span>
+                  <Form.Control
+                    onChange={handleChange}
+                    type='number'
+                    name='amountInvested'
+                    value={values.amountInvested}
+                  />
+                </li>
+                <li className={hc('currentMarketValue')}>
+                  <span className='form-subheading'>What is the current market value?</span>
+                  <Form.Control
+                    onChange={handleChange}
+                    type='number'
+                    name='currentMarketValue'
+                    value={values.currentMarketValue}
+                  />
+                </li>
+                <li className={hc('targetInterestRate')}>
+                  <span className='form-subheading'>What is the target IRR?</span>
+                  <Form.Control
+                    onChange={handleChange}
+                    type='number'
+                    name='targetInterestRate'
+                    value={values.targetInterestRate}
+                  />
+                </li>
+                <li className={hc('postMoneyValuation')}>
+                  <span className='form-subheading'>Post Money Valuation</span>
+                  <Form.Control
+                    onChange={handleChange}
+                    type='number'
+                    name='postMoneyValuation'
+                    value={values.postMoneyValuation}
+                  />
+                </li>
+                <li className={hc('currentValuation')}>
+                  <span className='form-subheading'>Current Valuation</span>
+                  <Form.Control
+                    type='number'
+                    onChange={handleChange}
+                    name='currentValuation'
+                    value={values.currentValuation}
+                  />
+                </li>
+              </ul>
+            </div>
+
+            {/* startup and investment section ends  */}
+
+            {/* business start */}
+            <div className='account-type'>
+              <ul className='account-type-list'>
+                <li className={hc('businessStartDate')}>
+                  <span className='form-subheading'>When did you start or buy this business?</span>
+                  <Form.Control
+                    type='date'
+                    onChange={handleChange}
+                    name='businessStartDate'
+                    value={values.businessStartDate}
+                  />
+                </li>
+                <li className={hc('estimatedAnnualRevenues')}>
+                  <span className='form-subheading'>Estimated Annual Revenues</span>
+                  <Form.Control
+                    type='number'
+                    onChange={handleChange}
+                    name='estimatedAnnualRevenues'
+                    value={values.estimatedAnnualRevenues}
+                    placeholder='12,000'
+                  />
+                </li>
+                <li className={`${hc('associatedLoan')} w-100`}>
+                  <span className='form-subheading'>Associated Loan</span>
+                  <Form.Control as='select' onChange={handleChange} name='associatedLoan' value={values.associatedLoan}>
+                    {loanAccounts?.map((loanAccount, index) => {
+                      return (
+                        <option key={index} value={loanAccount} aria-selected={values.associatedLoan === loanAccount}>
+                          {loanAccount}
+                        </option>
+                      );
+                    })}
+                  </Form.Control>
+                </li>
+              </ul>
+            </div>
+            {/* business ends  */}
+
             <div className='middle-input-wrap'>
-              <div className='input-wrap performance flex-box'>
+              <div className={`input-wrap performance flex-box ${hc('employerMatchContribution')}`}>
                 <div className='left-input'>
                   <p>
                     <span className='form-subheading'>Does your employer match your contributions?</span>
@@ -260,7 +434,8 @@ const AccountSettingForm = () => {
                   <label>No</label>
                 </div>
               </div>
-              <div className='input-wrap flex-box'>
+
+              <div className={`input-wrap flex-box ${hc('employerMatch')}`}>
                 <div className='left-input'>
                   <p>
                     <span className='form-subheading'>Employer match</span>
@@ -273,7 +448,8 @@ const AccountSettingForm = () => {
                   </span>
                 </div>
               </div>
-              <div className='input-wrap flex-box'>
+
+              <div className={`input-wrap flex-box ${hc('employerMatchLimitIn')} ${hc('employerMatchLimit')}`}>
                 <div className='left-input employer-match'>
                   <p>
                     <span className='form-subheading'>Employer match limit</span>
@@ -312,7 +488,8 @@ const AccountSettingForm = () => {
                   </span>
                 </div>
               </div>
-              <div className='input-wrap performance flex-box'>
+
+              <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
                 <div className='left-input'>
                   <p>
                     <span className='form-subheading'>Include employer match in performance?</span>
@@ -342,7 +519,8 @@ const AccountSettingForm = () => {
                   <label>No</label>
                 </div>
               </div>
-              <div className='input-wrap performance flex-box'>
+
+              <div className={`input-wrap performance flex-box ${hc('calculateReturns')}`}>
                 <div className='left-input'>
                   <p>
                     <span className='form-subheading'>Calculate Returns?</span>
@@ -373,7 +551,28 @@ const AccountSettingForm = () => {
                 </div>
               </div>
             </div>
-            <div className='estimated-annual-return'>
+
+            <div className='form-divider'>
+              <ul className='account-type-list'>
+                <li className={hc('separateLoanBalance')}>
+                  <Form.Control
+                    as='select'
+                    onChange={handleChange}
+                    name='separateLoanBalance'
+                    value={values.separateLoanBalance}
+                  >
+                    <option value='yes' aria-selected={values.separateLoanBalance === 'yes'}>
+                      Separated Account
+                    </option>
+                    <option value='no' aria-selected={values.separateLoanBalance === 'no'}>
+                      Same Account
+                    </option>
+                  </Form.Control>
+                </li>
+              </ul>
+            </div>
+
+            <div className={`estimated-annual-return ${hc('estimatedAnnualReturns')}`}>
               <div className='estimated-top-content flex-box'>
                 <span className='form-subheading'>Estimated annual returns</span>
                 <span className='form-subheading-right'>This will be used to show projections in your charts.</span>
@@ -422,7 +621,7 @@ const AccountSettingForm = () => {
             </div>
 
             {/* Estimated principal paydown */}
-            <div className='estimated-annual-return'>
+            <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReductionType')}`}>
               <div className='estimated-top-content flex-box'>
                 <span className='form-subheading'>Estimated principal paydown</span>
                 <span className='form-subheading-right'>This will be used to show projections in your charts.</span>
@@ -470,7 +669,7 @@ const AccountSettingForm = () => {
                 onChange={handleChange}
                 placeholder='123 5th Avenue'
                 value={values.streetAddress}
-                className='w-100'
+                className={`w-100 ${hc('streetAddress')}`}
               />
               <div className='d-flex align-items-center my-4'>
                 <input
@@ -479,7 +678,7 @@ const AccountSettingForm = () => {
                   onChange={handleChange}
                   placeholder='New York'
                   value={values.city}
-                  className='w-50 mr-2'
+                  className={`w-50 mr-2 ${hc('city')}`}
                 />
                 <input
                   type='text'
@@ -487,7 +686,7 @@ const AccountSettingForm = () => {
                   onChange={handleChange}
                   placeholder='New York'
                   value={values.state}
-                  className='w-50 ml-2'
+                  className={`w-50 ml-2 ${hc('state')}`}
                 />
               </div>
 
@@ -498,7 +697,7 @@ const AccountSettingForm = () => {
                   onChange={handleChange}
                   placeholder='10030'
                   value={values.zipCode}
-                  className='w-50 mr-2'
+                  className={`w-50 mr-2 ${hc('zipCode')}`}
                 />
                 <input
                   type='text'
@@ -506,7 +705,7 @@ const AccountSettingForm = () => {
                   onChange={handleChange}
                   placeholder='United States'
                   value={values.country}
-                  className='w-50 ml-2'
+                  className={`w-50 ml-2 ${hc('zipCode')}`}
                 />
               </div>
             </div>
@@ -514,7 +713,7 @@ const AccountSettingForm = () => {
             {/* address end */}
 
             {/* Current value */}
-            <div className='form-divider'>
+            <div className={`form-divider ${hc('useZestimate')}`}>
               <span className='form-subheading'>Current Value</span>
               <div className='d-flex align-items-start'>
                 <div className='w-50 mr-2 d-flex flex-column'>
@@ -553,7 +752,6 @@ const AccountSettingForm = () => {
                     type='text'
                     name='ownEstimate'
                     onChange={handleChange}
-                    placeholder='United States'
                     value={values.ownEstimate}
                     className='w-100'
                   />
@@ -563,10 +761,10 @@ const AccountSettingForm = () => {
 
             {/* current value ends */}
 
-            {/* associate mortage and loan  */}
+            {/* associate mortgage and loan  */}
             <div className='account-type'>
               <ul className='account-type-list'>
-                <li>
+                <li className={hc('associatedMortgage')}>
                   <span className='form-subheading'>Associated Mortgage</span>
                   <select
                     name='associatedMortgage'
@@ -584,7 +782,7 @@ const AccountSettingForm = () => {
                     })}
                   </select>
                 </li>
-                <li>
+                <li className={hc('loanBalance')}>
                   <span className='form-subheading'>Loan Balance</span>
                   <input
                     type='text'
@@ -597,7 +795,7 @@ const AccountSettingForm = () => {
               </ul>
             </div>
 
-            {/* associate mortage and loan  ends */}
+            {/* associate mortgage and loan  ends */}
 
             {/* calculate equity */}
             <div className='form-divider'>
@@ -607,7 +805,7 @@ const AccountSettingForm = () => {
               </div>
             </div>
 
-            <div className='form-row'>
+            <div className={`form-row ${hc('calculateReturnsOn')}`}>
               <span className='form-subheading'>How do you prefer to calculate real estate returns?</span>
               <div className='form-check w-100 my-2'>
                 <input

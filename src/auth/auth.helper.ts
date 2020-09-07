@@ -12,7 +12,8 @@ export const makeFormFields = (filters: string[]) => {
     const [found] = Object.keys(fieldData)
       .filter((key) => key === cur)
       .map((key) => (fieldData as any)[key]);
-    acc = [...all, ...acc, ...found];
+
+    acc = found ? [...all, ...acc, ...found] : [...all, ...acc];
     const formFields = [...new Set(acc)];
     return formFields;
   }, []);
