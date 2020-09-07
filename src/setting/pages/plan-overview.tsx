@@ -88,7 +88,7 @@ export const PlanOverview = () => {
             </div>
 
             <div className='col-md-6'>
-              <div className='card mm-setting-card mm-plan-overview__card mm-plan-overview__recommend-card'>
+              <div className='card mm-setting-card mm-plan-overview__card mm-plan-overview__recommend-card'> {/* mm-plan-overview__recommend-card is only for recommend card, styles are written*/}
                 <div className='card-body'>
                   <span className='mm-plan-overview__card-recommend'>RECOMMENDED</span>
                   <div className='mm-plan-overview__card-title'>Early Adopter - Pro</div>
@@ -299,7 +299,7 @@ export const PlanOverview = () => {
                     <button
                       type='button'
                       className='mm-plan-overview__plan-btn mm-plan-overview__plan-btn--current btn btn-lg'
-                    >
+                    > {/* button for currnt plan only mm-plan-overview__plan-btn--current  */}
                       Current Plan
                     </button>
                   </div>
