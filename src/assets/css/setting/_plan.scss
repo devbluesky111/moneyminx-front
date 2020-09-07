@@ -1,0 +1,74 @@
+.mm-profile-container {
+  max-width: 100% !important;
+
+  .mm-plan-overview {
+    &__card {
+      min-height: 52rem;
+    }
+    &__recommend-card {
+      border-top: 4px solid $primary;
+
+      > .card-body {
+        padding: 1.3rem 2.5rem;
+      }
+    }
+
+    &__card-title {
+      font-size: 20px;
+      font-weight: $normal;
+
+      &--sub {
+        font-size: 20px;
+        font-weight: 300;
+      }
+    }
+
+    &__card-body {
+      p {
+        font-weight: $lighter;
+        font-size: 14px;
+        line-height: 18px;
+      }
+    }
+
+    &__card-footer {
+      position: absolute;
+      left: 2.5rem;
+      right: 2.5rem;
+      bottom: 32px;
+    }
+
+    &__plan-btn {
+      width: 100%;
+      font-size: 14px;
+      font-weight: bold;
+      height: 48px;
+      border: 1.5px solid $primary;
+
+      &--current {
+        border: none;
+        color: $darkGray;
+      }
+    }
+
+    &__switch {
+      &--btn {
+        width: 140px;
+        height: 48px;
+        font-size: 14px;
+        font-weight: bold;
+        border: 1.5px solid $primary;
+      }
+    }
+
+    &__card-recommend {
+      position: absolute;
+      top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba($primary, 0.4);
+      font-weight: bold;
+      font-size: 11px;
+    }
+  }
+}
