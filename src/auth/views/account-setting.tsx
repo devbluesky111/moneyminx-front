@@ -1,19 +1,20 @@
+import { Dictionary } from 'lodash';
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
+import { Account } from 'auth/auth.types';
 import { AuthLayout } from 'layouts/auth.layout';
 import { groupByProviderName } from 'auth/auth.helper';
 import { getRefreshedProfile } from 'auth/auth.service';
-import { ConnectAccountStepsSection } from './inc/connect-steps';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { useAuthState, useAuthDispatch } from 'auth/auth.context';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
 import AccountSettingForm from './inc/account-setting-form';
+import { ConnectAccountStepsSection } from './inc/connect-steps';
 
 const AccountSetting = () => {
   const { user } = useAuthState();
@@ -36,18 +37,48 @@ const AccountSetting = () => {
 export default AccountSetting;
 export const AccountSettingMainSection = () => {
   const { user } = useAuthState();
-  const [providerIndex, setSelectedProviderIndex] = useState(0);
+  const [providerName, setProviderName] = useState('');
+  const [currentAccount, setCurrentAccount] = useState<Account>();
+  const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
+  const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
+
+  useEffect(() => {
+    if (user) {
+      setCurrentAccount(user[0]);
+      const accountsByProvider = groupByProviderName(user);
+      setAccountsByProviderName(accountsByProvider);
+      const [curProviderName] = Object.keys(accountsByProvider);
+      setProviderName(curProviderName);
+      const curProviderAccounts = accountsByProvider[curProviderName];
+      setCurrentProviderAccounts(curProviderAccounts);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (accountsByProviderName) {
+      const curProviderAccounts = accountsByProviderName[providerName];
+      setCurrentProviderAccounts(curProviderAccounts);
+      setCurrentAccount(curProviderAccounts[0]);
+    }
+  }, [providerName, accountsByProviderName]);
 
   if (!user) {
     return <CircularSpinner />;
   }
 
-  const groupedUserProfileByProviderName = groupByProviderName(user);
-  const providerNames = Object.keys(groupedUserProfileByProviderName);
-  const providers = Object.values(groupedUserProfileByProviderName)[providerIndex];
+  const providerNames = accountsByProviderName ? Object.keys(accountsByProviderName) : [''];
+  const accountNames = currentProviderAccounts?.map((providerAcc) => providerAcc.accountName) || [''];
 
-  const groupedUserProfileByAccountName = groupByProviderName(providers, 'accountName');
-  const accountNames = Object.keys(groupedUserProfileByAccountName);
+  const handleProviderChange = (provider: string) => {
+    setProviderName(provider);
+  };
+
+  const handleAccountNameChange = (accountName: string) => {
+    const curAccount = currentProviderAccounts?.find((provideAcc) => provideAcc.accountName === accountName);
+    if (curAccount) {
+      setCurrentAccount(curAccount);
+    }
+  };
 
   return (
     <div className='main-table-wrapper'>
@@ -100,7 +131,7 @@ export const AccountSettingMainSection = () => {
                 <ul className='bank-list'>
                   {providerNames.map((provider, index) => {
                     return (
-                      <li key={index} onClick={() => setSelectedProviderIndex(index)} role='button'>
+                      <li key={index} onClick={() => handleProviderChange(provider)} role='button'>
                         <Link to='#'>{provider}</Link>
                       </li>
                     );
@@ -112,14 +143,16 @@ export const AccountSettingMainSection = () => {
                     {accountNames.map((accountName, index) => {
                       return (
                         <li key={index}>
-                          <button className='account-btn'>{accountName}</button>
+                          <button className='account-btn' onClick={() => handleAccountNameChange(accountName)}>
+                            {accountName}
+                          </button>
                         </li>
                       );
                     })}
                   </ul>
                 </div>
 
-                <AccountSettingForm />
+                <AccountSettingForm currentAccount={currentAccount} />
 
                 <p className='flex-box learn-more-security'>
                   <SecurityIcon />

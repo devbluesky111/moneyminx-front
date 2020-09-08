@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import React, { useState, useEffect } from 'react';
 
+import { Account } from 'auth/auth.types';
 import { makeFormFields } from 'auth/auth.helper';
 import { enumerateStr } from 'common/common-helper';
 import useAccountType from 'auth/hooks/useAccountType';
@@ -20,7 +21,10 @@ import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
 
-const AccountSettingForm = () => {
+interface Props {
+  currentAccount?: Account;
+}
+const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
   const { loading: fetchingAccountType, data: accountTypes, error } = useAccountType();
@@ -28,23 +32,19 @@ const AccountSettingForm = () => {
     accountType
   );
 
-  const { fetchingFilters, error: filterError, accountFilters } = useAccountFilter(accountType, accountSubtype);
-  const { fetchingMortgage, mortgageAccounts, mortgageError } = useAssociateMortgage();
   const { fetchingLoanAccount, loanAccounts, loanAccountError } = useLoanAccount();
+  const { fetchingMortgage, mortgageAccounts, mortgageError } = useAssociateMortgage();
+  const { fetchingFilters, accountFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
 
   useEffect(() => {
-    if (accountTypes) {
-      setAccountType(accountTypes[0]);
+    if (currentAccount) {
+      setAccountType(currentAccount.category?.mmAccountType);
+      setAccountSubtype(currentAccount.category?.mmAccountSubType);
     }
-  }, [accountTypes]);
-
-  useEffect(() => {
-    if (accountSubTypes) {
-      setAccountSubtype(accountSubTypes[0]);
-    }
-  }, [accountSubTypes]);
+  }, [currentAccount]);
 
   const hasError = error || subTypeError || filterError || mortgageError || loanAccountError;
+
   const isLoading =
     fetchingAccountSubType || fetchingAccountType || fetchingFilters || fetchingMortgage || fetchingLoanAccount;
 
@@ -67,7 +67,7 @@ const AccountSettingForm = () => {
       initialValues={{
         currency: '',
         mmCategory: '',
-        accountName: '',
+        accountName: currentAccount?.accountName || '',
         city: undefined,
         state: undefined,
         mmAccountType: accountType || '',
@@ -272,7 +272,6 @@ const AccountSettingForm = () => {
                     name='originalBalance'
                     value={values.originalBalance}
                   />
-                  <span>Term length: 72 months</span>
                 </li>
                 <li className={hc('maturityDate')}>
                   <span className='form-subheading'>Maturity Date</span>
@@ -280,7 +279,7 @@ const AccountSettingForm = () => {
                 </li>
                 <li className={hc('termForInvestment')}>
                   {/* This is optional will be calculated if there are originated date and maturity date */}
-                  <span className='form-subheading'>Term Length</span>
+                  <span className='form-subheading'>Term Length (in Months)</span>
                   <Form.Control
                     onChange={handleChange}
                     type='number'
@@ -818,7 +817,7 @@ const AccountSettingForm = () => {
                   checked={values.calculateReturnsOn === CalculateRealEstateReturnOptions.EQUITY}
                 />
                 <label className='form-check-label ml-4' htmlFor='calculateReturnsOn'>
-                  {CalculateRealEstateReturnOptions.EQUITY}
+                  Calculate based on money in and returns on that money
                 </label>
               </div>
               <div className='form-check w-100 my-2'>
@@ -832,7 +831,7 @@ const AccountSettingForm = () => {
                   checked={values.calculateReturnsOn === CalculateRealEstateReturnOptions.PROPERTY_VALUE}
                 />
                 <label className='form-check-label ml-4' htmlFor='calculateReturnsOn'>
-                  {CalculateRealEstateReturnOptions.PROPERTY_VALUE}
+                  Calculate based on appreciation of the market value
                 </label>
               </div>
             </div>
