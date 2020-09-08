@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import OwnerOneImg from 'assets/images/about/hussein.png';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
-import { ReactComponent as ProBadage } from 'assets/images/about/pro-badage.svg';
+import { ReactComponent as ProBadge } from 'assets/images/about/pro-badage.svg';
 
-export const NavBarSection = () => {
+export const NavBarSection: React.FC = () => {
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light mm-setting-navbar'>
       <Link className='navbar-brand' to='/'>
@@ -19,20 +19,20 @@ export const NavBarSection = () => {
         aria-expanded='false'
         aria-label='Toggle navigation'
       >
-        <span className='navbar-toggler-icon'></span>
+        <span className='navbar-toggler-icon' />
       </button>
       <div className='collapse navbar-collapse' id='navbarNavDropdown'>
         <ul className='navbar-nav mm-setting-nav'>
           <div className='d-flex align-items-center'>
             <li className='nav-item mm-setting-nav--item'>
-              <Link className='nav-link' to="#">
+              <Link className='nav-link' to='/net-worth'>
                 Net Worth <span className='sr-only'>(current)</span>
-              </Link> 
+              </Link>
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' to="#">
+              <Link className='nav-link' to='#'>
                 Allocation
-              </Link> 
+              </Link>
             </li>
           </div>
           <div className='d-flex align-items-center'>
@@ -41,14 +41,14 @@ export const NavBarSection = () => {
                 Upgrade
               </button>
             </li>
-            <div className='mt-vl'></div>
+            <div className='mt-vl' />
             <li className='mr-1'>
-              <ProBadage />
+              <ProBadge />
             </li>
             <li className='nav-item dropdown'>
               <Link
                 className='nav-link dropdown-toggle'
-                to="#"
+                to='#'
                 id='navbarDropdownMenuLink'
                 data-toggle='dropdown'
                 aria-haspopup='true'
@@ -56,17 +56,17 @@ export const NavBarSection = () => {
               >
                 <img alt='Owner' src={OwnerOneImg} className='rounded-circle mr-2' width='38' height='38' />
                 Hussein
-              </Link> 
+              </Link>
               <div className='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
-                <Link className='dropdown-item' to="#">
+                <Link className='dropdown-item' to='#'>
                   Action
-                </Link> 
-                <Link className='dropdown-item' to="#">
+                </Link>
+                <Link className='dropdown-item' to='#'>
                   Another action
-                </Link> 
-                <Link className='dropdown-item' to="#">
+                </Link>
+                <Link className='dropdown-item' to='#'>
                   Something else here
-                </Link> 
+                </Link>
               </div>
             </li>
           </div>
