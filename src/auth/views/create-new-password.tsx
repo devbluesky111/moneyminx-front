@@ -1,8 +1,9 @@
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
-import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
+import useParam from 'common/hooks/useParam';
 import { AuthLayout } from 'layouts/auth.layout';
 import { postResetPassword } from 'api/request.api';
 import { resetPasswordValidation } from 'auth/auth.validation';
@@ -21,7 +22,7 @@ const CreateNewPassword = () => {
 };
 
 export const CreateNewPasswordMainSection = () => {
-  const { token } = useParams();
+  const { token } = useParam();
   const history = useHistory();
 
   const [visible, setVisible] = useState({

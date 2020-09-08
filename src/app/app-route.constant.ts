@@ -14,6 +14,7 @@ export const appRouteConstants = {
 
   web: {
     SECURITY: '/security',
+    NET_WORTH: '/net-worth',
   },
 
   misc: {

@@ -24,7 +24,7 @@
   color: $purple;
   font-size: 1.25rem;
   margin-bottom: 32px;
-  font-weight: 600;
+  font-weight: $bolder;
 }
 
 .guide-content li:before {
@@ -140,21 +140,18 @@
   }
 }
 
-.credintials-content input.email {
+.input-wrapper {
   margin: 0 0 31px;
-}
-
-.form-wrap .bg-primary.mm-btn-primary-outline {
-  background: #271ee5 !important;
 }
 
 span.forgot-pass {
   font-size: 0.875rem;
   color: $purple;
   float: right;
-  font-weight: bold;
+  font-weight: $bolder;
   padding-top: 5px;
   padding-bottom: 18px;
+  line-height: 1.125rem;
 }
 .credintials-content .form-wrap button {
   width: 100%;
@@ -169,20 +166,34 @@ span.forgot-pass {
   color: $white;
 }
 .credintials-content h2 {
+  font-weight: normal;
   font-size: 1.75rem;
   margin-bottom: 17px;
+  line-height: 2.1875rem;
+  color: $black;
 }
 .credintials-content p {
   margin-bottom: 37px;
+  font-weight: $bold;
 }
 .credintials-content .facebook-login {
   font-size: 0.87rem;
   border-top: 1px solid rgba(156, 159, 165, 0.24);
   padding-top: 34px;
+  font-weight: $bold;
+
+  p span {
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+  }
 }
 .credintials-content .fb-icon-wrap {
   display: inline-block;
   padding-left: 80px;
+}
+
+.credintials-content p > .loginPage-end-element {
+  color: $darkGray;
 }
 
 //Footer Second
@@ -222,6 +233,7 @@ ul.footer-list li {
   width: 60%;
   vertical-align: middle;
 }
+
 .footer-table-wrapper {
   display: table;
   width: 100%;
@@ -308,13 +320,25 @@ ul.footer-list li {
     padding-left: 79px;
   }
 }
+
+@media (max-width: $md) and (min-width: $sm) {
+  .credintials-wrapper {
+    min-height: 90vh;
+  }
+}
+
 @media (max-width: $sm) {
   .credintials-content {
     max-width: none;
     padding-left: 40px;
     padding-right: 38px;
+
     input {
       width: 100%;
+    }
+
+    .credintials-wrapper {
+      min-height: 90vh;
     }
   }
   ul.footer-list {
@@ -356,7 +380,9 @@ span.visibility-icon {
   right: 20px;
   cursor: pointer;
 }
-
+.email-wrap {
+  display: inline;
+}
 .email-wrap .feedback {
   margin-top: -17px;
   margin-bottom: 15px;
@@ -365,7 +391,7 @@ span.visibility-icon {
 
 .feedback {
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: $bold;
   color: $redAlert;
 }
 
