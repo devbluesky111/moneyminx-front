@@ -264,7 +264,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   />
                 </li>
                 <li className={hc('originalBalance')}>
-                  <span className='form-subheading'>Origination Balance</span>
+                  <span className='form-subheading'>Original Balance</span>
                   <input
                     onChange={handleChange}
                     type='text'
@@ -384,7 +384,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                     placeholder='12,000'
                   />
                 </li>
-                <li className={`${hc('associatedLoan')} w-100`}>
+                <li className={`${hc('associatedLoan')}`}>
                   <span className='form-subheading'>Associated Loan</span>
                   <Form.Control as='select' onChange={handleChange} name='associatedLoan' value={values.associatedLoan}>
                     {loanAccounts?.map((loanAccount, index) => {
@@ -399,6 +399,58 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
               </ul>
             </div>
             {/* business ends  */}
+
+            {/* address */}
+
+            <div className='form-divider'>
+              <input
+                type='text'
+                name='streetAddress'
+                onChange={handleChange}
+                placeholder='123 5th Avenue'
+                value={values.streetAddress}
+                className={`w-100 ${hc('streetAddress')}`}
+              />
+              <div className='d-flex align-items-center my-4'>
+                <input
+                  type='text'
+                  name='city'
+                  onChange={handleChange}
+                  placeholder='New York'
+                  value={values.city}
+                  className={`w-50 mr-2 ${hc('city')}`}
+                />
+                <input
+                  type='text'
+                  name='state'
+                  onChange={handleChange}
+                  placeholder='New York'
+                  value={values.state}
+                  className={`w-50 ml-2 ${hc('state')}`}
+                />
+              </div>
+
+              <div className='d-flex align-items-center my-4'>
+                <input
+                  type='text'
+                  name='zipCode'
+                  onChange={handleChange}
+                  placeholder='10030'
+                  value={values.zipCode}
+                  className={`w-50 mr-2 ${hc('zipCode')}`}
+                />
+                <input
+                  type='text'
+                  name='country'
+                  onChange={handleChange}
+                  placeholder='United States'
+                  value={values.country}
+                  className={`w-50 ml-2 ${hc('zipCode')}`}
+                />
+              </div>
+            </div>
+
+            {/* address end */}
 
             <div className='middle-input-wrap'>
               <div className={`input-wrap performance flex-box ${hc('employerMatchContribution')}`}>
@@ -554,6 +606,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
             <div className='form-divider'>
               <ul className='account-type-list'>
                 <li className={hc('separateLoanBalance')}>
+                  <p>
+                    <span className='form-subheading'>How do you want to handle your 401k loan?</span>
+                    <span className='mm-label b-primary-light w-100 d-inline'>Coming Soon</span>
+                  </p>
                   <Form.Control
                     as='select'
                     onChange={handleChange}
@@ -658,58 +714,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 </span>
               </p>
             </div>
-
-            {/* address */}
-
-            <div className='form-divider'>
-              <input
-                type='text'
-                name='streetAddress'
-                onChange={handleChange}
-                placeholder='123 5th Avenue'
-                value={values.streetAddress}
-                className={`w-100 ${hc('streetAddress')}`}
-              />
-              <div className='d-flex align-items-center my-4'>
-                <input
-                  type='text'
-                  name='city'
-                  onChange={handleChange}
-                  placeholder='New York'
-                  value={values.city}
-                  className={`w-50 mr-2 ${hc('city')}`}
-                />
-                <input
-                  type='text'
-                  name='state'
-                  onChange={handleChange}
-                  placeholder='New York'
-                  value={values.state}
-                  className={`w-50 ml-2 ${hc('state')}`}
-                />
-              </div>
-
-              <div className='d-flex align-items-center my-4'>
-                <input
-                  type='text'
-                  name='zipCode'
-                  onChange={handleChange}
-                  placeholder='10030'
-                  value={values.zipCode}
-                  className={`w-50 mr-2 ${hc('zipCode')}`}
-                />
-                <input
-                  type='text'
-                  name='country'
-                  onChange={handleChange}
-                  placeholder='United States'
-                  value={values.country}
-                  className={`w-50 ml-2 ${hc('zipCode')}`}
-                />
-              </div>
-            </div>
-
-            {/* address end */}
 
             {/* Current value */}
             <div className={`form-divider ${hc('useZestimate')}`}>
