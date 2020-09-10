@@ -19,6 +19,7 @@ import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
+import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
 import { patchAccount } from 'api/request.api';
@@ -170,7 +171,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
           <form onSubmit={props.handleSubmit} className='account-setting-form'>
             <input
               type='text'
-              className='email'
+              className="w-100 mb-4"
               onChange={props.handleChange}
               onBlur={props.handleBlur}
               value={props.values.accountName}
@@ -184,7 +185,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   <InfoIcon />
                 </a>
               </span>
-              <ul className='category-list'>
+              <ul className='category-list mb-4'>
                 <li onClick={() => setCategory('Investment Asset')} role='button'>
                   <Link to='#'>Investment Asset</Link>
                 </li>
@@ -202,7 +203,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   <span className='form-subheading'>Account Type</span>
                   <select
                     name='mmAccountType'
-                    className='retirement'
                     onChange={handleAccountChange}
                     onBlur={handleBlur}
                     value={values.mmAccountType}
@@ -221,7 +221,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                     <span className='form-subheading'>Account Subtype</span>
                     <select
                       name='mmAccountSubType'
-                      className='401k'
                       onChange={handleSubAccountChange}
                       onBlur={handleBlur}
                       value={values.mmAccountSubType}
@@ -240,7 +239,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   <span className='form-subheading'>Currency</span>
                   <select
                     name='currency'
-                    className='USD'
                     onSelect={handleChange}
                     onBlur={handleBlur}
                     value={values.currency}
@@ -259,7 +257,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   <span className='form-subheading'>Liquidity</span>
                   <select
                     name='liquidity'
-                    className='USD'
                     onSelect={handleChange}
                     onBlur={handleBlur}
                     value={values.currency}
@@ -415,7 +412,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   />
                 </li>
                 <li className={hc('estimatedAnnualRevenues')}>
-                  <span className='form-subheading'>Estimated Annual Revenues</span>
+                  <span className='form-subheading account-type-list__select-title'>Estimated Annual Revenues</span>
                   <Form.Control
                     type='number'
                     onChange={handleChange}
@@ -451,14 +448,14 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 value={values.streetAddress}
                 className={`w-100 ${hc('streetAddress')}`}
               />
-              <div className='d-flex align-items-center my-4'>
+              <div className='d-flex align-items-center'>
                 <input
                   type='text'
                   name='city'
                   onChange={handleChange}
                   placeholder='New York'
                   value={values.city}
-                  className={`w-50 mr-2 ${hc('city')}`}
+                  className={`w-50 my-5 mr-2 ${hc('city')}`}
                 />
                 <input
                   type='text'
@@ -466,18 +463,18 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   onChange={handleChange}
                   placeholder='New York'
                   value={values.state}
-                  className={`w-50 ml-2 ${hc('state')}`}
+                  className={`w-50 my-5 ml-2 ${hc('state')}`}
                 />
               </div>
 
-              <div className='d-flex align-items-center my-4'>
+              <div className='d-flex align-items-center'>
                 <input
                   type='text'
                   name='zipCode'
                   onChange={handleChange}
                   placeholder='10030'
                   value={values.zipCode}
-                  className={`w-50 mr-2 ${hc('zipCode')}`}
+                  className={`w-50 mb-5 mr-2 ${hc('zipCode')}`}
                 />
                 <input
                   type='text'
@@ -485,7 +482,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   onChange={handleChange}
                   placeholder='United States'
                   value={values.country}
-                  className={`w-50 ml-2 ${hc('zipCode')}`}
+                  className={`w-50 mb-5 ml-2 ${hc('zipCode')}`}
                 />
               </div>
             </div>
@@ -645,15 +642,16 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
 
             <div className='form-divider'>
               <ul className='account-type-list'>
-                <li className={hc('separateLoanBalance')}>
+                <li className={`w-100 ${hc('separateLoanBalance')}`}>
                   <p>
                     <span className='form-subheading'>How do you want to handle your 401k loan?</span>
-                    <span className='mm-label b-primary-light w-100 d-inline'>Coming Soon</span>
+                    <span className='mm-label b-primary-light w-100 d-inline'>Coming Soon!</span>
                   </p>
                   <Form.Control
                     as='select'
                     onChange={handleChange}
                     name='separateLoanBalance'
+                    className='w-50 account-type-list__dropdown'
                     value={values.separateLoanBalance}
                   >
                     <option value='yes' aria-selected={values.separateLoanBalance === 'yes'}>
@@ -686,7 +684,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 />
                 <label>
                   Use a calculation based on historical returns{' '}
-                  <span className='mm-label b-primary-light w-100 d-inline'>Coming Soon</span>
+                  <span className='mm-label b-primary-light w-100 d-inline ml-3'>Coming Soon!</span>
                 </label>
               </p>
               <p className='flex-box'>
@@ -713,12 +711,54 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   />
                 </span>
               </p>
+              <div className="d-flex justify-content-between">
+                <button className='btn btn-primary w-50 mm-button' type='button'>
+                  Link Account
+                </button>
+                <div>
+                <NotLinked />
+                  <span className="text--red">Attention</span>
+                </div>
+              </div>
+              
+            </div>
+
+            <div className='estimate-annual-block'>
+              <div className='estimated-top-content'>
+                <span className='form-subheading'>Estimated annual returns</span>
+                <div className='estimate-annual-block__checkbox'>
+                  <label className='custom-checkbox'>
+                    <input type='checkbox' />
+                    <span className='checkmark'></span>
+                  </label>
+                  <span className='ml-4'>
+                    Mark this account as closed
+                  </span>
+                </div>
+                <div className='row mt-5'>
+                  <div className='col-12 col-md-4'>
+                    <button className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete' type='button'>
+                      Delete Account
+                    </button>
+                  </div>
+                  <div className='col-12 col-md-8'>
+                    <div className='d-flex justify-content-end'>
+                    <button className='bg-white cancel-btn mm-btn-primary-outline mr-2 estimate-annual-block__btn estimate-annual-block__btn-cancel' type='button'>
+                      Cancel
+                    </button>
+                    <button className='btn btn-primary ml-2 estimate-annual-block__btn estimate-annual-block__btn-save' type='button'>
+                      Save
+                    </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Estimated principal paydown */}
             <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReductionType')}`}>
               <div className='estimated-top-content flex-box'>
-                <span className='form-subheading'>Estimated principal paydown</span>
+                <span className='form-subheading mr-0'>Estimated principal paydown</span>
                 <span className='form-subheading-right'>This will be used to show projections in your charts.</span>
               </div>
 
@@ -726,7 +766,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 <input type='radio' value='no' disabled defaultChecked={false} checked={false} aria-checked={false} />
                 <label>
                   Use a calculation based on historical returns
-                  <span className='mm-label b-primary-light w-100 d-inline'>Coming Soon</span>
+                  <span className='mm-label b-primary-light w-100 d-inline ml-3'>Coming Soon!</span>
                 </label>
               </p>
               <p className='flex-box'>
@@ -760,7 +800,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
               <span className='form-subheading'>Current Value</span>
               <div className='d-flex align-items-start'>
                 <div className='w-50 mr-2 d-flex flex-column'>
-                  <div className='form-check ml-0 pl-0 my-4 '>
+                  <div className='form-check ml-0 pl-0 mt-4 mb-5'>
                     <input
                       value='yes'
                       type='radio'
@@ -777,7 +817,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   <ZillowImage />
                 </div>
                 <div className='w-50 mr-2 d-flex flex-column'>
-                  <div className='form-check ml-0 pl-0 my-4 '>
+                  <div className='form-check ml-0 pl-0 mt-4 mb-5'>
                     <input
                       value='no'
                       type='radio'
@@ -807,7 +847,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
             {/* associate mortgage and loan  */}
             <div className='account-type'>
               <ul className='account-type-list'>
-                <li className={hc('associatedMortgage')}>
+                <li className={`mt-5 ${hc('associatedMortgage')}`}>
                   <span className='form-subheading'>Associated Mortgage</span>
                   <select
                     name='associatedMortgage'
@@ -825,7 +865,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                     })}
                   </select>
                 </li>
-                <li className={hc('loanBalance')}>
+                <li className={`mt-5 ${hc('loanBalance')}`}>
                   <span className='form-subheading'>Loan Balance</span>
                   <input
                     type='text'
@@ -848,7 +888,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
               </div>
             </div>
 
-            <div className={`form-row ${hc('calculateReturnsOn')}`}>
+            <div className={`form-row mt-0 ${hc('calculateReturnsOn')}`}>
               <span className='form-subheading'>How do you prefer to calculate real estate returns?</span>
               <div className='form-check w-100 my-2'>
                 <input
