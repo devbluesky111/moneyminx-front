@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { Account } from 'auth/auth.types';
 import { makeFormFields } from 'auth/auth.helper';
 import { enumerateStr } from 'common/common-helper';
+import { StringKeyObject } from 'common/common.types';
 import useAccountType from 'auth/hooks/useAccountType';
 import useLoanAccount from 'auth/hooks/useLoanAccount';
 import useAccountFilter from 'auth/hooks/useAccountFilter';
@@ -20,6 +21,8 @@ import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
+import { patchAccount } from 'api/request.api';
+import moment from 'moment';
 
 interface Props {
   currentAccount?: Account;
@@ -111,7 +114,35 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
       enableReinitialize
       validationSchema={loginValidationSchema}
       onSubmit={async (values, actions) => {
-        // patch request here
+        const mapping: StringKeyObject = {
+          yes: true,
+          no: false,
+        };
+
+        const accountId = currentAccount?.id;
+
+        if (!accountId) {
+          return;
+        }
+
+        let data = {};
+        Object.keys(values).forEach((key: any) => {
+          const value = (values as any)[key];
+
+          if (value === 'yes' || value === 'no') {
+            data = { ...data, [key]: mapping[value] };
+            return;
+          }
+
+          data = { ...data, [key]: value };
+        });
+
+        const res = await patchAccount(`${accountId}`, data);
+        if (res?.error) {
+          toast('Error Occurred', { type: 'error' });
+        } else {
+          toast('Success Fully updated', { type: 'success' });
+        }
       }}
     >
       {(props) => {
@@ -129,6 +160,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
         const handleSubAccountChange = (e: React.ChangeEvent<any>) => {
           setAccountSubtype(e.target.value);
           handleChange(e);
+        };
+
+        const handleDateChange = (e: React.ChangeEvent<any>) => {
+          setFieldValue(e.target.name, new Date(e.target.value));
         };
 
         return (
@@ -256,11 +291,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 <li className={hc('originationDate')}>
                   <span className='form-subheading'>Origination Date</span>
                   <input
-                    onChange={handleChange}
+                    onChange={handleDateChange}
                     type='date'
                     defaultChecked={false}
                     name='originationDate'
-                    value={values.originationDate}
+                    value={moment(values.originationDate).format('mm/dd/yyyy')}
                   />
                 </li>
                 <li className={hc('originalBalance')}>
@@ -275,7 +310,12 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 </li>
                 <li className={hc('maturityDate')}>
                   <span className='form-subheading'>Maturity Date</span>
-                  <input onChange={handleChange} type='date' name='maturityDate' value={values.maturityDate} />
+                  <input
+                    onChange={handleChange}
+                    type='datetime-local'
+                    name='maturityDate'
+                    value={values.maturityDate}
+                  />
                 </li>
                 <li className={hc('termForInvestment')}>
                   {/* This is optional will be calculated if there are originated date and maturity date */}

@@ -6,6 +6,7 @@ export const urls = {
     REGISTER: '/register',
     PROFILE: '/account/me',
     COMPLETE_SIGNUP: '/complete',
+    PATCH_ACCOUNT: '/account/:id',
     FACEBOOK_LOGIN: '/facebook/login',
     ACCOUNT_CATEGORY: '/account/category',
     ACCOUNT_TYPE: '/account/account-type',

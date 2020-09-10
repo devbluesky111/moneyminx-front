@@ -76,3 +76,7 @@ export const getFormFieldFilter = (accountType: string, accountSubtype: string):
 export const refreshAccessToken = ({ referenceToken }: { referenceToken: string }): Promise<any> => {
   return Promise.resolve({ referenceToken });
 };
+
+export const patchAccount = (id: string, data: any) => {
+  return http.patch(urls.auth.PATCH_ACCOUNT.replace(':id', id), data);
+};
