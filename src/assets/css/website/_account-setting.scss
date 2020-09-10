@@ -764,6 +764,10 @@ span.next-icon {
 
   &__checkbox {
     position: relative;
+
+    span {
+      color: gray;
+    }
   }
 
   .custom-checkbox {

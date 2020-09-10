@@ -691,7 +691,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                     <input type='checkbox' />
                     <span className='checkmark'></span>
                   </label>
-                  <span className='ml-5'>
+                  <span className='ml-4'>
                     Mark this account as closed
                   </span>
                 </div>
