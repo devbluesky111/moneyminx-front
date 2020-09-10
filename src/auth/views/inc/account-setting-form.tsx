@@ -2,9 +2,11 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
 
 import { Account } from 'auth/auth.types';
+import { patchAccount } from 'api/request.api';
 import { makeFormFields } from 'auth/auth.helper';
 import { enumerateStr } from 'common/common-helper';
 import { StringKeyObject } from 'common/common.types';
@@ -18,12 +20,10 @@ import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
-import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
+import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
-import { patchAccount } from 'api/request.api';
-import moment from 'moment';
 
 interface Props {
   currentAccount?: Account;
@@ -72,45 +72,45 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
         currency: '',
         mmCategory: '',
         accountName: currentAccount?.accountName || '',
-        city: undefined,
-        state: undefined,
+        city: '',
+        state: '',
         mmAccountType: accountType || '',
-        zipCode: undefined,
-        country: undefined,
+        zipCode: '',
+        country: '',
         mmAccountSubType: accountSubtype || '',
-        liquidity: undefined,
-        ownEstimate: undefined,
-        loanBalance: undefined,
-        useZestimate: undefined,
-        interestRate: undefined,
-        maturityDate: undefined,
-        investedDate: undefined,
-        employerMatch: undefined,
-        streetAddress: undefined,
-        amountInvested: undefined,
-        associatedLoan: undefined,
-        originationDate: undefined,
-        originalBalance: undefined,
-        paymentsPerYear: undefined,
-        calculateReturns: undefined,
-        calculatedEquity: undefined,
-        currentValuation: undefined,
-        termForInvestment: undefined,
-        businessStartDate: undefined,
-        employerMatchLimit: undefined,
-        associatedMortgage: undefined,
-        calculateReturnsOn: undefined,
-        postMoneyValuation: undefined,
-        currentMarketValue: undefined,
-        targetInterestRate: undefined,
-        separateLoanBalance: undefined,
-        employerMatchLimitIn: undefined,
-        includeEmployerMatch: undefined,
-        separateShortBalance: undefined,
-        estimatedAnnualReturns: undefined,
-        estimatedAnnualRevenues: undefined,
-        employerMatchContribution: undefined,
-        estimatedAnnualPrincipalReduction: undefined,
+        liquidity: '',
+        ownEstimate: '',
+        loanBalance: '',
+        useZestimate: '',
+        interestRate: '',
+        maturityDate: new Date(),
+        investedDate: new Date(),
+        employerMatch: '',
+        streetAddress: '',
+        amountInvested: '',
+        associatedLoan: '',
+        originationDate: new Date(),
+        originalBalance: '',
+        paymentsPerYear: '',
+        calculateReturns: '',
+        calculatedEquity: '',
+        currentValuation: '',
+        termForInvestment: '',
+        businessStartDate: new Date(),
+        employerMatchLimit: '',
+        associatedMortgage: '',
+        calculateReturnsOn: '',
+        postMoneyValuation: '',
+        currentMarketValue: '',
+        targetInterestRate: '',
+        separateLoanBalance: '',
+        employerMatchLimitIn: '',
+        includeEmployerMatch: '',
+        separateShortBalance: '',
+        estimatedAnnualReturns: '',
+        estimatedAnnualRevenues: '',
+        employerMatchContribution: '',
+        estimatedAnnualPrincipalReduction: '',
       }}
       enableReinitialize
       validationSchema={loginValidationSchema}
@@ -163,15 +163,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
           handleChange(e);
         };
 
-        const handleDateChange = (e: React.ChangeEvent<any>) => {
-          setFieldValue(e.target.name, new Date(e.target.value));
-        };
-
         return (
           <form onSubmit={props.handleSubmit} className='account-setting-form'>
             <input
               type='text'
-              className="w-100 mb-4"
+              className='w-100 mb-4'
               onChange={props.handleChange}
               onBlur={props.handleBlur}
               value={props.values.accountName}
@@ -237,12 +233,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 </li>
                 <li>
                   <span className='form-subheading'>Currency</span>
-                  <select
-                    name='currency'
-                    onSelect={handleChange}
-                    onBlur={handleBlur}
-                    value={values.currency}
-                  >
+                  <select name='currency' onSelect={handleChange} onBlur={handleBlur} value={values.currency}>
                     {enumerateStr(CurrencyOptions).map((curr, index) => {
                       return (
                         <option value={curr} key={index} aria-selected={!!values.currency}>
@@ -255,12 +246,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
 
                 <li className={hc('liquidity')}>
                   <span className='form-subheading'>Liquidity</span>
-                  <select
-                    name='liquidity'
-                    onSelect={handleChange}
-                    onBlur={handleBlur}
-                    value={values.currency}
-                  >
+                  <select name='liquidity' onSelect={handleChange} onBlur={handleBlur} value={values.currency}>
                     {enumerateStr(LiquidityOptions).map((curr, index) => {
                       return (
                         <option value={curr} key={index} aria-selected={!!values.liquidity}>
@@ -287,12 +273,12 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 </li>
                 <li className={hc('originationDate')}>
                   <span className='form-subheading'>Origination Date</span>
-                  <input
-                    onChange={handleDateChange}
-                    type='date'
-                    defaultChecked={false}
+                  <ReactDatePicker
                     name='originationDate'
-                    value={moment(values.originationDate).format('mm/dd/yyyy')}
+                    selected={values.originationDate}
+                    onChange={(val) => {
+                      setFieldValue('originationDate', val);
+                    }}
                   />
                 </li>
                 <li className={hc('originalBalance')}>
@@ -307,11 +293,12 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 </li>
                 <li className={hc('maturityDate')}>
                   <span className='form-subheading'>Maturity Date</span>
-                  <input
-                    onChange={handleChange}
-                    type='datetime-local'
+                  <ReactDatePicker
                     name='maturityDate'
-                    value={values.maturityDate}
+                    selected={values.maturityDate}
+                    onChange={(val) => {
+                      setFieldValue('maturityDate', val);
+                    }}
                   />
                 </li>
                 <li className={hc('termForInvestment')}>
@@ -347,7 +334,13 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
               <ul className='account-type-list'>
                 <li className={hc('investedDate')}>
                   <span className='form-subheading'>When did you invest?</span>
-                  <Form.Control onChange={handleChange} type='date' name='investedDate' value={values.investedDate} />
+                  <ReactDatePicker
+                    name='investedDate'
+                    selected={values.investedDate}
+                    onChange={(val) => {
+                      setFieldValue('investedDate', val);
+                    }}
+                  />
                 </li>
                 <li className={hc('amountInvested')}>
                   <span className='form-subheading'>How much did you invest?</span>
@@ -404,11 +397,12 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
               <ul className='account-type-list'>
                 <li className={hc('businessStartDate')}>
                   <span className='form-subheading'>When did you start or buy this business?</span>
-                  <Form.Control
-                    type='date'
-                    onChange={handleChange}
+                  <ReactDatePicker
                     name='businessStartDate'
-                    value={values.businessStartDate}
+                    selected={values.businessStartDate}
+                    onChange={(val) => {
+                      setFieldValue('businessStartDate', val);
+                    }}
                   />
                 </li>
                 <li className={hc('estimatedAnnualRevenues')}>
@@ -711,16 +705,15 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   />
                 </span>
               </p>
-              <div className="d-flex justify-content-between">
+              <div className='d-flex justify-content-between'>
                 <button className='btn btn-primary w-50 mm-button' type='button'>
                   Link Account
                 </button>
                 <div>
-                <NotLinked />
-                  <span className="text--red">Attention</span>
+                  <NotLinked />
+                  <span className='text--red'>Attention</span>
                 </div>
               </div>
-              
             </div>
 
             <div className='estimate-annual-block'>
@@ -728,27 +721,34 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                 <span className='form-subheading'>Estimated annual returns</span>
                 <div className='estimate-annual-block__checkbox'>
                   <label className='custom-checkbox'>
-                    <input type='checkbox' />
-                    <span className='checkmark'></span>
+                    <input type='checkbox' name='closeAccount' aria-checked={false} value='closeAccount' />
+                    <span className='checkmark' />
                   </label>
-                  <span className='ml-4'>
-                    Mark this account as closed
-                  </span>
+                  <span className='ml-4'>Mark this account as closed</span>
                 </div>
                 <div className='row mt-5'>
                   <div className='col-12 col-md-4'>
-                    <button className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete' type='button'>
+                    <button
+                      className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete'
+                      type='button'
+                    >
                       Delete Account
                     </button>
                   </div>
                   <div className='col-12 col-md-8'>
                     <div className='d-flex justify-content-end'>
-                    <button className='bg-white cancel-btn mm-btn-primary-outline mr-2 estimate-annual-block__btn estimate-annual-block__btn-cancel' type='button'>
-                      Cancel
-                    </button>
-                    <button className='btn btn-primary ml-2 estimate-annual-block__btn estimate-annual-block__btn-save' type='button'>
-                      Save
-                    </button>
+                      <button
+                        className='bg-white cancel-btn mm-btn-primary-outline mr-2 estimate-annual-block__btn estimate-annual-block__btn-cancel'
+                        type='button'
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className='btn btn-primary ml-2 estimate-annual-block__btn estimate-annual-block__btn-save'
+                        type='button'
+                      >
+                        Save
+                      </button>
                     </div>
                   </div>
                 </div>
