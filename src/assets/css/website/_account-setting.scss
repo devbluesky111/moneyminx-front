@@ -157,7 +157,7 @@ span.form-subheading {
 }
 
 .account-type-list li {
-  width: 50%;
+  width: 47%;
   float: left;
   margin-bottom: 33px;
 }
@@ -174,7 +174,7 @@ span.form-subheading {
   background: url('../../images/signup/arrow.svg') white no-repeat 98.5% !important; /* !important used for overriding all other customisations */
   background: url('../../images/signup/arrow.svg') white no-repeat calc(100% - 10px) !important; /* Better placement regardless of input width */
   display: table;
-  width: 93%;
+  width: 100%;
   height: 48px;
   padding: 1px 16px;
   border: 1px solid rgba(150, 158, 172, 0.24);
@@ -184,7 +184,9 @@ span.form-subheading {
 }
 
 .account-type-list {
-  display: table;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   width: 100%;
   padding-left: 0;
 }
@@ -206,7 +208,7 @@ span.form-subheading {
 
 .middle-input-wrap .input-wrap {
   position: relative;
-  margin-bottom: 38px;
+  margin-bottom: 34px;
 }
 
 .right-input {
@@ -273,7 +275,7 @@ span.form-subheading {
 
 .account-type-list li .account-list-content {
   float: right;
-  width: 93%;
+  width: 100%;
 }
 
 .account-type-list li .account-list-content select {
@@ -295,11 +297,11 @@ span.form-subheading {
 
 .form-divider {
   border-top: 1px solid rgba(150, 158, 172, 0.24);
-  padding-top: 41px;
+  padding-top: 34px;
 }
 
 .estimated-top-content .form-subheading-right {
-  width: 67%;
+  width: 66%;
   font-size: 0.87rem;
   text-align: right;
   color: $gray;
@@ -386,7 +388,7 @@ span.form-subheading {
     input[type='text'],
     input[type='date'],
     input[type='number'] {
-      width: 93%;
+      width: 100%;
     }
   }
   .form-divider,
@@ -719,4 +721,25 @@ span.next-icon {
 
 .next-icon.active path {
   stroke: $gray;
+}
+
+.account-type-list {
+  &__dropdown {
+    height: 48px;
+  }
+  &__select-title {
+    margin-bottom: 31px !important;
+  }
+} 
+
+.estimated-annual-return {
+  .mm-button {
+    width: 160px !important;
+  }
+}
+
+.bg-white.credintials-wrapper.account-setting .credintials-content {
+  @media (max-width: 768px) {
+    max-width: 100vw;
+  }  
 }
