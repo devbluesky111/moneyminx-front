@@ -109,9 +109,6 @@ span.form-subheading {
   margin-left: 20px;
 }
 
-.category-list {
-}
-
 .category-list li {
   float: left;
   width: 33%;
@@ -381,7 +378,7 @@ span.form-subheading {
 
   .hidden {
     // comment this code to see all form fields
-    // display: none;
+    display: none;
   }
 
   .account-type-list {
@@ -730,7 +727,7 @@ span.next-icon {
   &__select-title {
     margin-bottom: 31px !important;
   }
-} 
+}
 
 .estimated-annual-return {
   .mm-button {
@@ -741,23 +738,22 @@ span.next-icon {
 .bg-white.credintials-wrapper.account-setting .credintials-content {
   @media (max-width: 768px) {
     max-width: 100vw;
-  }  
+  }
 }
 
 .estimate-annual-block {
   &__btn {
     @media (min-width: 768px) {
-      width: 115px !important;  
+      width: 115px !important;
     }
 
     @media (min-width: 992px) {
-      width: 140px !important;  
+      width: 140px !important;
     }
-    
   }
 
   &__btn-cancel {
-    border: 1.5px solid #534CEA;
+    border: 1.5px solid #534cea;
     box-sizing: border-box;
     border-radius: 4px;
   }
@@ -823,4 +819,8 @@ span.next-icon {
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
   }
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
 }

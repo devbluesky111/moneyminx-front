@@ -24,6 +24,7 @@ import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
+import moment from 'moment';
 
 interface Props {
   currentAccount?: Account;
@@ -275,9 +276,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   <span className='form-subheading'>Origination Date</span>
                   <ReactDatePicker
                     name='originationDate'
-                    selected={values.originationDate}
-                    onChange={(val) => {
-                      setFieldValue('originationDate', val);
+                    selected={new Date(values.originationDate)}
+                    onChange={(val: Date) => {
+                      setFieldValue('originationDate', moment(val).toISOString());
                     }}
                   />
                 </li>
@@ -295,9 +296,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   <span className='form-subheading'>Maturity Date</span>
                   <ReactDatePicker
                     name='maturityDate'
-                    selected={values.maturityDate}
-                    onChange={(val) => {
-                      setFieldValue('maturityDate', val);
+                    selected={new Date(values.maturityDate)}
+                    onChange={(val: Date) => {
+                      setFieldValue('maturityDate', moment(val).toISOString());
                     }}
                   />
                 </li>
@@ -336,9 +337,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   <span className='form-subheading'>When did you invest?</span>
                   <ReactDatePicker
                     name='investedDate'
-                    selected={values.investedDate}
-                    onChange={(val) => {
-                      setFieldValue('investedDate', val);
+                    selected={new Date(values.investedDate)}
+                    onChange={(val: Date) => {
+                      setFieldValue('investedDate', moment(val).toISOString());
                     }}
                   />
                 </li>
@@ -399,9 +400,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   <span className='form-subheading'>When did you start or buy this business?</span>
                   <ReactDatePicker
                     name='businessStartDate'
-                    selected={values.businessStartDate}
-                    onChange={(val) => {
-                      setFieldValue('businessStartDate', val);
+                    selected={new Date(values.businessStartDate)}
+                    onChange={(val: Date) => {
+                      setFieldValue('businessStartDate', moment(val).toISOString());
                     }}
                   />
                 </li>
