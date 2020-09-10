@@ -683,6 +683,38 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
               
             </div>
 
+            <div className='estimate-annual-block'>
+              <div className='estimated-top-content'>
+                <span className='form-subheading'>Estimated annual returns</span>
+                <div className='estimate-annual-block__checkbox'>
+                  <label className='custom-checkbox'>
+                    <input type='checkbox' />
+                    <span className='checkmark'></span>
+                  </label>
+                  <span className='ml-5'>
+                    Mark this account as closed
+                  </span>
+                </div>
+                <div className='row mt-5'>
+                  <div className='col-12 col-md-4'>
+                    <button className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete' type='button'>
+                      Delete Account
+                    </button>
+                  </div>
+                  <div className='col-12 col-md-8'>
+                    <div className='d-flex justify-content-end'>
+                    <button className='bg-white cancel-btn mm-btn-primary-outline mr-2 estimate-annual-block__btn estimate-annual-block__btn-cancel' type='button'>
+                      Cancel
+                    </button>
+                    <button className='btn btn-primary ml-2 estimate-annual-block__btn estimate-annual-block__btn-save' type='button'>
+                      Save
+                    </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Estimated principal paydown */}
             <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReductionType')}`}>
               <div className='estimated-top-content flex-box'>
