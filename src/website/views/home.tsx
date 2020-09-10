@@ -133,7 +133,9 @@ export const HomeFeatureSection = () => {
             <li>
               <div className='feature-content'>
                 <div className='feature-icon'>
-                  <FeatureIconTwo />
+                  <Link to='/net-worth'>
+                    <FeatureIconTwo />
+                  </Link>
                 </div>
                 <h2>Net Worth</h2>
                 <p>Ready to view networth summary categories by investments, assets and liabilities</p>
