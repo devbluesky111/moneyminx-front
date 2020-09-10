@@ -55,13 +55,13 @@ const List = ({ data }: Data) => {
 const FooterList = () => {
   return (
     <div className='row'>
-      <div className='col-md-4 col-sm-4'>
+      <div className='col-sm-4'>
         <List data={resourceList} />
       </div>
-      <div className='col-md-4 col-sm-4'>
+      <div className='col-sm-4'>
         <List data={featureList} />
       </div>
-      <div className='col-md-4 col-sm-4'>
+      <div className='col-sm-4'>
         <List data={companyInfoList} />
       </div>
     </div>
