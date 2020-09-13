@@ -378,7 +378,7 @@ span.form-subheading {
 
   .hidden {
     // comment this code to see all form fields
-    display: none;
+    display: none !important;
   }
 
   .account-type-list {

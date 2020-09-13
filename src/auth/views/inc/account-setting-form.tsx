@@ -706,54 +706,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                   />
                 </span>
               </p>
-              <div className='d-flex justify-content-between'>
-                <button className='btn btn-primary w-50 mm-button' type='button'>
-                  Link Account
-                </button>
-                <div>
-                  <NotLinked />
-                  <span className='text--red'>Attention</span>
-                </div>
-              </div>
-            </div>
-
-            <div className='estimate-annual-block'>
-              <div className='estimated-top-content'>
-                <span className='form-subheading'>Estimated annual returns</span>
-                <div className='estimate-annual-block__checkbox'>
-                  <label className='custom-checkbox'>
-                    <input type='checkbox' name='closeAccount' aria-checked={false} value='closeAccount' />
-                    <span className='checkmark' />
-                  </label>
-                  <span className='ml-4'>Mark this account as closed</span>
-                </div>
-                <div className='row mt-5'>
-                  <div className='col-12 col-md-4'>
-                    <button
-                      className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete'
-                      type='button'
-                    >
-                      Delete Account
-                    </button>
-                  </div>
-                  <div className='col-12 col-md-8'>
-                    <div className='d-flex justify-content-end'>
-                      <button
-                        className='bg-white cancel-btn mm-btn-primary-outline mr-2 estimate-annual-block__btn estimate-annual-block__btn-cancel'
-                        type='button'
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        className='btn btn-primary ml-2 estimate-annual-block__btn estimate-annual-block__btn-save'
-                        type='button'
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Estimated principal paydown */}
@@ -921,13 +873,53 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
               </div>
             </div>
 
-            <div className='setting-button-wrap flex-box mt-5'>
-              <button className='bg-white cancel-btn mm-btn-primary-outline' type='submit'>
-                Cancel
-              </button>
-              <button className='bg-primary submit mm-btn-primary-outline' type='submit'>
-                Next
-              </button>
+            <div className='estimate-annual-block'>
+              <div className='estimated-top-content'>
+                <div className='link-attention-block  d-flex justify-content-between hidden'>
+                  <button className='btn btn-primary w-50 mm-button' type='button'>
+                    Link Account
+                  </button>
+                  <div>
+                    <NotLinked />
+                    <span className='text--red'>Attention</span>
+                  </div>
+                </div>
+                <span className='form-subheading hidden'>Closed Account</span>
+                <div className='estimate-annual-block__checkbox hidden'>
+                  <label className='custom-checkbox'>
+                    <input type='checkbox' name='closeAccount' aria-checked={false} value='closeAccount' />
+                    <span className='checkmark' />
+                  </label>
+                  <span className='ml-4'>Mark this account as closed</span>
+                </div>
+                <div className='row mt-5'>
+                  <div className='col-12 col-md-4 hidden'>
+                    <button
+                      className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete'
+                      type='button'
+                    >
+                      Delete Account
+                    </button>
+                  </div>
+
+                  <div className='col-12 col-md-8'>
+                    <div className='d-flex justify-content-start'>
+                      <button
+                        className='bg-white cancel-btn mm-btn-primary-outline mr-2 estimate-annual-block__btn estimate-annual-block__btn-cancel'
+                        type='button'
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className='btn btn-primary ml-2 estimate-annual-block__btn estimate-annual-block__btn-save'
+                        type='submit'
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </form>
         );
