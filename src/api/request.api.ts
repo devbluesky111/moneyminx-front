@@ -1,4 +1,5 @@
 import { ApiResponse } from 'app/app.types';
+import { EmailSubscriptionPayload } from 'setting/setting.type';
 import { RegisterPayload, ResetPasswordPayload } from 'auth/auth.types';
 
 import { urls } from './api.url';
@@ -49,4 +50,12 @@ export const getRefreshedAccount = () => {
 
 export const refreshAccessToken = ({ referenceToken }: { referenceToken: string }): Promise<any> => {
   return Promise.resolve({ referenceToken });
+};
+
+export const getCurrentSettings = () => {
+  return http.get(urls.auth.SETTINGS);
+};
+
+export const patchEmailSubscription = (payload: EmailSubscriptionPayload): Promise<ApiResponse> => {
+  return http.patch(urls.auth.SETTINGS, payload);
 };

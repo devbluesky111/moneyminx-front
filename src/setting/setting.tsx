@@ -43,13 +43,6 @@ const Settings: React.FC<SettingsProps> = () => {
         <SettingTitleSection handlePageSelect={handlePageSelect} pageTitle={page} />
         {renderTabContent()}
       </div>
-      <div className='card mm-setting-card'>
-        <div className='card-body text-right'>
-          <button type='button' className='btn btn-primary btn-lg mm-button'>
-            Save changes
-          </button>
-        </div>
-      </div>
       <FooterSection />
     </div>
   );

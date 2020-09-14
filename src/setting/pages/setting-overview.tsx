@@ -1,7 +1,36 @@
-import React from 'react';
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+
+import useSettings from 'setting/hooks/useSettings';
+import SaveSettings from 'setting/inc/save-settings';
+import { patchEmailSubscription } from 'api/request.api';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 export const SettingOverview = () => {
+  const { loading, data, error } = useSettings();
+  const [mailChimpSubscription, setMailChimpSubscription] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (data) {
+      setMailChimpSubscription(data.mailChimpSubscription);
+    }
+  }, [data]);
+
+  if (error) {
+    toast('Error on fetching settings');
+  }
+  if (loading) {
+    return <CircularSpinner />;
+  }
+
+  const handleSave = async () => {
+    const { error: pathError } = await patchEmailSubscription({ mailChimpSubscription });
+    if (pathError) {
+      return toast('Error on Adding Subscription', { type: 'error' });
+    }
+  };
+
   return (
     <section>
       <div className='card mm-setting-card'>
@@ -12,8 +41,14 @@ export const SettingOverview = () => {
               <label className='col-sm-3 col-md-3'>Notification</label>
               <div className='col-sm-9 col-md-9'>
                 <label className='custom-checkbox'>
-                  <input type='checkbox' />
-                  <span className='checkmark'></span>
+                  <input
+                    type='checkbox'
+                    value='true'
+                    checked={mailChimpSubscription}
+                    aria-checked={mailChimpSubscription}
+                    onChange={() => setMailChimpSubscription(!mailChimpSubscription)}
+                  />
+                  <span className='checkmark' />
                 </label>
                 <span className='checkbox-custom-label mm-setting-form-info'>
                   Get out diversified investor newsletter
@@ -76,9 +111,9 @@ export const SettingOverview = () => {
           </Link>
         </div>
       </div>
+      <SaveSettings handleSave={handleSave} />
     </section>
   );
 };
 
 export default SettingOverview;
-

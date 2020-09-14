@@ -11,3 +11,12 @@ export interface SettingTitleProps {
   pageTitle: SettingPageEnum;
   handlePageSelect: (pageName: SettingPageEnum) => void;
 }
+
+export interface SettingType {
+  id: number;
+  mailChimpSubscription: boolean;
+}
+
+export interface EmailSubscriptionPayload {
+  mailChimpSubscription: boolean;
+}

@@ -125,6 +125,16 @@ export function put(url: string, data: any): any {
     },
   });
 }
+export function patch(url: string, data: any): any {
+  return axiosInstance({
+    method: 'patch',
+    url,
+    data,
+    headers: {
+      authorization: `Bearer ${storage.accessToken()} `,
+    },
+  });
+}
 
 export function remove(url: string, params: object = {}): any {
   return axiosInstance({
