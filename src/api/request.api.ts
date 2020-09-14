@@ -59,3 +59,7 @@ export const getCurrentSettings = () => {
 export const patchEmailSubscription = (payload: EmailSubscriptionPayload): Promise<ApiResponse> => {
   return http.patch(urls.auth.SETTINGS, payload);
 };
+
+export const patchProfilePicture = (payload: any): Promise<ApiResponse> => {
+  return http.patch(urls.auth.PROFILE_PICTURE, payload);
+};

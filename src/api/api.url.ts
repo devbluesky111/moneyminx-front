@@ -12,6 +12,7 @@ export const urls = {
     RESET_PASSWORD: '/profile/password/reset',
     PROFILE_REFRESH: '/account/me?refresh=true',
     FORGOT_PASSWORD: '/profile/password/forgot',
+    PROFILE_PICTURE: '/profile/picture',
   },
   subscription: {
     SUB: '/subscription/stripe/subscriptions',

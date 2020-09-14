@@ -1,7 +1,8 @@
 import React from 'react';
+
+import ProfilePicture from 'setting/inc/profile-picture';
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as Shield } from 'assets/icons/shield.svg';
-import OwnerOneImg from 'assets/images/about/hussein.png';
 
 export const ProfileOverview = () => {
   return (
@@ -23,21 +24,7 @@ export const ProfileOverview = () => {
         </div>
       </div>
 
-      <div className='card mm-setting-card'>
-        <div className='card-body d-sm-flex justify-content-between align-items-center'>
-          <div className='mm-profile-overview__title'>
-            Profile Picture
-            <div className='mm-profile-overview__title-pp'>
-              <img alt='Owner' src={OwnerOneImg} className='rounded-circle mr-2' width='100' height='100' />
-            </div>
-          </div>
-          <div className='mt-4 mt-sm-0'>
-            <button type='button' className='btn btn-outline-primary mm-button btn-lg'>
-              Change Picture
-            </button>
-          </div>
-        </div>
-      </div>
+      <ProfilePicture />
 
       <div className='card mm-setting-card'>
         <div className='card-body'>
@@ -108,16 +95,16 @@ export const ProfileOverview = () => {
                     <Info className='mt-n1 ml-2' />
                   </label>
                   <div className='col-md-9'>
-                    <input type='text' className='form-control form-control-lg' id='fname' value='Hussein' />
+                    <input type='text' className='form-control form-control-lg' id='fname' placeholder='Hussein' />
                   </div>
                 </div>
                 <div className='form-group row align-items-center'>
                   <label htmlFor='lname' className='col-md-3 col-form-label'>
-                    Password
+                    LastName
                     <Info className='mt-n1 ml-2' />
                   </label>
                   <div className='col-md-9'>
-                    <input type='text' className='form-control form-control-lg' id='lname' value='Yahfoufi' />
+                    <input type='text' className='form-control form-control-lg' id='lname' placeholder='Yahfoufi' />
                   </div>
                 </div>
                 <div className='form-group row align-items-center'>
