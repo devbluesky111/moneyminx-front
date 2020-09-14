@@ -80,6 +80,9 @@ export const AccountSettingMainSection = () => {
     }
   };
 
+  const getAccountClass = (accName: string) =>
+    currentAccount?.accountName === accName ? 'account-btn active' : 'account-btn';
+
   return (
     <div className='main-table-wrapper'>
       <div className='mm-container mm-container-final'>
@@ -143,7 +146,10 @@ export const AccountSettingMainSection = () => {
                     {accountNames.map((accountName, index) => {
                       return (
                         <li key={index}>
-                          <button className='account-btn' onClick={() => handleAccountNameChange(accountName)}>
+                          <button
+                            className={getAccountClass(accountName)}
+                            onClick={() => handleAccountNameChange(accountName)}
+                          >
                             {accountName}
                           </button>
                         </li>
