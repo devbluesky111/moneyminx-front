@@ -59,7 +59,7 @@
 }
 @media (max-width: $sm) {
   .website-footer-wrapper {
-    padding: 245px $s4 $s4 $s4;
+    padding: 290px 1rem 1rem 1rem;
   }
   .signup-today-wrapper {
     padding: 1rem;
@@ -80,4 +80,10 @@
   display: block;
   margin-bottom: 20px;
   margin-left: 0px !important;
+}
+
+@media ( max-width:$md - 1 ) {
+  .wf-list-wrapper {
+    text-align: start;
+  }
 }

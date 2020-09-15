@@ -129,15 +129,15 @@ const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
               </div>
             </div>
             <div className='col-lg-6'>
-              <div className='download-btn-wrapper'>
-                <AppStoreLogo />
-                <GooglePlayLogo className='ml-3 text-white' color='white' />
+              <div className='ml-2 download-btn-wrapper d-flex'>
+                <AppStoreLogo className='pr-2' />
+                <GooglePlayLogo className='ml-3 text-white pl-2' color='white' />
               </div>
             </div>
           </div>
         </div>
 
-        <div className='footer-end-section p-t-176'>
+        <div className='footer-end-section p-t-40'>
           <div className='row'>
             <div className='col-lg-6'>
               <div className='mm-links-wrapper'>{footerListComponent}</div>
