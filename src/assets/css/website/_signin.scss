@@ -184,14 +184,22 @@ span.forgot-pass {
   font-size: 1.75rem;
   margin-bottom: 17px;
   line-height: 2.1875rem;
+  color: $black;
 }
 .credintials-content p {
   margin-bottom: 37px;
   font-weight: $bold;
 }
+
+//forgot password page
+@media(min-width: $sm + 1){
+  .credintials-content p.f-pwd {
+    width:22.125rem;
+  }
+}
 .credintials-content .facebook-login {
   font-size: 0.87rem;
-  border-top: 1px solid rgba(156, 159, 165, 0.24);
+  border-top: 1px solid #9c9fa53d;
   padding-top: 34px;
   font-weight: $bold;
 

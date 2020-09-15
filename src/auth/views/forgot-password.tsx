@@ -70,7 +70,7 @@ export const ForgotPasswordMainSection = () => {
                 <LogoImg />
               </div>
               <h2>Forgot Password?</h2>
-              <p>Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
+              <p className="f-pwd">Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
               <Formik
                 initialValues={{ email: '' }}
                 validationSchema={forgotPasswordValidation}
@@ -100,6 +100,7 @@ export const ForgotPasswordMainSection = () => {
                           value={props.values.email}
                           placeholder='Your Email'
                           onChange={props.handleChange}
+                          onBlur={props.handleBlur}
                         />
                        </div>
                       {props.errors.email && <div className='ml-2 mt-1 mt-md-3 text-right feedback text-nowrap'>{props.errors.email}</div>}
