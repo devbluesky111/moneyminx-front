@@ -40,6 +40,14 @@ export const getSubscription = () => {
   return http.get(urls.subscription.SUB);
 };
 
+export const postSubscriptionCheckout = <T>(payload: T): Promise<ApiResponse> => {
+  return http.post(urls.subscription.STRIPE_CHECKOUT, payload);
+};
+
+export const getCurrentSubscription = () => {
+  return http.get(urls.subscription.CURRENT_SUB);
+};
+
 export const getFastlink = () => {
   return http.get(urls.yodlee.FAST_LINK);
 };

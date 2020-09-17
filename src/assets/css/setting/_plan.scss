@@ -5,11 +5,11 @@
     &__card {
       min-height: 52rem;
 
-      @media (min-width: $lg - 200) and (max-width: $lg) { 
+      @media (min-width: $lg - 200) and (max-width: $lg) {
         min-height: 56rem;
       }
     }
-    
+
     &__recommend-card {
       border-top: 4px solid $primary;
 
@@ -53,6 +53,9 @@
       &--current {
         border: none;
         color: $darkGray;
+        &:hover {
+          background-color: transparent;
+        }
       }
     }
 

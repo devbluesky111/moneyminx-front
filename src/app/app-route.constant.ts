@@ -19,5 +19,7 @@ export const appRouteConstants = {
 
   misc: {
     NOT_FOUND: '/404',
+    STRIPE_SUCCESS: '/stripe/success',
+    STRIPE_FAILURE: '/stripe/cancel',
   },
 };

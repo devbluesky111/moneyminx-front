@@ -23,7 +23,9 @@ export const urls = {
     FORM_FIELD_FILTER: '/account/form-fields-filter?accountType=:accountType&accountSubType=:accountSubType',
   },
   subscription: {
+    CURRENT_SUB: '/subscription/me',
     SUB: '/subscription/stripe/subscriptions',
+    STRIPE_CHECKOUT: '/subscription/stripe/checkout',
   },
   yodlee: {
     FAST_LINK: '/account/yodlee/fastlink',
