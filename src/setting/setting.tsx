@@ -7,6 +7,7 @@ import SettingOverview from './pages/setting-overview';
 import ProfileOverview from './pages/profile-overview';
 import SettingTitleSection from './partials/setting-title';
 import { SettingsProps, SettingPageEnum } from './setting.type';
+import AccountOverview from './pages/account-overview';
 
 const Settings: React.FC<SettingsProps> = () => {
   const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.SETTINGS);
@@ -29,6 +30,10 @@ const Settings: React.FC<SettingsProps> = () => {
       case SettingPageEnum.PLAN: {
         return <PlanOverview />;
       }
+      case SettingPageEnum.ACCOUNTS: {
+        return <AccountOverview />;
+      }
+
       default: {
         return <SettingOverview />;
       }

@@ -97,7 +97,7 @@ export const SettingOverview = () => {
               </div>
               <div className='col'>
                 <button type='button' className='btn btn-outline-primary mm-button float-right'>
-                  Change Password
+                  Change Plan
                 </button>
               </div>
             </div>
@@ -107,7 +107,7 @@ export const SettingOverview = () => {
       <div className='card mm-setting-card'>
         <div className='card-body'>
           <Link className='mm-setting-card--subscription' to='#'>
-            Cancle subscription
+            Cancel subscription
           </Link>
         </div>
       </div>

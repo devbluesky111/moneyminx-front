@@ -5,7 +5,7 @@ import { ReactComponent as Refresh } from 'assets/icons/refresh.svg';
 import { ReactComponent as PeerStreet } from 'assets/icons/peer-street.svg';
 import { ReactComponent as WealthLogo } from 'assets/icons/wealth-logo.svg';
 
-export const accountOverview = () => {
+export const AccountOverview = () => {
   return (
     <section className='mm-account-overview'>
       <div className='card mm-setting-card'>
@@ -362,4 +362,4 @@ export const accountOverview = () => {
   );
 };
 
-export default accountOverview;
+export default AccountOverview;
