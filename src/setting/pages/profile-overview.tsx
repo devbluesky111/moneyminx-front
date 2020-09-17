@@ -72,6 +72,7 @@ export const ProfileOverview = () => {
           householdIncome: HouseHoldIncomeOptions.OPT_1,
           riskTolerance: RiskToleranceOptions.CONSERVATIVE,
           dob: new Date(),
+          spouseDob: new Date(),
           targetedRetirementAge: 0,
           alreadyRetired: false,
           maritalStatus: MaritalStatusOptions.SINGLE,
@@ -404,19 +405,11 @@ export const ProfileOverview = () => {
                                 setFieldValue('dob', moment(val).toISOString());
                               }}
                             />
-                            {/* <select className='form-control form-control-lg mr-sm-2'>
-                              <option value='defaultValue'>August 6, 1976</option>
-                              <option value='1'>April 6, 1976</option>
-                            </select> */}
                           </div>
                         </div>
                         <div className='form-group row align-items-center'>
                           <label className='col-md-3 col-form-label'>Retirement age</label>
                           <div className='col-md-5'>
-                            {/* <select className='form-control form-control-lg mr-sm-2'>
-                              <option>20</option>
-                              <option value='defaultValue'>50</option>
-                            </select> */}
                             <FormControl
                               type='number'
                               name='targetedRetirementAge'
@@ -469,10 +462,10 @@ export const ProfileOverview = () => {
                           <div className='col-md-5'>
                             <ReactDatePicker
                               className='form-control form-control-lg mr-sm-2'
-                              name='dob'
-                              selected={new Date(values.dob)}
+                              name='spouseDob'
+                              selected={new Date(values.spouseDob)}
                               onChange={(val: Date) => {
-                                setFieldValue('dob', moment(val).toISOString());
+                                setFieldValue('spouseDob', moment(val).toISOString());
                               }}
                             />
                           </div>
