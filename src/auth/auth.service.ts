@@ -1,6 +1,6 @@
 import { storage } from 'app/app.storage';
 import { ApiResponse } from 'api/api.types';
-import { postLogin, postRegister, postFacebookAssociation, getRefreshedAccount } from 'api/request.api';
+import { postLogin, postRegister, postFacebookAssociation, getRefreshedAccount, getProfile } from 'api/request.api';
 
 import { auth } from './auth-context.types';
 import { LoginServicePayload, RegisterServicePayload, FBAssociationPayload, Dispatch } from './auth.types';
@@ -55,13 +55,28 @@ export const signup = async ({ dispatch, payload }: RegisterServicePayload): Pro
 };
 
 export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }): Promise<ApiResponse> => {
-  dispatch({ type: auth.PROFILE_REFRESH });
+  dispatch({ type: auth.FETCH_ACCOUNT });
   const { data, error } = await getRefreshedAccount();
   if (error) {
-    dispatch({ type: auth.PROFILE_REFRESH_FAILURE });
+    dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
     dispatch({
-      type: auth.PROFILE_REFRESH_SUCCESS,
+      type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
+    });
+  }
+
+  return { data, error };
+};
+
+export const fetchProfile = async ({ dispatch }: { dispatch: Dispatch }): Promise<ApiResponse> => {
+  dispatch({ type: auth.FETCH_PROFILE });
+  const { data, error } = await getProfile();
+  if (error) {
+    dispatch({ type: auth.FETCH_PROFILE_FAILURE });
+  } else {
+    dispatch({
+      type: auth.FETCH_PROFILE_SUCCESS,
       payload: { user: data },
     });
   }

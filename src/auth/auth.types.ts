@@ -49,14 +49,31 @@ export enum AuthState {
   LOG_OUT_REJECTED,
 }
 
+export interface ProfileType {
+  roles: any;
+  bio: string;
+  role: string;
+  uuid: string;
+  email: string;
+  picture: string;
+  website: string;
+  lastName: string;
+  username: string;
+  firstName: string;
+  id: string | number;
+  investingSince: number;
+  profileDetails: string | null;
+}
+
 export interface AuthType {
   expires?: number;
   token?: string;
-  user?: Account[];
+  user?: ProfileType;
   roles?: RoleEnum[];
   authState: AuthState;
   isSigningIn: boolean;
   isAuthenticated: boolean;
+  accounts?: Account[];
 }
 
 export interface LoginFormProps {
@@ -79,32 +96,4 @@ export interface FBAssociationPayload {
 export interface RegisterServicePayload {
   dispatch: Dispatch;
   payload: RegisterPayload;
-}
-
-export interface AddressPayload {
-  addressLine1: string;
-  addressLine2: string;
-  city: string;
-  state: string;
-  country: string;
-  longitude: string;
-  latitude: string;
-}
-
-export interface ProfilePayload {
-  name: string;
-  photo: string;
-  type: string;
-  homeDelivery: boolean;
-  phoneNumber: string;
-  address: AddressPayload;
-}
-
-export interface ProfileFormPayload {
-  props: FormikProps<ProfilePayload>;
-}
-
-export interface ProfileServicePayload {
-  dispatch: Dispatch;
-  payload: ProfilePayload;
 }

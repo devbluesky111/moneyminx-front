@@ -17,16 +17,16 @@ import AccountSettingForm from './inc/account-setting-form';
 import { ConnectAccountStepsSection } from './inc/connect-steps';
 
 const AccountSetting = () => {
-  const { user } = useAuthState();
+  const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
   useEffect(() => {
-    if (!user) {
+    if (!accounts) {
       const getUser = async () => {
         await getRefreshedProfile({ dispatch });
       };
       getUser();
     }
-  }, [user, dispatch]);
+  }, [accounts, dispatch]);
 
   return (
     <AuthLayout>
@@ -36,23 +36,23 @@ const AccountSetting = () => {
 };
 export default AccountSetting;
 export const AccountSettingMainSection = () => {
-  const { user } = useAuthState();
+  const { accounts } = useAuthState();
   const [providerName, setProviderName] = useState('');
   const [currentAccount, setCurrentAccount] = useState<Account>();
   const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
   const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
 
   useEffect(() => {
-    if (user) {
-      setCurrentAccount(user[0]);
-      const accountsByProvider = groupByProviderName(user);
+    if (accounts) {
+      setCurrentAccount(accounts[0]);
+      const accountsByProvider = groupByProviderName(accounts);
       setAccountsByProviderName(accountsByProvider);
       const [curProviderName] = Object.keys(accountsByProvider);
       setProviderName(curProviderName);
       const curProviderAccounts = accountsByProvider[curProviderName];
       setCurrentProviderAccounts(curProviderAccounts);
     }
-  }, [user]);
+  }, [accounts]);
 
   useEffect(() => {
     if (accountsByProviderName) {
@@ -62,7 +62,7 @@ export const AccountSettingMainSection = () => {
     }
   }, [providerName, accountsByProviderName]);
 
-  if (!user) {
+  if (!accounts) {
     return <CircularSpinner />;
   }
 

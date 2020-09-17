@@ -12,6 +12,7 @@ const initialState: AuthType = {
   token: undefined,
   roles: undefined,
   isSigningIn: false,
+  accounts: undefined,
   isAuthenticated: false,
   authState: AuthState.INITIAL,
 };
@@ -78,13 +79,23 @@ function authReducer(state: AuthType = initialState, action: any) {
       return { ...state, authState: AuthState.LOG_OUT_REJECTED };
     }
 
-    case auth.PROFILE_COMPLETE: {
+    case auth.FETCH_ACCOUNT: {
       return { ...state };
     }
-    case auth.PROFILE_COMPLETE_SUCCESS: {
+    case auth.FETCH_ACCOUNT_SUCCESS: {
+      return { ...state, accounts: action.payload.user };
+    }
+    case auth.FETCH_ACCOUNT_FAILURE: {
+      return { ...state };
+    }
+
+    case auth.FETCH_PROFILE: {
+      return { ...state };
+    }
+    case auth.FETCH_PROFILE_SUCCESS: {
       return { ...state, user: action.payload.user };
     }
-    case auth.PROFILE_COMPLETE_FAILURE: {
+    case auth.FETCH_PROFILE_FAILURE: {
       return { ...state };
     }
 

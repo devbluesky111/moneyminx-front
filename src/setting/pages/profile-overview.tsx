@@ -3,8 +3,27 @@ import React from 'react';
 import ProfilePicture from 'setting/inc/profile-picture';
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as Shield } from 'assets/icons/shield.svg';
+import useProfile from 'auth/hooks/useProfile';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { toast } from 'react-toastify';
+import { useAuthState } from 'auth/auth.context';
 
 export const ProfileOverview = () => {
+  const {
+    loading,
+    response: { error },
+  } = useProfile();
+
+  const { user } = useAuthState();
+
+  if (error) {
+    toast('Error occured fetching your profile', { type: 'error' });
+  }
+
+  if (loading || !user) {
+    return <CircularSpinner />;
+  }
+
   return (
     <section className='mm-profile-overview'>
       <div className='card mm-setting-card'>
@@ -24,7 +43,7 @@ export const ProfileOverview = () => {
         </div>
       </div>
 
-      <ProfilePicture />
+      <ProfilePicture pictureURL={user.picture} />
 
       <div className='card mm-setting-card'>
         <div className='card-body'>
