@@ -248,7 +248,7 @@ export const LoginMainSection = () => {
                 </div>
 
                 <p>
-                  <div className='loginPage-end-element'>
+                  <div className='auth-end-element'>
                     Don’t have an account? <Link to='/signup'>Sign Up</Link>
                   </div>
                 </p>

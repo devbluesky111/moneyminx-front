@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import FacebookLogin from 'react-facebook-login';
 
 import { AuthLayout } from 'layouts/auth.layout';
+import validation from 'lang/en/validation.json';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
@@ -161,10 +162,15 @@ export const SignupMainSection = () => {
                     subscriptionPriceId: priceId || 'price_1H9iXSAjc68kwXCHsFEhWShL',
                   }}
                   validate={async (values) => {
+                    if (!values.password) {
+                      return {};
+                    }
+
                     let a = 0;
                     let errors: StringKeyObject = {};
                     [reg1, reg2, reg3, reg4].forEach((reg) => (reg.test(values.password) ? (a += 1) : a));
                     setValidator(a);
+
                     try {
                       await registerValidationSchema.validate(values, { abortEarly: false });
                     } catch (errs) {
@@ -172,41 +178,70 @@ export const SignupMainSection = () => {
                         obj[cur.path] = cur.message;
                         return obj;
                       }, {});
+
                       errors = mappedError;
                     }
                     return errors;
                   }}
                   onSubmit={async (values, actions) => {
-                    if (!values.termsAccepted) {
-                      actions.setFieldError('termsAccepted', 'You forgot to accept our terms of service');
-                      return;
+                    const hasEmail = values.email;
+                    const hasPassword = values.password;
+
+                    if (!hasEmail) {
+                      actions.setFieldError('email', validation.EMAIL_IS_EMPTY);
                     }
+
+                    if (!hasPassword) {
+                      actions.setFieldError('password', validation.PWD_IS_EMPTY);
+                    }
+
+                    if (!values.termsAccepted) {
+                      actions.setFieldError('termsAccepted', validation.FORGOT_TERMS);
+                    }
+
+                    const emptyFields = Object.keys(values).filter((key) => {
+                      const value = (values as StringKeyObject)[key];
+                      if (key === 'mailChimpSubscription') {
+                        return false;
+                      }
+                      return value === '' || value === false || value === undefined;
+                    });
+
+                    if (emptyFields.length > 0) {
+                      return emptyFields;
+                    }
+
                     const { error } = await signup({ dispatch, payload: values });
                     actions.setSubmitting(false);
 
                     if (!error) {
                       toast('Signup Success', { type: 'success' });
-                      history.push('/connect-account');
-                    } else {
-                      actions.setFieldError('password', error?.message || 'Sign up failed');
+                      return history.push('/connect-account');
                     }
+
+                    if (error?.statusCode === 409) {
+                      return actions.setFieldError('password', '409');
+                    }
+
+                    actions.setFieldError('password', error?.message || 'Sign up failed');
                   }}
                 >
                   {(props) => {
                     return (
                       <form onSubmit={props.handleSubmit}>
-                        <div className='email-wrap'>
-                          <input
-                            type='email'
-                            className='email'
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                            value={props.values.email}
-                            name='email'
-                            placeholder='Email'
-                          />
-
-                          {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
+                        <div className='input-wrapper'>
+                          <div className='email-wrap'>
+                            <input
+                              type='email'
+                              className='email'
+                              onChange={props.handleChange}
+                              onBlur={props.handleBlur}
+                              value={props.values.email}
+                              name='email'
+                              placeholder='Email'
+                            />
+                          </div>
+                          {props.errors.email && <div className='text-right mt-2 feedback'>{props.errors.email}</div>}
                         </div>
                         <div className='d-md-flex align-items-center'>
                           <div className='password-wrap'>
@@ -232,7 +267,16 @@ export const SignupMainSection = () => {
                           ) : null}
                         </div>
                         {props.errors.password && (
-                          <div className='feedback mt-2 text-right'>{props.errors.password}</div>
+                          <div className='feedback mt-2 text-right'>
+                            {props.errors.password === '409' ? (
+                              <span>
+                                This email is already registered. Want to <Link to='/login'>login</Link> or
+                                <Link to='/forgot-password'>recover your password?</Link>
+                              </span>
+                            ) : (
+                              props.errors.password
+                            )}
+                          </div>
                         )}
 
                         <div className='credintials-checkbox'>
@@ -277,11 +321,7 @@ export const SignupMainSection = () => {
                           <div className='feedback mb-4 text-right'>{props.errors.termsAccepted}</div>
                         )}
 
-                        <button
-                          className='bg-primary mm-btn-primary-outline'
-                          type='submit'
-                          disabled={!props.isValid || props.isSubmitting}
-                        >
+                        <button className='bg-primary mm-btn-primary-outline' type='submit'>
                           Sign Up
                         </button>
                       </form>
@@ -291,7 +331,7 @@ export const SignupMainSection = () => {
 
                 <div className='facebook-login'>
                   <p>
-                    Or, sign up with:
+                    <span> Or, sign up with: </span>
                     <div className='fb-icon-wrap'>
                       <FacebookLogin
                         authType='rerequest'
@@ -314,7 +354,9 @@ export const SignupMainSection = () => {
                 </div>
 
                 <p>
-                  Already have an account? <Link to='/login'>Log In</Link>
+                  <div className='auth-end-element'>
+                    Already have an account? <Link to='/login'>Log In</Link>
+                  </div>
                 </p>
               </div>
             </div>
