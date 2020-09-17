@@ -94,6 +94,10 @@ export const patchProfilePicture = (payload: any): Promise<ApiResponse> => {
   return http.patch(urls.auth.PROFILE_PICTURE, payload);
 };
 
+export const patchProfile = <T>(payload: T): Promise<ApiResponse> => {
+  return http.patch(urls.auth.PATCH_PROFILE, payload);
+};
+
 export const patchAccount = (id: string, data: any) => {
   return http.patch(urls.auth.PATCH_ACCOUNT.replace(':id', id), data);
 };
