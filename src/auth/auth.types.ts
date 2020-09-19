@@ -49,6 +49,26 @@ export enum AuthState {
   LOG_OUT_REJECTED,
 }
 
+export interface ProfileDetails {
+  dependants: number;
+  dob: string | Date;
+  minxWinks: boolean;
+  id: number | string;
+  maritalStatus: string;
+  riskTolerance: string;
+  minxMeasureUp: boolean;
+  alreadyRetired: boolean;
+  householdIncome: string;
+  profileEnabled: boolean;
+  spouseDob: string | Date;
+  shareAssetValues: boolean;
+  countryOfResidence: string;
+  shareAssetAllocation: boolean;
+  spouseAlreadyRetired: boolean;
+  targetedRetirementAge: number;
+  spouseTargetedRetirementAge: number;
+}
+
 export interface ProfileType {
   roles: any;
   bio: string;
@@ -62,7 +82,8 @@ export interface ProfileType {
   firstName: string;
   id: string | number;
   investingSince: number;
-  profileDetails: string | null;
+  profileEnabled: boolean;
+  profileDetails: ProfileDetails;
 }
 
 export interface AuthType {

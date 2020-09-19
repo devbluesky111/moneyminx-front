@@ -34,6 +34,7 @@ export const ProfileOverview = () => {
   }
 
   const fullName = `${user.firstName} ${user.lastName}`;
+  const { profileDetails } = user;
 
   return (
     <section className='mm-profile-overview'>
@@ -65,22 +66,22 @@ export const ProfileOverview = () => {
           bio: user.bio || '',
           website: user.website || '',
           investingSince: user.investingSince || '',
-          profileEnabled: false,
-          shareAssetAllocation: false,
-          shareAssetValues: false,
-          countryOfResidence: 'US',
-          householdIncome: HouseHoldIncomeOptions.OPT_1,
-          riskTolerance: RiskToleranceOptions.CONSERVATIVE,
-          dob: new Date(),
-          spouseDob: new Date(),
-          targetedRetirementAge: 0,
-          alreadyRetired: false,
-          maritalStatus: MaritalStatusOptions.SINGLE,
-          spouseTargetedRetirementAge: 0,
-          spouseAlreadyRetired: false,
-          dependants: 0,
-          minxMeasureUp: false,
-          minxWinks: false,
+          profileEnabled: profileDetails?.profileEnabled || false,
+          shareAssetAllocation: profileDetails?.shareAssetAllocation || false,
+          shareAssetValues: profileDetails?.shareAssetValues || false,
+          countryOfResidence: profileDetails?.countryOfResidence || 'US',
+          householdIncome: profileDetails?.householdIncome || HouseHoldIncomeOptions.OPT_1,
+          riskTolerance: profileDetails?.riskTolerance || RiskToleranceOptions.CONSERVATIVE,
+          dob: profileDetails?.dob || new Date(),
+          spouseDob: profileDetails?.spouseDob || new Date(),
+          targetedRetirementAge: profileDetails?.targetedRetirementAge || 0,
+          alreadyRetired: profileDetails?.alreadyRetired || false,
+          maritalStatus: profileDetails?.maritalStatus || MaritalStatusOptions.SINGLE,
+          spouseTargetedRetirementAge: profileDetails?.spouseTargetedRetirementAge || 0,
+          spouseAlreadyRetired: profileDetails?.spouseAlreadyRetired || false,
+          dependants: profileDetails?.dependants || 0,
+          minxMeasureUp: profileDetails?.minxMeasureUp || false,
+          minxWinks: profileDetails?.minxWinks || false,
         }}
         onSubmit={async (values, actions) => {
           const { error: patchError } = await patchProfile(values);
