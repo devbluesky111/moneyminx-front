@@ -19,7 +19,7 @@ import { ReactComponent as HomeMinxwinksImg } from 'assets/images/home/minxwinks
 import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-icon3.svg';
 import { ReactComponent as HomeNetWorthChart } from 'assets/images/home/home-networth.svg';
 import { ReactComponent as HomeScrollDown } from 'assets/images/home/scroll-down-icon.svg';
-import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-adapter-icon.svg';
+import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-adopter-icon.svg';
 import { ReactComponent as HomePerformanceChart } from 'assets/images/home/performance-chart.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
 
@@ -46,21 +46,14 @@ export const HomeTopSection = () => {
       <div className='row home-top'>
         <div className='col-lg-7'>
           <div className='home-left-banner'>
-            <h1>The easiest way to track all of your investments, in one place</h1>
+            <h1>Investments and Net Worth Tracker</h1>
             <p className='text'>
-              Track your stocks, bonds, mutual funds, alternatives and much more all in one simple, accessible
-              dashboard.
+              Track your stocks, bonds, cryptos, mutual funds, alternatives and much more in one place.
             </p>
-
             <Link to={appRouteConstants.auth.SIGNUP}>
-              <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Get Started</button>
+              <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
             </Link>
             <p className='info-text'>No credit card needed.</p>
-            <div className='scroll-down-btn'>
-              <a href='link'>
-                <HomeScrollDown />
-              </a>
-            </div>
           </div>
         </div>
         <div className='col-lg-5'>
@@ -68,14 +61,23 @@ export const HomeTopSection = () => {
             <HomeBannerImg />
           </div>
         </div>
+        {/*scroll icon*/}
+        <div className='mm-scroll-container-parent'>
+          <div className='mm-scroll-container'>
+            <div className='mouse'>
+              <div className='scroll'/>
+            </div>
+          </div>
+        </div>
       </div>
+      
     </div>
   );
 };
 
 export const HomeEarlyAdopterSection = () => {
   return (
-    <div className='mm-container-right early-adapter-section'>
+    <div className='mm-container-right early-adopter-section'>
       <div className='row home-top'>
         <div className='col-lg-12 home-list'>
           <div className='adopter-top-wrap'>
@@ -91,7 +93,7 @@ export const HomeEarlyAdopterSection = () => {
             </li>
             <li className='bg-white'>
               <div className='adopter-content'>
-                <div className='early-adapter-tag'>
+                <div className='early-adopter-tag'>
                   <span>
                     <HomeEarlyAdapter />
                   </span>
@@ -225,9 +227,9 @@ export const HomeBlogSection = () => {
                 className='mm-nav-link'
                 target='_blank'
                 rel='noopener noreferrer'
-                href='https://velocity.moneyminx.com'
+                href='https://www.moneyminx.com/blog'
               >
-                <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Visit Blog</button>
+                <button className='mm-btn-animate mm-btn-primary'>Visit Blog</button>
               </a>
             </div>
           </div>

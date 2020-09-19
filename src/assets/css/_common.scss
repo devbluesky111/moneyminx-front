@@ -80,21 +80,39 @@ a {
   transition: 0.3s;
   &:hover {
     transform: translateY(-6px);
+    color: $white;
   }
 }
 
-.mm-btn-primary-outline {
+.mm-btn-primary {
   color: $white;
-  border-color: $white;
+  background: $purple;
   &:hover {
-    color: $primary;
-    border-color: $white;
-    background-color: $white;
+    background: $purple;
+    box-shadow: 0 4px 12px #b9b8e0;
   }
   &:disabled {
     opacity: 0.7;
   }
 }
+
+.mm-btn-primary-outline {
+  color: $lightBg;
+  border: 1.5px solid #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 4px;
+
+
+  &:hover {
+    background: $lightBg;
+    color: $purple;
+    box-shadow: 0 4px 12px #3A33CC;
+  }
+  &:disabled {
+    opacity: 0.7;
+  }
+}
+
 .container-mm {
   max-width: 1200px;
   width: auto !important;
@@ -112,7 +130,7 @@ a {
   font-size: 18px;
   line-height: 23px;
   display: inline-block;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   vertical-align: middle;
   border: 1px solid transparent;
