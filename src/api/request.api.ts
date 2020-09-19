@@ -47,6 +47,36 @@ export const getRefreshedAccount = () => {
   return http.get(urls.auth.PROFILE_REFRESH);
 };
 
+export const getAccountCategory = (): Promise<ApiResponse> => {
+  return http.get(urls.auth.ACCOUNT_CATEGORY);
+};
+
+export const getAccountType = (): Promise<ApiResponse> => {
+  return http.get(urls.auth.ACCOUNT_TYPE);
+};
+
+export const getAccountSubType = (accountType: string): Promise<ApiResponse> => {
+  return http.get(urls.auth.ACCOUNT_SUBTYPE.replace(':accountType', accountType));
+};
+
+export const getAssociateMortgage = (): Promise<ApiResponse> => {
+  return http.get(urls.auth.ASSOCIATE_MORTGAGE);
+};
+
+export const getLoanAccounts = (): Promise<ApiResponse> => {
+  return http.get(urls.auth.LOAN_ACCOUNT);
+};
+
+export const getFormFieldFilter = (accountType: string, accountSubtype: string): Promise<ApiResponse> => {
+  return http.get(
+    urls.auth.FORM_FIELD_FILTER.replace(':accountType', accountType).replace(':accountSubType', accountSubtype)
+  );
+};
+
 export const refreshAccessToken = ({ referenceToken }: { referenceToken: string }): Promise<any> => {
   return Promise.resolve({ referenceToken });
+};
+
+export const patchAccount = (id: string, data: any) => {
+  return http.patch(urls.auth.PATCH_ACCOUNT.replace(':id', id), data);
 };
