@@ -66,6 +66,7 @@ export const SignupMainSection = () => {
         classNames: 'text-warning',
       };
     }
+
     return {
       text: 'Strong',
       classNames: 'text-success',

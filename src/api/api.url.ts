@@ -16,6 +16,7 @@ export const urls = {
     ACCOUNT_TYPE: '/account/account-type',
     ASSOCIATE_LOGIN: '/facebook/associate',
     RESET_PASSWORD: '/profile/password/reset',
+    UPDATE_PASSWORD: '/profile/password',
     LOAN_ACCOUNT: '/account/me/loan-accounts',
     FORGOT_PASSWORD: '/profile/password/forgot',
     ASSOCIATE_MORTGAGE: '/account/me/mortgage-accounts',

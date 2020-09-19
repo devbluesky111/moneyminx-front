@@ -1,9 +1,22 @@
 import { storage } from 'app/app.storage';
 import { ApiResponse } from 'api/api.types';
-import { postLogin, postRegister, postFacebookAssociation, getRefreshedAccount, getProfile } from 'api/request.api';
+import {
+  postLogin,
+  postRegister,
+  postFacebookAssociation,
+  getRefreshedAccount,
+  getProfile,
+  patchChangePassword,
+} from 'api/request.api';
 
 import { auth } from './auth-context.types';
-import { LoginServicePayload, RegisterServicePayload, FBAssociationPayload, Dispatch } from './auth.types';
+import {
+  LoginServicePayload,
+  RegisterServicePayload,
+  FBAssociationPayload,
+  Dispatch,
+  ChangePasswordServicePayload,
+} from './auth.types';
 
 export const login = async ({ dispatch, payload }: LoginServicePayload): Promise<ApiResponse> => {
   dispatch({ type: auth.LOGIN });
@@ -79,6 +92,19 @@ export const fetchProfile = async ({ dispatch }: { dispatch: Dispatch }): Promis
       type: auth.FETCH_PROFILE_SUCCESS,
       payload: { user: data },
     });
+  }
+
+  return { data, error };
+};
+
+export const changePassword = async ({ dispatch, payload }: ChangePasswordServicePayload): Promise<ApiResponse> => {
+  dispatch({ type: auth.SIGN_OUT });
+  const { data, error } = await patchChangePassword(payload);
+
+  if (error) {
+    dispatch({ type: auth.SIGN_OUT_FAILURE });
+  } else {
+    dispatch({ type: auth.SIGN_OUT_SUCCESS });
   }
 
   return { data, error };

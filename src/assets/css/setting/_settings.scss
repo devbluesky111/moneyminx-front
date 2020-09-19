@@ -284,3 +284,50 @@
   margin: 0;
   z-index: 2;
 }
+
+.change-password-modal {
+  max-width: 100%;
+  padding: 2rem;
+
+  h4 {
+    font-size: 1.75rem;
+  }
+
+  .input-wrapper {
+    padding-top: 1rem;
+
+    label {
+      display: block;
+    }
+
+    .input-wrap {
+      position: relative;
+      input {
+        width: 100%;
+        height: 48px;
+        border-radius: 4px;
+        border-color: $gray;
+        padding: 0 1rem;
+      }
+      .visibility-icon {
+        position: absolute;
+        right: 1rem;
+      }
+    }
+    .feedback {
+      text-align: right;
+      padding-top: 0.5rem;
+    }
+  }
+  button {
+    width: 100%;
+    display: block;
+    height: 48px;
+    cursor: pointer;
+    border: 0;
+    border-radius: 4px;
+    &:hover {
+      color: $white;
+    }
+  }
+}

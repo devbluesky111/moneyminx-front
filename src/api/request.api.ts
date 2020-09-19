@@ -36,6 +36,10 @@ export const postResetPassword = (payload: ResetPasswordPayload): Promise<ApiRes
   return http.post(urls.auth.RESET_PASSWORD, payload, false);
 };
 
+export const patchChangePassword = <T>(payload: T): Promise<ApiResponse> => {
+  return http.patch(urls.auth.UPDATE_PASSWORD, payload);
+};
+
 export const getSubscription = () => {
   return http.get(urls.subscription.SUB);
 };

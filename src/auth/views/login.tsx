@@ -151,7 +151,12 @@ export const LoginMainSection = () => {
                       toast('Sign in Success', { type: 'success' });
                       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                     } else {
-                      actions.setFieldError('password', error.message || 'Please enter valid credentials');
+                      actions.setFieldError(
+                        'password',
+                        error.message && typeof error.message !== 'object'
+                          ? error.message
+                          : 'Please enter valid credentials'
+                      );
                     }
                   }}
                 >

@@ -6,8 +6,11 @@ import useSettings from 'setting/hooks/useSettings';
 import SaveSettings from 'setting/inc/save-settings';
 import { patchEmailSubscription } from 'api/request.api';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import ChangePasswordModal from 'setting/inc/change-password.modal';
+import { useModal } from 'common/components/modal';
 
 export const SettingOverview = () => {
+  const changePasswordModal = useModal();
   const { loading, data, error } = useSettings();
   const [mailChimpSubscription, setMailChimpSubscription] = useState<boolean>(false);
 
@@ -111,6 +114,7 @@ export const SettingOverview = () => {
           </Link>
         </div>
       </div>
+      <ChangePasswordModal changePasswordModal={changePasswordModal} />
       <SaveSettings handleSave={handleSave} />
     </section>
   );

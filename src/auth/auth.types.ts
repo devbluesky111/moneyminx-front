@@ -118,3 +118,11 @@ export interface RegisterServicePayload {
   dispatch: Dispatch;
   payload: RegisterPayload;
 }
+
+export interface ChangePasswordServicePayload {
+  dispatch: Dispatch;
+  payload: {
+    newPassword: string;
+    oldPassword: string;
+  };
+}
