@@ -18,6 +18,16 @@ $purpleLight: #d3d1fa;
 $twitter: #00acee;
 $borderAlert: #7e7f80;
 $dimGray: #9c9fa53d;
+$link: #4dccff;
+
+// opacity 0.24 color
+$grayOpacity: #969eac3d;
+
+// shadow color
+$whiteShadow: #dbe3f0;
+$whiteInsetShadow: #ebecf1;
+$whiteFadeShadow: #e2e8f3;
+$whiteFadeInsetShadow: #ebecf1;
 
 // theme colors
 $primary: $purple;
@@ -39,6 +49,9 @@ $med: 576px;
 $md: 768px;
 $lg: 1400px;
 
+// font weight
+$lighter: 500;
+$normal: 600;
 //font weights
 $bold: 500;
 $bolder: 600;

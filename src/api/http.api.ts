@@ -6,9 +6,10 @@ import { refreshAccessToken } from 'api/request.api';
 import { withError, withData } from 'common/common-helper';
 
 import { urls } from './api.url';
+import appEnv from 'app/app.env';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://api.moneyminx.com/',
+  baseURL: appEnv.BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
