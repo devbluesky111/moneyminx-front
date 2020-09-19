@@ -1,3 +1,5 @@
+import { StripeSubscriptionStatus } from './setting.enum';
+
 export interface SettingsProps {}
 
 export enum SettingPageEnum {
@@ -25,8 +27,8 @@ export interface CurrentSubscription {
   priceId: string;
   customerId: string;
   id: string | number;
-  cancelAt: Date | null;
   subscriptionId: string;
-  subscriptionStatus: string;
+  cancelAt: Date | number;
   subscriptionEnd: string | number;
+  subscriptionStatus: StripeSubscriptionStatus;
 }

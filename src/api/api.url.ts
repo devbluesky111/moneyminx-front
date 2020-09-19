@@ -27,6 +27,7 @@ export const urls = {
     CURRENT_SUB: '/subscription/me',
     SUB: '/subscription/stripe/subscriptions',
     STRIPE_CHECKOUT: '/subscription/stripe/checkout',
+    CANCEL: '/subscription/me/cancel',
   },
   yodlee: {
     FAST_LINK: '/account/yodlee/fastlink',

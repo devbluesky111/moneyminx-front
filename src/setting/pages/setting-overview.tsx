@@ -2,17 +2,28 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
+import { capitalize } from 'common/common-helper';
+import { useModal } from 'common/components/modal';
 import useSettings from 'setting/hooks/useSettings';
 import SaveSettings from 'setting/inc/save-settings';
-import { patchEmailSubscription } from 'api/request.api';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import ChangePasswordModal from 'setting/inc/change-password.modal';
-import { useModal } from 'common/components/modal';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { CurrentSubscription, SettingPageEnum } from 'setting/setting.type';
+import SubscriptionCancelModal from 'setting/inc/subscription-cancel.modal';
+import { patchCancelSubscription, patchEmailSubscription } from 'api/request.api';
 
-export const SettingOverview = () => {
+interface SettingOverviewProps {
+  changeTab: (pageName: SettingPageEnum) => void;
+}
+
+export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) => {
   const changePasswordModal = useModal();
+  const subscriptionCancelModal = useModal();
   const { loading, data, error } = useSettings();
   const [mailChimpSubscription, setMailChimpSubscription] = useState<boolean>(false);
+  const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
+  const [cancelSubscriptionResponse, setCancelSubscriptionResponse] = useState<CurrentSubscription>();
 
   useEffect(() => {
     if (data) {
@@ -23,9 +34,19 @@ export const SettingOverview = () => {
   if (error) {
     toast('Error on fetching settings');
   }
-  if (loading) {
+
+  if (loading || fetchingCurrentSubscription) {
     return <CircularSpinner />;
   }
+
+  const handleCancelSubscription = async () => {
+    const { error: patchError, data: response } = await patchCancelSubscription();
+
+    if (!patchError) {
+      return subscriptionCancelModal.open();
+    }
+    setCancelSubscriptionResponse(response);
+  };
 
   const handleSave = async () => {
     const { error: pathError } = await patchEmailSubscription({ mailChimpSubscription });
@@ -96,10 +117,16 @@ export const SettingOverview = () => {
                 <label className=''>Current plan</label>
               </div>
               <div className='col-4 col-sm-5 col-md-5'>
-                <span className='mm-setting-form-info ml-0 mb-4'>FREE</span>
+                <span className='mm-setting-form-info ml-0 mb-4'>
+                  {capitalize(currentSubscription?.subscriptionStatus || '')}
+                </span>
               </div>
               <div className='col'>
-                <button type='button' className='btn btn-outline-primary mm-button float-right'>
+                <button
+                  type='button'
+                  className='btn btn-outline-primary mm-button float-right'
+                  onClick={() => changeTab(SettingPageEnum.PLAN)}
+                >
                   Change Plan
                 </button>
               </div>
@@ -109,12 +136,16 @@ export const SettingOverview = () => {
       </div>
       <div className='card mm-setting-card'>
         <div className='card-body'>
-          <Link className='mm-setting-card--subscription' to='#'>
+          <Link className='mm-setting-card--subscription' to='#' onClick={handleCancelSubscription}>
             Cancel subscription
           </Link>
         </div>
       </div>
       <ChangePasswordModal changePasswordModal={changePasswordModal} />
+      <SubscriptionCancelModal
+        subscriptionCancelModal={subscriptionCancelModal}
+        subscriptionEnd={cancelSubscriptionResponse?.cancelAt || +currentSubscription?.cancelAt}
+      />
       <SaveSettings handleSave={handleSave} />
     </section>
   );

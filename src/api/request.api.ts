@@ -52,6 +52,10 @@ export const getCurrentSubscription = () => {
   return http.get(urls.subscription.CURRENT_SUB);
 };
 
+export const patchCancelSubscription = (): Promise<ApiResponse> => {
+  return http.patch(urls.subscription.CANCEL, {});
+};
+
 export const getFastlink = () => {
   return http.get(urls.yodlee.FAST_LINK);
 };

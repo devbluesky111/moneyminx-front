@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { ApiResponse } from 'app/app.types';
-import { useAuthDispatch } from 'auth/auth.context';
 import { fetchProfile } from 'auth/auth.service';
+import { useAuthDispatch } from 'auth/auth.context';
 
 const useProfile = () => {
   const dispatch = useAuthDispatch();

@@ -22,7 +22,7 @@ const Settings: React.FC<SettingsProps> = () => {
   const renderTabContent = () => {
     switch (page) {
       case SettingPageEnum.SETTINGS: {
-        return <SettingOverview />;
+        return <SettingOverview changeTab={handlePageSelect} />;
       }
       case SettingPageEnum.PROFILE: {
         return <ProfileOverview />;
@@ -35,7 +35,7 @@ const Settings: React.FC<SettingsProps> = () => {
       }
 
       default: {
-        return <SettingOverview />;
+        return <SettingOverview changeTab={handlePageSelect} />;
       }
     }
   };
