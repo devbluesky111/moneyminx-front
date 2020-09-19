@@ -27,14 +27,15 @@
 .signup-btn-wrapper {
   margin: auto;
 }
-@media (max-width: 768px) {
+@media (max-width: $md) {
   .signup-today-wrapper {
     padding: 2rem;
     left: 80px;
     right: 80px;
   }
+
   .wf-list-wrapper {
-    text-align: center;
+    text-align: left;
   }
   .signup-btn-wrapper {
     margin: auto;
@@ -82,8 +83,64 @@
   margin-left: 0px !important;
 }
 
-@media ( max-width:$md - 1 ) {
+@mixin footer-resp {
   .wf-list-wrapper {
-    text-align: start;
+    text-align: left;
+    p {
+      margin-top: 0;
+    }
+  }
+
+  .wf-list-items {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+
+    p.light {
+      min-width: 50% !important;
+    }
+  }
+  .download-btn-wrapper {
+    display: flex;
+    .first-svg-item {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .website-footer-wrapper {
+    padding: 15.31rem 1.25rem 4.06rem 1.25rem;
+  }
+}
+
+//for mobile view
+@media (max-width: $sm) {
+  @include footer-resp;
+}
+
+// for responsiveness between mobile and tablet view
+@media (max-width: $med) {
+  @include footer-resp;
+
+  .website-footer-wrapper > .p-t-176 {
+    padding-top: 3.8125rem !important;
+  }
+}
+
+@media (min-width: $lg) {
+  .coming-soon-wrapper {
+    padding-left: 6.375rem;
+
+    h1 {
+      font-size: 3.5rem !important;
+    }
+  }
+  .info-wrapper {
+    padding-right: 2.5rem;
+  }
+  .wf-list-items p.light {
+    font-size: 1.125rem;
+    margin-top: 1.8rem;
   }
 }
