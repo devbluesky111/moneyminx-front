@@ -17,6 +17,15 @@ interface Props {
   size?: keyof Size;
 }
 
+export interface ModalType {
+  open: () => void;
+  close: () => void;
+  props: {
+    open: boolean;
+    onClose: () => void;
+  };
+}
+
 const Modal: React.FC<Props> = ({
   open,
   title,
@@ -48,7 +57,7 @@ const Modal: React.FC<Props> = ({
   );
 };
 
-function useModal(state: boolean = false) {
+function useModal(state: boolean = false): ModalType {
   const [open, setOpen] = useState(state);
   return {
     open: () => setOpen(true),

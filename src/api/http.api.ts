@@ -6,9 +6,10 @@ import { refreshAccessToken } from 'api/request.api';
 import { withError, withData } from 'common/common-helper';
 
 import { urls } from './api.url';
+import appEnv from 'app/app.env';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://api.moneyminx.com/',
+  baseURL: appEnv.BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -45,8 +46,8 @@ axiosInstance.interceptors.response.use(
     }
 
     const status = error.response?.status;
-    const url = error.response?.url;
-    const isAuthenticating = url === urls.auth.LOGIN_IN || urls.auth.REGISTER;
+    const url = error.response?.config?.url;
+    const isAuthenticating = url === urls.auth.LOGIN_IN || url === urls.auth.REGISTER;
 
     const errorResponse = error.response?.data ? error.response.data : error;
 
@@ -118,6 +119,16 @@ export function post(url: string, data: any, auth: boolean = true, params?: any)
 export function put(url: string, data: any): any {
   return axiosInstance({
     method: 'put',
+    url,
+    data,
+    headers: {
+      authorization: `Bearer ${storage.accessToken()} `,
+    },
+  });
+}
+export function patch(url: string, data: any): any {
+  return axiosInstance({
+    method: 'patch',
     url,
     data,
     headers: {

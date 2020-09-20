@@ -1,5 +1,7 @@
 import { Formik } from 'formik';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import { postForgotPassword } from 'api/request.api';
 import { forgotPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -35,9 +37,9 @@ export const ForgotPasswordMainSection = () => {
       <div className='mm-container mm-container-final'>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <div className='logo-img-wrap'>
+            <Link className='logo-img-wrap' to='/'>
               <LogoImg />
-            </div>
+            </Link>
             <h1>
               <span className='block'>Three easy steps to get </span>started with Money Minx
             </h1>
@@ -70,10 +72,13 @@ export const ForgotPasswordMainSection = () => {
                 <LogoImg />
               </div>
               <h2>Forgot Password?</h2>
-              <p>Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
+              <p className='f-pwd'>
+                Can’t log in? No worries, enter your email below and we will send you a password reset link.
+              </p>
               <Formik
                 initialValues={{ email: '' }}
                 validationSchema={forgotPasswordValidation}
+                validateOnChange={false}
                 onSubmit={async (values, actions) => {
                   const { error, data } = await postForgotPassword(values.email);
                   if (error) {
@@ -91,16 +96,21 @@ export const ForgotPasswordMainSection = () => {
                 {(props) => (
                   <div className='form-wrap'>
                     <form onSubmit={props.handleSubmit}>
-                      <div className='email-wrap'>
-                        <input
-                          type='text'
-                          className='email'
-                          name='email'
-                          value={props.values.email}
-                          placeholder='Your Email'
-                          onChange={props.handleChange}
-                        />
-                        {props.errors.email && <div className='feedback'>{props.errors.email}</div>}
+                      <div className='d-md-flex align-items-start input-wrapper'>
+                        <div className='email-wrap'>
+                          <input
+                            type='text'
+                            className='email'
+                            name='email'
+                            value={props.values.email}
+                            placeholder='Your Email'
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                          />
+                        </div>
+                        {props.errors.email && (
+                          <div className='ml-2 mt-1 mt-md-3 text-right feedback text-nowrap'>{props.errors.email}</div>
+                        )}
                       </div>
                       <button
                         className='bg-primary mm-btn-primary-outline'
