@@ -22,10 +22,10 @@ const Security = () => {
 export default Security;
 export const SecurityTopSection = () => {
   return (
-    <div className='mm-container-right security-container'>
+    <div className='mm-container-right security-container mm-security-margin'>
       <div className='row security-top'>
         <div className='col-lg-6'>
-          <div className='security-left-banner'>
+          <div className='security-left-banner mm-security-custom-banner'>
             <h1>
               Security and <span className='block'>Privacy are always </span>Top Priority
             </h1>
@@ -43,7 +43,7 @@ export const SecurityTopSection = () => {
           </div>
         </div>
         <div className='col-lg-6 text-right security-chart-wrapper'>
-          <SecurityChart />
+          <SecurityChart className='mm-security-chart-img' />
         </div>
       </div>
     </div>
@@ -170,7 +170,7 @@ export const SecurityInvestmentSection = () => {
         <div className='row'>
           <div className='col-lg-12'>
             <div className='investment-wrap'>
-              <h1>No One Can Access Your Money or Your Investments</h1>
+              <h1 className='mb-5'>No One Can Access Your Money or Your Investments</h1>
               <p className='text'>
                 Your Money Minx account only has read access to your data. Money Minx can’t trigger transfers,
                 transactons or any other events with your banks, brokerages and investment sites. In the event that your
@@ -183,7 +183,7 @@ export const SecurityInvestmentSection = () => {
               </p>
               <p className='text'>
                 For questions or concerns about security, please{' '}
-                <a href='/contact' target='_blank' rel='noopener noreferrer'>
+                <a href='https://security@moneyminx.com' target='_blank' rel='noopener noreferrer'>
                   Contact us
                 </a>
                 .

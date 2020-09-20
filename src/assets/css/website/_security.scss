@@ -332,10 +332,7 @@
   .security-chart-wrapper {
     overflow: visible !important;
   }
-  .mm-container-right {
-    margin: 0 80px;
-    overflow: visible !important;
-  }
+ 
   .website-hero-wrapper {
     padding: 100px 80px;
   }
@@ -379,5 +376,64 @@
   .security-pie-wrapper {
     position: static;
     display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .mm-container-right {
+    margin: 0 64px;
+    overflow: visible !important;
+  }
+} 
+
+.mm-security-chart-img {
+  margin-left: -15rem;
+
+  @media (min-width: $sm + 200) {
+    margin-left: 0rem;
+  }
+}
+
+.security-left-banner,
+.mm-container-right {
+  @media (min-width: $md) {
+    padding: 0px 64px;
+  }
+}
+
+@media (min-width: 575px){
+.mm-security-chart-img {
+    margin-left: 60px;
+}
+}
+
+@media (min-width: 768px){
+.signup-today-wrapper {
+  padding: 2rem;
+  width: 38rem;
+  margin: auto;
+}
+}
+
+@media (min-width: 768px){
+  .signup-today-wrapper {
+    width: unset;
+  }
+  }
+
+@media (min-width: 768px) {
+  .mm-security-custom-banner {
+    padding: 0px;
+  }
+  .mm-security-chart-img {
+    margin-left: 0px;
+  }
+}
+
+.mm-security-margin {
+  @media (min-width: 992px) {
+    margin: 0;
+    padding-left: 126px;
+    padding-right: 0px;
   }
 }
