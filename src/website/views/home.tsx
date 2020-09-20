@@ -18,7 +18,6 @@ import { ReactComponent as FeatureIconFive } from 'assets/images/home/feature-ic
 import { ReactComponent as HomeMinxwinksImg } from 'assets/images/home/minxwinks-img.svg';
 import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-icon3.svg';
 import { ReactComponent as HomeNetWorthChart } from 'assets/images/home/home-networth.svg';
-import { ReactComponent as HomeScrollDown } from 'assets/images/home/scroll-down-icon.svg';
 import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-adopter-icon.svg';
 import { ReactComponent as HomePerformanceChart } from 'assets/images/home/performance-chart.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
@@ -70,7 +69,7 @@ export const HomeTopSection = () => {
           </div>
         </div>
       </div>
-      
+
     </div>
   );
 };
