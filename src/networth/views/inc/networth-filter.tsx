@@ -18,7 +18,7 @@ const NetworthFilter = () => {
   return (
     <div className='row'>
       <div className='col-12'>
-        <div className='d-flex dropdowns-holder mb-15'>
+        <div className='d-flex dropdowns-holder mb-15 networth-filter-wrapper'>
           <Dropdown className='drop-box'>
             <Dropdown.Toggle className='dropdown-toggle'>All Categories</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>

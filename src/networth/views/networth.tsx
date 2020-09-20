@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useAlert } from 'common/components/alert';
 import NetworthLayout from 'networth/networth.layout';
+import MeasureIcon from 'assets/images/networth/measure.svg';
+import BlurChart from 'assets/images/networth/chart-blur.png';
 
 import NetworthHead from './inc/networth-head';
 import SimpleBarChart from './simple-bar-chart';
 import NetworthFilter from './inc/networth-filter';
-
-import BlurChart from 'assets/images/networth/chart-blur.png';
-import MeasureIcon from 'assets/images/networth/measure.svg';
+import ConnectionAlert from './inc/connection-alert';
 
 const Networth = () => {
+  const connectionAlert = useAlert();
+
+  useEffect(() => {
+    connectionAlert.open();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <NetworthLayout>
       <section className='content-container'>
@@ -466,6 +474,7 @@ const Networth = () => {
             </div>
           </div>
         </div>
+        <ConnectionAlert connectionAlert={connectionAlert} message='2 Connections required attention' />
       </section>
     </NetworthLayout>
   );
