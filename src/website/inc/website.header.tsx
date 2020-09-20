@@ -28,7 +28,7 @@ const WebsiteHeader = () => {
   const navClass = (label: string) => (pathname.includes(label) ? 'mm-nav-item active' : 'mm-nav-item');
 
   return (
-    <nav className='mm-navbar navbar-expand-lg navbar-light bg-light'>
+    <nav className='mm-navbar navbar-expand-lg navbar-light'>
       <div className='logo-btn-wrapper'>
         <Link className='navbar-brand' to='/'>
           <Logo />

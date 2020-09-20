@@ -10,7 +10,7 @@ interface WebsiteLayout {
 const WebsiteLayout: React.FC<WebsiteLayout> = ({ children, isSignupToday }) => {
   useScrollTop();
   return (
-    <div className='bg-lightBg'>
+    <div className='mm-overview-block'>
       <WebsiteHeader />
       <main className='main-content'>{children}</main>
       <WebsiteFooter isSignupToday={isSignupToday} />
