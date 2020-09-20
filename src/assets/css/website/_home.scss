@@ -65,34 +65,36 @@
   margin-top: -57px;
 }
 
-//Adapter Section
-.early-adapter-section {
+//Early adopter Section
+.early-adopter-section {
   padding-top: 115px;
   padding-bottom: 181px;
 }
-.early-adapter-section .adopter-top-wrap {
+.early-adopter-section .adopter-top-wrap {
   max-width: 500px;
   margin-bottom: 116px;
 }
 
-.early-adapter-section .earlyadopter-list li {
+.early-adopter-section .earlyadopter-list li {
   padding: 56px 33px 46px;
+  box-shadow: 0 2px 8px #E2E8F3, inset 0px -1px 0px #EBECF1;
+  border-radius: 6px;
 }
 
-.early-adapter-section .adopter-content h2 {
+.early-adopter-section .adopter-content h2 {
   margin-bottom: 29px;
 }
 
-.early-adapter-section .early-adapter-tag svg {
+.early-adopter-section .early-adopter-tag svg {
   background: linear-gradient(180deg, $purple 41.07%, #3e37d7 100%);
   box-shadow: 5px 10px 16px rgba(81, 84, 233, 0.2);
 }
-.early-adapter-tag {
+.early-adopter-tag {
   position: absolute;
   top: -21px;
   left: 34px;
 }
-.early-adapter-tag span {
+.early-adopter-tag span {
   background: linear-gradient(180deg, $purple 41.07%, #3e37d7 100%);
   display: inline-block;
   padding: 5px 9px;
@@ -165,6 +167,11 @@
   letter-spacing: 0.02em;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
+  color: $black;
+
+  a {
+    color: $black;
+  }
 }
 
 .home-blog-section .blog-content {
@@ -178,6 +185,7 @@
   img {
     width: 100%;
     height: 100%;
+    border-radius: 6px;
   }
 }
 
@@ -189,11 +197,6 @@
   flex: auto;
   float: left;
   width: 30.33%;
-}
-
-.blog-content-right button:hover {
-  background: $white !important;
-  border-color: $primary !important;
 }
 
 .blog-content {
@@ -357,7 +360,7 @@ span.above-tag-text {
 }
 
 @media (max-width: $sm) {
-  .early-adapter-section .earlyadopter-list li {
+  .early-adopter-section .earlyadopter-list li {
     padding: 51px 28px;
   }
   .home-list ul li {
@@ -384,5 +387,86 @@ span.above-tag-text {
   }
   .home-networth.networth-section .networth-text p span {
     top: -44px;
+  }
+}
+
+
+
+/*Scroll Icon*/
+
+.mm-scroll-container-parent {
+  position: absolute;
+}
+
+.mm-scroll-container {
+  position: relative;
+  top: 610px;
+  left: 28px;
+}
+
+.mouse {
+  position: absolute;
+  width: 24px;
+  height: 36px;
+  bottom: 40px;
+  left: 50%;
+  margin-left: -12px;
+  border-radius: 16px;
+  border: 1.5px solid $gray;
+  -webkit-animation: intro 1s;
+  animation: intro 1s;
+}
+.scroll {
+  display: block;
+  width: 4px;
+  height: 4px;
+  margin: 6px auto;
+  border-radius: 4px;
+  background: $gray;
+  -webkit-animation: finger 2s infinite;
+  animation: finger 2s infinite;
+}
+@-webkit-keyframes intro {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(40px);
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@keyframes intro {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(40px);
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes finger {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+}
+@keyframes finger {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
   }
 }

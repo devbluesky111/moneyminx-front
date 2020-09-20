@@ -2,6 +2,8 @@
 
 ## MoneyMinx Frontend Application
 
+[![CircleCI](https://circleci.com/gh/Money-Minx/mm-frontend.svg?style=svg&circle-token=74eebd24d6beb116aeac5a2498366d1da543759a)](<LINK>)
+
 ## Technologies
 
     - we are using React+Typescript as core technology

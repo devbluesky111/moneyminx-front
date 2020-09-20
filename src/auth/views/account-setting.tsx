@@ -1,32 +1,32 @@
-import React, { useEffect } from 'react';
+import { Dictionary } from 'lodash';
+import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+
+import { Account } from 'auth/auth.types';
 import { AuthLayout } from 'layouts/auth.layout';
 import { groupByProviderName } from 'auth/auth.helper';
 import { getRefreshedProfile } from 'auth/auth.service';
-import { ConnectAccountStepsSection } from './inc/connect-steps';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { useAuthState, useAuthDispatch } from 'auth/auth.context';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as ChaseLogo } from 'assets/images/signup/chase.svg';
-
-import { ReactComponent as UsBankLogo } from 'assets/images/signup/usbank.svg';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
-import { ReactComponent as WellsFargoLogo } from 'assets/images/signup/wellsfargo.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
-import { SapphireFormSection } from '../sapphire-form';
+import AccountSettingForm from './inc/account-setting-form';
+import { ConnectAccountStepsSection } from './inc/connect-steps';
 
 const AccountSetting = () => {
-  const { user } = useAuthState();
+  const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
   useEffect(() => {
-    if (!user) {
+    if (!accounts) {
       const getUser = async () => {
         await getRefreshedProfile({ dispatch });
       };
       getUser();
     }
-  }, [user, dispatch]);
+  }, [accounts, dispatch]);
 
   return (
     <AuthLayout>
@@ -36,14 +36,52 @@ const AccountSetting = () => {
 };
 export default AccountSetting;
 export const AccountSettingMainSection = () => {
-  const { user } = useAuthState();
+  const { accounts } = useAuthState();
+  const [providerName, setProviderName] = useState('');
+  const [currentAccount, setCurrentAccount] = useState<Account>();
+  const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
+  const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
 
-  if (!user) {
+  useEffect(() => {
+    if (accounts) {
+      setCurrentAccount(accounts[0]);
+      const accountsByProvider = groupByProviderName(accounts);
+      setAccountsByProviderName(accountsByProvider);
+      const [curProviderName] = Object.keys(accountsByProvider);
+      setProviderName(curProviderName);
+      const curProviderAccounts = accountsByProvider[curProviderName];
+      setCurrentProviderAccounts(curProviderAccounts);
+    }
+  }, [accounts]);
+
+  useEffect(() => {
+    if (accountsByProviderName) {
+      const curProviderAccounts = accountsByProviderName[providerName];
+      setCurrentProviderAccounts(curProviderAccounts);
+      setCurrentAccount(curProviderAccounts[0]);
+    }
+  }, [providerName, accountsByProviderName]);
+
+  if (!accounts) {
     return <CircularSpinner />;
   }
 
-  const groupedUserProfileByAccountName = groupByProviderName(user, 'accountName');
-  const accountNames = Object.keys(groupedUserProfileByAccountName);
+  const providerNames = accountsByProviderName ? Object.keys(accountsByProviderName) : [''];
+  const accountNames = currentProviderAccounts?.map((providerAcc) => providerAcc.accountName) || [''];
+
+  const handleProviderChange = (provider: string) => {
+    setProviderName(provider);
+  };
+
+  const handleAccountNameChange = (accountName: string) => {
+    const curAccount = currentProviderAccounts?.find((provideAcc) => provideAcc.accountName === accountName);
+    if (curAccount) {
+      setCurrentAccount(curAccount);
+    }
+  };
+
+  const getAccountClass = (accName: string) =>
+    currentAccount?.accountName === accName ? 'account-btn active' : 'account-btn';
 
   return (
     <div className='main-table-wrapper'>
@@ -94,21 +132,13 @@ export const AccountSettingMainSection = () => {
 
               <div className='form-wrap'>
                 <ul className='bank-list'>
-                  <li>
-                    <a href='/account-setting'>
-                      <ChaseLogo />
-                    </a>
-                  </li>
-                  <li>
-                    <a href='/account-setting'>
-                      <WellsFargoLogo />
-                    </a>
-                  </li>
-                  <li>
-                    <a href='/account-setting'>
-                      <UsBankLogo />
-                    </a>
-                  </li>
+                  {providerNames.map((provider, index) => {
+                    return (
+                      <li key={index} onClick={() => handleProviderChange(provider)} role='button'>
+                        <Link to='#'>{provider}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
 
                 <div className='form-heading'>
@@ -116,14 +146,19 @@ export const AccountSettingMainSection = () => {
                     {accountNames.map((accountName, index) => {
                       return (
                         <li key={index}>
-                          <button className='account-btn'>{accountName}</button>
+                          <button
+                            className={getAccountClass(accountName)}
+                            onClick={() => handleAccountNameChange(accountName)}
+                          >
+                            {accountName}
+                          </button>
                         </li>
                       );
                     })}
                   </ul>
                 </div>
 
-                <SapphireFormSection />
+                <AccountSettingForm currentAccount={currentAccount} />
 
                 <p className='flex-box learn-more-security'>
                   <SecurityIcon />

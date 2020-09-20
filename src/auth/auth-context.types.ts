@@ -5,5 +5,6 @@ export const auth = {
   ...makeTypes('REGISTER'),
   ...makeTypes('SIGN_OUT'),
   ...makeTypes('PROFILE_COMPLETE'),
-  ...makeTypes('PROFILE_REFRESH'),
+  ...makeTypes('FETCH_ACCOUNT'),
+  ...makeTypes('FETCH_PROFILE'),
 };

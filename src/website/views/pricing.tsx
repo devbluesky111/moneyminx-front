@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
 import useGetSubscription from 'auth/hooks/useGetSubscription';
+import { pricingDetailConstant } from 'common/common.constant';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as PricingTickIcon } from 'assets/images/pricing/tick-icon.svg';
 import { ReactComponent as PricingPieChart } from 'assets/images/pricing/pricing-pie-chart.svg';
@@ -41,15 +42,6 @@ export const PricingTopSection = () => {
       </div>
     </div>
   );
-};
-
-const pricingDetailConstant = {
-  NAME: 'Name',
-  CONNECTED_ACCOUNT: 'No of connected accounts',
-  MANUAL_ACCOUNT: 'No of manual accounts',
-  ALLOCATION_CHART_HISTORY: 'No of months in allocation charts history',
-  USER: 'No of users(future)',
-  PERFORMANCE: 'Performance(future)',
 };
 
 export const PricingTable = () => {
