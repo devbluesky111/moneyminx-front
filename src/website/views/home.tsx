@@ -47,7 +47,7 @@ export const HomeTopSection = () => {
           <div className='home-left-banner'>
             <h1>The easiest way to track all of your investments, in one place</h1>
             <p className='text'>
-              Track your stocks, bonds, cryptos, mutual funds, alternatives and much more in one place.
+              Track your stocks, bonds, cryptos, mutual funds, alternatives and much more  fin one place.
             </p>
             <Link to={appRouteConstants.auth.SIGNUP}>
               <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
@@ -80,13 +80,13 @@ export const HomeEarlyAdopterSection = () => {
       <div className='row home-top'>
         <div className='col-lg-12 home-list'>
           <div className='adopter-top-wrap'>
-            <h1>Early Adopter Perks</h1>
+            <h2>Early Adopter Perks</h2>
             <p>Money Minx early adopters get these awesome perks. Only available while we are in Beta.</p>
           </div>
           <ul className='earlyadopter-list'>
             <li className='bg-white'>
               <div className='adopter-content'>
-                <h2>25% Discount on all plans</h2>
+                <h3>25% Discount on all plans</h3>
                 <p>Get 25% off for the life of your account even after we go live!</p>
               </div>
             </li>
@@ -97,7 +97,7 @@ export const HomeEarlyAdopterSection = () => {
                     <HomeEarlyAdapter />
                   </span>
                 </div>
-                <h2>Early Adopter profile badge</h2>
+                <h3>Early Adopter profile badge</h3>
                 <p>
                   Get an early adopter badge that will go up in the community once we go live. This badge will never be
                   available again.
@@ -106,7 +106,7 @@ export const HomeEarlyAdopterSection = () => {
             </li>
             <li className='bg-white'>
               <div className='adopter-content'>
-                <h2>Get insights before anyone else</h2>
+                <h3>Get insights before anyone else</h3>
                 <p>Know about new features before others and help us drive the development of new features.</p>
               </div>
             </li>
