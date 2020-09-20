@@ -69,6 +69,10 @@
 .early-adopter-section {
   padding-top: 115px;
   padding-bottom: 181px;
+
+  @media (max-width: $md) {
+      padding-top: 0px;
+  }
 }
 .early-adopter-section .adopter-top-wrap {
   max-width: 500px;
@@ -183,7 +187,7 @@
   width: 384px;
   height: 257px;
   img {
-    width: 100%;
+    width: 97%;
     height: 100%;
     border-radius: 6px;
   }
@@ -388,6 +392,182 @@ span.above-tag-text {
   .home-networth.networth-section .networth-text p span {
     top: -44px;
   }
+}
+.mm-btn-primary-outline:hover {
+  color: #ffffff;
+  background-color: $primary !important;
+  border-color: $primary;
+}
+a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-primary:focus {
+  background-color: $primary !important;
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
+}
+.mm-above-tag-text {
+  color: #534cea;
+  font-size: 1.125rem;
+  line-height: 1.437rem;
+  background: rgba(83, 76, 234, 0.2);
+  padding: 0px 7px;
+  border-radius: 6px;
+  height: 24px;
+  margin-left: 8px;
+  margin-top: -12px;
+}
+.coming-soon-wrapper {
+  @media (min-width: 992px) {
+    padding-left: 4.5rem;
+  }
+  @media (min-width: 1300px) {
+    padding-left: 9.5rem;
+  }
+}
+.mm-home-banner-img {
+  margin-right: -88px;
+
+  @media (min-width: $lg - 300) {
+    margin-right: -185px;
+  }
+  
+  svg {
+    width: 30rem;
+
+    @media (min-width: $md) {
+      width: 55rem;
+    }
+
+    @media (min-width: $md) {
+      width: 55rem;
+    }
+
+    @media (min-width: 992px) and (max-width: 1260px) { 
+      width: 28rem;
+     }
+  }
+}
+.mm-home-left-block {
+  max-width: 600px;
+}
+
+.mm-home-top-section {
+  padding: 1rem;
+  @media (min-width: $md) {
+    padding: 3rem;
+  }
+  @media (min-width: $lg) {
+    padding: 0px 120px;
+  }
+
+  .text,
+  .info-text {
+    color: $gray;
+  }
+
+  .mm-scroll-down {
+    margin-top: 5rem
+  }
+}
+
+.main-content {
+  overflow: hidden;
+}
+
+.mm-mobile-hide {
+  @media (max-width: $md) {
+    display: none;
+  }
+}
+.mm-container-right-custom {
+  padding: 36px 0px 74px 120px;
+
+  @media (max-width: $md) {
+    padding-left: 21px;
+  }
+  .networth-chart {
+    width: unset;
+  }
+}
+
+.networth-chart {
+  float: unset;
+}
+@media (min-width: $lg) {
+  .mm-container-right {
+      padding: 36px 0px 74px 120px;
+  }
+  .networth-chart {
+    float: unset;
+    width: unset !important;
+  }
+}
+
+@media (min-width: $md + 101) {
+.blog-content-right button {
+  margin-top: 10rem;
+}
+.home-list.blog-list {
+  margin-bottom: 7rem;
+}
+}
+
+@media (max-width: $md + 100) {
+  .adopter-top-wrap {
+    margin-top: 7rem;
+    padding-left: 2rem;
+  }
+  .earlyadopter-list {
+    padding-left: 2rem !important;
+  }
+  .home-list.blog-list {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  .networth-text {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  .home-networth.networth-section .networth-text p span {
+    position: absolute;
+    top: 0px;
+  }
+  .networth-chart {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    text-align: center;
+    float: unset;
+    width: unset;
+  }
+  .networth-chart.text-right {
+    padding-left: 2.6rem;
+  }
+}
+
+@media (max-width: $sm + 300) {
+  .adopter-top-wrap,
+  .earlyadopter-list {
+    padding-left: 0rem !important;
+  }
+
+  .home-list.blog-list {
+      padding-left: 1rem;
+      padding-right: 1rem;
+  }
+
+  .networth-text {
+      padding-left: 0rem;
+      padding-right: 0rem;
+  }
+  .networth-chart.text-right {
+      padding-left: 0;
+  }
+  .mm-custom-networth-chart {
+    margin-right: -17rem;
+  }
+  .minxmeasure-section .networth-chart {
+      padding-left: 0;
+  }
+}
+.blog-content a {
+  color: $black;
 }
 
 

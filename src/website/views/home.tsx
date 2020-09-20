@@ -45,7 +45,7 @@ export const HomeTopSection = () => {
       <div className='row home-top'>
         <div className='col-lg-7'>
           <div className='home-left-banner'>
-            <h1>Investments and Net Worth Tracker</h1>
+            <h1>The easiest way to track all of your investments, in one place</h1>
             <p className='text'>
               Track your stocks, bonds, cryptos, mutual funds, alternatives and much more in one place.
             </p>
@@ -55,8 +55,8 @@ export const HomeTopSection = () => {
             <p className='info-text'>No credit card needed.</p>
           </div>
         </div>
-        <div className='col-lg-5'>
-          <div className='home-banner-right'>
+        <div className='col-md-12 col-lg-5'>
+          <div className='mm-home-banner-img float-right'>
             <HomeBannerImg />
           </div>
         </div>
@@ -175,7 +175,7 @@ export const HomeFeatureSection = () => {
                 <div className='feature-icon'>
                   <FeatureIconSix />
                 </div>
-                <h2>Income Projections</h2>
+                <div className='d-flex'><h2>Income Projections</h2><span className='mm-above-tag-text mm-mobile-hide'>Coming Soon!</span></div>
                 <p>
                   Track which investments are paying interest, dividends or royalties and create an income projection
                   schedule
@@ -266,7 +266,7 @@ export const HomeBlogSection = () => {
 
 export const HomeNetWorthSection = () => {
   return (
-    <div className='mm-container-right home-networth networth-section'>
+    <div className='mm-container-right-custom home-networth networth-section'>
       <div className='row'>
         <div className='col-lg-5'>
           <div className='networth-text'>
@@ -281,7 +281,7 @@ export const HomeNetWorthSection = () => {
           </div>
         </div>
         <div className='col-lg-7'>
-          <div className='networth-chart'>
+          <div className='networth-chart text-right'>
             <HomeNetWorthChart />
           </div>
         </div>
@@ -296,7 +296,7 @@ export const HomeAllocationSection = () => {
       <div className='networth-section rtl'>
         <div className='row'>
           <div className='col-lg-5'>
-            <div className='networth-text'>
+            <div className='networth-text pt-0'>
               <h1>Allocations</h1>
               <p className='text'>
                 Always up to date asset allocation pie chart gives you a 360 degree view of your investments and how
@@ -334,7 +334,7 @@ export const HomePerformanceSection = () => {
             </div>
           </div>
           <div className='col-lg-7'>
-            <div className='networth-chart'>
+            <div className='networth-chart text-right'>
               <HomePerformanceChart />
             </div>
           </div>
@@ -350,7 +350,7 @@ export const MinxWinksSection = () => {
       <div className='networth-section rtl'>
         <div className='row'>
           <div className='col-lg-5'>
-            <div className='networth-text'>
+            <div className='networth-text pt-4'>
               <h1>
                 Minx Winks<span className='above-tag-text'>!Coming Soon</span>
               </h1>
@@ -362,7 +362,7 @@ export const MinxWinksSection = () => {
           </div>
           <div className='col-lg-7'>
             <div className='networth-chart'>
-              <HomeMinxwinksImg />
+              <HomeMinxwinksImg className='mm-custom-networth-chart'/>
             </div>
           </div>
         </div>
