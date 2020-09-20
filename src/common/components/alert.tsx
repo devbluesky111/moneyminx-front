@@ -5,6 +5,7 @@ interface InlineAlertProps {
   message: string;
   open: boolean;
   onClose: () => void;
+  onClick?: () => void;
 }
 
 export interface AlertType {
@@ -16,12 +17,12 @@ export interface AlertType {
   };
 }
 
-export const InlineAlert: React.FC<InlineAlertProps> = ({ message, open, onClose, type = 'warning' }) => {
+export const InlineAlert: React.FC<InlineAlertProps> = ({ message, open, onClose, type = 'warning', onClick }) => {
   let classNames = `inline-alert bg-${type}`;
   classNames += !open ? ' hidden' : '';
 
   return (
-    <div className={classNames}>
+    <div className={classNames} onClick={onClick} role='alert'>
       {message}
       <button type='button' className='close' onClick={() => onClose()}>
         <span aria-hidden='true'>&times;</span>
