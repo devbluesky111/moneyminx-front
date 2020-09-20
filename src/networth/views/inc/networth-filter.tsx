@@ -1,9 +1,8 @@
+import moment from 'moment';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
 
 const NetworthFilter = () => {
   const [startDate, setStartDate] = useState(new Date());

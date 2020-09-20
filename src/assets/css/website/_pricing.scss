@@ -56,7 +56,7 @@ ul.features-list {
 .pricing-left-banner button:hover {
   color: $white;
 }
-.price-table:before {
+.price-table:nth-child(2)::before {
   content: '';
   width: 100%;
   background: $purple;
@@ -65,12 +65,9 @@ ul.features-list {
   top: 0;
   left: 0;
   position: absolute;
-  display: none;
-  transition: 0.8s ease;
-}
-.price-table:nth-child(2)::before {
   display: block;
 }
+
 
 .price-table:hover {
   box-shadow: 0 2px 20px #c6d2e7, inset 0px -1px 0px #ebecf1;

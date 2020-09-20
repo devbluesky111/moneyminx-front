@@ -45,7 +45,9 @@ const List = ({ data }: Data) => {
   return (
     <div className='wf-list-wrapper py-2'>
       <h5>{data.title}</h5>
-      {list}
+       <div className="wf-list-items">
+        {list}
+        </div>
     </div>
   );
 };
@@ -53,13 +55,13 @@ const List = ({ data }: Data) => {
 const FooterList = () => {
   return (
     <div className='row'>
-      <div className='col-md-4'>
+      <div className='col-sm-4'>
         <List data={resourceList} />
       </div>
-      <div className='col-md-4'>
+      <div className='col-sm-4'>
         <List data={featureList} />
       </div>
-      <div className='col-md-4'>
+      <div className='col-sm-4'>
         <List data={companyInfoList} />
       </div>
     </div>
@@ -130,7 +132,7 @@ const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
             </div>
             <div className='col-lg-6'>
               <div className='download-btn-wrapper'>
-                <AppStoreLogo />
+                <AppStoreLogo className="first-svg-item" />
                 <GooglePlayLogo className='ml-3 text-white' color='white' />
               </div>
             </div>
