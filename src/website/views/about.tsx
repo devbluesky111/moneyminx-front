@@ -24,7 +24,7 @@ export const AboutTopSection = () => {
   return (
     <div className='mm-container-right about-banner-container'>
       <div className='row about-top'>
-        <div className='col-lg-7'>
+        <div className='col-lg-7 mb-5 p-md-5'>
           <div className='about-left-banner'>
             <h1>About Money Minx</h1>
             <p className='text'>
@@ -47,7 +47,7 @@ export const AboutTopSection = () => {
             <p className='info-text'>No credit card needed.</p>
           </div>
         </div>
-        <div className='col-lg-5 pricing-chart-wrapper'>
+        <div className='col-lg-5 pricing-chart-wrapper pl-md-5'>
           <div className='about-right-banner'>
             <div className='account-wrap bg-white top-box'>
               <h3>Connected Accounts (3/3)</h3>
@@ -107,14 +107,14 @@ export const AboutTopSection = () => {
 
 export const AboutOwnerSection = () => {
   return (
-    <div className='mm-container-right owner-section bg-white'>
+    <div className='mm-container-right owner-section bg-white p-md-5'>
       <div className='row'>
-        <div className='col-lg-5'>
+        <div className='col-lg-5 mm-owner-section-img'>
           <div className='left-owner-img'>
             <img alt='OWNER IMG' src={OwnerLeftImg} />
           </div>
         </div>
-        <div className='col-lg-7'>
+        <div className='col-lg-7 mm-owner-section-info'>
           <div className='owner-info'>
             <h1>Meet our Founders</h1>
             <p className='text'>
@@ -163,7 +163,7 @@ export const AboutOwnerSection = () => {
 
 export const AboutNetWorthSection = () => {
   return (
-    <div className='mm-container-right networth-section'>
+    <div className='mm-container-right networth-section pt-0 p-md-5'>
       <div className='row'>
         <div className='col-lg-5'>
           <div className='networth-text'>
@@ -180,6 +180,14 @@ export const AboutNetWorthSection = () => {
         <div className='col-lg-7'>
           <div className='networth-chart'>
             <AboutNetWorthChart />
+          </div>
+          <div className='mm-chart-index mm-mobile-hide'>
+            <ul>
+              <li><div className="mm-square mm-square-1"></div><div className='mm-square-text'>Investment Assets</div><span className='d-block mm-square-amt'>$235,000</span></li>
+              <li><div className="mm-square mm-square-2"></div><div className='mm-square-text'>Other Assets</div><span className='d-block mm-square-amt'>$735,000</span></li>
+              <li><div className="mm-square mm-square-3"></div><div className='mm-square-text'>Liabilities</div><span className='d-block mm-square-amt'>$1,505,000</span></li>
+              <li><div className="mm-square mm-square-4"></div><div className='mm-square-text'>Net Worth</div><span className='d-block mm-square-amt mb-n3'>$535,000</span></li>
+            </ul>
           </div>
         </div>
       </div>
