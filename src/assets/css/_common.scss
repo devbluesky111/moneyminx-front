@@ -205,6 +205,15 @@ a {
     margin-left: 20px;
   }
 }
+.mm-overview-block {
+  background-image: url('../images/background-shadow.svg');
+  background-size: cover;
+  background-position: bottom;
+
+  @media ( max-width: $md) {
+    background-position: 140rem 0rem;
+  }
+}
 
 // switch checkbox
 .mm-switch-block {
@@ -263,7 +272,6 @@ a {
     }
   }
 }
-
 // custom radio button
 .mm-radio-block {
   .mm-radio {
