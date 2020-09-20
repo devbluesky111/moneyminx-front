@@ -1,4 +1,5 @@
 import { ApiResponse } from 'app/app.types';
+import { EmailSubscriptionPayload } from 'setting/setting.type';
 import { RegisterPayload, ResetPasswordPayload } from 'auth/auth.types';
 
 import { urls } from './api.url';
@@ -35,8 +36,24 @@ export const postResetPassword = (payload: ResetPasswordPayload): Promise<ApiRes
   return http.post(urls.auth.RESET_PASSWORD, payload, false);
 };
 
+export const patchChangePassword = <T>(payload: T): Promise<ApiResponse> => {
+  return http.patch(urls.auth.UPDATE_PASSWORD, payload);
+};
+
 export const getSubscription = () => {
   return http.get(urls.subscription.SUB);
+};
+
+export const postSubscriptionCheckout = <T>(payload: T): Promise<ApiResponse> => {
+  return http.post(urls.subscription.STRIPE_CHECKOUT, payload);
+};
+
+export const getCurrentSubscription = () => {
+  return http.get(urls.subscription.CURRENT_SUB);
+};
+
+export const patchCancelSubscription = (): Promise<ApiResponse> => {
+  return http.patch(urls.subscription.CANCEL, {});
 };
 
 export const getFastlink = () => {
@@ -44,7 +61,11 @@ export const getFastlink = () => {
 };
 
 export const getRefreshedAccount = () => {
-  return http.get(urls.auth.PROFILE_REFRESH);
+  return http.get(urls.auth.ACCOUNTS);
+};
+
+export const getProfile = () => {
+  return http.get(urls.auth.PROFILE);
 };
 
 export const getAccountCategory = (): Promise<ApiResponse> => {
@@ -75,6 +96,22 @@ export const getFormFieldFilter = (accountType: string, accountSubtype: string):
 
 export const refreshAccessToken = ({ referenceToken }: { referenceToken: string }): Promise<any> => {
   return Promise.resolve({ referenceToken });
+};
+
+export const getCurrentSettings = () => {
+  return http.get(urls.auth.SETTINGS);
+};
+
+export const patchEmailSubscription = (payload: EmailSubscriptionPayload): Promise<ApiResponse> => {
+  return http.patch(urls.auth.SETTINGS, payload);
+};
+
+export const patchProfilePicture = (payload: any): Promise<ApiResponse> => {
+  return http.patch(urls.auth.PROFILE_PICTURE, payload);
+};
+
+export const patchProfile = <T>(payload: T): Promise<ApiResponse> => {
+  return http.patch(urls.auth.PATCH_PROFILE, payload);
 };
 
 export const patchAccount = (id: string, data: any) => {
