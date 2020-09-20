@@ -114,3 +114,7 @@ export function enumerate(e: any): number[] {
 export function enumerateStr(e: any) {
   return Object.keys(e).map((k) => e[k as any]);
 }
+
+export const capitalize = (word: string) => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};
