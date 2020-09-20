@@ -22,8 +22,10 @@ export const InlineAlert: React.FC<InlineAlertProps> = ({ message, open, onClose
   classNames += !open ? ' hidden' : '';
 
   return (
-    <div className={classNames} onClick={onClick} role='alert'>
-      {message}
+    <div className={classNames}>
+      <span onClick={onClick} role='alert'>
+        {message}
+      </span>
       <button type='button' className='close' onClick={() => onClose()}>
         <span aria-hidden='true'>&times;</span>
       </button>
