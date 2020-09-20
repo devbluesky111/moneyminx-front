@@ -45,9 +45,7 @@ const List = ({ data }: Data) => {
   return (
     <div className='wf-list-wrapper py-2'>
       <h5>{data.title}</h5>
-       <div className="wf-list-items">
-        {list}
-        </div>
+      <div className='wf-list-items'>{list}</div>
     </div>
   );
 };
@@ -132,7 +130,7 @@ const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
             </div>
             <div className='col-lg-6'>
               <div className='download-btn-wrapper'>
-                <AppStoreLogo className="first-svg-item" />
+                <AppStoreLogo className='first-svg-item' />
                 <GooglePlayLogo className='ml-3 text-white' color='white' />
               </div>
             </div>
