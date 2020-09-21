@@ -32,6 +32,8 @@ export interface Account {
   profileId: number;
   category: any;
   formField: any;
+  isManual: boolean;
+  balance: number;
 }
 
 export enum RoleEnum {
