@@ -91,7 +91,7 @@ const handle401Error = async (error: any) => {
   return retryPendingRequest;
 };
 
-export function get(url: string, params: object = {}): any {
+export function get<P>(url: string, params?: P): any {
   return axiosInstance({
     method: 'get',
     url,

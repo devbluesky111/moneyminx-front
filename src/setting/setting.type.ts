@@ -1,3 +1,4 @@
+import { Account } from 'auth/auth.types';
 import { StripeSubscriptionStatus } from './setting.enum';
 
 export interface SettingsProps {}
@@ -31,4 +32,18 @@ export interface CurrentSubscription {
   cancelAt: Date | number;
   subscriptionEnd: string | number;
   subscriptionStatus: StripeSubscriptionStatus;
+}
+
+export interface AccountCardProps {
+  providerAccounts: any[];
+  availableAccounts: string | number;
+}
+
+export interface ManualAccountProps {
+  manualAccountList: Account[];
+  availableAccounts: string | number;
+}
+
+export interface AccountRowProps {
+  account: Account;
 }
