@@ -218,25 +218,25 @@ span.twitter-icon {
 }
 
 .mm-nav-item.active {
-  border-bottom: 1px solid #534cea;
+  border-bottom: 1px solid $purple;
   a {
     color: #434a55 !important;
   }
 }
 
 .mm-nav-item {
-  padding: 0px !important;
+  padding: 0 !important;
 }
 
 .mm-nav-item {
-  padding: 0px !important;
+  padding: 0 !important;
 }
 .mm-nav-link {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 .mm-nav-item {
-  margin: 0 1rem !important;
+  margin: 0 1.25rem !important;
 }
 
 .mm-owner-section-img {

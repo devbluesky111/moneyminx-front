@@ -47,14 +47,14 @@ const WebsiteHeader = () => {
                   </Link>
                 </li>
 
-                <li className={navClass('velocity')}>
+                <li className={navClass('blog')}>
                   <a
                     className='mm-nav-link'
                     target='_blank'
                     rel='noopener noreferrer'
-                    href='https://velocity.moneyminx.com'
+                    href='https://www.moneyminx.com/blog'
                   >
-                    Velocity
+                    Blog
                   </a>
                 </li>
                 <li className={navClass('about')}>

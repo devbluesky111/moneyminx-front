@@ -1,5 +1,5 @@
 body {
-  font-family: 'Mulish', sans-serif, Arial, Helvetica;
+  font-family: 'Mulish', sans-serif;
   font-size: 1rem;
   font-weight: 300;
   overflow-x: hidden;
@@ -181,7 +181,7 @@ a {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding: 36px 120px 74px 120px;
+    padding: 36px 120px 74px 56px;
   }
 }
 
@@ -211,7 +211,7 @@ a {
   background-position: bottom;
 
   @media ( max-width: $md) {
-    background-position: 140rem 0rem;
+    background-position: 140rem 0;
   }
 }
 

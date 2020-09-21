@@ -67,12 +67,20 @@
 
 //Early adopter Section
 .early-adopter-section {
-  padding-top: 115px;
+  padding-top: 120px;
   padding-bottom: 181px;
 
   @media (max-width: $md) {
-      padding-top: 0px;
+      padding-top: 0;
   }
+
+  h2 {
+    font-weight: 300;
+    font-size: 3.3rem;
+    line-height: 106%;
+    margin-bottom: 2rem;
+  }
+
 }
 .early-adopter-section .adopter-top-wrap {
   max-width: 500px;
@@ -85,8 +93,11 @@
   border-radius: 6px;
 }
 
-.early-adopter-section .adopter-content h2 {
+.early-adopter-section .adopter-content h3 {
   margin-bottom: 29px;
+  font-weight: 400;
+  color: $black;
+  font-size: 1.75rem;
 }
 
 .early-adopter-section .early-adopter-tag svg {
@@ -403,7 +414,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
   box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
 }
 .mm-above-tag-text {
-  color: #534cea;
+  color: $purple;
   font-size: 1.125rem;
   line-height: 1.437rem;
   background: rgba(83, 76, 234, 0.2);
@@ -492,7 +503,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 @media (min-width: $lg) {
   .mm-container-right {
-      padding: 36px 0px 74px 120px;
+      padding: 36px 0px 74px 56px;
   }
   .networth-chart {
     float: unset;
