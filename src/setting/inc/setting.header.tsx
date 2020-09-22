@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import OwnerOneImg from 'assets/images/about/hussein.png';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { ReactComponent as ProBadge } from 'assets/images/about/pro-badage.svg';
+import { useAuthState } from 'auth/auth.context';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
+import { capitalize } from 'common/common-helper';
 
 export const NavBarSection: React.FC = () => {
+  const { user } = useAuthState();
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light mm-setting-navbar'>
       <Link className='navbar-brand' to='/'>
@@ -54,8 +57,14 @@ export const NavBarSection: React.FC = () => {
                 aria-haspopup='true'
                 aria-expanded='false'
               >
-                <img alt='Owner' src={OwnerOneImg} className='rounded-circle mr-2' width='38' height='38' />
-                Hussein
+                <img
+                  alt='Owner'
+                  src={user?.picture || DefaultAvatar}
+                  className='rounded-circle mr-2'
+                  width='38'
+                  height='38'
+                />
+                {capitalize(user?.firstName || 'User')}
               </Link>
               <div className='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                 <Link className='dropdown-item' to='#'>

@@ -7,14 +7,16 @@ import { useAuthDispatch } from 'auth/auth.context';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import './app.i18n';
+import useProfile from 'auth/hooks/useProfile';
 
 export default function Main() {
   const dispatch = useAuthDispatch();
+  useProfile();
 
   useEffect(() => {
     const { data, error } = storage.get(StorageKey.AUTH);
     if (!error) {
-      dispatch({ type: auth.SIGN_IN_SUCCESS, payload: data });
+      dispatch({ type: auth.LOGIN_SUCCESS, payload: data });
     }
   }, [dispatch]);
 

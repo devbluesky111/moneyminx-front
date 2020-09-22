@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 
 import Logo from 'assets/icons/logo.svg';
 import ProBadge from 'assets/images/networth/pro-badge.svg';
-import ProfileAvatar from 'assets/images/networth/profile-avatar.png';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
+import { useAuthState } from 'auth/auth.context';
+import { capitalize } from 'common/common-helper';
 
 interface NetworthHeaderProps {
   toggleMenu: () => void;
 }
 const NetworthHeader: React.FC<NetworthHeaderProps> = ({ toggleMenu }) => {
+  const { user } = useAuthState();
   return (
     <header>
       <nav className='navbar navbar-expand-lg money-minx-header'>
@@ -43,9 +46,9 @@ const NetworthHeader: React.FC<NetworthHeaderProps> = ({ toggleMenu }) => {
             <div className='btn-group'>
               <button type='button' className='profile-toggle' onClick={toggleMenu}>
                 <span>
-                  <img src={ProfileAvatar} alt='Profile avatar' />
+                  <img src={user?.picture || DefaultAvatar} alt='Profile avatar' />
                 </span>
-                <span>Amy</span>
+                <span>{capitalize(user?.firstName || 'User')}</span>
               </button>
             </div>
           </div>
