@@ -160,7 +160,7 @@ export const AccountSettingMainSection = () => {
 
                 <AccountSettingForm currentAccount={currentAccount} />
 
-                <p className='flex-box learn-more-security'>
+                <p className='flex-box learn-more-security mt-3'>
                   <SecurityIcon />
                   <a href='/security'>Learn about our security</a>
                 </p>

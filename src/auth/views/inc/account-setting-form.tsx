@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
@@ -30,9 +30,15 @@ import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estat
 interface Props {
   currentAccount?: Account;
 }
+
+interface LocationType {
+  state?: Record<string, string>;
+}
+
 const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
+  const { state }: LocationType = useLocation();
 
   const { loading: fetchingAccountType, data: accountTypes, error } = useAccountType();
   const { loading: fetchingAccountSubType, subType: accountSubTypes, error: subTypeError } = useAccountSubtype(
@@ -42,6 +48,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
   const { fetchingLoanAccount, loanAccounts, loanAccountError } = useLoanAccount();
   const { fetchingMortgage, mortgageAccounts, mortgageError } = useAssociateMortgage();
   const { fetchingFilters, accountFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
+
+  const isFromAccount = state?.prevPath === '/accounts';
 
   useEffect(() => {
     if (currentAccount) {
@@ -884,7 +892,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
 
             <div className='estimate-annual-block'>
               <div className='estimated-top-content'>
-                <div className='link-attention-block  d-flex justify-content-between hidden'>
+                <div
+                  className={`link-attention-block  d-flex justify-content-between ${isFromAccount ? '' : 'hidden'}`}
+                >
                   <button className='btn btn-primary w-50 mm-button' type='button'>
                     Link Account
                   </button>
@@ -893,16 +903,21 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                     <span className='text--red'>Attention</span>
                   </div>
                 </div>
-                <span className='form-subheading hidden'>Closed Account</span>
-                <div className='estimate-annual-block__checkbox hidden'>
-                  <label className='custom-checkbox'>
-                    <input type='checkbox' name='closeAccount' aria-checked={false} value='closeAccount' />
-                    <span className='checkmark' />
-                  </label>
-                  <span className='ml-4'>Mark this account as closed</span>
+
+                <div className={isFromAccount ? '' : 'hidden'}>
+                  <span className='form-subheading'>Closed Account</span>
+
+                  <div className='estimate-annual-block__checkbox'>
+                    <label className='custom-checkbox'>
+                      <input type='checkbox' name='closeAccount' aria-checked={false} value='closeAccount' />
+                      <span className='checkmark' />
+                    </label>
+                    <span className='ml-4'>Mark this account as closed</span>
+                  </div>
                 </div>
+
                 <div className='row mt-5'>
-                  <div className='col-12 col-md-4 hidden'>
+                  <div className={`col-12 col-md-4 ${isFromAccount ? '' : 'hidden'}`}>
                     <button
                       className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete'
                       type='button'
@@ -917,13 +932,13 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                         className='bg-white cancel-btn mm-btn-primary-outline mr-2 estimate-annual-block__btn estimate-annual-block__btn-cancel'
                         type='button'
                       >
-                        Cancel
+                        {isFromAccount ? 'Cancel' : 'Back'}
                       </button>
                       <button
                         className='btn btn-primary ml-2 estimate-annual-block__btn estimate-annual-block__btn-save'
                         type='submit'
                       >
-                        Save
+                        {isFromAccount ? 'Save' : 'Next'}
                       </button>
                     </div>
                   </div>
