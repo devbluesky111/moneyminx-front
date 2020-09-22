@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Logo from 'assets/icons/logo.svg';
-import ProBadge from 'assets/images/networth/pro-badge.svg';
-import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import { useAuthState } from 'auth/auth.context';
 import { capitalize } from 'common/common-helper';
+import ProBadge from 'assets/images/networth/pro-badge.svg';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
 
 interface NetworthHeaderProps {
   toggleMenu: () => void;

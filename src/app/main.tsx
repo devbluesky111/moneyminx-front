@@ -1,13 +1,15 @@
-import AppRoute from './app.route';
-import { storage } from './app.storage';
-import { auth } from 'auth/auth-context.types';
-import { StorageKey } from './app.types';
 import React, { Suspense, useEffect } from 'react';
-import { useAuthDispatch } from 'auth/auth.context';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import './app.i18n';
 import useProfile from 'auth/hooks/useProfile';
+import { auth } from 'auth/auth-context.types';
+import { useAuthDispatch } from 'auth/auth.context';
+
+import AppRoute from './app.route';
+import { storage } from './app.storage';
+import { StorageKey } from './app.types';
+
+import './app.i18n';
 
 export default function Main() {
   const dispatch = useAuthDispatch();

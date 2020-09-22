@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import { useAuthState } from 'auth/auth.context';
+import { capitalize } from 'common/common-helper';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { ReactComponent as ProBadge } from 'assets/images/about/pro-badage.svg';
-import { useAuthState } from 'auth/auth.context';
-import DefaultAvatar from 'assets/icons/default-avatar.svg';
-import { capitalize } from 'common/common-helper';
 
 export const NavBarSection: React.FC = () => {
   const { user } = useAuthState();
