@@ -52,9 +52,13 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
 
   useEffect(() => {
     if (accountSubTypes?.length) {
+      if (currentAccount?.category?.mmAccountSubType) {
+        return setAccountSubtype(currentAccount?.category?.mmAccountSubType);
+      }
+
       setAccountSubtype(accountSubTypes[0]);
     }
-  }, [accountSubTypes]);
+  }, [accountSubTypes, currentAccount]);
 
   const hasError = error || subTypeError || filterError || mortgageError || loanAccountError;
 
@@ -730,7 +734,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
             </div>
 
             {/* Estimated principal paydown */}
-            <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReductionType')}`}>
+            <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReduction')}`}>
               <div className='estimated-top-content flex-box'>
                 <span className='form-subheading mr-0'>Estimated principal paydown</span>
                 <span className='form-subheading-right'>This will be used to show projections in your charts.</span>
@@ -831,11 +835,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                       );
                     })}
                   </select>
-                </li>
-                <li className={`mt-5 ${hc('loanBalance')}`}>
-                  <span className='form-subheading'>Loan Balance</span>
-
-                  <Form.Control onChange={handleChange} type='number' name='loanBalance' value={values.loanBalance} />
                 </li>
               </ul>
             </div>
