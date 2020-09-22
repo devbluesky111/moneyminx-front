@@ -10,8 +10,8 @@ const EmailNeededModal: React.FC<Props> = ({ emailNeededModal }) => {
       <div className='modal-wrapper modal-sm'>
         <h4>Email Missing</h4>
         <p>
-          Please enter a valid email address to continue. We never sell or abuse your email. It will strictly be used to
-          communicate with you about your Money Minx account.
+          A valid email address is required to use Money Minx. We only use your email to communicate with you and never
+          sell or share your email with others. Please try connecting again but do not change the email permission.
         </p>
         <div className='modal-btn-wrapper'>
           <button
