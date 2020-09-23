@@ -207,11 +207,12 @@ a {
 }
 .mm-overview-block {
   background-image: url('../images/background-shadow.svg');
-  background-size: cover;
-  background-position: bottom;
+  background-size: 65rem 133rem;
+  background-repeat: no-repeat;
+  background-position: top right;
 
-  @media ( max-width: $md) {
-    background-position: 140rem 0;
+  @media ( max-width: $md - 1) {
+    background-size: contain;
   }
 }
 
