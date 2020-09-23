@@ -31,7 +31,7 @@ export interface Account {
   providerName: string;
   profileId: number;
   category: any;
-  formField: any;
+  accountDetails: any;
   isManual: boolean;
   balance: number;
 }
