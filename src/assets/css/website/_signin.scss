@@ -218,7 +218,7 @@ span.forgot-pass {
 //Footer Second
 .footer-second {
   border-top: 1px solid rgba(150, 158, 172, 0.25);
-  padding: 31px 0;
+  padding: 40px 0px 20px;
   position: relative;
 }
 ul.footer-list {
@@ -346,7 +346,7 @@ ul.footer-list li {
   }
 }
 
-@media (max-width: $sm) {
+@media (max-width: $md - 1) {
   .credintials-content {
     max-width: none;
     padding-left: 40px;

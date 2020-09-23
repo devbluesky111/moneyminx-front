@@ -11,16 +11,16 @@ const AuthFooter = () => {
           </div>
           <div className='footer-content right-content'>
             <ul className='footer-list'>
-              <li>
+              <li className='my-3 my-md-0'>
                 <Link to='/privacy'>Privacy Policy</Link>
               </li>
-              <li>
+              <li className='my-3 my-md-0'>
                 <Link to='/terms'>Terms of Service</Link>
               </li>
-              <li>
+              <li className='my-3 my-md-0'>
                 <Link to='/notices'>Notices</Link>
               </li>
-              <li>
+              <li className='my-1 my-md-0'>
                 <Link to='#'>Resources</Link>
               </li>
             </ul>
