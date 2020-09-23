@@ -1,6 +1,6 @@
 import { Dictionary } from 'lodash';
 import { Link } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useCallback, useEffect, useState } from 'react';
 
 import { Account } from 'auth/auth.types';
 import { AuthLayout } from 'layouts/auth.layout';
@@ -34,7 +34,9 @@ const AccountSetting = () => {
     </AuthLayout>
   );
 };
+
 export default AccountSetting;
+
 export const AccountSettingMainSection = () => {
   const { accounts } = useAuthState();
   const [providerName, setProviderName] = useState('');
@@ -62,26 +64,21 @@ export const AccountSettingMainSection = () => {
     }
   }, [providerName, accountsByProviderName]);
 
-  if (!accounts) {
+  if (!accounts || !currentAccount || !currentProviderAccounts) {
     return <CircularSpinner />;
   }
 
   const providerNames = accountsByProviderName ? Object.keys(accountsByProviderName) : [''];
-  const accountNames = currentProviderAccounts?.map((providerAcc) => providerAcc.accountName) || [''];
 
   const handleProviderChange = (provider: string) => {
     setProviderName(provider);
   };
 
-  const handleAccountNameChange = (accountName: string) => {
-    const curAccount = currentProviderAccounts?.find((provideAcc) => provideAcc.accountName === accountName);
-    if (curAccount) {
-      setCurrentAccount(curAccount);
-    }
+  const handleChangeCurrentAccount = (curAccount: Account) => {
+    setCurrentAccount(curAccount);
   };
 
-  const getAccountClass = (accName: string) =>
-    currentAccount?.accountName === accName ? 'account-btn active' : 'account-btn';
+  // const gotoNextAccount = () => {};
 
   return (
     <div className='main-table-wrapper'>
@@ -142,20 +139,11 @@ export const AccountSettingMainSection = () => {
                 </ul>
 
                 <div className='form-heading'>
-                  <ul className='nav'>
-                    {accountNames.map((accountName, index) => {
-                      return (
-                        <li key={index}>
-                          <button
-                            className={getAccountClass(accountName)}
-                            onClick={() => handleAccountNameChange(accountName)}
-                          >
-                            {accountName}
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  <AccountNameList
+                    currentProviderAccounts={currentProviderAccounts}
+                    currentAccount={currentAccount}
+                    changeCurrentAccount={handleChangeCurrentAccount}
+                  />
                 </div>
 
                 <AccountSettingForm currentAccount={currentAccount} />
@@ -171,5 +159,55 @@ export const AccountSettingMainSection = () => {
       </div>
       <ConnectAccountStepsSection />
     </div>
+  );
+};
+
+interface AccountNameListProps {
+  currentProviderAccounts: Account[];
+  currentAccount: Account;
+  changeCurrentAccount: (curAccount: Account) => void;
+}
+
+export const AccountNameList: React.FC<AccountNameListProps> = ({
+  currentAccount,
+  changeCurrentAccount,
+  currentProviderAccounts,
+}) => {
+  const refList: any = [];
+
+  currentProviderAccounts.forEach((currentProviderAccount) => {
+    refList[currentProviderAccount.id] = createRef();
+  });
+
+  const scrollToCategory = useCallback(
+    (id: number) => {
+      if (refList) {
+        refList[id]?.current.scrollIntoView({ inline: 'center' });
+      }
+    },
+    [refList]
+  );
+
+  useEffect(() => {
+    scrollToCategory(currentAccount.id);
+  }, [scrollToCategory, currentAccount]);
+
+  const getAccountClass = (accId: number) => (currentAccount?.id === accId ? 'account-btn active' : 'account-btn');
+
+  return (
+    <ul className='nav'>
+      {currentProviderAccounts?.map((providerAccount, index) => {
+        return (
+          <li key={index} ref={refList[providerAccount.id]}>
+            <button
+              className={getAccountClass(providerAccount.id)}
+              onClick={() => changeCurrentAccount(providerAccount)}
+            >
+              {providerAccount.accountName}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
   );
 };
