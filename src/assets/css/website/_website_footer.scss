@@ -2,9 +2,11 @@
   margin-top: 145px;
   position: relative;
 }
+
 .website-footer-wrapper {
   padding: 290px $s4 $s4 $s4;
 }
+
 .signup-today-wrapper {
   padding: 4rem;
   border-radius: 0.4rem;
@@ -14,19 +16,31 @@
   right: 120px;
   top: -145px;
 }
+
 .wf-list-wrapper p {
   opacity: 0.8;
   line-height: 1.4375rem;
   margin-top: 2.25rem;
   font-size: 1.1rem;
 }
+
 .info-wrapper {
   font-size: 0.9375rem;
   line-height: 170%;
 }
+
 .signup-btn-wrapper {
   margin: auto;
 }
+
+.footer-hero-wrapper {
+  margin-bottom: 50px;
+
+  @media (min-width: $md) {
+    margin-bottom: 100px;
+  }
+}
+
 @media (max-width: $md) {
   .signup-today-wrapper {
     padding: 2rem;
@@ -37,9 +51,10 @@
   .wf-list-wrapper {
     text-align: left;
   }
-  .signup-btn-wrapper {
-    margin: auto;
-  }
+
+  // .signup-btn-wrapper {
+  //   margin: auto;
+  // }
 }
 
 @media (max-width: $sm + $md) {
@@ -54,25 +69,30 @@
     left: 35px;
     right: 35px;
   }
+
   .signup-today-wrapper h1 {
     font-size: 2.3rem !important;
   }
 }
+
 @media (max-width: $sm) {
   .website-footer-wrapper {
     padding: 290px 1rem 1rem 1rem;
   }
+
   .signup-today-wrapper {
-    padding: 1rem;
+    padding: 1.5rem;
     left: 20px;
     right: 20px;
   }
+
   .signup-btn-wrapper {
     width: 100%;
   }
+
   .btn-xs-block {
     width: 100%;
-    margin: 0.5rem 0 !important;
+    margin: 1.1rem 0 !important;
   }
 }
 
@@ -86,6 +106,7 @@
 @mixin footer-resp {
   .wf-list-wrapper {
     text-align: left;
+
     p {
       margin-top: 0;
     }
@@ -102,15 +123,17 @@
       min-width: 50% !important;
     }
   }
+
   .download-btn-wrapper {
     display: flex;
+
     .first-svg-item {
       margin-right: 0.5rem;
     }
   }
 
   .website-footer-wrapper {
-    padding: 15.31rem 1.25rem 4.06rem 1.25rem;
+    padding: 18.31rem 1.25rem 4.06rem 1.25rem;
   }
 }
 
@@ -123,7 +146,7 @@
 @media (max-width: $med) {
   @include footer-resp;
 
-  .website-footer-wrapper > .p-t-176 {
+  .website-footer-wrapper>.p-t-176 {
     padding-top: 3.8125rem !important;
   }
 }
@@ -136,11 +159,34 @@
       font-size: 3.5rem !important;
     }
   }
+
   .info-wrapper {
     padding-right: 2.5rem;
   }
+
   .wf-list-items p.light {
     font-size: 1.125rem;
     margin-top: 1.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .signup-today-wrapper {
+    padding: 5rem !important;
+    width: 38rem;
+    margin: auto;
+
+    button {
+      margin-bottom: 20px !important;
+    }
+  }
+}
+
+@media (max-width: $sm + 200) {
+  .networth-text {
+    margin-bottom: 40px;
+  }
+  .signup-btn-wrapper button {
+    width: 100%;
   }
 }

@@ -1,27 +1,33 @@
 .rtl {
   direction: rtl;
 }
+
 .home-top {
   h1 {
     padding-bottom: 1.3rem;
   }
+
   p {
     color: $gray;
   }
 }
+
 .networth-section {
   h1 {
     padding-bottom: 1.3rem;
   }
+
   p {
     color: $gray;
   }
 }
+
 .home-list ul {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
 }
+
 .home-list ul li {
   margin: 0 10px;
   list-style: none;
@@ -71,7 +77,7 @@
   padding-bottom: 181px;
 
   @media (max-width: $md) {
-      padding-top: 0;
+    padding-top: 0;
   }
 
   h2 {
@@ -82,6 +88,7 @@
   }
 
 }
+
 .early-adopter-section .adopter-top-wrap {
   max-width: 500px;
   margin-bottom: 116px;
@@ -104,17 +111,20 @@
   background: linear-gradient(180deg, $purple 41.07%, #3e37d7 100%);
   box-shadow: 5px 10px 16px rgba(81, 84, 233, 0.2);
 }
+
 .early-adopter-tag {
   position: absolute;
   top: -21px;
   left: 34px;
 }
+
 .early-adopter-tag span {
   background: linear-gradient(180deg, $purple 41.07%, #3e37d7 100%);
   display: inline-block;
   padding: 5px 9px;
   border-radius: 6px;
 }
+
 .earlyadopter-list li {
   position: relative;
 }
@@ -125,6 +135,7 @@
   padding-top: 107px;
   padding-bottom: 0px;
 }
+
 .home-feature-section .feature-content h2 {
   margin-bottom: 16px;
   color: $white;
@@ -148,9 +159,10 @@
 
 //Blog Section
 .home-blog-section {
-  padding-top: 104px;
+  // padding-top: 104px;
   padding-bottom: 6px;
 }
+
 .home-blog-section .blog-top-content {
   display: flex;
   flex-wrap: nowrap;
@@ -164,7 +176,7 @@
 .home-blog-section .blog-content-left h1 {
   max-width: 748px;
   line-height: 55px;
-  margin-bottom: 49px;
+  margin-bottom: 40px;
 }
 
 .home-blog-section .blog-content-left p {
@@ -197,6 +209,7 @@
   margin-bottom: 23px;
   width: 384px;
   height: 257px;
+
   img {
     width: 97%;
     height: 100%;
@@ -208,6 +221,7 @@
   max-width: 384px;
   overflow: hidden;
 }
+
 .home-list.blog-list li {
   flex: auto;
   float: left;
@@ -229,6 +243,7 @@
 .allocation-section .networth-section {
   padding-top: 73px;
 }
+
 .allocation-section .networth-text {
   padding-top: 155px;
 }
@@ -237,12 +252,15 @@
 .performance-section .networth-section {
   padding-top: 70px;
 }
+
 .performance-section .networth-text {
   padding-top: 100px;
 }
+
 .performance-section .networth-chart {
   width: 86%;
 }
+
 span.above-tag-text {
   color: $primary;
   font-size: 1.125rem;
@@ -254,22 +272,27 @@ span.above-tag-text {
   top: 8px;
   right: -141px;
 }
+
 .performance-section .networth-section h1,
 .minxwinks-section .networth-section h1,
 .minxmeasure-section .networth-section h1 {
   position: relative;
   display: inline-block;
 }
+
 //maxwinks section
 .minxwinks-section .networth-section {
   padding-top: 93px;
 }
+
 .minxwinks-section .networth-text {
   padding-top: 155px;
 }
+
 .mm-container-right.minxwinks-section {
   padding-left: 1px;
 }
+
 .minxwinks-section .networth-chart {
   width: 95%;
 }
@@ -278,13 +301,16 @@ span.above-tag-text {
 .minxmeasure-section .networth-section {
   padding-top: 84px;
 }
+
 .minxmeasure-section .networth-text {
   padding-top: 90px;
 }
+
 .minxmeasure-section .networth-chart {
   float: right;
   width: 72%;
 }
+
 .home-networth.networth-section .networth-text p span {
   position: absolute;
   top: -94px;
@@ -296,6 +322,7 @@ span.above-tag-text {
   margin: auto;
   padding-top: 78px;
 }
+
 @media (max-width: $lg+1) {
   .mm-container-right.home-feature-section {
     margin-left: 0;
@@ -316,21 +343,27 @@ span.above-tag-text {
     position: static;
     display: none;
   }
+
   .mm-container-right.home-banner-container {
     margin-right: 0px;
   }
+
   .mm-container-right.home-feature-section {
     padding-left: 80px;
   }
+
   .home-feature-section .feature-content {
     max-width: none;
   }
+
   .home-feature-list ul li {
     flex: 1 0 47% !important;
   }
+
   .home-banner-right {
     float: right;
   }
+
   .home-list ul li {
     flex: auto;
     margin-bottom: 31px;
@@ -378,41 +411,55 @@ span.above-tag-text {
   .early-adopter-section .earlyadopter-list li {
     padding: 51px 28px;
   }
+
   .home-list ul li {
     margin-right: 27px;
   }
+
   .home-feature-list ul li {
     flex: auto !important;
   }
+
   .mm-container-right.home-feature-section {
     padding-left: 21px;
   }
+
   .home-feature-section .feature-content {
     max-width: 100%;
   }
+
   .home-list.blog-list ul {
     margin-right: 20px;
   }
+
   .home-list ul li {
     margin: 0;
   }
+
   .home-list.blog-list li {
     float: none;
     width: 100%;
   }
+
   .home-networth.networth-section .networth-text p span {
     top: -44px;
   }
 }
+
 .mm-btn-primary-outline:hover {
   color: #ffffff;
   background-color: $primary !important;
   border-color: $primary;
 }
-a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-primary:focus {
+
+a.bg-primary:hover,
+a.bg-primary:focus,
+button.bg-primary:hover,
+button.bg-primary:focus {
   background-color: $primary !important;
   box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
 }
+
 .mm-above-tag-text {
   color: $purple;
   font-size: 1.125rem;
@@ -421,24 +468,34 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
   padding: 0px 7px;
   border-radius: 6px;
   height: 24px;
-  margin-left: 8px;
-  margin-top: -12px;
+  top: 140px;
+  width: 130px;
+  position: absolute;
+  left: 260px;
+
+  @media (min-width: 1199px) and (max-width: 1372px) {
+    // must rare cases
+    left: 264px;
+  }
 }
+
 .coming-soon-wrapper {
   @media (min-width: 992px) {
     padding-left: 4.5rem;
   }
+
   @media (min-width: 1300px) {
     padding-left: 9.5rem;
   }
 }
+
 .mm-home-banner-img {
   margin-right: -88px;
 
   @media (min-width: $lg - 300) {
     margin-right: -185px;
   }
-  
+
   svg {
     width: 30rem;
 
@@ -450,20 +507,23 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
       width: 55rem;
     }
 
-    @media (min-width: 992px) and (max-width: 1260px) { 
+    @media (min-width: 992px) and (max-width: 1260px) {
       width: 28rem;
-     }
+    }
   }
 }
+
 .mm-home-left-block {
   max-width: 600px;
 }
 
 .mm-home-top-section {
   padding: 1rem;
+
   @media (min-width: $md) {
     padding: 3rem;
   }
+
   @media (min-width: $lg) {
     padding: 0px 120px;
   }
@@ -480,6 +540,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 
 .main-content {
   overflow: hidden;
+  padding: 40px 0 0px 0;
 }
 
 .mm-mobile-hide {
@@ -487,12 +548,14 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
     display: none;
   }
 }
+
 .mm-container-right-custom {
   padding: 36px 0px 74px 120px;
 
   @media (max-width: $md) {
     padding-left: 21px;
   }
+
   .networth-chart {
     width: unset;
   }
@@ -501,10 +564,12 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 .networth-chart {
   float: unset;
 }
+
 @media (min-width: $lg) {
   .mm-container-right {
-      padding: 36px 0px 74px 56px;
+    padding: 36px 0px 74px 56px;
   }
+
   .networth-chart {
     float: unset;
     width: unset !important;
@@ -512,12 +577,13 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 
 @media (min-width: $md + 101) {
-.blog-content-right button {
-  margin-top: 10rem;
-}
-.home-list.blog-list {
-  margin-bottom: 7rem;
-}
+  .blog-content-right button {
+    margin-top: 10rem;
+  }
+
+  .home-list.blog-list {
+    margin-bottom: 10rem;
+  }
 }
 
 @media (max-width: $md + 100) {
@@ -525,21 +591,16 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
     margin-top: 7rem;
     padding-left: 2rem;
   }
+
   .earlyadopter-list {
     padding-left: 2rem !important;
   }
-  .home-list.blog-list {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-  .networth-text {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
+
   .home-networth.networth-section .networth-text p span {
     position: absolute;
     top: 0px;
   }
+
   .networth-chart {
     padding-left: 3rem;
     padding-right: 3rem;
@@ -547,66 +608,53 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
     float: unset;
     width: unset;
   }
+
   .networth-chart.text-right {
     padding-left: 2.6rem;
   }
 }
 
 @media (max-width: $sm + 300) {
+
   .adopter-top-wrap,
   .earlyadopter-list {
     padding-left: 0rem !important;
   }
 
   .home-list.blog-list {
-      padding-left: 1rem;
-      padding-right: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .networth-text {
-      padding-left: 0rem;
-      padding-right: 0rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
   }
+
   .networth-chart.text-right {
-      padding-left: 0;
+    padding-left: 0;
   }
-  .mm-custom-networth-chart {
-    margin-right: -17rem;
-  }
+
   .minxmeasure-section .networth-chart {
-      padding-left: 0;
+    padding-left: 0;
   }
 }
+
 .blog-content a {
   color: $black;
 }
 
 
-
-/*Scroll Icon*/
-
-.mm-scroll-container-parent {
-  position: absolute;
-}
-
-.mm-scroll-container {
-  position: relative;
-  top: 610px;
-  left: 28px;
-}
-
+// new update
 .mouse {
-  position: absolute;
   width: 24px;
   height: 36px;
-  bottom: 40px;
-  left: 50%;
-  margin-left: -12px;
   border-radius: 16px;
   border: 1.5px solid $gray;
   -webkit-animation: intro 1s;
   animation: intro 1s;
 }
+
 .scroll {
   display: block;
   width: 4px;
@@ -617,47 +665,438 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
   -webkit-animation: finger 2s infinite;
   animation: finger 2s infinite;
 }
+
 @-webkit-keyframes intro {
   0% {
     opacity: 0;
     -webkit-transform: translateY(40px);
     transform: translateY(40px);
   }
+
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
 }
+
 @keyframes intro {
   0% {
     opacity: 0;
     -webkit-transform: translateY(40px);
     transform: translateY(40px);
   }
+
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
 }
+
 @-webkit-keyframes finger {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     -webkit-transform: translateY(20px);
     transform: translateY(20px);
   }
 }
+
 @keyframes finger {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     -webkit-transform: translateY(20px);
     transform: translateY(20px);
+  }
+}
+
+
+
+.mm-new-container {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 16px;
+
+  @media (min-width: $md) {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  @media (min-width: $md + 372) {
+    padding-left: 120px;
+    padding-right: 120px;
+  }
+
+  section {
+    margin-bottom: 80px;
+
+    @media (min-width: $md) {
+      margin-bottom: 150px;
+    }
+  }
+
+  .mm-home-left-banner {
+    @media (min-width: $md + 372) {
+      margin-right: calc(100% - 604px);
+    }
+
+    h1 {
+      margin-bottom: 32px;
+    }
+
+    button {
+      margin-top: 30px;
+
+      @media (min-width: $md + 372) {
+        margin-top: 60px;
+      }
+    }
+
+    p {
+      color: gray;
+      font-weight: normal;
+      font-size: 20px;
+      max-width: 100%;
+
+      @media (min-width: $md + 372) {
+        max-width: 80%;
+      }
+    }
+
+    small {
+      color: gray;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+
+  .mm-home-right-img-banner {
+    svg {
+      margin-left: -180px;
+
+      @media (min-width: $md) {
+        margin-left: 0px;
+      }
+
+      @media (min-width: $lg) {
+        margin-left: calc(100% - 510px);
+      }
+    }
+  }
+
+  .mm-scroll-container-parent {
+    margin-top: 100px;
+  }
+
+  .mm-mb-hide {
+    display: none;
+
+    @media (min-width: $md + 372) {
+      display: block;
+    }
+  }
+
+  .adopter-content {
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px #E2E8F3, inset 0px -1px 0px #EBECF1;
+    border-radius: 6px;
+    padding: 42px;
+
+    h3 {
+      font-weight: normal;
+      font-size: 28px;
+    }
+  }
+
+  .early-adopter-tag {
+    box-shadow: 5px 10px 16px rgba(81, 84, 233, 0.2);
+  }
+
+  .adopter-top-wrap {
+    margin-bottom: 60px;
+
+    @media (min-width: $md + 372) {
+      margin-bottom: 110px;
+    }
+
+  }
+
+  p {
+    font-weight: normal;
+    font-size: 20px;
+    color: gray;
+  }
+
+  .mm-home-feature-section {
+    background-color: $darkBg;
+    padding: 100px 100px 0px 100px;
+    margin-left: -120px;
+    margin-right: -120px;
+
+    .mm-home-feature-wrapper {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .feature-content {
+      width: 100%;
+      margin-bottom: 120px;
+      height: 100%;
+
+      @media (min-width: $md + 372) {
+        padding-right: 80px;
+      }
+
+      h2,
+      p {
+        color: $white;
+        font-weight: normal;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      p {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .home-blog-section {
+    .mm-blog-details {
+
+      h2,
+      a {
+        font-weight: 300;
+        font-size: 32px;
+        color: $black;
+      }
+    }
+
+    .mm-blog-img {
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      border-radius: 6px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .mm-blog-btn {
+      float: right;
+      margin-top: -125px;
+    }
+
+    .home-list.blog-list {
+      margin-top: 60px;
+
+      .mm-link-blog-btn {
+        display: none;
+
+        @media (min-width: $md + 432) {
+          display: block !important;
+        }
+      }
+    }
+  }
+
+  .mm-networth-section-overview {
+    p {
+      margin-bottom: 60px;
+    }
+
+    .networth-text {
+      padding-top: 0;
+
+      @media (min-width: $md + 432) {
+        margin-right: calc(100% - 444px);
+      }
+
+      h1 {
+        margin-bottom: 32px;
+      }
+    }
+
+    .mm-networth-chart {
+      text-align: center;
+
+      @media (min-width: $md + 432) {
+        margin-left: calc(100% - 610px);
+      }
+    }
+  }
+
+  .networth-section {
+    padding-top: 0;
+  }
+
+  .mm-home-performance-section {
+    .mm-home-performance-section-chart {
+      text-align: center;
+
+      @media (min-width: $md + 432) {
+        margin-left: calc(100% - 590px);
+      }
+    }
+
+    span.mm-above-tag-text {
+      color: #534cea;
+      font-size: 1.125rem;
+      line-height: 1.437rem;
+      background: rgba(83, 76, 234, 0.2);
+      padding: 0px 7px;
+      border-radius: 6px;
+      position: absolute;
+      top: 50px;
+      left: 330px;
+    }
+
+    .mm-mb-hide {
+      display: none;
+
+      @media (min-width: $md) {
+        display: block;
+      }
+    }
+  }
+
+  .mm-winks-section {
+    .mm-above-tag-text {
+      color: #534cea;
+      font-size: 1.125rem;
+      line-height: 1.437rem;
+      background: rgba(83, 76, 234, 0.2);
+      padding: 0px 7px;
+      border-radius: 6px;
+      height: 24px;
+      top: 35px;
+      position: absolute;
+      left: 305px;
+    }
+
+    .mm-mb-hide {
+      display: none;
+
+      @media (min-width: $md) {
+        display: block;
+      }
+    }
+
+    .mm-custom-networth-chart {
+      @media (max-width: $md - 1) {
+        margin-right: -14rem;
+      }
+    }
+
+    .networth-chart {
+      padding-right: 0;
+      padding-left: 0;
+
+      @media (min-width: $md) and (max-width: $md + 400) {
+        width: 100%;
+        height: 100%;
+      }
+
+      svg {
+        @media (min-width: $md) and (max-width: $md + 400) {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  .mm-measure-section {
+    .highlighted-text {
+      font-weight: bold;
+    }
+
+    .mm-mb-hide {
+      display: none;
+
+      @media (min-width: $md) {
+        display: block;
+      }
+    }
+
+    .mm-networth-chart {
+      text-align: center;
+
+      @media (min-width: $md + 432) {
+        margin-left: calc(100% - 495px);
+      }
+    }
+
+    .mm-above-tag-text {
+      color: #534cea;
+      font-size: 1.125rem;
+      line-height: 1.437rem;
+      background: rgba(83, 76, 234, 0.2);
+      padding: 0px 7px;
+      border-radius: 6px;
+      height: 24px;
+      top: 50px;
+      position: absolute;
+      left: 440px;
+    }
+  }
+}
+
+.adopter-top-wrap h2 {
+  font-weight: 300;
+  font-size: 56px;
+}
+
+.mm-networth-chart-legend {
+  margin-right: calc(100% - 590px);
+
+  @media (min-width: $md) {
+    margin-right: calc(100% - 54rem);
+  }
+}
+
+.mm-sm-md-hide {
+  @media (max-width: $md + 432) {
+    display: none;
+  }
+}
+
+@media (max-width: $sm + 200) {
+  .networth-section.rtl {
+    margin-top: -130px;
+  }
+
+  .mm-blog-details {
+    margin-bottom: 32px;
+  }
+
+  .mm-new-container .mm-home-feature-section .feature-content {
+    margin-bottom: 50px;
+  }
+
+  .mm-winks-section .networth-text {
+    margin-top: 120px;
+  }
+}
+
+@media (max-width: $md + 432) {
+  .mm-new-container .mm-networth-section-overview p {
+    margin-top: 60px;
+  }
+
+  .networth-text {
+    margin-bottom: 40px;
   }
 }

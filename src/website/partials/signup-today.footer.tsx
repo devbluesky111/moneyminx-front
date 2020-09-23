@@ -5,7 +5,7 @@ import { appRouteConstants } from 'app/app-route.constant';
 const SignupToday = () => {
   return (
     <div className='signup-today-wrapper bg-primary text-white'>
-      <div className='row'>
+      <div className='row align-items-center'>
         <div className='col-lg-6'>
           <div className='text-wrapper'>
             <h1>Sign Up today</h1>
@@ -15,13 +15,13 @@ const SignupToday = () => {
             </p>
           </div>
         </div>
-        <div className='col-lg-6 d-flex flex-lg-row flex-md-column align-items-center'>
+        <div className='col-lg-6'>
           <div className='signup-btn-wrapper d-md-flex'>
             <Link to='/pricing'>
-              <button className='mm-btn-animate mm-btn-primary-outline btn-xs-block mr-3'>Compare Plans</button>
+              <button className='mm-btn-animate mm-btn-primary-outline btn-xs-block mr-3 my-2'>Compare Plans</button>
             </Link>
             <Link to={appRouteConstants.auth.SIGNUP}>
-              <button className='mm-btn-animate bg-white text-primary ml-3 btn-xs-block ml-3'>Sign Up Free</button>
+              <button className='mm-btn-animate bg-white text-primary ml-3 btn-xs-block ml-3 my-2'>Sign Up Free</button>
             </Link>
           </div>
         </div>
