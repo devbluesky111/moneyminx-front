@@ -71,7 +71,7 @@ ul.account-list li {
 
 .account-wrap {
   padding: 11px 38px 26px;
-  box-shadow: 0 2px 30px #c9d5e8, inset 0px -1px 0px #ebecf1;
+  box-shadow: 0 2px 30px #c9d5e8, inset 0 -1px 0 #ebecf1;
   border-radius: 6px;
   margin-bottom: 13px;
   margin-right: -24px;
@@ -89,7 +89,7 @@ ul.account-list li {
 
 .account-wrap.small-box {
   margin-left: 19px;
-  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0 -1px 0 #ebecf1;
 }
 
 .account-wrap h3 {
@@ -105,7 +105,7 @@ ul.account-list li {
 
 .account-wrap.bg-white.top-box {
   padding: 21px 40px 6px;
-  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0 -1px 0 #ebecf1;
   margin-left: 19px;
   margin-right: -24px;
 }
@@ -168,7 +168,7 @@ ul.owner-list li a:hover span svg {
 }
 
 .left-owner-img {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 span.twitter-icon {
@@ -319,7 +319,7 @@ span.twitter-icon {
   font-weight: 500;
   font-size: 14px;
   padding: 20px;
-  box-shadow: 0px 4px 28px rgba(8, 24, 51, 0.44);
+  box-shadow: 0 4px 28px rgba(8, 24, 51, 0.44);
   border-radius: 4px;
   position: relative;
   left: 530px;
@@ -356,7 +356,7 @@ span.twitter-icon {
 
 .mm-container-right.owner-section {
   @media (max-width: $sm + 100) {
-    padding: 0px !important;
+    padding: 0 !important;
   }
 }
 
@@ -426,20 +426,15 @@ span.twitter-icon {
 }
 
 .mm-networth-chart {
-  // background: #FFFFFF;
-  // box-shadow: 0px 2px 8px #E2E8F3, inset 0px -1px 0px #EBECF1;
-  // border-radius: 6px;
-
   svg {
     margin-bottom: 140px;
 
     @media (max-width: $md - 1) {
-      background: #FFFFFF;
-      box-shadow: 0px 2px 8px #E2E8F3, inset 0px -1px 0px #EBECF1;
+      background: #ffffff;
+      box-shadow: 0 2px 8px #e2e8f3, inset 0 -1px 0 #ebecf1;
       border-radius: 6px;
     }
   }
-
 
   @media (min-width: $md) {
     box-shadow: unset;
@@ -453,14 +448,7 @@ span.twitter-icon {
       float: right;
     }
   }
-
 }
-
-// .mm-new-container section {
-//   @media (min-width: $md) {
-//     margin-bottom: 100px;
-//   }
-// }
 
 .mm-sm-hide {
   @media (max-width: $md - 1) {
