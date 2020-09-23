@@ -51,10 +51,6 @@
   .wf-list-wrapper {
     text-align: left;
   }
-
-  // .signup-btn-wrapper {
-  //   margin: auto;
-  // }
 }
 
 @media (max-width: $sm + $md) {
@@ -100,7 +96,7 @@
 .signup-btn-wrapper button {
   display: block;
   margin-bottom: 20px;
-  margin-left: 0px !important;
+  margin-left: 0 !important;
 }
 
 @mixin footer-resp {
@@ -146,7 +142,7 @@
 @media (max-width: $med) {
   @include footer-resp;
 
-  .website-footer-wrapper>.p-t-176 {
+  .website-footer-wrapper > .p-t-176 {
     padding-top: 3.8125rem !important;
   }
 }

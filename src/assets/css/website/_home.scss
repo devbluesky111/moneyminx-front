@@ -86,7 +86,6 @@
     line-height: 106%;
     margin-bottom: 2rem;
   }
-
 }
 
 .early-adopter-section .adopter-top-wrap {
@@ -96,7 +95,7 @@
 
 .early-adopter-section .earlyadopter-list li {
   padding: 56px 33px 46px;
-  box-shadow: 0 2px 8px #E2E8F3, inset 0px -1px 0px #EBECF1;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0 -1px 0 #ebecf1;
   border-radius: 6px;
 }
 
@@ -133,7 +132,7 @@
 .mm-container-right.home-feature-section {
   background-color: $darkBg;
   padding-top: 107px;
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 
 .home-feature-section .feature-content h2 {
@@ -159,7 +158,6 @@
 
 //Blog Section
 .home-blog-section {
-  // padding-top: 104px;
   padding-bottom: 6px;
 }
 
@@ -266,7 +264,7 @@ span.above-tag-text {
   font-size: 1.125rem;
   line-height: 1.437rem;
   background: rgba(83, 76, 234, 0.2);
-  padding: 0px 7px;
+  padding: 0 7px;
   border-radius: 6px;
   position: absolute;
   top: 8px;
@@ -345,7 +343,7 @@ span.above-tag-text {
   }
 
   .mm-container-right.home-banner-container {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .mm-container-right.home-feature-section {
@@ -370,7 +368,7 @@ span.above-tag-text {
   }
 
   .mm-container-right.home-feature-section {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .mm-container-right.home-feature-section {
@@ -465,7 +463,7 @@ button.bg-primary:focus {
   font-size: 1.125rem;
   line-height: 1.437rem;
   background: rgba(83, 76, 234, 0.2);
-  padding: 0px 7px;
+  padding: 0 7px;
   border-radius: 6px;
   height: 24px;
   top: 140px;
@@ -525,7 +523,7 @@ button.bg-primary:focus {
   }
 
   @media (min-width: $lg) {
-    padding: 0px 120px;
+    padding: 0 120px;
   }
 
   .text,
@@ -534,13 +532,13 @@ button.bg-primary:focus {
   }
 
   .mm-scroll-down {
-    margin-top: 5rem
+    margin-top: 5rem;
   }
 }
 
 .main-content {
   overflow: hidden;
-  padding: 40px 0 0px 0;
+  padding: 40px 0 0 0;
 }
 
 .mm-mobile-hide {
@@ -550,7 +548,7 @@ button.bg-primary:focus {
 }
 
 .mm-container-right-custom {
-  padding: 36px 0px 74px 120px;
+  padding: 36px 0 74px 120px;
 
   @media (max-width: $md) {
     padding-left: 21px;
@@ -567,7 +565,7 @@ button.bg-primary:focus {
 
 @media (min-width: $lg) {
   .mm-container-right {
-    padding: 36px 0px 74px 56px;
+    padding: 36px 0 74px 56px;
   }
 
   .networth-chart {
@@ -598,7 +596,7 @@ button.bg-primary:focus {
 
   .home-networth.networth-section .networth-text p span {
     position: absolute;
-    top: 0px;
+    top: 0;
   }
 
   .networth-chart {
@@ -615,7 +613,6 @@ button.bg-primary:focus {
 }
 
 @media (max-width: $sm + 300) {
-
   .adopter-top-wrap,
   .earlyadopter-list {
     padding-left: 0rem !important;
@@ -643,7 +640,6 @@ button.bg-primary:focus {
 .blog-content a {
   color: $black;
 }
-
 
 // new update
 .mouse {
@@ -718,8 +714,6 @@ button.bg-primary:focus {
   }
 }
 
-
-
 .mm-new-container {
   padding-left: 20px;
   padding-right: 20px;
@@ -783,7 +777,7 @@ button.bg-primary:focus {
       margin-left: -180px;
 
       @media (min-width: $md) {
-        margin-left: 0px;
+        margin-left: 0;
       }
 
       @media (min-width: $lg) {
@@ -805,8 +799,8 @@ button.bg-primary:focus {
   }
 
   .adopter-content {
-    background: #FFFFFF;
-    box-shadow: 0px 2px 8px #E2E8F3, inset 0px -1px 0px #EBECF1;
+    background: #ffffff;
+    box-shadow: 0 2px 8px #e2e8f3, inset 0 -1px 0 #ebecf1;
     border-radius: 6px;
     padding: 42px;
 
@@ -826,7 +820,6 @@ button.bg-primary:focus {
     @media (min-width: $md + 372) {
       margin-bottom: 110px;
     }
-
   }
 
   p {
@@ -837,7 +830,7 @@ button.bg-primary:focus {
 
   .mm-home-feature-section {
     background-color: $darkBg;
-    padding: 100px 100px 0px 100px;
+    padding: 100px 100px 0 100px;
     margin-left: -120px;
     margin-right: -120px;
 
@@ -873,7 +866,6 @@ button.bg-primary:focus {
 
   .home-blog-section {
     .mm-blog-details {
-
       h2,
       a {
         font-weight: 300;
@@ -956,7 +948,7 @@ button.bg-primary:focus {
       font-size: 1.125rem;
       line-height: 1.437rem;
       background: rgba(83, 76, 234, 0.2);
-      padding: 0px 7px;
+      padding: 0 7px;
       border-radius: 6px;
       position: absolute;
       top: 50px;
@@ -978,7 +970,7 @@ button.bg-primary:focus {
       font-size: 1.125rem;
       line-height: 1.437rem;
       background: rgba(83, 76, 234, 0.2);
-      padding: 0px 7px;
+      padding: 0 7px;
       border-radius: 6px;
       height: 24px;
       top: 35px;
@@ -1044,7 +1036,7 @@ button.bg-primary:focus {
       font-size: 1.125rem;
       line-height: 1.437rem;
       background: rgba(83, 76, 234, 0.2);
-      padding: 0px 7px;
+      padding: 0 7px;
       border-radius: 6px;
       height: 24px;
       top: 50px;

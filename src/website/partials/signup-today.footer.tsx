@@ -16,7 +16,7 @@ const SignupToday = () => {
           </div>
         </div>
         <div className='col-lg-6'>
-          <div className='signup-btn-wrapper d-md-flex'>
+          <div className='signup-btn-wrapper d-md-flex float-xl-right'>
             <Link to='/pricing'>
               <button className='mm-btn-animate mm-btn-primary-outline btn-xs-block mr-3 my-2'>Compare Plans</button>
             </Link>
