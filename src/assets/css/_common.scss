@@ -205,14 +205,14 @@ a {
     margin-left: 20px;
   }
 }
-.mm-overview-block {
+.mm-overview-wrapper {
   background-image: url('../images/background-shadow.svg');
-  background-size: 65rem 133rem;
-  background-repeat: no-repeat;
+  background-size: 50%;
   background-position: top right;
+  background-repeat: no-repeat;
 
-  @media ( max-width: $md - 1) {
-    background-size: contain;
+  @media ( max-width: $md + 400) {
+    background-size: 100%;
   }
 }
 
@@ -344,4 +344,7 @@ hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border: 1px solid rgba($gray, 0.2);
+}
+.mm-overview-block {
+  background: $lightBg;
 }

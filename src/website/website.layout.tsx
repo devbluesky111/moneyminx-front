@@ -11,9 +11,11 @@ const WebsiteLayout: React.FC<WebsiteLayout> = ({ children, isSignupToday }) => 
   useScrollTop();
   return (
     <div className='mm-overview-block'>
-      <WebsiteHeader />
-      <main className='main-content'>{children}</main>
-      <WebsiteFooter isSignupToday={isSignupToday} />
+      <div className='mm-overview-wrapper'>
+        <WebsiteHeader />
+        <main className='main-content'>{children}</main>
+        <WebsiteFooter isSignupToday={isSignupToday} />
+      </div>
     </div>
   );
 };
