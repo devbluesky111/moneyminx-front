@@ -21,7 +21,7 @@ const AuthFooter = () => {
                 <Link to='/notices'>Notices</Link>
               </li>
               <li className='my-1 my-md-0'>
-                <Link to='#'>Resources</Link>
+                <Link to='/security'>Security</Link>
               </li>
             </ul>
           </div>
