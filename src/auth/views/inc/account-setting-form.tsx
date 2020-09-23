@@ -87,7 +87,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
 
   const hc = (field: string) => (hasField(field) ? '' : 'hidden');
 
-  const currentFormFields = currentAccount?.formField;
+  const currentFormFields = currentAccount?.accountDetails;
+
+  const hasAccountSubType = accountSubTypes.every(Boolean);
 
   return (
     <Formik
@@ -242,7 +244,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
                     })}
                   </select>
                 </li>
-                <li>
+
+                <li className={hasAccountSubType ? '' : 'hidden'}>
                   <div className='account-list-content'>
                     <span className='form-subheading'>Account Subtype</span>
                     <select

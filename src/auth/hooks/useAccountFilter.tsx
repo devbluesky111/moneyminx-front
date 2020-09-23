@@ -7,7 +7,7 @@ const useAccountFilter = (accountType: string, accountSubtype: string) => {
   const [accountFilters, setAccountFilters] = useState<string[]>(['']);
 
   useEffect(() => {
-    if (accountType && accountSubtype) {
+    if (accountType) {
       const fetchAccountSubType = async () => {
         setLoading(true);
         const { data, error: err } = await getFormFieldFilter(accountType, accountSubtype);
