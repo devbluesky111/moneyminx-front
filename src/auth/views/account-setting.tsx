@@ -117,8 +117,8 @@ export const AccountSettingMainSection = () => {
             </div>
           </div>
 
-          <div className='bg-white credintials-wrapper account-setting'>
-            <div className='credintials-content'>
+          <div className='bg-white credentials-wrapper account-setting'>
+            <div className='credentials-content'>
               <div className='logo-img-wrapper'>
                 <LogoImg />
               </div>
@@ -160,7 +160,7 @@ export const AccountSettingMainSection = () => {
 
                 <AccountSettingForm currentAccount={currentAccount} />
 
-                <p className='flex-box learn-more-security'>
+                <p className='flex-box learn-more-security mt-3'>
                   <SecurityIcon />
                   <a href='/security'>Learn about our security</a>
                 </p>

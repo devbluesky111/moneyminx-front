@@ -1,8 +1,8 @@
-.bg-white.credintials-wrapper.account-setting .credintials-content {
+.bg-white.credentials-wrapper.account-setting .credentials-content {
   max-width: 665px;
 }
 
-.credintials-wrapper li {
+.credentials-wrapper li {
   list-style: none;
 }
 
@@ -76,7 +76,7 @@ ul.bank-list li a {
   border-bottom: 1px solid rgba(150, 158, 172, 0.24);
 }
 
-.credintials-wrapper.account-setting .form-wrap input {
+.credentials-wrapper.account-setting .form-wrap input {
   color: $darkGray;
 }
 
@@ -84,7 +84,7 @@ ul.bank-list li a {
   margin-bottom: 40px;
 }
 
-.account-setting .credintials-content .form-wrap .setting-button-wrap button {
+.account-setting .credentials-content .form-wrap .setting-button-wrap button {
   width: auto;
   display: inline-block;
   width: 142px;
@@ -99,7 +99,7 @@ span.form-subheading {
   display: inline-block;
   margin-right: 20px;
 }
-.credintials-content .form-wrap .form-heading button {
+.credentials-content .form-wrap .form-heading button {
   width: auto;
   display: inline;
   margin-bottom: 0;
@@ -231,7 +231,7 @@ span.form-subheading {
   margin-left: 32px;
 }
 
-.credintials-wrapper.account-setting .form-wrap input[type='radio'] {
+.credentials-wrapper.account-setting .form-wrap input[type='radio'] {
   margin-right: 8px;
   margin-left: 29px;
   height: 20px;
@@ -265,7 +265,7 @@ span.form-subheading {
   max-width: 372px;
 }
 
-.credintials-wrapper.account-setting .form-wrap .estimated-annual-return input[type='radio'] {
+.credentials-wrapper.account-setting .form-wrap .estimated-annual-return input[type='radio'] {
   margin-left: 0;
 }
 
@@ -488,7 +488,7 @@ span.form-subheading {
   opacity: 1;
 }
 
-.credintials-wrapper.account-setting .form-wrap .estimated-annual-return input[type='radio'] {
+.credentials-wrapper.account-setting .form-wrap .estimated-annual-return input[type='radio'] {
   position: absolute;
   opacity: 0;
   z-index: 9999;
@@ -571,7 +571,7 @@ span.form-subheading {
 
 //Responsive
 @media (max-width: $lg + 1) {
-  .bg-white.credintials-wrapper.account-setting .credintials-content {
+  .bg-white.credentials-wrapper.account-setting .credentials-content {
     padding-left: 50px;
     padding-right: 40px;
   }
@@ -693,15 +693,15 @@ ul.weekdate {
     z-index: 999;
     border-color: black transparent;
     border-style: solid;
-    border-width: 0px 9px 9px 9px;
-    height: 0px;
-    width: 0px;
+    border-width: 0 9px 9px 9px;
+    height: 0;
+    width: 0;
     content: '';
   }
 }
 .calender-header h2 {
   font-size: 0.87rem;
-  color: #fff;
+  color: $white;
   font-weight: 500;
   text-align: center;
   margin-bottom: 20px;
@@ -738,7 +738,7 @@ span.next-icon {
   }
 }
 
-.bg-white.credintials-wrapper.account-setting .credintials-content {
+.bg-white.credentials-wrapper.account-setting .credentials-content {
   @media (max-width: 768px) {
     max-width: 100vw;
   }

@@ -3,6 +3,7 @@ body {
   font-size: 1rem;
   font-weight: 300;
   overflow-x: hidden;
+  background-color: $lightBg;
 }
 p {
   font-weight: 300;
@@ -63,7 +64,7 @@ a {
   width: 76px;
   height: 29px;
   padding: 3px;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 23px;
 }
 
@@ -102,7 +103,6 @@ a {
   box-sizing: border-box;
   border-radius: 4px;
 
-
   &:hover {
     background: $lightBg;
     color: $purple;
@@ -111,6 +111,11 @@ a {
   &:disabled {
     opacity: 0.7;
   }
+}
+
+.mm-btn-primary-outline[disabled]:hover {
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 .container-mm {
@@ -127,7 +132,7 @@ a {
   width: 76px;
   height: 29px;
   padding: 3px;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 23px;
   display: inline-block;
   font-weight: 500;
@@ -194,7 +199,7 @@ a {
 
 @media (max-width: $sm) {
   h1 {
-    font-size: 36px !important;
+    font-size: 2.25rem !important;
   }
 
   .mm-container {
@@ -205,13 +210,14 @@ a {
     margin-left: 20px;
   }
 }
-.mm-overview-block {
+.mm-overview-wrapper {
   background-image: url('../images/background-shadow.svg');
-  background-size: cover;
-  background-position: bottom;
+  background-size: 50%;
+  background-position: top right;
+  background-repeat: no-repeat;
 
-  @media ( max-width: $md) {
-    background-position: 140rem 0;
+  @media ( max-width: $md + 400) {
+    background-size: 100%;
   }
 }
 
@@ -343,4 +349,7 @@ hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border: 1px solid rgba($gray, 0.2);
+}
+.mm-overview-block {
+  background: $lightBg;
 }

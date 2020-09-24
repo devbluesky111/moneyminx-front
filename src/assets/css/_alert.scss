@@ -1,0 +1,25 @@
+.inline-alert {
+  display: none;
+}
+
+.inline-alert:not(.hidden) {
+  top: 1rem;
+  left: 40%;
+  z-index: 99;
+  display: flex;
+  color: $white;
+  padding: 0.7rem;
+  cursor: pointer;
+  position: absolute;
+  align-items: baseline;
+
+  button {
+    margin-left: 1rem;
+    color: $white;
+    opacity: 0.7;
+
+    &:hover {
+      color: lighten($color: $white, $amount: 20);
+    }
+  }
+}

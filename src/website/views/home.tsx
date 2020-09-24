@@ -19,21 +19,25 @@ import { ReactComponent as HomeMinxwinksImg } from 'assets/images/home/minxwinks
 import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-icon3.svg';
 import { ReactComponent as HomeNetWorthChart } from 'assets/images/home/home-networth.svg';
 import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-adopter-icon.svg';
+import { ReactComponent as PerformanceLegend } from 'assets/images/home/performance-legend.svg';
 import { ReactComponent as HomePerformanceChart } from 'assets/images/home/performance-chart.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
+
 
 const Home = () => {
   return (
     <WebsiteLayout>
-      <HomeTopSection />
-      <HomeEarlyAdopterSection />
-      <HomeFeatureSection />
-      <HomeBlogSection />
-      <HomeNetWorthSection />
-      <HomeAllocationSection />
-      <HomePerformanceSection />
-      <MinxWinksSection />
-      <MinxMeasureSection />
+      <div className='mm-new-container'>
+        <HomeTopSection />
+        <HomeEarlyAdopterSection />
+        <HomeFeatureSection />
+        <HomeBlogSection />
+        <HomeNetWorthSection />
+        <HomeAllocationSection />
+        <HomePerformanceSection />
+        <MinxWinksSection />
+        <MinxMeasureSection />
+      </div>
     </WebsiteLayout>
   );
 };
@@ -41,151 +45,144 @@ const Home = () => {
 export default Home;
 export const HomeTopSection = () => {
   return (
-    <div className='mm-container-right home-banner-container'>
-      <div className='row home-top'>
-        <div className='col-lg-7'>
-          <div className='home-left-banner'>
+    <section>
+      <div className='row'>
+        <div className='col-xl-7'>
+          <div className='mm-home-left-banner'>
             <h1>The easiest way to track all of your investments, in one place</h1>
             <p className='text'>
-              Track your stocks, bonds, cryptos, mutual funds, alternatives and much more  fin one place.
+              Track your stocks, bonds, mutual funds, alternatives and much more all in one simple, accessible dashboard.
             </p>
             <Link to={appRouteConstants.auth.SIGNUP}>
               <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
             </Link>
-            <p className='info-text'>No credit card needed.</p>
+            <small className='d-block mt-3 mt-md-4'>No credit card needed.</small>
           </div>
         </div>
-        <div className='col-md-12 col-lg-5'>
-          <div className='mm-home-banner-img float-right'>
+        <div className='col-xl-5'>
+          <div className='mm-home-right-img-banner text-center mt-xl-n5'>
             <HomeBannerImg />
           </div>
         </div>
-        {/*scroll icon*/}
-        <div className='mm-scroll-container-parent'>
-          <div className='mm-scroll-container'>
-            <div className='mouse'>
-              <div className='scroll'/>
-            </div>
+      </div>
+      <div className='mm-scroll-container-parent mm-mb-hide'>
+        <div className='mm-scroll-container'>
+          <div className='mouse'>
+            <div className='scroll' />
           </div>
         </div>
       </div>
-
-    </div>
+    </section>
   );
 };
 
 export const HomeEarlyAdopterSection = () => {
   return (
-    <div className='mm-container-right early-adopter-section'>
-      <div className='row home-top'>
-        <div className='col-lg-12 home-list'>
-          <div className='adopter-top-wrap'>
-            <h2>Early Adopter Perks</h2>
-            <p>Money Minx early adopters get these awesome perks. Only available while we are in Beta.</p>
+    <section>
+      <div className=''>
+        <div className='adopter-top-wrap'>
+          <h2>Early Adopter Perks</h2>
+          <p>Money Minx early adopters get these awesome perks. <br /> Only available while we are in Beta.</p>
+        </div>
+        <div className='row'>
+          <div className='col-12 col-xl-4 my-3'>
+            <div className='adopter-content h-100'>
+              <h3>25% Discount on all plans</h3>
+              <p>Get 25% off for the life of your account even after we go live!</p>
+            </div>
           </div>
-          <ul className='earlyadopter-list'>
-            <li className='bg-white'>
-              <div className='adopter-content'>
-                <h3>25% Discount on all plans</h3>
-                <p>Get 25% off for the life of your account even after we go live!</p>
+          <div className='col-12 col-xl-4 my-3'>
+            <div className='adopter-content h-100'>
+              <div className='early-adopter-tag'>
+                <span>
+                  <HomeEarlyAdapter />
+                </span>
               </div>
-            </li>
-            <li className='bg-white'>
-              <div className='adopter-content'>
-                <div className='early-adopter-tag'>
-                  <span>
-                    <HomeEarlyAdapter />
-                  </span>
-                </div>
-                <h3>Early Adopter profile badge</h3>
-                <p>
-                  Get an early adopter badge that will go up in the community once we go live. This badge will never be
-                  available again.
+              <h3>Early Adopter profile badge</h3>
+              <p>
+                Get an early adopter badge that will go up in the community once we go live. This badge will never be
+                available again.
                 </p>
-              </div>
-            </li>
-            <li className='bg-white'>
-              <div className='adopter-content'>
-                <h3>Get insights before anyone else</h3>
-                <p>Know about new features before others and help us drive the development of new features.</p>
-              </div>
-            </li>
-          </ul>
+            </div>
+          </div>
+          <div className='col-12 col-xl-4 my-3'>
+            <div className='adopter-content h-100'>
+              <h3>Get insights before anyone else</h3>
+              <p>Know about new features before others and help us drive the development of new features.</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 export const HomeFeatureSection = () => {
   return (
-    <div className='mm-container-right home-feature-section'>
-      <div className='row'>
-        <div className='col-lg-12 home-list home-feature-list'>
-          <ul>
-            <li>
-              <div className='feature-content'>
-                <div className='feature-icon'>
-                  <FeatureIconOne />
-                </div>
-                <h2>Asset Allocation</h2>
-                <p>Simple, up-to-date and shareable asset allocation charts</p>
+    <section>
+      <div className='mm-home-feature-section'>
+        <div className='row mm-home-feature-wrapper'>
+          <div className='col-12 col-md-6 col-xl-4'>
+            <div className='feature-content'>
+              <div className='feature-icon py-3'>
+                <FeatureIconOne />
               </div>
-            </li>
-            <li>
-              <div className='feature-content'>
-                <div className='feature-icon'>
-                  <Link to='/net-worth'>
-                    <FeatureIconTwo />
-                  </Link>
-                </div>
-                <h2>Net Worth</h2>
-                <p>Ready to view networth summary categories by investments, assets and liabilities</p>
+              <h2 className='py-3'>Asset Allocation</h2>
+              <p>Simple, up-to-date and shareable asset allocation charts</p>
+            </div>
+          </div>
+          <div className='col-12 col-md-6 col-xl-4'>
+            <div className='feature-content'>
+              <div className='feature-icon py-3'>
+                <Link to='/net-worth'>
+                  <FeatureIconTwo />
+                </Link>
               </div>
-            </li>
-            <li>
-              <div className='feature-content'>
-                <div className='feature-icon'>
-                  <FeatureIconThree />
-                </div>
-                <h2>Account Details</h2>
-                <p>View the details behind each account in one place.</p>
+              <h2 className='py-3'>Net Worth</h2>
+              <p>Ready to view networth summary categories by investments, assets and liabilities</p>
+            </div>
+          </div>
+          <div className='col-12 col-md-6 col-xl-4'>
+            <div className='feature-content'>
+              <div className='feature-icon py-3'>
+                <FeatureIconThree />
               </div>
-            </li>
-
-            <li>
-              <div className='feature-content'>
-                <div className='feature-icon'>
-                  <FeatureIconFour />
-                </div>
-                <h2>Synced Automatically</h2>
-                <p>We sync directly with your banks and brokerages to keep your information up to date.</p>
+              <h2 className='py-3'>Account Details</h2>
+              <p>View the details behind each account in one place.</p>
+            </div>
+          </div>
+          <div className='col-12 col-md-6 col-xl-4'>
+            <div className='feature-content'>
+              <div className='feature-icon py-3'>
+                <FeatureIconFour />
               </div>
-            </li>
-            <li>
-              <div className='feature-content'>
-                <div className='feature-icon'>
-                  <FeatureIconFive />
-                </div>
-                <h2>Bank Level Security</h2>
-                <p>We utilizing banking level security to keep your account safe and secure.</p>
+              <h2 className='py-3'>Synced Automatically</h2>
+              <p>We sync directly with your banks and brokerages to keep your information up to date.</p>
+            </div>
+          </div>
+          <div className='col-12 col-md-6 col-xl-4'>
+            <div className='feature-content'>
+              <div className='feature-icon py-3'>
+                <FeatureIconFive />
               </div>
-            </li>
-            <li>
-              <div className='feature-content'>
-                <div className='feature-icon'>
-                  <FeatureIconSix />
-                </div>
-                <div className='d-flex'><h2>Income Projections</h2><span className='mm-above-tag-text mm-mobile-hide'>Coming Soon!</span></div>
-                <p>
-                  Track which investments are paying interest, dividends or royalties and create an income projection
-                  schedule
+              <h2 className='py-3'>Bank Level Security</h2>
+              <p>We utilizing banking level security to keep your account safe and secure.</p>
+            </div>
+          </div>
+          <div className='col-12 col-md-6 col-xl-4'>
+            <div className='feature-content'>
+              <div className='feature-icon py-3'>
+                <FeatureIconSix />
+              </div>
+              <div className='d-flex'><h2 className='py-3'>Income Projections</h2><span className='mm-above-tag-text mm-mb-hide'>Coming Soon!</span></div>
+              <p>
+                Track which investments are paying interest, dividends or royalties and create an income projection
+                schedule
                 </p>
-              </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
@@ -210,89 +207,104 @@ export const HomeBlogSection = () => {
   }
 
   return (
-    <div className='mm-container-right home-blog-section'>
-      <div className='row'>
-        <div className='col-lg-12 home-list blog-list'>
-          <div className='blog-top-content'>
-            <div className='blog-content-left'>
-              <h1>Learn about investing platforms and strategies</h1>
-              <p>
-                <span className='block'>Visit our blog to learn about alternative investing,</span> diversifying your
-                portfolio and crowdfunding.
-              </p>
-            </div>
-            <div className='blog-content-right'>
-              <a
-                className='mm-nav-link'
-                target='_blank'
-                rel='noopener noreferrer'
-                href='https://www.moneyminx.com/blog'
-              >
-                <button className='mm-btn-animate mm-btn-primary'>Visit Blog</button>
-              </a>
-            </div>
+    <div className='home-blog-section'>
+      <div className='blog-content-left'>
+        <h1>Learn about investing platforms and strategies</h1>
+        <p>
+          <span className='block'>
+            Visit our blog to learn about alternative investing,
+          </span>
+            diversifying your
+            portfolio and crowdfunding.
+        </p>
+      </div>
+      <div className='home-list blog-list'>
+        <div className=''>
+          <div className='mm-blog-btn'>
+            <a
+              className='mm-nav-link mm-link-blog-btn'
+              target='_blank'
+              rel='noopener noreferrer'
+              href='https://www.moneyminx.com/blog'
+            >
+              <button className='mm-btn-animate mm-btn-primary'>Visit Blog</button>
+            </a>
           </div>
+        </div>
+        <div className='row'>
+          {blogs.map((blog: any, index: number) => {
+            const span = document.createElement('span');
+            span.innerHTML = blog?.title?.rendered;
+            const title = span.textContent || span.innerText;
+            span.innerHTML = blog?.excerpt?.rendered;
+            const excerpt = span.textContent || span.innerText;
 
-          <ul>
-            {blogs.map((blog: any, index: number) => {
-              const span = document.createElement('span');
-              span.innerHTML = blog?.title?.rendered;
-              const title = span.textContent || span.innerText;
-              span.innerHTML = blog?.excerpt?.rendered;
-              const excerpt = span.textContent || span.innerText;
-
-              return (
-                <li key={index}>
-                  <div className='blog-content'>
-                    <div className='blog-img'>
+            return (
+              <div className='col-md-6 col-xl-4'>
+                <div key={index}>
+                  <div className='mm-blog-details'>
+                    <div className='blog-img mm-blog-img'>
                       <img alt={blog?.slug} src={blog?.jetpack_featured_media_url || HomeBlogImgOne} />
                     </div>
-                    <h2>
+                    <h2 className='blog-header'>
                       <a href={blog?.link || '/'} target='_blank' rel='noopener noreferrer'>
                         {title || ''}
                       </a>
                     </h2>
-                    <p>{excerpt}</p>
+                    <p className='blog-content'>{excerpt}</p>
                   </div>
-                </li>
-              );
-            })}
-          </ul>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div>
+          <a
+            className='mm-nav-link d-xl-none'
+            target='_blank'
+            rel='noopener noreferrer'
+            href='https://www.moneyminx.com/blog'
+          >
+            <button className='mm-btn-animate mm-btn-primary'>Visit Blog</button>
+          </a>
         </div>
       </div>
     </div>
+
   );
 };
 
 export const HomeNetWorthSection = () => {
   return (
-    <div className='mm-container-right-custom home-networth networth-section'>
-      <div className='row'>
-        <div className='col-lg-5'>
-          <div className='networth-text'>
-            <p>
-              <span className='highlighted-text'>A FEW of our many features</span>
+    <section>
+      <div className='mm-networth-section-overview'>
+        <p>
+          <span className='highlighted-text'>A FEW of our many features</span>
+        </p>
+        <div className='row'>
+          <div className='col-12 col-xl-5'>
+            <div className='networth-text'>
+              <h1>Net Worth</h1>
+              <p className='text'>
+                Easy to use dashboard of your investments, assets, liabilities and net worth from all of your accounts,
+                all in one modern, easy-to-use place.
             </p>
-            <h1>Net Worth</h1>
-            <p className='text'>
-              Easy to use dashboard of your investments, assets, liabilities and net worth from all of your accounts,
-              all in one modern, easy-to-use place.
-            </p>
+            </div>
           </div>
-        </div>
-        <div className='col-lg-7'>
-          <div className='networth-chart text-right'>
-            <HomeNetWorthChart />
+          <div className='col-12 col-xl-7'>
+            <div className='mm-networth-chart'>
+              <HomeNetWorthChart />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export const HomeAllocationSection = () => {
   return (
-    <div className='mm-container-right allocation-section'>
+    <section>
       <div className='networth-section rtl'>
         <div className='row'>
           <div className='col-lg-5'>
@@ -309,23 +321,24 @@ export const HomeAllocationSection = () => {
           <div className='col-lg-7'>
             <div className='networth-chart'>
               <HomeAllocationChart />
+              <PerformanceLegend className='mm-networth-chart-legend mt-3' />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export const HomePerformanceSection = () => {
   return (
-    <div className='mm-container-right performance-section'>
-      <div className='networth-section'>
+    <section>
+      <div className='mm-home-performance-section networth-section'>
         <div className='row'>
-          <div className='col-lg-5'>
+          <div className='col-xl-5'>
             <div className='networth-text'>
               <h1>
-                Performance<span className='above-tag-text'>Coming Soon!</span>
+                Performance<span className='mm-above-tag-text mm-mb-hide '>Coming Soon!</span>
               </h1>
               <p className='text'>
                 Easy to use dashboard of your investments, assets, liabilities and net worth, from all your
@@ -333,26 +346,26 @@ export const HomePerformanceSection = () => {
               </p>
             </div>
           </div>
-          <div className='col-lg-7'>
-            <div className='networth-chart text-right'>
+          <div className='col-xl-7'>
+            <div className='mm-home-performance-section-chart'>
               <HomePerformanceChart />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export const MinxWinksSection = () => {
   return (
-    <div className='mm-container-right minxwinks-section'>
-      <div className='networth-section rtl'>
-        <div className='row'>
-          <div className='col-lg-5'>
-            <div className='networth-text pt-4'>
+    <section>
+      <div className='mm-winks-section networth-section rtl'>
+        <div className='row align-items-center'>
+          <div className='col-xl-5'>
+            <div className='networth-text pt-4 mb-5'>
               <h1>
-                Minx Winks<span className='above-tag-text'>!Coming Soon</span>
+                Minx Winks<span className='mm-above-tag-text mm-mb-hide'>!Coming Soon</span>
               </h1>
               <p className='text'>
                 Get inside insights, recommendations, and tips from Money Minx. Get inside insights, recommendations,
@@ -360,26 +373,26 @@ export const MinxWinksSection = () => {
               </p>
             </div>
           </div>
-          <div className='col-lg-7'>
+          <div className='col-xl-7'>
             <div className='networth-chart'>
-              <HomeMinxwinksImg className='mm-custom-networth-chart'/>
+              <HomeMinxwinksImg className='mm-custom-networth-chart' />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export const MinxMeasureSection = () => {
   return (
-    <div className='mm-container-right minxmeasure-section'>
-      <div className='networth-section'>
+    <section>
+      <div className='mm-measure-section networth-section'>
         <div className='row'>
           <div className='col-lg-5'>
             <div className='networth-text'>
               <h1>
-                Minx Measure-up<span className='above-tag-text'>Coming Soon!</span>
+                Minx Measure-up<span className='mm-above-tag-text mm-mb-hide'>Coming Soon!</span>
               </h1>
               <p className='text'>
                 Put your portfolio to the test against similar investors. How does yours stack up? What do you need to
@@ -388,15 +401,15 @@ export const MinxMeasureSection = () => {
             </div>
           </div>
           <div className='col-lg-7'>
-            <div className='networth-chart'>
+            <div className='mm-networth-chart'>
               <HomeMinxMeasure />
             </div>
           </div>
-          <div className='home-coming-soon'>
+          <div className='home-coming-soon mm-sm-md-hide'>
             <span className='highlighted-text'>And Much More Coming Soon!</span>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

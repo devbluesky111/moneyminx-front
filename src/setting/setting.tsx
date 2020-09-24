@@ -5,12 +5,12 @@ import FooterSection from './inc/setting.footer';
 import PlanOverview from './pages/plan-overview';
 import SettingOverview from './pages/setting-overview';
 import ProfileOverview from './pages/profile-overview';
-import AccountOverview from './pages/account-overview';
+import { AccountOverview } from './pages/account-overview';
 import SettingTitleSection from './partials/setting-title';
 import { SettingsProps, SettingPageEnum } from './setting.type';
 
 const Settings: React.FC<SettingsProps> = () => {
-  const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.SETTINGS);
+  const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.ACCOUNTS);
 
   const handlePageSelect = (pageName: SettingPageEnum) => {
     setPage(pageName);
@@ -35,7 +35,7 @@ const Settings: React.FC<SettingsProps> = () => {
       }
 
       default: {
-        return <SettingOverview changeTab={handlePageSelect} />;
+        return <AccountOverview />;
       }
     }
   };

@@ -143,8 +143,8 @@ export const SignupMainSection = () => {
             </div>
           </div>
 
-          <div className='bg-white credintials-wrapper'>
-            <div className='credintials-content'>
+          <div className='bg-white credentials-wrapper'>
+            <div className='credentials-content'>
               <div className='logo-img-wrapper'>
                 <LogoImg />
               </div>
@@ -280,7 +280,7 @@ export const SignupMainSection = () => {
                           </div>
                         )}
 
-                        <div className='credintials-checkbox'>
+                        <div className='credentials-checkbox'>
                           <span className='checkbox-item'>
                             <label className='check-box'>
                               I accept the{' '}

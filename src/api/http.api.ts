@@ -47,7 +47,7 @@ axiosInstance.interceptors.response.use(
 
     const status = error.response?.status;
     const url = error.response?.config?.url;
-    const isAuthenticating = url === urls.auth.LOGIN_IN || url === urls.auth.REGISTER;
+    const isAuthenticating = url === urls.auth.LOGIN_IN || url === urls.auth.REGISTER || url === urls.auth.PROFILE;
 
     const errorResponse = error.response?.data ? error.response.data : error;
 
@@ -91,7 +91,7 @@ const handle401Error = async (error: any) => {
   return retryPendingRequest;
 };
 
-export function get(url: string, params: object = {}): any {
+export function get<P>(url: string, params?: P): any {
   return axiosInstance({
     method: 'get',
     url,
