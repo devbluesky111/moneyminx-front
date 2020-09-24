@@ -157,7 +157,7 @@ ul.features-list {
   }
 }
 
-@media (max-width: 1024px) and (min-width: 768px) {
+@media (max-width: $lg - 376) and (min-width: $md) {
   .banner-piechart {
     max-width: none;
     float: none;

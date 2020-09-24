@@ -97,7 +97,7 @@ const SocialList: React.FC = () => (
   <ul className='navbar-nav'>
     {social.map(({ icon, link }, idx) => {
       return (
-        <li key={idx} className='px-2 social-links'>
+        <li key={idx} className='social-links'>
           <a href={link} target='_blank' rel='noopener noreferrer'>
             {icon}
           </a>

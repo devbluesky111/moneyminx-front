@@ -739,18 +739,18 @@ span.next-icon {
 }
 
 .bg-white.credentials-wrapper.account-setting .credentials-content {
-  @media (max-width: 768px) {
+  @media (max-width: $md) {
     max-width: 100vw;
   }
 }
 
 .estimate-annual-block {
   &__btn {
-    @media (min-width: 768px) {
+    @media (min-width: $md) {
       width: 115px !important;
     }
 
-    @media (min-width: 992px) {
+    @media (min-width: $md + 224) {
       width: 140px !important;
     }
   }

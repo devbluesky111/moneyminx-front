@@ -469,18 +469,18 @@ button.bg-primary:focus {
   position: absolute;
   left: 260px;
 
-  @media (min-width: 1199px) and (max-width: 1372px) {
+  @media (min-width: $lg - 101) and (max-width: $lg - 28) {
     // must rare cases
     left: 264px;
   }
 }
 
 .coming-soon-wrapper {
-  @media (min-width: 992px) {
+  @media (min-width: $md + 224) {
     padding-left: 4.5rem;
   }
 
-  @media (min-width: 1300px) {
+  @media (min-width: $lg - 100) {
     padding-left: 9.5rem;
   }
 }
@@ -503,7 +503,7 @@ button.bg-primary:focus {
       width: 55rem;
     }
 
-    @media (min-width: 992px) and (max-width: 1260px) {
+    @media (min-width: $md + 224) and (max-width: $lg - 140) {
       width: 28rem;
     }
   }
@@ -559,6 +559,11 @@ button.bg-primary:focus {
 
 .networth-chart {
   float: unset;
+
+  @media (max-width: $md) {
+    padding-left: 0 !important;
+  }
+
 }
 
 @media (min-width: $lg) {
