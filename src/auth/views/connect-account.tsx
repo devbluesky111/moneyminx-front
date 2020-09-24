@@ -77,8 +77,8 @@ export const ConnectAccountMainSection = () => {
               </div>
             </div>
           </div>
-          <div className='bg-white credintials-wrapper connect-wrap'>
-            <div className='credintials-content connect-account'>
+          <div className='bg-white credentials-wrapper connect-wrap'>
+            <div className='credentials-content connect-account'>
               <div className='logo-img-wrapper'>
                 <LogoImg />
               </div>

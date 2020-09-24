@@ -51,8 +51,8 @@ export const LoginSessionExpiredMainSection = () => {
             </div>
           </div>
 
-          <div className='bg-white credintials-wrapper'>
-            <div className='credintials-content'>
+          <div className='bg-white credentials-wrapper'>
+            <div className='credentials-content'>
               <div className='logo-img-wrapper'>
                 <LogoImg />
               </div>

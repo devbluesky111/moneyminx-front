@@ -1,7 +1,7 @@
-.credintials-wrapper.connect-wrap {
+.credentials-wrapper.connect-wrap {
   padding-bottom: 183px;
 }
-.credintials-content.connect-account .connect-account-btn {
+.credentials-content.connect-account .connect-account-btn {
   height: 48px;
   width: 236px;
   display: block;
@@ -10,7 +10,7 @@
   margin-bottom: 40px;
   border-radius: 4px;
 }
-.credintials-content.connect-account .connect-account-btn:hover {
+.credentials-content.connect-account .connect-account-btn:hover {
   background-color: $white !important;
   color: $primary;
   border: 1px solid $primary;
@@ -19,7 +19,7 @@ span.manual-heading {
   color: $darkGray;
   font-size: 1rem;
 }
-.credintials-content.connect-account .manual-account-btn {
+.credentials-content.connect-account .manual-account-btn {
   height: 48px;
   width: 236px;
   display: block;
@@ -30,14 +30,14 @@ span.manual-heading {
   border-radius: 4px;
   margin-bottom: 22px;
 }
-.credintials-content.connect-account .manual-account-btn:hover {
+.credentials-content.connect-account .manual-account-btn:hover {
   background-color: $primary !important;
   color: $white;
 }
-.credintials-content.connect-account p {
+.credentials-content.connect-account p {
   margin-bottom: 20px;
 }
-.credintials-content.connect-account {
+.credentials-content.connect-account {
   max-width: 486px;
 }
 .manual-account-section {
@@ -83,7 +83,7 @@ span.zillow-img {
   .mm-container.mm-container-final {
     margin: 0px 40px;
   }
-  .credintials-content {
+  .credentials-content {
     max-width: 86%;
     padding-left: 52px;
   }

@@ -42,7 +42,7 @@ export const ProfileOverview = () => {
         <div className='card-body d-flex justify-content-between align-items-center'>
           <div className='mm-profile-overview__title'>
             {fullName}
-            <span className='text-primary px-2'>#1</span>
+            <span className='text-primary px-2'>#{user.id}</span>
             <Info className='mt-n1' />
           </div>
           <div className='d-flex align-items-center'>
