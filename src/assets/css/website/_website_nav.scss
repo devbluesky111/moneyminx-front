@@ -18,6 +18,8 @@
 .mm-nav-item {
   @extend .nav-item;
   margin: 0 0.5rem;
+  height: 46px;
+
   &:hover {
     border-bottom: 1px solid $primary;
   }
