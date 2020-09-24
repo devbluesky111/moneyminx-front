@@ -48,3 +48,20 @@
     font-size: 1rem;
   }
 }
+
+.copyright-wrapper {
+  opacity: 0.8;
+}
+
+.social-links-wrapper {
+  padding: 26px 0;
+
+  li {
+    opacity: 0.8;
+    padding-right: 20px;
+
+  &:hover {
+    opacity: 1;
+  }
+  }
+}

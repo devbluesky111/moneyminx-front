@@ -693,15 +693,15 @@ ul.weekdate {
     z-index: 999;
     border-color: black transparent;
     border-style: solid;
-    border-width: 0px 9px 9px 9px;
-    height: 0px;
-    width: 0px;
+    border-width: 0 9px 9px 9px;
+    height: 0;
+    width: 0;
     content: '';
   }
 }
 .calender-header h2 {
   font-size: 0.87rem;
-  color: #fff;
+  color: $white;
   font-weight: 500;
   text-align: center;
   margin-bottom: 20px;

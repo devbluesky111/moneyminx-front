@@ -6,7 +6,7 @@ export const FooterSection = () => {
   return (
     <div className='mm-setting-footer'>
       <div className='mm-setting-footer--block'>
-        <div>{footerData.copyRightText.replace(':year', '2020')}</div>
+        <div>{footerData.copyrightText.replace(':year', '2020')}</div>
         <div>
           <ul className='mm-setting-footer--list'>
             <li>
