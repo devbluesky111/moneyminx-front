@@ -103,6 +103,26 @@
   margin-left: 0 !important;
 }
 
+.wf-list-items a {
+
+  opacity: 0.8;
+
+  &:hover {
+    border-bottom: 1px solid $white;
+    opacity: 1;
+  }
+
+}
+
+.social-links {
+  opacity: 0.8;
+  margin-right: 16px;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 @mixin footer-resp {
   .wf-list-wrapper {
     text-align: left;
@@ -122,6 +142,11 @@
     p.light {
       min-width: 50% !important;
     }
+
+    &:hover {
+      border-bottom: 1px solid $white;
+    }
+
   }
 
   .download-btn-wrapper {
@@ -135,6 +160,11 @@
   .website-footer-wrapper {
     padding: 18.31rem 1.25rem 4.06rem 1.25rem;
   }
+}
+
+.download-btn-wrapper {
+  height: 160px;
+  line-height: 160px;
 }
 
 //for mobile view
