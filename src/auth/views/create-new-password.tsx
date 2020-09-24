@@ -83,8 +83,8 @@ export const CreateNewPasswordMainSection = () => {
             </div>
           </div>
 
-          <div className='bg-white credintials-wrapper'>
-            <div className='credintials-content create-new-password'>
+          <div className='bg-white credentials-wrapper'>
+            <div className='credentials-content create-new-password'>
               <div className='logo-img-wrapper'>
                 <LogoImg />
               </div>

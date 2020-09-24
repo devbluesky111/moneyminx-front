@@ -117,8 +117,8 @@ export const AccountSettingMainSection = () => {
             </div>
           </div>
 
-          <div className='bg-white credintials-wrapper account-setting'>
-            <div className='credintials-content'>
+          <div className='bg-white credentials-wrapper account-setting'>
+            <div className='credentials-content'>
               <div className='logo-img-wrapper'>
                 <LogoImg />
               </div>

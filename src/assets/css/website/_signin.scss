@@ -98,25 +98,23 @@
   padding-left: 102px;
 }
 
-.credintials-wrapper {
+.credentials-wrapper {
   width: 58%;
   display: table-cell;
   vertical-align: middle;
   padding-top: 55px;
-  min-height: 90vh;
+  min-height: 70vh;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  border-radius: 6px;
+  z-index: 1;
 }
 
 .mm-container.mm-container-final {
-  margin-right: 0px;
+  margin-right: 0;
 }
-//Credintials Content
+//credentials Content
 
-.credintials-wrapper {
-  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
-  border-radius: 6px;
-}
-
-.credintials-content {
+.credentials-content {
   h1 {
     padding-bottom: 1.3rem;
   }
@@ -126,20 +124,24 @@
   }
 }
 
-.credintials-content .form-wrap input {
+.credentials-content .form-wrap input {
   height: 48px;
   font-size: 0.875rem;
-  border: 1px solid $gray;
+  border: 1px solid $formBorder;
   border-radius: 4px;
   padding: 0 20px;
-  color: $gray;
+  color: $darkGray;
+
+  &::placeholder {
+    color: $gray;
+  }
 }
 
-.credintials-content input.invalid {
+.credentials-content input.invalid {
   border: 1px solid $redAlert;
 }
 
-.credintials-content {
+.credentials-content {
   max-width: 450px;
   padding-left: 100px;
 
@@ -165,7 +167,7 @@ span.forgot-pass {
   padding-bottom: 18px;
   line-height: 1.125rem;
 }
-.credintials-content .form-wrap button {
+.credentials-content .form-wrap button {
   width: 100%;
   display: block;
   height: 48px;
@@ -173,28 +175,28 @@ span.forgot-pass {
   border: 0;
   border-radius: 4px;
 }
-.credintials-content .form-wrap button:hover {
+.credentials-content .form-wrap button:hover {
   color: $white;
 }
-.credintials-content h2 {
+.credentials-content h2 {
   font-weight: normal;
   font-size: 1.75rem;
   margin-bottom: 17px;
   line-height: 2.1875rem;
   color: $black;
 }
-.credintials-content p {
+.credentials-content p {
   margin-bottom: 37px;
   font-weight: $bold;
 }
 
 //forgot password page
 @media (min-width: $sm + 1) {
-  .credintials-content p.f-pwd {
+  .credentials-content p.f-pwd {
     width: 22.125rem;
   }
 }
-.credintials-content .facebook-login {
+.credentials-content .facebook-login {
   font-size: 0.87rem;
   border-top: 1px solid $dimGray;
   padding-top: 34px;
@@ -205,12 +207,12 @@ span.forgot-pass {
     line-height: 1.125rem;
   }
 }
-.credintials-content .fb-icon-wrap {
+.credentials-content .fb-icon-wrap {
   display: inline-block;
   padding-left: 80px;
 }
 
-.credintials-content p > .auth-end-element {
+.credentials-content p > .auth-end-element {
   color: $darkGray;
   line-height: 1.25rem;
 }
@@ -218,8 +220,10 @@ span.forgot-pass {
 //Footer Second
 .footer-second {
   border-top: 1px solid rgba(150, 158, 172, 0.25);
-  padding: 40px 0px 20px;
-  position: relative;
+  padding: 24px 0 12px;
+  position: fixed;
+  bottom: 0;
+  background-color: $lightBg;
 }
 ul.footer-list {
   padding-left: 0;
@@ -331,7 +335,7 @@ ul.footer-list li {
     position: static;
     display: none;
   }
-  .credintials-wrapper {
+  .credentials-wrapper {
     width: 100%;
   }
   .mm-container.mm-container-final {
@@ -347,7 +351,7 @@ ul.footer-list li {
 }
 
 @media (max-width: $md - 1) {
-  .credintials-content {
+  .credentials-content {
     max-width: none;
     padding-left: 40px;
     padding-right: 38px;

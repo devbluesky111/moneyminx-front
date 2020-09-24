@@ -445,9 +445,9 @@ span.above-tag-text {
 }
 
 .mm-btn-primary-outline:hover {
-  color: #ffffff;
-  background-color: $primary !important;
-  border-color: $primary;
+  color: $primary;
+  background-color: $white !important;
+  border-color: $white;
 }
 
 a.bg-primary:hover,
