@@ -118,7 +118,7 @@ const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
       {isSignupToday ? <SignupToday /> : null}
 
       <div className='website-footer-wrapper bg-secondary text-white'>
-        <div className='footer-hero-wrapper p-b-20'>
+        <div className='footer-hero-wrapper'>
           <div className='row'>
             <div className='col-lg-6'>
               <div className='coming-soon-wrapper'>

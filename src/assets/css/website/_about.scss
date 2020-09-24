@@ -186,15 +186,6 @@ span.twitter-icon {
   padding-top: 40px;
 }
 
-.highlighted-text {
-  font-size: 1.125rem;
-  line-height: 18px;
-  letter-spacing: 0.3em;
-  color: $purple;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
 @media (max-width: $lg+1) {
   .owner-section .owner-info {
     padding-right: 40px;
@@ -429,11 +420,7 @@ span.twitter-icon {
   svg {
     margin-bottom: 140px;
 
-    @media (max-width: $md - 1) {
-      background: #ffffff;
-      box-shadow: 0 2px 8px #e2e8f3, inset 0 -1px 0 #ebecf1;
-      border-radius: 6px;
-    }
+
   }
 
   @media (min-width: $md) {
