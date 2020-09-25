@@ -119,7 +119,7 @@ const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
 
       <div className='website-footer-wrapper bg-secondary text-white'>
         <div className='footer-hero-wrapper pb-4'>
-          <div className='row'>
+          <div className='row my-5 align-items-center'>
             <div className='col-lg-6'>
               <div className='coming-soon-wrapper'>
                 <h1>Coming Soon</h1>
