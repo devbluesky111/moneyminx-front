@@ -44,9 +44,9 @@ export const ForgotPasswordMainSection = () => {
               <span className='block'>Three easy steps to get </span>started with Money Minx
             </h1>
             <ul>
-              <li>Find your institutions</li>
-              <li>Connect it securely to Money Minx</li>
-              <li>Let Money Minx to the rest</li>
+              <li className='pt-2'>Find your institutions</li>
+              <li className='pt-2'>Connect it securely to Money Minx</li>
+              <li className='pt-2'>Let Money Minx to the rest</li>
             </ul>
             <div className='guide-bottom'>
               <h4>Serious about security</h4>
