@@ -8,7 +8,7 @@ const SignupToday = () => {
       <div className='row align-items-center'>
         <div className='col-lg-6'>
           <div className='text-wrapper'>
-            <h1>Sign Up today</h1>
+            <h1>Sign up today</h1>
             <p>
               Asset allocation, performance tracking, and more. Discover the effortless way to stay on top of your
               investments.

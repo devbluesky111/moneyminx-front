@@ -12,10 +12,12 @@
   cursor: pointer;
   position: absolute;
   align-items: baseline;
+
   button {
     margin-left: 1rem;
     color: $white;
     opacity: 0.7;
+
     &:hover {
       color: lighten($color: $white, $amount: 20);
     }

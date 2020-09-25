@@ -157,7 +157,7 @@ ul.features-list {
   }
 }
 
-@media (max-width: 1024px) and (min-width: 768px) {
+@media (max-width: $lg - 376) and (min-width: $md) {
   .banner-piechart {
     max-width: none;
     float: none;
@@ -204,4 +204,40 @@ ul.features-list {
   .download-btn-wrapper svg:nth-child(2) {
     margin-left: 0 !important;
   }
+}
+
+.mm-banner-chart {
+  float: unset;
+  padding-left: calc(100% - 555px);
+}
+
+@media ( min-width: $md) {
+  .mm-show-sm {
+    display: none;
+  }
+}
+
+@media ( max-width: $md + 200) {
+  .website-footer-wrapper {
+    padding: 9.125rem 1.25rem 4.06rem 1.25rem;
+  } 
+}
+
+@media ( min-width: $md + 201) {
+  .website-footer-wrapper {
+    padding: 12.5rem 1.25rem 4.06rem 1.25rem;
+  } 
+}
+
+@media ( max-width: $md - 1 ) {
+  .mm-show-md {
+    display: none;
+  }
+  .pricing-chart-wrapper {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  .website-footer-wrapper {
+    padding: 6.25rem 1.25rem 4.06rem 1.25rem;
+  } 
 }

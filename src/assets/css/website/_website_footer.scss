@@ -8,13 +8,52 @@
 }
 
 .signup-today-wrapper {
-  padding: 4rem;
+  padding: 1.5rem;
   border-radius: 0.4rem;
   position: absolute;
   min-height: 290px;
-  left: 120px;
-  right: 120px;
+  left: 20px;
+  right: 20px;
   top: -145px;
+
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  p {
+    max-width: 360px;
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: $md) {
+    padding: 3rem 3rem 1rem 4rem;
+    min-height: 290px;
+    left: 85px;
+    right: 85px;
+    top: -145px;
+
+    button {
+      margin-bottom: 20px !important;
+    }
+
+    p {
+      max-width: 400px;
+      padding: 10px 0 12px 0;
+    }
+    h1 {
+      font-size: 3.5rem !important;
+    }
+  }
+
+  @media (min-width: $lg) {
+    padding: 3rem 6rem 1rem 6rem;
+    border-radius: 0.4rem;
+    position: absolute;
+    min-height: 290px;
+    left: 120px;
+    right: 120px;
+    top: -145px;
+  }
 }
 
 .wf-list-wrapper p {
@@ -34,20 +73,14 @@
 }
 
 .footer-hero-wrapper {
-  margin-bottom: 50px;
+  margin-bottom: 0;
 
   @media (min-width: $md) {
-    margin-bottom: 100px;
+    margin-bottom: 50px;
   }
 }
 
 @media (max-width: $md) {
-  .signup-today-wrapper {
-    padding: 2rem;
-    left: 80px;
-    right: 80px;
-  }
-
   .wf-list-wrapper {
     text-align: left;
   }
@@ -59,27 +92,9 @@
   }
 }
 
-@media (min-width: $sm) and (max-width: $md) {
-  .signup-today-wrapper {
-    padding: 2rem;
-    left: 35px;
-    right: 35px;
-  }
-
-  .signup-today-wrapper h1 {
-    font-size: 2.3rem !important;
-  }
-}
-
 @media (max-width: $sm) {
   .website-footer-wrapper {
     padding: 290px 1rem 1rem 1rem;
-  }
-
-  .signup-today-wrapper {
-    padding: 1.5rem;
-    left: 20px;
-    right: 20px;
   }
 
   .signup-btn-wrapper {
@@ -99,6 +114,25 @@
   margin-left: 0 !important;
 }
 
+.wf-list-items a {
+  opacity: 0.8;
+
+  &:hover {
+    border-bottom: 1px solid $white;
+    opacity: 1;
+  }
+}
+
+.social-links {
+  opacity: 0.8;
+  margin-right: 16px;
+  padding: 8px 0;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 @mixin footer-resp {
   .wf-list-wrapper {
     text-align: left;
@@ -109,15 +143,31 @@
   }
 
   .wf-list-items {
-    display: flex;
+    display: block;
     justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 2rem;
     margin-top: 1rem;
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
 
     p.light {
       min-width: 50% !important;
     }
+
+    &:hover {
+      border-bottom: 1px solid $white;
+    }
+
+    @media (min-width: $md) {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      margin-top: 1rem;
+    }
+
   }
 
   .download-btn-wrapper {
@@ -131,6 +181,11 @@
   .website-footer-wrapper {
     padding: 18.31rem 1.25rem 4.06rem 1.25rem;
   }
+}
+
+.download-btn-wrapper {
+  height: 160px;
+  line-height: 160px;
 }
 
 //for mobile view
@@ -163,18 +218,6 @@
   .wf-list-items p.light {
     font-size: 1.125rem;
     margin-top: 1.8rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .signup-today-wrapper {
-    padding: 5rem !important;
-    width: 38rem;
-    margin: auto;
-
-    button {
-      margin-bottom: 20px !important;
-    }
   }
 }
 

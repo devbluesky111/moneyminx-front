@@ -7,6 +7,7 @@ import { pricingDetailConstant } from 'common/common.constant';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as PricingTickIcon } from 'assets/images/pricing/tick-icon.svg';
 import { ReactComponent as PricingPieChart } from 'assets/images/pricing/pricing-pie-chart.svg';
+import { ReactComponent as PricingPieChartMobile } from 'assets/images/pricing/pricing-pie-chart-mobile.svg';
 
 const Pricing = () => {
   return (
@@ -35,8 +36,9 @@ export const PricingTopSection = () => {
           </div>
         </div>
         <div className='col-lg-7 pricing-chart-wrapper'>
-          <div className='banner-piechart'>
-            <PricingPieChart />
+          <div className='banner-piechart mm-banner-chart'>
+            <PricingPieChart className='mm-show-md' />
+            <PricingPieChartMobile className='mm-show-sm' />
           </div>
         </div>
       </div>

@@ -246,12 +246,12 @@ export const HomeBlogSection = () => {
                     <div className='blog-img mm-blog-img'>
                       <img alt={blog?.slug} src={blog?.jetpack_featured_media_url || HomeBlogImgOne} />
                     </div>
-                    <h2>
+                    <h2 className='blog-header'>
                       <a href={blog?.link || '/'} target='_blank' rel='noopener noreferrer'>
                         {title || ''}
                       </a>
                     </h2>
-                    <p>{excerpt}</p>
+                    <p className='blog-content'>{excerpt}</p>
                   </div>
                 </div>
               </div>
