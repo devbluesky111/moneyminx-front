@@ -328,7 +328,7 @@
   }
 }
 
-@media (max-width: 1024px) and (min-width: 768px) {
+@media (max-width: $lg - 376) and (min-width: $md) {
   .security-chart-wrapper {
     overflow: visible !important;
   }
@@ -379,7 +379,7 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: $md) {
   .mm-container-right {
     margin: 0 64px;
     overflow: visible !important;
@@ -390,14 +390,14 @@
   margin-left: -15rem;
 
   @media (min-width: $sm + 200) {
-    margin-left: 0rem;
+    margin-left: 0;
   }
 }
 
 .security-left-banner,
 .mm-container-right {
   @media (min-width: $md) {
-    padding: 0px 64px;
+    padding: 0 64px;
   }
 }
 
@@ -407,26 +407,12 @@
 }
 }
 
-@media (min-width: 768px){
-.signup-today-wrapper {
-  padding: 2rem;
-  width: 38rem;
-  margin: auto;
-}
-}
-
-@media (min-width: 768px){
-  .signup-today-wrapper {
-    width: unset;
-  }
-  }
-
-@media (min-width: 768px) {
+@media (min-width: $md) {
   .mm-security-custom-banner {
-    padding: 0px;
+    padding: 0;
   }
   .mm-security-chart-img {
-    margin-left: 0px;
+    margin-left: 0;
   }
 }
 
@@ -434,6 +420,6 @@
   @media (min-width: 992px) {
     margin: 0;
     padding-left: 126px;
-    padding-right: 0px;
+    padding-right: 0;
   }
 }

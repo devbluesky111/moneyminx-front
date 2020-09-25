@@ -68,7 +68,7 @@ const WebsiteHeader = () => {
               <ul className='navbar-nav'>
                 <li className={navClass('login')}>
                   <Link className='mm-nav-link' to='login'>
-                    Login
+                    Log In
                   </Link>
                 </li>
                 <li>

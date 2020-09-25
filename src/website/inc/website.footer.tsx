@@ -30,7 +30,7 @@ interface Data {
 
 const List = ({ data }: Data) => {
   const list = data.list.map((item, idx) => (
-    <p key={idx} className='light'>
+    <p key={idx} className=''>
       {item.external ? (
         <a href={item.link} target='_blank' rel='noopener noreferrer' className='text-white'>
           {item.name}
@@ -73,7 +73,7 @@ const social = [
   },
   {
     icon: <TwitterIcon />,
-    link: 'https://twitter.com/getmoneyminx',
+    link: 'https://twitter.com/moneyminxapp',
   },
   {
     icon: <InstagramIcon />,
@@ -97,7 +97,7 @@ const SocialList: React.FC = () => (
   <ul className='navbar-nav'>
     {social.map(({ icon, link }, idx) => {
       return (
-        <li key={idx} className='px-2'>
+        <li key={idx} className='social-links'>
           <a href={link} target='_blank' rel='noopener noreferrer'>
             {icon}
           </a>
@@ -118,7 +118,7 @@ const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
       {isSignupToday ? <SignupToday /> : null}
 
       <div className='website-footer-wrapper bg-secondary text-white'>
-        <div className='footer-hero-wrapper pb-4'>
+        <div className='footer-hero-wrapper'>
           <div className='row'>
             <div className='col-lg-6'>
               <div className='coming-soon-wrapper'>
@@ -143,12 +143,12 @@ const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
               <div className='mm-links-wrapper'>{footerListComponent}</div>
             </div>
             <div className='col-lg-6'>
-              <div className='info-copy-right-wrapper'>
+              <div className='info-copyright-wrapper'>
                 <div className='info-wrapper light py-2'>{footerData.moneyminxInfo}</div>
-                <div className='social-links-wrapper py-2 d-flex flex-row'>
+                <div className='social-links-wrapper d-flex flex-row'>
                   <SocialList />
                 </div>
-                <div className='copy-right-wrapper light py-2'>{footerData.copyRightText.replace(':year', '2020')}</div>
+                <div className='copyright-wrapper'>{footerData.copyrightText.replace(':year', '2020')}</div>
               </div>
             </div>
           </div>

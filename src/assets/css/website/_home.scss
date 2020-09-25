@@ -104,6 +104,8 @@
   font-weight: 400;
   color: $black;
   font-size: 1.75rem;
+  max-width: 250px;
+  line-height: 2.1875rem;
 }
 
 .early-adopter-section .early-adopter-tag svg {
@@ -135,17 +137,8 @@
   padding-bottom: 0;
 }
 
-.home-feature-section .feature-content h2 {
-  margin-bottom: 16px;
-  color: $white;
-}
-
 .home-feature-section .feature-content {
   max-width: 85%;
-}
-
-.home-feature-section .feature-content p {
-  color: $white;
 }
 
 .home-feature-section li {
@@ -193,7 +186,6 @@
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   color: $black;
-
   a {
     color: $black;
   }
@@ -226,14 +218,20 @@
   width: 30.33%;
 }
 
+.blog-header {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
 .blog-content {
-  p {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
-  }
 }
 
 //allocation section
@@ -471,18 +469,18 @@ button.bg-primary:focus {
   position: absolute;
   left: 260px;
 
-  @media (min-width: 1199px) and (max-width: 1372px) {
+  @media (min-width: $lg - 101) and (max-width: $lg - 28) {
     // must rare cases
     left: 264px;
   }
 }
 
 .coming-soon-wrapper {
-  @media (min-width: 992px) {
+  @media (min-width: $md + 224) {
     padding-left: 4.5rem;
   }
 
-  @media (min-width: 1300px) {
+  @media (min-width: $lg - 100) {
     padding-left: 9.5rem;
   }
 }
@@ -505,7 +503,7 @@ button.bg-primary:focus {
       width: 55rem;
     }
 
-    @media (min-width: 992px) and (max-width: 1260px) {
+    @media (min-width: $md + 224) and (max-width: $lg - 140) {
       width: 28rem;
     }
   }
@@ -561,6 +559,11 @@ button.bg-primary:focus {
 
 .networth-chart {
   float: unset;
+
+  @media (max-width: $md) {
+    padding-left: 0 !important;
+  }
+
 }
 
 @media (min-width: $lg) {
@@ -615,7 +618,7 @@ button.bg-primary:focus {
 @media (max-width: $sm + 300) {
   .adopter-top-wrap,
   .earlyadopter-list {
-    padding-left: 0rem !important;
+    padding-left: 0 !important;
   }
 
   .home-list.blog-list {
@@ -624,8 +627,8 @@ button.bg-primary:focus {
   }
 
   .networth-text {
-    padding-left: 0rem;
-    padding-right: 0rem;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .networth-chart.text-right {
@@ -755,9 +758,9 @@ button.bg-primary:focus {
     }
 
     p {
-      color: gray;
-      font-weight: normal;
-      font-size: 20px;
+      color: $gray;
+      font-weight: 300;
+      font-size: 1.25rem;
       max-width: 100%;
 
       @media (min-width: $md + 372) {
@@ -766,9 +769,9 @@ button.bg-primary:focus {
     }
 
     small {
-      color: gray;
-      font-weight: 500;
-      font-size: 14px;
+      color: $gray;
+      font-weight: 300;
+      font-size: 0.875rem;
     }
   }
 
@@ -806,7 +809,7 @@ button.bg-primary:focus {
 
     h3 {
       font-weight: normal;
-      font-size: 28px;
+      font-size: 1.75rem;
     }
   }
 
@@ -817,15 +820,19 @@ button.bg-primary:focus {
   .adopter-top-wrap {
     margin-bottom: 60px;
 
+    p {
+      font-weight: 300;
+    }
+
     @media (min-width: $md + 372) {
       margin-bottom: 110px;
     }
   }
 
   p {
-    font-weight: normal;
-    font-size: 20px;
-    color: gray;
+    font-weight: 300;
+    font-size: 1.25rem;
+    color: $gray;
   }
 
   .mm-home-feature-section {
@@ -851,15 +858,16 @@ button.bg-primary:focus {
       h2,
       p {
         color: $white;
-        font-weight: normal;
+        font-weight: 300;
       }
 
       h2 {
-        font-size: 28px;
+        font-size: 1.75rem;
       }
 
       p {
-        font-size: 18px;
+        font-size: 1.125rem;
+        max-width: 300px;
       }
     }
   }
@@ -869,7 +877,7 @@ button.bg-primary:focus {
       h2,
       a {
         font-weight: 300;
-        font-size: 32px;
+        font-size: 2rem;
         color: $black;
       }
     }
@@ -944,7 +952,7 @@ button.bg-primary:focus {
     }
 
     span.mm-above-tag-text {
-      color: #534cea;
+      color: $purple;
       font-size: 1.125rem;
       line-height: 1.437rem;
       background: rgba(83, 76, 234, 0.2);
@@ -966,7 +974,7 @@ button.bg-primary:focus {
 
   .mm-winks-section {
     .mm-above-tag-text {
-      color: #534cea;
+      color: $purple;
       font-size: 1.125rem;
       line-height: 1.437rem;
       background: rgba(83, 76, 234, 0.2);
@@ -1010,10 +1018,22 @@ button.bg-primary:focus {
     }
   }
 
-  .mm-measure-section {
-    .highlighted-text {
-      font-weight: bold;
+
+  .highlighted-text {
+    font-size: 0.875rem;
+    line-height: 18px;
+    letter-spacing: 0.3em;
+    color: $purple;
+    text-transform: uppercase;
+    font-weight: 700;
+
+    @media (min-width: $md) {
+      font-size: 1.125rem;
     }
+  }
+
+
+  .mm-measure-section {
 
     .mm-mb-hide {
       display: none;
@@ -1032,7 +1052,7 @@ button.bg-primary:focus {
     }
 
     .mm-above-tag-text {
-      color: #534cea;
+      color: $purple;
       font-size: 1.125rem;
       line-height: 1.437rem;
       background: rgba(83, 76, 234, 0.2);
@@ -1048,7 +1068,12 @@ button.bg-primary:focus {
 
 .adopter-top-wrap h2 {
   font-weight: 300;
-  font-size: 56px;
+  font-size: 2rem;
+  padding-bottom: 14px;
+
+  @media (min-width: $md) {
+    font-size: 3.5rem;
+  }
 }
 
 .mm-networth-chart-legend {
