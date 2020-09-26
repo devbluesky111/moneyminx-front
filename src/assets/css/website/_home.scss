@@ -162,16 +162,23 @@
 
 .home-blog-section .blog-content-left {
   width: 85%;
-}
 
-.home-blog-section .blog-content-left h1 {
-  max-width: 748px;
-  line-height: 55px;
-  margin-bottom: 40px;
-}
+  h2 {
+    max-width: 748px;
+    line-height: 46px;
+    margin-bottom: 20px;
+    font-weight: 300;
+    font-size: 2.25rem;
 
-.home-blog-section .blog-content-left p {
-  color: $gray;
+    @media (min-width: $md) {
+      font-size: 3.5rem;
+      margin-bottom: 40px;
+    }
+  }
+
+  p {
+    color: $gray;
+  }
 }
 
 .home-blog-section .blog-content h2 {
@@ -186,6 +193,7 @@
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   color: $black;
+
   a {
     color: $black;
   }
@@ -316,7 +324,11 @@ span.above-tag-text {
 .home-coming-soon {
   text-align: center;
   margin: auto;
-  padding-top: 78px;
+  padding: 40px 0 40px 0;
+
+  @media (min-width: $md) {
+    padding: 80px 0 80px 0;
+  }
 }
 
 @media (max-width: $lg+1) {
@@ -398,7 +410,7 @@ span.above-tag-text {
     width: 100%;
   }
 
-  .home-blog-section .blog-content-left h1 {
+  .home-blog-section .blog-content-left h2 {
     max-width: none;
   }
 }
@@ -532,11 +544,6 @@ button.bg-primary:focus {
   .mm-scroll-down {
     margin-top: 5rem;
   }
-}
-
-.main-content {
-  overflow: hidden;
-  padding: 40px 0 0 0;
 }
 
 .mm-mobile-hide {
@@ -747,6 +754,12 @@ button.bg-primary:focus {
 
     h1 {
       margin-bottom: 32px;
+      font-size: 2.25rem;
+
+      @media (min-width: $md) {
+        font-size: 3.3rem;
+      }
+
     }
 
     button {
@@ -913,6 +926,12 @@ button.bg-primary:focus {
   }
 
   .mm-networth-section-overview {
+    margin-top: 40px;
+
+    @media (min-width: $sm) {
+      margin-top: 60px;
+    }
+
     p {
       margin-bottom: 60px;
     }
@@ -1018,21 +1037,6 @@ button.bg-primary:focus {
     }
   }
 
-
-  .highlighted-text {
-    font-size: 0.875rem;
-    line-height: 18px;
-    letter-spacing: 0.3em;
-    color: $purple;
-    text-transform: uppercase;
-    font-weight: 700;
-
-    @media (min-width: $md) {
-      font-size: 1.125rem;
-    }
-  }
-
-
   .mm-measure-section {
 
     .mm-mb-hide {
@@ -1066,7 +1070,7 @@ button.bg-primary:focus {
   }
 }
 
-.adopter-top-wrap h2 {
+.adopter-top-wrap h3 {
   font-weight: 300;
   font-size: 2rem;
   padding-bottom: 14px;
@@ -1109,10 +1113,6 @@ button.bg-primary:focus {
 }
 
 @media (max-width: $md + 432) {
-  .mm-new-container .mm-networth-section-overview p {
-    margin-top: 60px;
-  }
-
   .networth-text {
     margin-bottom: 40px;
   }

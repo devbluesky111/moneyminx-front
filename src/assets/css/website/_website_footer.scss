@@ -4,7 +4,17 @@
 }
 
 .website-footer-wrapper {
-  padding: 290px $s4 $s4 $s4;
+  padding: 19rem 1rem 1rem 1rem;
+
+  @media (min-width: $sm) {
+    padding: 19rem 2rem 1rem 2rem
+  }
+  @media (min-width: $md) {
+    padding: 19rem 4rem 3rem 5rem
+  }
+  @media (min-width: $lg) {
+    padding: 19rem 4rem 4rem 4rem
+  }
 }
 
 .signup-today-wrapper {
@@ -86,17 +96,9 @@
   }
 }
 
-@media (max-width: $sm + $md) {
-  .website-footer-wrapper {
-    padding-top: 315px;
-  }
-}
+
 
 @media (max-width: $sm) {
-  .website-footer-wrapper {
-    padding: 290px 1rem 1rem 1rem;
-  }
-
   .signup-btn-wrapper {
     width: 100%;
   }
@@ -114,15 +116,6 @@
   margin-left: 0 !important;
 }
 
-.wf-list-items a {
-  opacity: 0.8;
-
-  &:hover {
-    border-bottom: 1px solid $white;
-    opacity: 1;
-  }
-}
-
 .social-links {
   opacity: 0.8;
   margin-right: 16px;
@@ -133,8 +126,8 @@
   }
 }
 
-@mixin footer-resp {
-  .wf-list-wrapper {
+
+.wf-list-wrapper {
     text-align: left;
 
     p {
@@ -142,7 +135,7 @@
     }
   }
 
-  .wf-list-items {
+.wf-list-items {
     display: block;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -151,6 +144,15 @@
     columns: 2;
     -webkit-columns: 2;
     -moz-columns: 2;
+
+     a {
+       opacity: 0.8;
+
+       &:hover {
+         border-bottom: 1px solid $white;
+         opacity: 1;
+       }
+     }
 
     p.light {
       min-width: 50% !important;
@@ -161,16 +163,23 @@
     }
 
     @media (min-width: $md) {
-      display: flex;
+      display: initial;
       justify-content: space-between;
       flex-wrap: wrap;
       margin-bottom: 2rem;
       margin-top: 1rem;
     }
 
+    @media (min-width: $lg) {
+      p.light {
+        font-size: 1.125rem;
+        margin-top: 1.8rem;
+      }
+    }
+
   }
 
-  .download-btn-wrapper {
+.download-btn-wrapper {
     display: flex;
 
     .first-svg-item {
@@ -178,29 +187,17 @@
     }
   }
 
-  .website-footer-wrapper {
-    padding: 18.31rem 1.25rem 4.06rem 1.25rem;
-  }
-}
-
 .download-btn-wrapper {
-  height: 160px;
+  height: 100px;
   line-height: 160px;
-}
 
-//for mobile view
-@media (max-width: $sm) {
-  @include footer-resp;
+  @media (min-width: $sm) {
+    height: 160px;
+  }
+
 }
 
 // for responsiveness between mobile and tablet view
-@media (max-width: $med) {
-  @include footer-resp;
-
-  .website-footer-wrapper > .p-t-176 {
-    padding-top: 3.8125rem !important;
-  }
-}
 
 @media (min-width: $lg) {
   .coming-soon-wrapper {
@@ -215,10 +212,6 @@
     padding-right: 2.5rem;
   }
 
-  .wf-list-items p.light {
-    font-size: 1.125rem;
-    margin-top: 1.8rem;
-  }
 }
 
 @media (max-width: $sm + 200) {

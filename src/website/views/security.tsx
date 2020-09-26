@@ -56,7 +56,7 @@ export const SecurityHeroSection = () => {
         <SecurityPieChart />
       </div>
       <div className='row'>
-        <h1>Your Data is Protected</h1>
+        <p className='large-heading-light'>Your Data is Protected</p>
         <div className='text-wrap'>
           <p>Your sensitive information is always protected, always secure.</p>
         </div>
@@ -91,7 +91,7 @@ export const SecurityPracticeSection = () => {
       <div className='mm-container-right SecurityPractice'>
         <div className='row security-top'>
           <div className='col-lg-6'>
-            <h1>Secure. Private. Trusted.</h1>
+            <h2 className='large-heading-light'>Secure. Private. Trusted.</h2>
             <p className='text text-gap'>
               Our website’s encryption is of the utmost importance. We stay on top of security vulnerabilities and keep
               up-to-date with best practices, including the followingractices, including the following:
@@ -148,7 +148,7 @@ export const SecurityPartneredSection = () => {
             <div className='security-logo'>
               <SecurityYodleeLogo />
             </div>
-            <h1>We’ve partnered with the industry leader to keep your accounts safe.</h1>
+            <h2 className='large-heading-light'>We’ve partnered with the industry leader to keep your accounts safe.</h2>
             <p className='text'>
               We use the best of the best to aggregate your account’s data, Yodlee. Yodlee is a public company with over
               a decade of experience connecting with financial institutions, They provide an added layer of safety
@@ -170,7 +170,7 @@ export const SecurityInvestmentSection = () => {
         <div className='row'>
           <div className='col-lg-12'>
             <div className='investment-wrap'>
-              <h1 className='mb-5'>No One Can Access Your Money or Your Investments</h1>
+              <h2 className='large-heading-light mb-5'>No One Can Access Your Money or Your Investments</h2>
               <p className='text'>
                 Your Money Minx account only has read access to your data. Money Minx can’t trigger transfers,
                 transactons or any other events with your banks, brokerages and investment sites. In the event that your

@@ -81,7 +81,7 @@ export const HomeEarlyAdopterSection = () => {
     <section>
       <div className=''>
         <div className='adopter-top-wrap'>
-          <h2>Early Adopter Perks</h2>
+          <h3>Early Adopter Perks</h3>
           <p>Money Minx early adopters get these awesome perks. <br /> Only available while we are in Beta.</p>
         </div>
         <div className='row'>
@@ -209,7 +209,7 @@ export const HomeBlogSection = () => {
   return (
     <div className='home-blog-section'>
       <div className='blog-content-left'>
-        <h1>Learn about investing platforms and strategies</h1>
+        <h2>Learn about investing platforms and strategies</h2>
         <p>
           <span className='block'>
             Visit our blog to learn about alternative investing,
@@ -284,7 +284,7 @@ export const HomeNetWorthSection = () => {
         <div className='row'>
           <div className='col-12 col-xl-5'>
             <div className='networth-text'>
-              <h1>Net Worth</h1>
+              <h2>Net Worth</h2>
               <p className='text'>
                 Easy to use dashboard of your investments, assets, liabilities and net worth from all of your accounts,
                 all in one modern, easy-to-use place.
@@ -309,7 +309,7 @@ export const HomeAllocationSection = () => {
         <div className='row'>
           <div className='col-lg-5'>
             <div className='networth-text pt-0'>
-              <h1>Allocations</h1>
+              <h2>Allocations</h2>
               <p className='text'>
                 Always up to date asset allocation pie chart gives you a 360 degree view of your investments and how
                 diversified your portfolio is. This at-a-glance visual give you immediate insight on where your money is
@@ -337,9 +337,9 @@ export const HomePerformanceSection = () => {
         <div className='row'>
           <div className='col-xl-5'>
             <div className='networth-text'>
-              <h1>
+              <h2>
                 Performance<span className='mm-above-tag-text mm-mb-hide '>Coming Soon!</span>
-              </h1>
+              </h2>
               <p className='text'>
                 Easy to use dashboard of your investments, assets, liabilities and net worth, from all your
                 institutions, all consolidated in one place.
@@ -364,9 +364,9 @@ export const MinxWinksSection = () => {
         <div className='row align-items-center'>
           <div className='col-xl-5'>
             <div className='networth-text pt-4 mb-5'>
-              <h1>
+              <h2>
                 Minx Winks<span className='mm-above-tag-text mm-mb-hide'>!Coming Soon</span>
-              </h1>
+              </h2>
               <p className='text'>
                 Get inside insights, recommendations, and tips from Money Minx. Get inside insights, recommendations,
                 and tips from Money Minx. Get inside insights, recommendations, and tips from Money Minx.
@@ -391,9 +391,9 @@ export const MinxMeasureSection = () => {
         <div className='row'>
           <div className='col-lg-5'>
             <div className='networth-text'>
-              <h1>
+              <h2>
                 Minx Measure-up<span className='mm-above-tag-text mm-mb-hide'>Coming Soon!</span>
-              </h1>
+              </h2>
               <p className='text'>
                 Put your portfolio to the test against similar investors. How does yours stack up? What do you need to
                 add? How can you further diversify?
@@ -405,7 +405,7 @@ export const MinxMeasureSection = () => {
               <HomeMinxMeasure />
             </div>
           </div>
-          <div className='home-coming-soon mm-sm-md-hide'>
+          <div className='home-coming-soon'>
             <span className='highlighted-text'>And Much More Coming Soon!</span>
           </div>
         </div>

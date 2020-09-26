@@ -1,9 +1,9 @@
 .main-content {
-  padding: 40px 0 200px 0;
 
-  @media (max-width: $md) {
-    padding: 40px 0 100px 0;
+  @media (min-width: $lg) {
+    padding: 40px 0 1px 0;
   }
+
 }
 
 .wrapper {
