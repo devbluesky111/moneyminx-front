@@ -10,14 +10,26 @@ import NetworthHead from './inc/networth-head';
 import SimpleBarChart from './simple-bar-chart';
 import NetworthFilter from './inc/networth-filter';
 import ConnectionAlert from './inc/connection-alert';
+import useNetworth from 'networth/hooks/useNetworth';
+// import { AccountCategory } from 'networth/networth.enum';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 const Networth = () => {
   const connectionAlert = useAlert();
+  const { loading, accounts, networth } = useNetworth();
 
   useEffect(() => {
     connectionAlert.open();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (loading || !networth || !accounts) {
+    return <CircularSpinner />;
+  }
+
+  // const investmentAssets = accounts[AccountCategory.INVESTMENT_ASSETS];
+  // const otherAssets = accounts[AccountCategory.OTHER_ASSETS];
+  // const liablities = accounts[AccountCategory.LIABILITIES];
 
   return (
     <NetworthLayout>

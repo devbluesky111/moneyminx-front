@@ -32,4 +32,7 @@ export const urls = {
   yodlee: {
     FAST_LINK: '/account/yodlee/fastlink',
   },
+  networth: {
+    NETWORTH: '/networth',
+  },
 };
