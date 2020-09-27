@@ -19,7 +19,7 @@
   }
 
 }
-//Guide Content
+
 .guide-content {
   width: 46%;
   display: table-cell;
@@ -104,6 +104,13 @@
     }
   }
 }
+.social-login-fb {
+  &:hover {
+    box-shadow: 0 4px 8px #B8CCE0;
+    border-radius: 50%;
+  }
+}
+
 .fb-login-icon {
   cursor: pointer;
 }
@@ -138,7 +145,7 @@
   border-radius: 6px 0 0 6px;
   z-index: 1;
 
-  @media (min-width: $md) { 
+  @media (min-width: $md) {
     padding-top: 40px;
   }
   @media (min-width: $md + 1) {

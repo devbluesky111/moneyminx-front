@@ -40,13 +40,11 @@ export const ForgotPasswordMainSection = () => {
             <Link className='logo-img-wrap' to='/'>
               <LogoImg />
             </Link>
-            <h1>
-              <span className='block'>Three easy steps to get </span>started with Money Minx
-            </h1>
+            <h1>Three easy steps to get started with Money Minx</h1>
             <ul>
-              <li className='pt-2'>Find your institutions</li>
+              <li className='pt-2'>Find your accounts</li>
               <li className='pt-2'>Connect it securely to Money Minx</li>
-              <li className='pt-2'>Let Money Minx to the rest</li>
+              <li className='pt-2'>Let Money Minx do the rest</li>
             </ul>
             <div className='guide-bottom'>
               <h4>Serious about security</h4>

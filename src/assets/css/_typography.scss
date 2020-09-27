@@ -27,3 +27,10 @@
     line-height: 1.4375rem;
   }
 }
+
+.purple-links {
+  &:hover {
+    border-bottom: 1.5px solid $purple;
+    transition-duration: 0s;
+  }
+}
