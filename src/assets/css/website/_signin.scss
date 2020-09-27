@@ -134,6 +134,10 @@
   padding: 0 20px;
   color: $darkGray;
 
+  &:active {
+    border: 1px solid $gray;
+  }
+
   &::placeholder {
     color: $gray;
   }
