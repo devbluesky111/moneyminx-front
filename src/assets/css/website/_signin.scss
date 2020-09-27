@@ -2,6 +2,7 @@
   flex-direction: column;
   height: 100vh;
   display: flex;
+  overflow: hidden;
 }
 
 //Guide Content
@@ -113,7 +114,7 @@
   padding-top: 55px;
   min-height: 70vh;
   box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
-  border-radius: 6px;
+  border-radius: 6px 0 0 6px;
   z-index: 1;
 }
 
@@ -140,7 +141,7 @@
   padding: 0 20px;
   color: $darkGray;
 
-  &:active {
+  &:active, &:focus {
     border: 1px solid $gray;
   }
 
@@ -167,7 +168,7 @@
 }
 
 input:focus {
-  outline: 0px;
+  outline: 0;
   border: 1px solid $gray;
 }
 span.forgot-pass {
