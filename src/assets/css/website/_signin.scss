@@ -1,3 +1,9 @@
+.auth-wrapper {
+  flex-direction: column;
+  height: 100vh;
+  display: flex;
+}
+
 //Guide Content
 .guide-content {
   h1 {
@@ -227,9 +233,8 @@ span.forgot-pass {
 .footer-second {
   border-top: 1px solid rgba(150, 158, 172, 0.25);
   padding: 24px 0 12px;
-  position: fixed;
-  bottom: 0;
   background-color: $lightBg;
+  margin-top:auto;
 }
 ul.footer-list {
   padding-left: 0;
