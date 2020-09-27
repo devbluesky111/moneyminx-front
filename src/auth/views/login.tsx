@@ -112,9 +112,8 @@ export const LoginMainSection = () => {
                 </span>
                 <p>Investors from all over the world are using Money Minx</p>
               </div>
+              </div>
             </div>
-            </div>
-
           </div>
 
           <div className='bg-white credentials-wrapper'>

@@ -34,34 +34,35 @@ export const ExpiredLinkMainSection = () => {
 
   return (
     <div className='main-table-wrapper'>
-      <div className='mm-container mm-container-final'>
+      <div className=''>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <div className='logo-img-wrap'>
-              <Link to='/'>
-                <LogoImg />
-              </Link>
-            </div>
-            <h1>Three easy steps to get started with Money Minx</h1>
-            <ul>
-              <li>Find your accounts</li>
-              <li>Connect it securily to Money Minx</li>
-              <li>Let Money Minx do the rest</li>
-            </ul>
-            <div className='guide-bottom'>
-              <h4>Serious about security</h4>
-              <div className='guide-icon-wrap'>
+            <Link to='/'>
+              <LogoImg className='icon auth-logo' />
+            </Link>
+
+            <div className='auth-left-content'>
+              <h1>Three easy steps to get started with Money Minx</h1>
+              <ul>
+                <li>Find your accounts</li>
+                <li>Connect it securely to Money Minx</li>
+                <li>Let Money Minx do the rest</li>
+              </ul>
+              <div className='guide-bottom'>
+                <h4>Serious about security</h4>
+                <div className='guide-icon-wrap'>
                 <span className='locked-icon'>
                   <LoginLockIcon />
                 </span>
-                <p>The security of your information is our top priority</p>
-              </div>
-              <h4>Trusted by investors</h4>
-              <div className='guide-icon-wrap'>
+                  <p>The security of your information is our top priority</p>
+                </div>
+                <h4>Trusted by investors</h4>
+                <div className='guide-icon-wrap'>
                 <span className='shield-icon'>
                   <LoginShieldIcon />
                 </span>
-                <p>Investors from all over the world are using Money Minx</p>
+                  <p>Investors from all over the world are using Money Minx</p>
+                </div>
               </div>
             </div>
           </div>
@@ -69,7 +70,7 @@ export const ExpiredLinkMainSection = () => {
           <div className='bg-white credentials-wrapper'>
             <div className='credentials-content'>
               <div className='logo-img-wrapper'>
-                <LogoImg />
+                <LogoImg className='auth-logo'/>
               </div>
               <h2>Expired Link</h2>
               <p>The reset password link you are using already expired. Please request a new one below.</p>
@@ -105,9 +106,8 @@ export const ExpiredLinkMainSection = () => {
                       <div className='feedback'>{props.errors.email ? props.errors.email : null}</div>
 
                       <button
-                        className='bg-primary mm-btn-primary-outline mt-4'
-                        disabled={!props.isValid || props.isSubmitting}
-                      >
+                        className='mm-btn-animate mm-btn-primary'
+                        disabled={!props.isValid || props.isSubmitting}>
                         Reset Password
                       </button>
                     </form>

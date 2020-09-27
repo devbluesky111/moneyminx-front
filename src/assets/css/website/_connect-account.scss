@@ -9,12 +9,15 @@
   border: none;
   margin-bottom: 40px;
   border-radius: 4px;
+
+  &:hover {
+    box-shadow: 0 4px 12px #b9b8e0;
+    transition: 0.3s;
+    transform: translateY(-6px);
+    color: $white;
+  }
 }
-.credentials-content.connect-account .connect-account-btn:hover {
-  background-color: $white !important;
-  color: $primary;
-  border: 1px solid $primary;
-}
+
 span.manual-heading {
   color: $darkGray;
   font-size: 1rem;
@@ -24,7 +27,6 @@ span.manual-heading {
   width: 236px;
   display: block;
   outline: none;
-  border: none;
   color: $primary;
   border: 1.5px solid $primary;
   border-radius: 4px;
@@ -66,7 +68,22 @@ span.zillow-img {
   padding: 8px 95px 15px 171px;
 }
 .account-mobile-content {
+  display: block;
+
+  @media (min-width: $med) {
+      display: none;
+    }
+}
+
+.connect-steps-wrap {
+  max-width: 379px;
+  overflow: hidden;
   display: none;
+  width: 100%;
+
+  @media (min-width: $med) {
+    display: table;
+  }
 }
 .footer-table-wrapper {
   padding: 0 32px;
@@ -107,9 +124,6 @@ span.zillow-img {
   .connect-account .subs-content svg {
     display: none;
   }
-  .account-mobile-content {
-    display: block;
-  }
   .subscription-bottom-text.connect-account {
     display: block;
   }
@@ -122,16 +136,8 @@ span.zillow-img {
     line-height: 98%;
     text-align: center;
   }
-  .connect-steps-wrap {
-    display: none !important;
-  }
 }
-.connect-steps-wrap {
-  max-width: 379px;
-  overflow: hidden;
-  display: table;
-  width: 100%;
-}
+
 .step-content {
   display: table-cell;
   width: 30.33%;
