@@ -81,14 +81,11 @@ span.zillow-img {
 }
 @media (max-width: $md + $sm) and (min-width: $md + 1) {
   .mm-container.mm-container-final {
-    margin: 0px 40px;
+    margin: 0 40px;
   }
   .credentials-content {
     max-width: 86%;
     padding-left: 52px;
-  }
-  .guide-content {
-    padding-left: 22px;
   }
   .subscription-bottom-text.connect-account {
     padding: 6px 50px;

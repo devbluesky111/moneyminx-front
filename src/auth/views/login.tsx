@@ -83,16 +83,18 @@ export const LoginMainSection = () => {
 
   return (
     <div className='main-table-wrapper'>
-      <div className='mm-container mm-container-final'>
+      <div className=''>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <div className='logo-img-wrap'>
+            <div className=''>
               <Link to='/'>
-                <LogoImg className='icon' />
+                <LogoImg className='icon auth-logo' />
               </Link>
             </div>
+
+            <div className='auth-left-content'>
             <h1>
-              <span className='block'>Three easy steps to get </span>started with Money Minx
+              Three easy steps to get started with Money Minx
             </h1>
             <ul>
               <li>Find your institutions</li>
@@ -115,12 +117,14 @@ export const LoginMainSection = () => {
                 <p>Investors from all over the world are using Money Minx</p>
               </div>
             </div>
+            </div>
+
           </div>
 
           <div className='bg-white credentials-wrapper'>
             <div className='credentials-content'>
               <div className='logo-img-wrapper'>
-                <LogoImg />
+                <LogoImg className='auth-logo' />
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>

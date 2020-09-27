@@ -17,7 +17,7 @@ const AuthFooter = () => {
               <li className='my-3 my-md-0'>
                 <Link to='/terms'>Terms of Service</Link>
               </li>
-              <li className='my-3 my-md-0'>
+              <li className='my-1 my-md-0'>
                 <Link to='/notices'>Notices</Link>
               </li>
               <li className='my-1 my-md-0'>
