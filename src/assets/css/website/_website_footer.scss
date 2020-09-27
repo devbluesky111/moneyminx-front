@@ -78,9 +78,7 @@
   line-height: 170%;
 }
 
-.signup-btn-wrapper {
-  margin: auto;
-}
+
 
 .footer-hero-wrapper {
   margin-bottom: 0;
@@ -96,24 +94,30 @@
   }
 }
 
+.signup-btn-wrapper {
+  margin: auto;
+}
 
+.signup-btn-wrapper {
+  width: 100%;
+
+  button {
+    display: inline-block;
+    margin-bottom: 20px;
+    margin-left: 0 !important;
+
+    @media (max-width: $sm + 200) {
+      width: 100%;
+    }
+  }
+}
 
 @media (max-width: $sm) {
-  .signup-btn-wrapper {
-    width: 100%;
-  }
 
   .btn-xs-block {
     width: 100%;
     margin: 1.1rem 0 !important;
   }
-}
-
-//Recently Added
-.signup-btn-wrapper button {
-  display: block;
-  margin-bottom: 20px;
-  margin-left: 0 !important;
 }
 
 .social-links {
@@ -217,8 +221,5 @@
 @media (max-width: $sm + 200) {
   .networth-text {
     margin-bottom: 40px;
-  }
-  .signup-btn-wrapper button {
-    width: 100%;
   }
 }
