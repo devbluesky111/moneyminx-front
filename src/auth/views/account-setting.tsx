@@ -85,42 +85,44 @@ export const AccountSettingMainSection = () => {
 
   return (
     <div className='main-table-wrapper'>
-      <div className='mm-container mm-container-final'>
+      <div className=''>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <div className='logo-img-wrap'>
-              <LogoImg />
-            </div>
-            <h1>
-              <span className='block'>Three easy steps to get </span>started with Money Minx
-            </h1>
-            <ul>
-              <li>Find your accounts</li>
-              <li>Connect it securely to Money Minx</li>
-              <li>Let Money Minx to the rest</li>
-            </ul>
-            <div className='guide-bottom'>
-              <h4>Serious about security</h4>
-              <div className='guide-icon-wrap'>
+            <Link to='/'>
+              <LogoImg className='icon auth-logo' />
+            </Link>
+
+            <div className='auth-left-content'>
+              <h1>Three easy steps to get started with Money Minx</h1>
+              <ul>
+                <li>Find your accounts</li>
+                <li>Connect it securely to Money Minx</li>
+                <li>Let Money Minx do the rest</li>
+              </ul>
+              <div className='guide-bottom'>
+                <h4>Serious about security</h4>
+                <div className='guide-icon-wrap'>
                 <span className='locked-icon'>
                   <LoginLockIcon />
                 </span>
-                <p>The security of your information is our top priority</p>
-              </div>
-              <h4>Trusted by investors</h4>
-              <div className='guide-icon-wrap'>
+                  <p>The security of your information is our top priority</p>
+                </div>
+                <h4>Trusted by investors</h4>
+                <div className='guide-icon-wrap'>
                 <span className='shield-icon'>
                   <LoginShieldIcon />
                 </span>
-                <p>Investors from all over the world are using Money Minx</p>
+                  <p>Investors from all over the world are using Money Minx</p>
+                </div>
               </div>
             </div>
+
           </div>
 
           <div className='bg-white credentials-wrapper account-setting'>
             <div className='credentials-content'>
               <div className='logo-img-wrapper'>
-                <LogoImg />
+                <LogoImg className='auth-logo'/>
               </div>
               <div className='top-content-wrap'>
                 <h2>Organize accounts</h2>

@@ -30,22 +30,24 @@ export const AboutTopSection = () => {
         <div className='col-12 col-xl-7'>
           <div className=''>
             <h1>About Money Minx</h1>
-            <p className='text'>
+            <div className='p-b-10'>
+              <p className='text'>
               Money Minx makes (professional-level) investment tracking and portfolio visualizer tools accessible to
               investors of all wealth levels, including those just getting started.{' '}
             </p>
-            <p className='text'>
+              <p className='text'>
               With a focus on modern technology, beautiful design and a friendly, intuitive user experience, Money
               Minx’s mission is to empower people of all walks life to be more informed, confident and successful in
               building and diversifying their portfolios.{' '}
             </p>
-            <p className='text'>
+              <p className='text'>
               By developing wealth-building tools that are traditionally available to professional investors and the
               ultra wealthy, Money Minx aims to transform the way every day investors track and see their investments -
               and in turn plan for bright futures.
             </p>
+            </div>
             <Link to='/signup'>
-              <button className='mm-btn-animate bg-primary mm-btn-primary-outline mt-3'>Get Started</button>
+              <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
             </Link>
             <p className='info-text'>No credit card needed.</p>
           </div>
@@ -58,34 +60,34 @@ export const AboutTopSection = () => {
             </div>
 
             <div className='account-wrap bg-white border'>
-              <h2>
+              <h4>
                 <span className='logo-icon'>
                   <AboutWealthFrontIcon />
                 </span>
                 Wealthfront
-              </h2>
+              </h4>
               <ul className='account-list'>
                 <li>
                   <span className='switch-icon'>
                     <AboutSwitchIcon />{' '}
                   </span>
-                  Account 01
+                  Joint Cash Account
                 </li>
                 <li>
                   <span className='switch-icon'>
                     <AboutSwitchIcon />
                   </span>{' '}
-                  Account 02
+                  Investment Account
                 </li>
               </ul>
             </div>
             <div className='account-wrap bg-white border small-box'>
-              <h2>
+              <h4>
                 <span className='logo-icon'>
                   <img alt='Peer Street' src={PeerStreetLogo} />
                 </span>
                 Peer Street
-              </h2>
+              </h4>
               <ul className='account-list'>
                 <li>
                   <span className='switch-icon'>
@@ -120,7 +122,7 @@ export const AboutOwnerSection = () => {
           </div>
           <div className='col-xl-7 mm-owner-section-info'>
             <div className='owner-info'>
-              <h1 className='mb-3'>Meet our Founders</h1>
+              <h2 className='mb-3'>Meet our Founders</h2>
               <p className='text'>
                 Money Minx was started by Hussein and Jessica, a husband/wife team and investors from Southern California.
             </p>
@@ -135,7 +137,7 @@ export const AboutOwnerSection = () => {
               <ul className='owner-list'>
                 <li>
                   <img alt='Owner' src={OwnerOneImg} />
-                  <h2>Hussein</h2>
+                  <h3>Hussein</h3>
                   <p>
                     <a href='https://www.twitter.com' target='_blank' rel='noopener noreferrer'>
                       @husseinyahfoufi
@@ -147,7 +149,7 @@ export const AboutOwnerSection = () => {
                 </li>
                 <li>
                   <img alt='Owner' src={OwnerTwoImg} />
-                  <h2>Jessica</h2>
+                  <h3>Jessica</h3>
                   <p className='mb-5'>
                     <a href='http://www.twitter.com' target='_blank' rel='noopener noreferrer'>
                       @jessicayahfoufi
@@ -175,7 +177,7 @@ export const AboutNetWorthSection = () => {
             <p>
               <span className='highlighted-text'>One of our many features</span>
             </p>
-            <h1>Net Worth</h1>
+            <h2>Net Worth</h2>
             <p className='text'>
               Stock shares which make up the stock portfolio of an individual or firm. Other types of investments, if
               held, are also holdings.

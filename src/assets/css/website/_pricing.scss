@@ -51,7 +51,7 @@ ul.features-list {
   margin: 0 12px;
   transition: 0.8s ease;
   position: relative;
-  flex: 0 23%;
+  flex: 0 22%;
 }
 .pricing-left-banner button:hover {
   color: $white;
@@ -169,11 +169,6 @@ ul.features-list {
     margin-bottom: 27px;
   }
 }
-@media (max-width: $md) {
-  .trial-btn {
-    height: 65px;
-  }
-}
 
 @media (max-width: $sm) {
   .pricing-table-wrapper {
@@ -217,17 +212,7 @@ ul.features-list {
   }
 }
 
-@media ( max-width: $md + 200) {
-  .website-footer-wrapper {
-    padding: 9.125rem 1.25rem 4.06rem 1.25rem;
-  } 
-}
 
-@media ( min-width: $md + 201) {
-  .website-footer-wrapper {
-    padding: 12.5rem 1.25rem 4.06rem 1.25rem;
-  } 
-}
 
 @media ( max-width: $md - 1 ) {
   .mm-show-md {
@@ -237,7 +222,4 @@ ul.features-list {
     margin-left: -20px;
     margin-right: -20px;
   }
-  .website-footer-wrapper {
-    padding: 6.25rem 1.25rem 4.06rem 1.25rem;
-  } 
 }

@@ -2,7 +2,7 @@
   padding-top: 55px;
 }
 
-.about-top {
+.mm-about-top-section {
   h1 {
     padding-bottom: 1.3rem;
   }
@@ -12,9 +12,12 @@
   }
 }
 
-.owner-section {
-  h1 {
-    padding-bottom: 1.3rem;
+.owner-info {
+  h2 {
+    padding-bottom: 1rem;
+    font-weight: 300;
+    font-size: 3.5rem;
+    line-height: 106%;
   }
 
   p {
@@ -23,9 +26,17 @@
   }
 }
 
-.networth-section {
-  h1 {
-    padding-bottom: 1.3rem;
+.networth-text {
+  h2 {
+    padding-bottom: 4px;
+    font-weight: 300;
+    font-size: 2.25rem;
+    line-height: 106%;
+
+    @media (min-width: $md) {
+      font-size: 3.5rem;
+      padding-bottom: 1.3rem;
+    }
   }
 
   p {
@@ -77,7 +88,7 @@ ul.account-list li {
   margin-right: -24px;
 }
 
-.account-wrap h2 {
+.account-wrap h4 {
   margin-bottom: 27px;
   font-size: 1.125rem;
   line-height: 23px;
@@ -92,7 +103,7 @@ ul.account-list li {
   box-shadow: 0 2px 8px #e2e8f3, inset 0 -1px 0 #ebecf1;
 }
 
-.account-wrap h3 {
+.account-wrap h4 {
   font-size: 1.25rem;
   line-height: 25px;
   font-weight: 400;
@@ -158,13 +169,6 @@ ul.owner-list li a:hover span svg {
 .networth-chart {
   float: right;
   width: 90%;
-}
-
-.owner-section h2 {
-  font-size: 2.25rem;
-  line-height: 45px;
-  font-weight: 200;
-  margin-top: 41px;
 }
 
 .left-owner-img {
@@ -275,10 +279,6 @@ span.twitter-icon {
   @media (max-width: $md + 432) {
     order: 2;
   }
-}
-
-.app-wrapper {
-  overflow: hidden;
 }
 
 .mm-square {
@@ -417,11 +417,6 @@ span.twitter-icon {
 }
 
 .mm-networth-chart {
-  svg {
-    margin-bottom: 140px;
-
-
-  }
 
   @media (min-width: $md) {
     box-shadow: unset;

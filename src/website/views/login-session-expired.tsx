@@ -25,11 +25,9 @@ export const LoginSessionExpiredMainSection = () => {
             <div className='logo-img-wrap'>
               <LogoImg />
             </div>
-            <h1>
-              <span className='block'>Three easy steps to get </span>started with Money Minx
-            </h1>
+            <h1>Three easy steps to get started with Money Minx</h1>
             <ul>
-              <li>Find your institutions</li>
+              <li>Find your accounts</li>
               <li>Connect it securily to Money Minx</li>
               <li>Let Money Minx to the rest</li>
             </ul>
@@ -81,7 +79,7 @@ export const LoginSessionExpiredMainSection = () => {
                     Or, log in with:
                     <div className='fb-icon-wrap'>
                       <a href='link6'>
-                        <LoginFacebookIcon />
+                        <LoginFacebookIcon className='social-login-fb'/>
                       </a>
                     </div>
                   </p>
