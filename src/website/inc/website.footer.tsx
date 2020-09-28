@@ -118,11 +118,11 @@ const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
       {isSignupToday ? <SignupToday /> : null}
 
       <div className='website-footer-wrapper bg-secondary text-white'>
-        <div className='footer-hero-wrapper pb-4'>
-          <div className='row my-5 align-items-center'>
+        <div className='footer-hero-wrapper'>
+          <div className='row align-items-center'>
             <div className='col-lg-6'>
               <div className='coming-soon-wrapper'>
-                <h1>Coming Soon</h1>
+                <p className='large-heading-light'>Coming Soon</p>
                 <p className='light-80'>
                   Money Minx is currently available online and coming soon to iOS and Android devices.
                 </p>

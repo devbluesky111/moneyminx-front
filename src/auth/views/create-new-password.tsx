@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 
 import useParam from 'common/hooks/useParam';
 import { AuthLayout } from 'layouts/auth.layout';
@@ -51,34 +51,35 @@ export const CreateNewPasswordMainSection = () => {
 
   return (
     <div className='main-table-wrapper'>
-      <div className='mm-container mm-container-final'>
+      <div className=''>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <div className='logo-img-wrap'>
-              <LogoImg />
-            </div>
-            <h1>
-              <span className='block'>Three easy steps to get </span>started with Money Minx
-            </h1>
-            <ul>
-              <li>Find your institutions</li>
-              <li>Connect it securily to Money Minx</li>
-              <li>Let Money Minx to the rest</li>
-            </ul>
-            <div className='guide-bottom'>
-              <h4>Serious about security</h4>
-              <div className='guide-icon-wrap'>
+            <Link to='/'>
+              <LogoImg className='icon auth-logo' />
+            </Link>
+
+            <div className='auth-left-content'>
+              <h1>Three easy steps to get started with Money Minx</h1>
+              <ul>
+                <li>Find your accounts</li>
+                <li>Connect it securely to Money Minx</li>
+                <li>Let Money Minx do the rest</li>
+              </ul>
+              <div className='guide-bottom'>
+                <h4>Serious about security</h4>
+                <div className='guide-icon-wrap'>
                 <span className='locked-icon'>
                   <LoginLockIcon />
                 </span>
-                <p>The security of your information is our top priority</p>
-              </div>
-              <h4>Trusted by investors</h4>
-              <div className='guide-icon-wrap'>
+                  <p>The security of your information is our top priority</p>
+                </div>
+                <h4>Trusted by investors</h4>
+                <div className='guide-icon-wrap'>
                 <span className='shield-icon'>
                   <LoginShieldIcon />
                 </span>
-                <p>Investors from all over the world are using Money Minx</p>
+                  <p>Investors from all over the world are using Money Minx</p>
+                </div>
               </div>
             </div>
           </div>
@@ -86,7 +87,7 @@ export const CreateNewPasswordMainSection = () => {
           <div className='bg-white credentials-wrapper'>
             <div className='credentials-content create-new-password'>
               <div className='logo-img-wrapper'>
-                <LogoImg />
+                <LogoImg className='auth-logo'/>
               </div>
               <h2>Create new Password</h2>
               <p>One last step. Enter a new password below and you should be good to go.</p>
@@ -138,10 +139,9 @@ export const CreateNewPasswordMainSection = () => {
                         </div>
 
                         <button
-                          className='bg-primary mm-btn-primary-outline mt-2'
+                          className='mm-btn-animate mm-btn-primary'
                           disabled={!props.isValid || props.isSubmitting}
-                          type='submit'
-                        >
+                          type='submit'>
                           Save Password
                         </button>
                       </form>

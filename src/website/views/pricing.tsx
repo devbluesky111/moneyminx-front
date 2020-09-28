@@ -28,7 +28,7 @@ export const PricingTopSection = () => {
               <span className='block'>Early adopter </span>pricing (25% off)
             </h1>
             <p className='text'>
-              No credit card needed, sign up now and use Money <span className='block'>Minx free for 30 days.</span>
+              No credit card needed, sign up now and use Money Minx free for 30 days.
             </p>
 
             <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Get Started</button>

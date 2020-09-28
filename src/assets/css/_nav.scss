@@ -1,21 +1,33 @@
+.navbar {
+  position: relative;
+}
+.navbar {
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  -webkit-align-items: center;
+  -webkit-justify-content: space-between;
+}
+.navbar > .container,
+.navbar > .container-fluid {
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  -webkit-align-items: center;
+  -webkit-justify-content: space-between;
+}
+
 .mm-navbar {
   @extend .navbar;
-  max-width: 1400px;
-  padding: 30px 120px 36px 120px;
-}
+  padding: 20px 0 20px 20px;
 
-@media (max-width: $md) {
-  .mm-navbar {
-    padding: 20px;
+  @media (min-width: $md) {
+    padding: 30px 50px 36px 50px;
   }
-}
 
-@media (min-width: $lg) {
-  .mm-navbar {
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  @media (min-width: $lg) {
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
 }
 
 .top-navbar {
