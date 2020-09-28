@@ -167,18 +167,12 @@ const Networth = () => {
                               Total
                             </Link>
                           </td>
-                          <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$95,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                          <td className='tab-hide'>$34,000</td>
-                          <td data-title4='Apr 2020'>$90,000</td>
-                          <td data-title5='May 2020'>$56,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $53,000
-                          </td>
-                          <td data-title7='Jul 2020'>$23,000</td>
-                          <td data-title8='Aug 2020'>$94,000</td>
-                          <td className='tab-hide'>$74,000</td>
+                          <td>{''}</td>
+                          {networth?.map((nItem, idx) => (
+                            <td key={idx} className={gc(nItem.interval)}>
+                              {fNumber(nItem.investmentAssets)}
+                            </td>
+                          ))}
                         </tr>
                       </tfoot>
                     </table>
@@ -223,18 +217,12 @@ const Networth = () => {
                       <tfoot>
                         <tr data-href='#'>
                           <td>Total</td>
-                          <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$95,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                          <td className='tab-hide'>$34,000</td>
-                          <td data-title4='Apr 2020'>$90,000</td>
-                          <td data-title5='May 2020'>$56,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $53,000
-                          </td>
-                          <td data-title7='Jul 2020'>$23,000</td>
-                          <td data-title8='Aug 2020'>$94,000</td>
-                          <td className='tab-hide'>$74,000</td>
+                          <td>{''}</td>
+                          {networth?.map((nItem, idx) => (
+                            <td key={idx} className={gc(nItem.interval)}>
+                              {fNumber(nItem.otherAssets)}
+                            </td>
+                          ))}
                         </tr>
                       </tfoot>
                     </table>
@@ -279,18 +267,12 @@ const Networth = () => {
                       <tfoot>
                         <tr>
                           <td>Total</td>
-                          <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$95,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                          <td className='tab-hide'>$34,000</td>
-                          <td data-title4='Apr 2020'>$90,000</td>
-                          <td data-title5='May 2020'>$56,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $53,000
-                          </td>
-                          <td data-title7='Jul 2020'>$23,000</td>
-                          <td data-title8='Aug 2020'>$94,000</td>
-                          <td className='tab-hide'>$74,000</td>
+                          <td>{''}</td>
+                          {networth?.map((nItem, idx) => (
+                            <td key={idx} className={gc(nItem.interval)}>
+                              {fNumber(nItem.liabilities)}
+                            </td>
+                          ))}
                         </tr>
                       </tfoot>
                     </table>
