@@ -26,6 +26,8 @@ const NetworthFilter = () => {
     dispatch(setCategory(event.target.value));
   };
 
+  console.log('_____________category__________', category);
+
   return (
     <div className='row'>
       <div className='col-12'>
@@ -43,8 +45,8 @@ const NetworthFilter = () => {
                           type='checkbox'
                           aria-describedby={cat}
                           value={cat}
-                          aria-checked={cat === category}
-                          checked={cat === category}
+                          aria-checked={category?.includes(cat)}
+                          checked={category?.includes(cat)}
                           onChange={handleCategoryChange}
                         />
                         <span>{cat}</span>

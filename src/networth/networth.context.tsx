@@ -4,7 +4,7 @@ import { NetworthDispatch, NetworthState, NetworthProviderProps, Action } from '
 
 const initialState: NetworthState = {
   fromDate: undefined,
-  category: undefined,
+  category: [''],
   accountType: undefined,
   timeInterval: undefined,
 };
@@ -15,7 +15,17 @@ const NetworthStateContext = createContext<NetworthState | undefined>(undefined)
 function networthReducer(state: NetworthState, action: Action): any {
   switch (action.type) {
     case NetworthActionEnum.SET_CATEGORY: {
-      return { ...state, category: action.payload?.category };
+      const isFound = state.category?.includes(action.payload?.category);
+
+      if (isFound) {
+        const tempCategory = state.category?.filter((cat) => cat !== action.payload?.category);
+
+        return { ...state, category: tempCategory };
+      }
+
+      const categories = state.category?.concat(action.payload?.category);
+
+      return { ...state, category: categories };
     }
 
     case NetworthActionEnum.SET_ACCOUNT_TYPE: {

@@ -45,7 +45,7 @@ export type NetworthDispatch = (action: Action) => void;
 
 export interface NetworthState {
   fromDate?: string;
-  category?: string;
+  category?: string[];
   accountType?: string;
   timeInterval?: TimeIntervalEnum;
 }
