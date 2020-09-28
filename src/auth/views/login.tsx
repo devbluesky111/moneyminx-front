@@ -169,7 +169,7 @@ export const LoginMainSection = () => {
 
                     return (
                       <form onSubmit={props.handleSubmit}>
-                        <div className='d-md-flex align-items-start input-wrapper'>
+                        <div className='align-items-start input-wrapper'>
                           <div className='email-wrap'>
                             <input
                               type='email'
@@ -182,13 +182,13 @@ export const LoginMainSection = () => {
                             />
                           </div>
                           {hasError('email') ? (
-                            <div className='ml-2 mt-1 mt-md-3 text-right feedback text-nowrap'>
+                            <div className='mt-2 feedback'>
                               {props.errors.email}
                             </div>
                           ) : null}
                         </div>
 
-                        <div className='d-md-flex align-items-center'>
+                        <div className='align-items-center'>
                           <div className='password-wrap'>
                             <input
                               name='password'
@@ -208,7 +208,7 @@ export const LoginMainSection = () => {
                             </span>
                           </div>
                           {hasError('password') ? (
-                            <div className='ml-2 mt-2 mt-md-0 text-right feedback text-nowrap'>
+                            <div className='mt-2 feedback'>
                               {props.errors.password}
                             </div>
                           ) : null}
