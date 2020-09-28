@@ -1,19 +1,36 @@
 import moment from 'moment';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
+import React, { useEffect, useState } from 'react';
 
-import { enumerateStr } from 'common/common-helper';
-import { setCategory } from 'networth/networth.actions';
-import { AccountCategory } from 'networth/networth.enum';
+import { Account } from 'auth/auth.types';
+import { getAccount } from 'api/request.api';
+import { getRelativeDate } from 'common/moment.helper';
+import { arrGroupBy, enumerateStr } from 'common/common-helper';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
 import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
+import { setFilterAccount, setFilterAccountType, setFilterCategories } from 'networth/networth.actions';
 
 const NetworthFilter = () => {
   const dispatch = useNetworthDispatch();
-  const { category } = useNetworthState();
   const [endDate, setEndDate] = useState<any>(null);
   const [startDate, setStartDate] = useState(new Date());
+  const [currentAccount, setCurrentAccount] = useState<Account[]>();
+
+  const { fCategories, fTypes, fAccounts } = useNetworthState();
+
+  useEffect(() => {
+    const fetchCurrentAccount = async () => {
+      const { data, error } = await getAccount();
+
+      if (!error) {
+        setCurrentAccount(data);
+      }
+    };
+
+    fetchCurrentAccount();
+  }, []);
 
   const onChange = (dates: any) => {
     const [start, end] = dates;
@@ -23,8 +40,22 @@ const NetworthFilter = () => {
   };
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setCategory(event.target.value));
+    dispatch(setFilterCategories(event.target.value));
   };
+
+  const handleAccountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFilterAccount(+event.target.value));
+  };
+
+  const handleAccountTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFilterAccountType(event.target.value));
+  };
+
+  if (!currentAccount) {
+    return <CircularSpinner />;
+  }
+
+  const currentAccountByType = arrGroupBy(currentAccount, 'category.mmAccountType');
 
   return (
     <div className='row'>
@@ -43,8 +74,8 @@ const NetworthFilter = () => {
                           type='checkbox'
                           aria-describedby={cat}
                           value={cat}
-                          aria-checked={category?.includes(cat)}
-                          checked={category?.includes(cat)}
+                          aria-checked={fCategories?.includes(cat)}
+                          checked={fCategories?.includes(cat)}
                           onChange={handleCategoryChange}
                         />
                         <span>{cat}</span>
@@ -66,93 +97,31 @@ const NetworthFilter = () => {
               All Accounts
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
-              <div className='dropdown-head'>
-                <h4>Needs Attention</h4>
-              </div>
               <div className='dropdown-box'>
-                <ul className='pending'>
-                  <li>
-                    <label>
-                      <input
-                        name='accBox'
-                        type='checkbox'
-                        aria-describedby='Investment assets'
-                        value='accBox'
-                        aria-checked={false}
-                        placeholder=''
-                        defaultChecked={false}
-                        checked={false}
-                      />
-                      <span />
-                    </label>
-                    <div>
-                      <h5>Robinhood</h5>
-                      <span>10 days ago</span>
-                    </div>
-                    <div>$2,343</div>
-                  </li>
-                  <li>
-                    <label>
-                      <input
-                        name='accBox'
-                        type='checkbox'
-                        aria-describedby='Investment assets'
-                        value='accBox'
-                        aria-checked={false}
-                        placeholder=''
-                        defaultChecked={false}
-                        checked={false}
-                      />
-                      <span />
-                    </label>
-                    <div>
-                      <h5>Yieldstreet</h5>
-                      <span>12 days ago</span>
-                    </div>
-                    <div>$2,343</div>
-                  </li>
-                </ul>
                 <ul className='success'>
-                  <li>
-                    <label>
-                      <input
-                        name='accBox'
-                        type='checkbox'
-                        aria-describedby='Investment assets'
-                        value='accBox'
-                        aria-checked={false}
-                        placeholder=''
-                        defaultChecked={false}
-                        checked={false}
-                      />
-                      <span />
-                    </label>
-                    <div>
-                      <h5>Robinhood</h5>
-                      <span>10 days ago</span>
-                    </div>
-                    <div>$2,343</div>
-                  </li>
-                  <li>
-                    <label>
-                      <input
-                        name='accBox'
-                        type='checkbox'
-                        aria-describedby='Investment assets'
-                        value='accBox'
-                        aria-checked={false}
-                        placeholder=''
-                        defaultChecked={false}
-                        checked={false}
-                      />
-                      <span />
-                    </label>
-                    <div>
-                      <h5>Yieldstreet</h5>
-                      <span>12 days ago</span>
-                    </div>
-                    <div>$2,343</div>
-                  </li>
+                  {currentAccount.map((account, index) => {
+                    return (
+                      <li key={account.id}>
+                        <label>
+                          <input
+                            name='accBox'
+                            type='checkbox'
+                            aria-describedby='Investment assets'
+                            value={account.id}
+                            aria-checked={fAccounts.includes(account.id)}
+                            checked={fAccounts.includes(account.id)}
+                            onChange={handleAccountChange}
+                          />
+                          <span />
+                        </label>
+                        <div>
+                          <h5>{account.accountName}</h5>
+                          <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                        </div>
+                        <div>${account.balance}</div>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </Dropdown.Menu>
@@ -169,35 +138,25 @@ const NetworthFilter = () => {
               All Types
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
-              <ul className='droplist'>
-                <li>
-                  <Link to='#'>401K</Link>
-                </li>
-                <li>
-                  <Link to='#'>Cash Management</Link>
-                </li>
-                <li>
-                  <Link to='#'>IRA</Link>
-                </li>
-                <li>
-                  <Link to='#' className='subdrop-toggle'>
-                    Loan
-                  </Link>
-                  <ol className='subdrop-m'>
-                    <li>
-                      <Link to='#'>Credit</Link>
+              <ul className='checkbox-list'>
+                {Object.keys(currentAccountByType)?.map((accountName, index) => {
+                  return (
+                    <li key={index}>
+                      <label>
+                        <input
+                          name='types'
+                          type='checkbox'
+                          aria-describedby={accountName}
+                          value={accountName}
+                          aria-checked={fTypes?.includes(accountName)}
+                          checked={fTypes?.includes(accountName)}
+                          onChange={handleAccountTypeChange}
+                        />
+                        <span>{accountName}</span>
+                      </label>
                     </li>
-                    <li>
-                      <Link to='#'>Mortgage</Link>
-                    </li>
-                    <li>
-                      <Link to='#'>Car Loan</Link>
-                    </li>
-                  </ol>
-                </li>
-                <li>
-                  <Link to='#'>Investment Non-Retirement</Link>
-                </li>
+                  );
+                })}
               </ul>
             </Dropdown.Menu>
           </Dropdown>
@@ -234,24 +193,16 @@ const NetworthFilter = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu dropsm'>
               <ul className='radiolist'>
-                <li>
-                  <label>
-                    <input type='radio' name='m-list' aria-checked={false} value='monthly' />
-                    <span>Monthly</span>
-                  </label>
-                </li>
-                <li>
-                  <label>
-                    <input type='radio' name='m-list' value='quarterly' aria-checked={false} />
-                    <span>Quarterly</span>
-                  </label>
-                </li>
-                <li>
-                  <label>
-                    <input type='radio' name='m-list' value='yearly' aria-checked={false} />
-                    <span>Yearly</span>
-                  </label>
-                </li>
+                {enumerateStr(TimeIntervalEnum).map((interval, index) => {
+                  return (
+                    <li key={interval}>
+                      <label>
+                        <input type='radio' name='m-list' aria-checked={false} value='monthly' />
+                        <span>{interval}</span>
+                      </label>
+                    </li>
+                  );
+                })}
               </ul>
             </Dropdown.Menu>
           </Dropdown>

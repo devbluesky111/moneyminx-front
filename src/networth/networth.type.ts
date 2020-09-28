@@ -44,10 +44,12 @@ export interface NetworthProviderProps {
 export type NetworthDispatch = (action: Action) => void;
 
 export interface NetworthState {
-  fromDate?: string;
-  category?: string[];
-  accountType?: string;
-  timeInterval?: TimeIntervalEnum;
+  fTypes: string[];
+  fFromDate?: string;
+  fAccounts: number[];
+  fCategories: string[];
+  fTimeInterval?: TimeIntervalEnum;
+
   networth?: NetworthItem[];
   accounts?: Record<AccountCategory, AccountItem[]>;
 }

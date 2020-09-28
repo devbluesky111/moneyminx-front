@@ -61,6 +61,10 @@ export const getFastlink = () => {
 };
 
 export const getRefreshedAccount = () => {
+  return http.get(urls.auth.ACCOUNTS_REFRESH);
+};
+
+export const getAccount = (): Promise<ApiResponse> => {
   return http.get(urls.auth.ACCOUNTS);
 };
 

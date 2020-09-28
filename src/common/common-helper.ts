@@ -1,3 +1,5 @@
+import { groupBy } from 'lodash';
+
 import { ApiResponse } from 'api/api.types';
 import { StringKeyObject } from './common.types';
 
@@ -117,4 +119,16 @@ export function enumerateStr(e: any) {
 
 export const capitalize = (word: string) => {
   return word.charAt(0).toUpperCase() + word.slice(1);
+};
+
+export const arrGroupBy = <T>(arr: T[], key: string) => groupBy(arr, key);
+
+export const handleStringArrayToggle = <A>(arr: A[], val: any) => {
+  const isFound = arr.includes(val);
+
+  if (isFound) {
+    return arr.filter((item) => item !== val);
+  }
+
+  return arr.concat(val);
 };
