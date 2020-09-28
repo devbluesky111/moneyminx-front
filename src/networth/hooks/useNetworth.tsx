@@ -2,9 +2,28 @@ import { getNetworth } from 'api/request.api';
 import { AccountCategory } from 'networth/networth.enum';
 import { useEffect, useState } from 'react';
 
+interface NetworthItem {
+  interval: string;
+  networth: number;
+  liabilities: number;
+  otherAssets: number;
+  investmentAssets: number;
+}
+
+interface AccountItem {
+  accountId: number;
+  accountName: number;
+  accountType: number;
+  balances: {
+    balance: number;
+    interval: string;
+  }[];
+  category: number;
+}
+
 interface NetworthType {
-  accounts: Record<AccountCategory, any[]>;
-  networth: any[];
+  accounts: Record<AccountCategory, AccountItem[]>;
+  networth: NetworthItem[];
 }
 
 const useNetworth = () => {
