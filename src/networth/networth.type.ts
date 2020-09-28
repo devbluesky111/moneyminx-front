@@ -48,6 +48,8 @@ export interface NetworthState {
   category?: string[];
   accountType?: string;
   timeInterval?: TimeIntervalEnum;
+  networth?: NetworthItem[];
+  accounts?: Record<AccountCategory, AccountItem[]>;
 }
 
 export type NetworthPayload = any;

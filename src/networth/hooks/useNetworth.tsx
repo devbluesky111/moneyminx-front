@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { getNetworth } from 'api/request.api';
+import { useNetworthDispatch } from 'networth/networth.context';
 import { NetworthParam, NetworthType } from 'networth/networth.type';
+import { setAccounts, setNetWorth } from 'networth/networth.actions';
 
 const useNetworth = (params?: NetworthParam) => {
+  const dispatch = useNetworthDispatch();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<NetworthType>();
@@ -24,13 +27,21 @@ const useNetworth = (params?: NetworthParam) => {
         return setError(networthError);
       }
 
+      if (data?.networth) {
+        dispatch(setNetWorth(data.networth));
+      }
+
+      if (data?.accounts) {
+        dispatch(setAccounts(data.accounts));
+      }
+
       setLoading(false);
 
       return setResponse(data);
     };
 
     fetchNetworth();
-  }, [accountType, timeInterval, category, fromDate]);
+  }, [accountType, timeInterval, category, fromDate, dispatch]);
 
   return { loading, error, accounts: response?.accounts, networth: response?.networth };
 };

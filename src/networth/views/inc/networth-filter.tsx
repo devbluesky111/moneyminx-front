@@ -10,10 +10,10 @@ import { AccountCategory } from 'networth/networth.enum';
 import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
 
 const NetworthFilter = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState<any>(null);
-  const { category } = useNetworthState();
   const dispatch = useNetworthDispatch();
+  const { category } = useNetworthState();
+  const [endDate, setEndDate] = useState<any>(null);
+  const [startDate, setStartDate] = useState(new Date());
 
   const onChange = (dates: any) => {
     const [start, end] = dates;
@@ -25,8 +25,6 @@ const NetworthFilter = () => {
   const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setCategory(event.target.value));
   };
-
-  console.log('_____________category__________', category);
 
   return (
     <div className='row'>

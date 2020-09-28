@@ -1,13 +1,14 @@
 import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+
 import { Login, Signup } from 'auth';
 import Setting from 'setting/setting';
 import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { NetworthProvider } from 'networth/networth.context';
 import { Home, TermNService, Notice, Privacy, About, Pricing, Security } from 'website/views';
 
-import { appRouteConstants } from './app-route.constant';
 import {
   Networth,
   TokenExpired,
@@ -17,6 +18,7 @@ import {
   AccountSetting,
   ConnectAccount,
 } from './app.view';
+import { appRouteConstants } from './app-route.constant';
 
 const {
   web: { SECURITY, NET_WORTH },
@@ -56,8 +58,11 @@ function AppRoute() {
         <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
         <Route exact path={CONNECT_ACCOUNT} component={ConnectAccount} />
         <Route exact path={ACCOUNT_SETTING} component={AccountSetting} />
-        <Route exact path={NET_WORTH} component={Networth} />
-
+        <Route exact path={NET_WORTH}>
+          <NetworthProvider>
+            <Networth />
+          </NetworthProvider>
+        </Route>
         <Route exact path={'/404'} component={NotFound} />
         <Redirect to='/404' />
       </Switch>

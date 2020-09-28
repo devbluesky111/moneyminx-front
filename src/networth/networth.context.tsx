@@ -7,6 +7,8 @@ const initialState: NetworthState = {
   category: [''],
   accountType: undefined,
   timeInterval: undefined,
+  accounts: undefined,
+  networth: undefined,
 };
 
 const NetworthDispatchContext = createContext<NetworthDispatch | undefined>(undefined);
@@ -38,6 +40,14 @@ function networthReducer(state: NetworthState, action: Action): any {
 
     case NetworthActionEnum.SET_TIME_INTERVAL: {
       return { ...state, category: action.payload?.timeInterval };
+    }
+
+    case NetworthActionEnum.SET_NETWORTH: {
+      return { ...state, networth: action.payload?.networth };
+    }
+
+    case NetworthActionEnum.SET_ACCOUNTS: {
+      return { ...state, accounts: action.payload?.accounts };
     }
 
     default: {

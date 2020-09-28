@@ -15,11 +15,13 @@ import NetworthHead from './inc/networth-head';
 import SimpleBarChart from './simple-bar-chart';
 import NetworthFilter from './inc/networth-filter';
 import ConnectionAlert from './inc/connection-alert';
+import { useNetworthState } from 'networth/networth.context';
 
 const Networth = () => {
   const connectionAlert = useAlert();
 
-  const { loading, accounts, networth } = useNetworth();
+  const { loading } = useNetworth();
+  const { accounts, networth } = useNetworthState();
 
   useEffect(() => {
     connectionAlert.open();
