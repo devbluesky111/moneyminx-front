@@ -1,6 +1,58 @@
 import { AlertType } from 'common/components/alert';
+import { AccountCategory, NetworthActionEnum, TimeIntervalEnum } from 'networth/networth.enum';
 
 export interface ConnectionAlertProps {
   message: string;
   connectionAlert: AlertType;
+}
+
+export interface NetworthItem {
+  interval: string;
+  networth: number;
+  liabilities: number;
+  otherAssets: number;
+  investmentAssets: number;
+}
+
+export interface AccountItem {
+  category: number;
+  accountId: number;
+  accountName: number;
+  accountType: number;
+  balances: {
+    balance: number;
+    interval: string;
+  }[];
+}
+
+export interface NetworthType {
+  networth: NetworthItem[];
+  accounts: Record<AccountCategory, AccountItem[]>;
+}
+
+export interface NetworthParam {
+  category?: string;
+  fromDate?: string;
+  accountType?: string;
+  timeInterval?: TimeIntervalEnum;
+}
+
+export interface NetworthProviderProps {
+  children: React.ReactNode;
+}
+
+export type NetworthDispatch = (action: Action) => void;
+
+export interface NetworthState {
+  fromDate?: string;
+  category?: string;
+  accountType?: string;
+  timeInterval?: TimeIntervalEnum;
+}
+
+export type NetworthPayload = any;
+
+export interface Action {
+  type: NetworthActionEnum;
+  payload?: NetworthPayload;
 }

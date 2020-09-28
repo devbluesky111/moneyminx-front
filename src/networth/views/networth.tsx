@@ -18,6 +18,7 @@ import ConnectionAlert from './inc/connection-alert';
 
 const Networth = () => {
   const connectionAlert = useAlert();
+
   const { loading, accounts, networth } = useNetworth();
 
   useEffect(() => {

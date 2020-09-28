@@ -4,15 +4,26 @@ import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
 
+import { enumerateStr } from 'common/common-helper';
+import { setCategory } from 'networth/networth.actions';
+import { AccountCategory } from 'networth/networth.enum';
+import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
+
 const NetworthFilter = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState<any>(null);
+  const { category } = useNetworthState();
+  const dispatch = useNetworthDispatch();
 
   const onChange = (dates: any) => {
     const [start, end] = dates;
 
     setStartDate(start);
     setEndDate(end);
+  };
+
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setCategory(event.target.value));
   };
 
   return (
@@ -23,62 +34,24 @@ const NetworthFilter = () => {
             <Dropdown.Toggle className='dropdown-toggle'>All Categories</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
               <ul className='checkbox-list'>
-                <li>
-                  <label>
-                    <input
-                      type='checkbox'
-                      aria-describedby='Investment assets'
-                      value='investmentAsset'
-                      aria-checked={false}
-                      placeholder=''
-                      defaultChecked={false}
-                      checked={false}
-                    />
-                    <span>Investment Assets</span>
-                  </label>
-                </li>
-                <li>
-                  <label>
-                    <input
-                      type='checkbox'
-                      aria-describedby='Investment assets'
-                      value='otherAssets'
-                      aria-checked={false}
-                      placeholder=''
-                      defaultChecked={false}
-                      checked={false}
-                    />
-                    <span>Other Assets</span>
-                  </label>
-                </li>
-                <li>
-                  <label>
-                    <input
-                      type='checkbox'
-                      aria-describedby='Investment assets'
-                      value='liabilities'
-                      aria-checked={false}
-                      placeholder=''
-                      defaultChecked={false}
-                      checked={false}
-                    />
-                    <span>Liabilities</span>
-                  </label>
-                </li>
-                <li>
-                  <label>
-                    <input
-                      type='checkbox'
-                      aria-describedby='Investment assets'
-                      value='netWorth'
-                      aria-checked={false}
-                      placeholder=''
-                      defaultChecked={false}
-                      checked={false}
-                    />
-                    <span>Net Worth</span>
-                  </label>
-                </li>
+                {enumerateStr(AccountCategory).map((cat, index) => {
+                  return (
+                    <li key={index}>
+                      <label>
+                        <input
+                          name='category'
+                          type='checkbox'
+                          aria-describedby={cat}
+                          value={cat}
+                          aria-checked={cat === category}
+                          checked={cat === category}
+                          onChange={handleCategoryChange}
+                        />
+                        <span>{cat}</span>
+                      </label>
+                    </li>
+                  );
+                })}
               </ul>
             </Dropdown.Menu>
           </Dropdown>

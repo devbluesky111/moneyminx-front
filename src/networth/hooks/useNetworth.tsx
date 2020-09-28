@@ -1,40 +1,22 @@
-import { getNetworth } from 'api/request.api';
-import { AccountCategory } from 'networth/networth.enum';
 import { useEffect, useState } from 'react';
 
-interface NetworthItem {
-  interval: string;
-  networth: number;
-  liabilities: number;
-  otherAssets: number;
-  investmentAssets: number;
-}
+import { getNetworth } from 'api/request.api';
+import { NetworthParam, NetworthType } from 'networth/networth.type';
 
-interface AccountItem {
-  accountId: number;
-  accountName: number;
-  accountType: number;
-  balances: {
-    balance: number;
-    interval: string;
-  }[];
-  category: number;
-}
-
-interface NetworthType {
-  accounts: Record<AccountCategory, AccountItem[]>;
-  networth: NetworthItem[];
-}
-
-const useNetworth = () => {
+const useNetworth = (params?: NetworthParam) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<NetworthType>();
 
+  const fromDate = params?.fromDate;
+  const category = params?.timeInterval;
+  const accountType = params?.accountType;
+  const timeInterval = params?.timeInterval;
+
   useEffect(() => {
     const fetchNetworth = async () => {
       setLoading(true);
-      const { data, error: networthError } = await getNetworth();
+      const { data, error: networthError } = await getNetworth({ accountType, timeInterval, category, fromDate });
 
       if (networthError) {
         setLoading(false);
@@ -48,7 +30,7 @@ const useNetworth = () => {
     };
 
     fetchNetworth();
-  }, []);
+  }, [accountType, timeInterval, category, fromDate]);
 
   return { loading, error, accounts: response?.accounts, networth: response?.networth };
 };
