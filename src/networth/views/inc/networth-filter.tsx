@@ -201,7 +201,7 @@ const NetworthFilter = () => {
               aria-haspopup='true'
               aria-expanded='false'
             >
-              Monthly
+              {fTimeInterval || 'Monthly'}
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu dropsm'>
               <ul className='radiolist'>

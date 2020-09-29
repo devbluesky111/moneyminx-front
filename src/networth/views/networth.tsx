@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 import { fNumber } from 'common/number.helper';
 import { useAlert } from 'common/components/alert';
-import { getMonthYear } from 'common/moment.helper';
 import useNetworth from 'networth/hooks/useNetworth';
 import NetworthLayout from 'networth/networth.layout';
 import { AccountCategory } from 'networth/networth.enum';
 import MeasureIcon from 'assets/images/networth/measure.svg';
 import BlurChart from 'assets/images/networth/chart-blur.png';
+import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import NetworthHead from './inc/networth-head';
@@ -37,8 +37,10 @@ const Networth = () => {
   const investmentAssets = accounts[AccountCategory.INVESTMENT_ASSETS];
 
   const gc = (interval: string) => {
-    if (interval && getMonthYear() === interval) {
-      return 'current-m';
+    if (interval) {
+      if (getMonthYear() === interval || getYear() === interval || getQuarter() === interval) {
+        return 'current-m';
+      }
     }
 
     return 'tab-hide';
