@@ -11,6 +11,7 @@ export enum TimeIntervalEnum {
 }
 
 export enum NetworthActionEnum {
+  SET_F_TO_DATE = 'SET_FILTER_TO_DATE',
   SET_F_ACCOUNT = 'SET_FILTER_ACCOUNT',
   SET_F_CATEGORY = 'SET_FILTER_CATEGORY',
   SET_F_FROM_DATE = 'SET_FILTER_FROM_DATE',

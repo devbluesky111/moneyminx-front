@@ -1,10 +1,17 @@
 import { AccountItem, Action, NetworthItem } from './networth.type';
 import { AccountCategory, NetworthActionEnum, TimeIntervalEnum } from './networth.enum';
 
-export const setFromDate = (fromDate: string): Action => ({
+export const setFilterFromDate = (fromDate: string): Action => ({
   type: NetworthActionEnum.SET_F_FROM_DATE,
   payload: {
     fromDate,
+  },
+});
+
+export const setFilterToDate = (toDate?: string): Action => ({
+  type: NetworthActionEnum.SET_F_TO_DATE,
+  payload: {
+    toDate,
   },
 });
 
@@ -23,7 +30,7 @@ export const setFilterAccountType = (fAccountType: string) => ({
   payload: { fAccountType },
 });
 
-export const setTimeInterval = (fTimeInterval: TimeIntervalEnum) => ({
+export const setFilterTimeInterval = (fTimeInterval: TimeIntervalEnum) => ({
   type: NetworthActionEnum.SET_F_TIME_INTERVAL,
   payload: { fTimeInterval },
 });

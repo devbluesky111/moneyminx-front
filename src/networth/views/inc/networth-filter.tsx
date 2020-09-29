@@ -1,24 +1,29 @@
-import moment from 'moment';
 import { Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
 import React, { useEffect, useState } from 'react';
 
 import { Account } from 'auth/auth.types';
 import { getAccount } from 'api/request.api';
-import { getRelativeDate } from 'common/moment.helper';
 import { arrGroupBy, enumerateStr } from 'common/common-helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
 import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
-import { setFilterAccount, setFilterAccountType, setFilterCategories } from 'networth/networth.actions';
+import { getDate, getMonthYear, getRelativeDate, isAfter } from 'common/moment.helper';
+
+import {
+  setFilterAccount,
+  setFilterAccountType,
+  setFilterCategories,
+  setFilterFromDate,
+  setFilterTimeInterval,
+  setFilterToDate,
+} from 'networth/networth.actions';
 
 const NetworthFilter = () => {
   const dispatch = useNetworthDispatch();
-  const [endDate, setEndDate] = useState<any>(null);
-  const [startDate, setStartDate] = useState(new Date());
   const [currentAccount, setCurrentAccount] = useState<Account[]>();
 
-  const { fCategories, fTypes, fAccounts } = useNetworthState();
+  const { fCategories, fTypes, fAccounts, fFromDate, fToDate, fTimeInterval } = useNetworthState();
 
   useEffect(() => {
     const fetchCurrentAccount = async () => {
@@ -35,8 +40,11 @@ const NetworthFilter = () => {
   const onChange = (dates: any) => {
     const [start, end] = dates;
 
-    setStartDate(start);
-    setEndDate(end);
+    dispatch(setFilterFromDate(getDate(start)));
+
+    if (!isAfter(end)) {
+      dispatch(setFilterToDate(end ? getDate(end) : undefined));
+    }
   };
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +57,10 @@ const NetworthFilter = () => {
 
   const handleAccountTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setFilterAccountType(event.target.value));
+  };
+
+  const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFilterTimeInterval(event.target.value as TimeIntervalEnum));
   };
 
   if (!currentAccount) {
@@ -162,20 +174,20 @@ const NetworthFilter = () => {
           </Dropdown>
 
           <ReactDatePicker
-            selected={startDate}
+            selected={fFromDate ? new Date(fFromDate) : null}
             onChange={onChange}
             selectsStart
-            startDate={startDate}
-            endDate={endDate}
+            startDate={fFromDate ? new Date(fFromDate) : null}
+            endDate={fToDate ? new Date(fToDate) : null}
             dateFormat='MM/yyyy'
             showMonthYearPicker
             selectsRange
             customInput={
               <div className='drop-box'>
                 <div className='date-box'>
-                  <input type='text' className='month_year' placeholder={moment(startDate).format('MMM YYYY')} />
+                  <input type='text' className='month_year' placeholder={getMonthYear(fFromDate)} />
                   <span>-</span>
-                  <input type='text' className='month_year' placeholder={moment(endDate).format('MMM YYYY') || ''} />
+                  <input type='text' className='month_year' placeholder={getMonthYear(fToDate)} />
                 </div>
               </div>
             }
@@ -197,7 +209,14 @@ const NetworthFilter = () => {
                   return (
                     <li key={interval}>
                       <label>
-                        <input type='radio' name='m-list' aria-checked={false} value='monthly' />
+                        <input
+                          type='radio'
+                          name='m-list'
+                          aria-checked={fTimeInterval === interval}
+                          value={interval}
+                          checked={fTimeInterval === interval}
+                          onChange={handleIntervalChange}
+                        />
                         <span>{interval}</span>
                       </label>
                     </li>

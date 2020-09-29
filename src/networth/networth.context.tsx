@@ -7,6 +7,7 @@ const initialState: NetworthState = {
   fTypes: [],
   fAccounts: [],
   fCategories: [],
+  fToDate: undefined,
   fFromDate: undefined,
   fTimeInterval: undefined,
 
@@ -14,8 +15,8 @@ const initialState: NetworthState = {
   networth: undefined,
 };
 
-const NetworthDispatchContext = createContext<NetworthDispatch | undefined>(undefined);
 const NetworthStateContext = createContext<NetworthState | undefined>(undefined);
+const NetworthDispatchContext = createContext<NetworthDispatch | undefined>(undefined);
 
 function networthReducer(state: NetworthState, action: Action): any {
   switch (action.type) {
@@ -29,6 +30,10 @@ function networthReducer(state: NetworthState, action: Action): any {
 
     case NetworthActionEnum.SET_F_FROM_DATE: {
       return { ...state, fFromDate: action.payload?.fromDate };
+    }
+
+    case NetworthActionEnum.SET_F_TO_DATE: {
+      return { ...state, fToDate: action.payload?.toDate };
     }
 
     case NetworthActionEnum.SET_F_TIME_INTERVAL: {

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { fNumber } from 'common/number.helper';
 import { useAlert } from 'common/components/alert';
+import { getMonthYear } from 'common/moment.helper';
 import useNetworth from 'networth/hooks/useNetworth';
 import NetworthLayout from 'networth/networth.layout';
-import { curMonthYearStr } from 'common/moment.helper';
 import { AccountCategory } from 'networth/networth.enum';
 import MeasureIcon from 'assets/images/networth/measure.svg';
 import BlurChart from 'assets/images/networth/chart-blur.png';
@@ -37,7 +37,7 @@ const Networth = () => {
   const investmentAssets = accounts[AccountCategory.INVESTMENT_ASSETS];
 
   const gc = (interval: string) => {
-    if (interval && curMonthYearStr() === interval) {
+    if (interval && getMonthYear() === interval) {
       return 'current-m';
     }
 
@@ -119,169 +119,175 @@ const Networth = () => {
               </div>
             </div>
 
-            <div className='row mb-40'>
-              <div className='col-12'>
-                <div className='ct-box box-b'>
-                  <div className='table-holder'>
-                    <table className='table'>
-                      <thead>
-                        <tr>
-                          <th>
-                            <span>Investment Assets</span>
-                          </th>
-                          <th className='tab-hide'>Type</th>
-
-                          {investmentAssets[0]?.balances.map((item, idx) => (
-                            <th key={idx} className={gc(item.interval)}>
-                              {item.interval}
+            {investmentAssets?.length ? (
+              <div className='row mb-40'>
+                <div className='col-12'>
+                  <div className='ct-box box-b'>
+                    <div className='table-holder'>
+                      <table className='table'>
+                        <thead>
+                          <tr>
+                            <th>
+                              <span>Investment Assets</span>
                             </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {investmentAssets?.map((iAsset, index) => {
-                          return (
-                            <tr key={index}>
-                              <td>{iAsset.accountName}</td>
-                              <td>{iAsset.accountType}</td>
-                              {iAsset.balances.map((b, idx) => (
-                                <td key={`${index}-${idx}`} className={gc(b.interval)}>
-                                  {b.balance}
-                                </td>
-                              ))}
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                      <tfoot>
-                        <tr data-href='#'>
-                          <td>
-                            <Link
-                              to='#'
-                              className='warning-popover'
-                              data-className='warning-pop'
-                              data-container='body'
-                              title='Warning'
-                              data-toggle='popover'
-                              data-placement='right'
-                              data-content=''
-                            >
-                              Total
-                            </Link>
-                          </td>
-                          <td>{''}</td>
-                          {networth?.map((nItem, idx) => (
-                            <td key={idx} className={gc(nItem.interval)}>
-                              {fNumber(nItem.investmentAssets)}
+                            <th className='tab-hide'>Type</th>
+
+                            {investmentAssets?.[0]?.balances.map((item, idx) => (
+                              <th key={idx} className={gc(item.interval)}>
+                                {item.interval}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {investmentAssets?.map((iAsset, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{iAsset.accountName}</td>
+                                <td>{iAsset.accountType}</td>
+                                {iAsset.balances.map((b, idx) => (
+                                  <td key={`${index}-${idx}`} className={gc(b.interval)}>
+                                    {b.balance}
+                                  </td>
+                                ))}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                        <tfoot>
+                          <tr data-href='#'>
+                            <td>
+                              <Link
+                                to='#'
+                                className='warning-popover'
+                                data-className='warning-pop'
+                                data-container='body'
+                                title='Warning'
+                                data-toggle='popover'
+                                data-placement='right'
+                                data-content=''
+                              >
+                                Total
+                              </Link>
                             </td>
-                          ))}
-                        </tr>
-                      </tfoot>
-                    </table>
+                            <td>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.investmentAssets)}
+                              </td>
+                            ))}
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : null}
 
-            <div className='row mb-40'>
-              <div className='col-12'>
-                <div className='ct-box box-g'>
-                  <div className='table-holder'>
-                    <table className='table'>
-                      <thead>
-                        <tr>
-                          <th>
-                            <span>Other Assets</span>
-                          </th>
-                          <th className='tab-hide'>Type</th>
-                          {otherAssets[0]?.balances.map((item, idx) => (
-                            <th key={idx} className={gc(item.interval)}>
-                              {item.interval}
+            {otherAssets?.length ? (
+              <div className='row mb-40'>
+                <div className='col-12'>
+                  <div className='ct-box box-g'>
+                    <div className='table-holder'>
+                      <table className='table'>
+                        <thead>
+                          <tr>
+                            <th>
+                              <span>Other Assets</span>
                             </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {otherAssets?.map((iAsset, index) => {
-                          return (
-                            <tr key={index}>
-                              <td>{iAsset.accountName}</td>
-                              <td>{iAsset.accountType}</td>
-                              {iAsset.balances.map((b, idx) => (
-                                <td key={`${index}-${idx}`} className={gc(b.interval)}>
-                                  {b.balance}
-                                </td>
-                              ))}
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                      <tfoot>
-                        <tr data-href='#'>
-                          <td>Total</td>
-                          <td>{''}</td>
-                          {networth?.map((nItem, idx) => (
-                            <td key={idx} className={gc(nItem.interval)}>
-                              {fNumber(nItem.otherAssets)}
-                            </td>
-                          ))}
-                        </tr>
-                      </tfoot>
-                    </table>
+                            <th className='tab-hide'>Type</th>
+                            {otherAssets?.[0]?.balances.map((item, idx) => (
+                              <th key={idx} className={gc(item.interval)}>
+                                {item.interval}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {otherAssets?.map((iAsset, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{iAsset.accountName}</td>
+                                <td>{iAsset.accountType}</td>
+                                {iAsset.balances.map((b, idx) => (
+                                  <td key={`${index}-${idx}`} className={gc(b.interval)}>
+                                    {b.balance}
+                                  </td>
+                                ))}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                        <tfoot>
+                          <tr data-href='#'>
+                            <td>Total</td>
+                            <td>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.otherAssets)}
+                              </td>
+                            ))}
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : null}
 
-            <div className='row mb-40'>
-              <div className='col-12'>
-                <div className='ct-box box-r'>
-                  <div className='table-holder'>
-                    <table className='table'>
-                      <thead>
-                        <tr>
-                          <th>
-                            <span>Liabilities</span>
-                          </th>
-                          <th className='tab-hide'>Type</th>
-                          {liabilities[0]?.balances.map((item, idx) => (
-                            <th key={idx} className={gc(item.interval)}>
-                              {item.interval}
+            {liabilities?.length ? (
+              <div className='row mb-40'>
+                <div className='col-12'>
+                  <div className='ct-box box-r'>
+                    <div className='table-holder'>
+                      <table className='table'>
+                        <thead>
+                          <tr>
+                            <th>
+                              <span>Liabilities</span>
                             </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {liabilities?.map((iAsset, index) => {
-                          return (
-                            <tr key={index}>
-                              <td>{iAsset.accountName}</td>
-                              <td>{iAsset.accountType}</td>
-                              {iAsset.balances.map((b, idx) => (
-                                <td key={`${index}-${idx}`} className={gc(b.interval)}>
-                                  {b.balance}
-                                </td>
-                              ))}
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <td>Total</td>
-                          <td>{''}</td>
-                          {networth?.map((nItem, idx) => (
-                            <td key={idx} className={gc(nItem.interval)}>
-                              {fNumber(nItem.liabilities)}
-                            </td>
-                          ))}
-                        </tr>
-                      </tfoot>
-                    </table>
+                            <th className='tab-hide'>Type</th>
+                            {liabilities?.[0]?.balances.map((item, idx) => (
+                              <th key={idx} className={gc(item.interval)}>
+                                {item.interval}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {liabilities?.map((iAsset, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{iAsset.accountName}</td>
+                                <td>{iAsset.accountType}</td>
+                                {iAsset.balances.map((b, idx) => (
+                                  <td key={`${index}-${idx}`} className={gc(b.interval)}>
+                                    {b.balance}
+                                  </td>
+                                ))}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td>Total</td>
+                            <td>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.liabilities)}
+                              </td>
+                            ))}
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : null}
 
             <div className='row mb-40'>
               <div className='col-12'>
