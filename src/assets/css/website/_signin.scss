@@ -231,16 +231,18 @@ span.forgot-pass {
 .credentials-content .form-wrap button:hover {
   color: $white;
 }
-.credentials-content h2 {
-  font-weight: 300;
-  font-size: 1.75rem;
-  margin-bottom: 17px;
-  line-height: 2.1875rem;
-  color: $black;
-}
-.credentials-content p {
-  margin-bottom: 40px;
-  font-weight: 400;
+.credentials-content {
+  h2 {
+    font-weight: 300;
+    font-size: 1.75rem;
+    margin-bottom: 17px;
+    line-height: 2.1875rem;
+    color: $black;
+  }
+  p {
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
 }
 
 //forgot password page
