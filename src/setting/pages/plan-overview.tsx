@@ -77,13 +77,14 @@ export const PlanOverview = () => {
 
   return (
     <section className='mm-plan-overview my-4'>
-      <div className='mm-plan-overview__switch text-center'>
-        <button type='button' className={monthlyClasses} onClick={() => setType('month')}>
-          Monthly
-        </button>
-        <button type='button' className={annualClasses} onClick={() => setType('year')}>
-          Annually
-        </button>
+      <div className='row mm-plan-overview__switch text-center'>
+        <div className="mm-plan-radios m-auto">
+            <input type="radio" id="mm-plan-radios1" value="monthly" name='mm-radio-time-interval' checked={type==='month'} />
+            <label className="labels" htmlFor="mm-plan-radios1" onClick={() => setType('month')}>Monthly</label>
+            <input type="radio" id="mm-plan-radios2" value="annually"  name='mm-radio-time-interval' checked={type==='year'} />
+            <label className="labels" htmlFor="mm-plan-radios2" onClick={() => setType('year')}>Annually</label>
+            <div className="mm-radion-bg"></div>
+          </div>
       </div>
 
       <div className='row'>

@@ -13,7 +13,7 @@
     &__recommend-card {
       border-top: 4px solid $primary;
 
-      > .card-body {
+      >.card-body {
         padding: 1.3rem 2.5rem;
       }
     }
@@ -53,6 +53,7 @@
       &--current {
         border: none;
         color: $darkGray;
+
         &:hover {
           background-color: transparent;
         }

@@ -69,22 +69,13 @@ export const PricingTable = () => {
     <div className='container-fluid'>
       <div className='row'>
         <div className='plan-section'>
-          {/* <button className={monthlyClasses} onClick={() => setType('monthly')}>
-            Monthly
-          </button>
-          <button className={annualClasses} onClick={() => setType('yearly')}>
-            <span className='save-text'>Annually</span>
-          </button> */}
-          <div className="flight-types">
-            <input type="radio" name="flight-type" value="coach" id="coach" checked />
-            <label htmlFor="coach">
-              Monthly
-            </label>
-
-            <input type="radio" name="flight-type" value="business" id="business" />
-            <label htmlFor="business">
-              Annually
-            </label>
+          <div className="mm-plan-radios">
+            <input type="radio" id="mm-plan-radios1" value="monthly" name='mm-radio-time-interval' checked={type==='monthly'} />
+            <label className="labels" htmlFor="mm-plan-radios1" onClick={() => setType('monthly')}>Monthly</label>
+            <input type="radio" id="mm-plan-radios2" value="annually"  name='mm-radio-time-interval' checked={type==='yearly'} />
+            <label className="labels" htmlFor="mm-plan-radios2" onClick={() => setType('yearly')}>Annually</label>
+            <span className='save-text' />
+            <div className="mm-radion-bg"></div>
           </div>
         </div>
       </div>
