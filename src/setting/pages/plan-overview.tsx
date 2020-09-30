@@ -75,10 +75,10 @@ export const PlanOverview = () => {
     <section className='mm-plan-overview my-4'>
       <div className='row mm-plan-overview__switch text-center'>
         <div className="mm-plan-radios m-auto">
-            <input type="radio" id="mm-plan-radios1" value="monthly" name='mm-radio-time-interval' checked={type==='month'} />
-            <label className="labels" htmlFor="mm-plan-radios1" onClick={() => setType('month')}>Monthly</label>
-            <input type="radio" id="mm-plan-radios2" value="annually"  name='mm-radio-time-interval' checked={type==='year'} />
-            <label className="labels" htmlFor="mm-plan-radios2" onClick={() => setType('year')}>Annually</label>
+            <input type="radio" id="mm-plan-month" value="monthly" name='mm-radio-time-interval' checked={type==='month'} />
+            <label className="labels" htmlFor="mm-plan-month" onClick={() => setType('month')}>Monthly</label>
+            <input type="radio" id="mm-plan-year" value="annually"  name='mm-radio-time-interval' checked={type==='year'} />
+            <label className="labels" htmlFor="mm-plan-year" onClick={() => setType('year')}>Annually</label>
             <div className="mm-radion-bg"></div>
           </div>
       </div>

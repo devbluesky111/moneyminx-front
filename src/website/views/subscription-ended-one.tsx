@@ -56,10 +56,10 @@ export const PricingTable = () => {
       <div className='row'>
         <div className='plan-section'>
           <div className="mm-plan-radios">
-            <input type="radio" id="mm-plan-radios1" value="monthly" name='mm-radio-time-interval'  />
-            <label className="labels" htmlFor="mm-plan-radios1" >Monthly</label>
-            <input type="radio" id="mm-plan-radios2" value="annually" name='mm-radio-time-interval' />
-            <label className="labels" htmlFor="mm-plan-radios2">Annually</label>
+            <input type="radio" id="mm-plan-month" value="monthly" name='mm-radio-time-interval'  />
+            <label className="labels" htmlFor="mm-plan-month" >Monthly</label>
+            <input type="radio" id="mm-plan-year" value="annually" name='mm-radio-time-interval' />
+            <label className="labels" htmlFor="mm-plan-year">Annually</label>
             <span className='save-text' />
             <div className="mm-radion-bg"></div>
           </div>

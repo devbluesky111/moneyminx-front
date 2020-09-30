@@ -247,15 +247,19 @@ ul.features-list {
 }
 
 
-
-@media (max-width: $md - 1) {
-  .mm-show-md {
-    display: none;
+.mm-show-md {
+  display: none;
+  @media (min-width: $md) {
+    display: block;
   }
+}
 
-  .pricing-chart-wrapper {
-    margin-left: -20px;
-    margin-right: -20px;
+.pricing-chart-wrapper {
+  margin-left: -20px;
+  margin-right: -20px;
+  @media (min-width: $md) {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
@@ -295,17 +299,17 @@ ul.features-list {
     height: 3.25rem;
   }
 
-  #mm-plan-radios1:checked+label,
-  #mm-plan-radios2:checked+label {
+  #mm-plan-month:checked+label,
+  #mm-plan-year:checked+label {
     color: $primary;
   }
 
-  #mm-plan-radios1:checked~.mm-radion-bg {
+  #mm-plan-month:checked~.mm-radion-bg {
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
   }
 
-  #mm-plan-radios2:checked~.mm-radion-bg {
+  #mm-plan-year:checked~.mm-radion-bg {
     transform: translateX(138px);
     transition: transform 0.2s ease-in-out;
   }
