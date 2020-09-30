@@ -3,22 +3,24 @@ import { ReactComponent as PricingTickIcon } from 'assets/images/pricing/tick-ic
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 const SubscriptionEnded = () => {
   return (
-      <PricingTable />
+    <PricingTable />
   );
 };
 export default SubscriptionEnded;
 export const PricingTable = () => {
   return (
-    <div className='container-fluid py-5'>
-      <div className='row'>
-        <div className='subs-ended-msg-box'>
-          <div className='subs-ended-left'>
-            <h4>Uh oh. Your subscription ended!</h4>
-            <p>To continue using Money Minx please choose from one of the plans below to continue.</p>
+    <div className='px-4 py-5'>
+      <div className='container'>
+        <div className='row'>
+          <div className='subs-ended-msg-box'>
+            <div className='subs-ended-left'>
+              <h4>Uh oh. Your subscription ended!</h4>
+              <p>To continue using Money Minx please choose from one of the plans below to continue.</p>
+            </div>
+            <span className='warning-icon'>
+              <SubscriptionWarning />
+            </span>
           </div>
-          <span className='warning-icon'>
-            <SubscriptionWarning />
-          </span>
         </div>
       </div>
       <div className='row'>

@@ -20,9 +20,11 @@ a {
 }
 .subs-ended-msg-box h4 {
   font-size: 1.25rem;
+  font-weight: 600;
 }
 .subs-ended-msg-box p {
-  font-size: 0.87rem;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 span.warning-icon {
   float: right;
@@ -123,6 +125,7 @@ ul.subscribed-list li:last-child {
   border-radius: 6px;
   padding: 9px;
   margin-top: 9px;
+  margin-bottom: 9px;
   outline: none;
   border: none;
 }
