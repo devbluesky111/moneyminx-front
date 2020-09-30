@@ -24,6 +24,10 @@ ul.bank-list li {
   display: inline-block;
   box-sizing: border-box;
   border: 1px solid rgba(150, 158, 172, 0.4);
+
+  &.completed {
+    border: 1px solid $green;
+  }
 }
 
 ul.bank-list li a {

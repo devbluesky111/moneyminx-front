@@ -21,10 +21,11 @@ const AccountSetting = () => {
   const { accounts } = useAuthState();
   const [providerName, setProviderName] = useState('');
   const [reloadCounter, setReloadCounter] = useState(0);
+  const [completed, setCompleted] = useState<number[]>([]);
   const [currentAccount, setCurrentAccount] = useState<Account>();
+  const [completedProviderName, setCompletedProviderName] = useState<string[]>([]);
   const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
   const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
-  const [completed, setCompleted] = useState<number[]>([]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -39,8 +40,16 @@ const AccountSetting = () => {
       setCurrentAccount(accounts[0]);
       const accountsByProvider = groupByProviderName(accounts);
       setAccountsByProviderName(accountsByProvider);
+
+      const completedProviders = Object.keys(accountsByProvider).filter((pName) =>
+        accountsByProvider[pName].every((acc) => acc.accountDetails?.overridden === true)
+      );
+
+      setCompletedProviderName(completedProviders);
+
       const [curProviderName] = Object.keys(accountsByProvider);
       setProviderName(curProviderName);
+
       const curProviderAccounts = accountsByProvider[curProviderName];
       setCurrentProviderAccounts(curProviderAccounts);
     }
@@ -62,10 +71,6 @@ const AccountSetting = () => {
     }
   }, [accounts]);
 
-  // console.log('_____________completed__________', completed);
-
-  // console.log('_____________currentAccount__________', currentAccount);
-
   if (!accounts || !currentAccount || !currentProviderAccounts) {
     return <CircularSpinner />;
   }
@@ -79,8 +84,6 @@ const AccountSetting = () => {
   const handleChangeCurrentAccount = (curAccount: Account) => {
     setCurrentAccount(curAccount);
   };
-
-  // const gotoNextAccount = () => {};
 
   return (
     <AuthLayout>
@@ -135,7 +138,12 @@ const AccountSetting = () => {
                   <ul className='bank-list'>
                     {providerNames.map((provider, index) => {
                       return (
-                        <li key={index} onClick={() => handleProviderChange(provider)} role='button'>
+                        <li
+                          key={index}
+                          onClick={() => handleProviderChange(provider)}
+                          role='button'
+                          className={completedProviderName.includes(provider) ? 'completed' : ''}
+                        >
                           <Link to='#'>{provider}</Link>
                         </li>
                       );
