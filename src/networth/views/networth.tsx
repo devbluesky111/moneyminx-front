@@ -12,7 +12,7 @@ import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import NetworthHead from './inc/networth-head';
-import SimpleBarChart from './simple-bar-chart';
+import NetworthBarGraph from './networth-bar-graph';
 import NetworthFilter from './inc/networth-filter';
 import ConnectionAlert from './inc/connection-alert';
 import { useNetworthState } from 'networth/networth.context';
@@ -35,16 +35,25 @@ const Networth = () => {
   const otherAssets = accounts[AccountCategory.OTHER_ASSETS];
   const liabilities = accounts[AccountCategory.LIABILITIES];
   const investmentAssets = accounts[AccountCategory.INVESTMENT_ASSETS];
+  const isCurrent = (interval: string) =>
+    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
 
   const gc = (interval: string) => {
     if (interval) {
-      if (getMonthYear() === interval || getYear() === interval || getQuarter() === interval) {
+      if (isCurrent(interval)) {
         return 'current-m';
       }
     }
 
     return 'tab-hide';
   };
+
+  const [curNetworthItem] = networth.filter((networthItem) => isCurrent(networthItem.interval));
+
+  const currentNetworth = curNetworthItem?.networth || 0;
+  const currentOtherAssets = curNetworthItem?.otherAssets || 0;
+  const currentLiabilities = curNetworthItem?.liabilities || 0;
+  const currentInvestmentAsset = curNetworthItem?.investmentAssets || 0;
 
   return (
     <NetworthLayout>
@@ -60,41 +69,23 @@ const Networth = () => {
                     <ul>
                       <li className='inv-data'>
                         <span>Investment Assets</span>
-                        <h3>$235,000</h3>
+                        <h3>$ {fNumber(currentInvestmentAsset)}</h3>
                       </li>
                       <li className='other-data'>
                         <span>Other Assets</span>
-                        <h3>$735,000</h3>
+                        <h3>${fNumber(currentOtherAssets)}</h3>
                       </li>
                       <li className='lty-data'>
                         <span>Liabilities</span>
-                        <h3>$1,505,000</h3>
+                        <h3>${fNumber(currentLiabilities)}</h3>
                       </li>
                       <li className='nw-data'>
                         <span>Net Worth</span>
-                        <h3>$535,000</h3>
+                        <h3>${fNumber(currentNetworth)}</h3>
                       </li>
                     </ul>
                     <div className='chartbox'>
-                      <SimpleBarChart />
-                      <ul className='charttool'>
-                        <li className='inv-data'>
-                          <span>Investment Assets</span>
-                          <h3>$235,000</h3>
-                        </li>
-                        <li className='other-data'>
-                          <span>Other Assets</span>
-                          <h3>$735,000</h3>
-                        </li>
-                        <li className='lty-data'>
-                          <span>Liabilities</span>
-                          <h3>$1,505,000</h3>
-                        </li>
-                        <li className='nw-data'>
-                          <span>Net Worth</span>
-                          <h3>$535,000</h3>
-                        </li>
-                      </ul>
+                      <NetworthBarGraph networth={networth} />
                     </div>
                   </div>
                 </div>

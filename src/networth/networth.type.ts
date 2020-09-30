@@ -61,3 +61,7 @@ export interface Action {
   type: NetworthActionEnum;
   payload?: NetworthPayload;
 }
+
+export interface NetworthBarGraphProps {
+  networth: NetworthItem[];
+}
