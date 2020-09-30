@@ -11,7 +11,8 @@ export const urls = {
     PATCH_ACCOUNT: '/account/:id',
     FACEBOOK_LOGIN: '/facebook/login',
     PROFILE_PICTURE: '/profile/picture',
-    ACCOUNTS: '/account/me?refresh=true',
+    ACCOUNTS: '/account/me?refresh=false',
+    ACCOUNTS_REFRESH: '/account/me?refresh=true',
     ACCOUNT_CATEGORY: '/account/category',
     ACCOUNT_TYPE: '/account/account-type',
     ASSOCIATE_LOGIN: '/facebook/associate',
@@ -31,5 +32,8 @@ export const urls = {
   },
   yodlee: {
     FAST_LINK: '/account/yodlee/fastlink',
+  },
+  networth: {
+    NETWORTH: '/networth',
   },
 };

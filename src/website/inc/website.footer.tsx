@@ -112,6 +112,7 @@ const footerListComponent = <FooterList />;
 interface WebsiteFooter {
   isSignupToday?: boolean;
 }
+
 const WebsiteFooter: React.FC<WebsiteFooter> = ({ isSignupToday = true }) => {
   return (
     <div className='website-footer'>
