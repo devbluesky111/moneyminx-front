@@ -3,6 +3,7 @@ body {
   font-size: 1rem;
   font-weight: 300;
   overflow-x: hidden;
+  background-color: $lightBg;
 }
 p {
   font-weight: 300;
@@ -10,7 +11,7 @@ p {
   line-height: 150%;
 }
 h1 {
-  font-size: 3.3rem !important;
+  font-size: 3.3rem;
   font-weight: 300;
 }
 h3 {
@@ -24,6 +25,7 @@ h5 {
 h6 {
   font-weight: 300 !important;
 }
+
 a {
   text-decoration: none;
   &:hover {
@@ -45,7 +47,10 @@ a {
   margin-right: 120px;
 }
 
-//
+.app-wrapper {
+  overflow: hidden;
+}
+
 .mm-container-right {
   margin-left: 120px;
 }
@@ -63,7 +68,7 @@ a {
   width: 76px;
   height: 29px;
   padding: 3px;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 23px;
 }
 
@@ -88,7 +93,6 @@ a {
   color: $white;
   background: $purple;
   &:hover {
-    background: $purple;
     box-shadow: 0 4px 12px #b9b8e0;
   }
   &:disabled {
@@ -102,7 +106,6 @@ a {
   box-sizing: border-box;
   border-radius: 4px;
 
-
   &:hover {
     background: $lightBg;
     color: $purple;
@@ -111,6 +114,15 @@ a {
   &:disabled {
     opacity: 0.7;
   }
+
+  &[disabled]:hover {
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.mm-btn-crypto {
+  background: $pinkAlert;
 }
 
 .container-mm {
@@ -127,7 +139,7 @@ a {
   width: 76px;
   height: 29px;
   padding: 3px;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 23px;
   display: inline-block;
   font-weight: 500;
@@ -194,7 +206,7 @@ a {
 
 @media (max-width: $sm) {
   h1 {
-    font-size: 36px !important;
+    font-size: 2.25rem !important;
   }
 
   .mm-container {
@@ -205,14 +217,14 @@ a {
     margin-left: 20px;
   }
 }
-.mm-overview-block {
+.mm-overview-wrapper {
   background-image: url('../images/background-shadow.svg');
-  background-size: 65rem 133rem;
-  background-repeat: no-repeat;
+  background-size: 50%;
   background-position: top right;
+  background-repeat: no-repeat;
 
-  @media ( max-width: $md - 1) {
-    background-size: contain;
+  @media ( max-width: $md + 400) {
+    background-size: 100%;
   }
 }
 
@@ -344,4 +356,7 @@ hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border: 1px solid rgba($gray, 0.2);
+}
+.mm-overview-block {
+  background: $lightBg;
 }

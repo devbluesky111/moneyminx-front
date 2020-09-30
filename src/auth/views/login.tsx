@@ -83,23 +83,21 @@ export const LoginMainSection = () => {
 
   return (
     <div className='main-table-wrapper'>
-      <div className='mm-container mm-container-final'>
+      <div className=''>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <div className='logo-img-wrap'>
               <Link to='/'>
-                <LogoImg className='icon' />
+                <LogoImg className='icon auth-logo' />
               </Link>
-            </div>
-            <h1>
-              <span className='block'>Three easy steps to get </span>started with Money Minx
-            </h1>
-            <ul>
-              <li>Find your institutions</li>
-              <li>Connect it securely to Money Minx</li>
-              <li>Let Money Minx to the rest</li>
-            </ul>
-            <div className='guide-bottom'>
+
+            <div className='auth-left-content'>
+              <h1>Three easy steps to get started with Money Minx</h1>
+              <ul>
+                <li>Find your accounts</li>
+                <li>Connect it securely to Money Minx</li>
+                <li>Let Money Minx do the rest</li>
+              </ul>
+              <div className='guide-bottom'>
               <h4>Serious about security</h4>
               <div className='guide-icon-wrap'>
                 <span className='locked-icon'>
@@ -114,13 +112,14 @@ export const LoginMainSection = () => {
                 </span>
                 <p>Investors from all over the world are using Money Minx</p>
               </div>
+              </div>
             </div>
           </div>
 
-          <div className='bg-white credintials-wrapper'>
-            <div className='credintials-content'>
+          <div className='bg-white credentials-wrapper'>
+            <div className='credentials-content'>
               <div className='logo-img-wrapper'>
-                <LogoImg />
+                <LogoImg className='auth-logo'/>
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
@@ -220,7 +219,7 @@ export const LoginMainSection = () => {
                             <Link to='/auth/forgot-password'>Forgot Password?</Link>
                           </span>
                         </p>
-                        <button className='bg-primary mm-btn-primary-outline' type='submit' disabled={!props.isValid}>
+                        <button className='mm-btn-animate mm-btn-primary' type='submit' disabled={!props.isValid}>
                           Log in
                         </button>
                       </form>
@@ -241,7 +240,7 @@ export const LoginMainSection = () => {
                         reAuthenticate={true}
                         callback={responseFacebook}
                         scope='public_profile,email'
-                        icon={<LoginFacebookIcon />}
+                        icon={<LoginFacebookIcon className='social-login-fb'/>}
                         appId={env.FACEBOOK_APP_ID || ''}
                         buttonStyle={{
                           background: 'transparent',
@@ -254,7 +253,7 @@ export const LoginMainSection = () => {
 
                 <p>
                   <div className='auth-end-element'>
-                    Don’t have an account? <Link to='/signup'>Sign Up</Link>
+                    Don’t have an account? <Link to='/signup' className='purple-links'>Sign Up</Link>
                   </div>
                 </p>
               </div>

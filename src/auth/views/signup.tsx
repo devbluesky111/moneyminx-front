@@ -111,42 +111,43 @@ export const SignupMainSection = () => {
 
   return (
     <div className='main-table-wrapper'>
-      <div className='mm-container mm-container-final'>
+      <div className=''>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <Link className='logo-img-wrap' to='/'>
-              <LogoImg />
+            <Link to='/'>
+              <LogoImg className='icon auth-logo' />
             </Link>
-            <h1>
-              <span className='block'>Three easy steps to get </span>started with Money Minx
-            </h1>
-            <ul>
-              <li>Find your accounts</li>
-              <li>Connect it securely to Money Minx</li>
-              <li>Let Money Minx do the rest</li>
-            </ul>
-            <div className='guide-bottom'>
-              <h4>Serious about security</h4>
-              <div className='guide-icon-wrap'>
+
+            <div className='auth-left-content'>
+              <h1>Three easy steps to get started with Money Minx</h1>
+              <ul>
+                <li>Find your accounts</li>
+                <li>Connect it securely to Money Minx</li>
+                <li>Let Money Minx do the rest</li>
+              </ul>
+              <div className='guide-bottom'>
+                <h4>Serious about security</h4>
+                <div className='guide-icon-wrap'>
                 <span className='locked-icon'>
                   <LoginLockIcon />
                 </span>
-                <p>The security of your information is our top priority</p>
-              </div>
-              <h4>Trusted by investors</h4>
-              <div className='guide-icon-wrap'>
+                  <p>The security of your information is our top priority</p>
+                </div>
+                <h4>Trusted by investors</h4>
+                <div className='guide-icon-wrap'>
                 <span className='shield-icon'>
                   <LoginShieldIcon />
                 </span>
-                <p>Investors from all over the world are using Money Minx</p>
+                  <p>Investors from all over the world are using Money Minx</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className='bg-white credintials-wrapper'>
-            <div className='credintials-content'>
+          <div className='bg-white credentials-wrapper'>
+            <div className='credentials-content'>
               <div className='logo-img-wrapper'>
-                <LogoImg />
+                <LogoImg className='auth-logo'/>
               </div>
               <h2>Track your net worth and portfolio in one place</h2>
               <p>
@@ -280,7 +281,7 @@ export const SignupMainSection = () => {
                           </div>
                         )}
 
-                        <div className='credintials-checkbox'>
+                        <div className='credentials-checkbox'>
                           <span className='checkbox-item'>
                             <label className='check-box'>
                               I accept the{' '}
@@ -322,7 +323,7 @@ export const SignupMainSection = () => {
                           <div className='feedback mb-4 text-right'>{props.errors.termsAccepted}</div>
                         )}
 
-                        <button className='bg-primary mm-btn-primary-outline' type='submit'>
+                        <button className='mm-btn-animate mm-btn-primary' type='submit'>
                           Sign Up
                         </button>
                       </form>
@@ -343,7 +344,7 @@ export const SignupMainSection = () => {
                         reAuthenticate={true}
                         callback={responseFacebook}
                         scope='public_profile,email'
-                        icon={<LoginFacebookIcon />}
+                        icon={<LoginFacebookIcon className='social-login-fb'/>}
                         appId={env.FACEBOOK_APP_ID || ''}
                         buttonStyle={{
                           background: 'transparent',
@@ -356,7 +357,7 @@ export const SignupMainSection = () => {
 
                 <p>
                   <div className='auth-end-element'>
-                    Already have an account? <Link to='/login'>Log In</Link>
+                    Already have an account? <Link to='/login' className='purple-links'>Log In</Link>
                   </div>
                 </p>
               </div>

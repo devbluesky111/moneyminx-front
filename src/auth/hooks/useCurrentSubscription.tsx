@@ -4,6 +4,7 @@ import { CurrentSubscription } from 'setting/setting.type';
 
 const useCurrentSubscription = () => {
   const { res, loading } = useFetch(getCurrentSubscription, {});
+
   return {
     fetchingCurrentSubscription: loading,
     currentSubscription: res?.data as CurrentSubscription,

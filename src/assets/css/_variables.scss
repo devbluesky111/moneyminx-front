@@ -21,8 +21,11 @@ $pinkAlert: #fd8f95;
 $dimGray: #9c9fa53d;
 $link: #4dccff;
 
+// forms
+$formBorder: #969eac24;
+
 // opacity 0.24 color
-$grayOpacity: #969eac3d;
+$grayOpacity: #969eac24;
 
 // shadow color
 $whiteShadow: #dbe3f0;
@@ -48,11 +51,13 @@ $s4: 4rem;
 $sm: 375px;
 $med: 576px;
 $md: 768px;
+$desk: 1024px;
 $lg: 1400px;
 
 // font weight
 $lighter: 500;
 $normal: 600;
+
 //font weights
 $bold: 500;
 $bolder: 600;

@@ -1,10 +1,113 @@
-//Guide Content
+.auth-wrapper {
+  flex-direction: column;
+  height: 100vh;
+  display: flex;
+}
+.auth-logo {
+  width: 110px;
+}
+.auth-left-content {
+  padding-top: 30px;
+  padding-left: 0;
+
+  @media (min-width: $desk) {
+    padding-left: 0;
+  }
+
+  @media (min-width: $lg) {
+    padding-left: 110px;
+  }
+
+}
+
 .guide-content {
+  width: 46%;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 28px 0 0 100px;
+  font-size: 2rem !important;
+  font-weight: 300;
+  line-height: 2.5rem;
+  letter-spacing: 0.02em;
+  position: relative;
+
   h1 {
     padding-bottom: 2.1rem;
+    font-size: 2rem;
+    font-weight: 200;
+    letter-spacing: 0.02em;
+    max-width: 460px;
   }
+
+  h4 {
+    font-size: 1.25rem;
+    margin-bottom: 23px;
+    font-weight: 500;
+    line-height: 1.5625rem;
+    color: $darkGray;
+  }
+
   p {
     color: $gray;
+  }
+
+  ul {
+    margin-bottom: 73px;
+    counter-reset: section;
+    padding-left: 0;
+  }
+
+  li {
+    position: relative;
+    list-style: none;
+    padding-left: 58px;
+    color: $purple;
+    font-size: 1.25rem;
+    margin-bottom: 32px;
+    padding-top: 8px;
+    line-height: 1.5625rem;
+    font-weight: 400;
+
+    &:before {
+      counter-increment: section;
+      content: counter(section);
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 40px;
+      width: 40px;
+      border-radius: 100%;
+      background: $purple;
+      box-shadow: 0 4px 12px rgba(83, 76, 234, 0.3);
+      color: $white;
+      padding: 8px 14px;
+      font-size: 1rem;
+    }
+  }
+
+  span.locked-icon {
+    margin-right: 15px;
+  }
+
+  span.shield-icon {
+    margin-right: 15px;
+  }
+
+  @media (max-width: $md) {
+    position: static;
+    display: none;
+  }
+
+  @media (max-width: $lg+1px) {
+    .guide-content {
+      padding-left: 45px;
+    }
+  }
+}
+.social-login-fb {
+  &:hover {
+    box-shadow: 0 4px 8px #B8CCE0;
+    border-radius: 50%;
   }
 }
 
@@ -12,78 +115,19 @@
   cursor: pointer;
 }
 
-.guide-content ul {
-  counter-reset: section;
-  padding-left: 0;
-}
-
-.guide-content li {
-  position: relative;
-  list-style: none;
-  padding-left: 58px;
-  color: $purple;
-  font-size: 1.25rem;
-  margin-bottom: 32px;
-  font-weight: $bolder;
-  line-height: 1.5625rem;
-}
-
-.guide-content li:before {
-  counter-increment: section;
-  content: counter(section);
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 40px;
-  width: 40px;
-  border-radius: 100%;
-  background: $purple;
-  box-shadow: 0 4px 12px rgba(83, 76, 234, 0.3);
-  color: $white;
-  padding: 8px 14px;
-  font-size: 1rem;
-}
-
-.guide-content span.locked-icon {
-  margin-right: 15px;
-}
-
-.guide-content span.shield-icon {
-  margin-right: 15px;
-}
-
-.guide-content h4 {
-  font-size: 1.25rem;
-  margin-bottom: 23px;
-  font-weight: $bolder;
-  line-height: 1.5625rem;
-  color: $darkGray;
-}
-
-.guide-bottom p {
-  margin-bottom: 57px;
-  font-weight: $bold;
-  font-size: 1rem;
-  line-height: 1.25rem;
-}
-
 .guide-icon-wrap {
   display: flex;
 }
 
-.guide-content ul {
-  margin-bottom: 73px;
-}
-
-.guide-content h1 {
-  font-size: 2rem !important;
-  font-weight: 300;
-  line-height: 2.5rem;
-  letter-spacing: 0.02em;
-}
-
 .guide-bottom {
-  max-width: 352px;
+  max-width: 326px;
+
+  p {
+    margin-bottom: 57px;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
 }
 
 .main-table-wrapper {
@@ -91,32 +135,35 @@
   width: 100%;
 }
 
-.guide-content {
-  width: 42%;
+.credentials-wrapper {
+  width: 100%;
   display: table-cell;
   vertical-align: middle;
-  padding-left: 102px;
-}
+  padding-top: 30px;
+  min-height: 70vh;
+  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  border-radius: 6px 0 0 6px;
+  z-index: 1;
 
-.credintials-wrapper {
-  width: 58%;
-  display: table-cell;
-  vertical-align: middle;
-  padding-top: 55px;
-  min-height: 90vh;
+  @media (min-width: $md) {
+    padding-top: 40px;
+  }
+  @media (min-width: $md + 1) {
+    width: 54%;
+    padding-top: 40px;
+  }
+  @media (min-width: $desk) {
+    padding-top: 55px;
+    width: 54%;
+  }
 }
 
 .mm-container.mm-container-final {
-  margin-right: 0px;
+  margin-right: 0;
 }
-//Credintials Content
+//credentials Content
 
-.credintials-wrapper {
-  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
-  border-radius: 6px;
-}
-
-.credintials-content {
+.credentials-content {
   h1 {
     padding-bottom: 1.3rem;
   }
@@ -126,20 +173,28 @@
   }
 }
 
-.credintials-content .form-wrap input {
+.credentials-content .form-wrap input {
   height: 48px;
   font-size: 0.875rem;
-  border: 1px solid $gray;
+  border: 1px solid $formBorder;
   border-radius: 4px;
   padding: 0 20px;
-  color: $gray;
+  color: $darkGray;
+
+  &:active, &:focus {
+    border: 1px solid $gray;
+  }
+
+  &::placeholder {
+    color: $gray;
+  }
 }
 
-.credintials-content input.invalid {
+.credentials-content input.invalid {
   border: 1px solid $redAlert;
 }
 
-.credintials-content {
+.credentials-content {
   max-width: 450px;
   padding-left: 100px;
 
@@ -153,7 +208,7 @@
 }
 
 input:focus {
-  outline: 0px;
+  outline: 0;
   border: 1px solid $gray;
 }
 span.forgot-pass {
@@ -165,7 +220,7 @@ span.forgot-pass {
   padding-bottom: 18px;
   line-height: 1.125rem;
 }
-.credintials-content .form-wrap button {
+.credentials-content .form-wrap button {
   width: 100%;
   display: block;
   height: 48px;
@@ -173,44 +228,47 @@ span.forgot-pass {
   border: 0;
   border-radius: 4px;
 }
-.credintials-content .form-wrap button:hover {
+.credentials-content .form-wrap button:hover {
   color: $white;
 }
-.credintials-content h2 {
-  font-weight: normal;
-  font-size: 1.75rem;
-  margin-bottom: 17px;
-  line-height: 2.1875rem;
-  color: $black;
-}
-.credintials-content p {
-  margin-bottom: 37px;
-  font-weight: $bold;
+.credentials-content {
+  h2 {
+    font-weight: 300;
+    font-size: 1.75rem;
+    margin-bottom: 17px;
+    line-height: 2.1875rem;
+    color: $black;
+  }
+  p {
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
 }
 
 //forgot password page
 @media (min-width: $sm + 1) {
-  .credintials-content p.f-pwd {
+  .credentials-content p.f-pwd {
     width: 22.125rem;
   }
 }
-.credintials-content .facebook-login {
+.credentials-content .facebook-login {
   font-size: 0.87rem;
-  border-top: 1px solid $dimGray;
+  border-top: 1px solid $grayOpacity;
   padding-top: 34px;
   font-weight: $bold;
+  margin-top: 32px;
 
   p span {
     font-size: 0.875rem;
     line-height: 1.125rem;
   }
 }
-.credintials-content .fb-icon-wrap {
+.credentials-content .fb-icon-wrap {
   display: inline-block;
   padding-left: 80px;
 }
 
-.credintials-content p > .auth-end-element {
+.credentials-content p > .auth-end-element {
   color: $darkGray;
   line-height: 1.25rem;
 }
@@ -218,8 +276,9 @@ span.forgot-pass {
 //Footer Second
 .footer-second {
   border-top: 1px solid rgba(150, 158, 172, 0.25);
-  padding: 40px 0px 20px;
-  position: relative;
+  padding: 24px 0 12px;
+  background-color: $lightBg;
+  margin-top:auto;
 }
 ul.footer-list {
   padding-left: 0;
@@ -228,20 +287,17 @@ ul.footer-list {
 ul.footer-list li {
   display: inline-block;
   margin-right: 22px;
-  font-weight: $bold;
+  font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.1875rem;
 }
 .copyright-text {
   color: $gray;
-  font-weight: $bold;
+  font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.1875rem;
 }
-.guide-content {
-  padding-left: 102px;
-  padding-top: 101px;
-}
+
 .footer-second .footer-list li a {
   color: $gray;
 }
@@ -265,17 +321,22 @@ ul.footer-list li {
 }
 
 //login img wrap
-.guide-content {
-  position: relative;
-}
+
 .logo-img-wrap {
   position: absolute;
   top: 26px;
-  left: 0%;
+  left: 0;
 }
 .logo-img-wrapper {
   display: none;
+  margin-bottom: 72px;
+
+  @media (max-width: $md) {
+      display: block;
+      margin-bottom: 26px;
+    }
 }
+
 //session Expired
 .session-expired {
   font-size: 0.87rem;
@@ -316,9 +377,6 @@ ul.footer-list li {
   box-shadow: 0 2px 8px #e2e8f3;
 }
 @media (max-width: $lg+1px) {
-  .guide-content {
-    padding-left: 45px;
-  }
   .footer-table-wrapper {
     padding: 0 32px;
   }
@@ -327,19 +385,8 @@ ul.footer-list li {
   }
 }
 @media (max-width: $md) {
-  .guide-content {
-    position: static;
-    display: none;
-  }
-  .credintials-wrapper {
-    width: 100%;
-  }
   .mm-container.mm-container-final {
     margin-left: 0 !important;
-  }
-  .logo-img-wrapper {
-    display: block;
-    margin-bottom: 72px;
   }
   .bottom-popup-message {
     padding-left: 79px;
@@ -347,7 +394,7 @@ ul.footer-list li {
 }
 
 @media (max-width: $md - 1) {
-  .credintials-content {
+  .credentials-content {
     max-width: none;
     padding-left: 40px;
     padding-right: 38px;
@@ -377,7 +424,7 @@ ul.footer-list li {
     font-size: 0.93rem;
   }
   .bottom-popup-message {
-    padding-left: 0px;
+    padding-left: 0;
   }
   .bottom-popup-message {
     height: 69%;

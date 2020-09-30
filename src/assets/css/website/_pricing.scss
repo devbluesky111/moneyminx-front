@@ -51,7 +51,7 @@ ul.features-list {
   margin: 0 12px;
   transition: 0.8s ease;
   position: relative;
-  flex: 0 23%;
+  flex: 0 22%;
 }
 .pricing-left-banner button:hover {
   color: $white;
@@ -157,7 +157,7 @@ ul.features-list {
   }
 }
 
-@media (max-width: 1024px) and (min-width: 768px) {
+@media (max-width: $lg - 376) and (min-width: $md) {
   .banner-piechart {
     max-width: none;
     float: none;
@@ -167,11 +167,6 @@ ul.features-list {
   .price-table {
     flex: 0 46.5%;
     margin-bottom: 27px;
-  }
-}
-@media (max-width: $md) {
-  .trial-btn {
-    height: 65px;
   }
 }
 
@@ -203,5 +198,28 @@ ul.features-list {
   }
   .download-btn-wrapper svg:nth-child(2) {
     margin-left: 0 !important;
+  }
+}
+
+.mm-banner-chart {
+  float: unset;
+  padding-left: calc(100% - 555px);
+}
+
+@media ( min-width: $md) {
+  .mm-show-sm {
+    display: none;
+  }
+}
+
+
+
+@media ( max-width: $md - 1 ) {
+  .mm-show-md {
+    display: none;
+  }
+  .pricing-chart-wrapper {
+    margin-left: -20px;
+    margin-right: -20px;
   }
 }

@@ -1,9 +1,9 @@
 .main-content {
-  padding: 40px 0 200px 0;
 
-  @media (max-width: 768px) {
-    padding: 40px 0 100px 0;
+  @media (min-width: $lg) {
+    padding: 40px 0 1px 0;
   }
+
 }
 
 .wrapper {
@@ -46,5 +46,22 @@
 
   p {
     font-size: 1rem;
+  }
+}
+
+.copyright-wrapper {
+  opacity: 0.8;
+}
+
+.social-links-wrapper {
+  padding: 26px 0;
+
+  li {
+    opacity: 0.8;
+    padding-right: 20px;
+
+  &:hover {
+    opacity: 1;
+  }
   }
 }

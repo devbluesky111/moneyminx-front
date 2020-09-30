@@ -26,8 +26,8 @@ export const SecurityTopSection = () => {
       <div className='row security-top'>
         <div className='col-lg-6'>
           <div className='security-left-banner mm-security-custom-banner'>
-            <h1>
-              Security and <span className='block'>Privacy are always </span>Top Priority
+            <h1 className='large-heading-light'>
+              Security and Privacy are Always Top Priority
             </h1>
             <p className='text'>
               We know your finances are personal, private and confidential. That is why, at Money Minx the security of
@@ -56,16 +56,16 @@ export const SecurityHeroSection = () => {
         <SecurityPieChart />
       </div>
       <div className='row'>
-        <h1>Your Data is Protected</h1>
-        <div className='text-wrap'>
+        <p className='large-heading-light p-l-3 p-r-3'>Your Data is Protected</p>
+        <div className='text-wrap p-l-3 p-r-3'>
           <p>Your sensitive information is always protected, always secure.</p>
         </div>
         <div className='col-lg-6'>
           <div className='protected-div'>
             <span className='block mb-25'>
-              <SecurityLockIcon />
+              <SecurityShieldIcon />
             </span>
-            <p className='text'>
+            <p className='text p-t-5'>
               We use the highest security standard and encryption with your data to make sure it is always safe.
             </p>
           </div>
@@ -73,9 +73,9 @@ export const SecurityHeroSection = () => {
         <div className='col-lg-6'>
           <div className='protected-div'>
             <span className='block mb-25'>
-              <SecurityShieldIcon />
+              <SecurityLockIcon />
             </span>
-            <p className='text'>
+            <p className='text p-t-5'>
               Money Minx follows strict internal controls. Employees have no access to your credentials.
             </p>
           </div>
@@ -91,7 +91,7 @@ export const SecurityPracticeSection = () => {
       <div className='mm-container-right SecurityPractice'>
         <div className='row security-top'>
           <div className='col-lg-6'>
-            <h1>Secure. Private. Trusted.</h1>
+            <h2 className='large-heading-light'>Secure. Private. Trusted.</h2>
             <p className='text text-gap'>
               Our website’s encryption is of the utmost importance. We stay on top of security vulnerabilities and keep
               up-to-date with best practices, including the followingractices, including the following:
@@ -148,7 +148,7 @@ export const SecurityPartneredSection = () => {
             <div className='security-logo'>
               <SecurityYodleeLogo />
             </div>
-            <h1>We’ve partnered with the industry leader to keep your accounts safe.</h1>
+            <h2 className='large-heading-light'>We’ve partnered with the industry leader to keep your accounts safe.</h2>
             <p className='text'>
               We use the best of the best to aggregate your account’s data, Yodlee. Yodlee is a public company with over
               a decade of experience connecting with financial institutions, They provide an added layer of safety
@@ -170,7 +170,7 @@ export const SecurityInvestmentSection = () => {
         <div className='row'>
           <div className='col-lg-12'>
             <div className='investment-wrap'>
-              <h1 className='mb-5'>No One Can Access Your Money or Your Investments</h1>
+              <h2 className='large-heading-light mb-5'>No One Can Access Your Money or Your Investments</h2>
               <p className='text'>
                 Your Money Minx account only has read access to your data. Money Minx can’t trigger transfers,
                 transactons or any other events with your banks, brokerages and investment sites. In the event that your
@@ -181,9 +181,9 @@ export const SecurityInvestmentSection = () => {
                 used to link your accounts is hosted by Yodlee. When you link your accounts, your credentials are stored
                 at Yodlee and are only ever sent directly to your financial institution.
               </p>
-              <p className='text'>
+              <p className='text p-b-10'>
                 For questions or concerns about security, please{' '}
-                <a href='https://security@moneyminx.com' target='_blank' rel='noopener noreferrer'>
+                <a href='mailto:hello@moneyminx.com' target='_blank' rel='noopener noreferrer'>
                   Contact us
                 </a>
                 .

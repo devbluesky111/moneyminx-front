@@ -1,7 +1,3 @@
-.navbar {
-  position: relative;
-}
-
 .right-menu-wrapper {
   display: flex;
   flex-direction: row;
@@ -18,6 +14,8 @@
 .mm-nav-item {
   @extend .nav-item;
   margin: 0 0.5rem;
+  height: 46px;
+
   &:hover {
     border-bottom: 1px solid $primary;
   }
@@ -40,16 +38,17 @@
 }
 
 // for small mobile menu
-@media (max-width: 576px) {
+@media (max-width: $med) {
   .expand-all {
     left: 0;
-    top: 75px;
-    width: 100%;
-    height: 250px;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     padding: 1rem;
     position: absolute;
-    background-color: lighten($color: $black, $amount: 40);
+    background-color: $darkBg;
+    z-index: 1;
 
     .btn-outline-primary {
       color: $white;
@@ -87,7 +86,7 @@
 }
 
 // for tab menu
-@media (min-width: 576px) {
+@media (min-width: $med) {
   .expand-menu {
     left: 0;
     top: 75px;
@@ -117,13 +116,13 @@
   align-items: center;
 }
 
-@media (max-width: 576px) {
+@media (max-width: $med) {
   .auth-btn-wrapper {
     display: none;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $md) {
   .navbar-menu-list {
     display: none;
   }
@@ -133,7 +132,7 @@
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: $md + 1) {
   .navbar-expand-lg {
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -141,7 +140,7 @@
 }
 
 // greater than 768
-@media (min-width: 769px) {
+@media (min-width: $md + 1) {
   .navbar-expand-lg .navbar-toggler {
     display: none;
   }
@@ -151,4 +150,14 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.navbar-brand svg {
+
+  @media screen and (max-width: $md) {
+    width: 118px;
+  }
+  @media screen and (max-width: $sm) {
+    width: 106px;
+  }
 }
