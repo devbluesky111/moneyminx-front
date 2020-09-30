@@ -9,6 +9,8 @@
 ul.bank-list {
   padding-left: 0;
   margin-bottom: 38px;
+  display: flex;
+  overflow-x: scroll;
 }
 
 ul.bank-list li {
@@ -57,6 +59,14 @@ ul.bank-list li a {
 }
 .form-heading button:hover {
   color: $gray !important;
+}
+
+.form-heading button.completed:not(.active) {
+  color: $green;
+
+  &:hover {
+    color: lighten($color: $green, $amount: 10);
+  }
 }
 
 .form-heading button.active {

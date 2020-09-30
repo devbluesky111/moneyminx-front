@@ -17,32 +17,22 @@ import AccountSettingForm from './inc/account-setting-form';
 import { ConnectAccountStepsSection } from './inc/connect-steps';
 
 const AccountSetting = () => {
-  const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
-  useEffect(() => {
-    if (!accounts) {
-      const getUser = async () => {
-        await getRefreshedProfile({ dispatch });
-      };
-      getUser();
-    }
-  }, [accounts, dispatch]);
-
-  return (
-    <AuthLayout>
-      <AccountSettingMainSection />
-    </AuthLayout>
-  );
-};
-
-export default AccountSetting;
-
-export const AccountSettingMainSection = () => {
   const { accounts } = useAuthState();
   const [providerName, setProviderName] = useState('');
+  const [reloadCounter, setReloadCounter] = useState(0);
   const [currentAccount, setCurrentAccount] = useState<Account>();
   const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
   const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
+  const [completed, setCompleted] = useState<number[]>([]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      await getRefreshedProfile({ dispatch });
+    };
+
+    getUser();
+  }, [dispatch, reloadCounter]);
 
   useEffect(() => {
     if (accounts) {
@@ -60,9 +50,21 @@ export const AccountSettingMainSection = () => {
     if (accountsByProviderName) {
       const curProviderAccounts = accountsByProviderName[providerName];
       setCurrentProviderAccounts(curProviderAccounts);
-      setCurrentAccount(curProviderAccounts[0]);
+      const firstNonOverriddenAccount = curProviderAccounts.find((acc) => acc.accountDetails?.overridden !== true);
+      setCurrentAccount(firstNonOverriddenAccount);
     }
   }, [providerName, accountsByProviderName]);
+
+  useEffect(() => {
+    if (accounts) {
+      const completedIds = accounts.filter((acc) => acc.accountDetails?.overridden).map((item) => item.id);
+      setCompleted(completedIds);
+    }
+  }, [accounts]);
+
+  // console.log('_____________completed__________', completed);
+
+  // console.log('_____________currentAccount__________', currentAccount);
 
   if (!accounts || !currentAccount || !currentProviderAccounts) {
     return <CircularSpinner />;
@@ -81,96 +83,105 @@ export const AccountSettingMainSection = () => {
   // const gotoNextAccount = () => {};
 
   return (
-    <div className='main-table-wrapper'>
-      <div className=''>
-        <div className='row login-wrapper'>
-          <div className='guide-content'>
-            <Link to='/'>
-              <LogoImg className='icon auth-logo' />
-            </Link>
+    <AuthLayout>
+      <div className='main-table-wrapper'>
+        <div className=''>
+          <div className='row login-wrapper'>
+            <div className='guide-content'>
+              <Link to='/'>
+                <LogoImg className='icon auth-logo' />
+              </Link>
 
-            <div className='auth-left-content'>
-              <h1>Three easy steps to get started with Money Minx</h1>
-              <ul>
-                <li>Find your accounts</li>
-                <li>Connect it securely to Money Minx</li>
-                <li>Let Money Minx do the rest</li>
-              </ul>
-              <div className='guide-bottom'>
-                <h4>Serious about security</h4>
-                <div className='guide-icon-wrap'>
-                <span className='locked-icon'>
-                  <LoginLockIcon />
-                </span>
-                  <p>The security of your information is our top priority</p>
-                </div>
-                <h4>Trusted by investors</h4>
-                <div className='guide-icon-wrap'>
-                <span className='shield-icon'>
-                  <LoginShieldIcon />
-                </span>
-                  <p>Investors from all over the world are using Money Minx</p>
+              <div className='auth-left-content'>
+                <h1>Three easy steps to get started with Money Minx</h1>
+                <ul>
+                  <li>Find your accounts</li>
+                  <li>Connect it securely to Money Minx</li>
+                  <li>Let Money Minx do the rest</li>
+                </ul>
+                <div className='guide-bottom'>
+                  <h4>Serious about security</h4>
+                  <div className='guide-icon-wrap'>
+                    <span className='locked-icon'>
+                      <LoginLockIcon />
+                    </span>
+                    <p>The security of your information is our top priority</p>
+                  </div>
+                  <h4>Trusted by investors</h4>
+                  <div className='guide-icon-wrap'>
+                    <span className='shield-icon'>
+                      <LoginShieldIcon />
+                    </span>
+                    <p>Investors from all over the world are using Money Minx</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-          </div>
-
-          <div className='bg-white credentials-wrapper account-setting'>
-            <div className='credentials-content'>
-              <div className='logo-img-wrapper'>
-                <LogoImg className='auth-logo'/>
-              </div>
-              <div className='top-content-wrap'>
-                <h2>Organize accounts</h2>
-                <p>
-                  Great! You connected your banks. Now you can organize your accounts to start getting insights into
-                  your portfolio. You can leave this step for later.
-                </p>
-              </div>
-
-              <div className='form-wrap'>
-                <ul className='bank-list'>
-                  {providerNames.map((provider, index) => {
-                    return (
-                      <li key={index} onClick={() => handleProviderChange(provider)} role='button'>
-                        <Link to='#'>{provider}</Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-
-                <div className='form-heading'>
-                  <AccountNameList
-                    currentProviderAccounts={currentProviderAccounts}
-                    currentAccount={currentAccount}
-                    changeCurrentAccount={handleChangeCurrentAccount}
-                  />
+            <div className='bg-white credentials-wrapper account-setting'>
+              <div className='credentials-content'>
+                <div className='logo-img-wrapper'>
+                  <LogoImg className='auth-logo' />
+                </div>
+                <div className='top-content-wrap'>
+                  <h2>Organize accounts</h2>
+                  <p>
+                    Great! You connected your banks. Now you can organize your accounts to start getting insights into
+                    your portfolio. You can leave this step for later.
+                  </p>
                 </div>
 
-                <AccountSettingForm currentAccount={currentAccount} />
+                <div className='form-wrap'>
+                  <ul className='bank-list'>
+                    {providerNames.map((provider, index) => {
+                      return (
+                        <li key={index} onClick={() => handleProviderChange(provider)} role='button'>
+                          <Link to='#'>{provider}</Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
 
-                <p className='flex-box learn-more-security mt-3'>
-                  <SecurityIcon />
-                  <a href='/security'>Learn about our security</a>
-                </p>
+                  <div className='form-heading'>
+                    <AccountNameList
+                      completedIds={completed}
+                      currentAccount={currentAccount}
+                      currentProviderAccounts={currentProviderAccounts}
+                      changeCurrentAccount={handleChangeCurrentAccount}
+                    />
+                  </div>
+
+                  <AccountSettingForm
+                    currentAccount={currentAccount}
+                    handleReload={() => setReloadCounter((c) => c + 1)}
+                  />
+
+                  <p className='flex-box learn-more-security mt-3'>
+                    <SecurityIcon />
+                    <a href='/security'>Learn about our security</a>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <ConnectAccountStepsSection />
       </div>
-      <ConnectAccountStepsSection />
-    </div>
+    </AuthLayout>
   );
 };
+
+export default AccountSetting;
 
 interface AccountNameListProps {
   currentProviderAccounts: Account[];
   currentAccount: Account;
+  completedIds: number[];
   changeCurrentAccount: (curAccount: Account) => void;
 }
 
 export const AccountNameList: React.FC<AccountNameListProps> = ({
+  completedIds,
   currentAccount,
   changeCurrentAccount,
   currentProviderAccounts,
@@ -195,6 +206,7 @@ export const AccountNameList: React.FC<AccountNameListProps> = ({
   }, [scrollToCategory, currentAccount]);
 
   const getAccountClass = (accId: number) => (currentAccount?.id === accId ? 'account-btn active' : 'account-btn');
+  const completedClass = (accId: number) => (completedIds.includes(accId) ? 'completed' : '');
 
   return (
     <ul className='nav'>
@@ -202,7 +214,7 @@ export const AccountNameList: React.FC<AccountNameListProps> = ({
         return (
           <li key={index} ref={refList[providerAccount.id]}>
             <button
-              className={getAccountClass(providerAccount.id)}
+              className={`${getAccountClass(providerAccount.id)} ${completedClass(providerAccount.id)}`}
               onClick={() => changeCurrentAccount(providerAccount)}
             >
               {providerAccount.accountName}
