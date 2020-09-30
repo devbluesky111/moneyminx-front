@@ -1,23 +1,59 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import { fNumber } from 'common/number.helper';
 import { useAlert } from 'common/components/alert';
+import useNetworth from 'networth/hooks/useNetworth';
 import NetworthLayout from 'networth/networth.layout';
+import { AccountCategory } from 'networth/networth.enum';
 import MeasureIcon from 'assets/images/networth/measure.svg';
 import BlurChart from 'assets/images/networth/chart-blur.png';
+import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import NetworthHead from './inc/networth-head';
-import SimpleBarChart from './simple-bar-chart';
+import NetworthBarGraph from './networth-bar-graph';
 import NetworthFilter from './inc/networth-filter';
 import ConnectionAlert from './inc/connection-alert';
+import { useNetworthState } from 'networth/networth.context';
 
 const Networth = () => {
   const connectionAlert = useAlert();
+
+  const { loading } = useNetworth();
+  const { accounts, networth } = useNetworthState();
 
   useEffect(() => {
     connectionAlert.open();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (loading || !networth || !accounts) {
+    return <CircularSpinner />;
+  }
+
+  const otherAssets = accounts[AccountCategory.OTHER_ASSETS];
+  const liabilities = accounts[AccountCategory.LIABILITIES];
+  const investmentAssets = accounts[AccountCategory.INVESTMENT_ASSETS];
+  const isCurrent = (interval: string) =>
+    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+
+  const gc = (interval: string) => {
+    if (interval) {
+      if (isCurrent(interval)) {
+        return 'current-m';
+      }
+    }
+
+    return 'tab-hide';
+  };
+
+  const [curNetworthItem] = networth.filter((networthItem) => isCurrent(networthItem.interval));
+
+  const currentNetworth = curNetworthItem?.networth || 0;
+  const currentOtherAssets = curNetworthItem?.otherAssets || 0;
+  const currentLiabilities = curNetworthItem?.liabilities || 0;
+  const currentInvestmentAsset = curNetworthItem?.investmentAssets || 0;
 
   return (
     <NetworthLayout>
@@ -33,41 +69,23 @@ const Networth = () => {
                     <ul>
                       <li className='inv-data'>
                         <span>Investment Assets</span>
-                        <h3>$235,000</h3>
+                        <h3>$ {fNumber(currentInvestmentAsset)}</h3>
                       </li>
                       <li className='other-data'>
                         <span>Other Assets</span>
-                        <h3>$735,000</h3>
+                        <h3>${fNumber(currentOtherAssets)}</h3>
                       </li>
                       <li className='lty-data'>
                         <span>Liabilities</span>
-                        <h3>$1,505,000</h3>
+                        <h3>${fNumber(currentLiabilities)}</h3>
                       </li>
                       <li className='nw-data'>
                         <span>Net Worth</span>
-                        <h3>$535,000</h3>
+                        <h3>${fNumber(currentNetworth)}</h3>
                       </li>
                     </ul>
                     <div className='chartbox'>
-                      <SimpleBarChart />
-                      <ul className='charttool'>
-                        <li className='inv-data'>
-                          <span>Investment Assets</span>
-                          <h3>$235,000</h3>
-                        </li>
-                        <li className='other-data'>
-                          <span>Other Assets</span>
-                          <h3>$735,000</h3>
-                        </li>
-                        <li className='lty-data'>
-                          <span>Liabilities</span>
-                          <h3>$1,505,000</h3>
-                        </li>
-                        <li className='nw-data'>
-                          <span>Net Worth</span>
-                          <h3>$535,000</h3>
-                        </li>
-                      </ul>
+                      <NetworthBarGraph networth={networth} />
                     </div>
                   </div>
                 </div>
@@ -94,292 +112,175 @@ const Networth = () => {
               </div>
             </div>
 
-            <div className='row mb-40'>
-              <div className='col-12'>
-                <div className='ct-box box-b'>
-                  <div className='table-holder'>
-                    <table className='table'>
-                      <thead>
-                        <tr>
-                          <th>
-                            <span>Investment Assets</span>
-                          </th>
-                          <th className='tab-hide'>Type</th>
-                          <th className='tab-hide'>Jan 2020</th>
-                          <th className='tab-hide'>Feb 2020</th>
-                          <th className='tab-hide'>Mar 2020</th>
-                          <th>Apr 2020</th>
-                          <th>May 2020</th>
-                          <th className='current-m'>Jun 2020</th>
-                          <th>Jul 2020</th>
-                          <th>Aug 2020</th>
-                          <th className='tab-hide'>Sep 2020</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr data-href=''>
-                          <td>401K</td>
-                          <td className='tab-hide'>401k</td>
-                          <td className='tab-hide'>$75,000</td>
-                          <td className='tab-hide'>$13,000</td>
-                          <td className='tab-hide'>$78,000</td>
-                          <td data-title4='Apr 2020'>$83,000</td>
-                          <td data-title5='May 2020'>$88,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $83,000
-                          </td>
-                          <td data-title7='Jul 2020'>$94,000</td>
-                          <td data-title8='Aug 2020'>$32,000</td>
-                          <td className='tab-hide'>$32,000</td>
-                        </tr>
-                        <tr data-href='#'>
-                          <td>WealthFront</td>
-                          <td className='tab-hide'>Cash Management</td>
-                          <td className='tab-hide'>$73,000</td>
-                          <td className='tab-hide'>$64,000</td>
-                          <td className='tab-hide'>$83,000</td>
-                          <td data-title4='Apr 2020'>$67,000</td>
-                          <td data-title5='May 2020'>$24,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $97,000
-                          </td>
-                          <td data-title7='Jul 2020'>$56,000</td>
-                          <td data-title8='Aug 2020'>$13,000</td>
-                          <td className='tab-hide'>$65,000</td>
-                        </tr>
-                        <tr data-href='#'>
-                          <td>Merill Edge IRA</td>
-                          <td className='tab-hide'>IRA</td>
-                          <td className='tab-hide'>$62,000</td>
-                          <td className='tab-hide'>$75,000</td>
-                          <td className='tab-hide'>$66,000</td>
-                          <td data-title4='Apr 2020'>$14,000</td>
-                          <td data-title5='May 2020'>$44,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $65,000
-                          </td>
-                          <td data-title7='Jul 2020'>$12,000</td>
-                          <td data-title8='Aug 2020'>$18,000</td>
-                          <td className='tab-hide'>$53,000</td>
-                        </tr>
-                        <tr data-href='#'>
-                          <td>Fundrise</td>
-                          <td className='tab-hide'>Investment Non-Retirement</td>
-                          <td className='tab-hide'>$53,000</td>
-                          <td className='tab-hide'>$64,000</td>
-                          <td className='tab-hide'>$99,000</td>
-                          <td data-title4='Apr 2020'>$89,000</td>
-                          <td data-title5='May 2020'>$23,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $61,000
-                          </td>
-                          <td data-title7='Jul 2020'>$84,000</td>
-                          <td data-title8='Aug 2020'>$83,000</td>
-                          <td className='tab-hide'>$43,000</td>
-                        </tr>
-                        <tr data-href='#'>
-                          <td>Peer Street</td>
-                          <td className='tab-hide'>Investment Non-Retirement</td>
-                          <td className='tab-hide'>$12,000</td>
-                          <td className='tab-hide'>$69,000</td>
-                          <td className='tab-hide'>$24,000</td>
-                          <td data-title4='Apr 2020'>$78,000</td>
-                          <td data-title5='May 2020'>$39,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $65,000
-                          </td>
-                          <td data-title7='Jul 2020'>$83,000</td>
-                          <td data-title8='Aug 2020'>$41,000</td>
-                          <td className='tab-hide'>$55,000</td>
-                        </tr>
-                      </tbody>
-                      <tfoot>
-                        <tr data-href='#'>
-                          <td>
-                            <Link
-                              to='#'
-                              className='warning-popover'
-                              data-className='warning-pop'
-                              data-container='body'
-                              title='Warning'
-                              data-toggle='popover'
-                              data-placement='right'
-                              data-content=''
-                            >
-                              Total
-                            </Link>
-                          </td>
-                          <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$95,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                          <td className='tab-hide'>$34,000</td>
-                          <td data-title4='Apr 2020'>$90,000</td>
-                          <td data-title5='May 2020'>$56,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $53,000
-                          </td>
-                          <td data-title7='Jul 2020'>$23,000</td>
-                          <td data-title8='Aug 2020'>$94,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {investmentAssets?.length ? (
+              <div className='row mb-40'>
+                <div className='col-12'>
+                  <div className='ct-box box-b'>
+                    <div className='table-holder'>
+                      <table className='table'>
+                        <thead>
+                          <tr>
+                            <th>
+                              <span>Investment Assets</span>
+                            </th>
+                            <th className='tab-hide'>Type</th>
 
-            <div className='row mb-40'>
-              <div className='col-12'>
-                <div className='ct-box box-g'>
-                  <div className='table-holder'>
-                    <table className='table'>
-                      <thead>
-                        <tr>
-                          <th>
-                            <span>Other Assets</span>
-                          </th>
-                          <th className='tab-hide'>Type</th>
-                          <th className='tab-hide'>Jan 2020</th>
-                          <th className='tab-hide'>Feb 2020</th>
-                          <th className='tab-hide'>Mar 2020</th>
-                          <th>Apr 2020</th>
-                          <th>May 2020</th>
-                          <th className='current-m'>Jun 2020</th>
-                          <th>Jul 2020</th>
-                          <th>Aug 2020</th>
-                          <th className='tab-hide'>Sep 2020</th>
-                        </tr>
-                      </thead>
-                      <tfoot>
-                        <tr data-href='#'>
-                          <td>Total</td>
-                          <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$95,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                          <td className='tab-hide'>$34,000</td>
-                          <td data-title4='Apr 2020'>$90,000</td>
-                          <td data-title5='May 2020'>$56,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $53,000
-                          </td>
-                          <td data-title7='Jul 2020'>$23,000</td>
-                          <td data-title8='Aug 2020'>$94,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                        </tr>
-                      </tfoot>
-                    </table>
+                            {investmentAssets?.[0]?.balances.map((item, idx) => (
+                              <th key={idx} className={gc(item.interval)}>
+                                {item.interval}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {investmentAssets?.map((iAsset, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{iAsset.accountName}</td>
+                                <td>{iAsset.accountType}</td>
+                                {iAsset.balances.map((b, idx) => (
+                                  <td key={`${index}-${idx}`} className={gc(b.interval)}>
+                                    {b.balance}
+                                  </td>
+                                ))}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                        <tfoot>
+                          <tr data-href='#'>
+                            <td>
+                              <Link
+                                to='#'
+                                className='warning-popover'
+                                data-className='warning-pop'
+                                data-container='body'
+                                title='Warning'
+                                data-toggle='popover'
+                                data-placement='right'
+                                data-content=''
+                              >
+                                Total
+                              </Link>
+                            </td>
+                            <td>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.investmentAssets)}
+                              </td>
+                            ))}
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : null}
 
-            <div className='row mb-40'>
-              <div className='col-12'>
-                <div className='ct-box box-r'>
-                  <div className='table-holder'>
-                    <table className='table'>
-                      <thead>
-                        <tr>
-                          <th>
-                            <span>Liabilities</span>
-                          </th>
-                          <th className='tab-hide'>Type</th>
-                          <th className='tab-hide'>Jan 2020</th>
-                          <th className='tab-hide'>Feb 2020</th>
-                          <th className='tab-hide'>Mar 2020</th>
-                          <th>Apr 2020</th>
-                          <th>May 2020</th>
-                          <th className='current-m'>Jun 2020</th>
-                          <th>Jul 2020</th>
-                          <th>Aug 2020</th>
-                          <th className='tab-hide'>Sep 2020</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Jeep</td>
-                          <td className='tab-hide'>Car</td>
-                          <td className='tab-hide'>$75,000</td>
-                          <td className='tab-hide'>$13,000</td>
-                          <td className='tab-hide'>$78,000</td>
-                          <td data-title4='Apr 2020'>$83,000</td>
-                          <td data-title5='May 2020'>$88,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $83,000
-                          </td>
-                          <td data-title7='Jul 2020'>$94,000</td>
-                          <td data-title8='Aug 2020'>$32,000</td>
-                          <td className='tab-hide'>$32,000</td>
-                        </tr>
-                        <tr>
-                          <td>Mustang</td>
-                          <td className='tab-hide'>Car</td>
-                          <td className='tab-hide'>$73,000</td>
-                          <td className='tab-hide'>$64,000</td>
-                          <td className='tab-hide'>$83,000</td>
-                          <td data-title4='Apr 2020'>$67,000</td>
-                          <td data-title5='May 2020'>$24,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $97,000
-                          </td>
-                          <td data-title7='Jul 2020'>$56,000</td>
-                          <td data-title8='Aug 2020'>$13,000</td>
-                          <td className='tab-hide'>$65,000</td>
-                        </tr>
-                        <tr>
-                          <td>Home</td>
-                          <td className='tab-hide'>Mortgage</td>
-                          <td className='tab-hide'>$62,000</td>
-                          <td className='tab-hide'>$75,000</td>
-                          <td className='tab-hide'>$66,000</td>
-                          <td data-title4='Apr 2020'>$14,000</td>
-                          <td data-title5='May 2020'>$44,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $65,000
-                          </td>
-                          <td data-title7='Jul 2020'>$12,000</td>
-                          <td data-title8='Aug 2020'>$18,000</td>
-                          <td className='tab-hide'>$53,000</td>
-                        </tr>
-                        <tr data-href='#'>
-                          <td>Chase Saphire</td>
-                          <td className='tab-hide'>Credit Card</td>
-                          <td className='tab-hide'>$53,000</td>
-                          <td className='tab-hide'>$64,000</td>
-                          <td className='tab-hide'>$99,000</td>
-                          <td data-title4='Apr 2020'>$89,000</td>
-                          <td data-title5='May 2020'>$23,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $61,000
-                          </td>
-                          <td data-title7='Jul 2020'>$84,000</td>
-                          <td data-title8='Aug 2020'>$83,000</td>
-                          <td className='tab-hide'>$43,000</td>
-                        </tr>
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <td>Total</td>
-                          <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$95,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                          <td className='tab-hide'>$34,000</td>
-                          <td data-title4='Apr 2020'>$90,000</td>
-                          <td data-title5='May 2020'>$56,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $53,000
-                          </td>
-                          <td data-title7='Jul 2020'>$23,000</td>
-                          <td data-title8='Aug 2020'>$94,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                        </tr>
-                      </tfoot>
-                    </table>
+            {otherAssets?.length ? (
+              <div className='row mb-40'>
+                <div className='col-12'>
+                  <div className='ct-box box-g'>
+                    <div className='table-holder'>
+                      <table className='table'>
+                        <thead>
+                          <tr>
+                            <th>
+                              <span>Other Assets</span>
+                            </th>
+                            <th className='tab-hide'>Type</th>
+                            {otherAssets?.[0]?.balances.map((item, idx) => (
+                              <th key={idx} className={gc(item.interval)}>
+                                {item.interval}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {otherAssets?.map((iAsset, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{iAsset.accountName}</td>
+                                <td>{iAsset.accountType}</td>
+                                {iAsset.balances.map((b, idx) => (
+                                  <td key={`${index}-${idx}`} className={gc(b.interval)}>
+                                    {b.balance}
+                                  </td>
+                                ))}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                        <tfoot>
+                          <tr data-href='#'>
+                            <td>Total</td>
+                            <td>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.otherAssets)}
+                              </td>
+                            ))}
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : null}
+
+            {liabilities?.length ? (
+              <div className='row mb-40'>
+                <div className='col-12'>
+                  <div className='ct-box box-r'>
+                    <div className='table-holder'>
+                      <table className='table'>
+                        <thead>
+                          <tr>
+                            <th>
+                              <span>Liabilities</span>
+                            </th>
+                            <th className='tab-hide'>Type</th>
+                            {liabilities?.[0]?.balances.map((item, idx) => (
+                              <th key={idx} className={gc(item.interval)}>
+                                {item.interval}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {liabilities?.map((iAsset, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{iAsset.accountName}</td>
+                                <td>{iAsset.accountType}</td>
+                                {iAsset.balances.map((b, idx) => (
+                                  <td key={`${index}-${idx}`} className={gc(b.interval)}>
+                                    {b.balance}
+                                  </td>
+                                ))}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td>Total</td>
+                            <td>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.liabilities)}
+                              </td>
+                            ))}
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : null}
 
             <div className='row mb-40'>
               <div className='col-12'>
@@ -392,79 +293,53 @@ const Networth = () => {
                             <span>Net Worth</span>
                           </th>
                           <th className='tab-hide'>{''}</th>
-                          <th className='tab-hide'>Jan 2020</th>
-                          <th className='tab-hide'>Feb 2020</th>
-                          <th className='tab-hide'>Mar 2020</th>
-                          <th>Apr 2020</th>
-                          <th>May 2020</th>
-                          <th className='current-m'>Jun 2020</th>
-                          <th>Jul 2020</th>
-                          <th>Aug 2020</th>
-                          <th className='tab-hide'>Sep 2020</th>
+                          {networth?.map((nItem, idx) => (
+                            <th key={idx} className={gc(nItem.interval)}>
+                              {nItem.interval}
+                            </th>
+                          ))}
                         </tr>
                       </thead>
                       <tbody>
                         <tr data-href='#'>
                           <td>Investment Assets</td>
                           <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$75,000</td>
-                          <td className='tab-hide'>$13,000</td>
-                          <td className='tab-hide'>$78,000</td>
-                          <td data-title4='Apr 2020'>$83,000</td>
-                          <td data-title5='May 2020'>$88,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $83,000
-                          </td>
-                          <td data-title7='Jul 2020'>$94,000</td>
-                          <td data-title8='Aug 2020'>$32,000</td>
-                          <td className='tab-hide'>$32,000</td>
+                          {networth?.map((nItem, idx) => (
+                            <td key={idx} className={gc(nItem.interval)}>
+                              {fNumber(nItem.investmentAssets)}
+                            </td>
+                          ))}
                         </tr>
                         <tr data-href='#'>
                           <td>Other Assets</td>
                           <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$73,000</td>
-                          <td className='tab-hide'>$64,000</td>
-                          <td className='tab-hide'>$83,000</td>
-                          <td data-title4='Apr 2020'>$67,000</td>
-                          <td data-title5='May 2020'>$24,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $97,000
-                          </td>
-                          <td data-title7='Jul 2020'>$56,000</td>
-                          <td data-title8='Aug 2020'>$13,000</td>
-                          <td className='tab-hide'>$65,000</td>
+
+                          {networth?.map((nItem, idx) => (
+                            <td key={idx} className={gc(nItem.interval)}>
+                              {fNumber(nItem.otherAssets)}
+                            </td>
+                          ))}
                         </tr>
                         <tr data-href='#'>
                           <td>Liabilities</td>
                           <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$62,000</td>
-                          <td className='tab-hide'>$75,000</td>
-                          <td className='tab-hide'>$66,000</td>
-                          <td data-title4='Apr 2020'>$14,000</td>
-                          <td data-title5='May 2020'>$44,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $65,000
-                          </td>
-                          <td data-title7='Jul 2020'>$12,000</td>
-                          <td data-title8='Aug 2020'>$18,000</td>
-                          <td className='tab-hide'>$53,000</td>
+
+                          {networth?.map((nItem, idx) => (
+                            <td key={idx} className={gc(nItem.interval)}>
+                              {fNumber(nItem.liabilities)}
+                            </td>
+                          ))}
                         </tr>
                       </tbody>
                       <tfoot>
                         <tr>
                           <td>Net Worth</td>
                           <td className='tab-hide'>{''}</td>
-                          <td className='tab-hide'>$95,000</td>
-                          <td className='tab-hide'>$74,000</td>
-                          <td className='tab-hide'>$34,000</td>
-                          <td data-title4='Apr 2020'>$90,000</td>
-                          <td data-title5='May 2020'>$56,000</td>
-                          <td data-title6='Jun 2020' className='current-m'>
-                            $53,000
-                          </td>
-                          <td data-title7='Jul 2020'>$23,000</td>
-                          <td data-title8='Aug 2020'>$94,000</td>
-                          <td className='tab-hide'>$74,000</td>
+                          {networth?.map((nItem, idx) => (
+                            <td key={idx} className={gc(nItem.interval)}>
+                              {fNumber(nItem.networth)}
+                            </td>
+                          ))}
                         </tr>
                       </tfoot>
                     </table>

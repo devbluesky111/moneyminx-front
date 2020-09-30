@@ -34,6 +34,7 @@ export interface Account {
   accountDetails: any;
   isManual: boolean;
   balance: number;
+  balancesFetchedAt: string;
 }
 
 export enum RoleEnum {

@@ -55,10 +55,14 @@ export const PricingTable = () => {
       </div>
       <div className='row'>
         <div className='plan-section'>
-          <button className='mm-btn-animate plan-btn text-primary ml-3 btn-xs-block'>Monthly</button>
-          <button className='mm-btn-animate plan-btn text-primary ml-3 btn-xs-block annually'>
-            <span className='save-text'>Annually</span>
-          </button>
+          <div className="mm-plan-radios">
+            <input type="radio" id="mm-plan-month" value="monthly" name='mm-radio-time-interval'  />
+            <label className="labels" htmlFor="mm-plan-month" >Monthly</label>
+            <input type="radio" id="mm-plan-year" value="annually" name='mm-radio-time-interval' />
+            <label className="labels" htmlFor="mm-plan-year">Annually</label>
+            <span className='save-text' />
+            <div className="mm-radion-bg"></div>
+          </div>
         </div>
       </div>
 

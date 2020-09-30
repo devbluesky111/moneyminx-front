@@ -61,6 +61,10 @@ export const getFastlink = () => {
 };
 
 export const getRefreshedAccount = () => {
+  return http.get(urls.auth.ACCOUNTS_REFRESH);
+};
+
+export const getAccount = (): Promise<ApiResponse> => {
   return http.get(urls.auth.ACCOUNTS);
 };
 
@@ -116,4 +120,8 @@ export const patchProfile = <T>(payload: T): Promise<ApiResponse> => {
 
 export const patchAccount = (id: string, data: any) => {
   return http.patch(urls.auth.PATCH_ACCOUNT.replace(':id', id), data);
+};
+
+export const getNetworth = <P>(params?: P) => {
+  return http.get(urls.networth.NETWORTH, params);
 };
