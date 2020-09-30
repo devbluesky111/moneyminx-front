@@ -69,12 +69,23 @@ export const PricingTable = () => {
     <div className='container-fluid'>
       <div className='row'>
         <div className='plan-section'>
-          <button className={monthlyClasses} onClick={() => setType('monthly')}>
+          {/* <button className={monthlyClasses} onClick={() => setType('monthly')}>
             Monthly
           </button>
           <button className={annualClasses} onClick={() => setType('yearly')}>
             <span className='save-text'>Annually</span>
-          </button>
+          </button> */}
+          <div className="flight-types">
+            <input type="radio" name="flight-type" value="coach" id="coach" checked />
+            <label htmlFor="coach">
+              Monthly
+            </label>
+
+            <input type="radio" name="flight-type" value="business" id="business" />
+            <label htmlFor="business">
+              Annually
+            </label>
+          </div>
         </div>
       </div>
 
