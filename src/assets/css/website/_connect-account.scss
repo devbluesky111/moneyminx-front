@@ -3,18 +3,12 @@
 }
 .credentials-content.connect-account .connect-account-btn {
   height: 48px;
-  width: 236px;
+  width: 100%;
   display: block;
-  outline: none;
-  border: none;
   margin-bottom: 40px;
-  border-radius: 4px;
 
-  &:hover {
-    box-shadow: 0 4px 12px #b9b8e0;
-    transition: 0.3s;
-    transform: translateY(-6px);
-    color: $white;
+  @media (min-width: $md) {
+    width: 236px;
   }
 }
 
@@ -36,11 +30,11 @@ span.manual-heading {
   background-color: $primary !important;
   color: $white;
 }
+.credentials-content.connect-account {
+  max-width: 516px;
+}
 .credentials-content.connect-account p {
   margin-bottom: 20px;
-}
-.credentials-content.connect-account {
-  max-width: 486px;
 }
 .manual-account-section {
   position: relative;
@@ -63,6 +57,11 @@ span.zillow-img {
   position: absolute;
   top: 11px;
   right: 0;
+
+  @media (max-width: $sm) {
+      position: static;
+      display: block;
+    }
 }
 .subscription-bottom-text.connect-account {
   padding: 8px 95px 15px 171px;
@@ -117,10 +116,6 @@ span.zillow-img {
   }
 }
 @media (max-width: $sm) {
-  span.zillow-img {
-    position: static;
-    display: block;
-  }
   .connect-account .subs-content svg {
     display: none;
   }
@@ -154,7 +149,6 @@ span.zillow-img {
   background: $gray;
   top: 21px;
   right: -150%;
-  width: 100%;
   z-index: 99;
   opacity: 0.4;
 }
@@ -166,7 +160,6 @@ span.zillow-img {
   background: $primary;
   top: 21px;
   left: 29%;
-  width: 100%;
 }
 .connect-text {
   margin-top: 41px;
