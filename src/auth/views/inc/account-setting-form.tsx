@@ -177,7 +177,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
         }
 
         handleReload?.();
-        return toast('Success Fully updated', { type: 'success' });
+        return toast('Successfully updated', { type: 'success' });
       }}
     >
       {(props) => {
