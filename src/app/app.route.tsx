@@ -19,12 +19,14 @@ import {
   ConnectAccount,
 } from './app.view';
 import { appRouteConstants } from './app-route.constant';
+import AllocationRoute from 'allocation/allocation.route';
 
 const {
   web: { SECURITY, NET_WORTH },
   auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
   misc: { STRIPE_FAILURE, STRIPE_SUCCESS },
   home,
+  allocation: { ALLOCATION },
 } = appRouteConstants;
 
 function AppRoute() {
@@ -41,6 +43,10 @@ function AppRoute() {
 
         <Route path={DEF}>
           <AuthRoute />
+        </Route>
+
+        <Route path={ALLOCATION}>
+          <AllocationRoute />
         </Route>
 
         <Route exact path={'/about'} component={About} />
