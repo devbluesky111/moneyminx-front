@@ -51,11 +51,6 @@ export const PricingTable = () => {
 
   const { fetchingSubscription, subError, subscription } = useGetSubscription();
 
-  const btnClasses = 'mm-btn-animate plan-btn text-primary ml-3 btn-xs-block';
-
-  const monthlyClasses = `${btnClasses} ${type === 'monthly' ? '' : 'annually'}`;
-  const annualClasses = `${btnClasses} ${type === 'yearly' ? '' : 'annually'}`;
-
   if (fetchingSubscription && !subscription && subError) {
     return <CircularSpinner />;
   }

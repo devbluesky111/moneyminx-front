@@ -67,11 +67,7 @@ export const PlanOverview = () => {
   const monthlyPricingList = subscription?.filter((sub: any) => sub.duration === 'month');
   const annualPricingList = subscription?.filter((sub: any) => sub.duration === 'year');
 
-  const btnClasses = 'mm-plan-overview__switch--btn btn btn-outline-primary';
   const planBtnClasses = 'mm-plan-overview__plan-btn btn btn-outline-primary btn-lg';
-
-  const monthlyClasses = `${btnClasses} ${type === 'month' ? 'active' : ''}`;
-  const annualClasses = `${btnClasses} ${type === 'year' ? 'active' : ''}`;
 
   const pricingList = type === 'month' ? monthlyPricingList : annualPricingList;
 
