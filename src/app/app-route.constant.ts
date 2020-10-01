@@ -12,6 +12,10 @@ export const appRouteConstants = {
     ACCOUNT_SETTING: '/account-settings',
   },
 
+  allocation: {
+    ALLOCATION: '/allocation',
+  },
+
   web: {
     SECURITY: '/security',
     NET_WORTH: '/net-worth',
