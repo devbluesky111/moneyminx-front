@@ -62,7 +62,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
           <form>
             <div className='mm-setting-card--title'>Preferences</div>
             <div className='mm-setting-form form-group mt-3 row'>
-              <label className='col-sm-3 col-md-3'>Notification</label>
+              <label className='col-sm-3 col-md-3'>Notifications</label>
               <div className='col-sm-9 col-md-9'>
                 <label className='custom-checkbox'>
                   <input
@@ -75,7 +75,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
                   <span className='checkmark' />
                 </label>
                 <span className='checkbox-custom-label mm-setting-form-info'>
-                  Get out diversified investor newsletter
+                  Get our diversified investor newsletter
                 </span>
               </div>
             </div>
@@ -88,9 +88,9 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
           <form>
             <div className='mm-setting-card--title'>Security</div>
             <div className='mm-setting-form form-group row mt-3'>
-              <label className='col-sm-3 col-md-3 col-form-label'>Email</label>
+              <label className='col-sm-3 col-md-3 col-form-label'>Email Address</label>
               <div className='col-sm-9 mb-4 col-md-9'>
-                <input type='email' className='form-control' placeholder='Enter email' value='hussein@moneyminx.com' />
+                <input type='email' className='mm-form-field' placeholder='Enter email' value='hussein@moneyminx.com' />
               </div>
 
               <label className='col-4 col-sm-3 col-md-3 col-form-label'>Password</label>

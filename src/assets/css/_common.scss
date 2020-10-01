@@ -150,6 +150,26 @@ a {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 }
+// forms
+
+.mm-form-field {
+  height: 48px;
+  font-size: 0.875rem;
+  border: 1px solid $formBorder;
+  border-radius: 4px;
+  padding: 0 20px;
+  color: $darkGray;
+  width: 100%;
+
+  &:active, &:focus {
+    border: 1px solid $gray;
+  }
+
+  &::placeholder {
+    color: $gray;
+  }
+}
+
 
 // message wrapper
 .message-container {
