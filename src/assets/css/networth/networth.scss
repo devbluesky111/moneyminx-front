@@ -192,8 +192,10 @@ button:focus {
   margin-right: 0;
   padding: 12px 0;
 }
-.money-minx-header .navbar-brand img {
+.money-minx-header .navbar-brand {
+  img, svg {
   max-width: 110px;
+  }
 }
 .money-minx-header .headtab {
   margin: 0;
