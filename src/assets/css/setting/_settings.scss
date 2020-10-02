@@ -56,11 +56,12 @@
         align-items: center;
         list-style: none;
         padding: 0;
+        overflow: auto;
       }
 
       &--type {
         margin-right: 5rem;
-        padding-bottom: 0.875rem;
+        padding: 0 0.125rem 0.875rem 0.125rem;
 
         &.active {
           border-bottom: 1.5px solid $primary;
