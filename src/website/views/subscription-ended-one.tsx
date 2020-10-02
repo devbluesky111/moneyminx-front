@@ -31,7 +31,7 @@ export const PricingTable = () => {
             <input type="radio" id="mm-plan-year" value="annually" name='mm-radio-time-interval' />
             <label className="labels" htmlFor="mm-plan-year">Annually</label>
             <span className='save-text' />
-            <div className="mm-radion-bg"></div>
+            <div className="mm-radio-bg"></div>
           </div>
         </div>
       </div>

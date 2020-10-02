@@ -31,7 +31,11 @@
 
 ul.features-list {
   padding-left: 0;
-  margin-bottom: 121px;
+  margin-bottom: 104px;
+
+  @media (min-width: $md) {
+    margin-bottom: 62px;
+  }
 }
 
 .features-list li {
@@ -91,7 +95,7 @@ ul.features-list {
 .price-heading {
   font-size: 20px;
   line-height: 25px;
-  border-bottom: 1px solid rgb(150, 158, 172);
+  border-bottom: 1px solid $grayOpacity;
   margin-bottom: 21px;
 }
 
@@ -104,7 +108,14 @@ ul.features-list {
   border: 1.5px solid $purple;
   border-radius: 4px;
   display: block;
-  width: 90%;
+  width: 88%;
+  font-weight: 600;
+  font-size: 0.875rem;
+  bottom: 32px;
+  position: absolute;
+  text-align: center;
+  margin: 0 auto;
+  right: 6%;
 }
 
 .price-table .trial-btn:hover {
@@ -271,7 +282,7 @@ ul.features-list {
     display: none;
   }
 
-  .mm-radion-bg,
+  .mm-radio-bg,
   .labels {
     text-align: center;
     display: inline-block;
@@ -285,10 +296,14 @@ ul.features-list {
     border-radius: 4px;
     margin-left: -3px;
     width: 8.75rem;
-    height: 3.25rem;
+    height: 3rem;
+
+    &:hover {
+     color: $purple;
+    }
   }
 
-  .mm-radion-bg {
+  .mm-radio-bg {
     color: $primary;
     border: 1.5px solid $primary;
     border-radius: 4px;
@@ -296,7 +311,7 @@ ul.features-list {
     left: 0;
     top: 0;
     width: 8.75rem;
-    height: 3.25rem;
+
   }
 
   #mm-plan-month:checked+label,
@@ -304,12 +319,12 @@ ul.features-list {
     color: $primary;
   }
 
-  #mm-plan-month:checked~.mm-radion-bg {
+  #mm-plan-month:checked~.mm-radio-bg {
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
   }
 
-  #mm-plan-year:checked~.mm-radion-bg {
+  #mm-plan-year:checked~.mm-radio-bg {
     transform: translateX(138px);
     transition: transform 0.2s ease-in-out;
   }
