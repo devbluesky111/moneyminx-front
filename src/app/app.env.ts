@@ -8,4 +8,6 @@ export default {
   STRIPE_PUBLIC_KEY:
     process.env.REACT_APP_STRIPE_PUBLIC_KEY ||
     'pk_test_51H8PpUAjc68kwXCHuXGg5Kjb6YrCsLRSqfiCTeayJJ3zk3ydXl7SdEJRqa7fKJHEyZJ7BdPHAcdH3GpMPrT8lG5y00HehFXF0D',
+  ZABO_CLIENT_ID: process.env.ZABO_CLIENT_ID || '4bz22yXnR2lCbbUp3k4lvKwTikXSAP61D0q6GSy0GnwHiXoQYPlrgtloX6AhBaeM',
+  ZABO_ENV: process.env.ZABO_ENV || 'sandbox',
 };
