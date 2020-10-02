@@ -33,7 +33,7 @@ const WebsiteHeader = () => {
         <Link className='navbar-brand' to='/'>
           <Logo />
         </Link>
-        <div className='mm-label b-primary-light'>Beta</div>
+        <div className='badge badge-pill badge-primary mm-coming-soon'>Beta</div>
       </div>
 
       <div className='right-menu-wrapper'>
