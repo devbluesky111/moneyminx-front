@@ -73,9 +73,8 @@ export const ForgotPasswordMainSection = () => {
                 <LogoImg className='auth-logo'/>
               </div>
               <h2>Forgot Password?</h2>
-              <p className='f-pwd'>
-                Can’t log in? No worries, enter your email below and we will send you a password reset link.
-              </p>
+              <p>Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
+
               <Formik
                 initialValues={{ email: '' }}
                 validationSchema={forgotPasswordValidation}

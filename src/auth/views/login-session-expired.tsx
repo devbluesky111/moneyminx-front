@@ -76,7 +76,7 @@ export const LoginSessionExpiredMainSection = () => {
                   </div>
                 </form>
                 <p>
-                  <span className='forgot-pass'>
+                  <span className='forgot-pass purple-links'>
                     <a href='link7'>Forgot Password?</a>
                   </span>
                 </p>
@@ -92,7 +92,7 @@ export const LoginSessionExpiredMainSection = () => {
                   </p>
                 </div>
                 <p>
-                  Don’t have an account? <a href='moneyminx'>Sign Up</a>
+                  Don’t have an account? <a href='moneyminx' className='purple-links'>Sign Up</a>
                 </p>
               </div>
             </div>
