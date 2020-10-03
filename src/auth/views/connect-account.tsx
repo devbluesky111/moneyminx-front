@@ -1,5 +1,3 @@
-import React, {useEffect, useState} from 'react';
-import Zabo from 'zabo-sdk-js';
 import appEnv from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
@@ -13,11 +11,14 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
+import React, {useEffect, useState} from 'react';
+import Zabo from 'zabo-sdk-js';
+
 import { ConnectAccountStepsSection } from './inc/connect-steps';
 
 const config = {
-  clientId: appEnv.ZABO_CLIENT_ID,
-  env: appEnv.ZABO_ENV
+  clientId: appEnv.ZABO_CONFIGURATION.ZABO_CLIENT_ID,
+  env: appEnv.ZABO_CONFIGURATION.ZABO_ENV
 }
 
 const ConnectAccount = () => {
@@ -29,7 +30,7 @@ const ConnectAccount = () => {
 };
 export default ConnectAccount;
 export const ConnectAccountMainSection = () => {
-  const [zabo, setZabo] = useState<Record<string,Function>>({});
+  const [zabo, setZabo] = useState<Record<string,() => Record<string, any>>>({});
 
   useEffect( () => {
     const initializeZabo = async () => {
@@ -50,14 +51,16 @@ export const ConnectAccountMainSection = () => {
   const handleCryptoExchange = () => {
     zabo.connect()
       .onConnection((account: Record<string, string>) => {
-        //Todo Onconnection implementation
+        // Todo Onconnection implementation
+        // tslint:disable-next-line:no-console
         console.log('account connected:', account)
     })
-      .onError((error:  Record<string, string>) => {
-        //Todo OnError implementation
+      .onError((errorOnConnection:  Record<string, string>) => {
+        // Todo OnError implementation
       })
       .onEvent((eventName:  Record<string, string>, metadata:  Record<string, string>) => {
-        //Todo On each event implementation
+        // Todo On each event implementation
+        // tslint:disable-next-line:no-console
         console.info(`[EVENT] ${eventName}`, metadata)
     })
   };
