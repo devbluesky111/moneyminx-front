@@ -157,8 +157,9 @@ ul.subscribed-list li:last-child {
 }
 .subs-content.two {
   display: table-cell;
-  width: 15%;
+  width: 40%;
   vertical-align: middle;
+  max-width: 400px;
 }
 .subs-content.one {
   display: table-cell;

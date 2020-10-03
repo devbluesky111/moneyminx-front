@@ -1,6 +1,7 @@
 /** include scss **/
 @import 'datatables';
 @import '../datepicker/datepicker';
+@import '../variables';
 
 /** Custom CSS **/
 html,
@@ -588,7 +589,7 @@ button:focus {
   background: #ec5555;
 }
 .dropdown-box ul.success li:before {
-  background: #10c273;
+  background: $green;
 }
 .dropdown-box ul li h5 {
   font-weight: 600;
@@ -903,7 +904,7 @@ button:focus {
 .table thead th.current-m,
 .table tbody td.current-m,
 .table tfoot td.current-m {
-  color: #10c273;
+  color: $green;
 }
 .table thead th:not(:first-child) {
   padding-left: 10px;

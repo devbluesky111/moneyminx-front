@@ -93,13 +93,13 @@ export const AboutTopSection = () => {
                   <span className='switch-icon'>
                     <AboutSwitchIcon />{' '}
                   </span>
-                  Account 01
+                  Individual Investor Account
                 </li>
                 <li>
                   <span className='switch-icon'>
                     <AboutSwitchIcon />
                   </span>{' '}
-                  Account 02
+                  Self-directed IRA
                 </li>
               </ul>
             </div>
@@ -138,26 +138,22 @@ export const AboutOwnerSection = () => {
                 <li>
                   <img alt='Owner' src={OwnerOneImg} />
                   <h3>Hussein</h3>
-                  <p>
                     <a href='https://www.twitter.com' target='_blank' rel='noopener noreferrer'>
                       @husseinyahfoufi
                     <span className='twitter-icon'>
                         <OwnerTwitterIcon />
                       </span>
                     </a>
-                  </p>
                 </li>
                 <li>
                   <img alt='Owner' src={OwnerTwoImg} />
                   <h3>Jessica</h3>
-                  <p className='mb-5'>
-                    <a href='http://www.twitter.com' target='_blank' rel='noopener noreferrer'>
-                      @jessicayahfoufi
+                  <a href='http://www.twitter.com' target='_blank' rel='noopener noreferrer'>
+                    @jessicayahfoufi
                     <span className='twitter-icon'>
-                        <OwnerTwitterIcon />
-                      </span>
-                    </a>
-                  </p>
+                      <OwnerTwitterIcon />
+                    </span>
+                  </a>
                 </li>
               </ul>
             </div>

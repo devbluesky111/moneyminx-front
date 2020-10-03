@@ -31,7 +31,11 @@
 
 ul.features-list {
   padding-left: 0;
-  margin-bottom: 121px;
+  margin-bottom: 104px;
+
+  @media (min-width: $md) {
+    margin-bottom: 62px;
+  }
 }
 
 .features-list li {
@@ -60,7 +64,15 @@ ul.features-list {
   margin: 0 12px;
   transition: 0.8s ease;
   position: relative;
-  flex: 0 22%;
+
+  @media (min-width: $md) {
+      flex: 0 46.5%;
+      margin-bottom: 27px;
+  }
+  @media (min-width: $desk) {
+    flex: 0 22.5%;
+    margin-bottom: 27px;
+  }
 }
 
 .pricing-left-banner button:hover {
@@ -91,7 +103,7 @@ ul.features-list {
 .price-heading {
   font-size: 20px;
   line-height: 25px;
-  border-bottom: 1px solid rgb(150, 158, 172);
+  border-bottom: 1px solid $grayOpacity;
   margin-bottom: 21px;
 }
 
@@ -104,7 +116,14 @@ ul.features-list {
   border: 1.5px solid $purple;
   border-radius: 4px;
   display: block;
-  width: 90%;
+  width: 88%;
+  font-weight: 600;
+  font-size: 0.875rem;
+  bottom: 32px;
+  position: absolute;
+  text-align: center;
+  margin: 0 auto;
+  right: 6%;
 }
 
 .price-table .trial-btn:hover {
@@ -135,19 +154,23 @@ ul.features-list {
 
 .save-text {
   position: relative;
-}
 
-.save-text::before {
-  position: absolute;
-  content: 'Save 10%';
-  width: 4.688rem;
-  font-weight: bold;
-  font-size: 0.688rem;
-  color: $purple;
-  text-transform: uppercase;
-  right: 1.5rem;
-  letter-spacing: 0.2em;
-  top: -35px;
+  &::before {
+    position: absolute;
+    content: 'Save 10%';
+    width: 4.688rem;
+    font-weight: bold;
+    font-size: 0.688rem;
+    color: $purple;
+    text-transform: uppercase;
+    right: 1.5rem;
+    letter-spacing: 0.2em;
+    top: -90px;
+
+    @media (min-width: $sm - 15) {
+      top: -35px;
+    }
+  }
 }
 
 .plan-btn {
@@ -164,9 +187,15 @@ ul.features-list {
 }
 
 .plan-section {
-  margin: auto;
-  padding-right: 15px;
-  margin-bottom: 40px;
+  text-align: center;
+  padding-right: 0;
+  margin: 60px auto 40px;
+
+  @media (min-width: $md) {
+      margin: auto;
+      padding-right: 15px;
+      margin-bottom: 40px;
+    }
 }
 
 .save-percentage {
@@ -190,11 +219,6 @@ ul.features-list {
     width: 100%;
     margin-bottom: 92px;
   }
-
-  .price-table {
-    flex: 0 46.5%;
-    margin-bottom: 27px;
-  }
 }
 
 @media (max-width: $sm) {
@@ -212,22 +236,12 @@ ul.features-list {
     float: right;
   }
 
-  .plan-section {
-    margin-top: 60px;
-    text-align: center;
-    padding-right: 0;
-  }
-
   .mm-container-right {
     overflow: visible;
   }
 
   .mm-container-right.pricing-banner-container {
     margin: 0 20px;
-  }
-
-  .save-text::before {
-    top: -95px;
   }
 
   .download-btn-wrapper svg:nth-child(2) {
@@ -271,7 +285,7 @@ ul.features-list {
     display: none;
   }
 
-  .mm-radion-bg,
+  .mm-radio-bg,
   .labels {
     text-align: center;
     display: inline-block;
@@ -284,19 +298,30 @@ ul.features-list {
     color: $gray;
     border-radius: 4px;
     margin-left: -3px;
-    width: 8.75rem;
-    height: 3.25rem;
+    width: 7.75rem;
+    height: 3rem;
+
+    &:hover {
+     color: $purple;
+    }
+
+    @media (min-width: $sm) {
+      width: 8.75rem;
+    }
   }
 
-  .mm-radion-bg {
+  .mm-radio-bg {
     color: $primary;
     border: 1.5px solid $primary;
     border-radius: 4px;
     position: absolute;
     left: 0;
     top: 0;
-    width: 8.75rem;
-    height: 3.25rem;
+    width: 7.75rem;
+
+    @media (min-width: $sm) {
+      width: 8.75rem;
+    }
   }
 
   #mm-plan-month:checked+label,
@@ -304,12 +329,12 @@ ul.features-list {
     color: $primary;
   }
 
-  #mm-plan-month:checked~.mm-radion-bg {
+  #mm-plan-month:checked~.mm-radio-bg {
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
   }
 
-  #mm-plan-year:checked~.mm-radion-bg {
+  #mm-plan-year:checked~.mm-radio-bg {
     transform: translateX(138px);
     transition: transform 0.2s ease-in-out;
   }
