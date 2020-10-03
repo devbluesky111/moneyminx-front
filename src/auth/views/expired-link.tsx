@@ -95,7 +95,7 @@ export const ExpiredLinkMainSection = () => {
                   <div className='form-wrap'>
                     <form onSubmit={props.handleSubmit}>
                       <input
-                        className='email email-wrap'
+                        className='email email-wrap m-b-8'
                         type='email'
                         name='email'
                         value={props.values.email}

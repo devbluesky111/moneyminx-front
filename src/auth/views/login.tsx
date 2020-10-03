@@ -215,7 +215,7 @@ export const LoginMainSection = () => {
                         </div>
 
                         <p>
-                          <span className='forgot-pass'>
+                          <span className='forgot-pass purple-links'>
                             <Link to='/auth/forgot-password'>Forgot Password?</Link>
                           </span>
                         </p>
