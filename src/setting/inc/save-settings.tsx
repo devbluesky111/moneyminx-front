@@ -6,7 +6,7 @@ interface SaveSettingProps {
 const SaveSettings: React.FC<SaveSettingProps> = ({ handleSave }) => {
   return (
     <div className='action-overlay'>
-      <button type='button' className='btn btn-primary btn-lg mm-button' onClick={handleSave}>
+      <button type='button' className='btn btn-primary btn-lg mm-button float-right' onClick={handleSave}>
         Save changes
       </button>
     </div>

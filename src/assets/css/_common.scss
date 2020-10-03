@@ -404,16 +404,11 @@ hr {
   bottom: 0;
   margin: 0;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
   word-wrap: break-word;
   background-color: #ffffff;
   background-clip: border-box;
   border-radius: 0.25rem;
   padding: 1rem 2.5rem;
-  flex: 1 1 auto;
-  min-height: 1px;
 
   button {
     @extend .mm-btn-animate;
