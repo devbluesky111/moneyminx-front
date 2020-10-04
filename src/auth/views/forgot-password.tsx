@@ -96,7 +96,7 @@ export const ForgotPasswordMainSection = () => {
                 {(props) => (
                   <div className='form-wrap'>
                     <form onSubmit={props.handleSubmit}>
-                      <div className='d-md-flex align-items-start input-wrapper'>
+                      <div className='align-items-start input-wrapper'>
                         <div className='email-wrap'>
                           <input
                             type='text'
@@ -109,7 +109,7 @@ export const ForgotPasswordMainSection = () => {
                           />
                         </div>
                         {props.errors.email && (
-                          <div className='ml-2 mt-1 mt-md-3 text-right feedback text-nowrap'>{props.errors.email}</div>
+                          <div className='ml-2 mt-1 mt-md-3 feedback'>{props.errors.email}</div>
                         )}
                       </div>
                       <button

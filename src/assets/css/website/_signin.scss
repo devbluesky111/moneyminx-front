@@ -394,9 +394,9 @@ ul.footer-list li {
 
 @media (max-width: $md - 1) {
   .credentials-content {
-    max-width: none;
-    padding-left: 40px;
-    padding-right: 38px;
+    width: 100vw;
+    padding-left: 32px;
+    padding-right: 6px;
 
     input {
       width: 100%;
