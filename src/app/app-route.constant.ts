@@ -22,4 +22,8 @@ export const appRouteConstants = {
     STRIPE_SUCCESS: '/stripe/success',
     STRIPE_FAILURE: '/stripe/cancel',
   },
+
+  account: {
+    ACCOUNT: '/account',
+  },
 };

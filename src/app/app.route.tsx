@@ -6,6 +6,7 @@ import Setting from 'setting/setting';
 import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
+import AccountRoute from 'account/account.route';
 import { NetworthProvider } from 'networth/networth.context';
 import { Home, TermNService, Notice, Privacy, About, Pricing, Security } from 'website/views';
 
@@ -18,9 +19,11 @@ import {
   AccountSetting,
   ConnectAccount,
 } from './app.view';
+
 import { appRouteConstants } from './app-route.constant';
 
 const {
+  account: { ACCOUNT },
   web: { SECURITY, NET_WORTH },
   auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
   misc: { STRIPE_FAILURE, STRIPE_SUCCESS },
@@ -41,6 +44,10 @@ function AppRoute() {
 
         <Route path={DEF}>
           <AuthRoute />
+        </Route>
+
+        <Route path={ACCOUNT}>
+          <AccountRoute />
         </Route>
 
         <Route exact path={'/about'} component={About} />
