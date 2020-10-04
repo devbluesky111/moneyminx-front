@@ -30,7 +30,7 @@ export const ConnectAccountStepsSection = () => {
               <div className='step-icon icon-two'>
                 <SelectedIcon />
               </div>
-              <span className='connect-text'>Connect banks </span>
+              <span className='connect-text'>Connect accounts </span>
             </div>
             <div className='step-content right-border'>
               <div className='step-icon icon-three'>

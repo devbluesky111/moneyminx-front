@@ -176,7 +176,7 @@
 .credentials-content .form-wrap input {
   height: 48px;
   font-size: 0.875rem;
-  border: 1px solid $formBorder;
+  border: 1px solid $grayOpacity;
   border-radius: 4px;
   padding: 0 20px;
   color: $darkGray;
@@ -223,7 +223,6 @@ span.forgot-pass {
   display: block;
   height: 48px;
   cursor: pointer;
-  border: 0;
   border-radius: 4px;
 }
 .credentials-content .form-wrap button:hover {

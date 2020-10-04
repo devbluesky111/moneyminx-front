@@ -56,12 +56,6 @@ span.manual-heading {
 span.zillow-img {
   position: inherit;
   display: block;
-
-  @media (min-width: $md) {
-    position: absolute;
-    right: 0;
-    top: 11px;
-    }
 }
 .subscription-bottom-text.connect-account {
   padding: 8px 95px 15px 171px;

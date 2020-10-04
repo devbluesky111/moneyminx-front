@@ -358,7 +358,7 @@ button:focus {
 .profilemenu ul + ul {
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid rgba(150, 158, 172, 0.24);
+  border-top: 1px solid $grayOpacity;
 }
 .profilemenu ul li a {
   font-weight: 500;
@@ -618,7 +618,7 @@ button:focus {
 .dropdown-box ul + ul {
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid rgba(150, 158, 172, 0.24);
+  border-top: 1px solid $grayOpacity;
 }
 .content-wraper {
   padding: 15px 0;

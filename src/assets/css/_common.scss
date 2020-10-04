@@ -76,7 +76,7 @@ a {
   @extend .mm-btn;
   width: 160px;
   &:hover {
-    box-shadow: 0 4px 12px #b9b8e0;
+    box-shadow: 0 4px 12px $purpleShadow;
   }
 }
 
@@ -93,7 +93,7 @@ a {
   color: $white;
   background: $purple;
   &:hover {
-    box-shadow: 0 4px 12px #b9b8e0;
+    box-shadow: 0 4px 12px $purpleShadow;
   }
   &:disabled {
     opacity: 0.7;
@@ -102,14 +102,14 @@ a {
 
 .mm-btn-primary-outline {
   color: $lightBg;
-  border: 1.5px solid #FFFFFF;
+  border: 1.5px solid $white;
   box-sizing: border-box;
   border-radius: 4px;
 
   &:hover {
     background: $lightBg;
     color: $purple;
-    box-shadow: 0 4px 12px #3A33CC;
+    box-shadow: 0 4px 12px $whiteOutlineButtonShadow;
   }
   &:disabled {
     opacity: 0.7;
@@ -155,7 +155,7 @@ a {
 .mm-form-field {
   height: 48px;
   font-size: 0.875rem;
-  border: 1px solid $formBorder;
+  border: 1px solid $grayOpacity;
   border-radius: 4px;
   padding: 0 20px;
   color: $darkGray;
@@ -174,7 +174,7 @@ a {
 // message wrapper
 .message-container {
   color: $white;
-  box-shadow: 0 2px 8px #e2e8f3;
+  box-shadow: 0 2px 8px $whiteFadeShadow;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -396,7 +396,7 @@ hr {
 // action overlay
 
 .action-overlay {
-  box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border: none;
   position: fixed;
   width: 100%;
@@ -405,7 +405,7 @@ hr {
   margin: 0;
   z-index: 2;
   word-wrap: break-word;
-  background-color: #ffffff;
+  background-color: $white;
   background-clip: border-box;
   border-radius: 0.25rem;
   padding: 1rem 2.5rem;
@@ -428,8 +428,8 @@ hr {
 .mm-coming-soon {
   font-size: 0.6875rem;
   vertical-align: top;
-  color: #534cea;
-  background-color: #534cea24;
+  color: $purple;
+  background-color: $purpleOpacity;
   font-weight: 500;
   border-radius: 6px;
 
