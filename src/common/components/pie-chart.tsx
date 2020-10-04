@@ -1,27 +1,23 @@
 import React from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 
-const data = [
-  { name: 'Group A', value: 400 },
-  { name: 'Group B', value: 300 },
-  { name: 'Group C', value: 300 },
-  { name: 'Group D', value: 200 },
-];
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+import { ChartData } from 'allocation/allocation.type';
 
-export const MMPieChart = () => {
+const COLORS = ['#235EE7', '#1F32AD', '#FFBC02', '#29CFD6', '#D3365F'];
+
+interface MMPieChartProps {
+  chartData: ChartData;
+}
+
+export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData }) => {
+  const data = chartData.map((item) => ({
+    name: item.group,
+    value: item.per,
+  }));
+
   return (
-    <PieChart width={800} height={400} onMouseEnter={() => {}}>
-      <Pie
-        data={data}
-        cx={120}
-        cy={200}
-        innerRadius={60}
-        outerRadius={80}
-        fill='#8884d8'
-        paddingAngle={5}
-        dataKey='value'
-      >
+    <PieChart width={440} height={400} onMouseEnter={() => {}} className='mm-allocation-overview__block--chart'>
+      <Pie data={data} cx={250} cy={200} innerRadius={95} outerRadius={155} fill='#000000' dataKey='value'>
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}

@@ -1,13 +1,14 @@
 import React from 'react';
 
 import { fNumber } from 'common/number.helper';
+import { MMPieChart } from 'common/components/pie-chart';
 import { Allocations, ChartData } from 'allocation/allocation.type';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Calendar } from 'assets/images/allocation/calendar.svg';
 import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
-import { ReactComponent as AllocationChart } from 'assets/images/allocation/allocation-chart.svg';
-import { ReactComponent as AllocationLegend } from 'assets/images/allocation/allocation-legend.svg';
+
+import AllocationLegend from './allocation-legend';
 
 interface SelectedAllocationProps {
   allocations: Allocations;
@@ -38,8 +39,10 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ allocat
         <hr className='mb-4' />
         <div className='allocation-content'>
           <div className='text-center d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
-            <AllocationChart className='mm-allocation-overview__block--chart' />
-            <AllocationLegend className='mm-allocation-overview__block--legend' />
+            <MMPieChart chartData={chartData} />
+            {/* <AllocationChart className='mm-allocation-overview__block--chart' /> */}
+            {/* <AllocationLegend className='mm-allocation-overview__block--legend' /> */}
+            <AllocationLegend chartData={chartData} />
           </div>
           <hr className='my-5' />
           <div className='mm-allocation-overview__table'>

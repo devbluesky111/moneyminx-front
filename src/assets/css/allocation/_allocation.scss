@@ -24,29 +24,29 @@
       height: 3.125rem;
     }
 
-    #mm-allocation-type:checked+label,
-    #mm-allocation-asset:checked+label,
-    #mm-allocation-country:checked+label,
-    #mm-allocation-risk:checked+label {
+    #mm-allocation-type:checked + label,
+    #mm-allocation-asset:checked + label,
+    #mm-allocation-country:checked + label,
+    #mm-allocation-risk:checked + label {
       color: $primary;
     }
 
-    #mm-allocation-type:checked~.mm-radio-bg {
+    #mm-allocation-type:checked ~ .mm-radio-bg {
       transform: translateX(0);
       transition: transform 0.2s ease-in-out;
     }
 
-    #mm-allocation-asset:checked~.mm-radio-bg {
+    #mm-allocation-asset:checked ~ .mm-radio-bg {
       transform: translateX(138px);
       transition: transform 0.2s ease-in-out;
     }
 
-    #mm-allocation-country:checked~.mm-radio-bg {
+    #mm-allocation-country:checked ~ .mm-radio-bg {
       transform: translateX(276px);
       transition: transform 0.2s ease-in-out;
     }
 
-    #mm-allocation-risk:checked~.mm-radio-bg {
+    #mm-allocation-risk:checked ~ .mm-radio-bg {
       transform: translateX(412px);
       transition: transform 0.2s ease-in-out;
     }
@@ -62,8 +62,8 @@
     }
   }
 
-  &__switch>span,
-  &__download>span {
+  &__switch > span,
+  &__download > span {
     font-weight: 500;
     font-size: 0.938rem;
     color: $gray;
@@ -109,7 +109,7 @@
       color: $darkGray;
     }
 
-    &--title+p {
+    &--title + p {
       min-height: 3.125rem;
     }
 
@@ -197,7 +197,7 @@
 
         span {
           font-weight: 500;
-          font-size: 0.75rem;;
+          font-size: 0.75rem;
           color: $gray;
 
           @media (min-width: $md) {
@@ -243,7 +243,6 @@
           @media (min-width: $md) {
             display: table-cell;
           }
-
         }
       }
     }
@@ -284,6 +283,35 @@
       font-size: 1rem;
       line-height: 150%;
       color: $darkGray;
+    }
+  }
+}
+
+.mm-allocation-legend-wrapper {
+  padding: 1rem;
+
+  .legend-row {
+    color: $gray;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+
+    &:hover {
+      color: $green;
+    }
+
+    .color-title {
+      .legend-color-box {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border-radius: 2px;
+      }
+      span {
+        padding-left: 1rem;
+      }
     }
   }
 }

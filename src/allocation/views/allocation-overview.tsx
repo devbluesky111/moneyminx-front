@@ -2,14 +2,16 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 
 import { fNumber } from 'common/number.helper';
+import { MMPieChart } from 'common/components/pie-chart';
 import { Allocations, ChartData } from 'allocation/allocation.type';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
 import { ReactComponent as MeasureUpIcon } from 'assets/images/allocation/measure-up-icon.svg';
-import { ReactComponent as AllocationChart } from 'assets/images/allocation/allocation-chart.svg';
-import { ReactComponent as AllocationLegend } from 'assets/images/allocation/allocation-legend.svg';
+import { ReactComponent as AllocationChartSVG } from 'assets/images/allocation/allocation-chart.svg';
+import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/allocation-legend.svg';
 
+import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
 
 interface AllocationOverviewProps {
@@ -38,8 +40,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             <hr className='mb-4' />
             <div className='allocation-content'>
               <div className='text-center d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
-                <AllocationChart className='mm-allocation-overview__block--chart' />
-                <AllocationLegend className='mm-allocation-overview__block--legend' />
+                <MMPieChart chartData={chartData} />
+                <AllocationLegend chartData={chartData} />
               </div>
               <hr className='my-5' />
               <div className='mm-allocation-overview__table'>
@@ -103,8 +105,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             </div>
             <hr className='mb-4' />
             <div className='text-center d-xl-block d-md-flex align-items-md-center justify-content-md-center mm-allocation-overview__block-chart-overview'>
-              <AllocationChart className='mm-allocation-overview__block--chart' />
-              <AllocationLegend className='mm-allocation-overview__block--legend' />
+              <AllocationChartSVG className='mm-allocation-overview__block--chart' />
+              <AllocationLegendSVG className='mm-allocation-overview__block--legend' />
               <div className='mm-allocation-overview__block-element text-center'>
                 <div className='mm-allocation-overview__block-element--middle'>
                   <div className='d-inline-flex align-items-center'>
