@@ -1,4 +1,4 @@
-import React from 'react';
+import appEnv from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import FastLinkModal from 'yodlee/fast-link.modal';
@@ -11,8 +11,15 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
+import React, {useEffect, useState} from 'react';
+import Zabo from 'zabo-sdk-js';
 
 import { ConnectAccountStepsSection } from './inc/connect-steps';
+
+const config = {
+  clientId: appEnv.ZABO_CONFIGURATION.ZABO_CLIENT_ID,
+  env: appEnv.ZABO_CONFIGURATION.ZABO_ENV
+}
 
 const ConnectAccount = () => {
   return (
@@ -23,12 +30,39 @@ const ConnectAccount = () => {
 };
 export default ConnectAccount;
 export const ConnectAccountMainSection = () => {
+  const [zabo, setZabo] = useState<Record<string,() => Record<string, any>>>({});
+
+  useEffect( () => {
+    const initializeZabo = async () => {
+      const zaboConfig = await Zabo.init(config);
+      setZabo(zaboConfig);
+    }
+    initializeZabo();
+  }, []);
+
   const { error, data, loading } = useGetFastlink();
   const fastlinkModal = useModal();
   const history = useHistory();
 
   const handleConnectAccount = () => {
     fastlinkModal.open();
+  };
+
+  const handleCryptoExchange = () => {
+    zabo.connect()
+      .onConnection((account: Record<string, string>) => {
+        // Todo Onconnection implementation
+        // tslint:disable-next-line:no-console
+        console.log('account connected:', account)
+    })
+      .onError((errorOnConnection:  Record<string, string>) => {
+        // Todo OnError implementation
+      })
+      .onEvent((eventName:  Record<string, string>, metadata:  Record<string, string>) => {
+        // Todo On each event implementation
+        // tslint:disable-next-line:no-console
+        console.info(`[EVENT] ${eventName}`, metadata)
+    })
   };
 
   const handleConnectAccountSuccess = () => {
@@ -97,7 +131,7 @@ export const ConnectAccountMainSection = () => {
                 <button
                   className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto'
                   type='button'
-                  onClick={handleConnectAccount}>
+                  onClick={handleCryptoExchange}>
                   Add Crypto Exchanges
                 </button>
               </div>

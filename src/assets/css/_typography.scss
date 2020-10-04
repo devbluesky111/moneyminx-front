@@ -32,5 +32,10 @@
   &:hover {
     border-bottom: 1.5px solid $purple;
     transition-duration: 0s;
+    color: $purple;
   }
+}
+
+.text-warning {
+  color: $yellow !important;
 }

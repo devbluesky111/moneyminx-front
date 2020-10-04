@@ -173,7 +173,7 @@ export const HomeFeatureSection = () => {
               <div className='feature-icon py-3'>
                 <FeatureIconSix />
               </div>
-              <div className='d-flex'><h2 className='py-3'>Income Projections</h2><span className='mm-above-tag-text mm-mb-hide'>Coming Soon!</span></div>
+              <div className=''><h2 className='py-3'>Income Projections <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span></h2></div>
               <p>
                 Track which investments are paying interest, dividends or royalties and create an income projection
                 schedule
@@ -338,7 +338,7 @@ export const HomePerformanceSection = () => {
           <div className='col-xl-5'>
             <div className='networth-text'>
               <h2>
-                Performance<span className='mm-above-tag-text mm-mb-hide '>Coming Soon!</span>
+                Performance<span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
               </h2>
               <p className='text'>
                 Easy to use dashboard of your investments, assets, liabilities and net worth, from all your
@@ -365,7 +365,7 @@ export const MinxWinksSection = () => {
           <div className='col-xl-5'>
             <div className='networth-text pt-4 mb-5'>
               <h2>
-                Minx Winks<span className='mm-above-tag-text mm-mb-hide'>!Coming Soon</span>
+                <span className='badge badge-pill badge-primary mm-coming-soon'>!Coming Soon</span>Minx Winks
               </h2>
               <p className='text'>
                 Get inside insights, recommendations, and tips from Money Minx. Get inside insights, recommendations,
@@ -392,7 +392,7 @@ export const MinxMeasureSection = () => {
           <div className='col-lg-5'>
             <div className='networth-text'>
               <h2>
-                Minx Measure-up<span className='mm-above-tag-text mm-mb-hide'>Coming Soon!</span>
+                Minx Measure-up<span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
               </h2>
               <p className='text'>
                 Put your portfolio to the test against similar investors. How does yours stack up? What do you need to

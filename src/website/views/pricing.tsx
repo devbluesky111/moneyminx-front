@@ -51,11 +51,6 @@ export const PricingTable = () => {
 
   const { fetchingSubscription, subError, subscription } = useGetSubscription();
 
-  const btnClasses = 'mm-btn-animate plan-btn text-primary ml-3 btn-xs-block';
-
-  const monthlyClasses = `${btnClasses} ${type === 'monthly' ? '' : 'annually'}`;
-  const annualClasses = `${btnClasses} ${type === 'yearly' ? '' : 'annually'}`;
-
   if (fetchingSubscription && !subscription && subError) {
     return <CircularSpinner />;
   }
@@ -69,12 +64,14 @@ export const PricingTable = () => {
     <div className='container-fluid'>
       <div className='row'>
         <div className='plan-section'>
-          <button className={monthlyClasses} onClick={() => setType('monthly')}>
-            Monthly
-          </button>
-          <button className={annualClasses} onClick={() => setType('yearly')}>
-            <span className='save-text'>Annually</span>
-          </button>
+          <div className="mm-plan-radios">
+            <input type="radio" id="mm-plan-month" value="monthly" name='mm-radio-time-interval' checked={type==='monthly'} />
+            <label className="labels" htmlFor="mm-plan-month" onClick={() => setType('monthly')}>Monthly</label>
+            <input type="radio" id="mm-plan-year" value="annually"  name='mm-radio-time-interval' checked={type==='yearly'} />
+            <label className="labels" htmlFor="mm-plan-year" onClick={() => setType('yearly')}>Annually</label>
+            <span className='save-text' />
+            <div className="mm-radio-bg"></div>
+          </div>
         </div>
       </div>
 

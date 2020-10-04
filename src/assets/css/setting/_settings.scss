@@ -3,8 +3,8 @@
 
   .mm-setting-navbar {
     background: $white;
-    box-shadow: 0px 2px 8px $whiteShadow, inset 0px -1px 0px $whiteInsetShadow;
-    border-radius: 0px 0px 6px 6px;
+    box-shadow: 0 2px 8px $whiteShadow, inset 0px -1px 0px $whiteInsetShadow;
+    border-radius: 0 0 6px 6px;
 
     .mm-setting-nav {
       display: flex;
@@ -17,19 +17,28 @@
     }
   }
 
-  .mm-setting-container {
+  .mm-settings-container {
     max-width: 830px;
     width: 100%;
     padding-right: 0.938rem;
     padding-left: 0.938rem;
-    margin: 3.75rem auto;
+    margin: 1.375rem auto 3rem auto;
 
-    .mm-setting-title {
+    @media (min-width: $md) {
+      margin: 2.5rem auto 3.75rem auto;
+    }
+
+    @media (min-width: $lg) {
+      margin: 3.75rem auto 3.75rem auto;
+    }
+
+    .mm-settings-title {
       max-width: 830px;
-      font-weight: $normal;
+      font-weight: 400;
       font-size: 1.125rem;
       overflow: hidden;
       margin: auto;
+      color: $gray;
 
       @media (max-width: $md - 1) {
         overflow-x: scroll;
@@ -47,33 +56,36 @@
         align-items: center;
         list-style: none;
         padding: 0;
+        overflow: auto;
       }
 
       &--type {
         margin-right: 5rem;
-        padding-bottom: 1rem;
+        padding: 0 0.125rem 0.875rem 0.125rem;
 
         &.active {
-          border-bottom: 3px solid $primary;
+          border-bottom: 1.5px solid $primary;
+          color: $darkGray;
+
         }
       }
 
       &--link {
-        color: $darkGray;
+        color: $gray;
       }
 
       &--bar {
-        margin-top: -1.125rem;
-        border-bottom: 2px solid $grayOpacity;
+        margin-top: -1rem;
+        border-bottom: 1px solid $grayOpacity;
       }
     }
   }
 
   .mm-setting-card {
-    box-shadow: 0px 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteFadeInsetShadow;
+    box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteFadeInsetShadow;
     border-radius: 6px;
     margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    border: none;
 
     &--title {
       font-weight: $normal;
@@ -88,8 +100,8 @@
 
     &--subscription {
       color: $redAlert;
-      font-weight: $normal;
-      font-size: 1.25rem;
+      font-weight: 500;
+      font-size: 1.125rem;
     }
 
     .card-body {
@@ -120,13 +132,12 @@
     font-size: 0.875rem;
     color: $gray;
     margin-left: 2rem;
+    font-weight: 400;
+    line-height: 1.625rem;
+    text-align: right;
 
-    @media (max-width: $sm) {
-      float: right;
-
-      &::after {
-        clear: both;
-      }
+    @media (min-width: $md) {
+      text-align: left;
     }
   }
 
@@ -160,7 +171,7 @@
     left: 0;
     height: 1.25rem;
     width: 1.25rem;
-    border: 1px solid $gray;
+    border: 1px solid #534CEA24;
     box-sizing: border-box;
     border-radius: 0.25rem;
   }
@@ -266,6 +277,20 @@
       border: 3px solid $white;
       top: 0.938rem;
     }
+  }
+}
+
+.mm-btn-settings {
+  @extend .mm-btn-signup;
+  @extend .btn-outline-primary;
+  height: 40px;
+  width: 100%;
+  float: right;
+  font-size: 0.875rem;
+  font-weight: 400;
+
+  @media (min-width: $md) {
+    width: 200px;
   }
 }
 

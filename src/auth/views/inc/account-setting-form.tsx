@@ -29,16 +29,17 @@ import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estat
 
 interface Props {
   currentAccount?: Account;
+  handleReload?: () => void;
 }
 
 interface LocationType {
   state?: Record<string, string>;
 }
 
-const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
+const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) => {
+  const { state }: LocationType = useLocation();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
-  const { state }: LocationType = useLocation();
 
   const { loading: fetchingAccountType, data: accountTypes, error } = useAccountType();
   const { loading: fetchingAccountSubType, subType: accountSubTypes, error: subTypeError } = useAccountSubtype(
@@ -172,10 +173,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount }) => {
 
         const res = await patchAccount(`${accountId}`, data);
         if (res?.error) {
-          toast('Error Occurred', { type: 'error' });
-        } else {
-          toast('Success Fully updated', { type: 'success' });
+          return toast('Error Occurred', { type: 'error' });
         }
+
+        handleReload?.();
+        return toast('Successfully updated', { type: 'success' });
       }}
     >
       {(props) => {
