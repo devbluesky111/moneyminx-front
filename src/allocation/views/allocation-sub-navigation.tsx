@@ -26,18 +26,17 @@ return (
       </div>
       <div
         className="mm-plan-radios mm-allocation-radios mm-allocation-sub-navigation__category m-auto mt-2">
-        <input type="radio" id="mm-allocation-type" value="monthly" name='mm-radio-time-interval' />
+        <input type="radio" id="mm-allocation-type" value="type" name='mm-radio-time-interval' aria-checked="true" />
         <label className="labels" htmlFor="mm-allocation-type">Type</label>
         <input type="radio" id="mm-allocation-asset" value="annually"
-          name='mm-radio-time-interval' />
-        <label className="labels" htmlFor="mm-allocation-asset">Asset class</label>
-        <input type="radio" id="mm-allocation-country" value="annually"
-          name='mm-radio-time-interval' />
+          name='mm-radio-time-interval' aria-checked="false" />
+        <label className="labels" htmlFor="mm-allocation-asset">annually</label>
+        <input type="radio" id="mm-allocation-country" value="country"
+          name='mm-radio-time-interval' aria-checked="false" />
         <label className="labels" htmlFor="mm-allocation-country">Country</label>
-        <input type="radio" id="mm-allocation-risk" value="annually"
-          name='mm-radio-time-interval' />
+        <input type="radio" id="mm-allocation-risk" value="risk" name='mm-radio-time-interval' aria-checked="false" />
         <label className="labels" htmlFor="mm-allocation-risk">Risk</label>
-        <div className="mm-radio-bg"></div>
+        <div className="mm-radio-bg" />
       </div>
       <div className='d-flex mm-allocation-sub-navigation__download align-items-center mt-md-2'>
         <DownloadExcel />
