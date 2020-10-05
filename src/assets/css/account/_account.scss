@@ -1,0 +1,62 @@
+.mm-account {
+  padding: 33px 40px;
+  background: $lightBg;
+
+  table {
+    width: 100%;
+  }
+
+  .mm-account-table {
+    width: 100%;
+    background: $white;
+    box-shadow: 0px 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteFadeInsetShadow;
+    border-radius: 6px;
+    padding: 30px 30px;
+
+    &__head {
+      font-weight: 600;
+      font-size: 16px;
+      color: $gray;
+
+      &--data {
+        padding-bottom: 25px;
+        display: none;
+
+        // @media (min-width: $md) {
+        //   display: block;
+        // }
+      }
+    }
+
+    &__body {
+      font-weight: 500;
+      font-size: 14px;
+      color: $darkGray;
+
+      &--data {
+        padding-top: 16px;
+        padding-bottom: 16px;
+
+        &:nth-last-child(-n+3) {
+          background: #534cea1a;
+         }
+      }
+
+      &--wrapper {
+        border-bottom: 1px solid rgba($gray, 0.2);
+
+        span {
+          font-weight: 500;
+          font-size: 12px;
+          color: $gray;
+        }
+      }
+
+      &--sm-title {
+        font-weight: 500;
+        font-size: 16px;
+        color: $black;
+      }
+    }
+  }
+}
