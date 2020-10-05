@@ -129,8 +129,8 @@ const AccountSetting = () => {
                 <div className='top-content-wrap'>
                   <h2>Organize accounts</h2>
                   <p>
-                    Great! You connected your banks. Now you can organize your accounts to start getting insights into
-                    your portfolio. You can leave this step for later.
+                    Great! You connected your accounts. Now you can organize them to get better insights into
+                    your portfolio.
                   </p>
                 </div>
 
@@ -164,9 +164,9 @@ const AccountSetting = () => {
                     handleReload={() => setReloadCounter((c) => c + 1)}
                   />
 
-                  <p className='flex-box learn-more-security mt-3'>
+                  <p className='flex-box learn-more-security'>
                     <SecurityIcon />
-                    <a href='/security'>Learn about our security</a>
+                    <a href='/security' target='_blank' className='purple-links'>Learn about our security</a>
                   </p>
                 </div>
               </div>
