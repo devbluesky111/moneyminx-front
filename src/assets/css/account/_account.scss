@@ -85,7 +85,7 @@
     background: $white;
     box-shadow: 0px 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteFadeInsetShadow;
     border-radius: 6px;
-    padding: 1.875rem 1.875rem;
+    padding: 1.875rem 1.875rem 0 1.875rem;
 
     &__head {
       font-weight: 600;
@@ -107,13 +107,17 @@
         padding-top: 1rem;
         padding-bottom: 1rem;
 
-        &:nth-last-child(-n+3) {
-          background: #534cea1a;
+        &:nth-child(10) {
+          background: linear-gradient(90deg, rgba($purple, 0.04) 0%, rgba($purple, 0) 100%);
         }
       }
 
       &--wrapper {
         border-bottom: 1px solid rgba($gray, 0.2);
+
+        &:last-child {
+          border-bottom: unset;
+        }
 
         span {
           font-weight: 500;

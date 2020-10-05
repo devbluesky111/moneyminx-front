@@ -21,7 +21,7 @@ return (
     </div>
     <div className='order-2 order-md-3'>
       <DownloadExcel />
-      <span className='ml-2'>
+      <span className='ml-2 text-gray'>
         Download CSV
       </span>
     </div>
