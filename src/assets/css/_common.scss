@@ -373,6 +373,9 @@ a {
   }
 }
 
+.form-control:focus {
+  box-shadow: none;
+}
 .form-control-lg {
   font-size: 1rem;
 }

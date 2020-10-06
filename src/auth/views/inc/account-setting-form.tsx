@@ -558,7 +558,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                       type='number'
                       name='employerMatch'
                       onChange={handleChange}
-                      placeholder='Employer Match'
+                      placeholder='50'
                     />
                     <span className='symbol-icon'>%</span>
                   </span>
@@ -597,7 +597,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                       type='number'
                       name='employerMatchLimit'
                       onChange={handleChange}
-                      placeholder='Employer Match'
+                      placeholder='5'
                       value={values.employerMatchLimit}
                     />
                     <span className='symbol-icon'>$</span>
@@ -701,7 +701,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
             <div className={`estimated-annual-return ${hc('estimatedAnnualReturns')}`}>
               <span className='form-subheading'>Estimated annual returns</span>
-              <span className='sub-label'>This will be used to show projections in your charts.</span>
+              <span className='sub-label'>This will be used to show projections on your charts.</span>
 
               <div className='form-field-group'>
                 <Form.Control
@@ -718,41 +718,20 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
             {/* Estimated principal paydown */}
             <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReduction')}`}>
-              <div className='estimated-top-content flex-box'>
-                <span className='form-subheading mr-0'>Estimated principal paydown</span>
-                <span className='form-subheading-right'>This will be used to show projections in your charts.</span>
-              </div>
+                <span className='form-subheading'>Estimated principal paydown</span>
+                <span className='sub-label'>This will be used to show projections on your charts.</span>
 
-              <p>
-                <input type='radio' value='no' disabled defaultChecked={false} checked={false} aria-checked={false} />
-                <label>
-                  Use a calculation based on historical returns
-                  <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
-                </label>
-              </p>
-              <p className='flex-box'>
-                <span className='estimate-left'>
-                  <input
-                    type='radio'
-                    value='own'
-                    disabled
-                    defaultChecked={true}
-                    name='estimatedAnnualPrincipalReductionType'
-                    checked={true}
-                    aria-checked={true}
-                  />
-                  <label>Use my own estimate</label>
-                </span>
-                <span className='estimate-right'>
+                <div className='form-field-group'>
                   <Form.Control
                     onChange={handleChange}
                     type='number'
-                    placeholder='12%'
+                    placeholder='5'
                     name='estimatedAnnualPrincipalReduction'
                     value={values.estimatedAnnualPrincipalReduction}
                   />
-                </span>
-              </p>
+                  <span className="input-add-on">%</span>
+                </div>
+
             </div>
 
             {/* Current value */}

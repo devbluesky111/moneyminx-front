@@ -210,7 +210,7 @@ span.form-subheading {
 }
 
 .account-type-list {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .account-type select {
@@ -227,7 +227,12 @@ span.form-subheading {
   border: 1px solid $grayOpacity;
   border-radius: 4px;
   font-size: 0.875rem;
-  color: gray;
+  color: $darkGray;
+
+  &:focus {
+    outline: none;
+    border: 1px solid $gray;
+  }
 }
 
 .account-type-list {
@@ -643,10 +648,6 @@ span.form-subheading {
   .account-type-list li {
     width: 100%;
     float: none;
-  }
-
-  .account-type select {
-    width: 100%;
   }
 
   .account-type-list li .account-list-content {
