@@ -137,7 +137,7 @@
   .mm-account-activity-block {
     p {
       font-weight: 500;
-      font-size: 14px;
+      font-size: 0.875rem;
       color: $gray;
     }
 
@@ -210,6 +210,41 @@
           color: $black;
         }
       }
+    }
+  }
+
+  .mm-add-activity-modal {
+    background: $darkBg;
+    box-shadow: 0px 4px 28px rgba($darkBg, 0.44);
+    border-radius: 6px;
+    color: $white;
+    padding: 1.25rem 1.25rem;
+
+    p {
+      font-weight: 500;
+      font-size: 0.875rem;
+      min-width: 6.25rem;
+      margin-bottom: 0;
+    }
+
+    &__btn {
+      height: 3rem;
+    }
+
+    &__text {
+      height: 3rem;
+    }
+
+    &__checkmark {
+      border: 1px solid $lightBg;
+
+      &--label {
+        margin-left: 1.875rem;
+      }
+    }
+
+    select {
+      height: 3rem;
     }
   }
 }

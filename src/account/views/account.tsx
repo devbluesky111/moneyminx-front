@@ -1,4 +1,5 @@
 import React from 'react';
+import Form from 'react-bootstrap/Form';
 import AccountTable from './account-table';
 import ActivityTable from './activity-table';
 import Button from 'react-bootstrap/Button';
@@ -96,6 +97,66 @@ const Account: React.FC<AccountProps> = () => {
           </div>
         </div>
         <ActivityTable />
+      </div>
+
+      {/* add activity popup modal section */}
+      <div className='mm-add-activity-modal mt-5'>
+        <div className='row mb-4'>
+          <div className="col-md-5">
+            <div className="d-md-flex align-items-baseline">
+              <p className='mr-xl-5 mb-3 mb-md-0'><span className='d-block d-md-none'>Date</span>04
+                / 04 / 2020</p>
+              <Form.Control as="select" className="mr-sm-2" id="inlineFormCustomSelect" custom>
+                <option value="0">Choose...</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </Form.Control>
+              <Form.Control type="text" placeholder="This is a deposit description"
+                className='mm-add-activity-modal__text d-none d-xl-block' />
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="d-md-flex align-items-baseline justify-content-between mt-3">
+              <p className='mx-xl-5 mb-3 mb-md-0'><span
+                  className='d-block d-md-none'>Amount</span>$10</p>
+              <p className='mx-xl-5 mb-3 mb-md-0'><span
+                  className='d-block d-md-none'>Balance</span>$231,234</p>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="d-md-flex align-items-baseline">
+              <Form.Control as="select" className="mr-sm-2 mb-3 mb-md-0" id="inlineFormCustomSelect"
+                custom>
+                <option value="0">Choose...</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </Form.Control>
+              <Form.Control as="select" className="mr-sm-2" id="inlineFormCustomSelect" custom>
+                <option value="0">Choose...</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </Form.Control>
+            </div>
+
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-5">
+            <label className='custom-checkbox'>
+              <input type='checkbox' value='true' aria-checked='true' />
+              <span className='checkmark mm-add-activity-modal__checkmark' />
+            </label>
+            <span className='mm-add-activity-modal__checkmark--label'>Ignore this transaction</span>
+          </div>
+          <div className="col-md-3" />
+          <div className="col-md-4">
+            <Button className='mm-add-activity-modal__btn w-100 mt-4 mt-md-0' variant="primary">Save
+              Changes</Button>
+          </div>
+        </div>
       </div>
     </div>
     <FooterSection />
