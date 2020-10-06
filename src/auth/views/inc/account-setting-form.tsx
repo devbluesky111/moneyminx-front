@@ -673,7 +673,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 <li className={`w-100 ${hc('separateLoanBalance')}`}>
                   <p>
                     <span className='form-subheading'>How do you want to handle your 401k loan?</span>
-                    <span className='mm-label b-primary-light w-100 d-inline'>Coming Soon!</span>
+                    <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
                   </p>
                   <Form.Control
                     as='select'
@@ -700,50 +700,20 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             </div>
 
             <div className={`estimated-annual-return ${hc('estimatedAnnualReturns')}`}>
-              <div className='estimated-top-content flex-box'>
-                <span className='form-subheading'>Estimated annual returns</span>
-                <span className='form-subheading-right'>This will be used to show projections in your charts.</span>
+              <span className='form-subheading'>Estimated annual returns</span>
+              <span className='sub-label'>This will be used to show projections in your charts.</span>
+
+              <div className='form-field-group'>
+                <Form.Control
+                onChange={handleChange}
+                type='number'
+                placeholder='5'
+                name='estimatedAnnualReturns'
+                value={values.estimatedAnnualReturns}
+              />
+                <span className="input-add-on">%</span>
               </div>
 
-              <p>
-                <input
-                  type='radio'
-                  value='no'
-                  disabled
-                  defaultChecked={false}
-                  onChange={handleChange}
-                  name='estimatedAnnualReturns'
-                  checked={values.estimatedAnnualReturns === 'no' || values.estimatedAnnualReturns === false}
-                  aria-checked={values.estimatedAnnualReturns === 'no' || values.estimatedAnnualReturns === false}
-                />
-                <label>
-                  Use a calculation based on historical returns{' '}
-                  <span className='mm-label b-primary-light w-100 d-inline ml-3'>Coming Soon!</span>
-                </label>
-              </p>
-              <p className='flex-box'>
-                <span className='estimate-left'>
-                  <input
-                    type='radio'
-                    value='own'
-                    disabled
-                    defaultChecked={true}
-                    name='estimatedAnnualReturnType'
-                    checked={true}
-                    aria-checked={true}
-                  />
-                  <label>Use my own estimate</label>
-                </span>
-                <span className='estimate-right'>
-                  <Form.Control
-                    onChange={handleChange}
-                    type='number'
-                    placeholder='5%'
-                    name='estimatedAnnualReturns'
-                    value={values.estimatedAnnualReturns}
-                  />
-                </span>
-              </p>
             </div>
 
             {/* Estimated principal paydown */}
@@ -757,7 +727,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 <input type='radio' value='no' disabled defaultChecked={false} checked={false} aria-checked={false} />
                 <label>
                   Use a calculation based on historical returns
-                  <span className='mm-label b-primary-light w-100 d-inline ml-3'>Coming Soon!</span>
+                  <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
                 </label>
               </p>
               <p className='flex-box'>
@@ -933,13 +903,13 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                   <div className='col-12 col-md-8'>
                     <div className='d-flex justify-content-start'>
                       <button
-                        className='bg-white cancel-btn mm-btn-primary-outline mr-2 estimate-annual-block__btn estimate-annual-block__btn-cancel'
+                        className='mm-btn-signup btn-outline-primary mm-btn-animate estimate-annual-block__btn-cancel'
                         type='button'
                       >
                         {isFromAccount ? 'Cancel' : 'Back'}
                       </button>
                       <button
-                        className='btn btn-primary ml-2 estimate-annual-block__btn estimate-annual-block__btn-save'
+                        className='mm-btn-animate mm-btn-primary estimate-annual-block__btn-save'
                         type='submit'
                       >
                         {isFromAccount ? 'Save' : 'Next'}
