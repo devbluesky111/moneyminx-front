@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 
 import { fNumber } from 'common/number.helper';
 import { MMPieChart } from 'common/components/pie-chart';
-import { Allocations, ChartData } from 'allocation/allocation.type';
+import { AllocationOverviewProps } from 'allocation/allocation.type';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
@@ -13,11 +13,6 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
-
-interface AllocationOverviewProps {
-  allocations: Allocations;
-  chartData: ChartData;
-}
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData }) => {
   const getTotal = (key: string) => {

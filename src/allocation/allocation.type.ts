@@ -1,4 +1,5 @@
 import { CurrencyOptions } from 'auth/enum/currency-options';
+import { AllocationsFilter } from './allocation.enum';
 
 export interface AllocationProps {}
 
@@ -26,3 +27,13 @@ export interface ChartDatum {
 export type ChartData = ChartDatum[];
 
 export type Allocations = Record<string, Allocation[]>;
+
+export interface AllocationSubNavigationProps {
+  onTypeChange: (type: AllocationsFilter) => void;
+  filter: AllocationsFilter;
+}
+
+export interface AllocationOverviewProps {
+  allocations: Allocations;
+  chartData: ChartData;
+}
