@@ -25,18 +25,6 @@ export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = (
                 </button>
               </div>
             </div>
-            <span className='d-flex align-items-end mm-switch-block mb-4 mb-md-0 mm-allocation-sub-navigation__switch'>
-              <input
-                type='radio'
-                name='profileEnabled'
-                className='mm-switch-input'
-                value='true'
-                checked
-                aria-checked={false}
-              />
-              <label className='mm-switch mt-md-0 mt-3' role='button' />
-              <span className='ml-2'>Group by account</span>
-            </span>
           </div>
           <div className='mm-plan-radios mm-allocation-radios mm-allocation-sub-navigation__category m-auto mt-2'>
             <input

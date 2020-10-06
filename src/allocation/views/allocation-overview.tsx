@@ -13,8 +13,14 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
+import { useModal } from 'common/components/modal';
+import SettingModal from 'allocation/modal/setting-modal';
+import FieldChangeModal from 'allocation/modal/field-change-modal';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData }) => {
+  const chartSettingModal = useModal();
+  const fieldChangeModal = useModal();
+
   const getTotal = (key: string) => {
     return chartData.find((datum) => datum.group === key);
   };
@@ -28,7 +34,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             <div className='mm-allocation-overview__block--title'>Current allocation</div>
             <p>Current allocation based on your holdings</p>
             <div className='mm-allocation-overview__block--action'>
-              <SettingsIcon className='mr-3' />
+              <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
               <Download className='mr-3' />
               <Share />
             </div>
@@ -52,7 +58,9 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                     return (
                       <React.Fragment key={index}>
                         <tr>
-                          <td className='mm-allocation-overview__table--title'>{allocationKey}</td>
+                          <td className='mm-allocation-overview__table--title' onClick={() => fieldChangeModal.open()}>
+                            {allocationKey}
+                          </td>
                         </tr>
                         {allocation?.map((al) => {
                           return (
@@ -118,6 +126,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
           </div>
         </div>
       </div>
+      <SettingModal settingModal={chartSettingModal} />
+      <FieldChangeModal fieldChangeModal={fieldChangeModal} />
     </section>
   );
 };
