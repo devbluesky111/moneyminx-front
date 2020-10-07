@@ -382,7 +382,12 @@ a {
 
 // hide block, div for small screen
 .sm-hide {
-  @media (max-width: $md - 1) {
+  @media (max-width: $sm + 1) {
+    display: none;
+  }
+}
+.mm-md-hide {
+  @media (min-width: $md) {
     display: none;
   }
 }

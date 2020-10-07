@@ -182,8 +182,7 @@ export const AboutNetWorthSection = () => {
         </div>
         <div className='col-xl-7'>
           <div className='mm-networth-chart text-center'>
-            <AboutNetWorthChart className='mm-sm-hide mm-about-net-worth-chart' />
-            <NetWorthMobileChart className='net-worth-mobile-chart mm-md-hide' />
+            <AboutNetWorthChart className='mm-about-net-worth-chart' />
           </div>
         </div>
       </div>

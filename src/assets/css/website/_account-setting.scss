@@ -5,7 +5,7 @@
 
   @media (min-width: $med) {
     padding-left: 60px;
-    padding-right: 20px;
+    padding-right: 30px;
   }
   @media (min-width: $desk) {
     max-width: 665px;
@@ -63,7 +63,7 @@ ul.bank-list {
 }
 
 .flex-box {
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: left;
 }
@@ -139,11 +139,15 @@ ul.bank-list {
 
 span.form-subheading {
   font-size: 0.875rem;
-  color: black;
+  color: $black;
   font-weight: 600;
   margin-bottom: 14px;
   display: inline-block;
-  margin-right: 20px;
+  margin-right: 0;
+
+  @media (min-width: $md) {
+    margin-right: 20px;
+  }
 }
 .credentials-content .form-wrap .form-heading button {
   width: auto;
@@ -153,7 +157,7 @@ span.form-subheading {
   border: 0;
 }
 .form-subheading svg {
-  margin-left: 20px;
+  margin: 0 0 2px 12px;
   width: 20px;
   height: 20px;
 }
@@ -265,12 +269,31 @@ span.form-subheading {
 
 .right-input {
   position: absolute;
+  display: contents;
   right: 0;
   top: -2%;
-}
+  width: 47%;
 
-.right-input.radio {
-  top: 16%;
+  &.radio {
+    top: 25%;
+  }
+
+  @media (max-width: $sm) {
+
+    &.radio {
+      margin-left: -28px;
+      display: inline;
+    }
+  }
+
+  @media (max-width: $md) {
+      position: static;
+      display: block;
+
+    &.radio {
+      margin-left: -28px;
+    }
+  }
 }
 
 .account-setting #feedback {
@@ -307,17 +330,32 @@ span.form-subheading {
   input[type='text'],
   input[type='number'] {
     height: 48px;
-    width: 263px;
+    width: 100%;
+
+    @media (min-width: $md) {
+      min-width: 263px;
+    }
   }
 }
 
-.estimated-annual-return .estimate-right {
-  width: 48%;
-  float: right;
-}
+.estimated-annual-return  {
+  border-top: 1px solid $grayOpacity;
+  padding-top: 41px;
+  position: relative;
 
-.estimated-annual-return .estimate-left {
-  width: 52%;
+  .mm-button {
+    width: 160px !important;
+  }
+  p {
+    font-size: 14px;
+  }
+  .estimate-left {
+    width: 52%;
+  }
+  .estimate-right {
+    width: 48%;
+    float: right;
+  }
 }
 
 .account-setting .top-content-wrap {
@@ -349,10 +387,7 @@ span.form-subheading {
   color: $darkGray;
 }
 
-.estimated-annual-return {
-  border-top: 1px solid $grayOpacity;
-  padding-top: 41px;
-}
+
 
 .form-divider {
   border-top: 1px solid $grayOpacity;
@@ -437,10 +472,6 @@ span.form-subheading {
   border-top: 1px solid $grayOpacity;
   height: 1.5rem;
   padding-top: 2rem;
-}
-
-.estimated-annual-return p {
-  font-size: 14px;
 }
 
 .account-setting-form {
@@ -563,10 +594,6 @@ span.form-subheading {
   z-index: 9999;
 }
 
-.estimated-annual-return p {
-  position: relative;
-}
-
 .submit.mm-btn-primary-outline:hover {
   background-color: $white !important;
   color: $primary !important;
@@ -669,11 +696,6 @@ span.form-subheading {
     float: none;
   }
 
-  .right-input {
-    position: static;
-    display: block;
-  }
-
   .estimated-annual-return span.form-subheading {
     margin-bottom: 11px;
     display: block;
@@ -686,9 +708,6 @@ span.form-subheading {
   .form-wrap .right-input input[type='text'] {
     width: 100%;
     display: block;
-  }
-  .right-input.radio {
-    margin-left: -28px;
   }
 }
 
@@ -772,15 +791,6 @@ span.next-icon {
 .account-type-list {
   &__dropdown {
     height: 48px;
-  }
-  &__select-title {
-    margin-bottom: 31px !important;
-  }
-}
-
-.estimated-annual-return {
-  .mm-button {
-    width: 160px !important;
   }
 }
 
@@ -879,8 +889,15 @@ span.next-icon {
   }
 }
 .form-field-group {
-  width: 47%;
+  width: 100%;
   position: relative;
+
+  @media (min-width: $md) {
+    &.single-field {
+      width: 47%;
+    }
+  }
+
 }
 .input-add-on {
   position: absolute;
