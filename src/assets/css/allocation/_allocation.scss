@@ -24,29 +24,29 @@
       height: 3.125rem;
     }
 
-    #mm-allocation-type:checked + label,
-    #mm-allocation-asset:checked + label,
-    #mm-allocation-country:checked + label,
-    #mm-allocation-risk:checked + label {
+    #mm-allocation-type:checked+label,
+    #mm-allocation-asset:checked+label,
+    #mm-allocation-country:checked+label,
+    #mm-allocation-risk:checked+label {
       color: $primary;
     }
 
-    #mm-allocation-type:checked ~ .mm-radio-bg {
+    #mm-allocation-type:checked~.mm-radio-bg {
       transform: translateX(0);
       transition: transform 0.2s ease-in-out;
     }
 
-    #mm-allocation-asset:checked ~ .mm-radio-bg {
+    #mm-allocation-asset:checked~.mm-radio-bg {
       transform: translateX(138px);
       transition: transform 0.2s ease-in-out;
     }
 
-    #mm-allocation-country:checked ~ .mm-radio-bg {
+    #mm-allocation-country:checked~.mm-radio-bg {
       transform: translateX(276px);
       transition: transform 0.2s ease-in-out;
     }
 
-    #mm-allocation-risk:checked ~ .mm-radio-bg {
+    #mm-allocation-risk:checked~.mm-radio-bg {
       transform: translateX(412px);
       transition: transform 0.2s ease-in-out;
     }
@@ -62,8 +62,8 @@
     }
   }
 
-  &__switch > span,
-  &__download > span {
+  &__switch>span,
+  &__download>span {
     font-weight: 500;
     font-size: 0.938rem;
     color: $gray;
@@ -109,7 +109,7 @@
       color: $darkGray;
     }
 
-    &--title + p {
+    &--title+p {
       min-height: 3.125rem;
     }
 
@@ -309,9 +309,39 @@
         height: 18px;
         border-radius: 2px;
       }
+
       span {
         padding-left: 1rem;
       }
     }
+  }
+}
+.allocation-content {
+  svg {
+    margin-left: -6.875rem;
+  }
+}
+
+.mm-field-change-modal {
+  &__title {
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: $black;
+  }
+
+  p {
+    font-weight: 500;
+    font-size: 0.75rem;
+    color: $gray;
+  }
+
+  &__sub-title {
+    font-weight: bold;
+    font-size: 1rem;
+    color: $black;
+  }
+
+  .custom-select {
+    color: $red;
   }
 }

@@ -40,7 +40,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             </div>
             <hr className='mb-4' />
             <div className='allocation-content'>
-              <div className='text-center d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
+              <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
                 <MMPieChart chartData={chartData} />
                 <AllocationLegend chartData={chartData} />
               </div>
@@ -107,7 +107,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
               <Share />
             </div>
             <hr className='mb-4' />
-            <div className='text-center d-xl-block d-md-flex align-items-md-center justify-content-md-center mm-allocation-overview__block-chart-overview'>
+            <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center mm-allocation-overview__block-chart-overview'>
               <AllocationChartSVG className='mm-allocation-overview__block--chart' />
               <AllocationLegendSVG className='mm-allocation-overview__block--legend' />
               <div className='mm-allocation-overview__block-element text-center'>

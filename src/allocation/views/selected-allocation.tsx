@@ -38,7 +38,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ allocat
         </div>
         <hr className='mb-4' />
         <div className='allocation-content'>
-          <div className='text-center d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
+          <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
             <MMPieChart chartData={chartData} />
             {/* <AllocationChart className='mm-allocation-overview__block--chart' /> */}
             {/* <AllocationLegend className='mm-allocation-overview__block--legend' /> */}
