@@ -5,7 +5,6 @@ import OwnerTwoImg from 'assets/images/about/jessica.png';
 import OwnerLeftImg from 'assets/images/about/owner-left-img.png';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
-import { ReactComponent as NetWorthMobileChart } from 'assets/images/about/net-worth-mobile-chart.svg';
 import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
 import { ReactComponent as OwnerTwitterIcon } from 'assets/images/about/owner-twitter-icon.svg';
