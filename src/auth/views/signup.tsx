@@ -273,7 +273,7 @@ export const SignupMainSection = () => {
                             {props.errors.password === '409' ? (
                               <span>
                                 This email is already registered. Want to <Link to='/login'>login</Link> or
-                                <Link to='/forgot-password'>recover your password?</Link>
+                                <Link to='/forgot-password'> recover your password?</Link>
                               </span>
                             ) : (
                               props.errors.password
