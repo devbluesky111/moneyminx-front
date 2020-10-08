@@ -16,9 +16,16 @@ export const appRouteConstants = {
     ALLOCATION: '/allocation',
   },
 
+  settings: {
+    SETTINGS: '/settings',
+  },
+
+  networth: {
+    NET_WORTH: '/net-worth',
+  },
+
   web: {
     SECURITY: '/security',
-    NET_WORTH: '/net-worth',
   },
 
   misc: {
