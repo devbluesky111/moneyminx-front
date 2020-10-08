@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { fNumber } from 'common/number.helper';
+import ReactDatePicker from 'react-datepicker';
 import { MMPieChart } from 'common/components/pie-chart';
-import { Allocations, ChartData } from 'allocation/allocation.type';
+import useAllocation from 'allocation/hooks/useAllocation';
+import { SelectedAllocationProps } from 'allocation/allocation.type';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Calendar } from 'assets/images/allocation/calendar.svg';
 import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
@@ -10,12 +13,14 @@ import { ReactComponent as SettingsIcon } from 'assets/images/allocation/setting
 
 import AllocationLegend from './allocation-legend';
 
-interface SelectedAllocationProps {
-  allocations: Allocations;
-  chartData: ChartData;
-}
+export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter }) => {
+  const [date, setDate] = useState<Date | null>(null);
+  const { fetching, allocations, error, allocationChartData: chartData } = useAllocation(filter, date?.toISOString());
 
-export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ allocations, chartData }) => {
+  if (fetching || error || !allocations || !chartData) {
+    return <CircularSpinner />;
+  }
+
   const getTotal = (key: string) => {
     return chartData.find((datum) => datum.group === key);
   };
@@ -26,7 +31,15 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ allocat
         <div className='mm-allocation-overview__block--date'>
           June 30, 2020
           <span className='float-right'>
-            <Calendar />
+            <ReactDatePicker
+              selected={date}
+              customInput={<Calendar />}
+              dateFormat='MM/yyyy'
+              showMonthYearPicker
+              onChange={(val: Date) => {
+                setDate(val);
+              }}
+            />
           </span>
         </div>
         <div className='mm-allocation-overview__block--title'>Previous allocations</div>
@@ -40,8 +53,6 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ allocat
         <div className='allocation-content'>
           <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
             <MMPieChart chartData={chartData} />
-            {/* <AllocationChart className='mm-allocation-overview__block--chart' /> */}
-            {/* <AllocationLegend className='mm-allocation-overview__block--legend' /> */}
             <AllocationLegend chartData={chartData} />
           </div>
           <hr className='my-5' />

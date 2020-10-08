@@ -26,7 +26,7 @@ const Allocation: React.FC<AllocationProps> = () => {
     <div className='mm-setting mm-allocation'>
       <NavBarSection />
       <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
-      <AllocationOverview allocations={allocations} chartData={allocationChartData} />
+      <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
       <FooterSection />
     </div>
   );

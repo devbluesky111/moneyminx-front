@@ -2,7 +2,10 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 
 import { fNumber } from 'common/number.helper';
+import { useModal } from 'common/components/modal';
 import { MMPieChart } from 'common/components/pie-chart';
+import SettingModal from 'allocation/modal/setting-modal';
+import FieldChangeModal from 'allocation/modal/field-change-modal';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
@@ -13,11 +16,8 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
-import { useModal } from 'common/components/modal';
-import SettingModal from 'allocation/modal/setting-modal';
-import FieldChangeModal from 'allocation/modal/field-change-modal';
 
-const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData }) => {
+const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
   const chartSettingModal = useModal();
   const fieldChangeModal = useModal();
 
@@ -95,7 +95,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
           </div>
         </div>
 
-        <SelectedAllocations allocations={allocations} chartData={chartData} />
+        <SelectedAllocations filter={filter} />
 
         <div className='col-xl-4'>
           <div className='mm-allocation-overview__block'>

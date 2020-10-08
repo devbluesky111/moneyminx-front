@@ -4,7 +4,7 @@ import { getAllocations } from 'api/request.api';
 import { Allocations, ChartData } from 'allocation/allocation.type';
 import { AllocationsFilter } from 'allocation/allocation.enum';
 
-const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE) => {
+const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDate?: string) => {
   const [error, setError] = useState();
   const [fetching, setFetching] = useState<boolean>(false);
   const [allocations, setAllocations] = useState<Allocations>();
@@ -15,6 +15,7 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE) => {
       setFetching(true);
       const params = {
         filter,
+        forDate,
       };
 
       const { data, error: err } = await getAllocations(params);
@@ -36,7 +37,7 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE) => {
     };
 
     fetchAllocations();
-  }, [filter]);
+  }, [filter, forDate]);
 
   return { fetching, error, allocations, allocationChartData };
 };

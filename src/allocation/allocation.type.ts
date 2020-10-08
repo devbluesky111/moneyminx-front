@@ -1,4 +1,5 @@
 import { CurrencyOptions } from 'auth/enum/currency-options';
+
 import { AllocationsFilter } from './allocation.enum';
 
 export interface AllocationProps {}
@@ -34,6 +35,11 @@ export interface AllocationSubNavigationProps {
 }
 
 export interface AllocationOverviewProps {
-  allocations: Allocations;
   chartData: ChartData;
+  allocations: Allocations;
+  filter: AllocationsFilter;
+}
+
+export interface SelectedAllocationProps {
+  filter: AllocationsFilter;
 }
