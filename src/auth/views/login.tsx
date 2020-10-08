@@ -180,11 +180,7 @@ export const LoginMainSection = () => {
                               placeholder='Email'
                             />
                           </div>
-                          {hasError('email') ? (
-                            <div className='mt-2 feedback'>
-                              {props.errors.email}
-                            </div>
-                          ) : null}
+                          {hasError('email') ? <div className='mt-2 feedback'>{props.errors.email}</div> : null}
                         </div>
 
                         <div className='align-items-center'>
@@ -206,11 +202,7 @@ export const LoginMainSection = () => {
                               {visibilityIcon}
                             </span>
                           </div>
-                          {hasError('password') ? (
-                            <div className='mt-2 feedback'>
-                              {props.errors.password}
-                            </div>
-                          ) : null}
+                          {hasError('password') ? <div className='mt-2 feedback'>{props.errors.password}</div> : null}
                         </div>
 
                         <p>

@@ -51,7 +51,7 @@ function AppRoute() {
         <Route path={ACCOUNT}>
           <AccountRoute />
         </Route>
-    
+
         <Route path={ALLOCATION}>
           <AllocationRoute />
         </Route>
