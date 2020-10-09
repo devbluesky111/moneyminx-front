@@ -2,12 +2,15 @@
 
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+
+import useSize from 'common/hooks/useSize';
+import { BreakPoint } from 'app/app.constant';
 import WebsiteLayout from 'website/website.layout';
 import { fetchBlogs } from 'website/website.service';
 import { appRouteConstants } from 'app/app-route.constant';
-
 import HomeBlogImgOne from 'assets/images/home/home-blog-img1.png';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+
 import { ReactComponent as FeatureIconOne } from 'assets/images/home/feature-icon1.svg';
 import { ReactComponent as FeatureIconTwo } from 'assets/images/home/feature-icon2.svg';
 import { ReactComponent as FeatureIconSix } from 'assets/images/home/feature-icon6.svg';
@@ -22,7 +25,6 @@ import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-ado
 import { ReactComponent as PerformanceLegend } from 'assets/images/home/performance-legend.svg';
 import { ReactComponent as HomePerformanceChart } from 'assets/images/home/performance-chart.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
-
 
 const Home = () => {
   return (
@@ -51,7 +53,8 @@ export const HomeTopSection = () => {
           <div className='mm-home-left-banner'>
             <h1>The easiest way to track all of your investments, in one place</h1>
             <p className='text'>
-              Track your stocks, bonds, mutual funds, alternatives and much more all in one simple, accessible dashboard.
+              Track your stocks, bonds, mutual funds, alternatives and much more all in one simple, accessible
+              dashboard.
             </p>
             <Link to={appRouteConstants.auth.SIGNUP}>
               <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
@@ -82,7 +85,9 @@ export const HomeEarlyAdopterSection = () => {
       <div className=''>
         <div className='adopter-top-wrap'>
           <h3>Early Adopter Perks</h3>
-          <p>Money Minx early adopters get these awesome perks. <br /> Only available while we are in Beta.</p>
+          <p>
+            Money Minx early adopters get these awesome perks. <br /> Only available while we are in Beta.
+          </p>
         </div>
         <div className='row'>
           <div className='col-12 col-xl-4 my-3'>
@@ -102,7 +107,7 @@ export const HomeEarlyAdopterSection = () => {
               <p>
                 Get an early adopter badge that will go up in the community once we go live. This badge will never be
                 available again.
-                </p>
+              </p>
             </div>
           </div>
           <div className='col-12 col-xl-4 my-3'>
@@ -173,11 +178,15 @@ export const HomeFeatureSection = () => {
               <div className='feature-icon py-3'>
                 <FeatureIconSix />
               </div>
-              <div className=''><h2 className='py-3'>Income Projections <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span></h2></div>
+              <div className=''>
+                <h2 className='py-3'>
+                  Income Projections <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
+                </h2>
+              </div>
               <p>
                 Track which investments are paying interest, dividends or royalties and create an income projection
                 schedule
-                </p>
+              </p>
             </div>
           </div>
         </div>
@@ -187,6 +196,7 @@ export const HomeFeatureSection = () => {
 };
 
 export const HomeBlogSection = () => {
+  const { width } = useSize();
   const [blogs, setBlogs] = useState<any[]>();
   const [loading, setLoading] = useState<boolean>();
 
@@ -211,11 +221,8 @@ export const HomeBlogSection = () => {
       <div className='blog-content-left'>
         <h2>Learn about investing platforms and strategies</h2>
         <p>
-          <span className='block'>
-            Visit our blog to learn about alternative investing,
-          </span>
-            diversifying your
-            portfolio and crowdfunding.
+          <span className='block'>Visit our blog to learn about alternative investing,</span>
+          diversifying your portfolio and crowdfunding.
         </p>
       </div>
       <div className='home-list blog-list'>
@@ -239,9 +246,13 @@ export const HomeBlogSection = () => {
             span.innerHTML = blog?.excerpt?.rendered;
             const excerpt = span.textContent || span.innerText;
 
+            if (width <= BreakPoint.MD && index === blogs?.length - 1) {
+              return null;
+            }
+
             return (
-              <div className='col-md-6 col-xl-4'>
-                <div key={index}>
+              <div className='col-md-6 col-xl-4' key={index}>
+                <div>
                   <div className='mm-blog-details'>
                     <div className='blog-img mm-blog-img'>
                       <img alt={blog?.slug} src={blog?.jetpack_featured_media_url || HomeBlogImgOne} />
@@ -270,7 +281,6 @@ export const HomeBlogSection = () => {
         </div>
       </div>
     </div>
-
   );
 };
 
@@ -288,7 +298,7 @@ export const HomeNetWorthSection = () => {
               <p className='text'>
                 Easy to use dashboard of your investments, assets, liabilities and net worth from all of your accounts,
                 all in one modern, easy-to-use place.
-            </p>
+              </p>
             </div>
           </div>
           <div className='col-12 col-xl-7'>
