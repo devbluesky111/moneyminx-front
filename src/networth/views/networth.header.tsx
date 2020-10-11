@@ -25,7 +25,7 @@ const NetworthHeader: React.FC<NetworthHeaderProps> = ({ toggleMenu }) => {
           >
             <span className='navbar-toggler-icon' />
           </button>
-          <Link to='/' className='navbar-brand'>
+          <Link to='/net-worth' className='navbar-brand'>
             <img src={Logo} alt='Money Minx logo' />
           </Link>
           <div className='headtab'>
@@ -39,9 +39,7 @@ const NetworthHeader: React.FC<NetworthHeaderProps> = ({ toggleMenu }) => {
               Upgrade
             </button>
             <div className='badge-box'>
-              <Link to='#'>
                 <img src={ProBadge} alt='Pro badge' />
-              </Link>
             </div>
             <div className='btn-group'>
               <button type='button' className='profile-toggle' onClick={toggleMenu}>
