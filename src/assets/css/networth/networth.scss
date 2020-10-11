@@ -699,7 +699,7 @@ button:focus {
   font-weight: 500;
   font-size: 15px;
   color: $gray;
-  border: 1px solid rgba(150, 158, 172, 0.23);
+  border: 1px solid $grayOpacity24;
   border-radius: 4px;
   width: auto;
   height: 48px;
@@ -924,8 +924,7 @@ button:focus {
   color: $darkGray;
   padding: 15px 0;
   white-space: nowrap;
-  border: 0;
-  border-bottom: 1px solid rgba(150, 158, 172, 0.23);
+  border-bottom: 1px solid $grayOpacity24;
 }
 .table thead th.current-m,
 .table tbody td.current-m,
@@ -1129,7 +1128,11 @@ button:focus {
   padding: 20px;
 }
 .measure-box {
-  height: 90%;
+  height: 100%;
+
+  @media (min-width: $md) {
+    height: 90%;
+  }
 }
 .measure-box h2 {
   font-weight: 500;
@@ -1162,21 +1165,74 @@ button:focus {
   margin-bottom: 60px;
   position: relative;
   height: 78%;
+  background-size: contain;
+
+  p {
+    font-weight: 600;
+    font-size: 16px;
+    color: $gray;
+  }
+
+  .mm-btn-primary {
+    bottom: -60px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: block;
+    width: 100%;
+    height: 40px;
+
+    @media (min-width: $sm) and (max-width: $md) {
+      position: initial;
+      max-width: 236px;
+      margin: auto;
+    }
+  }
+
+  @media (max-width: 575px) {
+    display: block;
+    min-height: inherit;
+    padding: 15px;
+    position: initial;
+    height: 80%;
+
+    .mm-btn-primary {
+      position: relative;
+      width: 100%;
+      height: 40px;
+      display: inline-block;
+      margin: 0 auto;
+      bottom: 0;
+    }
+
+    p {
+      max-width: 100%;
+    }
+
+    .btn-blue {
+      margin-top: 20px;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 991px) {
+      padding: 30px 25px 20px 25px;
+      margin-bottom: 0;
+      min-height: 110px;
+      -webkit-align-items: flex-start;
+      align-items: flex-start;
+
+    p {
+      max-width: 270px;
+      margin-right: auto;
+    }
+    .btn-blue {
+      position: static;
+      max-width: 230px;
+    }
+  }
 }
-.measure-box .bgbox p {
-  font-weight: 600;
-  font-size: 16px;
-  color: $gray;
-}
-.measure-box .mm-btn-primary {
-  bottom: -60px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: block;
-  width: 100%;
-  height: 40px;
-}
+
 .btn-blue {
   background: $purple;
   border-radius: 4px;
@@ -1533,7 +1589,7 @@ footer p {
   color: $gray;
 }
 .foot-link li a:hover {
-  color: $black;
+  color: $darkGray;
 }
 
 /** =============================== **/
@@ -1589,13 +1645,6 @@ footer p {
     display: -webkit-flex;
     display: flex;
   }
-  .measure-box .bgbox {
-    padding: 30px 25px 10px;
-    margin-bottom: 0;
-    min-height: 110px;
-    -webkit-align-items: flex-start;
-    align-items: flex-start;
-  }
   .mb-40 {
     margin-bottom: 30px;
   }
@@ -1611,14 +1660,6 @@ footer p {
   footer p,
   .foot-link li a {
     font-size: 14px;
-  }
-  .measure-box .bgbox p {
-    max-width: 270px;
-    margin-right: auto;
-  }
-  .measure-box .bgbox .btn-blue {
-    position: static;
-    max-width: 230px;
   }
   .content-wraper .container {
     padding-left: 20px;
@@ -1766,7 +1807,7 @@ footer p {
     display: flex;
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
-    border-bottom: 1px solid rgba(150, 158, 172, 0.23);
+    border-bottom: 1px solid $grayOpacity24;
     padding-bottom: 10px;
   }
   .table-holder .table tfoot tr {
@@ -1874,18 +1915,6 @@ footer p {
 }
 
 @media (max-width: 575px) {
-  .measure-box .bgbox {
-    display: block;
-    min-height: inherit;
-    padding: 15px;
-  }
-  .measure-box .bgbox p {
-    max-width: 100%;
-  }
-  .measure-box .bgbox .btn-blue {
-    margin-top: 20px;
-    max-width: 100%;
-  }
   .mb-40 {
     margin-bottom: 20px;
   }

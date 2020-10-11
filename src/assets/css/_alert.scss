@@ -4,7 +4,7 @@
 
 .inline-alert:not(.hidden) {
   top: 1rem;
-  left: 40%;
+  left: 12%;
   z-index: 99;
   display: flex;
   color: $white;
@@ -16,6 +16,10 @@
   box-shadow: 0 4px 8px $pinkShadow30;
   font-size: 0.9375rem;
   height: 42px;
+
+  @media (min-width: $md) {
+    left: 40%;
+  }
 
   button {
     margin-left: 2rem;
