@@ -240,6 +240,11 @@ button:focus {
   display: -webkit-flex;
   display: flex;
   height: 100%;
+  padding-bottom: 16px;
+
+  @media (min-width: $md) {
+    padding-bottom: 0;
+  }
 }
 
 .upgrader-btn {
@@ -515,8 +520,8 @@ button:focus {
     padding: 0;
     border: 0;
     background-color: transparent;
-    font-weight: 500;
-    font-size: 1rem;
+    font-weight: 400;
+    font-size: 0.9375rem;
     color: $gray;
 
     &:hover {
@@ -1267,7 +1272,13 @@ button:focus {
   -webkit-flex: 0 0 180px;
   flex: 0 0 180px;
   max-width: 180px;
-  padding-top: 12px;
+  padding-top: 16px;
+  border-top: 1px solid $grayOpacity10;
+
+  @media (min-width: $sm) {
+    padding-top: 12px;
+    border-top: none;
+  }
 }
 .graphbox ul li span {
   font-weight: 300;
@@ -1897,9 +1908,6 @@ footer p {
   }
   .mob-btm .ct-box.padd-20 {
     padding: 20px;
-  }
-  .download-btn span {
-    display: none;
   }
   .money-minx-header .navbar-brand {
     width: 32px;

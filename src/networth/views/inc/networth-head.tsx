@@ -71,7 +71,7 @@ const NetworthHead = () => {
         <div className='right-box'>
           <button type='button' className='download-btn'>
             <DownloadExcel />
-            <span>Download CSV</span>
+            <span className='sm-hide'>Download</span> <span>CSV</span>
           </button>
         </div>
       </div>
