@@ -12,7 +12,11 @@ import Message from './inc/message';
 import AuthFooter from './auth.footer';
 
 const ForgotPassword = () => {
-  return <ForgotPasswordMainSection />;
+  return (
+    <div className='auth-wrapper'>
+      <ForgotPasswordMainSection />;
+    </div>
+  );
 };
 
 export default ForgotPassword;
@@ -51,16 +55,16 @@ export const ForgotPasswordMainSection = () => {
               <div className='guide-bottom'>
                 <h4>Serious about security</h4>
                 <div className='guide-icon-wrap'>
-                <span className='locked-icon'>
-                  <LoginLockIcon />
-                </span>
+                  <span className='locked-icon'>
+                    <LoginLockIcon />
+                  </span>
                   <p>The security of your information is our top priority</p>
                 </div>
                 <h4>Trusted by investors</h4>
                 <div className='guide-icon-wrap'>
-                <span className='shield-icon'>
-                  <LoginShieldIcon />
-                </span>
+                  <span className='shield-icon'>
+                    <LoginShieldIcon />
+                  </span>
                   <p>Investors from all over the world are using Money Minx</p>
                 </div>
               </div>
@@ -70,7 +74,7 @@ export const ForgotPasswordMainSection = () => {
           <div className='bg-white credentials-wrapper'>
             <div className='credentials-content'>
               <div className='logo-img-wrapper'>
-                <LogoImg className='auth-logo'/>
+                <LogoImg className='auth-logo' />
               </div>
               <h2>Forgot Password?</h2>
               <p>Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
@@ -108,14 +112,13 @@ export const ForgotPasswordMainSection = () => {
                             onBlur={props.handleBlur}
                           />
                         </div>
-                        {props.errors.email && (
-                          <div className='ml-2 mt-1 mt-md-3 feedback'>{props.errors.email}</div>
-                        )}
+                        {props.errors.email && <div className='ml-2 mt-1 mt-md-3 feedback'>{props.errors.email}</div>}
                       </div>
                       <button
                         className='mm-btn-animate mm-btn-primary'
                         type='submit'
-                        disabled={!props.isValid || props.isSubmitting}>
+                        disabled={!props.isValid || props.isSubmitting}
+                      >
                         Reset Password
                       </button>
                     </form>

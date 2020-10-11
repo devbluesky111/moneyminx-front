@@ -47,10 +47,6 @@ a {
   margin-right: 120px;
 }
 
-.app-wrapper {
-  overflow: hidden;
-}
-
 .mm-container-right {
   margin-left: 120px;
 }
@@ -161,7 +157,8 @@ a {
   color: $darkGray;
   width: 100%;
 
-  &:active, &:focus {
+  &:active,
+  &:focus {
     border: 1px solid $gray;
   }
 
@@ -169,7 +166,6 @@ a {
     color: $gray;
   }
 }
-
 
 // message wrapper
 .message-container {
@@ -255,7 +251,7 @@ a {
   background-position: top right;
   background-repeat: no-repeat;
 
-  @media ( max-width: $md + 400) {
+  @media (max-width: $md + 400) {
     background-size: 100%;
   }
 }
@@ -441,7 +437,7 @@ hr {
   font-weight: 500;
   border-radius: 6px;
 
-  @media (min-width: $md){
+  @media (min-width: $md) {
     font-size: 1rem;
   }
 }
