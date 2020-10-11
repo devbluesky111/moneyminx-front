@@ -854,7 +854,7 @@ button:focus {
   background: $white;
   box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border-radius: 6px;
-  padding: 25px 40px;
+  padding: 25px 40px 16px 40px;
   height: 100%;
   position: relative;
 }
@@ -925,6 +925,7 @@ button:focus {
   padding: 15px 0;
   white-space: nowrap;
   border-bottom: 1px solid $grayOpacity24;
+  border-top: none;
 }
 .table thead th.current-m,
 .table tbody td.current-m,
