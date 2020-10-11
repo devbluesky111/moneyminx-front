@@ -24,18 +24,20 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth }) => {
           bottom: 5,
         }}
       >
-        <XAxis dataKey='interval' tickSize={0} tickMargin={10} />
+        <XAxis dataKey='interval' tickSize={0} tickMargin={10} tick={{fontSize: 14}} stroke='#969eac'/>
         <YAxis
           orientation='right'
           minTickGap={10}
           axisLine={false}
           tickSize={0}
           tickMargin={10}
+          tick={{fontSize: 14}}
+          stroke='#969eac'
           tickFormatter={(tick) => `$${tick}m`}
         />
-        <Bar dataKey='investmentAssets' fill='#235EE7' />
-        <Bar dataKey='liabilities' fill='#29CFD6' />
-        <Bar dataKey='otherAssets' fill='#D3365F' />
+        <Bar dataKey='investmentAssets' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]}/>
+        <Bar dataKey='liabilities' barSize={10} fill='#29CFD6' radius={[2, 2, 0, 0]}/>
+        <Bar dataKey='otherAssets' barSize={10} fill='#D3365F' radius={[2, 2, 0, 0]}/>
       </BarChart>
     </div>
   );
