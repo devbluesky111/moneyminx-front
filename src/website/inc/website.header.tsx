@@ -17,9 +17,11 @@ const WebsiteHeader = () => {
       setExpand(undefined);
       return;
     }
+
     if (width > 605 && width <= 768) {
       setExpand('menus');
     }
+
     if (width <= 604) {
       setExpand('all');
     }
