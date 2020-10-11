@@ -1,6 +1,7 @@
 /** include scss **/
 @import 'datatables';
 @import '../datepicker/datepicker';
+@import '../variables';
 
 /** Custom CSS **/
 html,
@@ -192,8 +193,10 @@ button:focus {
   margin-right: 0;
   padding: 12px 0;
 }
-.money-minx-header .navbar-brand img {
+.money-minx-header .navbar-brand {
+  img, svg {
   max-width: 110px;
+  }
 }
 .money-minx-header .headtab {
   margin: 0;
@@ -355,7 +358,7 @@ button:focus {
 .profilemenu ul + ul {
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid rgba(150, 158, 172, 0.24);
+  border-top: 1px solid $grayOpacity;
 }
 .profilemenu ul li a {
   font-weight: 500;
@@ -586,7 +589,7 @@ button:focus {
   background: #ec5555;
 }
 .dropdown-box ul.success li:before {
-  background: #10c273;
+  background: $green;
 }
 .dropdown-box ul li h5 {
   font-weight: 600;
@@ -615,7 +618,7 @@ button:focus {
 .dropdown-box ul + ul {
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid rgba(150, 158, 172, 0.24);
+  border-top: 1px solid $grayOpacity;
 }
 .content-wraper {
   padding: 15px 0;
@@ -901,7 +904,7 @@ button:focus {
 .table thead th.current-m,
 .table tbody td.current-m,
 .table tfoot td.current-m {
-  color: #10c273;
+  color: $green;
 }
 .table thead th:not(:first-child) {
   padding-left: 10px;

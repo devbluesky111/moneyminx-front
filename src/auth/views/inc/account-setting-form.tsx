@@ -381,7 +381,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                   />
                 </li>
                 <li className={hc('currentMarketValue')}>
-                  <span className='form-subheading'>What is the current market value?</span>
+                  <span className='form-subheading'>Current market value?</span>
                   <Form.Control
                     onChange={handleChange}
                     type='number'
@@ -425,7 +425,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             <div className='account-type'>
               <ul className='account-type-list'>
                 <li className={hc('businessStartDate')}>
-                  <span className='form-subheading'>When did you start or buy this business?</span>
+                  <span className='form-subheading'>Date Established</span>
                   <ReactDatePicker
                     name='businessStartDate'
                     selected={new Date(values.businessStartDate)}
@@ -516,10 +516,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <div className={`input-wrap performance flex-box ${hc('employerMatchContribution')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>Does your employer match your contributions?</span>
-                    <span>
-                      <InfoIcon />
-                    </span>
+                    <span className='form-subheading'>Does your employer match contributions? <InfoIcon className='sm-hide'/></span>
                   </p>
                 </div>
                 <div className='right-input radio'>
@@ -553,15 +550,15 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                   </p>
                 </div>
                 <div className='right-input'>
-                  <span className='symbol-wrap'>
+                  <div className='form-field-group'>
                     <Form.Control
                       type='number'
                       name='employerMatch'
                       onChange={handleChange}
-                      placeholder='Employer Match'
+                      placeholder='50'
                     />
-                    <span className='symbol-icon'>%</span>
-                  </span>
+                    <span className='input-add-on'>%</span>
+                  </div>
                 </div>
               </div>
 
@@ -569,78 +566,81 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 <div className='left-input employer-match'>
                   <p>
                     <span className='form-subheading'>Employer match limit</span>
-                    <input
-                      type='radio'
-                      onChange={handleChange}
-                      value={EmployerMatchLimitOptions.AMOUNT}
-                      defaultChecked={false}
-                      name='employerMatchLimitIn'
-                      checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
-                      aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
-                    />
-                    <label>$</label>
-                    <input
-                      type='radio'
-                      onChange={handleChange}
-                      value={EmployerMatchLimitOptions.PERCENTAGE}
-                      defaultChecked={false}
-                      name='employerMatchLimitIn'
-                      checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
-                      aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
-                    />
-                    <label>%</label>
+                    <span className='employer-match-limits'>
+                      <input
+                        type='radio'
+                        onChange={handleChange}
+                        value={EmployerMatchLimitOptions.AMOUNT}
+                        defaultChecked={false}
+                        name='employerMatchLimitIn'
+                        checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
+                        aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
+                      />
+                      <label>$</label>
+                      <input
+                        type='radio'
+                        onChange={handleChange}
+                        value={EmployerMatchLimitOptions.PERCENTAGE}
+                        defaultChecked={false}
+                        name='employerMatchLimitIn'
+                        checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
+                        aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
+                      />
+                      <label>%</label>
+                    </span>
+
                   </p>
                 </div>
                 <div className='right-input'>
-                  <span className='symbol-wrap'>
+                  <div className='form-field-group'>
                     <Form.Control
                       type='number'
                       name='employerMatchLimit'
                       onChange={handleChange}
-                      placeholder='Employer Match'
+                      placeholder='5'
                       value={values.employerMatchLimit}
                     />
-                    <span className='symbol-icon'>$</span>
-                  </span>
+                    <span className='input-add-on'>$</span>
+                  </div>
                 </div>
               </div>
 
               <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>Include employer match in performance?</span>
-                    <InfoIcon />
+                    <span className='form-subheading'>Include employer match in performance? <InfoIcon className='sm-hide'/></span>
                   </p>
                 </div>
                 <div className='right-input radio'>
-                  <input
-                    type='radio'
-                    value='yes'
-                    defaultChecked={false}
-                    onChange={handleChange}
-                    name='includeEmployerMatch'
-                    checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
-                    aria-checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
-                  />
-                  <label>Yes</label>
-                  <input
-                    type='radio'
-                    value='no'
-                    defaultChecked={false}
-                    onChange={handleChange}
-                    name='includeEmployerMatch'
-                    checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
-                    aria-checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
-                  />
-                  <label>No</label>
+                  <div className='yes-no-radios'>
+                    <input
+                      type='radio'
+                      value='yes'
+                      defaultChecked={false}
+                      onChange={handleChange}
+                      name='includeEmployerMatch'
+                      checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
+                      aria-checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
+                    />
+                    <label>Yes</label>
+                    <input
+                      type='radio'
+                      value='no'
+                      defaultChecked={false}
+                      onChange={handleChange}
+                      name='includeEmployerMatch'
+                      checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
+                      aria-checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
+                    />
+                    <label>No</label>
+                  </div>
                 </div>
               </div>
 
               <div className={`input-wrap performance flex-box ${hc('calculateReturns')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>Calculate Returns?</span>
-                    <InfoIcon />
+                    <span className='form-subheading'>Calculate Returns? <InfoIcon /></span>
                   </p>
                 </div>
                 <div className='right-input radio'>
@@ -673,7 +673,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 <li className={`w-100 ${hc('separateLoanBalance')}`}>
                   <p>
                     <span className='form-subheading'>How do you want to handle your 401k loan?</span>
-                    <span className='mm-label b-primary-light w-100 d-inline'>Coming Soon!</span>
+                    <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
                   </p>
                   <Form.Control
                     as='select'
@@ -700,89 +700,38 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             </div>
 
             <div className={`estimated-annual-return ${hc('estimatedAnnualReturns')}`}>
-              <div className='estimated-top-content flex-box'>
-                <span className='form-subheading'>Estimated annual returns</span>
-                <span className='form-subheading-right'>This will be used to show projections in your charts.</span>
+              <span className='form-subheading'>Estimated annual returns</span>
+              <span className='sub-label'>This will be used to show projections on your charts.</span>
+
+              <div className='form-field-group single-field'>
+                <Form.Control
+                onChange={handleChange}
+                type='number'
+                placeholder='5'
+                name='estimatedAnnualReturns'
+                value={values.estimatedAnnualReturns}
+              />
+                <span className="input-add-on">%</span>
               </div>
 
-              <p>
-                <input
-                  type='radio'
-                  value='no'
-                  disabled
-                  defaultChecked={false}
-                  onChange={handleChange}
-                  name='estimatedAnnualReturns'
-                  checked={values.estimatedAnnualReturns === 'no' || values.estimatedAnnualReturns === false}
-                  aria-checked={values.estimatedAnnualReturns === 'no' || values.estimatedAnnualReturns === false}
-                />
-                <label>
-                  Use a calculation based on historical returns{' '}
-                  <span className='mm-label b-primary-light w-100 d-inline ml-3'>Coming Soon!</span>
-                </label>
-              </p>
-              <p className='flex-box'>
-                <span className='estimate-left'>
-                  <input
-                    type='radio'
-                    value='own'
-                    disabled
-                    defaultChecked={true}
-                    name='estimatedAnnualReturnType'
-                    checked={true}
-                    aria-checked={true}
-                  />
-                  <label>Use my own estimate</label>
-                </span>
-                <span className='estimate-right'>
-                  <Form.Control
-                    onChange={handleChange}
-                    type='number'
-                    placeholder='5%'
-                    name='estimatedAnnualReturns'
-                    value={values.estimatedAnnualReturns}
-                  />
-                </span>
-              </p>
             </div>
 
             {/* Estimated principal paydown */}
             <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReduction')}`}>
-              <div className='estimated-top-content flex-box'>
-                <span className='form-subheading mr-0'>Estimated principal paydown</span>
-                <span className='form-subheading-right'>This will be used to show projections in your charts.</span>
-              </div>
+                <span className='form-subheading'>Estimated principal paydown</span>
+                <span className='sub-label'>This will be used to show projections on your charts.</span>
 
-              <p>
-                <input type='radio' value='no' disabled defaultChecked={false} checked={false} aria-checked={false} />
-                <label>
-                  Use a calculation based on historical returns
-                  <span className='mm-label b-primary-light w-100 d-inline ml-3'>Coming Soon!</span>
-                </label>
-              </p>
-              <p className='flex-box'>
-                <span className='estimate-left'>
-                  <input
-                    type='radio'
-                    value='own'
-                    disabled
-                    defaultChecked={true}
-                    name='estimatedAnnualPrincipalReductionType'
-                    checked={true}
-                    aria-checked={true}
-                  />
-                  <label>Use my own estimate</label>
-                </span>
-                <span className='estimate-right'>
+                <div className='form-field-group single-field'>
                   <Form.Control
                     onChange={handleChange}
                     type='number'
-                    placeholder='12%'
+                    placeholder='5'
                     name='estimatedAnnualPrincipalReduction'
                     value={values.estimatedAnnualPrincipalReduction}
                   />
-                </span>
-              </p>
+                  <span className="input-add-on">%</span>
+                </div>
+
             </div>
 
             {/* Current value */}
@@ -933,13 +882,13 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                   <div className='col-12 col-md-8'>
                     <div className='d-flex justify-content-start'>
                       <button
-                        className='bg-white cancel-btn mm-btn-primary-outline mr-2 estimate-annual-block__btn estimate-annual-block__btn-cancel'
+                        className='mm-btn-signup btn-outline-primary mm-btn-animate estimate-annual-block__btn-cancel'
                         type='button'
                       >
                         {isFromAccount ? 'Cancel' : 'Back'}
                       </button>
                       <button
-                        className='btn btn-primary ml-2 estimate-annual-block__btn estimate-annual-block__btn-save'
+                        className='mm-btn-animate mm-btn-primary estimate-annual-block__btn-save'
                         type='submit'
                       >
                         {isFromAccount ? 'Save' : 'Next'}

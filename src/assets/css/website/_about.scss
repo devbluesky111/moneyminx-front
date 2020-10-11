@@ -16,8 +16,12 @@
   h2 {
     padding-bottom: 1rem;
     font-weight: 300;
-    font-size: 3.5rem;
+    font-size: 2.25rem;
     line-height: 106%;
+
+    @media (min-width: $md) {
+      font-size: 3.5rem;
+    }
   }
 
   p {
@@ -136,7 +140,7 @@ ul.account-list li {
 
 ul.owner-list li {
   list-style: none;
-  width: 44%;
+  width: 50%;
 }
 
 ul.owner-list {
@@ -429,17 +433,5 @@ span.twitter-icon {
       margin-right: -120px;
       float: right;
     }
-  }
-}
-
-.mm-sm-hide {
-  @media (max-width: $md - 1) {
-    display: none;
-  }
-}
-
-.mm-md-hide {
-  @media (min-width: $md) {
-    display: none;
   }
 }

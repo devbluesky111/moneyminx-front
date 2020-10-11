@@ -54,20 +54,25 @@ span.manual-heading {
   position: relative;
 }
 span.zillow-img {
-  position: absolute;
-  top: 11px;
-  right: 0;
-
-  @media (max-width: $sm) {
-      position: static;
-      display: block;
-    }
+  position: inherit;
+  display: block;
 }
 .subscription-bottom-text.connect-account {
   padding: 8px 95px 15px 171px;
 }
 .account-mobile-content {
   display: block;
+
+  .step {
+    font-size: 0.68rem;
+    font-weight: 600;
+  }
+
+  p {
+    color: $primary;
+    line-height: 98%;
+    text-align: center;
+  }
 
   @media (min-width: $med) {
       display: none;
@@ -121,15 +126,6 @@ span.zillow-img {
   }
   .subscription-bottom-text.connect-account {
     display: block;
-  }
-  .account-mobile-content .step {
-    font-size: 0.68rem;
-    font-weight: 600;
-  }
-  .account-mobile-content p {
-    color: $primary;
-    line-height: 98%;
-    text-align: center;
   }
 }
 
@@ -196,4 +192,8 @@ span.zillow-img {
 }
 .main-table-wrapper {
   position: relative;
+}
+.action-next-step {
+  color: $gray;
+  opacity: 0.40;
 }

@@ -31,7 +31,7 @@ export const PricingTopSection = () => {
               No credit card needed, sign up now and use Money Minx free for 30 days.
             </p>
 
-            <button className='mm-btn-animate bg-primary mm-btn-primary-outline'>Get Started</button>
+            <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
             <p className='info-text'>No credit card needed.</p>
           </div>
         </div>
@@ -70,7 +70,7 @@ export const PricingTable = () => {
             <input type="radio" id="mm-plan-year" value="annually"  name='mm-radio-time-interval' checked={type==='yearly'} />
             <label className="labels" htmlFor="mm-plan-year" onClick={() => setType('yearly')}>Annually</label>
             <span className='save-text' />
-            <div className="mm-radion-bg"></div>
+            <div className="mm-radio-bg"></div>
           </div>
         </div>
       </div>

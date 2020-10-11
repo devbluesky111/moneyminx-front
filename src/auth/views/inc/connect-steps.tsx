@@ -10,7 +10,7 @@ export default ConnectAccountSteps;
 export const ConnectAccountStepsSection = () => {
   return (
     <div className='row'>
-      <div className='subscription-bottom-text connect-account'>
+      <div className='action-overlay'>
         <div className='subs-content two'>
           <div className='account-mobile-content'>
             <p>
@@ -30,13 +30,13 @@ export const ConnectAccountStepsSection = () => {
               <div className='step-icon icon-two'>
                 <SelectedIcon />
               </div>
-              <span className='connect-text'>Connect banks </span>
+              <span className='connect-text'>Connect accounts </span>
             </div>
             <div className='step-content right-border'>
               <div className='step-icon icon-three'>
                 <CircleIcon />
               </div>
-              <span className='connect-text text-right'>Link accounts</span>
+              <span className='connect-text text-right action-next-step'>Link accounts</span>
             </div>
           </div>
         </div>

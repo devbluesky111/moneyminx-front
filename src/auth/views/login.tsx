@@ -11,7 +11,6 @@ import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
 import { appRouteConstants } from 'app/app-route.constant';
-import { loginValidationSchema } from 'auth/auth.validation';
 import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { EMAIL_IS_EMPTY, PWD_IS_EMPTY } from 'lang/en/validation.json';
@@ -72,6 +71,7 @@ export const LoginMainSection = () => {
 
   const handleFacebookAssociation = async () => {
     const { error } = await associateFacebookUser({ dispatch, token: fbToken });
+
     if (error) {
       toast('Association Failed', { type: 'error' });
     } else {
@@ -86,9 +86,9 @@ export const LoginMainSection = () => {
       <div className=''>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-              <Link to='/'>
-                <LogoImg className='icon auth-logo' />
-              </Link>
+            <Link to='/'>
+              <LogoImg className='icon auth-logo' />
+            </Link>
 
             <div className='auth-left-content'>
               <h1>Three easy steps to get started with Money Minx</h1>
@@ -98,20 +98,20 @@ export const LoginMainSection = () => {
                 <li>Let Money Minx do the rest</li>
               </ul>
               <div className='guide-bottom'>
-              <h4>Serious about security</h4>
-              <div className='guide-icon-wrap'>
-                <span className='locked-icon'>
-                  <LoginLockIcon />
-                </span>
-                <p>The security of your information is our top priority</p>
-              </div>
-              <h4>Trusted by investors</h4>
-              <div className='guide-icon-wrap'>
-                <span className='shield-icon'>
-                  <LoginShieldIcon />
-                </span>
-                <p>Investors from all over the world are using Money Minx</p>
-              </div>
+                <h4>Serious about security</h4>
+                <div className='guide-icon-wrap'>
+                  <span className='locked-icon'>
+                    <LoginLockIcon />
+                  </span>
+                  <p>The security of your information is our top priority</p>
+                </div>
+                <h4>Trusted by investors</h4>
+                <div className='guide-icon-wrap'>
+                  <span className='shield-icon'>
+                    <LoginShieldIcon />
+                  </span>
+                  <p>Investors from all over the world are using Money Minx</p>
+                </div>
               </div>
             </div>
           </div>
@@ -119,7 +119,7 @@ export const LoginMainSection = () => {
           <div className='bg-white credentials-wrapper'>
             <div className='credentials-content'>
               <div className='logo-img-wrapper'>
-                <LogoImg className='auth-logo'/>
+                <LogoImg className='auth-logo' />
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
@@ -127,7 +127,6 @@ export const LoginMainSection = () => {
                 <Formik
                   validateOnChange={false}
                   initialValues={{ email: '', password: '' }}
-                  validationSchema={loginValidationSchema}
                   onSubmit={async (values, actions) => {
                     const isEmailEmpty = isEmpty(values.email);
                     const isPasswordEmpty = isEmpty(values.password);
@@ -148,15 +147,15 @@ export const LoginMainSection = () => {
 
                     if (!error) {
                       toast('Sign in Success', { type: 'success' });
-                      history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
-                    } else {
-                      actions.setFieldError(
-                        'password',
-                        error.message && typeof error.message !== 'object'
-                          ? error.message
-                          : 'Please enter valid credentials'
-                      );
+                      return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                     }
+
+                    actions.setFieldError(
+                      'password',
+                      error.message && typeof error.message !== 'object'
+                        ? error.message
+                        : 'Please enter valid credentials'
+                    );
                   }}
                 >
                   {(props) => {
@@ -169,7 +168,7 @@ export const LoginMainSection = () => {
 
                     return (
                       <form onSubmit={props.handleSubmit}>
-                        <div className='d-md-flex align-items-start input-wrapper'>
+                        <div className='align-items-start input-wrapper'>
                           <div className='email-wrap'>
                             <input
                               type='email'
@@ -182,13 +181,13 @@ export const LoginMainSection = () => {
                             />
                           </div>
                           {hasError('email') ? (
-                            <div className='ml-2 mt-1 mt-md-3 text-right feedback text-nowrap'>
+                            <div className='mt-2 feedback'>
                               {props.errors.email}
                             </div>
                           ) : null}
                         </div>
 
-                        <div className='d-md-flex align-items-center'>
+                        <div className='align-items-center'>
                           <div className='password-wrap'>
                             <input
                               name='password'
@@ -208,14 +207,14 @@ export const LoginMainSection = () => {
                             </span>
                           </div>
                           {hasError('password') ? (
-                            <div className='ml-2 mt-2 mt-md-0 text-right feedback text-nowrap'>
+                            <div className='mt-2 feedback'>
                               {props.errors.password}
                             </div>
                           ) : null}
                         </div>
 
                         <p>
-                          <span className='forgot-pass'>
+                          <span className='forgot-pass purple-links'>
                             <Link to='/auth/forgot-password'>Forgot Password?</Link>
                           </span>
                         </p>
@@ -240,7 +239,7 @@ export const LoginMainSection = () => {
                         reAuthenticate={true}
                         callback={responseFacebook}
                         scope='public_profile,email'
-                        icon={<LoginFacebookIcon className='social-login-fb'/>}
+                        icon={<LoginFacebookIcon className='social-login-fb' />}
                         appId={env.FACEBOOK_APP_ID || ''}
                         buttonStyle={{
                           background: 'transparent',
@@ -253,7 +252,10 @@ export const LoginMainSection = () => {
 
                 <p>
                   <div className='auth-end-element'>
-                    Don’t have an account? <Link to='/signup' className='purple-links'>Sign Up</Link>
+                    Don’t have an account?{' '}
+                    <Link to='/signup' className='purple-links'>
+                      Sign Up
+                    </Link>
                   </div>
                 </p>
               </div>

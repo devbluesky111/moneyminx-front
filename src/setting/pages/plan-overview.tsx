@@ -79,7 +79,7 @@ export const PlanOverview = () => {
             <label className="labels" htmlFor="mm-plan-month" onClick={() => setType('month')}>Monthly</label>
             <input type="radio" id="mm-plan-year" value="annually"  name='mm-radio-time-interval' checked={type==='year'} />
             <label className="labels" htmlFor="mm-plan-year" onClick={() => setType('year')}>Annually</label>
-            <div className="mm-radion-bg"></div>
+            <div className="mm-radio-bg"></div>
           </div>
       </div>
 

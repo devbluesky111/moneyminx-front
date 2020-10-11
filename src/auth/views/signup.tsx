@@ -56,7 +56,7 @@ export const SignupMainSection = () => {
   const getValidationText = () => {
     if (validator < 3) {
       return {
-        text: 'Weak, please choose another',
+        text: 'Weak',
         classNames: 'text-danger ',
       };
     }
@@ -243,7 +243,7 @@ export const SignupMainSection = () => {
                               placeholder='Email'
                             />
                           </div>
-                          {props.errors.email && <div className='text-right mt-2 feedback'>{props.errors.email}</div>}
+                          {props.errors.email && <div className='mt-2 feedback'>{props.errors.email}</div>}
                         </div>
                         <div className='d-md-flex align-items-center'>
                           <div className='password-wrap'>
@@ -262,18 +262,18 @@ export const SignupMainSection = () => {
                           </div>
                           {props.values.password ? (
                             <div
-                              className={`ml-2 mt-2 mt-md-0 text-right text-nowrap ${getValidationText().classNames}`}
+                              className={`ml-2 mt-2 mt-md-0 ${getValidationText().classNames}`}
                             >
                               {getValidationText().text}
                             </div>
                           ) : null}
                         </div>
                         {props.errors.password && (
-                          <div className='feedback mt-2 text-right'>
+                          <div className='feedback mt-2'>
                             {props.errors.password === '409' ? (
                               <span>
                                 This email is already registered. Want to <Link to='/login'>login</Link> or
-                                <Link to='/forgot-password'>recover your password?</Link>
+                                <Link to='/forgot-password'> recover your password?</Link>
                               </span>
                             ) : (
                               props.errors.password
@@ -285,7 +285,7 @@ export const SignupMainSection = () => {
                           <span className='checkbox-item'>
                             <label className='check-box'>
                               I accept the{' '}
-                              <a href='/terms' target='_blank'>
+                              <a href='/terms' target='_blank' className='purple-links'>
                                 Terms of Service
                               </a>
                               <input
@@ -320,7 +320,7 @@ export const SignupMainSection = () => {
                         </div>
 
                         {props.errors.termsAccepted && (
-                          <div className='feedback mb-4 text-right'>{props.errors.termsAccepted}</div>
+                          <div className='feedback mb-4'>{props.errors.termsAccepted}</div>
                         )}
 
                         <button className='mm-btn-animate mm-btn-primary' type='submit'>

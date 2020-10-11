@@ -7,8 +7,9 @@ a {
   border-radius: 6px;
   padding: 17px 42px 15px;
   border-left: 4px solid $redAlert;
-  width: 797px;
-  margin: auto;
+  width: 100%;
+  margin-left: 15px;
+  margin-right: 15px;
   margin-bottom: 65px;
 
   max-width: 100%;
@@ -19,9 +20,11 @@ a {
 }
 .subs-ended-msg-box h4 {
   font-size: 1.25rem;
+  font-weight: 600;
 }
 .subs-ended-msg-box p {
-  font-size: 0.87rem;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 span.warning-icon {
   float: right;
@@ -32,7 +35,7 @@ span.warning-icon {
 }
 .subscription-account-wrap {
   display: table;
-  width: 797px;
+  width: 100%;
   margin: auto;
   max-width: 100%;
 }
@@ -122,6 +125,7 @@ ul.subscribed-list li:last-child {
   border-radius: 6px;
   padding: 9px;
   margin-top: 9px;
+  margin-bottom: 9px;
   outline: none;
   border: none;
 }
@@ -143,7 +147,7 @@ ul.subscribed-list li:last-child {
 }
 .subs-content.four {
   display: table-cell;
-  width: 23%;
+  width: 10%;
   vertical-align: middle;
 }
 .subs-content.three {
@@ -153,8 +157,9 @@ ul.subscribed-list li:last-child {
 }
 .subs-content.two {
   display: table-cell;
-  width: 15%;
+  width: 40%;
   vertical-align: middle;
+  max-width: 400px;
 }
 .subs-content.one {
   display: table-cell;
@@ -227,5 +232,13 @@ ul.subscribed-list li:last-child {
   }
   .subscription-bottom-text.positive .subs-content.three {
     display: none;
+  }
+}
+.mm-subscription-ended-three {
+  .subscription-bottom-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
   }
 }

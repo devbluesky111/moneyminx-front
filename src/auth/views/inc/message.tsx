@@ -20,12 +20,10 @@ const Message: React.FC<MessageProps> = ({ type, message, onDismiss }) => {
 
   return (
     <div className={classes}>
-      <div className='mm-container'>
         <div className='message-wrapper'>
           {icon}
           {message}
         </div>
-      </div>
     </div>
   );
 };

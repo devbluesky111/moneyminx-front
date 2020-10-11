@@ -17,7 +17,7 @@ const Settings: React.FC<SettingsProps> = () => {
   };
 
   const containerClass =
-    page === SettingPageEnum.PLAN ? 'mm-setting-container mm-profile-container' : 'mm-setting-container';
+    page === SettingPageEnum.PLAN ? 'mm-settings-container mm-profile-container' : 'mm-settings-container';
 
   const renderTabContent = () => {
     switch (page) {
