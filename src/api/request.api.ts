@@ -125,3 +125,7 @@ export const patchAccount = (id: string, data: any) => {
 export const getNetworth = <P>(params?: P) => {
   return http.get(urls.networth.NETWORTH, params);
 };
+
+export const getAllocations = <P>(params?: P): Promise<ApiResponse> => {
+  return http.get(urls.allocations.ALLOCATIONS, params);
+};

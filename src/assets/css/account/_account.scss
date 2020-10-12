@@ -11,19 +11,18 @@
     padding: 1.25rem 1.125rem 2.063rem 1.125rem;
   }
 
-
-  #mm-account-holding:checked~.mm-radio-bg {
+  #mm-account-holding:checked ~ .mm-radio-bg {
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
   }
 
-  #mm-account-activity:checked~.mm-radio-bg {
+  #mm-account-activity:checked ~ .mm-radio-bg {
     transform: translateX(138px);
     transition: transform 0.2s ease-in-out;
   }
 
-  #mm-account-holding:checked+label,
-  #mm-account-activity:checked+label {
+  #mm-account-holding:checked + label,
+  #mm-account-activity:checked + label {
     color: $primary;
   }
 

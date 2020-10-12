@@ -263,6 +263,10 @@ span.forgot-pass {
 .credentials-content .fb-icon-wrap {
   display: inline-block;
   padding-left: 80px;
+
+  button {
+    border: none;
+  }
 }
 
 .credentials-content p > .auth-end-element {
