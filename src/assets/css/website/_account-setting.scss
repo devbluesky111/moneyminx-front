@@ -909,3 +909,10 @@ span.next-icon {
   line-height: 1.125rem;
   color: $gray;
 }
+.connections-account-name {
+  padding-left: 0.8125rem;
+
+  @media (min-width: $md) {
+    padding-left: 1rem;
+  }
+}
