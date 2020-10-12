@@ -148,12 +148,12 @@ export const ConnectAccountMainSection = () => {
                 <h2>
                   <span className='manual-heading'>Add real estate</span>
                 </h2>
-                <div className='zillow-wrap'>
+                <div className='zillow-wrap d-block d-md-flex'>
                   <button className='connect-account-btn btn-outline-primary mm-btn-animate' type='submit'>
                     Add Real Estate
                   </button>
                   <span className='zillow-img'>
-                    <ZillowIcon />
+                    <ZillowIcon className='mt-2'/>
                   </span>
                 </div>
               </div>

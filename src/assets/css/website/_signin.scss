@@ -34,7 +34,7 @@
   h1 {
     padding-bottom: 2.1rem;
     font-size: 2rem;
-    font-weight: 200;
+    font-weight: 300;
     letter-spacing: 0.02em;
     max-width: 460px;
   }
@@ -42,7 +42,7 @@
   h4 {
     font-size: 1.25rem;
     margin-bottom: 23px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.5625rem;
     color: $darkGray;
   }
@@ -66,7 +66,7 @@
     margin-bottom: 32px;
     padding-top: 8px;
     line-height: 1.5625rem;
-    font-weight: 400;
+    font-weight: 600;
 
     &:before {
       counter-increment: section;
@@ -124,7 +124,7 @@
 
   p {
     margin-bottom: 57px;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 1rem;
     line-height: 1.25rem;
   }
@@ -230,7 +230,7 @@ span.forgot-pass {
 }
 .credentials-content {
   h2 {
-    font-weight: 300;
+    font-weight: normal;
     font-size: 1.75rem;
     margin-bottom: 17px;
     line-height: 2.1875rem;
@@ -238,7 +238,7 @@ span.forgot-pass {
   }
   p {
     margin-bottom: 40px;
-    font-weight: 400;
+    font-weight: 500;
   }
 }
 
