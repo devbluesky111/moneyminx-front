@@ -355,17 +355,18 @@ button:focus {
 .profilemenu.open {
   right: 0;
 }
-.profilemenu ul + ul {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid $grayOpacity;
-}
+
 .profilemenu ul li a {
   font-weight: 500;
   font-size: 15px;
   color: #969eac;
-  padding: 10px 25px;
+  padding: 14px 25px;
   display: block;
+}
+.sidebar-custom-hr {
+  width: calc(100% - 50px);
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .profilemenu ul li:hover {
   background: linear-gradient(90deg, rgba(83, 76, 234, 0.14) 0%, rgba(83, 76, 234, 0) 100%);

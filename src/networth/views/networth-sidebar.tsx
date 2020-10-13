@@ -1,5 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ReactComponent as Logout } from 'assets/icons/logout.svg';
+import { ReactComponent as Upgrade } from 'assets/icons/upgrade.svg';
+import { ReactComponent as Profile } from 'assets/icons/profile.svg';
+import { ReactComponent as Support } from 'assets/icons/support.svg';
+import { ReactComponent as Settings } from 'assets/icons/settings.svg';
+import { ReactComponent as ResourceCenter } from 'assets/icons/resource-center.svg';
+import { ReactComponent as ManageConnection } from 'assets/icons/manage-connection.svg';
 
 interface NetworthSidebarProps {
   open: boolean;
@@ -8,45 +15,54 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
   return (
     <>
       <aside className='profilemenu' style={{ right: open ? 0 : -300 }}>
-        <ul className='prlist-up'>
+        <ul className='prlist-up mb-0 mt-2'>
           <li>
             <Link to='/abc'>
+              <Upgrade />
               <i className='icon-upgrade' /> Upgrade
             </Link>
           </li>
         </ul>
-        <ul className='prlist-pro'>
+        <hr className='sidebar-custom-hr' />
+        <ul className='prlist-pro mb-0'>
           <li>
             <Link to='#'>
+              <Profile />
               <i className='icon-profile' />
               Profile
             </Link>
           </li>
           <li>
             <Link to='#'>
+              <Settings />
               <i className='icon-settings' />
               Settings
             </Link>
           </li>
           <li>
             <Link to='#'>
+              <ManageConnection />
               <i className='icon-manage-connections' /> Manage Connections
             </Link>
           </li>
           <li>
             <Link to='#'>
+              <Support />
               <i className='icon-support' /> Support
             </Link>
           </li>
           <li>
             <Link to='#'>
+              <ResourceCenter />
               <i className='icon-resource-center' /> Resource Center
             </Link>
           </li>
         </ul>
-        <ul className='prlist-log'>
+        <hr className='sidebar-custom-hr' />
+        <ul className='prlist-log mb-0'>
           <li>
             <Link to='#'>
+              <Logout />
               <i className='icon-logout' /> Logout
             </Link>
           </li>
