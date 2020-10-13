@@ -199,7 +199,7 @@
   padding-left: 100px;
 
   input {
-    width: 350px;
+    width: 100%;
   }
 }
 
@@ -343,15 +343,18 @@ ul.footer-list li {
 .session-expired {
   font-size: 0.87rem;
   color: $white;
-  background: rgba(83, 76, 234, 0.1);
+  background: $purpleOpacity10;
   border-radius: 4px;
   padding: 25px;
   margin-bottom: 30px;
+
+  p {
+    color: $darkGray;
+    margin-bottom: 0;
+    font-weight: 400;
+  }
 }
-.session-expired p {
-  color: $black;
-  margin-bottom: 0;
-}
+
 //Create New password
 .create-new-password input {
   margin-bottom: 33px;

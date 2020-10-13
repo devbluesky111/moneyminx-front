@@ -123,6 +123,9 @@ export const LoginMainSection = () => {
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
+              <div className='session-expired hide-me'>
+              <p>We thought you left, so we logged you out to protect your account.</p>
+            </div>
               <div className='form-wrap'>
                 <Formik
                   validateOnChange={false}
