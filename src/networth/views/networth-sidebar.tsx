@@ -17,7 +17,7 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
       <aside className='profilemenu' style={{ right: open ? 0 : -300 }}>
         <ul className='prlist-up mb-0 mt-2'>
           <li>
-            <Link to='/abc'>
+            <Link to='/plan'>
               <Upgrade />
               <i className='icon-upgrade' /> Upgrade
             </Link>
@@ -26,33 +26,33 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
         <hr className='sidebar-custom-hr' />
         <ul className='prlist-pro mb-0'>
           <li>
-            <Link to='#'>
+            <Link to='/profile'>
               <Profile />
               <i className='icon-profile' />
               Profile
             </Link>
           </li>
           <li>
-            <Link to='#'>
+            <Link to='/settings'>
               <Settings />
               <i className='icon-settings' />
               Settings
             </Link>
           </li>
           <li>
-            <Link to='#'>
+            <Link to='/connections'>
               <ManageConnection />
               <i className='icon-manage-connections' /> Manage Connections
             </Link>
           </li>
           <li>
-            <Link to='#'>
+            <Link to='mailto:hello@moneyminx.com'>
               <Support />
               <i className='icon-support' /> Support
             </Link>
           </li>
           <li>
-            <Link to='#'>
+            <Link to='/blog'>
               <ResourceCenter />
               <i className='icon-resource-center' /> Resource Center
             </Link>
