@@ -2,6 +2,15 @@
   flex-direction: column;
   height: 100vh;
   display: flex;
+
+  .row {
+
+    margin-right: 0;
+
+    @media (min-width: $sm) {
+    margin-right: -15px;
+    }
+  }
 }
 .auth-logo {
   width: 110px;
@@ -104,7 +113,7 @@
     }
   }
 }
-.social-login-fb {
+.fb-icon-wrap button {
   &:hover {
     box-shadow: 0 4px 8px #B8CCE0;
     border-radius: 50%;
@@ -266,6 +275,7 @@ span.forgot-pass {
 
   button {
     border: none;
+    border-radius: 50%;
   }
 }
 
@@ -465,6 +475,3 @@ span.visibility-icon {
   margin-top: 11px;
 }
 
-.password-wrap.confirm .feedback {
-  margin-top: -17px;
-}

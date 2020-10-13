@@ -261,9 +261,7 @@ export const SignupMainSection = () => {
                             </span>
                           </div>
                           {props.values.password ? (
-                            <div
-                              className={`ml-2 mt-2 mt-md-0 ${getValidationText().classNames}`}
-                            >
+                            <div className={`ml-2 mt-2 mt-md-0 ${getValidationText().classNames}`}>
                               {getValidationText().text}
                             </div>
                           ) : null}

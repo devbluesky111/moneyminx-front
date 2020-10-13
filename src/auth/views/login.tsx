@@ -213,7 +213,7 @@ export const LoginMainSection = () => {
                             <Link to='/auth/forgot-password'>Forgot Password?</Link>
                           </span>
                         </p>
-                        <button className='mm-btn-animate mm-btn-primary' type='submit' disabled={!props.isValid}>
+                        <button className='mm-btn-animate mm-btn-primary' type='submit' disabled={props.isSubmitting}>
                           Log in
                         </button>
                       </form>
