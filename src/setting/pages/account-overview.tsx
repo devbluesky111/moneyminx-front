@@ -179,7 +179,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
             <input type='checkbox' className='mm-switch-input' id='mc3' name='Switch' />
             <label className='mm-switch' htmlFor='mc3'></label>
           </span>
-          <span>{account.accountName}</span>
+          <span className='connections-account-name'>{account.accountName}</span>
         </div>
       </div>
       <div className='col col-md-4'>
