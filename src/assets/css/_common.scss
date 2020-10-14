@@ -449,6 +449,10 @@ hr {
   }
 }
 
+.hide-me {
+  display: none;
+}
+
 // coming soon badge
 
 .mm-coming-soon {
@@ -464,6 +468,24 @@ hr {
   }
 }
 
-.hide-me {
-  display: none;
-}
+// dropdowns
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Some browsers will not display the caret when using calc, so we put the fallback first */
+  background: url('../images/signup/arrow.svg') white no-repeat 98.5% !important; /* !important used for overriding all other customisations */
+  background: url('../images/signup/arrow.svg') white no-repeat calc(100% - 10px) !important; /* Better placement regardless of input width */
+  display: table;
+  width: 100%;
+  height: 48px;
+  padding: 1px 16px;
+  border: 1px solid $grayOpacity;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: $darkGray;
+
+  &:focus, &:hover {
+    outline: none;
+    border: 1px solid $gray;
+  }
