@@ -195,10 +195,10 @@
   .custom-checkbox .checkmark:after {
     left: 6px;
     top: 1px;
-    width: 7px;
+    width: 5px;
     height: 0.75rem;
     border: solid $purple;
-    border-width: 0 3px 3px 0;
+    border-width: 0 1px 1px 0;
     transform: rotate(45deg);
   }
 
