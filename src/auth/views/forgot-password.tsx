@@ -115,9 +115,9 @@ export const ForgotPasswordMainSection = () => {
                         {props.errors.email && <div className='ml-2 mt-1 mt-md-3 feedback'>{props.errors.email}</div>}
                       </div>
                       <button
-                        className='mm-btn-animate mm-btn-primary'
+                        className='mm-btn-animate mm-btn-primary m-b-5'
                         type='submit'
-                        disabled={!props.isValid || props.isSubmitting}
+                        disabled={props.isSubmitting}
                       >
                         Reset Password
                       </button>
