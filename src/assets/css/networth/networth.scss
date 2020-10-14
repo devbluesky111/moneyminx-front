@@ -129,7 +129,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Mulish', sans-serif;
-  background: #fafbfd;
+  background: $lightBg;
 }
 ol,
 ul,
@@ -169,12 +169,12 @@ button:focus {
 /** Header **/
 /** =============================== **/
 .money-minx-header {
-  background: #ffffff;
-  box-shadow: 0px 2px 8px #dbe3f0, inset 0px -1px 0px #ebecf1;
-  border-radius: 0px 0px 6px 6px;
+  background: $white;
+  box-shadow: 0 2px 8px $whiteShadow, inset 0px -1px 0px $whiteInsetShadow;
+  border-radius: 0 0 6px 6px;
   padding: 0;
   align-items: inherit;
-  min-height: 60px;
+  height: 60px;
   position: relative;
   z-index: 999;
 }
@@ -185,9 +185,10 @@ button:focus {
   width: 100%;
 }
 .money-minx-header .container {
-  max-width: 1440px;
-  padding-left: 25px;
-  padding-right: 25px;
+  max-width: 100vw;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 60px;
 }
 .money-minx-header .navbar-brand {
   margin-right: 0;
@@ -214,8 +215,8 @@ button:focus {
   font-weight: 500;
   font-size: 15px;
   line-height: 19px;
-  color: #969eac;
-  border-bottom: 2px solid transparent;
+  color: $gray;
+  border-bottom: 1.5px solid transparent;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
@@ -226,8 +227,9 @@ button:focus {
 
 .headtab a:hover,
 .headtab a.active {
-  color: #434a55;
-  border-bottom-color: #534cea;
+  color: $darkGray;
+  border-bottom: 1.5px solid $purple;
+  box-sizing: border-box;
 }
 .headtab a + a {
   margin-left: 40px;
@@ -238,27 +240,33 @@ button:focus {
   display: -webkit-flex;
   display: flex;
   height: 100%;
+  padding-bottom: 16px;
+
+  @media (min-width: $md) {
+    padding-bottom: 0;
+  }
 }
 
 .upgrader-btn {
-  border: 2px solid #534cea;
+  border: 1.5px solid $purple;
   border-radius: 4px;
   position: relative;
   width: 110px;
   height: 40px;
-  font-weight: bold;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 0.875rem;
   text-align: center;
-  color: #534cea;
-  background: #fff;
+  color: $purple;
+  background: $white;
   padding: 0;
   transition: 0.3s all;
   margin: auto 0;
-}
 
-.upgrader-btn:hover {
-  background: #534cea;
-  color: #fff;
+  &:hover {
+    background: $purple;
+    color: $white;
+    box-shadow: 0 4px 12px $purpleShadow;
+  }
 }
 
 .upgrader-btn:before {
@@ -269,8 +277,8 @@ button:focus {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #534cea;
-  border: 4px solid #fff;
+  background: $purple;
+  border: 4px solid $white;
 }
 
 .badge-box {
@@ -287,15 +295,15 @@ button:focus {
   display: inline-block;
   width: 1px;
   height: 32px;
-  background: #969eac;
+  background: $gray;
   opacity: 0.2;
   margin-right: 18px;
   vertical-align: middle;
 }
-.badge-box a img,
+.badge-box img,
 .badge-box span img {
-  width: 40px;
-  height: 40px;
+  width: 56px;
+  height: 56px;
 }
 .money-minx-header .btn-group .profile-toggle {
   padding: 0;
@@ -304,13 +312,13 @@ button:focus {
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  color: #969eac;
+  color: $gray;
 }
 .money-minx-header .btn-group .profile-toggle:after {
   content: '';
   width: 8px;
   height: 8px;
-  border: 2px solid #969eac;
+  border: 1.5px solid $gray;
   border-top: 0;
   border-left: 0;
   transform: rotate(45deg);
@@ -318,6 +326,10 @@ button:focus {
   vertical-align: 3px;
   margin-left: 6px;
   transition: 0.3s all;
+
+  &:hover {
+    color: $darkGray;
+  }
 }
 .money-minx-header .btn-group .profile-toggle.show:after {
   transform: rotate(225deg);
@@ -325,12 +337,21 @@ button:focus {
 }
 .money-minx-header .btn-group .profile-toggle span + span {
   margin-left: 10px;
+
+  &:hover {
+    color: $darkGray;
+  }
 }
 .money-minx-header .btn-group .profile-toggle span img {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(165, 172, 184, 0.2);
+  width: 46px;
+  height: 46px;
+  border: 2px solid $grayBorder20;
   border-radius: 50%;
+  margin-bottom: 8px;
+
+  &:hover {
+    border: 2px solid $purpleOpacity50;
+  }
 }
 .money-minx-header .btn-group {
   position: static;
@@ -344,9 +365,9 @@ button:focus {
   max-width: 280px;
   margin: 0;
   z-index: 600;
-  background: #ffffff;
-  box-shadow: 0px 8px 8px #dbe3f0;
-  border-radius: 6px 0px 0px 6px;
+  background: $white;
+  box-shadow: 0 8px 8px $whiteShadow;
+  border-radius: 6px 0 0 6px;
   padding: 25px 0;
   padding-top: 75px;
   transition: 0.3s all;
@@ -363,7 +384,7 @@ button:focus {
 .profilemenu ul li a {
   font-weight: 500;
   font-size: 15px;
-  color: #969eac;
+  color: $gray;
   padding: 10px 25px;
   display: block;
 }
@@ -371,7 +392,7 @@ button:focus {
   background: linear-gradient(90deg, rgba(83, 76, 234, 0.14) 0%, rgba(83, 76, 234, 0) 100%);
 }
 .profilemenu ul li:hover a {
-  color: #534cea;
+  color: $purple;
 }
 .profilemenu ul li img {
   max-width: 18px;
@@ -385,10 +406,10 @@ button:focus {
   font-weight: 600;
 }
 .profilemenu ul.prlist-up li a {
-  color: #534cea;
+  color: $purple;
 }
 .profilemenu ul.prlist-log li a {
-  color: #ec5555;
+  color: $redAlert;
 }
 .sidebackdrop {
   position: fixed;
@@ -413,9 +434,9 @@ button:focus {
   margin: 0;
   left: inherit;
   z-index: 1;
-  background: #ffffff;
-  box-shadow: 0px 2px 8px #dbe3f0, inset 0px -1px 0px #ebecf1;
-  border-radius: 6px 0px 0px 6px;
+  background: $white;
+  box-shadow: 0 2px 8px $whiteShadow, inset 0px -1px 0px $whiteInsetShadow;
+  border-radius: 6px 0 0 6px;
   padding: 25px 0;
   padding-top: 75px;
   transition: 0.3s all;
@@ -434,8 +455,8 @@ button:focus {
 }
 .mobmenu .headtab a:hover,
 .mobmenu .headtab a.active {
-  color: #434a55;
-  border-left-color: #534cea;
+  color: $darkGray;
+  border-left-color: $purple;
 }
 
 /** =============================== **/
@@ -479,33 +500,49 @@ button:focus {
   width: 34px;
   height: 34px;
   border: 0;
-  background: #534cea;
-  color: #fff;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 20px;
+  background: $purple;
+  color: $white;
+  font-weight: 400;
+  font-size: 1.375rem;
+  line-height: 1.375rem;
   border-radius: 50%;
+  padding-bottom: 5px;
+
+  &:hover {
+    box-shadow: 0 4px 12px $darkPurpleOpacity40;
+  }
 }
 .myaccount-drop {
   margin-left: 12px;
+  color: $gray;
+
+  .dropdown-toggle {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: $gray;
+
+    &:hover {
+      color: $darkGray;
+    }
+  }
 }
-.myaccount-drop .dropdown-toggle {
-  padding: 0;
-  border: 0;
-  background-color: transparent;
-  font-weight: 500;
-  font-size: 15px;
-  color: #969eac;
-}
+
 .myaccount-drop .dropdown-toggle:after {
   width: 8px;
   height: 8px;
-  border: 2px solid #969eac;
+  border: 1.5px solid $gray;
   border-top: 0;
   border-left: 0;
   transform: rotate(45deg);
   margin-left: 10px;
   transition: 0.3s all;
+
+  &:hover {
+    color: $darkGray;
+  }
 }
 .myaccount-drop.show .dropdown-toggle:after {
   transform: rotate(-135deg);
@@ -514,9 +551,20 @@ button:focus {
 .download-btn {
   font-weight: 500;
   font-size: 15px;
-  color: #969eac;
+  color: $gray;
   border: 0;
   background-color: transparent;
+
+  svg {
+    margin-right: 12px;
+    &:hover {
+      color: $darkGray;
+    }
+  }
+
+  &:hover {
+    color: $darkGray;
+  }
 }
 .download-btn img {
   margin-right: 5px;
@@ -528,16 +576,13 @@ button:focus {
   font-weight: 600;
   vertical-align: -2px;
 }
-.download-btn:hover {
-  color: #534cea;
-}
 .dropdown-menu {
-  background: #081833;
+  background: $darkBg;
   border: 0;
-  box-shadow: 0px 4px 28px rgba(8, 24, 51, 0.44);
-  border-radius: 6px;
+  box-shadow: 0 4px 28px rgba(8, 24, 51, 0.44);
   padding: 0;
   margin-top: 10px;
+  border-radius: 0.375rem !important;
 }
 .myaccount-drop .dropdown-menu {
   min-width: 240px;
@@ -549,7 +594,7 @@ button:focus {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: #ec5555;
+  color: $redAlert;
 }
 .dropdown-box {
   padding-bottom: 10px;
@@ -586,7 +631,7 @@ button:focus {
   border-radius: 2px;
 }
 .dropdown-box ul.pending li:before {
-  background: #ec5555;
+  background: $redAlert;
 }
 .dropdown-box ul.success li:before {
   background: $green;
@@ -595,12 +640,12 @@ button:focus {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: #ffffff;
+  color: $white;
 }
 .dropdown-box ul li span {
   font-weight: 500;
   font-size: 12px;
-  color: #969eac;
+  color: $gray;
   display: block;
   margin-top: 3px;
 }
@@ -609,7 +654,7 @@ button:focus {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: #ffffff;
+  color: $white;
 }
 .dropdown-box ul li > div + div,
 .dropdown-box ul li a > div + div {
@@ -629,12 +674,11 @@ button:focus {
   padding-right: 40px;
 }
 .drop-box .dropdown-toggle {
-  padding: 0;
-  background-color: transparent;
+  background-color: $lightBg;
   font-weight: 500;
-  font-size: 15px;
-  color: #969eac;
-  border: 1px solid rgba(150, 158, 172, 0.23);
+  font-size: 0.875rem;
+  color: $gray;
+  border: 1px solid $grayOpacity24;
   border-radius: 4px;
   width: auto;
   height: 48px;
@@ -643,7 +687,7 @@ button:focus {
 .drop-box .dropdown-toggle:after {
   width: 8px;
   height: 8px;
-  border: 2px solid #969eac;
+  border: 2px solid $gray;
   border-top: 0;
   border-left: 0;
   transform: rotate(45deg);
@@ -659,8 +703,8 @@ button:focus {
   background-color: transparent;
   font-weight: 500;
   font-size: 15px;
-  color: #969eac;
-  border: 1px solid rgba(150, 158, 172, 0.23);
+  color: $gray;
+  border: 1px solid $grayOpacity24;
   border-radius: 4px;
   width: auto;
   height: 48px;
@@ -668,24 +712,11 @@ button:focus {
   position: relative;
   white-space: nowrap;
 }
-.date-box:after {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border: 2px solid #969eac;
-  border-top: 0;
-  border-left: 0;
-  transform: rotate(45deg);
-  vertical-align: 4px;
-  margin-right: 15px;
-  pointer-events: none;
-}
 .date-box > span {
-  font-size: 18px;
+  font-size: 0.875rem;
   display: inline-block;
-  margin-left: -7px;
-  margin-right: 3px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .date-box input {
   padding: 0 20px;
@@ -693,27 +724,27 @@ button:focus {
   background-color: transparent;
   height: 100%;
   border: 0;
-  font-size: 15px;
-  color: #969eac;
+  font-size: 0.875rem;
+  color: $gray;
   max-width: 94px;
 }
 .date-box input::-webkit-input-placeholder {
-  color: #969eac;
+  color: $gray;
 }
 .date-box input::-moz-placeholder {
-  color: #969eac;
+  color: $gray;
 }
 .date-box input:-ms-input-placeholder {
-  color: #969eac;
+  color: $gray;
 }
 .date-box input:-moz-placeholder {
-  color: #969eac;
+  color: $gray;
 }
 .date-box input:first-child {
   padding-right: 0;
 }
 .date-box input ~ input {
-  padding-left: 0;
+  padding-left: 12px;
 }
 .dropdown-box ul li label {
   position: relative;
@@ -741,7 +772,7 @@ button:focus {
   content: '';
   width: 8px;
   height: 8px;
-  border: 1px solid #fff;
+  border: 1px solid $white;
   border-top: 0;
   display: inline-block;
 }
@@ -767,7 +798,7 @@ button:focus {
 }
 .datepicker-dropdown .table-condensed thead th,
 .datepicker-dropdown .table-condensed tbody td {
-  color: #fff;
+  color: $white;
   font-size: 14px;
 }
 .datepicker-dropdown .table-condensed tbody td span {
@@ -778,12 +809,12 @@ button:focus {
   margin: 0;
 }
 .datepicker-dropdown .table-condensed tbody td span.disabled {
-  color: #969eac;
+  color: $gray;
   opacity: 0.3;
 }
 .datepicker-dropdown .table-condensed tbody td span:hover,
 .datepicker-dropdown .table-condensed tbody td span.active {
-  background: #534cea !important;
+  background: $purple !important;
 }
 .dropdown-box ul li label input {
   opacity: 0;
@@ -808,7 +839,7 @@ button:focus {
   right: 0;
   width: 11px;
   height: 7px;
-  border: 1.5px solid #534cea;
+  border: 1.5px solid $purple;
   border-top: 0;
   border-right: 0;
   margin: auto;
@@ -825,10 +856,10 @@ button:focus {
   margin-bottom: 15px;
 }
 .ct-box {
-  background: #ffffff;
-  box-shadow: 0px 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
+  background: $white;
+  box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border-radius: 6px;
-  padding: 25px 40px;
+  padding: 25px 40px 16px 40px;
   height: 100%;
   position: relative;
 }
@@ -838,20 +869,20 @@ button:focus {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 5px;
+  width: 4px;
   border-radius: 10px 0 0 10px;
 }
 .box-b:before {
-  background: #235ee7;
+  background: $blue;
 }
 .box-g:before {
-  background: #29cfd6;
+  background: $cyan;
 }
 .box-r:before {
-  background: #d3365f;
+  background: $red;
 }
 .box-v:before {
-  background: #534cea;
+  background: $purple;
 }
 .table {
   margin-bottom: 0;
@@ -860,7 +891,7 @@ button:focus {
 .table-holder .table thead th {
   font-weight: 600;
   font-size: 16px;
-  color: #969eac;
+  color: $gray;
   padding: 0;
   vertical-align: middle;
   white-space: nowrap;
@@ -870,7 +901,7 @@ button:focus {
 .table thead th span {
   font-weight: 600;
   font-size: 20px;
-  color: #000000;
+  color: $black;
   position: relative;
   cursor: pointer;
 }
@@ -881,7 +912,7 @@ button:focus {
   content: '';
   width: 8px;
   height: 8px;
-  border: 2px solid #969eac;
+  border: 2px solid $gray;
   border-top: 0;
   border-left: 0;
   transform: rotate(-135deg);
@@ -895,11 +926,11 @@ button:focus {
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: #000000;
+  color: $darkGray;
   padding: 15px 0;
   white-space: nowrap;
-  border: 0;
-  border-bottom: 1px solid rgba(150, 158, 172, 0.23);
+  border-bottom: 1px solid $grayOpacity24;
+  border-top: none;
 }
 .table thead th.current-m,
 .table tbody td.current-m,
@@ -922,7 +953,7 @@ button:focus {
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: #534cea;
+  color: $purple;
   padding: 15px 0;
   white-space: nowrap;
   border: 0;
@@ -947,12 +978,12 @@ button:focus {
 .table tfoot td:nth-child(2) {
   width: 18%;
 }
-.table-holder .table tbody td:nth-last-of-type(2),
-.table-holder .table tfoot td:nth-last-of-type(2) {
+.table-holder .table tbody td:nth-last-of-type(3),
+.table-holder .table tfoot td:nth-last-of-type(3) {
   background: linear-gradient(90deg, rgba(83, 76, 234, 0.04) 0%, rgba(83, 76, 234, 0) 100%);
 }
 .warning-pop {
-  background: #fd8f95;
+  background: $pink;
   max-width: 200px;
   border: 0;
   border-radius: 4px;
@@ -960,7 +991,7 @@ button:focus {
 }
 .warning-pop.popover .arrow:before,
 .warning-pop.popover .arrow:after {
-  border-right-color: #fd8f95;
+  border-right-color: $pink;
   border-width: 0.3rem 0.3rem 0.3rem 0;
 }
 .warning-pop.bs-popover-auto[x-placement^='right'] > .arrow,
@@ -976,7 +1007,7 @@ button:focus {
 .warning-pop .popover-header {
   position: relative;
   background-color: transparent;
-  color: #fff;
+  color: $white;
   font-weight: 500;
   font-size: 16px;
   padding: 0;
@@ -996,45 +1027,7 @@ button:focus {
 .warning-pop .popover-content p {
   font-size: 14px;
   line-height: 20px;
-  color: #ffffff;
-}
-.droplist li a {
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-  padding: 12px 20px;
-  display: block;
-}
-.droplist > li.show > a,
-.droplist > li:hover > a {
-  background: rgba(83, 76, 234, 0.3);
-  border-radius: 3px;
-}
-.droplist .subdrop-m {
-  display: none;
-}
-.subdrop-m {
-  padding-left: 20px;
-}
-.subdrop-m li {
-  position: relative;
-}
-.subdrop-m li:before {
-  width: 16px;
-  height: 110%;
-  border: 1px solid transparent;
-  border-left-color: #414d63;
-  border-bottom-color: #414d63;
-  border-radius: 0 0 0 4px;
-  content: '';
-  position: absolute;
-  left: 0;
-  top: -60%;
-}
-.subdrop-m li:first-child:before {
-  height: 50%;
-  top: 0;
+  color: $white;
 }
 .checkbox-list {
   padding: 10px 0;
@@ -1055,7 +1048,7 @@ button:focus {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: #ffffff;
+  color: $white;
 }
 .checkbox-list li label span:before {
   content: '';
@@ -1074,7 +1067,7 @@ button:focus {
   left: 4px;
   width: 11px;
   height: 7px;
-  border: 1.5px solid #534cea;
+  border: 1.5px solid $purple;
   border-top: 0;
   border-right: 0;
   transform: rotate(-45deg);
@@ -1108,7 +1101,7 @@ button:focus {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: #ffffff;
+  color: $white;
 }
 .radiolist label span:before {
   content: '';
@@ -1127,7 +1120,7 @@ button:focus {
   left: 6px;
   width: 8px;
   height: 8px;
-  background: #534cea;
+  background: $purple;
   border-radius: 50%;
   opacity: 0;
   transition: 0.3s all;
@@ -1140,11 +1133,22 @@ button:focus {
 .padd-20 {
   padding: 20px;
 }
+.measure-box {
+  height: 100%;
+
+  @media (min-width: $md) {
+    height: 90%;
+  }
+}
 .measure-box h2 {
-  font-weight: bold;
-  font-size: 20px;
-  color: #534cea;
-  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: $purple;
+  margin-bottom: 1.25rem;
+
+  @media (width: $desk) {
+    font-size: 1rem;
+  }
 }
 .measure-box h2 img {
   max-width: 20px;
@@ -1166,33 +1170,90 @@ button:focus {
   border-radius: 6px;
   margin-bottom: 60px;
   position: relative;
+  height: 78%;
+  background-size: contain;
+
+  p {
+    font-weight: 600;
+    font-size: 16px;
+    color: $gray;
+  }
+
+  .mm-btn-primary {
+    bottom: -60px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: block;
+    width: 100%;
+    height: 40px;
+
+    @media (min-width: $sm) and (max-width: $md) {
+      position: initial;
+      max-width: 236px;
+      margin: auto;
+    }
+  }
+
+  @media (max-width: 575px) {
+    display: block;
+    min-height: inherit;
+    padding: 15px;
+    position: initial;
+    height: 80%;
+
+    .mm-btn-primary {
+      position: relative;
+      width: 100%;
+      height: 40px;
+      display: inline-block;
+      margin: 0 auto;
+      bottom: 0;
+    }
+
+    p {
+      max-width: 100%;
+    }
+
+    .btn-blue {
+      margin-top: 20px;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 991px) {
+      padding: 30px 25px 20px 25px;
+      margin-bottom: 0;
+      min-height: 110px;
+      -webkit-align-items: flex-start;
+      align-items: flex-start;
+
+    p {
+      max-width: 270px;
+      margin-right: auto;
+    }
+    .btn-blue {
+      position: static;
+      max-width: 230px;
+    }
+  }
 }
-.measure-box .bgbox p {
-  font-weight: 600;
-  font-size: 16px;
-  color: #969eac;
-}
-.measure-box .bgbox .btn-blue {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -60px;
-}
+
 .btn-blue {
-  background: #534cea;
+  background: $purple;
   border-radius: 4px;
   display: inline-block;
   font-weight: bold;
   font-size: 14px;
   text-align: center;
-  color: #ffffff;
+  color: $white;
   height: 40px;
   line-height: 40px;
   border: 0;
   padding: 0 12px;
 }
 .btn-blue:hover {
-  color: #fff;
+  color: $white;
 }
 .btn-full {
   display: block;
@@ -1211,35 +1272,43 @@ button:focus {
   -webkit-flex: 0 0 180px;
   flex: 0 0 180px;
   max-width: 180px;
+  padding-top: 16px;
+  border-top: 1px solid $grayOpacity10;
+
+  @media (min-width: $sm) {
+    padding-top: 12px;
+    border-top: none;
+  }
 }
 .graphbox ul li span {
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 300;
+  font-size: 0.875rem;
   color: inherit;
   display: block;
 }
 .graphbox ul li h3 {
-  font-weight: 300;
-  font-size: 24px;
+  font-weight: 200;
+  font-size: 1.5rem;
+  line-height: 1.875rem;
   color: inherit;
 }
 .graphbox ul li + li {
-  margin-top: 20px;
+  margin-top: 22px;
 }
 .graphbox ul li.inv-data {
-  color: #235ee7;
+  color: $blue;
 }
 .graphbox ul li.other-data {
-  color: #29cfd6;
+  color: $cyan;
 }
 .graphbox ul li.lty-data {
-  color: #d3365f;
+  color: $red;
 }
 .graphbox ul li.nw-data {
-  color: #534cea;
+  color: $purple;
 }
 ul.charttool {
-  background: #081833;
+  background: $darkBg;
   box-shadow: 0px 4px 28px rgba(8, 24, 51, 0.44);
   border-radius: 4px;
   padding: 10px 0;
@@ -1263,7 +1332,7 @@ ul.charttool:before {
   position: absolute;
   pointer-events: none;
   border-color: rgba(136, 183, 213, 0);
-  border-right-color: #081833;
+  border-right-color: $darkBg;
   border-width: 6px;
   margin-top: -6px;
 }
@@ -1278,13 +1347,13 @@ ul.charttool li + li {
 ul.charttool li span {
   font-weight: 500;
   font-size: 14px;
-  color: #fff;
+  color: $white;
   display: block;
 }
 ul.charttool li h3 {
   font-weight: 300;
   font-size: 24px;
-  color: #fff;
+  color: $white;
 }
 ul.charttool li:before {
   content: '';
@@ -1292,22 +1361,22 @@ ul.charttool li:before {
   width: 10px;
   height: 10px;
   border-radius: 2px;
-  background: #fff;
+  background: $white;
   position: absolute;
   left: 10px;
   top: 15px;
 }
 ul.charttool li.inv-data:before {
-  background: #235ee7;
+  background: $blue;
 }
 ul.charttool li.other-data:before {
-  background: #29cfd6;
+  background: $cyan;
 }
 ul.charttool li.lty-data:before {
-  background: #d3365f;
+  background: $red;
 }
 ul.charttool li.nw-data:before {
-  background: #534cea;
+  background: $purple;
 }
 .chartbox {
   -ms-flex: 0 0 calc(100% - 180px);
@@ -1397,7 +1466,7 @@ ul.charttool li.nw-data:before {
   margin: 0 auto;
   width: 100%;
   max-width: 300px;
-  background: #fd8f95;
+  background: $pink;
   box-shadow: 0px 4px 8px rgba(252, 142, 148, 0.3);
   border-radius: 4px;
   border: 0;
@@ -1406,14 +1475,14 @@ ul.charttool li.nw-data:before {
 .warning-toast .toast-body {
   padding: 10px 15px;
   font-size: 15px;
-  color: #fff;
+  color: $white;
 }
 .warning-toast > span {
   position: absolute;
   top: 0;
   bottom: 0;
   right: 20px;
-  color: #fff;
+  color: $white;
   font-size: 14px;
   margin: auto;
   height: 18px;
@@ -1436,7 +1505,7 @@ ul.charttool li.nw-data:before {
   max-width: 520px;
 }
 #upgradeModal .modal-content {
-  background: #ffffff;
+  background: $white;
   border-radius: 6px;
   border: 0;
 }
@@ -1448,7 +1517,7 @@ ul.charttool li.nw-data:before {
 #upgradeModal .modal-header .modal-title {
   font-size: 28px;
   line-height: 35px;
-  color: #000000;
+  color: $black;
 }
 #upgradeModal .modal-body {
   padding: 0 40px 30px;
@@ -1456,7 +1525,7 @@ ul.charttool li.nw-data:before {
 #upgradeModal .modal-body p {
   font-weight: 500;
   font-size: 15px;
-  color: #969eac;
+  color: $gray;
   line-height: 1.7;
   max-width: 400px;
 }
@@ -1470,17 +1539,17 @@ ul.charttool li.nw-data:before {
   margin-top: 30px;
 }
 .btnbox .btn-com {
-  background: #534cea;
+  background: $purple;
   border-radius: 4px;
   width: 160px;
   height: 40px;
   font-size: 14px;
-  color: #fff;
+  color: $white;
   text-align: center;
   line-height: 40px;
 }
 .btnbox .btn-normal {
-  color: #969eac;
+  color: $gray;
   font-size: 14px;
   font-weight: bold;
 }
@@ -1510,7 +1579,7 @@ footer .container {
 footer p {
   font-weight: 500;
   font-size: 15px;
-  color: #969eac;
+  color: $gray;
 }
 .foot-link {
   display: -ms-flexbox;
@@ -1529,10 +1598,10 @@ footer p {
 .foot-link li a {
   font-weight: 500;
   font-size: 15px;
-  color: #969eac;
+  color: $gray;
 }
 .foot-link li a:hover {
-  color: #000;
+  color: $darkGray;
 }
 
 /** =============================== **/
@@ -1588,13 +1657,6 @@ footer p {
     display: -webkit-flex;
     display: flex;
   }
-  .measure-box .bgbox {
-    padding: 30px 25px 10px;
-    margin-bottom: 0;
-    min-height: 110px;
-    -webkit-align-items: flex-start;
-    align-items: flex-start;
-  }
   .mb-40 {
     margin-bottom: 30px;
   }
@@ -1611,20 +1673,12 @@ footer p {
   .foot-link li a {
     font-size: 14px;
   }
-  .measure-box .bgbox p {
-    max-width: 270px;
-    margin-right: auto;
-  }
-  .measure-box .bgbox .btn-blue {
-    position: static;
-    max-width: 230px;
-  }
   .content-wraper .container {
     padding-left: 20px;
     padding-right: 20px;
   }
-  .table-holder .table tbody td:nth-last-of-type(2),
-  .table-holder .table tfoot td:nth-last-of-type(2) {
+  .table-holder .table tbody td:nth-last-of-type(3),
+  .table-holder .table tfoot td:nth-last-of-type(3) {
     background: transparent;
   }
   .chartbox {
@@ -1647,11 +1701,11 @@ footer p {
     transition: 0.1s all;
   }
   .table tbody tr:hover {
-    background: #081833;
-    color: #fff;
+    background: $darkBg;
+    color: $white;
   }
   .table tbody tr:hover td {
-    color: #fff;
+    color: $white;
     border-bottom-color: transparent;
   }
   .table tbody tr td:first-child:before,
@@ -1674,7 +1728,7 @@ footer p {
   }
   .table tbody tr:hover td:first-child:before,
   .table tbody tr:hover td:last-child:after {
-    background: #081833;
+    background: $darkBg;
   }
 }
 
@@ -1765,7 +1819,7 @@ footer p {
     display: flex;
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
-    border-bottom: 1px solid rgba(150, 158, 172, 0.23);
+    border-bottom: 1px solid $grayOpacity24;
     padding-bottom: 10px;
   }
   .table-holder .table tfoot tr {
@@ -1791,7 +1845,7 @@ footer p {
     content: '';
     font-weight: 500;
     font-size: 12px;
-    color: #969eac;
+    color: $gray;
     display: block;
     margin-bottom: 5px;
   }
@@ -1843,7 +1897,7 @@ footer p {
     bottom: 0;
     right: 0;
     width: 30px;
-    background: linear-gradient(to right, rgba(250, 251, 253, 0.8) 0%, #fafbfd 100%);
+    background: linear-gradient(to right, rgba(250, 251, 253, 0.8) 0%, $lightBg 100%);
   }
   .ct-box {
     padding: 20px;
@@ -1854,9 +1908,6 @@ footer p {
   }
   .mob-btm .ct-box.padd-20 {
     padding: 20px;
-  }
-  .download-btn span {
-    display: none;
   }
   .money-minx-header .navbar-brand {
     width: 32px;
@@ -1873,18 +1924,6 @@ footer p {
 }
 
 @media (max-width: 575px) {
-  .measure-box .bgbox {
-    display: block;
-    min-height: inherit;
-    padding: 15px;
-  }
-  .measure-box .bgbox p {
-    max-width: 100%;
-  }
-  .measure-box .bgbox .btn-blue {
-    margin-top: 20px;
-    max-width: 100%;
-  }
   .mb-40 {
     margin-bottom: 20px;
   }
@@ -1940,7 +1979,7 @@ footer p {
 
 .mm-dropdown-menu {
   @extend .dropdown-menu;
-  background-color: #081833 !important;
+  background-color: $darkBg !important;
 }
 
 /****************************/
@@ -2005,5 +2044,6 @@ $start-width: 100%;
 .networth-filter-wrapper {
   .react-datepicker-wrapper {
     width: auto;
+    margin: 0 12px;
   }
 }

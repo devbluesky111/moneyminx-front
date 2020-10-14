@@ -127,7 +127,7 @@ export const ProfileOverview = () => {
                           className='mm-switch-input'
                           checked={values.profileEnabled}
                           aria-checked={values.profileEnabled}
-                          onChange={() => {}}
+                          onChange={() => { }}
                         />
                         <label
                           className='mm-switch mt-md-0 mt-3'
@@ -421,18 +421,22 @@ export const ProfileOverview = () => {
                             />
                           </div>
                           <div className='col text-md-center  mt-3 mt-md-0'>
-                            <label className='custom-checkbox'>
-                              <input
-                                type='checkbox'
-                                name='alreadyRetired'
-                                value='true'
-                                checked={values.alreadyRetired}
-                                onChange={() => toggleFormCheck('alreadyRetired')}
-                                aria-checked={values.alreadyRetired}
-                              />
-                              <span className='checkmark' />
-                            </label>
-                            <span className='checkbox-custom-label mm-setting-form-info'>Already retired</span>
+                            <div className='form-wrap'>
+                              <span className='checkbox-item'>
+                                <label className='check-box'>
+                                  Already retired
+                                  <input
+                                    type='checkbox'
+                                    name='alreadyRetired'
+                                    value='true'
+                                    checked={values.alreadyRetired}
+                                    onChange={() => toggleFormCheck('alreadyRetired')}
+                                    aria-checked={values.alreadyRetired}
+                                  />
+                                  <span className='geekmark' />
+                                </label>
+                              </span>
+                            </div>
                           </div>
                         </div>
                         <div className='form-group row align-items-center'>
@@ -484,19 +488,22 @@ export const ProfileOverview = () => {
                             />
                           </div>
                           <div className='col text-md-center mt-3 mt-md-0'>
-                            <label className='custom-checkbox'>
-                              <input
-                                type='checkbox'
-                                name='spouseAlreadyRetired'
-                                value='true'
-                                checked={values.spouseAlreadyRetired}
-                                onChange={() => toggleFormCheck('spouseAlreadyRetired')}
-                                aria-checked={values.spouseAlreadyRetired}
-                              />
-
-                              <span className='checkmark' />
-                            </label>
-                            <span className='checkbox-custom-label mm-setting-form-info'>Already retired</span>
+                            <div className='form-wrap'>
+                              <span className='checkbox-item'>
+                                <label className='check-box'>
+                                  Already retired
+                                  <input
+                                    type='checkbox'
+                                    name='spouseAlreadyRetired'
+                                    value='true'
+                                    checked={values.spouseAlreadyRetired}
+                                    onChange={() => toggleFormCheck('spouseAlreadyRetired')}
+                                    aria-checked={values.spouseAlreadyRetired}
+                                  />
+                                  <span className='geekmark' />
+                                </label>
+                              </span>
+                            </div>
                           </div>
                         </div>
                         <div className='form-group row align-items-center'>

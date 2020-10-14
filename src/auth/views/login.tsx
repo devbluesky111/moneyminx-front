@@ -123,6 +123,9 @@ export const LoginMainSection = () => {
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
+              <div className='session-expired hide-me'>
+              <p>We thought you left, so we logged you out to protect your account.</p>
+            </div>
               <div className='form-wrap'>
                 <Formik
                   validateOnChange={false}
@@ -210,7 +213,7 @@ export const LoginMainSection = () => {
                             <Link to='/auth/forgot-password'>Forgot Password?</Link>
                           </span>
                         </p>
-                        <button className='mm-btn-animate mm-btn-primary' type='submit' disabled={!props.isValid}>
+                        <button className='mm-btn-animate mm-btn-primary' type='submit' disabled={props.isSubmitting}>
                           Log in
                         </button>
                       </form>

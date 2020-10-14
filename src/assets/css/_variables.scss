@@ -23,8 +23,14 @@ $link: #4dccff;
 
 // opacity color
 $grayOpacity: #969eac24;
+$grayOpacity10: #969eac1a;
+$grayOpacity24: #969eac40;
 $grayOpacity40: #969eac40;
 $purpleOpacity: #534cea24;
+$purpleOpacity10: #534cea1a;
+$purpleOpacity50: #534cea80;
+$darkPurpleOpacity40: #23206066;
+$grayBorder20: #a5acb833;
 
 // shadow color
 $whiteShadow: #dbe3f0;
@@ -32,8 +38,10 @@ $whiteInsetShadow: #ebecf1;
 $whiteFadeShadow: #e2e8f3;
 $purpleShadow: #b9b8e0;
 $whiteOutlineButtonShadow: #3a33cc;
-$whiteFadeInsetShadow: #b9b8e0; //fixme
+$whiteFadeInsetShadow: #b9b8e0;
+$pinkShadow30: #fb8e944d;
 
+// blur
 $blurBg: rgba(236, 241, 249, 0.4);
 $modalCardBg: #ecf1f966;
 

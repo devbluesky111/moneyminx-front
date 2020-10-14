@@ -120,11 +120,13 @@
   .mm-button {
     width: 200px;
     font-size: 0.875rem;
-    font-weight: bold;
+    font-weight: 600;
     border: 1.5px solid $purple;
+    height: 48px;
 
     @media (max-width: $md - 1) {
       width: 100%;
+      height: 48px;
     }
   }
 
@@ -193,10 +195,10 @@
   .custom-checkbox .checkmark:after {
     left: 6px;
     top: 1px;
-    width: 7px;
+    width: 5px;
     height: 0.75rem;
     border: solid $purple;
-    border-width: 0 3px 3px 0;
+    border-width: 0 1px 1px 0;
     transform: rotate(45deg);
   }
 
@@ -229,7 +231,7 @@
       align-items: center;
       justify-content: center;
       list-style: none;
-      margin: 0rem;
+      margin: 0;
 
       @media (max-width: $md) {
         flex-wrap: wrap;

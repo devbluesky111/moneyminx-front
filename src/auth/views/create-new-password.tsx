@@ -85,7 +85,7 @@ export const CreateNewPasswordMainSection = () => {
           </div>
 
           <div className='bg-white credentials-wrapper'>
-            <div className='credentials-content create-new-password'>
+            <div className='credentials-content'>
               <div className='logo-img-wrapper'>
                 <LogoImg className='auth-logo'/>
               </div>
@@ -107,40 +107,44 @@ export const CreateNewPasswordMainSection = () => {
                 {(props) => {
                   return (
                     <div className='form-wrap'>
-                      <form onSubmit={props.handleSubmit}>
-                        <div className='email-wrap'>
+                    <form onSubmit={props.handleSubmit}>
+                        <div className='input-wrapper'>
+                          <div className='password-wrap'>
                           <input
                             type={visible.password ? 'text' : 'password'}
                             id='password'
+                            className='password'
                             name='password'
                             placeholder='Set Password'
                             value={props.values.password}
                             onChange={props.handleChange}
                           />
                           <span className='visibility-icon' onClick={togglePasswordVisibility} role='button'>
-                            {getVisibilityIcon('password')}
-                          </span>
-                          <div className='feedback'>{props.errors.password ? props.errors.password : null}</div>
+                            {getVisibilityIcon('password')}</span>
                         </div>
-                        <div className='password-wrap confirm'>
-                          <input
-                            type={visible.confirmPassword ? 'text' : 'password'}
-                            name='confirmPassword'
-                            onChange={props.handleChange}
-                            placeholder='Confirm Password'
-                            value={props.values.confirmPassword}
-                          />
-                          <span className='visibility-icon' onClick={toggleConfirmPasswordVisibility} role='button'>
+                          {props.errors.password && <div className='mt-2 feedback'>{props.errors.password}</div>}
+                        </div>
+                      <div className='input-wrapper'>
+                      <div className='password-wrap confirm'>
+                        <input
+                          type={visible.confirmPassword ? 'text' : 'password'}
+                          className='password'
+                          name='confirmPassword'
+                          onChange={props.handleChange}
+                          placeholder='Confirm Password'
+                          value={props.values.confirmPassword}
+                        />
+                        <span className='visibility-icon' onClick={toggleConfirmPasswordVisibility} role='button'>
                             {getVisibilityIcon('confirmPassword')}
                           </span>
-                          <div className='feedback'>
-                            {props.errors.confirmPassword ? props.errors.confirmPassword : null}
-                          </div>
+                        <div className='feedback'>
+                          {props.errors.confirmPassword ? props.errors.confirmPassword : null}
                         </div>
-
+                      </div>
+                      </div>
                         <button
-                          className='mm-btn-animate mm-btn-primary'
-                          disabled={!props.isValid || props.isSubmitting}
+                          className='mm-btn-animate mm-btn-primary m-b-5'
+                          disabled={props.isSubmitting}
                           type='submit'>
                           Save Password
                         </button>
@@ -149,6 +153,7 @@ export const CreateNewPasswordMainSection = () => {
                   );
                 }}
               </Formik>
+
             </div>
           </div>
         </div>

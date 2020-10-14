@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ReactComponent as DownloadExcel } from '../../../assets/images/allocation/download-excel.svg';
 
 const NetworthHead = () => {
   return (
@@ -69,8 +70,8 @@ const NetworthHead = () => {
 
         <div className='right-box'>
           <button type='button' className='download-btn'>
-            <i className='icon-download' />
-            <span>Download</span> CSV
+            <DownloadExcel />
+            <span className='sm-hide'>Download</span> <span>CSV</span>
           </button>
         </div>
       </div>
