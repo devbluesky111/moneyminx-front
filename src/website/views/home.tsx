@@ -246,7 +246,7 @@ export const HomeBlogSection = () => {
             span.innerHTML = blog?.excerpt?.rendered;
             const excerpt = span.textContent || span.innerText;
 
-            if (width <= BreakPoint.MD && index === blogs?.length - 1) {
+            if (width <= BreakPoint.DESK && index === blogs?.length - 1) {
               return null;
             }
 

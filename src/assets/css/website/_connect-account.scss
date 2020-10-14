@@ -1,5 +1,5 @@
 .credentials-wrapper.connect-wrap {
-  padding-bottom: 183px;
+  padding-bottom: 150px;
 }
 .credentials-content.connect-account .connect-account-btn {
   height: 48px;
@@ -9,6 +9,12 @@
 
   @media (min-width: $md) {
     width: 236px;
+  }
+}
+
+.zillow-wrap {
+  button{
+    margin-right: 40px;
   }
 }
 
@@ -105,8 +111,8 @@ span.zillow-img {
     margin: 0 40px;
   }
   .credentials-content {
-    max-width: 86%;
     padding-left: 52px;
+    max-width: 420px;
   }
   .subscription-bottom-text.connect-account {
     padding: 6px 50px;

@@ -245,7 +245,7 @@ export const SignupMainSection = () => {
                           </div>
                           {props.errors.email && <div className='mt-2 feedback'>{props.errors.email}</div>}
                         </div>
-                        <div className='d-md-flex align-items-center'>
+                        <div className='align-items-center'>
                           <div className='password-wrap'>
                             <input
                               type={visible ? 'text' : 'password'}
@@ -261,9 +261,7 @@ export const SignupMainSection = () => {
                             </span>
                           </div>
                           {props.values.password ? (
-                            <div
-                              className={`ml-2 mt-2 mt-md-0 ${getValidationText().classNames}`}
-                            >
+                            <div className={`ml-2 mt-2 mt-md-0 ${getValidationText().classNames}`}>
                               {getValidationText().text}
                             </div>
                           ) : null}

@@ -120,11 +120,13 @@
   .mm-button {
     width: 200px;
     font-size: 0.875rem;
-    font-weight: bold;
+    font-weight: 600;
     border: 1.5px solid $purple;
+    height: 48px;
 
     @media (max-width: $md - 1) {
       width: 100%;
+      height: 48px;
     }
   }
 
@@ -176,7 +178,7 @@
     border-radius: 0.25rem;
   }
 
-  .custom-checkbox input:checked ~ .checkmark {
+  .custom-checkbox input:checked~.checkmark {
     background-color: $white;
   }
 
@@ -186,7 +188,7 @@
     display: none;
   }
 
-  .custom-checkbox input:checked ~ .checkmark:after {
+  .custom-checkbox input:checked~.checkmark:after {
     display: block;
   }
 
@@ -229,7 +231,7 @@
       align-items: center;
       justify-content: center;
       list-style: none;
-      margin: 0rem;
+      margin: 0;
 
       @media (max-width: $md) {
         flex-wrap: wrap;
@@ -327,6 +329,7 @@
 
     .input-wrap {
       position: relative;
+
       input {
         width: 100%;
         height: 3rem;
@@ -334,16 +337,19 @@
         border-color: $gray;
         padding: 0 1rem;
       }
+
       .visibility-icon {
         position: absolute;
         right: 1rem;
       }
     }
+
     .feedback {
       text-align: right;
       padding-top: 0.5rem;
     }
   }
+
   button {
     width: 100%;
     display: block;
@@ -351,6 +357,7 @@
     cursor: pointer;
     border: 0;
     border-radius: 4px;
+
     &:hover {
       color: $white;
     }
@@ -361,7 +368,79 @@
   .link {
     color: $link;
   }
+
   button {
     min-width: 164px;
+  }
+}
+
+.mm-setting-modal {
+  &__title {
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: $black;
+  }
+
+  &__sub-title {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  &__card {
+    background: $modalCardBg;
+    border-radius: 6px;
+  }
+
+  .mm-copy-link {
+    position: absolute;
+    right: 1.875rem;
+    top: 5.5rem;
+    cursor: pointer;
+  }
+
+  .mm-url-link {
+    padding: 0.5rem 2.813rem 0.5rem 1rem;
+  }
+
+  .mm-setting-modal-checkbox {
+    position: relative;
+  }
+
+  .mm-setting-comming-soon {
+    background: rgba($purple, 0.2);
+    border-radius: 6px;
+
+    p {
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: $purple;
+    }
+  }
+
+  #mm-allocation-type-modal:checked+label,
+  #mm-allocation-asset-modal:checked+label,
+  #mm-allocation-country-modal:checked+label,
+  #mm-allocation-risk-modal:checked+label {
+    color: $primary;
+  }
+
+  #mm-allocation-type-modal:checked~.mm-radio-bg {
+    transform: translateX(0);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  #mm-allocation-asset-modal:checked~.mm-radio-bg {
+    transform: translateX(138px);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  #mm-allocation-country-modal:checked~.mm-radio-bg {
+    transform: translateX(276px);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  #mm-allocation-risk-modal:checked~.mm-radio-bg {
+    transform: translateX(412px);
+    transition: transform 0.2s ease-in-out;
   }
 }

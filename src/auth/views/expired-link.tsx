@@ -12,7 +12,11 @@ import Message from './inc/message';
 import AuthFooter from './auth.footer';
 
 const ExpiredLink = () => {
-  return <ExpiredLinkMainSection />;
+  return (
+    <div className='auth-wrapper'>
+      <ExpiredLinkMainSection />
+    </div>
+  );
 };
 
 export default ExpiredLink;
@@ -51,16 +55,16 @@ export const ExpiredLinkMainSection = () => {
               <div className='guide-bottom'>
                 <h4>Serious about security</h4>
                 <div className='guide-icon-wrap'>
-                <span className='locked-icon'>
-                  <LoginLockIcon />
-                </span>
+                  <span className='locked-icon'>
+                    <LoginLockIcon />
+                  </span>
                   <p>The security of your information is our top priority</p>
                 </div>
                 <h4>Trusted by investors</h4>
                 <div className='guide-icon-wrap'>
-                <span className='shield-icon'>
-                  <LoginShieldIcon />
-                </span>
+                  <span className='shield-icon'>
+                    <LoginShieldIcon />
+                  </span>
                   <p>Investors from all over the world are using Money Minx</p>
                 </div>
               </div>
@@ -70,7 +74,7 @@ export const ExpiredLinkMainSection = () => {
           <div className='bg-white credentials-wrapper'>
             <div className='credentials-content'>
               <div className='logo-img-wrapper'>
-                <LogoImg className='auth-logo'/>
+                <LogoImg className='auth-logo' />
               </div>
               <h2>Expired Link</h2>
               <p>The reset password link you are using already expired. Please request a new one below.</p>
@@ -94,20 +98,20 @@ export const ExpiredLinkMainSection = () => {
                 {(props) => (
                   <div className='form-wrap'>
                     <form onSubmit={props.handleSubmit}>
+                      <div className='align-items-start input-wrapper'>
+                      <div className='email-wrap'>
                       <input
-                        className='email email-wrap m-b-8'
+                        className='email'
                         type='email'
                         name='email'
                         value={props.values.email}
                         placeholder='Your Email'
                         onChange={props.handleChange}
                       />
-
-                      <div className='feedback'>{props.errors.email ? props.errors.email : null}</div>
-
-                      <button
-                        className='mm-btn-animate mm-btn-primary'
-                        disabled={!props.isValid || props.isSubmitting}>
+                      </div>
+                        {props.errors.email && <div className='ml-2 mt-1 mt-md-3 feedback'>{props.errors.email}</div>}
+                      </div>
+                      <button className='mm-btn-animate mm-btn-primary m-b-5' disabled={props.isSubmitting}>
                         Reset Password
                       </button>
                     </form>

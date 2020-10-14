@@ -36,4 +36,7 @@ export const urls = {
   networth: {
     NETWORTH: '/networth',
   },
+  allocations: {
+    ALLOCATIONS: '/allocations',
+  },
 };
