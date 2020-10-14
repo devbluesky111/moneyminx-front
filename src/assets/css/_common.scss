@@ -129,6 +129,28 @@ a {
 .container-fluid {
   padding: 0 40px;
 }
+
+.drop-box.dropdown {
+  border-radius: 4px;
+  color: $gray;
+  background: $white;
+  border: 1px solid $grayOpacity24;
+
+  &:hover, &:focus, &:active {
+    color: $darkGray;
+    border: 1px solid $gray;
+    background: $white;
+    box-shadow: none;
+  }
+
+  &:after {
+    color: $gray;
+    &:hover {
+      color: $darkGray;
+    }
+  }
+}
+
 // media queries
 
 .mm-label {
