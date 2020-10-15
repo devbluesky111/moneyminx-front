@@ -108,8 +108,8 @@ export const ProfileOverview = () => {
             <form>
               <div className='card mm-setting-card'>
                 <div className='card-body'>
-                  <div className='mm-profile-overview__title mm-profile-overview__profile-page'>
-                    Profile Page
+                  <div className='mm-profile-overview__profile-page'>
+                    <span className='mm-profile-overview__title'>Profile Page</span>
                     <span className='mm-profile-overview__profile-page--tag text--primary m-l-15 px-2 py-1'>
                       Coming Soon!
                     </span>
@@ -209,7 +209,7 @@ export const ProfileOverview = () => {
                   <div className='mm-profile-overview__title mm-profile-overview__profile-page'>
                     About You
                     <span className='mm-profile-overview__profile-page--tag text--primary m-l-15 px-2 py-1'>
-                      Comming Soon!
+                      Coming Soon!
                     </span>
                     <p className='text--gray m-t-3 m-b-10'>
                       Profile pages and conversations are coming mid-2021. Get a head start by getting your profile

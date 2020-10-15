@@ -45,7 +45,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
         <div className='mm-profile-overview__title'>
           Profile Picture
           <div className='mm-profile-overview__title-pp' onClick={() => handleFileBrowserOpen(ppRef)} role='button'>
-            <img alt='Owner' src={profileURL} className='rounded-circle mr-2' width='100' height='100' />
+            <img alt='Owner' src={profileURL} className='rounded-circle mr-2 profile-pic-large' width='100' height='100' />
           </div>
         </div>
         <div className='mt-4 mt-sm-0'>

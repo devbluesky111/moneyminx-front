@@ -79,7 +79,7 @@
 
       &--bar {
         margin-top: -1rem;
-        border-bottom: 1px solid $grayOpacity;
+        border-bottom: 1px solid $grayOpacity24;
       }
     }
   }
@@ -206,7 +206,7 @@
   }
 
   .mm-setting-footer {
-    border-top: 1px solid $grayOpacity;
+    border-top: 1px solid $grayOpacity24;
     font-weight: $lighter;
     font-size: 0.938rem;
     height: 4.75rem;
@@ -300,7 +300,7 @@
 }
 
 .mt-vl {
-  border-left: 2px solid $grayOpacity;
+  border-left: 2px solid $grayOpacity24;
   height: 2.5rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -409,8 +409,8 @@
     position: relative;
   }
 
-  .mm-setting-comming-soon {
-    background: rgba($purple, 0.2);
+  .mm-setting-coming-soon {
+    background: $purpleOpacity20;
     border-radius: 6px;
 
     p {
