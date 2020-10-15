@@ -65,7 +65,10 @@
 
         &.active {
           border-bottom: 1.5px solid $primary;
-          color: $darkGray;
+
+          a {
+            color: $darkGray;
+          }
 
         }
       }
@@ -105,10 +108,10 @@
     }
 
     .card-body {
-      padding: 1.5rem 2.5rem;
+      padding: 1.5rem 1.25rem;
 
-      @media (max-width: $sm) {
-        padding: 1.5rem 1.25rem;
+      @media (min-width: $md) {
+        padding: 1.5rem 2.50rem;
       }
     }
 
