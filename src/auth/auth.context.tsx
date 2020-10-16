@@ -7,6 +7,7 @@ import { auth } from './auth-context.types';
 import { AuthType, AuthState } from './auth.types';
 
 const initialState: AuthType = {
+  email: '',
   expires: undefined,
   user: undefined,
   token: undefined,
@@ -97,6 +98,9 @@ function authReducer(state: AuthType = initialState, action: any) {
     }
     case auth.FETCH_PROFILE_FAILURE: {
       return { ...state };
+    }
+    case auth.UPDATE_EMAIL_ADDRESS: {
+      return { ...state, email: action.email};
     }
 
     default: {

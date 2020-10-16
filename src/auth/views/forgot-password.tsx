@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import React, { useState } from 'react';
+import {useAuthState} from 'auth/auth.context';
 import { Link } from 'react-router-dom';
 
 import { postForgotPassword } from 'api/request.api';
@@ -22,6 +23,7 @@ const ForgotPassword = () => {
 export default ForgotPassword;
 
 export const ForgotPasswordMainSection = () => {
+  const {email} = useAuthState();
   const [status, setStatus] = useState<string>('initial');
   const [message, setMessage] = useState<string>('');
   const [isMessage, setIsMessage] = useState<boolean>(false);
@@ -80,7 +82,7 @@ export const ForgotPasswordMainSection = () => {
               <p>Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
 
               <Formik
-                initialValues={{ email: '' }}
+                initialValues={{ email }}
                 validationSchema={forgotPasswordValidation}
                 validateOnChange={false}
                 onSubmit={async (values, actions) => {

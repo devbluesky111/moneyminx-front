@@ -2,7 +2,7 @@ import env from 'app/app.env';
 import { Formik } from 'formik';
 import { isEmpty } from 'lodash';
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { useHistory, Link } from 'react-router-dom';
 
@@ -162,6 +162,10 @@ export const LoginMainSection = () => {
                   }}
                 >
                   {(props) => {
+                    const updateEmailAddress = (event: ChangeEvent<HTMLInputElement>) => {
+                      dispatch({type: 'UPDATE_EMAIL_ADDRESS', email: event.target.value})
+                      return props.handleChange(event)
+                    }
                     const { errors } = props;
 
                     const hasError = (field: 'email' | 'password') => errors[field];
@@ -176,7 +180,7 @@ export const LoginMainSection = () => {
                             <input
                               type='email'
                               className={emailClass}
-                              onChange={props.handleChange}
+                              onChange={updateEmailAddress}
                               onBlur={props.handleBlur}
                               value={props.values.email}
                               name='email'

@@ -90,6 +90,7 @@ export interface ProfileType {
 }
 
 export interface AuthType {
+  email: string;
   expires?: number;
   token?: string;
   user?: ProfileType;
