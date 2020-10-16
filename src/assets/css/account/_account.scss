@@ -1,6 +1,6 @@
 .mm-account-sub-nav {
   padding: 1.25rem 1.25rem;
-  border-bottom: 1px solid rgba($gray, 0.2);
+  border-bottom: 1px solid $grayOpacity20;
 }
 
 .mm-account {
@@ -28,8 +28,8 @@
 
   &__selection {
     &--info {
-      background: rgba($darkBlue, 0.03);
-      border: 1px solid rgba($gray, 0.24);
+      background: $darkBlueOpacity03;
+      border: 1px solid $grayOpacity24;
       box-sizing: border-box;
       border-radius: 4px;
       overflow-y: auto;
@@ -45,7 +45,7 @@
       li {
         padding-left: 1.25rem;
         padding-right: 1.25rem;
-        border-right: 1px solid rgba($gray, 0.2);
+        border-right: 1px solid $grayOpacity20;
         font-size: 0.875rem;
         font-weight: 500;
         color: $darkGray;
@@ -107,12 +107,12 @@
         padding-bottom: 1rem;
 
         &:nth-child(10) {
-          background: linear-gradient(90deg, rgba($purple, 0.04) 0%, rgba($purple, 0) 100%);
+          background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity00 100%);
         }
       }
 
       &--wrapper {
-        border-bottom: 1px solid rgba($gray, 0.2);
+        border-bottom: 1px solid $grayOpacity20;
 
         &:last-child {
           border-bottom: unset;

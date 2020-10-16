@@ -3,7 +3,7 @@
 }
 
 .mm-allocation-sub-navigation {
-  border-bottom: 1.5px solid rgba($gray, 0.2);
+  border-bottom: 1.5px solid $grayOpacity20;
   margin-bottom: 2.313rem;
 
   &__row {
@@ -11,7 +11,7 @@
   }
 
   .mm-allocation-radios {
-    border: 1.5px solid rgba($gray, 0.2);
+    border: 1.5px solid $grayOpacity20;
     height: 3.125rem;
     border-radius: 4px;
 
@@ -175,7 +175,7 @@
         color: $darkGray;
         padding-bottom: 0.625rem;
         padding-top: 0.625rem;
-        border-bottom: 1px solid rgba($gray, 0.2);
+        border-bottom: 1px solid $grayOpacity20;
         text-align: center;
 
         &:first-child {
