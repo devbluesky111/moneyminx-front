@@ -7,4 +7,5 @@ export const auth = {
   ...makeTypes('PROFILE_COMPLETE'),
   ...makeTypes('FETCH_ACCOUNT'),
   ...makeTypes('FETCH_PROFILE'),
+  ...makeTypes('UPDATE_EMAIL_ADDRESS'),
 };
