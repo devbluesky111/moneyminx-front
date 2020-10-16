@@ -4,7 +4,7 @@ import { TokenType, YodleeHookType } from './yodlee.type';
 const useYodlee: YodleeHookType = ({
   containerId = 'fastlinkContainer',
   createScriptTag = true,
-  fastLinkOptions: { fastLinkURL, token, userExperienceFlow = 'Verification' },
+  fastLinkOptions: { fastLinkURL, token, configName = 'Verification' },
   onSuccess,
   onError,
   onExit,
@@ -21,7 +21,7 @@ const useYodlee: YodleeHookType = ({
       script = document.createElement('script');
 
       script.id = 'yodlee-fastlink-script';
-      script.src = 'https://cdn.yodlee.com/fastlink/v3/initialize.js';
+      script.src = 'https://cdn.yodlee.com/fastlink/v4/initialize.js';
       script.async = true;
       script.defer = true;
       script.onload = () => setReady(true);
@@ -59,7 +59,7 @@ const useYodlee: YodleeHookType = ({
     window.fastlink?.open(
       {
         fastLinkURL,
-        params: { userExperienceFlow },
+        params: { configName },
         ...getTokenString(currentToken || token),
         onSuccess: (customerData: any) => {
           setData(customerData);
