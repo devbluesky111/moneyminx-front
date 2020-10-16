@@ -56,7 +56,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   };
 
   return (
-    <section>
+    <section className='mm-settings-card-holder'>
       <div className='card mm-setting-card'>
         <div className='card-body'>
           <form>
