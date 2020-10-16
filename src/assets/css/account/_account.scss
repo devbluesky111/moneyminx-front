@@ -132,4 +132,118 @@
       }
     }
   }
+
+  .mm-account-activity-block {
+    p {
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: $gray;
+    }
+
+    .mm-activity-table {
+      width: 100%;
+      background: $white;
+      box-shadow: 0px 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteFadeInsetShadow;
+      border-radius: 6px;
+      padding: 1.875rem 1.875rem 0 1.875rem;
+
+      &__head {
+        font-weight: 600;
+        font-size: 1rem;
+        color: $gray;
+
+        &--data {
+          padding-bottom: 1.563rem;
+          display: none;
+
+          &:last-child {
+            text-align: right;
+          }
+        }
+      }
+
+      &__body {
+        font-weight: 500;
+        font-size: 0.875rem;
+        color: $darkGray;
+
+        &--data {
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+
+          &:last-child {
+            display: none;
+            text-align: right;
+
+            @media (min-width: $md) {
+              display: block;
+            }
+          }
+        }
+
+        &--data-edited {
+          opacity: 0.2;
+        }
+
+        &--wrapper {
+          border-bottom: 1px solid rgba($gray, 0.2);
+
+          &:nth-child(-n+3) {
+            background: linear-gradient(90deg, rgba($purple, 0.04) 50%, rgba($purple, 0.04) 100%);
+          }
+
+          &:last-child {
+            border-bottom: unset;
+          }
+
+          span {
+            font-weight: 500;
+            font-size: 0.75rem;
+            color: $gray;
+          }
+        }
+
+        &--sm-title {
+          font-weight: 500;
+          font-size: 1rem;
+          color: $black;
+        }
+      }
+    }
+  }
+
+  .mm-add-activity-modal {
+    background: $darkBg;
+    box-shadow: 0px 4px 28px rgba($darkBg, 0.44);
+    border-radius: 6px;
+    color: $white;
+    padding: 1.25rem 1.25rem;
+
+    p {
+      font-weight: 500;
+      font-size: 0.875rem;
+      min-width: 6.25rem;
+      margin-bottom: 0;
+    }
+
+    &__btn {
+      height: 3rem;
+    }
+
+    &__text {
+      height: 3rem;
+    }
+
+    &__checkmark {
+      border: 1px solid $lightBg;
+
+      &--label {
+        margin-left: 1.875rem;
+      }
+    }
+
+    select {
+      height: 3rem;
+    }
+  }
 }
