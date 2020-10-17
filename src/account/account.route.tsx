@@ -9,7 +9,7 @@ function AccountRoute() {
   return (
     <AccountProvider>
       <Switch>
-        <Route exact path='/account-detail/:accountId' component={Account} />
+        <Route exact path='/account-details/:accountId' component={Account} />
         <Route exact path='/account-detail/404' component={NotFound} />
         <Redirect to='/account/404' />
       </Switch>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { fNumber } from 'common/number.helper';
 import { useAlert } from 'common/components/alert';
@@ -18,6 +18,7 @@ import ConnectionAlert from './inc/connection-alert';
 import { useNetworthState } from 'networth/networth.context';
 
 const Networth = () => {
+  const history = useHistory();
   const connectionAlert = useAlert();
 
   const { loading } = useNetworth();
@@ -35,6 +36,7 @@ const Networth = () => {
   const otherAssets = accounts[AccountCategory.OTHER_ASSETS];
   const liabilities = accounts[AccountCategory.LIABILITIES];
   const investmentAssets = accounts[AccountCategory.INVESTMENT_ASSETS];
+
   const isCurrent = (interval: string) =>
     getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
 
@@ -54,6 +56,10 @@ const Networth = () => {
   const currentOtherAssets = curNetworthItem?.otherAssets || 0;
   const currentLiabilities = curNetworthItem?.liabilities || 0;
   const currentInvestmentAsset = curNetworthItem?.investmentAssets || 0;
+
+  const handleAccountDetail = (accountId: number) => {
+    history.push(`/account-details/${accountId}`);
+  };
 
   return (
     <NetworthLayout>
@@ -135,7 +141,7 @@ const Networth = () => {
                         <tbody>
                           {investmentAssets?.map((iAsset, index) => {
                             return (
-                              <tr key={index}>
+                              <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
                                 <td>{iAsset.accountName}</td>
                                 <td>{iAsset.accountType}</td>
                                 {iAsset.balances.map((b, idx) => (
@@ -198,12 +204,12 @@ const Networth = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {otherAssets?.map((iAsset, index) => {
+                          {otherAssets?.map((oAsset, index) => {
                             return (
-                              <tr key={index}>
-                                <td>{iAsset.accountName}</td>
-                                <td>{iAsset.accountType}</td>
-                                {iAsset.balances.map((b, idx) => (
+                              <tr key={index} onClick={() => handleAccountDetail(oAsset.accountId)}>
+                                <td>{oAsset.accountName}</td>
+                                <td>{oAsset.accountType}</td>
+                                {oAsset.balances.map((b, idx) => (
                                   <td key={`${index}-${idx}`} className={gc(b.interval)}>
                                     {b.balance}
                                   </td>
@@ -250,12 +256,12 @@ const Networth = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {liabilities?.map((iAsset, index) => {
+                          {liabilities?.map((liability, index) => {
                             return (
-                              <tr key={index}>
-                                <td>{iAsset.accountName}</td>
-                                <td>{iAsset.accountType}</td>
-                                {iAsset.balances.map((b, idx) => (
+                              <tr key={index} onClick={() => handleAccountDetail(liability.accountId)}>
+                                <td>{liability.accountName}</td>
+                                <td>{liability.accountType}</td>
+                                {liability.balances.map((b, idx) => (
                                   <td key={`${index}-${idx}`} className={gc(b.interval)}>
                                     {b.balance}
                                   </td>
