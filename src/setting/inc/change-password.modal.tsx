@@ -1,6 +1,7 @@
 import { Modal, ModalType } from 'common/components/modal';
 import { Formik } from 'formik';
 import React, { useState } from 'react';
+import {toast} from 'react-toastify';
 
 import { changePassword } from 'auth/auth.service';
 import { useAuthDispatch } from 'auth/auth.context';
@@ -103,6 +104,10 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
               if (error.message) {
                 actions.setFieldError('confirmPassword', error.message);
               }
+            }
+            else {
+              toast('Successfully update password.', { type: 'success' });
+              changePasswordModal.close()
             }
           }}
         >

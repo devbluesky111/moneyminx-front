@@ -12,6 +12,7 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { CurrentSubscription, SettingPageEnum } from 'setting/setting.type';
 import SubscriptionCancelModal from 'setting/inc/subscription-cancel.modal';
 import { patchCancelSubscription, patchEmailSubscription } from 'api/request.api';
+import {useAuthState} from 'auth/auth.context';
 
 interface SettingOverviewProps {
   changeTab: (pageName: SettingPageEnum) => void;
@@ -21,6 +22,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   const changePasswordModal = useModal();
   const subscriptionCancelModal = useModal();
   const { loading, data, error } = useSettings();
+  const {user} = useAuthState();
   const [mailChimpSubscription, setMailChimpSubscription] = useState<boolean>(false);
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
   const [cancelSubscriptionResponse, setCancelSubscriptionResponse] = useState<CurrentSubscription>();
@@ -96,7 +98,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
 
               <label className='col-md-3 col-form-label'>Email Address</label>
               <div className='col-md-9'>
-                <input type='email' className='mm-form-field' placeholder='Enter email' value='hussein@moneyminx.com' />
+                <input type='email' className='mm-form-field' placeholder='Enter email' value={user?.email} />
               </div>
             </div>
 
@@ -117,7 +119,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
               </span>
 
               <div className='col-12 col-md-6'>
-                <button type='button' className='mm-btn-settings mm-btn-animate float-right'>
+                <button type='button' className='mm-btn-settings mm-btn-animate float-right' onClick={() => changePasswordModal.open()}>
                   Change Password
                 </button>
               </div>
