@@ -1,6 +1,6 @@
 {
   "REQUIRED_FIELD": "Field is required",
-  "PASSWORD_MATCH": "Password does not match",
+  "PASSWORD_MATCH": "Passwords do not match",
   "INVALID_EMAIL": "Please enter a valid email",
   "INVALID_PASSWORD": "Please enter a valid password",
   "EMAIL_IS_EMPTY": "You forgot to share your email",

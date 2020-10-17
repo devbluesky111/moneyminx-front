@@ -56,9 +56,8 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
   };
 
   return (
-    <Modal {...changePasswordModal.props} title='' canBeClosed>
+    <Modal {...changePasswordModal.props} title='Change Password' canBeClosed>
       <div className='modal-wrapper change-password-modal'>
-        <h4>Change Password</h4>
         <Formik
           initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
           validate={(values) => {
@@ -86,12 +85,12 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
             }
 
             if (!confirmPassword) {
-              actions.setFieldError('confirmPassword', 'You forgot to include confirm password');
+              actions.setFieldError('confirmPassword', 'You forgot to confirm password');
               hasError = true;
             }
 
             if (newPassword !== confirmPassword) {
-              actions.setFieldError('confirmPassword', 'Password does not match');
+              actions.setFieldError('confirmPassword', 'Passwords do not match');
               hasError = true;
             }
 
@@ -112,7 +111,7 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
           {(props) => (
             <form onSubmit={props.handleSubmit}>
               <div className='input-wrapper'>
-                <label>Current Password</label>
+                <label className='form-subheading'>Current Password</label>
                 <div className='input-wrap'>
                   <input
                     type={isVisible('oldPassword') ? 'text' : 'password'}
@@ -130,7 +129,7 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
                 {props.errors.oldPassword && <div className='feedback'>{props.errors.oldPassword}</div>}
               </div>
               <div className='input-wrapper'>
-                <label>New Password</label>
+                <label className='form-subheading'>New Password</label>
                 <div className='input-wrap'>
                   <input
                     type={isVisible('newPassword') ? 'text' : 'password'}
@@ -146,11 +145,11 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
                   </span>
                 </div>
                 {props.values.newPassword && (
-                  <div className={`${getValidationText().classNames}`}>{getValidationText().text}</div>
+                  <div className={`${getValidationText().classNames} pt-1`}>{getValidationText().text}</div>
                 )}
                 {props.errors.newPassword ? <div className='feedback'>{props.errors.newPassword}</div> : null}
               </div>
-              <div className='input-wrapper'>
+              <div className='input-wrapper pt-0'>
                 <div className='input-wrap'>
                   <input
                     type={isVisible('confirmPassword') ? 'text' : 'password'}
@@ -167,8 +166,8 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
                 </div>
                 {props.errors.confirmPassword && <div className='feedback'>{props.errors.confirmPassword}</div>}
               </div>
-              <button type='submit' className='bg-primary mm-btn-primary-outline'>
-                Submit
+              <button type='submit' className='mm-btn-animate mm-btn-primary'>
+                Save Password
               </button>
             </form>
           )}

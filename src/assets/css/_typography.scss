@@ -36,6 +36,14 @@
   }
 }
 
+.red-links {
+  &:hover {
+    border-bottom: 1.5px solid $redAlert;
+    transition-duration: 0s;
+    color: $redAlert;
+  }
+}
+
 .text-warning {
   color: $yellow !important;
 }

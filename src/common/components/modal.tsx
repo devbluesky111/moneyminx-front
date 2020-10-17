@@ -31,12 +31,11 @@ const Modal: React.FC<Props> = ({
   title,
   onClose,
   children,
-  size = 'md',
   backdrop = true,
   canBeClosed = false,
 }) => {
   const classNames = `${backdrop ? 'modal mm-modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
-  const modalClasses = `modal-dialog modal-dialog-centered modal-${size}`;
+  const modalClasses = `modal-dialog modal-dialog-centered`;
 
   return (
     <div className={classNames} tabIndex={-1} role='dialog' aria-hidden='true'>
@@ -45,9 +44,7 @@ const Modal: React.FC<Props> = ({
           <div className='modal-header'>
             <h5 className='modal-title'>{title}</h5>
             {canBeClosed && (
-              <button type='button' className='close' onClick={() => onClose()}>
-                <span aria-hidden='true'>&times;</span>
-              </button>
+              <button type='button' className='close' onClick={() => onClose()} />
             )}
           </div>
           <div className='modal-body'>{children}</div>

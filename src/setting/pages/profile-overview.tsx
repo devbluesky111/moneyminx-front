@@ -110,15 +110,15 @@ export const ProfileOverview = () => {
                 <div className='card-body'>
                   <div className='mm-profile-overview__profile-page'>
                     <span className='mm-profile-overview__title'>Profile Page</span>
-                    <span className='mm-profile-overview__profile-page--tag text--primary m-l-15 px-2 py-1'>
+                    <span className='mm-profile-overview__profile-page--tag text--primary m-l-15'>
                       Coming Soon!
                     </span>
-                    <p className='text--gray m-t-3 m-b-10'>
+                    <div className='card-sub-title'>
                       Profile pages and conversations are coming mid-2021. Get a head start by getting your profile
                       ready for when we launch.
-                    </p>
-                    <p className='m-b-6 d-md-flex align-items-center justify-content-between'>
-                      Profile page is where you can join the community in discussions about your investments
+                    </div>
+                    <div className='card-section d-md-flex align-items-center justify-content-between'>
+                      <p>Profile page is where you can join the community in discussions about your investments</p>
                       <span className='mm-switch-block'>
                         <input
                           value='true'
@@ -135,10 +135,9 @@ export const ProfileOverview = () => {
                           role='button'
                         />
                       </span>
-                    </p>
-                    <div className='m-b-4 d-md-flex align-items-center justify-content-between mm-asset-allocation'>
-                      <p>
-                        Do you want to share your asset allocation on your profile page?
+                    </div>
+                    <div className='card-section d-md-flex align-items-center justify-content-between mm-asset-allocation'>
+                      <p>Do you want to share your asset allocation on your profile page?
                         <Info className='mt-n1 ml-2' />
                       </p>
                       <div className='mm-radio-block mr-n2 ml-n2 ml-md-0'>
@@ -168,9 +167,8 @@ export const ProfileOverview = () => {
                         </label>
                       </div>
                     </div>
-                    <div className='m-b-4 d-md-flex align-items-center justify-content-between'>
-                      <p>
-                        Do you want to share asset values on your profile page?
+                    <div className='card-section--last d-md-flex align-items-center justify-content-between'>
+                      <p>Do you want to share asset values on your profile page?
                         <Info className='mt-n1 ml-2' />
                       </p>
                       <div className='mm-radio-block mr-md-n2 ml-n2 ml-md-0'>
@@ -208,13 +206,13 @@ export const ProfileOverview = () => {
                 <div className='card-body'>
                   <div className='mm-profile-overview__title mm-profile-overview__profile-page'>
                     About You
-                    <span className='mm-profile-overview__profile-page--tag text--primary m-l-15 px-2 py-1'>
+                    <span className='mm-profile-overview__profile-page--tag text--primary m-l-15'>
                       Coming Soon!
                     </span>
-                    <p className='text--gray m-t-3 m-b-10'>
+                    <div className='card-sub-title'>
                       Profile pages and conversations are coming mid-2021. Get a head start by getting your profile
                       ready for when we launch.
-                    </p>
+                    </div>
                     <div>
                       <div className='mm-profile-overview__form'>
                         <div className='form-group row align-items-center'>
@@ -322,12 +320,12 @@ export const ProfileOverview = () => {
                     Specialized Intelligence
                     <Info className='mt-n1 ml-2' />
                     <Shield className='float-right mt-1' />
-                    <p className='text--gray m-t-3 mb-4'>
+                    <div className='card-sub-title'>
                       Enter your data below and opt-in for specialized insights including Minks Winks and Minks
                       Measure-up. Minks Winks includes tips and intelligence based on machine learning. Minks Measure-up
                       allows you to see how your allocation chart stacks up to your investor peers. We will never share
                       or sell your data.
-                    </p>
+                    </div>
                     <div>
                       <div className='mm-profile-overview__form'>
                         <div className='form-group row align-items-center'>
@@ -414,7 +412,7 @@ export const ProfileOverview = () => {
                             <FormControl
                               type='number'
                               name='targetedRetirementAge'
-                              value={values.targetedRetirementAge}
+                              value={values.targetedRetirementAge || ''}
                               onChange={handleChange}
                               className='form-control form-control-lg mr-sm-2'
                               disabled={values.alreadyRetired}
@@ -481,7 +479,7 @@ export const ProfileOverview = () => {
                             <FormControl
                               type='number'
                               name='spouseTargetedRetirementAge'
-                              value={values.spouseTargetedRetirementAge}
+                              value={values.spouseTargetedRetirementAge  || ''}
                               onChange={handleChange}
                               className='mr-sm-2 form-control form-control-lg'
                               disabled={values.spouseAlreadyRetired}
@@ -513,7 +511,7 @@ export const ProfileOverview = () => {
                               {[0, 1, 2, 3, 4].map((dependant, index) => {
                                 return (
                                   <option value={dependant} aria-selected={values.dependants === dependant} key={index}>
-                                    {dependant}
+                                    {dependant  || ''}
                                   </option>
                                 );
                               })}
@@ -524,7 +522,7 @@ export const ProfileOverview = () => {
                       <div className='mm-profile-overview__title mm-profile-overview__profile-page mt-4'>
                         <div className='float-sm-left fs-16'>Turn on Minx Measure-up</div>
                         <div className='d-flex justify-content-between align-items-center mt-sm-0 mt-2'>
-                          <span className='mm-profile-overview__profile-page--tag text--primary ml-0 ml-sm-3 px-2 py-1'>
+                          <span className='mm-profile-overview__profile-page--tag text--primary ml-0 ml-sm-3'>
                             Coming Soon!
                           </span>
                           <span className='mm-switch-block'>
@@ -543,15 +541,15 @@ export const ProfileOverview = () => {
                             />
                           </span>
                         </div>
-                        <p className='text--gray m-t-1 m-b-6'>
+                        <div className='card-description'>
                           You will be able to see how your portfolio compares to others with a similar profile. Your
                           data will be included in the aggregated data but not individually.
-                        </p>
+                        </div>
                       </div>
                       <div className='mm-profile-overview__title mm-profile-overview__profile-page'>
                         <div className='float-sm-left fs-16'>Turn on Minx Winks</div>
                         <div className='d-flex justify-content-between align-items-center mt-sm-0 mt-2'>
-                          <span className='mm-profile-overview__profile-page--tag text--primary ml-0 ml-sm-3 px-2 py-1'>
+                          <span className='mm-profile-overview__profile-page--tag text--primary ml-0 ml-sm-3'>
                             Coming Soon!
                           </span>
                           <span className='mm-switch-block'>
@@ -570,10 +568,10 @@ export const ProfileOverview = () => {
                             />
                           </span>
                         </div>
-                        <p className='text--gray m-t-1'>
+                        <div className='card-description'>
                           You will receive intelligent tips and insights custom crafted based on your accounts and
                           profile details.
-                        </p>
+                        </div>
                       </div>
                     </div>
                   </div>

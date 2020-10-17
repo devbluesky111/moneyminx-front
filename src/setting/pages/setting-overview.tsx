@@ -58,7 +58,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   };
 
   return (
-    <section className='mm-settings-card-holder'>
+    <section>
       <div className='card mm-setting-card'>
         <div className='card-body'>
           <form>
@@ -166,7 +166,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
               <label className='col-5 col-md-3 col-form-label'>Current Plan</label>
 
               <span className='col-7 col-md-3 mm-setting-form-info col-form-label ml-0 mb-4'>
-                {capitalize(currentSubscription?.subscriptionStatus || '')}
+                {capitalize(currentSubscription?.subscriptionStatus || 'FREE')}
               </span>
 
               <div className='col-12 col-md-6'>
@@ -184,7 +184,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
       </div>
       <div className='card mm-setting-card'>
         <div className='card-body'>
-          <Link className='mm-setting-card--subscription' to='#' onClick={handleCancelSubscription}>
+          <Link className='mm-setting-card--subscription red-links' to='#' onClick={handleCancelSubscription}>
             Cancel Subscription
           </Link>
         </div>
