@@ -13,6 +13,7 @@
 .mm-modal-backdrop {
   @extend .modal-backdrop;
   background-color: transparent;
+  overflow-y: scroll;
 }
 
 .modal-btn-wrapper {

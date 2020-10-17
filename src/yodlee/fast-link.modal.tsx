@@ -26,7 +26,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
     toast('Error Occurred', { type: 'error' });
   };
 
-  const onExit = async (args: any) => {
+  const onClose = async (args: any) => {
     setLoading(true);
     const { error } = await getRefreshedProfile({ dispatch });
     if (error) {
@@ -40,7 +40,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
     fastLinkOptions,
     onSuccess,
     onError,
-    onExit,
+    onClose,
   });
 
   const token = (fastLinkOptions.token as any) || '';

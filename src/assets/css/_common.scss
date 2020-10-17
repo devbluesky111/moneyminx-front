@@ -136,7 +136,9 @@ a {
   background: $white;
   border: 1px solid $grayOpacity24;
 
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     color: $darkGray;
     border: 1px solid $gray;
     background: $white;
@@ -221,7 +223,7 @@ a {
 
 #fastlinkContainer {
   iframe {
-    height: 600px !important;
+    height: 100%;
   }
 }
 
@@ -485,7 +487,8 @@ select {
   font-size: 0.875rem;
   color: $darkGray;
 
-  &:focus, &:hover {
+  &:focus,
+  &:hover {
     outline: none;
     border: 1px solid $gray;
   }
