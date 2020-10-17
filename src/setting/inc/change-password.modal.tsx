@@ -1,10 +1,10 @@
-import { Modal, ModalType } from 'common/components/modal';
 import { Formik } from 'formik';
+import { toast } from 'react-toastify';
 import React, { useState } from 'react';
-import {toast} from 'react-toastify';
 
 import { changePassword } from 'auth/auth.service';
 import { useAuthDispatch } from 'auth/auth.context';
+import { Modal, ModalType } from 'common/components/modal';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
 import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
 
@@ -100,14 +100,12 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
             }
 
             const { error } = await changePassword({ dispatch, payload: { newPassword, oldPassword } });
-            if (error) {
-              if (error.message) {
-                actions.setFieldError('confirmPassword', error.message);
-              }
-            }
-            else {
-              toast('Successfully update password.', { type: 'success' });
-              changePasswordModal.close()
+
+            if (error && error.message) {
+              actions.setFieldError('confirmPassword', error.message);
+            } else {
+              toast('Password updated successfully.', { type: 'success' });
+              changePasswordModal.close();
             }
           }}
         >
