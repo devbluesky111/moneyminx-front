@@ -8,7 +8,6 @@ import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { pricingDetailConstant } from 'common/common.constant';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as CheckRound } from 'assets/icons/check-round.svg';
 import { ReactComponent as PricingTickIcon } from '../../assets/images/pricing/tick-icon.svg';
 
 const stripePromise = loadStripe(appEnv.STRIPE_PUBLIC_KEY);
