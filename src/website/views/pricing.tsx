@@ -82,8 +82,9 @@ export const PricingTable = () => {
               <div className='price-table' key={index}>
                 <div className='price-heading'>
                   <h2>{pt.name}</h2>
-                  <p>{type === 'yearly' ? `$${pt.price}/Year` : `$${pt.price}/Month`}</p>
-                  {type === 'yearly' ? <span className='save-percentage'>{'Save $89'}</span> : null}
+                  <p>
+                    {type === 'yearly' ? `$${pt.price}/Year` : `$${pt.price}/Month`}</p>
+                    {type === 'yearly' ? <span className='save-percentage'>{'Save $89'}</span> : null}
                 </div>
                 <ul className='features-list'>
                   <li>
@@ -140,7 +141,7 @@ export const PricingTable = () => {
                   </li>
                 </ul>
                 <Link to={`/auth/signup?priceId=${pt.priceId}`}>
-                  <button className='mm-btn-animate trial-btn bg-white text-primary ml-3 btn-xs-block'>
+                  <button className='mm-btn-animate trial-btn ml-3 btn-xs-block'>
                     Start 30 day trial
                   </button>
                 </Link>
