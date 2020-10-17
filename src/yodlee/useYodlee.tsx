@@ -4,10 +4,10 @@ import { TokenType, YodleeHookType } from './yodlee.type';
 const useYodlee: YodleeHookType = ({
   containerId = 'fastlinkContainer',
   createScriptTag = true,
-  fastLinkOptions: { fastLinkURL, token, configName = 'Verification' },
+  fastLinkOptions: { fastLinkURL, token, configName = 'Aggregation' },
   onSuccess,
   onError,
-  onExit,
+  onClose,
   onEvent,
 }) => {
   const [ready, setReady] = useState(false);
@@ -71,7 +71,7 @@ const useYodlee: YodleeHookType = ({
           // tslint:disable-next-line: no-unused-expression
           onError && onError(fastLinkError);
         },
-        onExit,
+        onClose,
         onEvent,
       },
       containerId

@@ -19,7 +19,7 @@ export interface YodleeHookPropsType {
   fastLinkOptions: FastLinkOptionsType;
   onSuccess?: (args: any) => void;
   onError?: (args: any) => void;
-  onExit?: (args: any) => void;
+  onClose?: (args: any) => void;
   onEvent?: (args: any) => void;
 }
 
