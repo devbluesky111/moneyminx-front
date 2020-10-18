@@ -15,7 +15,7 @@ const EmailNeededModal: React.FC<Props> = ({ emailNeededModal }) => {
         </p>
         <div className='modal-btn-wrapper'>
           <button
-            className='mm-btn bg-primary mm-btn-primary-outline text-white'
+            className='mm-btn-animate mm-btn-primary'
             onClick={() => emailNeededModal.close()}
           >
             Ok

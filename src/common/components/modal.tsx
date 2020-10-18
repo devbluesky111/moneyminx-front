@@ -46,9 +46,7 @@ const Modal: React.FC<Props> = ({
           <div className='modal-header'>
             <h5 className='modal-title'>{title}</h5>
             {canBeClosed && (
-              <button type='button' className='close' onClick={() => onClose()}>
-                <span aria-hidden='true'>&times;</span>
-              </button>
+              <button type='button' className='close' onClick={() => onClose()} />
             )}
           </div>
           <div className='modal-body'>{children}</div>

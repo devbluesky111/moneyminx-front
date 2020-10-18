@@ -32,7 +32,7 @@ const AssociateEmailModal: React.FC<Props> = ({ associateModal, message, handleS
         <h4>Existing Account Found</h4>
         <p>{message}</p>
         <div className='modal-btn-wrapper'>
-          <button className='mm-btn bg-primary mm-btn-primary-outline text-white' onClick={handleSuccess}>
+          <button className='mm-btn-animate mm-btn-primary' onClick={handleSuccess}>
             {acceptText}
           </button>
         </div>
