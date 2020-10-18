@@ -356,6 +356,8 @@ button:focus {
 .money-minx-header .btn-group {
   position: static;
 }
+
+// App sidebar
 .profilemenu {
   display: block;
   position: fixed;
@@ -368,7 +370,6 @@ button:focus {
   background: $white;
   box-shadow: 0 8px 8px $whiteShadow;
   border-radius: 6px 0 0 6px;
-  padding: 25px 0;
   padding-top: 75px;
   transition: 0.3s all;
   right: -300px;
@@ -376,24 +377,32 @@ button:focus {
 .profilemenu.open {
   right: 0;
 }
-.profilemenu ul + ul {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid $grayOpacity24;
-}
+
 .profilemenu ul li a {
   font-weight: 500;
   font-size: 15px;
   color: $gray;
-  padding: 10px 25px;
+  padding: 14px 25px;
   display: block;
 }
+.sidebar-custom-hr {
+  width: calc(100% - 50px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .profilemenu ul li:hover {
   background: linear-gradient(90deg, rgba(83, 76, 234, 0.14) 0%, rgba(83, 76, 234, 0) 100%);
+
+  a {
+    color: $purple;
+  }
+
+  .sidebar-icon {
+    stroke: $purple;
+  }
 }
-.profilemenu ul li:hover a {
-  color: $purple;
-}
+
 .profilemenu ul li img {
   max-width: 18px;
   vertical-align: -2px;
