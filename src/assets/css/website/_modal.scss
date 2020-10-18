@@ -1,9 +1,17 @@
-.modal-md {
-  max-width: 696px;
+.modal-xs {
+  max-width: 100%;
+
+  @media (min-width: $md) {
+    max-width: 372px;
+  }
 }
 
 .modal-sm {
   max-width: 431px;
+}
+
+.modal-md {
+  max-width: 696px;
 }
 
 .modal-show {

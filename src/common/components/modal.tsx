@@ -4,6 +4,7 @@ interface Size {
   lg: string;
   md: string;
   sm: string;
+  xs: string;
 }
 
 interface Props {
