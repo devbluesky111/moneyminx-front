@@ -29,6 +29,7 @@ export interface Account {
   yodleeId: number;
   accountName: string;
   providerName: string;
+  providerLogo: string;
   profileId: number;
   category: any;
   accountDetails: any;
@@ -90,6 +91,7 @@ export interface ProfileType {
 }
 
 export interface AuthType {
+  email: string;
   expires?: number;
   token?: string;
   user?: ProfileType;

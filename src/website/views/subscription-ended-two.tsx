@@ -43,7 +43,7 @@ export const PricingTable = () => {
                         </span>
                         Wealthfront
                       </p>
-                      <button className='delete-btn'>
+                      <button className='delete-btn mm-btn-animate'>
                         <a href='link9'>Delete Account</a>
                       </button>
                     </div>
@@ -56,7 +56,7 @@ export const PricingTable = () => {
                         </span>
                         Peer Street
                       </p>
-                      <button className='delete-btn'>
+                      <button className='delete-btn mm-btn-animate'>
                         <a href='link9'>Delete Account</a>
                       </button>
                     </div>
@@ -69,7 +69,7 @@ export const PricingTable = () => {
                         </span>
                         Merill Edge IRA
                       </p>
-                      <button className='delete-btn'>
+                      <button className='delete-btn mm-btn-animate'>
                         <a href='link9'>Delete Account</a>
                       </button>
                     </div>
@@ -85,7 +85,7 @@ export const PricingTable = () => {
                         </span>
                         My own account
                       </p>
-                      <button className='delete-btn'>
+                      <button className='delete-btn mm-btn-animate'>
                         <a href='link9'>Delete Account</a>
                       </button>
                     </div>
@@ -95,7 +95,7 @@ export const PricingTable = () => {
             </div>
           </div>
         </div>
-        <div className='row'>
+        <div className='action-overlay'>
           <div className='subscription-bottom-text'>
             <div className='subs-content one'>
               <a href='link12'>

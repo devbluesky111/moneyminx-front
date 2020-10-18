@@ -41,7 +41,7 @@ export const ProfileOverview = () => {
       <div className='card mm-setting-card'>
         <div className='card-body d-flex justify-content-between align-items-center'>
           <div className='mm-profile-overview__title'>
-            {fullName}
+            {fullName || 'My Account'}
             <span className='text-primary px-2'>#{user.id}</span>
             <Info className='mt-n1' />
           </div>
@@ -108,8 +108,8 @@ export const ProfileOverview = () => {
             <form>
               <div className='card mm-setting-card'>
                 <div className='card-body'>
-                  <div className='mm-profile-overview__title mm-profile-overview__profile-page'>
-                    Profile Page
+                  <div className='mm-profile-overview__profile-page'>
+                    <span className='mm-profile-overview__title'>Profile Page</span>
                     <span className='mm-profile-overview__profile-page--tag text--primary m-l-15 px-2 py-1'>
                       Coming Soon!
                     </span>
@@ -127,7 +127,7 @@ export const ProfileOverview = () => {
                           className='mm-switch-input'
                           checked={values.profileEnabled}
                           aria-checked={values.profileEnabled}
-                          onChange={() => {}}
+                          onChange={() => { }}
                         />
                         <label
                           className='mm-switch mt-md-0 mt-3'
@@ -209,7 +209,7 @@ export const ProfileOverview = () => {
                   <div className='mm-profile-overview__title mm-profile-overview__profile-page'>
                     About You
                     <span className='mm-profile-overview__profile-page--tag text--primary m-l-15 px-2 py-1'>
-                      Comming Soon!
+                      Coming Soon!
                     </span>
                     <p className='text--gray m-t-3 m-b-10'>
                       Profile pages and conversations are coming mid-2021. Get a head start by getting your profile
@@ -421,18 +421,22 @@ export const ProfileOverview = () => {
                             />
                           </div>
                           <div className='col text-md-center  mt-3 mt-md-0'>
-                            <label className='custom-checkbox'>
-                              <input
-                                type='checkbox'
-                                name='alreadyRetired'
-                                value='true'
-                                checked={values.alreadyRetired}
-                                onChange={() => toggleFormCheck('alreadyRetired')}
-                                aria-checked={values.alreadyRetired}
-                              />
-                              <span className='checkmark' />
-                            </label>
-                            <span className='checkbox-custom-label mm-setting-form-info'>Already retired</span>
+                            <div className='form-wrap'>
+                              <span className='checkbox-item'>
+                                <label className='check-box'>
+                                  Already retired
+                                  <input
+                                    type='checkbox'
+                                    name='alreadyRetired'
+                                    value='true'
+                                    checked={values.alreadyRetired}
+                                    onChange={() => toggleFormCheck('alreadyRetired')}
+                                    aria-checked={values.alreadyRetired}
+                                  />
+                                  <span className='geekmark' />
+                                </label>
+                              </span>
+                            </div>
                           </div>
                         </div>
                         <div className='form-group row align-items-center'>
@@ -484,19 +488,22 @@ export const ProfileOverview = () => {
                             />
                           </div>
                           <div className='col text-md-center mt-3 mt-md-0'>
-                            <label className='custom-checkbox'>
-                              <input
-                                type='checkbox'
-                                name='spouseAlreadyRetired'
-                                value='true'
-                                checked={values.spouseAlreadyRetired}
-                                onChange={() => toggleFormCheck('spouseAlreadyRetired')}
-                                aria-checked={values.spouseAlreadyRetired}
-                              />
-
-                              <span className='checkmark' />
-                            </label>
-                            <span className='checkbox-custom-label mm-setting-form-info'>Already retired</span>
+                            <div className='form-wrap'>
+                              <span className='checkbox-item'>
+                                <label className='check-box'>
+                                  Already retired
+                                  <input
+                                    type='checkbox'
+                                    name='spouseAlreadyRetired'
+                                    value='true'
+                                    checked={values.spouseAlreadyRetired}
+                                    onChange={() => toggleFormCheck('spouseAlreadyRetired')}
+                                    aria-checked={values.spouseAlreadyRetired}
+                                  />
+                                  <span className='geekmark' />
+                                </label>
+                              </span>
+                            </div>
                           </div>
                         </div>
                         <div className='form-group row align-items-center'>

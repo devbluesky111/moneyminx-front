@@ -59,19 +59,20 @@ $sizes: 20;
 // classes for text color (eg: .text--gray)
 // Define a named list of our colors
 $colors: (
-  'primary': #534cea,
-  'gray': #969eac,
-  'black': #000000,
+  'primary': $purple,
+  'gray': $gray,
+  'black': $black,
+  'darkGray': $darkGray,
 );
 
 // Loop over each color, where $n is the name (or key), $c is the color value
 @each $n, $c in $colors {
   .text--#{$n} {
-    color: #{$c};
+    color: #{$c} !important;
   }
 
   .bg--#{$n} {
-    background-color: #{$c};
+    background-color: #{$c} !important;
   }
 }
 

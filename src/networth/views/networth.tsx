@@ -69,7 +69,7 @@ const Networth = () => {
                     <ul>
                       <li className='inv-data'>
                         <span>Investment Assets</span>
-                        <h3>$ {fNumber(currentInvestmentAsset)}</h3>
+                        <h3>${fNumber(currentInvestmentAsset)}</h3>
                       </li>
                       <li className='other-data'>
                         <span>Other Assets</span>
@@ -103,7 +103,7 @@ const Networth = () => {
                       }}
                     >
                       <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
-                      <Link to='#' className='btn-blue btn-full'>
+                      <Link to='#' className='mm-btn-animate mm-btn-primary'>
                         Complete Profile
                       </Link>
                     </div>
@@ -349,7 +349,7 @@ const Networth = () => {
             </div>
           </div>
         </div>
-        <ConnectionAlert connectionAlert={connectionAlert} message='2 Connections required attention' />
+        <ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />
       </section>
     </NetworthLayout>
   );

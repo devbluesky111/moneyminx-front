@@ -64,8 +64,8 @@ const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
                   Get our diversified investor newsletter
                 </span>
               </div>
-              <div className='mm-setting-comming-soon text-center'>
-                <p className='py-1'>Comming Soon!</p>
+              <div className='mm-setting-coming-soon text-center'>
+                <p className='py-1'>Coming Soon!</p>
               </div>
             </Card.Body>
           </Card>

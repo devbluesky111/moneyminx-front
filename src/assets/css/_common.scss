@@ -129,6 +129,30 @@ a {
 .container-fluid {
   padding: 0 40px;
 }
+
+.drop-box.dropdown {
+  border-radius: 4px;
+  color: $gray;
+  background: $white;
+  border: 1px solid $grayOpacity24;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $darkGray;
+    border: 1px solid $gray;
+    background: $white;
+    box-shadow: none;
+  }
+
+  &:after {
+    color: $gray;
+    &:hover {
+      color: $darkGray;
+    }
+  }
+}
+
 // media queries
 
 .mm-label {
@@ -151,7 +175,7 @@ a {
 .mm-form-field {
   height: 48px;
   font-size: 0.875rem;
-  border: 1px solid $grayOpacity;
+  border: 1px solid $grayOpacity24;
   border-radius: 4px;
   padding: 0 20px;
   color: $darkGray;
@@ -199,7 +223,7 @@ a {
 
 #fastlinkContainer {
   iframe {
-    height: 600px !important;
+    height: 100%;
   }
 }
 
@@ -267,7 +291,7 @@ a {
     height: 1.375rem;
     border-radius: 12.5px;
     margin: 0;
-    border: 1px solid rgba($primary, 0.3);
+    border: 1px solid $grayOpacity20;
     box-sizing: border-box;
     display: block;
     position: relative;
@@ -285,8 +309,8 @@ a {
       position: absolute;
       top: 1px;
       left: 1px;
-      background: rgba($gray, 0.7);
-      box-shadow: 0px 2px 2px rgba($primary, 0.3);
+      background: $grayOpacity70;
+      box-shadow: 0 2px 2px $purpleOpacity30;
       transition: ease-out 0.2s;
     }
   }
@@ -358,7 +382,7 @@ a {
     height: 1.25rem;
     width: 1.25rem;
     background-color: $white;
-    border: 1px solid rgba($primary, 0.2);
+    border: 1px solid $purpleOpacity20;
     border-radius: 50%;
 
     &:after {
@@ -391,7 +415,7 @@ a {
 hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
-  border: 1px solid rgba($gray, 0.2);
+  border: 1px solid $grayOpacity20;
 }
 .mm-overview-block {
   background: $lightBg;
@@ -427,17 +451,45 @@ hr {
   }
 }
 
+.hide-me {
+  display: none;
+}
+
 // coming soon badge
 
 .mm-coming-soon {
   font-size: 0.6875rem;
   vertical-align: top;
   color: $purple;
-  background-color: $purpleOpacity;
+  background-color: $purpleOpacity20;
   font-weight: 500;
   border-radius: 6px;
 
   @media (min-width: $md) {
     font-size: 1rem;
+  }
+}
+
+// dropdowns
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Some browsers will not display the caret when using calc, so we put the fallback first */
+  background: url('../images/signup/arrow.svg') white no-repeat 98.5% !important; /* !important used for overriding all other customisations */
+  background: url('../images/signup/arrow.svg') white no-repeat calc(100% - 10px) !important; /* Better placement regardless of input width */
+  display: table;
+  width: 100%;
+  height: 48px;
+  padding: 1px 16px;
+  border: 1px solid $grayOpacity24;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: $darkGray;
+
+  &:focus,
+  &:hover {
+    outline: none;
+    border: 1px solid $gray;
   }
 }

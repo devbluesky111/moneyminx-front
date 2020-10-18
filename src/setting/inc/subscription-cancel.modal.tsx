@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Modal, ModalType } from 'common/components/modal';
+import { Link } from 'react-router-dom';
 
 interface Props {
   subscriptionEnd?: number | Date;
@@ -11,9 +12,8 @@ const SubscriptionCancelModal: React.FC<Props> = ({ subscriptionCancelModal, sub
   const endingDate = subscriptionEnd ? moment(subscriptionEnd).format('MM/DD/YY') : 'xx/xx/xx';
 
   return (
-    <Modal {...subscriptionCancelModal.props} title='' canBeClosed>
+    <Modal {...subscriptionCancelModal.props} title='Sorry to see you go' canBeClosed>
       <div className='modal-wrapper signup-modal modal-md subscription-cancel-modal'>
-        <h4>Sorry to see you go</h4>
         <p>
           Your account will remain active until <span>{endingDate}</span>. Please let us know why you decided to cancel
           and if there is anything we can do to improve our service by emailing{' '}
@@ -24,8 +24,11 @@ const SubscriptionCancelModal: React.FC<Props> = ({ subscriptionCancelModal, sub
             className='mm-btn bg-primary mm-btn-primary-outline text-white'
             onClick={() => subscriptionCancelModal.close()}
           >
-            Ok
+            Never mind
           </button>
+          <div className='create-new-btn text-center'>
+            <Link to='/dashboard'>Confirm Cancellation</Link>
+          </div>
         </div>
       </div>
     </Modal>

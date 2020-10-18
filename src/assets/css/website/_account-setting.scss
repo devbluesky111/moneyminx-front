@@ -40,6 +40,12 @@ ul.bank-list {
       font-size: 1.125rem;
       font-weight: 500;
       line-height: 1.4375rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+      }
     }
 
     &.completed {
@@ -119,7 +125,7 @@ ul.bank-list {
 }
 
 .form-heading {
-  border-bottom: 1px solid $grayOpacity;
+  border-bottom: 1px solid $grayOpacity24;
 }
 
 .credentials-wrapper.account-setting .form-wrap input {
@@ -170,7 +176,7 @@ span.form-subheading {
 
 .account-category .category-list {
   display: table;
-  border: 1.5px solid $grayOpacity;
+  border: 1.5px solid $grayOpacity24;
   width: 100%;
   border-radius: 4px;
   padding-left: 0;
@@ -186,7 +192,8 @@ span.form-subheading {
   font-size: 0.875rem;
   font-weight: 400;
 
-  &.active, &:hover {
+  &.active,
+  &:hover {
     color: $primary;
   }
 }
@@ -228,7 +235,7 @@ span.form-subheading {
   width: 100%;
   height: 48px;
   padding: 1px 16px;
-  border: 1px solid $grayOpacity;
+  border: 1px solid $grayOpacity24;
   border-radius: 4px;
   font-size: 0.875rem;
   color: $darkGray;
@@ -279,7 +286,6 @@ span.form-subheading {
   }
 
   @media (max-width: $sm) {
-
     &.radio {
       margin-left: -28px;
       display: inline;
@@ -287,8 +293,8 @@ span.form-subheading {
   }
 
   @media (max-width: $md) {
-      position: static;
-      display: block;
+    position: static;
+    display: block;
 
     &.radio {
       margin-left: -28px;
@@ -338,8 +344,8 @@ span.form-subheading {
   }
 }
 
-.estimated-annual-return  {
-  border-top: 1px solid $grayOpacity;
+.estimated-annual-return {
+  border-top: 1px solid $grayOpacity24;
   padding-top: 41px;
   position: relative;
 
@@ -387,10 +393,8 @@ span.form-subheading {
   color: $darkGray;
 }
 
-
-
 .form-divider {
-  border-top: 1px solid $grayOpacity;
+  border-top: 1px solid $grayOpacity24;
   padding-top: 34px;
 }
 
@@ -458,7 +462,7 @@ span.form-subheading {
 
 .setting-button-wrap.flex-box {
   justify-content: right !important;
-  border-bottom: 1px solid $grayOpacity;
+  border-bottom: 1px solid $grayOpacity24;
   padding-bottom: 28px;
   margin-bottom: 30px;
 }
@@ -469,7 +473,7 @@ span.form-subheading {
 
 .flex-box.learn-more-security {
   margin: 3rem 0 6rem 0;
-  border-top: 1px solid $grayOpacity;
+  border-top: 1px solid $grayOpacity24;
   height: 1.5rem;
   padding-top: 2rem;
 }
@@ -897,7 +901,6 @@ span.next-icon {
       width: 47%;
     }
   }
-
 }
 .input-add-on {
   position: absolute;
@@ -908,4 +911,11 @@ span.next-icon {
   font-size: 0.875rem;
   line-height: 1.125rem;
   color: $gray;
+}
+.connections-account-name {
+  padding-left: 0.8125rem;
+
+  @media (min-width: $md) {
+    padding-left: 1rem;
+  }
 }

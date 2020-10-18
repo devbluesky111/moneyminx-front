@@ -75,8 +75,6 @@ const AccountSetting = () => {
     return <CircularSpinner />;
   }
 
-  const providerNames = accountsByProviderName ? Object.keys(accountsByProviderName) : [''];
-
   const handleProviderChange = (provider: string) => {
     setProviderName(provider);
   };
@@ -136,18 +134,23 @@ const AccountSetting = () => {
 
                 <div className='form-wrap'>
                   <ul className='bank-list'>
-                    {providerNames.map((provider, index) => {
-                      return (
-                        <li
-                          key={index}
-                          onClick={() => handleProviderChange(provider)}
-                          role='button'
-                          className={completedProviderName.includes(provider) ? 'completed' : ''}
-                        >
-                          <Link to='#'>{provider}</Link>
-                        </li>
-                      );
-                    })}
+
+                    {
+                     accountsByProviderName ?  Object.keys(accountsByProviderName).map((pName, index)=>{
+                        const [account] = accountsByProviderName[pName];
+
+                        return (
+                          <li
+                            key={index}
+                            onClick={() => handleProviderChange(pName)}
+                            role='button'
+                            className={completedProviderName.includes(pName) ? 'completed' : ''}
+                          >
+                            <Link to='#'>{account.providerLogo ? <img src={account.providerLogo} alt={pName}/>: pName}</Link>
+                          </li>
+                        );
+                     }) : null
+                    }
                   </ul>
 
                   <div className='form-heading'>
