@@ -47,7 +47,9 @@ export const PricingTable = () => {
           </div>
         </div>
       </div>
-      <div className='row mm-subscription-ended-three'>
+
+      <div className='action-overlay'>
+        <div className='row mm-subscription-ended-three'>
         <div className='subscription-bottom-text positive'>
           <div className='subs-content one'>
             <a href='link12'>
@@ -68,6 +70,7 @@ export const PricingTable = () => {
             </button>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

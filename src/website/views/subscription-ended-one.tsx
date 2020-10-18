@@ -9,7 +9,7 @@ const SubscriptionEnded = () => {
 export default SubscriptionEnded;
 export const PricingTable = () => {
   return (
-    <div className='px-4 py-5'>
+    <div className='sub-ended-wrapper'>
       <div className='container'>
         <div className='row'>
           <div className='subs-ended-msg-box'>
@@ -25,19 +25,19 @@ export const PricingTable = () => {
       </div>
       <div className='row'>
         <div className='plan-section'>
-          <div className="mm-plan-radios">
-            <input type="radio" id="mm-plan-month" value="monthly" name='mm-radio-time-interval'  />
-            <label className="labels" htmlFor="mm-plan-month" >Monthly</label>
-            <input type="radio" id="mm-plan-year" value="annually" name='mm-radio-time-interval' />
-            <label className="labels" htmlFor="mm-plan-year">Annually</label>
+          <div className='mm-plan-radios'>
+            <input type='radio' id='mm-plan-month' value='monthly' name='mm-radio-time-interval'  />
+            <label className='labels' htmlFor='mm-plan-month' >Monthly</label>
+            <input type='radio' id='mm-plan-year' value='annually' name='mm-radio-time-interval' />
+            <label className='labels' htmlFor='mm-plan-year'>Annually</label>
             <span className='save-text' />
-            <div className="mm-radio-bg"></div>
+            <div className='mm-radio-bg'></div>
           </div>
         </div>
       </div>
 
       <div className='row'>
-        <div className='pricing-table-wrapper justify-content-center'>
+        <div className='pricing-table-wrapper'>
           <div className='price-table'>
             <div className='price-heading'>
               <h2>Early Adopter - VIP</h2>
