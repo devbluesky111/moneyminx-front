@@ -61,7 +61,7 @@ ul.features-list {
   box-shadow: 0 2px 8px #e2e8f3, inset 0px -1px 0px #ebecf1;
   background: $white;
   border-radius: 6px;
-  margin: 0 12px;
+  margin: 0 12px 22px 12px;
   transition: 0.8s ease;
   position: relative;
 
@@ -165,11 +165,8 @@ ul.features-list {
     text-transform: uppercase;
     right: 1.5rem;
     letter-spacing: 0.2em;
-    top: -90px;
+    top: -36px;
 
-    @media (min-width: $sm - 15) {
-      top: -35px;
-    }
   }
 }
 
@@ -225,10 +222,6 @@ ul.features-list {
   .pricing-table-wrapper {
     display: block;
     width: 100%;
-  }
-
-  .price-table {
-    margin-bottom: 22px;
   }
 
   .banner-piechart {
