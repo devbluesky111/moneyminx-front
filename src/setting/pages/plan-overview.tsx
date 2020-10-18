@@ -8,7 +8,6 @@ import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { pricingDetailConstant } from 'common/common.constant';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as CheckRound } from 'assets/icons/check-round.svg';
 import { ReactComponent as PricingTickIcon } from '../../assets/images/pricing/tick-icon.svg';
 
 const stripePromise = loadStripe(appEnv.STRIPE_PUBLIC_KEY);
@@ -81,7 +80,7 @@ export const PlanOverview = () => {
           <input type='radio' id='mm-plan-year' value='annually'  name='mm-radio-time-interval' checked={type==='year'} />
           <label className='labels' htmlFor='mm-plan-year' onClick={() => setType('year')}>Annually</label>
           <span className='save-text' />
-          <div className='mm-radio-bg'></div>
+          <div className='mm-radio-bg'/>
           </div>
       </div>
 
@@ -95,10 +94,9 @@ export const PlanOverview = () => {
                 <h2>{pt.name}</h2>
                   <p>
                     {type === 'yearly' ? `$${pt.price}/Year` : `$${pt.price}/Month`}
-                    {type === 'yearly' ? <span className='save-percentage'>Save ${pt?.save}</span> : null}
+                    {type === 'yearly' ? <span className='save-percentage'>Save ${pt.save}</span> : null}
                   </p>
               </div>
-
                 <ul className='features-list'>
                   <li>
                     <div className='tick-icon'>

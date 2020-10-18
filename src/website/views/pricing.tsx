@@ -64,13 +64,13 @@ export const PricingTable = () => {
     <div className='container-fluid'>
       <div className='row'>
         <div className='plan-section'>
-          <div className="mm-plan-radios">
-            <input type="radio" id="mm-plan-month" value="monthly" name='mm-radio-time-interval' checked={type==='monthly'} />
-            <label className="labels" htmlFor="mm-plan-month" onClick={() => setType('monthly')}>Monthly</label>
-            <input type="radio" id="mm-plan-year" value="annually"  name='mm-radio-time-interval' checked={type==='yearly'} />
-            <label className="labels" htmlFor="mm-plan-year" onClick={() => setType('yearly')}>Annually</label>
+          <div className='mm-plan-radios'>
+            <input type='radio' id='mm-plan-month' value='monthly' name='mm-radio-time-interval' checked={type==='monthly'} />
+            <label className='labels' htmlFor='mm-plan-month' onClick={() => setType('monthly')}>Monthly</label>
+            <input type='radio' id='mm-plan-year' value='annually'  name='mm-radio-time-interval' checked={type==='yearly'} />
+            <label className='labels' htmlFor='mm-plan-year' onClick={() => setType('yearly')}>Annually</label>
             <span className='save-text' />
-            <div className="mm-radio-bg"></div>
+            <div className='mm-radio-bg'/>
           </div>
         </div>
       </div>
@@ -82,9 +82,8 @@ export const PricingTable = () => {
               <div className='price-table' key={index}>
                 <div className='price-heading'>
                   <h2>{pt.name}</h2>
-                  <p>
-                    {type === 'yearly' ? `$${pt.price}/Year` : `$${pt.price}/Month`}</p>
-                    {type === 'yearly' ? <span className='save-percentage'>{'Save $89'}</span> : null}
+                  <p>{type === 'yearly' ? `$${pt.price}/Year` : `$${pt.price}/Month`}</p>
+                  {type === 'yearly' ? <span className='save-percentage'>Save ${pt.save}</span> : null}
                 </div>
                 <ul className='features-list'>
                   <li>
