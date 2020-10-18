@@ -31,11 +31,12 @@ const Modal: React.FC<Props> = ({
   title,
   onClose,
   children,
+  size = 'md',
   backdrop = true,
   canBeClosed = false,
 }) => {
   const classNames = `${backdrop ? 'modal mm-modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
-  const modalClasses = `modal-dialog modal-dialog-centered`;
+  const modalClasses = `modal-dialog modal-dialog-centered modal-${size}`;
 
   return (
     <div className={classNames} tabIndex={-1} role='dialog' aria-hidden='true'>
