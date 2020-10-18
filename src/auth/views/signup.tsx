@@ -330,7 +330,7 @@ export const SignupMainSection = () => {
                 </Formik>
 
                 <div className='facebook-login'>
-                  <p>
+                  <div className='social-login-options'>
                     <span> Or, sign up with: </span>
                     <div className='fb-icon-wrap'>
                       <FacebookLogin
@@ -350,14 +350,14 @@ export const SignupMainSection = () => {
                         }}
                       />
                     </div>
-                  </p>
+                  </div>
                 </div>
 
-                <p>
+                <div>
                   <div className='auth-end-element'>
                     Already have an account? <Link to='/login' className='purple-links'>Log In</Link>
                   </div>
-                </p>
+                </div>
               </div>
             </div>
           </div>
