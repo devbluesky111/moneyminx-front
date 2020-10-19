@@ -566,15 +566,24 @@ button:focus {
 
   svg {
     margin-right: 12px;
+
     &:hover {
       color: $darkGray;
+      stroke: $darkGray;
     }
   }
 
   &:hover {
     color: $darkGray;
+
+    .icon-link {
+      stroke: $darkGray;
+    }
   }
 }
+
+
+
 .download-btn img {
   margin-right: 5px;
   max-width: 18px;
