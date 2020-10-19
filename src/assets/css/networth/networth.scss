@@ -607,6 +607,8 @@ button:focus {
 }
 .dropdown-box {
   padding-bottom: 10px;
+  max-height: 520px;
+  overflow-y: auto;
 }
 .dropdown-box ul li {
   padding: 10px 24px;
