@@ -23,13 +23,26 @@
 
   button {
     margin-left: 2rem;
-    color: $white;
-    opacity: 1;
     font-weight: 200;
     margin-bottom: 4px;
-
-    &:hover {
-      color: lighten($color: $white, $amount: 20);
-    }
+    border: none;
+    background: none;
   }
+}
+
+.close-alert:before, .close-alert:after {
+  position: absolute;
+  top: 14px;
+  content: ' ';
+  height: 14px;
+  width: 1.5px;
+  background-color: lighten($white, 20);
+}
+
+.close-alert:before {
+  transform: rotate(45deg);
+}
+
+.close-alert:after {
+  transform: rotate(-45deg);
 }
