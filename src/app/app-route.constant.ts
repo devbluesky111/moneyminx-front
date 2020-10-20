@@ -35,6 +35,6 @@ export const appRouteConstants = {
   },
 
   account: {
-    ACCOUNT: '/account',
+    ACCOUNT: '/account-details/:accountId',
   },
 };
