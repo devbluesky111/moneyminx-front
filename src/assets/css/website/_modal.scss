@@ -94,7 +94,6 @@ button.hidden {
   }
 }
 
-
 .close:hover {
   color: $darkGray;
 }
@@ -130,6 +129,7 @@ button.hidden {
   margin-top: 28px;
   display: inline-block;
   font-weight: 400;
+  padding-bottom: 0;
 
   &:hover {
     color: $darkGray;

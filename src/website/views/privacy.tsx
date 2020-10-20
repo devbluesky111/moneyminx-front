@@ -22,8 +22,8 @@ const Privacy = () => {
       <div className='mm-container wrapper notice-wrapper'>
         <div className='notice-header'>
           <h1>{privacy.title}</h1>
-          <p>{privacy.update}</p>
-          <div dangerouslySetInnerHTML={{ __html: privacy.info }} />
+          <p className='notice-date'>{privacy.update}</p>
+          <div dangerouslySetInnerHTML={{ __html: privacy.info }}/>
         </div>
         {privacyContentSection()}
       </div>

@@ -156,10 +156,6 @@
       min-width: 50% !important;
     }
 
-    &:hover {
-      border-bottom: 1px solid $white;
-    }
-
     @media (min-width: $md) {
       display: initial;
       justify-content: space-between;

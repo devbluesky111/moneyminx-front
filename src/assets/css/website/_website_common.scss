@@ -25,13 +25,16 @@
 .notice-wrapper {
   p {
     color: $gray;
+    font-size: 1.25rem;
   }
   ul {
     li {
       color: $gray;
+      list-style: inside;
     }
   }
 }
+
 .notice-content {
   padding-top: 1.25rem;
 }
@@ -44,8 +47,12 @@
 .notice-header {
   padding-bottom: 2rem;
 
-  p {
+  .notice-date {
     font-size: 1rem;
+  }
+
+  p {
+    font-size: 1.25rem;
   }
 }
 

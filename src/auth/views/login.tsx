@@ -226,7 +226,7 @@ export const LoginMainSection = () => {
                 </Formik>
 
                 <div className='facebook-login'>
-                  <p>
+                  <div className='social-login-options'>
                     <span>Or, log in with:</span>
                     <div className='fb-icon-wrap'>
                       <FacebookLogin
@@ -246,17 +246,17 @@ export const LoginMainSection = () => {
                         }}
                       />
                     </div>
-                  </p>
+                  </div>
                 </div>
 
-                <p>
+                <div>
                   <div className='auth-end-element'>
-                    Don’t have an account?{' '}
+                    {'Don’t have an account? '}
                     <Link to='/signup' className='purple-links'>
                       Sign Up
                     </Link>
                   </div>
-                </p>
+                </div>
               </div>
             </div>
           </div>

@@ -54,8 +54,8 @@ export const AboutTopSection = () => {
         <div className='col-12 col-xl-5'>
           <div className='mm-about-right-banner'>
             <div className='account-wrap bg-white top-box'>
-              <h3>Connected Accounts (3/3)</h3>
-              <p>Upgrade your account to add more connections</p>
+              <h3>Connected Accounts</h3>
+              <p>Go ahead, add more accounts</p>
             </div>
 
             <div className='account-wrap bg-white border'>
@@ -137,7 +137,7 @@ export const AboutOwnerSection = () => {
                 <li>
                   <img alt='Owner' src={OwnerOneImg} />
                   <h3>Hussein</h3>
-                    <a href='https://www.twitter.com' target='_blank' rel='noopener noreferrer'>
+                    <a href='https://www.twitter.com/husseinyahfoufi' target='_blank' rel='noopener noreferrer'>
                       @husseinyahfoufi
                     <span className='twitter-icon'>
                         <OwnerTwitterIcon />
@@ -147,7 +147,7 @@ export const AboutOwnerSection = () => {
                 <li>
                   <img alt='Owner' src={OwnerTwoImg} />
                   <h3>Jessica</h3>
-                  <a href='http://www.twitter.com' target='_blank' rel='noopener noreferrer'>
+                  <a href='http://www.twitter.com/jessicayahfoufi' target='_blank' rel='noopener noreferrer'>
                     @jessicayahfoufi
                     <span className='twitter-icon'>
                       <OwnerTwitterIcon />
