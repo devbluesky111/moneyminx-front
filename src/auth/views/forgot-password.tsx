@@ -4,19 +4,19 @@ import {useAuthState} from 'auth/auth.context';
 import { Link } from 'react-router-dom';
 
 import { postForgotPassword } from 'api/request.api';
+import { AuthLayout } from 'layouts/auth.layout';
 import { forgotPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
 import Message from './inc/message';
-import AuthFooter from './auth.footer';
 
 const ForgotPassword = () => {
   return (
-    <div className='auth-wrapper'>
-      <ForgotPasswordMainSection />;
-    </div>
+    <AuthLayout>
+      <ForgotPasswordMainSection />
+    </AuthLayout>
   );
 };
 
@@ -130,9 +130,6 @@ export const ForgotPasswordMainSection = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className={footerClass}>
-        <AuthFooter />
       </div>
 
       {isErrorMessage ? (
