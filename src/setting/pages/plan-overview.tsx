@@ -8,7 +8,7 @@ import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { pricingDetailConstant } from 'common/common.constant';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as PricingTickIcon } from '../../assets/images/pricing/tick-icon.svg';
+import { ReactComponent as PricingTickIcon } from 'assets/images/pricing/tick-icon.svg';
 
 const stripePromise = loadStripe(appEnv.STRIPE_PUBLIC_KEY);
 
@@ -117,8 +117,8 @@ export const PlanOverview = () => {
                       <PricingTickIcon />
                     </div>
                     {'Current and '}
-                    {pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY] === 'Unlimited '
-                      ? 'historical'
+                    {pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY] === 'Unlimited'
+                      ? 'historical '
                       : `last ${pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY]} months `}
                     asset allocation charts
                   </li>

@@ -103,8 +103,8 @@ export const PricingTable = () => {
                       <PricingTickIcon />
                     </div>
                     {'Current and '}
-                    {pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY] === 'Unlimited '
-                      ? 'historical'
+                    {pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY] === 'Unlimited'
+                      ? 'historical '
                       : `last ${pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY]} months `}
                     asset allocation charts
                   </li>
