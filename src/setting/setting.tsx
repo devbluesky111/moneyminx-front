@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import AppHeader from 'common/app.header';
-import FooterSection from './inc/setting.footer';
+import FooterSection from 'auth/views/auth.footer';
 import PlanOverview from './pages/plan-overview';
 import SettingOverview from './pages/setting-overview';
 import ProfileOverview from './pages/profile-overview';

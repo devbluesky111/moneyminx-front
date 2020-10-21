@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import AppHeader from 'common/app.header';
-import NetworthFooter from './views/networth.footer';
+import NetworthFooter from 'auth/views/auth.footer';
 import NetworthSidebar from './views/networth-sidebar';
 
 import 'assets/css/networth/networth.scss';

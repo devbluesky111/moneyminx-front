@@ -7,6 +7,10 @@ interface Size {
   xs: string;
 }
 
+export enum ModalTypeEnum {
+  NO_HEADER = 'NO_HEADER',
+}
+
 interface Props {
   title: string;
   open: boolean;
@@ -16,6 +20,7 @@ interface Props {
   onSuccess?: () => void;
   onError?: () => void;
   size?: keyof Size;
+  type?: ModalTypeEnum;
 }
 
 export interface ModalType {
@@ -35,6 +40,7 @@ const Modal: React.FC<Props> = ({
   size = 'md',
   backdrop = true,
   canBeClosed = false,
+  type,
 }) => {
   const classNames = `${backdrop ? 'modal mm-modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
   const modalClasses = `modal-dialog modal-dialog-centered modal-${size}`;
@@ -43,12 +49,12 @@ const Modal: React.FC<Props> = ({
     <div className={classNames} tabIndex={-1} role='dialog' aria-hidden='true'>
       <div className={modalClasses} role='document'>
         <div className='modal-content'>
-          <div className='modal-header'>
-            <h5 className='modal-title'>{title}</h5>
-            {canBeClosed && (
-              <button type='button' className='close' onClick={() => onClose()} />
-            )}
-          </div>
+          {type === ModalTypeEnum.NO_HEADER ? null : (
+            <div className='modal-header'>
+              <h5 className='modal-title'>{title}</h5>
+              {canBeClosed && <button type='button' className='close' onClick={() => onClose()} />}
+            </div>
+          )}
           <div className='modal-body'>{children}</div>
         </div>
       </div>
