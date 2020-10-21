@@ -1,3 +1,4 @@
+// TODO not used, can delete once good with common/app.header.tsx file
 import React from 'react';
 import { Link } from 'react-router-dom';
 
