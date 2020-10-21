@@ -7,7 +7,7 @@ import { AccountProps } from '../account.type';
 import Dropdown from 'react-bootstrap/Dropdown';
 import AccountSubNavigation from './account-sub-navigation';
 import NavBarSection from '../../setting/inc/setting.header';
-import FooterSection from '../../setting/inc/setting.footer';
+import FooterSection from 'auth/views/auth.footer';
 import { ReactComponent as Info } from '../../assets/icons/info.svg';
 import { ReactComponent as Edit } from '../../assets/images/account/edit.svg';
 import { ReactComponent as Chart } from '../../assets/images/account/chart.svg';

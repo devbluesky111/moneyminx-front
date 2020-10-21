@@ -7,7 +7,7 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { AllocationProps } from '../allocation.type';
 import AllocationOverview from './allocation-overview';
 import NavBarSection from '../../setting/inc/setting.header';
-import FooterSection from '../../setting/inc/setting.footer';
+import FooterSection from 'auth/views/auth.footer';
 import AllocationSubNavigation from './allocation-sub-navigation';
 
 const Allocation: React.FC<AllocationProps> = () => {
