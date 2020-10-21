@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import NavBarSection from './inc/setting.header';
+import AppHeader from 'common/app.header';
 import FooterSection from 'auth/views/auth.footer';
 import PlanOverview from './pages/plan-overview';
 import SettingOverview from './pages/setting-overview';
@@ -11,6 +11,7 @@ import { SettingsProps, SettingPageEnum } from './setting.type';
 
 const Settings: React.FC<SettingsProps> = () => {
   const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.ACCOUNTS);
+  const [openNav, setOpenNav] = useState<boolean>(false);
 
   const handlePageSelect = (pageName: SettingPageEnum) => {
     setPage(pageName);
@@ -42,8 +43,7 @@ const Settings: React.FC<SettingsProps> = () => {
 
   return (
     <div className='mm-setting'>
-      <NavBarSection />
-
+      <AppHeader toggleMenu={() => setOpenNav(!openNav)} />
       <div className={containerClass}>
         <SettingTitleSection handlePageSelect={handlePageSelect} pageTitle={page} />
         {renderTabContent()}
