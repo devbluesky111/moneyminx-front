@@ -349,3 +349,70 @@
 .current-allocation-chart-wrapper {
   padding-left: 1rem;
 }
+
+.allocation-share-card-wrapper {
+  padding: 1rem;
+  background-color: $lightBg;
+
+  .chart-legend-wrapper {
+    display: flex;
+    max-height: 200px;
+    overflow: hidden;
+
+    .recharts-wrapper {
+      width: 189px !important;
+      height: 189px !important;
+
+      svg {
+        width: 189px !important;
+        height: 189px !important;
+      }
+    }
+  }
+
+  .allocation-share-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    svg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  .share-button-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .share-button {
+      width: 135px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      border-radius: 4px;
+      color: $white !important;
+    }
+
+    .pinterest-share-button {
+      background-color: $pinterestRed !important;
+    }
+
+    .facebook-share-button {
+      background-color: $facebookBlue !important;
+    }
+
+    .twitter-share-button {
+      background-color: $twitterBlue !important;
+    }
+  }
+  .divider {
+    padding: 1rem 0;
+  }
+
+  .outline-button-wrapper {
+    button:not(:first-child) {
+      margin-left: 2rem;
+    }
+  }
+}

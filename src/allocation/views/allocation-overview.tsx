@@ -17,9 +17,11 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
+import ChartShareModal from 'allocation/modal/chart-share-modal';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
   const { df } = useFileDownload();
+  const chartShareModal = useModal();
   const fieldChangeModal = useModal();
   const chartSettingModal = useModal();
 
@@ -38,7 +40,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             <div className='mm-allocation-overview__block--action'>
               <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
               <Download className='mr-3' onClick={() => df('current-allocation-pie-chart', 'current-allocation')} />
-              <Share />
+              <Share onClick={() => chartShareModal.open()} />
             </div>
             <hr className='mb-4' />
             <div className='allocation-content'>
@@ -132,6 +134,11 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
         </div>
       </div>
       <SettingModal settingModal={chartSettingModal} />
+      <ChartShareModal
+        chartShareModal={chartShareModal}
+        chartComponent={<MMPieChart chartData={chartData} />}
+        chatLegendComponent={<AllocationLegend chartData={chartData} />}
+      />
       <FieldChangeModal fieldChangeModal={fieldChangeModal} />
     </section>
   );
