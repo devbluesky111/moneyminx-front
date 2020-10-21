@@ -1,9 +1,7 @@
 import { groupBy } from 'lodash';
 
-import { saveAs } from 'file-saver';
-
 import { ApiResponse } from 'api/api.types';
-import { FileType, StringKeyObject } from './common.types';
+import { StringKeyObject } from './common.types';
 import { v4 } from 'uuid';
 
 const toString = Object.prototype.toString;
@@ -136,14 +134,4 @@ export const handleStringArrayToggle = <A>(arr: A[], val: any) => {
   }
 
   return arr.concat(val);
-};
-
-export const exportFile = (file: Node, type: FileType = FileType.SVG) => {
-  if (type === FileType.SVG) {
-    const svgURL = new XMLSerializer().serializeToString(file);
-    const svgBlob = new Blob([svgURL], { type: 'image/svg+xml;charset=utf-8' });
-    saveAs(svgBlob, shortId + '.svg');
-  }
-
-  // handle for other file format
 };
