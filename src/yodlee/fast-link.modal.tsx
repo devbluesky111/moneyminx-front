@@ -55,7 +55,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   };
 
   return (
-    <Modal {...fastLinkModal.props} title='' size={'xs'} canBeClosed>
+    <Modal {...fastLinkModal.props} title='' size={'xs'} type={'noheader'} canBeClosed>
       <div id='fastlinkContainer' />
       {loading ? <CircularSpinner /> : null}
       <button ref={initRef} onClick={handleInit} className='hidden' />
