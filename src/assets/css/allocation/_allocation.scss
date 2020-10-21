@@ -3,7 +3,6 @@
 }
 
 .mm-allocation-sub-navigation {
-  border-bottom: 1.5px solid $grayOpacity20;
   margin-bottom: 2.313rem;
 
   &__row {
@@ -88,15 +87,12 @@
 
   &__block {
     background: $white;
-    box-shadow: 0px 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
+    box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
     border-radius: 6px;
-    padding: 2.188rem 1.125rem;
+    padding: 2.188rem 1.5rem;
     margin-bottom: 2rem;
     position: relative;
-
-    @media (min-width: $md) {
-      padding: 2.188rem 2.688rem;
-    }
+    min-height: 810px;
 
     &--date {
       font-weight: normal;
@@ -104,7 +100,7 @@
     }
 
     &--title {
-      font-weight: 600;
+      font-weight: 500;
       font-size: 1.25rem;
       color: $darkGray;
     }
@@ -123,16 +119,31 @@
     }
 
     p {
-      font-weight: 500;
+      font-weight: 400;
       font-size: 1rem;
       color: $gray;
-      margin-bottom: 1.5rem;
+      margin: .5rem 0 1.5rem 0;
     }
 
     &--action {
+      padding-bottom: 1rem;
+
       svg {
         cursor: pointer;
+
+        &:hover {
+          color: $purple;
+
+          .icon-link {
+            stroke: $purple;
+          }
+        }
       }
+    }
+
+    .mm-btn-primary {
+      height: 40px;
+      width: 232px;
     }
   }
 
@@ -254,19 +265,18 @@
 
   &__block-element {
     position: absolute;
-    top: -1.75rem;
+    top: 0;
     left: 0;
     right: 0;
     width: 100%;
     height: 35rem;
-    border-radius: 4px;
     background: $blurBg;
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-radius: 6px;
 
     &--text {
-      font-weight: bold;
+      font-weight: 600;
       font-size: 1.25rem;
       color: $primary;
     }
@@ -279,11 +289,20 @@
     }
 
     p {
-      font-weight: 500;
+      font-weight: 400;
       font-size: 1rem;
       line-height: 150%;
       color: $darkGray;
     }
+  }
+}
+
+.allocation-card-top {
+  padding: 0 1rem;
+  border-bottom: 1px solid $grayOpacity20;
+
+  &.no-border {
+    border: none;
   }
 }
 
@@ -345,3 +364,13 @@
     color: $red;
   }
 }
+.react-datepicker__input-container svg {
+    cursor: pointer;
+
+    &:hover {
+
+      .icon-link-purple {
+        stroke: $purpleOpacity50;
+      }
+    }
+  }
