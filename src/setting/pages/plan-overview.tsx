@@ -8,7 +8,7 @@ import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { pricingDetailConstant } from 'common/common.constant';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as CheckRound } from 'assets/icons/check-round.svg';
+import { ReactComponent as PricingTickIcon } from 'assets/images/pricing/tick-icon.svg';
 
 const stripePromise = loadStripe(appEnv.STRIPE_PUBLIC_KEY);
 
@@ -67,110 +67,106 @@ export const PlanOverview = () => {
   const monthlyPricingList = subscription?.filter((sub: any) => sub.duration === 'month');
   const annualPricingList = subscription?.filter((sub: any) => sub.duration === 'year');
 
-  const planBtnClasses = 'mm-plan-overview__plan-btn btn btn-outline-primary btn-lg';
+  const planBtnClasses = 'mm-btn-animate trial-btn ml-3 btn-xs-block';
 
   const pricingList = type === 'month' ? monthlyPricingList : annualPricingList;
 
   return (
     <section className='mm-plan-overview my-4'>
-      <div className='row mm-plan-overview__switch text-center'>
-        <div className="mm-plan-radios m-auto">
-            <input type="radio" id="mm-plan-month" value="monthly" name='mm-radio-time-interval' checked={type==='month'} />
-            <label className="labels" htmlFor="mm-plan-month" onClick={() => setType('month')}>Monthly</label>
-            <input type="radio" id="mm-plan-year" value="annually"  name='mm-radio-time-interval' checked={type==='year'} />
-            <label className="labels" htmlFor="mm-plan-year" onClick={() => setType('year')}>Annually</label>
-            <div className="mm-radio-bg"></div>
+      <div className='row mm-plan-overview__switch text-center pt-4 pb-4'>
+        <div className='mm-plan-radios m-auto'>
+          <input type='radio' id='mm-plan-month' value='monthly' name='mm-radio-time-interval' checked={type==='month'} />
+          <label className='labels' htmlFor='mm-plan-month' onClick={() => setType('month')}>Monthly</label>
+          <input type='radio' id='mm-plan-year' value='annually'  name='mm-radio-time-interval' checked={type==='year'} />
+          <label className='labels' htmlFor='mm-plan-year' onClick={() => setType('year')}>Annually</label>
+          <span className='save-text' />
+          <div className='mm-radio-bg'/>
           </div>
       </div>
 
+      <div className='container-fluid'>
       <div className='row'>
+        <div className='plan-table-wrapper'>
         {pricingList?.map((pt: any, index: number) => {
           return (
-            <div className='col-md-6 col-lg-3' key={index}>
-              <div className='card mm-setting-card mm-plan-overview__card'>
-                <div className='card-body'>
-                  <div className='mm-plan-overview__card-title'>{pt.name}</div>
-                  <div className='mm-plan-overview__card-title--sub'>
+              <div className='price-table' key={index}>
+              <div className='price-heading'>
+                <h2>{pt.name}</h2>
+                  <p>
                     {type === 'yearly' ? `$${pt.price}/Year` : `$${pt.price}/Month`}
-                    {type === 'yearly' ? <span className='save-percentage'>Save ${pt?.save}</span> : null}
-                  </div>
-                  <hr />
-                  <div className='mm-plan-overview__card-body'>
-                    <div className='d-flex align-items-lg-baseline py-2'>
-                      <span className='mr-3'>
-                        <CheckRound />
-                      </span>
-                      <p>{pt.details[pricingDetailConstant.CONNECTED_ACCOUNT]} connected accounts</p>
+                    {type === 'yearly' ? <span className='save-percentage'>Save ${pt.save}</span> : null}
+                  </p>
+              </div>
+                <ul className='features-list'>
+                  <li>
+                    <div className='tick-icon'>
+                      <PricingTickIcon />
                     </div>
-                    <div className='d-flex align-items-lg-baseline py-2'>
-                      <span className='mr-3'>
-                        <CheckRound />
-                      </span>
-                      <p>{pt.details[pricingDetailConstant.MANUAL_ACCOUNT]} manual accounts</p>
+                    {pt.details[pricingDetailConstant.CONNECTED_ACCOUNT]} connected accounts
+                  </li>
+
+                  <li>
+                    <div className='tick-icon'>
+                      <PricingTickIcon />
                     </div>
-                    <div className='d-flex align-items-lg-baseline py-2'>
-                      <span className='mr-3'>
-                        <CheckRound />
-                      </span>
-                      <p>
-                        Current and{' '}
-                        {pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY] === 'Unlimited'
-                          ? 'historical'
-                          : `last ${pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY]} months`}{' '}
-                        asset allocation charts
-                      </p>
+                    {pt.details[pricingDetailConstant.MANUAL_ACCOUNT]} manual accounts
+                  </li>
+
+                  <li>
+                    <div className='tick-icon'>
+                      <PricingTickIcon />
                     </div>
-                    <div className='d-flex align-items-lg-baseline py-2'>
-                      <span className='mr-3'>
-                        <CheckRound />
-                      </span>
-                      <p>Sync across as many devices as you need</p>
+                    {'Current and '}
+                    {pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY] === 'Unlimited'
+                      ? 'historical '
+                      : `last ${pt.details[pricingDetailConstant.ALLOCATION_CHART_HISTORY]} months `}
+                    asset allocation charts
+                  </li>
+
+                  <li>
+                    <div className='tick-icon'>
+                      <PricingTickIcon />
                     </div>
-                    <div className='d-flex align-items-lg-baseline py-2'>
-                      <span className='mr-3'>
-                        <CheckRound />
-                      </span>
-                      <p>Early Adopter badge</p>
+                    Early Adopter badge
+                  </li>
+                  <li>
+                    <div className='tick-icon'>
+                      <PricingTickIcon />
                     </div>
-                    <div className='d-flex align-items-lg-baseline py-2'>
-                      <span className='mr-3'>
-                        <CheckRound />
-                      </span>
-                      <p>{pt.details[pricingDetailConstant.NAME]} badge</p>
+                    {pt.details[pricingDetailConstant.NAME]} badge
+                  </li>
+                  <li>
+                    <div className='tick-icon'>
+                      <PricingTickIcon />
                     </div>
-                    <div className='d-flex align-items-lg-baseline py-2'>
-                      <span className='mr-3'>
-                        <CheckRound />
-                      </span>
-                      <p>New features as being developed</p>
+                    New features as being developed
+                  </li>
+                  <li>
+                    <div className='tick-icon'>
+                      <PricingTickIcon />
                     </div>
-                    <div className='d-flex align-items-lg-baseline py-2'>
-                      <span className='mr-3'>
-                        <CheckRound />
-                      </span>
-                      <p>Early adopter access to founders</p>
+                    Early adopter access to founders
+                  </li>
+                  <li>
+                    <div className='tick-icon'>
+                      <PricingTickIcon />
                     </div>
-                    <div className='d-flex align-items-lg-baseline py-2'>
-                      <span className='mr-3'>
-                        <CheckRound />
-                      </span>
-                      <p>Early adopter access to request new features for consideration</p>
-                    </div>
-                  </div>
+                    Early adopter access to request new features for consideration
+                  </li>
+                </ul>
                   <div className='mm-plan-overview__card-footer'>
                     <button
                       type='button'
                       className={`${planBtnClasses} ${ac(pt.priceId)}`}
-                      onClick={() => changePlan(pt.priceId)}
-                    >
+                      onClick={() => changePlan(pt.priceId)}>
                       {isCurrentPlan(pt.priceId) ? 'Current Plan' : 'Change Plan'}
                     </button>
                   </div>
-                </div>
-              </div>
             </div>
           );
         })}
+      </div>
+      </div>
       </div>
     </section>
   );

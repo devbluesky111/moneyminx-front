@@ -1,3 +1,8 @@
+.plan-table-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .mm-profile-container {
   max-width: 100% !important;
 
@@ -52,10 +57,15 @@
 
       &--current {
         border: none;
-        color: $darkGray;
+        color: $darkGray !important;
+        background: none !important;
 
         &:hover {
-          background-color: transparent;
+          border: none;
+          color: $darkGray !important;
+          background: none !important;
+          transform: none;
+          cursor: default;
         }
       }
     }

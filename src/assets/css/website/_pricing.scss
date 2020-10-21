@@ -35,6 +35,7 @@ ul.features-list {
 
   @media (min-width: $md) {
     margin-bottom: 62px;
+    padding-bottom: 20px;
   }
 }
 
@@ -114,6 +115,7 @@ ul.features-list {
 
 .trial-btn {
   border: 1.5px solid $purple;
+  color: $purple;
   border-radius: 4px;
   display: block;
   width: 88%;
@@ -132,8 +134,8 @@ ul.features-list {
 }
 
 .price-table:nth-child(2) .trial-btn {
-  background-color: $purple !important;
-  color: $white !important;
+  background-color: $purple;
+  color: $white;
 }
 
 .second-table {
