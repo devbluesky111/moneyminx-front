@@ -48,7 +48,7 @@ const Modal: React.FC<Props> = ({
       <div className={modalClasses} role='document'>
         <div className='modal-content'>
           {
-            type === 'noheader' ? ('') :
+            type === 'noheader' ? null :
             (<div className='modal-header'>
               <h5 className='modal-title'>{title}</h5>
               {canBeClosed && (
