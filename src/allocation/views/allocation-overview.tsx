@@ -5,6 +5,7 @@ import { fNumber } from 'common/number.helper';
 import { useModal } from 'common/components/modal';
 import { MMPieChart } from 'common/components/pie-chart';
 import SettingModal from 'allocation/modal/setting-modal';
+import useFileDownload from 'common/hooks/useFileDownload';
 import FieldChangeModal from 'allocation/modal/field-change-modal';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
@@ -16,21 +17,14 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
-import domToImage from 'dom-to-image';
-import fileDownload from 'js-file-download';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
-  const chartSettingModal = useModal();
+  const { df } = useFileDownload();
   const fieldChangeModal = useModal();
+  const chartSettingModal = useModal();
 
   const getTotal = (key: string) => {
     return chartData.find((datum) => datum.group === key);
-  };
-
-  const handleChartDownload = (name: string) => {
-    domToImage.toBlob(document.getElementById('current-allocation-pie-chart') as any).then((blob) => {
-      fileDownload(blob, name + '.png');
-    });
   };
 
   return (
@@ -43,7 +37,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             <p>Current allocation based on your holdings</p>
             <div className='mm-allocation-overview__block--action'>
               <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
-              <Download className='mr-3' onClick={() => handleChartDownload('current-allocation')} />
+              <Download className='mr-3' onClick={() => df('current-allocation-pie-chart', 'current-allocation')} />
               <Share />
             </div>
             <hr className='mb-4' />
