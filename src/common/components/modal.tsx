@@ -16,7 +16,9 @@ interface Props {
   onSuccess?: () => void;
   onError?: () => void;
   size?: keyof Size;
-  type?: string;
+  ModalTypeEnum{
+  NO_HEADER = 'NO_HEADER'
+  }
 }
 
 export interface ModalType {
