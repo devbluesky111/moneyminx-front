@@ -16,6 +16,8 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
+import domtoimage from 'dom-to-image';
+import fileDownload from 'js-file-download';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
   const chartSettingModal = useModal();
@@ -23,6 +25,12 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
 
   const getTotal = (key: string) => {
     return chartData.find((datum) => datum.group === key);
+  };
+
+  const handleChartDownload = () => {
+    domtoimage.toBlob(document.getElementById('allocation-pie-chart') as any).then((blob) => {
+      fileDownload(blob, 'dom-to-image.png');
+    });
   };
 
   return (
@@ -35,7 +43,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             <p>Current allocation based on your holdings</p>
             <div className='mm-allocation-overview__block--action'>
               <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
-              <Download className='mr-3' />
+              <Download className='mr-3' onClick={handleChartDownload} />
               <Share />
             </div>
             <hr className='mb-4' />
