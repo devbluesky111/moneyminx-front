@@ -16,7 +16,7 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
-import domtoimage from 'dom-to-image';
+import domToImage from 'dom-to-image';
 import fileDownload from 'js-file-download';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
@@ -27,9 +27,9 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
     return chartData.find((datum) => datum.group === key);
   };
 
-  const handleChartDownload = () => {
-    domtoimage.toBlob(document.getElementById('allocation-pie-chart') as any).then((blob) => {
-      fileDownload(blob, 'dom-to-image.png');
+  const handleChartDownload = (name: string) => {
+    domToImage.toBlob(document.getElementById('current-allocation-pie-chart') as any).then((blob) => {
+      fileDownload(blob, name + '.png');
     });
   };
 
@@ -43,12 +43,15 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             <p>Current allocation based on your holdings</p>
             <div className='mm-allocation-overview__block--action'>
               <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
-              <Download className='mr-3' onClick={handleChartDownload} />
+              <Download className='mr-3' onClick={() => handleChartDownload('current-allocation')} />
               <Share />
             </div>
             <hr className='mb-4' />
             <div className='allocation-content'>
-              <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
+              <div
+                className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'
+                id='current-allocation-pie-chart'
+              >
                 <MMPieChart chartData={chartData} />
                 <AllocationLegend chartData={chartData} />
               </div>
