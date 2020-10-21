@@ -35,8 +35,6 @@ export const ForgotPasswordMainSection = () => {
   const isErrorMessage = status === 'error' && isMessage;
   const isSuccessMessage = status === 'success' && isMessage;
 
-  const isFeedback = isErrorMessage || isSuccessMessage;
-
   return (
     <div className='main-table-wrapper'>
       <div className=''>
