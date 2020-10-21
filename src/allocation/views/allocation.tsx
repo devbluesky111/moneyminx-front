@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 
 import AppHeader from 'common/app.header';
+import FooterSection from 'auth/views/auth.footer';
 import useAllocation from 'allocation/hooks/useAllocation';
 import { AllocationsFilter } from 'allocation/allocation.enum';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import { AllocationProps } from '../allocation.type';
 import AllocationOverview from './allocation-overview';
-import NavBarSection from '../../setting/inc/setting.header';
-import FooterSection from 'auth/views/auth.footer';
 import AllocationSubNavigation from './allocation-sub-navigation';
 
 const Allocation: React.FC<AllocationProps> = () => {
+  const [openNav, setOpenNav] = useState<boolean>(false);
   const [filter, setFilter] = useState(AllocationsFilter.TYPE);
   const { fetching, allocations, error, allocationChartData } = useAllocation(filter);
-  const [openNav, setOpenNav] = useState<boolean>(false);
 
   if (fetching || error || !allocations || !allocationChartData) {
     return <CircularSpinner />;

@@ -1,18 +1,20 @@
-import { Modal } from 'common/components/modal';
+import { toast } from 'react-toastify';
 import React, { useEffect, useRef, useState } from 'react';
+
+import { useAuthDispatch } from 'auth/auth.context';
+import { getRefreshedProfile } from 'auth/auth.service';
+import { Modal, ModalTypeEnum } from 'common/components/modal';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import useYodlee from './useYodlee';
 import { FastLinkOptionsType } from './yodlee.type';
-import { toast } from 'react-toastify';
-import { getRefreshedProfile } from 'auth/auth.service';
-import { useAuthDispatch } from 'auth/auth.context';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 interface Props {
   fastLinkModal: any;
   handleSuccess: () => void;
   fastLinkOptions: FastLinkOptionsType;
 }
+
 const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLinkOptions }) => {
   const initRef = useRef<any>();
   const dispatch = useAuthDispatch();
