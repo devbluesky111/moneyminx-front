@@ -21,8 +21,8 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
   const { user } = useAuthState();
 
   return (
-    <Modal {...chartShareModal.props} title='Share' canBeClosed onClose={() => chartShareModal.close()}>
-      <div className='modal-wrapper chart-setting-modal modal-md mm-setting-modal'>
+    <Modal {...chartShareModal.props} title='Share' size='md' canBeClosed onClose={() => chartShareModal.close()}>
+      <div className='modal-wrapper chart-setting-modal mm-setting-modal'>
         <div className='allocation-share-card-wrapper'>
           <div id='allocation-share-card'>
             <div className='allocation-share-card-heading'>

@@ -56,7 +56,7 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
   };
 
   return (
-    <Modal {...changePasswordModal.props} title='Change Password' canBeClosed>
+    <Modal {...changePasswordModal.props} title='Change Password' size='sm' canBeClosed>
       <div className='modal-wrapper change-password-modal'>
         <Formik
           initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}

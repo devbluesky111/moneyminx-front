@@ -32,6 +32,9 @@ a {
     text-decoration: none;
   }
 }
+textarea.form-control {
+  min-height: 100px;
+}
 
 .link-gray {
   color: $gray;
@@ -465,6 +468,14 @@ hr {
 
 .hide-me {
   display: none;
+}
+
+.hide-sm {
+  display: none;
+
+  @media (min-width: $sm) {
+    display: inline;
+  }
 }
 
 // coming soon badge

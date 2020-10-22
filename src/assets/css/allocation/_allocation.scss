@@ -394,22 +394,36 @@
 
   &--title {
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 0.625rem;
     color: $darkGray;
+
+    @media (min-width: $sm + 75px) {
+      font-size: 1rem;
+    }
   }
 
   img {
     border: 1px solid rgba(165, 172, 184, 0.2);
     border-radius: 50%;
-    width: 1.625rem;
-    height: 1.625rem;
-    margin-right: 0.5rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-right: 0.375rem;
+
+    @media (min-width: $sm + 75px) {
+      width: 1.625rem;
+      height: 1.625rem;
+      margin-right: 0.5rem;
+    }
   }
 
   &--username {
     font-weight: 400;
-    font-size: 0.625rem;
+    font-size: 0.5rem;
     color: $gray;
+
+    @media (min-width: $sm + 75px) {
+      font-size: 0.625rem;;
+    }
   }
 }
 
@@ -448,11 +462,15 @@
     }
   }
   .share-button-wrapper {
-    display: flex;
+    display: block;
     justify-content: space-between;
 
+    @media (min-width: $md) {
+      display: flex;
+    }
+
     .share-button {
-      width: 135px;
+      width: 100%;
       height: 40px;
       display: flex;
       align-items: center;
@@ -460,6 +478,12 @@
       border-radius: 4px;
       color: $white !important;
       font-weight: 500 !important;
+      margin-top: 1rem;
+
+      @media (min-width: $md) {
+        width: 135px;
+        margin-top: 0;
+      }
     }
 
     .pinterest-share-button {
@@ -493,8 +517,23 @@
   }
 
   .outline-button-wrapper {
+
+    button {
+      width: 100%;
+
+      @media (min-width: $md) {
+        width: 180px;
+      }
+    }
+
     button:not(:first-child) {
-      margin-left: 2rem;
+      margin-left: 0;
+      margin-top: 1rem;
+
+      @media (min-width: $md) {
+        margin-top: 0;
+        margin-left: 2rem;
+      }
     }
   }
 }

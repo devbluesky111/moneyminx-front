@@ -43,13 +43,12 @@ const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
   };
 
   return (
-    <Modal {...settingModal.props} title='' canBeClosed onClose={() => settingModal.close()}>
+    <Modal {...settingModal.props} title='Chart Settings' size='md' canBeClosed onClose={() => settingModal.close()}>
       {loading ? (
         <CircularSpinner />
       ) : (
-        <div className='modal-wrapper chart-setting-modal modal-md mm-setting-modal'>
+        <div className='modal-wrapper chart-setting-modal mm-setting-modal'>
           <div className='mm-setting-modal__title'>
-            Chart Settings
             <Form>
               <Form.Group controlId='exampleForm.ControlInput1'>
                 <Form.Label className='mm-setting-modal__sub-title'>Title</Form.Label>
@@ -99,7 +98,7 @@ const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
                 Cancel
               </button>
               <button className='mm-btn-animate mm-btn-primary' onClick={handleSubmit}>
-                Save Changes
+                Save <span className='hide-sm'>Changes</span>
               </button>
             </div>
           </div>

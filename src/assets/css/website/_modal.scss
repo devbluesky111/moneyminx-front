@@ -7,12 +7,21 @@
 }
 
 .modal-sm {
-  max-width: 431px;
+  max-width: 430px;
 }
 
 .modal-md {
+  max-width: 520px;
+}
+
+.modal-lg {
   max-width: 696px;
 }
+
+.modal-xl {
+  max-width: 740px;
+}
+
 
 .modal-show {
   display: block;
@@ -109,7 +118,11 @@ button.hidden {
 }
 
 .modal-title {
-  font-size: 1.75rem;
+  font-size: 1.625rem;
+
+  @media (min-width: $sm) {
+    font-size: 1.75rem;
+  }
 }
 
 .modal-wrapper p {
