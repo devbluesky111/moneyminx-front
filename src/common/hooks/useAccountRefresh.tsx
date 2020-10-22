@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { getRefreshedProfile } from 'auth/auth.service';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 
 const useAccountRefresh = () => {
   const dispatch = useAuthDispatch();

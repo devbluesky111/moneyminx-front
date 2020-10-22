@@ -3,12 +3,12 @@ import { Modal, ModalType } from 'common/components/modal';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from 'react-share';
 
+import { useAuthState } from 'auth/auth.context';
 import useFileDownload from 'common/hooks/useFileDownload';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg';
 import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg';
 import { ReactComponent as PinterestIcon } from 'assets/icons/pinterest.svg';
-import { useAuthState } from '../../auth/auth.context';
 
 interface ChartShareModalProps {
   chartShareModal: ModalType;
@@ -28,10 +28,12 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
             <div className='allocation-share-card-heading'>
               <span className='allocation-share-card-heading--title'>Replace me with the chart title</span>
               <div className='float-right'>
-                <img src={user?.picture || DefaultAvatar} className='allocation-share-card-heading--avatar' alt='Profile avatar' />
-                <span className='allocation-share-card-heading--username'>
-                  @{user?.username || 'moneyminx'}
-                </span>
+                <img
+                  src={user?.picture || DefaultAvatar}
+                  className='allocation-share-card-heading--avatar'
+                  alt='Profile avatar'
+                />
+                <span className='allocation-share-card-heading--username'>@{user?.username || 'moneyminx'}</span>
               </div>
             </div>
             <div className='chart-legend-wrapper'>

@@ -1,8 +1,8 @@
-import { groupBy } from 'lodash';
-
-import { ApiResponse } from 'api/api.types';
-import { StringKeyObject } from './common.types';
 import { v4 } from 'uuid';
+import { groupBy } from 'lodash';
+import { ApiResponse } from 'api/api.types';
+
+import { StringKeyObject } from './common.types';
 
 const toString = Object.prototype.toString;
 
