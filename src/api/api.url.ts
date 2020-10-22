@@ -38,5 +38,6 @@ export const urls = {
   },
   allocations: {
     ALLOCATIONS: '/allocations',
+    CHART_SETTINGS: '/allocations/me/chart-settings',
   },
 };

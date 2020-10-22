@@ -60,13 +60,13 @@
         padding: 0 0.125rem 0.875rem 0.125rem;
         height: 41px;
 
-        &.active, &:hover {
+        &.active,
+        &:hover {
           border-bottom: 1.5px solid $primary;
 
           a {
             color: $darkGray;
           }
-
         }
       }
 
@@ -108,7 +108,7 @@
       padding: 1.5rem 1.25rem;
 
       @media (min-width: $md) {
-        padding: 1.5rem 2.50rem;
+        padding: 1.5rem 2.5rem;
       }
     }
 
@@ -173,12 +173,12 @@
     left: 0;
     height: 1.25rem;
     width: 1.25rem;
-    border: 1px solid #534CEA24;
+    border: 1px solid #534cea24;
     box-sizing: border-box;
     border-radius: 0.25rem;
   }
 
-  .custom-checkbox input:checked~.checkmark {
+  .custom-checkbox input:checked ~ .checkmark {
     background-color: $white;
   }
 
@@ -188,7 +188,7 @@
     display: none;
   }
 
-  .custom-checkbox input:checked~.checkmark:after {
+  .custom-checkbox input:checked ~ .checkmark:after {
     display: block;
   }
 
@@ -338,7 +338,8 @@
         color: $darkGray;
         width: 100%;
 
-        &:active, &:focus {
+        &:active,
+        &:focus {
           border: 1px solid $gray;
         }
 
@@ -374,7 +375,6 @@
 }
 
 .subscription-cancel-modal {
-
   button {
     min-width: 164px;
   }
@@ -423,30 +423,40 @@
     }
   }
 
-  #mm-allocation-type-modal:checked+label,
-  #mm-allocation-asset-modal:checked+label,
-  #mm-allocation-country-modal:checked+label,
-  #mm-allocation-risk-modal:checked+label {
+  #mm-allocation-type-modal:checked + label,
+  #mm-allocation-asset-modal:checked + label,
+  #mm-allocation-country-modal:checked + label,
+  #mm-allocation-risk-modal:checked + label {
     color: $primary;
   }
 
-  #mm-allocation-type-modal:checked~.mm-radio-bg {
+  #mm-allocation-type-modal:checked ~ .mm-radio-bg {
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
   }
 
-  #mm-allocation-asset-modal:checked~.mm-radio-bg {
+  #mm-allocation-asset-modal:checked ~ .mm-radio-bg {
     transform: translateX(138px);
     transition: transform 0.2s ease-in-out;
   }
 
-  #mm-allocation-country-modal:checked~.mm-radio-bg {
+  #mm-allocation-country-modal:checked ~ .mm-radio-bg {
     transform: translateX(276px);
     transition: transform 0.2s ease-in-out;
   }
 
-  #mm-allocation-risk-modal:checked~.mm-radio-bg {
+  #mm-allocation-risk-modal:checked ~ .mm-radio-bg {
     transform: translateX(412px);
     transition: transform 0.2s ease-in-out;
+  }
+
+  .action-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1rem;
+
+    button:nth-child(2) {
+      margin-left: 1rem;
+    }
   }
 }
