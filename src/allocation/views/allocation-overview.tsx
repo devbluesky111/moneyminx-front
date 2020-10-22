@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 
 import { fNumber } from 'common/number.helper';
 import { useModal } from 'common/components/modal';
 import { MMPieChart } from 'common/components/pie-chart';
 import SettingModal from 'allocation/modal/setting-modal';
+import useFileDownload from 'common/hooks/useFileDownload';
 import FieldChangeModal from 'allocation/modal/field-change-modal';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
@@ -16,10 +16,14 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
+import { Link } from 'react-router-dom';
+import ChartShareModal from 'allocation/modal/chart-share-modal';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
-  const chartSettingModal = useModal();
+  const { df } = useFileDownload();
+  const chartShareModal = useModal();
   const fieldChangeModal = useModal();
+  const chartSettingModal = useModal();
 
   const getTotal = (key: string) => {
     return chartData.find((datum) => datum.group === key);
@@ -30,21 +34,24 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
       <div className='row mm-allocation-overview__wrapper'>
         <div className='col-xl-4'>
           <div className='mm-allocation-overview__block'>
-            <div className='mm-allocation-overview__block--date'>June 30, 2020</div>
-            <div className='mm-allocation-overview__block--title'>Current allocation</div>
-            <p>Current allocation based on your holdings</p>
-            <div className='mm-allocation-overview__block--action'>
-              <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
-              <Download className='mr-3' />
-              <Share />
+            <div className='allocation-card-top'>
+              <div className='mm-allocation-overview__block--date'>June 30, 2020</div>
+              <div className='mm-allocation-overview__block--title'>Current allocation</div>
+              <p>Current allocation based on your holdings</p>
+              <div className='mm-allocation-overview__block--action'>
+                <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
+                <Download className='mr-3' onClick={() => df('current-allocation-pie-chart', 'current-allocation')} />
+              <Share onClick={() => chartShareModal.open()} />
+              </div>
             </div>
-            <hr className='mb-4' />
             <div className='allocation-content'>
-              <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
+              <div
+                className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'
+                id='current-allocation-pie-chart'
+              >
                 <MMPieChart chartData={chartData} />
                 <AllocationLegend chartData={chartData} />
               </div>
-              <hr className='my-5' />
               <div className='mm-allocation-overview__table'>
                 <table>
                   <tr>
@@ -99,14 +106,15 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
 
         <div className='col-xl-4'>
           <div className='mm-allocation-overview__block'>
-            <div className='mm-allocation-overview__block--date'>June 30, 2020</div>
-            <div className='mm-allocation-overview__block--title'>Similar Investors</div>
-            <p>Here’s how investors with similar profiles are currently allocated</p>
-            <div className='mm-allocation-overview__block--action'>
-              <Download className='mr-3' />
-              <Share />
+            <div className='allocation-card-top no-border'>
+              <div className='mm-allocation-overview__block--date'>June 30, 2020</div>
+              <div className='mm-allocation-overview__block--title'>Similar Investors</div>
+              <p>Here’s how investors with similar profiles are currently allocated</p>
+              <div className='mm-allocation-overview__block--action'>
+                <Download className='mr-3' />
+                <Share />
+              </div>
             </div>
-            <hr className='mb-4' />
             <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center mm-allocation-overview__block-chart-overview'>
               <AllocationChartSVG className='mm-allocation-overview__block--chart' />
               <AllocationLegendSVG className='mm-allocation-overview__block--legend' />
@@ -117,9 +125,9 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                     <div className='mm-allocation-overview__block-element--text ml-2'>Minx Measure-up</div>
                   </div>
                   <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
-                  <Button className='w-100' variant='primary'>
+                  <Link to='#' className='mm-btn-animate mm-btn-primary'>
                     Complete Profile
-                  </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -127,6 +135,11 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
         </div>
       </div>
       <SettingModal settingModal={chartSettingModal} />
+      <ChartShareModal
+        chartShareModal={chartShareModal}
+        chartComponent={<MMPieChart chartData={chartData} />}
+        chatLegendComponent={<AllocationLegend chartData={chartData} />}
+      />
       <FieldChangeModal fieldChangeModal={fieldChangeModal} />
     </section>
   );

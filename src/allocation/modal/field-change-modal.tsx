@@ -8,7 +8,7 @@ interface FieldChangeModal {
 
 const FieldChangeModal: React.FC<FieldChangeModal> = ({ fieldChangeModal }) => {
   return (
-    <Modal {...fieldChangeModal.props} title='' canBeClosed>
+    <Modal {...fieldChangeModal.props} title='' canBeClosed onClose={() => fieldChangeModal.close()}>
       <div className='modal-wrapper chart-setting-modal modal-md'>
         <div className='mm-field-change-modal'>
           <div className='mm-field-change-modal__title'>Peer Street</div>

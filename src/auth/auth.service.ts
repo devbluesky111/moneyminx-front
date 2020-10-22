@@ -70,6 +70,7 @@ export const signup = async ({ dispatch, payload }: RegisterServicePayload): Pro
 export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }): Promise<ApiResponse> => {
   dispatch({ type: auth.FETCH_ACCOUNT });
   const { data, error } = await getRefreshedAccount();
+
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
