@@ -4,9 +4,11 @@ import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from 'react-share';
 
 import useFileDownload from 'common/hooks/useFileDownload';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg';
 import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg';
 import { ReactComponent as PinterestIcon } from 'assets/icons/pinterest.svg';
+import { useAuthState } from '../../auth/auth.context';
 
 interface ChartShareModalProps {
   chartShareModal: ModalType;
@@ -16,20 +18,29 @@ interface ChartShareModalProps {
 
 const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, chartComponent, chatLegendComponent }) => {
   const { df } = useFileDownload();
+  const { user } = useAuthState();
 
   return (
-    <Modal {...chartShareModal.props} title='' canBeClosed onClose={() => chartShareModal.close()}>
+    <Modal {...chartShareModal.props} title='Share' canBeClosed onClose={() => chartShareModal.close()}>
       <div className='modal-wrapper chart-setting-modal modal-md mm-setting-modal'>
-        <div className='mm-setting-modal__title'>Share</div>
         <div className='allocation-share-card-wrapper'>
           <div id='allocation-share-card'>
+            <div className='allocation-share-card-heading'>
+              <span className='allocation-share-card-heading--title'>Replace me with the chart title</span>
+              <div className='float-right'>
+                <img src={user?.picture || DefaultAvatar} className='allocation-share-card-heading--avatar' alt='Profile avatar' />
+                <span className='allocation-share-card-heading--username'>
+                  @{user?.username || 'moneyminx'}
+                </span>
+              </div>
+            </div>
             <div className='chart-legend-wrapper'>
               {chartComponent}
               {chatLegendComponent}
             </div>
             <div className='allocation-share-card-footer'>
               <Logo />
-              <a href='www.moneyminx.com'>moneyminx.com</a>
+              <span className='float-right'>moneyminx.com</span>
             </div>
           </div>
           <div className='share-button-wrapper'>

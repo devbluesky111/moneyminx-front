@@ -350,9 +350,40 @@
   padding-left: 1rem;
 }
 
+#allocation-share-card {
+  background: $lightBg;
+  border: 1px solid $grayOpacity10;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 1.25rem;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.allocation-share-card-heading {
+
+  &--title {
+    font-weight: 500;
+    font-size: 1rem;
+    color: $darkGray;
+  }
+
+  img {
+    border: 1px solid rgba(165, 172, 184, 0.2);
+    border-radius: 50%;
+    width: 1.625rem;
+    height: 1.625rem;
+    margin-right: 0.5rem;
+  }
+
+  &--username {
+    font-weight: 400;
+    font-size: 0.625rem;
+    color: $gray;
+  }
+}
+
 .allocation-share-card-wrapper {
-  padding: 1rem;
-  background-color: $lightBg;
 
   .chart-legend-wrapper {
     display: flex;
@@ -371,13 +402,19 @@
   }
 
   .allocation-share-card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: block;
+    bottom: 20px;
 
     svg {
-      width: 100px;
-      height: 100px;
+      height: 26px;
+      width: 81px;
+    }
+
+    span {
+      font-weight: 500;
+      font-size: 0.625rem;
+      color: $purple;
+      margin-top: 12px;
     }
   }
   .share-button-wrapper {
@@ -392,22 +429,37 @@
       justify-content: space-evenly;
       border-radius: 4px;
       color: $white !important;
+      font-weight: 500 !important;
     }
 
     .pinterest-share-button {
       background-color: $pinterestRed !important;
+
+      &:hover {
+        background: #EA4235;
+        box-shadow: 0 4px 8px $pinterestRedHover;
+      }
     }
 
     .facebook-share-button {
       background-color: $facebookBlue !important;
+
+      &:hover {
+        box-shadow: 0 4px 8px $facebookBlueHover;
+      }
     }
 
     .twitter-share-button {
       background-color: $twitterBlue !important;
+
+      &:hover {
+        box-shadow: 0 4px 8px $twitterBlueHover;
+      }
     }
   }
   .divider {
     padding: 1rem 0;
+    color: $gray;
   }
 
   .outline-button-wrapper {
