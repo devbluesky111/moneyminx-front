@@ -12,7 +12,7 @@ interface SettingModalProps {
 
 const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
   return (
-    <Modal {...settingModal.props} title='' canBeClosed>
+    <Modal {...settingModal.props} title='' canBeClosed onClose={() => settingModal.close()}>
       <div className='modal-wrapper chart-setting-modal modal-md mm-setting-modal'>
         <div className='mm-setting-modal__title'>
           Chart Settings

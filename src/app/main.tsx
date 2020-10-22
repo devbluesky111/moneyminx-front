@@ -10,10 +10,12 @@ import { storage } from './app.storage';
 import { StorageKey } from './app.types';
 
 import './app.i18n';
+import useAccountRefresh from 'common/hooks/useAccountRefresh';
 
 export default function Main() {
-  const dispatch = useAuthDispatch();
   useProfile();
+  useAccountRefresh();
+  const dispatch = useAuthDispatch();
 
   useEffect(() => {
     const { data, error } = storage.get(StorageKey.AUTH);

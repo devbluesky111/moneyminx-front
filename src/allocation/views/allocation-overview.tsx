@@ -4,6 +4,7 @@ import { fNumber } from 'common/number.helper';
 import { useModal } from 'common/components/modal';
 import { MMPieChart } from 'common/components/pie-chart';
 import SettingModal from 'allocation/modal/setting-modal';
+import useFileDownload from 'common/hooks/useFileDownload';
 import FieldChangeModal from 'allocation/modal/field-change-modal';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
@@ -16,10 +17,13 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
 import { Link } from 'react-router-dom';
+import ChartShareModal from 'allocation/modal/chart-share-modal';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
-  const chartSettingModal = useModal();
+  const { df } = useFileDownload();
+  const chartShareModal = useModal();
   const fieldChangeModal = useModal();
+  const chartSettingModal = useModal();
 
   const getTotal = (key: string) => {
     return chartData.find((datum) => datum.group === key);
@@ -36,12 +40,15 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
               <p>Current allocation based on your holdings</p>
               <div className='mm-allocation-overview__block--action'>
                 <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
-                <Download className='mr-3' />
-                <Share />
+                <Download className='mr-3' onClick={() => df('current-allocation-pie-chart', 'current-allocation')} />
+              <Share onClick={() => chartShareModal.open()} />
               </div>
             </div>
             <div className='allocation-content'>
-              <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
+              <div
+                className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'
+                id='current-allocation-pie-chart'
+              >
                 <MMPieChart chartData={chartData} />
                 <AllocationLegend chartData={chartData} />
               </div>
@@ -128,6 +135,11 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
         </div>
       </div>
       <SettingModal settingModal={chartSettingModal} />
+      <ChartShareModal
+        chartShareModal={chartShareModal}
+        chartComponent={<MMPieChart chartData={chartData} />}
+        chatLegendComponent={<AllocationLegend chartData={chartData} />}
+      />
       <FieldChangeModal fieldChangeModal={fieldChangeModal} />
     </section>
   );

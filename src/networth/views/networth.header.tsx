@@ -46,7 +46,7 @@ const NetworthHeader: React.FC<NetworthHeaderProps> = ({ toggleMenu }) => {
                 <span>
                   <img src={user?.picture || DefaultAvatar} alt='Profile avatar' />
                 </span>
-                <span>{capitalize(user?.firstName || 'User')}</span>
+                <span>{capitalize(user?.firstName || 'My Account')}</span>
               </button>
             </div>
           </div>

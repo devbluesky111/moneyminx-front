@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
 
 interface Size {
   lg: string;
@@ -46,7 +47,9 @@ const Modal: React.FC<Props> = ({
           <div className='modal-header'>
             <h5 className='modal-title'>{title}</h5>
             {canBeClosed && (
-              <button type='button' className='close' onClick={() => onClose()} />
+              <div onClick={() => onClose()} className='close' role='button'>
+                <AiOutlineClose />
+              </div>
             )}
           </div>
           <div className='modal-body'>{children}</div>
