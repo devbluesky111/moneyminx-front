@@ -87,6 +87,14 @@ button.hidden {
   }
 }
 
+.modal-close {
+  color: $gray;
+
+  &:hover {
+    color: $darkGray;
+  }
+}
+
 .modal-header {
   border-bottom: none;
   padding: 1rem 0.5rem;

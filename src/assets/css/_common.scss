@@ -33,6 +33,14 @@ a {
   }
 }
 
+.link-gray {
+  color: $gray;
+
+  &:hover {
+    color: $darkGray;
+  }
+}
+
 .light {
   opacity: 0.6;
 }
