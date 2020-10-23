@@ -367,13 +367,6 @@
 
 .react-datepicker__input-container svg {
     cursor: pointer;
-
-    &:hover {
-
-      .icon-link-purple {
-        stroke: $purpleOpacity50;
-      }
-    }
   }
 
 .current-allocation-chart-wrapper {
@@ -490,8 +483,7 @@
       background-color: $pinterestRed !important;
 
       &:hover {
-        background: #EA4235;
-        box-shadow: 0 4px 8px $pinterestRedHover;
+        box-shadow: 2px 4px 8px $pinterestRedGlow;
       }
     }
 
@@ -499,7 +491,7 @@
       background-color: $facebookBlue !important;
 
       &:hover {
-        box-shadow: 0 4px 8px $facebookBlueHover;
+        box-shadow: 2px 4px 8px $facebookBlueGlow;
       }
     }
 
@@ -507,7 +499,7 @@
       background-color: $twitterBlue !important;
 
       &:hover {
-        box-shadow: 0 4px 8px $twitterBlueHover;
+        box-shadow: 2px 4px 8px $twitterBlueGlow;
       }
     }
   }

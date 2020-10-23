@@ -155,6 +155,10 @@ ul.owner-list li a {
   outline: none;
   display: inline-block;
 
+  &:hover {
+    color: $darkGray;
+  }
+
   ul.owner-list li {
     width: 100%;
   }
