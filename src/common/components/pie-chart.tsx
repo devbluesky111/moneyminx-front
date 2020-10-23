@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell } from 'recharts';
 
 import { ChartData } from 'allocation/allocation.type';
 
-const COLORS = ['#235EE7', '#1F32AD', '#FFBC02', '#29CFD6', '#D3365F'];
+const COLORS = ['#235ee7', '#10c273', '#e74f99', '#ffd911', '#1f32ad', '#f7b164', '#16977f', '#158fff', '#ffbc02', '#f5325c', '#b5d539', '#c73cb9', '#29cfd6', '#7854f6', '#ec7100', '#c11a1a', '#d3365f', '#b1c0d2', '#454d7f', '#14b8b8'];
 
 interface MMPieChartProps {
   chartData: ChartData;
