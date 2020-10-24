@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, ModalType } from 'common/components/modal';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { FacebookShareButton, PinterestShareButton, TwitterShareButton } from 'react-share';
@@ -9,6 +9,8 @@ import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg';
 import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg';
 import { ReactComponent as PinterestIcon } from 'assets/icons/pinterest.svg';
+import useAllocationSetting from 'allocation/hooks/useAllocationSetting';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 interface ChartShareModalProps {
   chartShareModal: ModalType;
@@ -17,8 +19,26 @@ interface ChartShareModalProps {
 }
 
 const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, chartComponent, chatLegendComponent }) => {
-  const { df } = useFileDownload();
+  const { df, getImage } = useFileDownload();
   const { user } = useAuthState();
+  const [blob, setBlob] = useState<any>(null);
+
+  const { loading, settings }: { loading: boolean; settings: any } = useAllocationSetting();
+
+  const getBlobImage = async () => {
+    if (!blob) {
+      const { image, error } = await getImage('allocation-share-card');
+      if (!error) {
+        setBlob(image);
+      }
+    }
+  };
+
+  useEffect(() => {}, []);
+
+  if (loading) {
+    return <CircularSpinner />;
+  }
 
   return (
     <Modal {...chartShareModal.props} title='Share' canBeClosed onClose={() => chartShareModal.close()}>
@@ -26,7 +46,9 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
         <div className='allocation-share-card-wrapper'>
           <div id='allocation-share-card'>
             <div className='allocation-share-card-heading'>
-              <span className='allocation-share-card-heading--title'>Replace me with the chart title</span>
+              <span className='allocation-share-card-heading--title'>
+                {settings?.title || 'Replace me with the chart title'}
+              </span>
               <div className='float-right'>
                 <img
                   src={user?.picture || DefaultAvatar}
@@ -47,6 +69,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
           </div>
           <div className='share-button-wrapper'>
             <PinterestShareButton
+              beforeOnClick={getBlobImage}
               url='www.github.com'
               media='www.github.com'
               className='share-button pinterest-share-button'
@@ -54,11 +77,11 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
               <PinterestIcon />
               Pin It
             </PinterestShareButton>
-            <FacebookShareButton url='www.github.com' className='share-button facebook-share-button'>
+            <FacebookShareButton url='www.github.com' className='share-button facebook-share-button' disabled={!blob}>
               <FacebookIcon />
               Share
             </FacebookShareButton>
-            <TwitterShareButton url='www.github.com' className='share-button twitter-share-button'>
+            <TwitterShareButton url='www.github.com' className='share-button twitter-share-button' disabled={!blob}>
               <TwitterIcon />
               Tweet
             </TwitterShareButton>

@@ -137,3 +137,7 @@ export const getAllocationChartSetting = (): Promise<ApiResponse> => {
 export const patchAllocationChartSettings = <D>(data: D): Promise<ApiResponse> => {
   return http.patch(urls.allocations.CHART_SETTINGS, data);
 };
+
+export const postUploadChart = <D>(data: D): Promise<ApiResponse> => {
+  return http.post(urls.allocations.UPLOAD_CHART, data);
+};
