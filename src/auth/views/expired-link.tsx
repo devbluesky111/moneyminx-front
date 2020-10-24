@@ -33,9 +33,6 @@ export const ExpiredLinkMainSection = () => {
   const isErrorMessage = status === 'error' && isMessage;
   const isSuccessMessage = status === 'success' && isMessage;
 
-  const isFeedback = isErrorMessage || isSuccessMessage;
-  const footerClass = isFeedback ? 'd-md-none d-lg-none d-xl-none' : '';
-
   return (
     <div className='main-table-wrapper'>
       <div className=''>
