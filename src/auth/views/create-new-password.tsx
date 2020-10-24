@@ -1,11 +1,11 @@
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 
 import useParam from 'common/hooks/useParam';
 import { AuthLayout } from 'layouts/auth.layout';
-import { postResetPassword } from 'api/request.api';
+import { postResetPassword, checkResetPasswordToken } from 'api/request.api';
 import { resetPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
@@ -37,6 +37,20 @@ export const CreateNewPasswordMainSection = () => {
   const toggleConfirmPasswordVisibility = () => {
     setVisible({ ...visible, confirmPassword: !visible.confirmPassword });
   };
+
+  const checkPasswordIsAlive = async () => {
+    const {data: {expired}, error} = await checkResetPasswordToken({ token });
+    if(error || expired) {
+      history.push('/password/token-expired');
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      checkPasswordIsAlive();
+    }
+  },[]); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   if (!token) {
     return <Redirect to='/auth/forgot-password' />;

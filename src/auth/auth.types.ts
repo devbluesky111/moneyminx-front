@@ -20,6 +20,10 @@ export interface ResetPasswordPayload {
   token: string;
 }
 
+export interface VerifyResetPasswordTokenPayload {
+  token: string;
+}
+
 export interface UserType {
   [key: string]: any;
 }
