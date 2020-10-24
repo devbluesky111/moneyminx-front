@@ -45,9 +45,14 @@ const Modal: React.FC<Props> = ({
 }) => {
   const classNames = `${backdrop ? 'modal mm-modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
   const modalClasses = `modal-dialog modal-dialog-centered modal-${size}`;
+  const clickOutsideModalHandler = (event: any) => {
+    if (event?.target?.className === 'modal mm-modal-backdrop modal-show') {
+      onClose();
+    }
+  }
 
   return (
-    <div className={classNames} tabIndex={-1} role='dialog' aria-hidden='true'>
+    <div className={classNames} tabIndex={-1} role='dialog' aria-hidden='true' onClick={clickOutsideModalHandler}>
       <div className={modalClasses} role='document'>
         <div className='modal-content'>
           {type === ModalTypeEnum.NO_HEADER ? null : (
