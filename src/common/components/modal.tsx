@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
 interface Size {
+  xl: string;
   lg: string;
   md: string;
   sm: string;
