@@ -123,6 +123,39 @@
 }
 
 @media (max-width: $md) {
+  .expand-all {
+    position: fixed;
+  .navbar-menu-list {
+    margin-left: -1rem;
+    margin-right: -1rem !important;
+    overflow: hidden;
+    .mm-nav-item {
+      height: 100%;
+      width: 100%;
+      margin: 0 !important;
+      .mm-nav-link {
+        font-weight: 300;
+        font-size: 24px;
+        color: $white;
+        padding: 20px 0;
+        margin-left: 40px;
+        margin-right: 40px;
+      }
+    }
+    .mm-nav-item.active {
+      border-bottom: unset;
+      background: #534cea4d;
+      .mm-nav-link {
+        color: #fff !important;
+      }
+    }
+  }
+  .mm-navbar-logo {
+    display: block;
+    margin-bottom: 50px;
+  }
+}
+
   .navbar-menu-list {
     display: none;
   }
@@ -160,4 +193,9 @@
   @media screen and (max-width: $sm) {
     width: 106px;
   }
+}
+
+
+.mm-navbar-logo {
+  display: none;
 }
