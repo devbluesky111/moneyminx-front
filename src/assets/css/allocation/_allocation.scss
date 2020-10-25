@@ -105,8 +105,16 @@
       color: $darkGray;
     }
 
-    &--title + p {
-      min-height: 3.125rem;
+    &--subtitle {
+      font-weight: 400;
+      font-size: 1rem;
+      color: $gray;
+      margin: .5rem 0 .5rem 0;
+      display: inline-block;
+
+      @media (min-width: 1200px) {
+        min-height: 3rem;
+      }
     }
 
     &--chart {
@@ -118,15 +126,16 @@
       width: 100%;
     }
 
-    p {
-      font-weight: 400;
-      font-size: 1rem;
-      color: $gray;
-      margin: .5rem 0 1.5rem 0;
-    }
-
     &--action {
-      padding-bottom: 1rem;
+      float: none;
+      display: block;
+      margin: 0;
+
+      @media (min-width: 560px) and (max-width: 1199px) {
+        float: right;
+        display: inline-block;
+        margin: .5rem 0 0 0;
+      }
 
       svg {
         cursor: pointer;
@@ -148,6 +157,9 @@
   }
 
   &__table {
+    padding-top: 2rem;
+    border-top: 1px solid $grayOpacity20;
+
     table {
       width: 100%;
     }
@@ -298,7 +310,7 @@
 }
 
 .allocation-card-top {
-  padding: 0 1rem;
+  padding: 0 1rem 1rem 1rem;
   border-bottom: 1px solid $grayOpacity20;
 
   &.no-border {
@@ -307,7 +319,7 @@
 }
 
 .mm-allocation-legend-wrapper {
-  padding: 1rem;
+  padding: 1rem 0;
 
   .legend-row {
     color: $gray;

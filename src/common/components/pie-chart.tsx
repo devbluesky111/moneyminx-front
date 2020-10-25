@@ -25,7 +25,7 @@ export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, height = 440,
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip />
+        <Tooltip/>
       </PieChart>
     </div>
   );
