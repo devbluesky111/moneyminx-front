@@ -330,7 +330,11 @@ ul.features-list {
   }
 
   #mm-plan-year:checked~.mm-radio-bg {
-    transform: translateX(138px);
+    transform: translateX(122px);
     transition: transform 0.2s ease-in-out;
+
+    @media (min-width: $sm) {
+      transform: translateX(138px);
+    }
   }
 }
