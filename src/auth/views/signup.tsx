@@ -55,13 +55,13 @@ export const SignupMainSection = () => {
   const visibilityIcon = visible ? <VisibleIcon /> : <HiddenIcon />;
 
   const getValidationText = () => {
-    if (validator < 3) {
+    if (validator < 2) {
       return {
         text: 'Weak',
         classNames: 'text-danger ',
       };
     }
-    if (validator < 4) {
+    if (validator < 3) {
       return {
         text: 'Medium',
         classNames: 'text-warning',

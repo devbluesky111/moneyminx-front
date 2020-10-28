@@ -16,7 +16,7 @@ import { ReactComponent as PinterestIcon } from 'assets/icons/pinterest.svg';
 interface ChartShareModalProps {
   chartShareModal: ModalType;
   chartComponent: React.ReactNode;
-  chatLegendComponent: React.ReactNode;
+  chartLegendComponent: React.ReactNode;
 }
 
 export enum ShareTypeEnum {
@@ -25,7 +25,7 @@ export enum ShareTypeEnum {
   TWITTER = 'TWITTER',
 }
 
-const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, chartComponent, chatLegendComponent }) => {
+const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, chartComponent, chartLegendComponent }) => {
   const { user } = useAuthState();
   const { df, getImage } = useFileDownload();
   const [imageUrl, setImageUrl] = useState<string>();
@@ -108,13 +108,13 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
   }
 
   return (
-    <Modal {...chartShareModal.props} title='Share' size='md' canBeClosed onClose={() => chartShareModal.close()}>
+    <Modal {...chartShareModal.props} title='Share' size='mdx' canBeClosed onClose={() => chartShareModal.close()}>
       <div className='modal-wrapper chart-setting-modal mm-setting-modal'>
         <div className='allocation-share-card-wrapper'>
           <div id='allocation-share-card'>
             <div className='allocation-share-card-heading'>
               <span className='allocation-share-card-heading--title'>
-                {settings?.title || 'Replace me with the chart title'}
+                {settings?.title || 'My Investments Portfolio Allocation'}
               </span>
               <div className='float-right'>
                 <img
@@ -122,12 +122,12 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
                   className='allocation-share-card-heading--avatar'
                   alt='Profile avatar'
                 />
-                <span className='allocation-share-card-heading--username'>@{user?.username || 'moneyminx'}</span>
+                <span className='allocation-share-card-heading--username'>@{user?.username || 'moneyminxapp'}</span>
               </div>
             </div>
             <div className='chart-legend-wrapper'>
               {chartComponent}
-              {chatLegendComponent}
+              {chartLegendComponent}
             </div>
             <div className='allocation-share-card-footer'>
               <Logo />
