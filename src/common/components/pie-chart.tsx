@@ -18,7 +18,7 @@ export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, height = 440,
   }));
 
   return (
-    <div className='current-allocation-chart-wrapper'>
+    <div className='allocation-chart-wrapper'>
       <PieChart width={width} height={height} onMouseEnter={() => {}} className='mm-allocation-overview__block--chart'>
         <Pie data={data} cx={250} cy={200} innerRadius={95} outerRadius={155} fill='#000000' stroke='none' dataKey='value'>
           {data.map((entry, index) => (
