@@ -17,7 +17,10 @@
   height: 46px;
 
   &:hover {
-    border-bottom: 1px solid $primary;
+    @media (min-width: $md) {
+      border-bottom: 1px solid $primary;
+    }
+    
   }
 }
 
@@ -48,7 +51,8 @@
     padding: 1rem;
     position: absolute;
     background-color: $darkBg;
-    z-index: 1;
+    z-index: 9;
+    overflow: hidden;
 
     .btn-outline-primary {
       color: $white;
