@@ -1,6 +1,8 @@
 import React from 'react';
-import { Modal } from 'common/components/modal';
 import { useHistory } from 'react-router-dom';
+
+import { Modal } from 'common/components/modal';
+import { appRouteConstants } from 'app/app-route.constant';
 
 interface Props {
   associateModal: any;
@@ -16,7 +18,7 @@ const AssociateEmailModal: React.FC<Props> = ({ associateModal, message, handleS
   let rejectText: string = 'Create a new account instead';
 
   if (source === 'login') {
-    link = '/login';
+    link = appRouteConstants.auth.LOGIN;
     acceptText = 'Yes please';
     rejectText = 'No, login by email';
   }
