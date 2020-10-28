@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import ReactDatePicker from 'react-datepicker';
 
 import { fNumber } from 'common/number.helper';
-import ReactDatePicker from 'react-datepicker';
+import { useModal } from 'common/components/modal';
+import { getStringDate } from 'common/moment.helper';
 import { MMPieChart } from 'common/components/pie-chart';
+import SettingModal from 'allocation/modal/setting-modal';
 import useAllocation from 'allocation/hooks/useAllocation';
+import useFileDownload from 'common/hooks/useFileDownload';
+import ChartShareModal from 'allocation/modal/chart-share-modal';
 import { SelectedAllocationProps } from 'allocation/allocation.type';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
@@ -12,11 +17,14 @@ import { ReactComponent as Download } from 'assets/images/allocation/download.sv
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
 
 import AllocationLegend from './allocation-legend';
-import { getStringDate } from 'common/moment.helper';
 
 export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter }) => {
   const [date, setDate] = useState<Date | null>(null);
   const { fetching, allocations, error, allocationChartData: chartData } = useAllocation(filter, date?.toISOString());
+  const { df } = useFileDownload();
+
+  const chartSettingModal = useModal();
+  const chartShareModal = useModal();
 
   if (fetching || error || !allocations || !chartData) {
     return <CircularSpinner />;
@@ -49,13 +57,16 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
             Use the arrows above to see your previous allocations
           </p>
           <div className='mm-allocation-overview__block--action'>
-            <SettingsIcon className='mr-3' />
-            <Download className='mr-3' />
-            <Share />
+            <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
+            <Download className='mr-3' onClick={() => df('selected-allocation-pie-chart', 'selected-allocation')} />
+            <Share onClick={() => chartShareModal.open()} />
           </div>
         </div>
         <div className='allocation-content'>
-          <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
+          <div
+            className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'
+            id='selected-allocation-pie-chart'
+          >
             <MMPieChart chartData={chartData} />
             <AllocationLegend chartData={chartData} />
           </div>
@@ -109,6 +120,12 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
           </div>
         </div>
       </div>
+      <SettingModal settingModal={chartSettingModal} />
+      <ChartShareModal
+        chartShareModal={chartShareModal}
+        chartComponent={<MMPieChart chartData={chartData} />}
+        chartLegendComponent={<AllocationLegend chartData={chartData} />}
+      />
     </div>
   );
 };
