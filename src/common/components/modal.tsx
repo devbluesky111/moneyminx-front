@@ -4,6 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 interface Size {
   xl: string;
   lg: string;
+  mdx: string;
   md: string;
   sm: string;
   xs: string;

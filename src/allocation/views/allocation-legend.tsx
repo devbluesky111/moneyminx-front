@@ -7,7 +7,7 @@ interface Props {
   chartData: ChartData;
 }
 
-const COLORS = ['#235EE7', '#1F32AD', '#FFBC02', '#29CFD6', '#D3365F'];
+const COLORS = ['#235ee7', '#10c273', '#e74f99', '#ffd911', '#1f32ad', '#f7b164', '#16977f', '#158fff', '#ffbc02', '#f5325c', '#b5d539', '#c73cb9', '#29cfd6', '#7854f6', '#ec7100', '#c11a1a', '#d3365f', '#b1c0d2', '#454d7f', '#14b8b8'];
 
 const AllocationLegend: React.FC<Props> = ({ chartData }) => {
   return (
@@ -15,13 +15,9 @@ const AllocationLegend: React.FC<Props> = ({ chartData }) => {
       {chartData.map((data, index) => {
         return (
           <div className='legend-row' key={index}>
-            <div className='color-title'>
               <span className='legend-color-box' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-              <span className='p-r-1'>
-                {data.group} - {fNumber(data.per)}%
-              </span>
-            </div>
-            <span>${fNumber(data.total)}</span>
+              <span className='legend-label'>{data.group} - {fNumber(data.per)}%</span>
+              <span className='legend-amount'>${fNumber(data.total)}</span>
           </div>
         );
       })}

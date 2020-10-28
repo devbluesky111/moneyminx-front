@@ -333,7 +333,6 @@
       color: $green;
     }
 
-    .color-title {
       .legend-color-box {
         display: inline-block;
         width: 18px;
@@ -344,7 +343,6 @@
       span {
         padding-left: 1rem;
       }
-    }
   }
 }
 .allocation-content {
@@ -379,10 +377,6 @@
 
 .react-datepicker__input-container svg {
   cursor: pointer;
-}
-
-.current-allocation-chart-wrapper {
-  padding-left: 1rem;
 }
 
 #allocation-share-card {
@@ -433,8 +427,7 @@
 
 .allocation-share-card-wrapper {
   .chart-legend-wrapper {
-    display: flex;
-    max-height: 200px;
+    display: inline-flex;
     overflow: hidden;
 
     .recharts-wrapper {
@@ -446,6 +439,33 @@
         height: 189px !important;
       }
     }
+
+    span {
+      font-size: 0.75rem;
+    }
+
+    .legend-row {
+
+      display: flex;
+      width: 100%;
+
+      .legend-color-box {
+        width: 12px;
+        height: 12px;
+        padding-left: 0;
+      }
+
+      .legend-label {
+        padding-left: 8px;
+      }
+
+      .legend-amount {
+        text-align: right;
+        float: right;
+      }
+
+    }
+
   }
 
   .allocation-share-card-footer {
