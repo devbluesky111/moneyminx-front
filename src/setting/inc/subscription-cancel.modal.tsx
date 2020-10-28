@@ -12,8 +12,8 @@ const SubscriptionCancelModal: React.FC<Props> = ({ subscriptionCancelModal, sub
   const endingDate = subscriptionEnd ? moment(subscriptionEnd).format('MM/DD/YY') : 'xx/xx/xx';
 
   return (
-    <Modal {...subscriptionCancelModal.props} title='Sorry to see you go' canBeClosed>
-      <div className='modal-wrapper signup-modal modal-md subscription-cancel-modal'>
+    <Modal {...subscriptionCancelModal.props} title='Sorry to see you go' size='md' canBeClosed>
+      <div className='modal-wrapper signup-modal subscription-cancel-modal'>
         <p>
           Your account will remain active until <span>{endingDate}</span>. Please let us know why you decided to cancel
           and if there is anything we can do to improve our service by emailing{' '}

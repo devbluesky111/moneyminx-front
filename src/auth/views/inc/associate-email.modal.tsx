@@ -29,9 +29,8 @@ const AssociateEmailModal: React.FC<Props> = ({ associateModal, message, handleS
   };
 
   return (
-    <Modal {...associateModal.props} title='' onSuccess={handleSuccess} size='sm'>
-      <div className='modal-wrapper modal-sm'>
-        <h4>Existing Account Found</h4>
+    <Modal {...associateModal.props} title='Existing Account Found' onSuccess={handleSuccess} size='sm'>
+      <div className='modal-wrapper'>
         <p>{message}</p>
         <div className='modal-btn-wrapper'>
           <button className='mm-btn-animate mm-btn-primary' onClick={handleSuccess}>

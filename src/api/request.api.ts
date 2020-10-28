@@ -133,3 +133,15 @@ export const getNetworth = <P>(params?: P) => {
 export const getAllocations = <P>(params?: P): Promise<ApiResponse> => {
   return http.get(urls.allocations.ALLOCATIONS, params);
 };
+
+export const getAllocationChartSetting = (): Promise<ApiResponse> => {
+  return http.get(urls.allocations.CHART_SETTINGS);
+};
+
+export const patchAllocationChartSettings = <D>(data: D): Promise<ApiResponse> => {
+  return http.patch(urls.allocations.CHART_SETTINGS, data);
+};
+
+export const postUploadChart = <D>(data: D): Promise<ApiResponse> => {
+  return http.post(urls.allocations.UPLOAD_CHART, data);
+};

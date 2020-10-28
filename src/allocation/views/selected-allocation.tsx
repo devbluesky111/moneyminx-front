@@ -44,7 +44,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
             </span>
           </div>
           <div className='mm-allocation-overview__block--title'>Previous allocations</div>
-          <p>Use the arrows above to see your previous allocations</p>
+          <p className='mm-allocation-overview__block--subtitle'>Use the arrows above to see your previous allocations</p>
           <div className='mm-allocation-overview__block--action'>
             <SettingsIcon className='mr-3' />
             <Download className='mr-3' />
@@ -58,11 +58,14 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
           </div>
           <div className='mm-allocation-overview__table'>
             <table>
-              <tr>
-                <th className='mm-allocation-overview__table--head'>Position</th>
-                <th className='mm-allocation-overview__table--head'>Allocation</th>
-                <th className='mm-allocation-overview__table--head'>Value</th>
-              </tr>
+              <thead>
+                <tr>
+                  <th className='mm-allocation-overview__table--head'>Position</th>
+                  <th className='mm-allocation-overview__table--head'>Allocation</th>
+                  <th className='mm-allocation-overview__table--head'>Value</th>
+                </tr>
+              </thead>
+              <tbody>
               {Object.keys(allocations).map((allocationKey, index) => {
                 const allocation = allocations[allocationKey];
 
@@ -75,7 +78,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                       return (
                         <React.Fragment key={al.id}>
                           <tr className='mm-allocation-overview__table--data-row-mobile'>
-                            <p className='mt-2 mb-0'>{al.description}</p>
+                            <span className='mt-2 mb-0'>{al.description}</span>
                           </tr>
                           <tr className='mm-allocation-overview__table--data-row'>
                             <td>{al.description}</td>
@@ -98,6 +101,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                   </React.Fragment>
                 );
               })}
+              </tbody>
             </table>
           </div>
         </div>
