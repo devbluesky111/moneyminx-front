@@ -151,6 +151,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
               Tweet
             </button>
             <PinterestShareButton
+              description={`Check out my ${settings?.title || 'My awesome chart'} via Moneyminx.com`}
               ref={pinterestButtonRef}
               url={imageUrl ? imageUrl : 'https://app.moneyminx.com/'}
               media={imageUrl ? imageUrl : 'https://app.moneyminx.com/'}
@@ -160,6 +161,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
               Pin It
             </PinterestShareButton>
             <FacebookShareButton
+              quote={`Check out my ${settings?.title || 'My awesome chart'} via Moneyminx.com`}
               ref={facebookShareButtonRef}
               url={imageUrl ? imageUrl : 'https://app.moneyminx.com/'}
               className='d-none share-button facebook-share-button'
@@ -168,6 +170,8 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
               Share
             </FacebookShareButton>
             <TwitterShareButton
+              title={`Check out my ${settings?.title || 'My awesome chart'}`}
+              via='moneyminxapp'
               ref={twitterShareButtonRef}
               url={imageUrl ? imageUrl : 'https://app.moneyminx.com/'}
               className='d-none share-button twitter-share-button'
