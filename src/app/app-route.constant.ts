@@ -3,13 +3,14 @@ export const appRouteConstants = {
   auth: {
     DEF: '/auth',
     ME: '/auth/me',
-    LOGIN: '/auth/login',
-    SIGNUP: '/auth/signup',
-    LOGOUT: '/auth/logout',
+    LOGIN: '/login',
+    SIGNUP: '/signup',
+    LOGOUT: '/logout',
     RESET_PASSWORD: '/password_reset/:token?',
-    TOKEN_EXPIRED: '/password/token-expired',
+    TOKEN_EXPIRED: '/token-expired',
     CONNECT_ACCOUNT: '/connect-account',
     ACCOUNT_SETTING: '/account-settings',
+    FORGOT_PASSWORD: '/forgot-password',
   },
 
   allocation: {

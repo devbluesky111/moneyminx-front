@@ -22,6 +22,7 @@ import {
 
 import { appRouteConstants } from './app-route.constant';
 import AllocationRoute from 'allocation/allocation.route';
+import { ForgotPassword } from 'auth/views';
 
 const {
   home,
@@ -31,7 +32,7 @@ const {
   networth: { NET_WORTH },
   allocation: { ALLOCATION },
   misc: { STRIPE_FAILURE, STRIPE_SUCCESS },
-  auth: { DEF, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
+  auth: { DEF, LOGIN, SIGNUP, FORGOT_PASSWORD, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
 } = appRouteConstants;
 
 function AppRoute() {
@@ -59,12 +60,13 @@ function AppRoute() {
         </Route>
 
         <Route exact path={'/about'} component={About} />
-        <Route exact path={'/login'} component={Login} />
-        <Route exact path={'/signup'} component={Signup} />
+        <Route exact path={LOGIN} component={Login} />
+        <Route exact path={SIGNUP} component={Signup} />
         <Route exact path={'/notices'} component={Notice} />
         <Route exact path={'/privacy'} component={Privacy} />
         <Route exact path={'/pricing'} component={Pricing} />
         <Route exact path={'/terms'} component={TermNService} />
+        <Route exact path={FORGOT_PASSWORD} component={ForgotPassword} />
         <Route exact path={SETTINGS} component={Setting} />
         <Route exact path={SECURITY} component={Security} />
         <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
