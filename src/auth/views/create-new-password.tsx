@@ -25,6 +25,7 @@ const CreateNewPassword = () => {
 export const CreateNewPasswordMainSection = () => {
   const { token } = useParam();
   const history = useHistory();
+  const [validator, setValidator] = useState<number>(0);
 
   const [visible, setVisible] = useState({
     password: false,
@@ -55,6 +56,31 @@ export const CreateNewPasswordMainSection = () => {
       checkPasswordIsAlive();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const reg1 = /^.{8,}$/;
+  const reg2 = /(^.*\d+.*$)/;
+  const reg3 = /(^.*[@$!%*#?&].*$)/;
+  const reg4 = /(^.*[A-Z].*$)/;
+
+  const getValidationText = () => {
+    if (validator < 3) {
+      return {
+        text: 'Weak',
+        classNames: 'text-danger ',
+      };
+    }
+    if (validator < 4) {
+      return {
+        text: 'Medium',
+        classNames: 'text-warning',
+      };
+    }
+
+    return {
+      text: 'Strong',
+      classNames: 'text-success',
+    };
+  };
 
   if (!token) {
     return <Redirect to={appRouteConstants.auth.FORGOT_PASSWORD} />;
@@ -111,7 +137,28 @@ export const CreateNewPasswordMainSection = () => {
               <p>One last step. Enter a new password below and you should be good to go.</p>
               <Formik
                 initialValues={{ password: '', confirmPassword: '' }}
-                validationSchema={resetPasswordValidation}
+                validate={async (values) => {
+                  if (!values.password) {
+                    return {};
+                  }
+
+                  let a = 0;
+                  let errors: Record<string, any> = {};
+                  [reg1, reg2, reg3, reg4].forEach((reg) => (reg.test(values.password) ? (a += 1) : a));
+                  setValidator(a);
+
+                  try {
+                    await resetPasswordValidation.validate(values, { abortEarly: false });
+                  } catch (errs) {
+                    const mappedError = errs.inner.reduce((obj: Record<string, any>, cur: any) => {
+                      obj[cur.path] = cur.message;
+                      return obj;
+                    }, {});
+
+                    errors = mappedError;
+                  }
+                  return errors;
+                }}
                 onSubmit={async (values, actions) => {
                   const { error } = await postResetPassword({ password: values.password, token });
                   if (error) {
@@ -141,7 +188,16 @@ export const CreateNewPasswordMainSection = () => {
                               {getVisibilityIcon('password')}
                             </span>
                           </div>
-                          {props.errors.password && <div className='mt-2 feedback'>{props.errors.password}</div>}
+
+                          {props.values.password ? (
+                            <div className={`pt-2 text-right ${getValidationText().classNames}`}>
+                              {getValidationText().text}
+                            </div>
+                          ) : null}
+
+                          {props.errors.password && props.values.password && (
+                            <div className='mt-2 feedback'>{props.errors.password}</div>
+                          )}
                         </div>
                         <div className='input-wrapper'>
                           <div className='password-wrap confirm'>
@@ -156,8 +212,11 @@ export const CreateNewPasswordMainSection = () => {
                             <span className='visibility-icon' onClick={toggleConfirmPasswordVisibility} role='button'>
                               {getVisibilityIcon('confirmPassword')}
                             </span>
+
                             <div className='feedback'>
-                              {props.errors.confirmPassword ? props.errors.confirmPassword : null}
+                              {props.errors.confirmPassword && props.values.confirmPassword
+                                ? props.errors.confirmPassword
+                                : null}
                             </div>
                           </div>
                         </div>
