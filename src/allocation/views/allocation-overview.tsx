@@ -37,7 +37,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             <div className='allocation-card-top'>
               <div className='mm-allocation-overview__block--date'>June 30, 2020</div>
               <div className='mm-allocation-overview__block--title'>Current allocation</div>
-              <p>Current allocation based on your holdings</p>
+              <p className='mm-allocation-overview__block--subtitle'>Current allocation based on your holdings</p>
               <div className='mm-allocation-overview__block--action'>
                 <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
                 <Download className='mr-3' onClick={() => df('current-allocation-pie-chart', 'current-allocation')} />
@@ -46,7 +46,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             </div>
             <div className='allocation-content'>
               <div
-                className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'
+                className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center p-b-4'
                 id='current-allocation-pie-chart'
               >
                 <MMPieChart chartData={chartData} />
@@ -54,11 +54,14 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
               </div>
               <div className='mm-allocation-overview__table'>
                 <table>
-                  <tr>
-                    <th className='mm-allocation-overview__table--head'>Position</th>
-                    <th className='mm-allocation-overview__table--head'>Allocation</th>
-                    <th className='mm-allocation-overview__table--head'>Value</th>
-                  </tr>
+                  <thead>
+                    <tr>
+                      <th className='mm-allocation-overview__table--head'>Position</th>
+                      <th className='mm-allocation-overview__table--head'>Allocation</th>
+                      <th className='mm-allocation-overview__table--head'>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                   {Object.keys(allocations).map((allocationKey, index) => {
                     const allocation = allocations[allocationKey];
 
@@ -96,6 +99,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                       </React.Fragment>
                     );
                   })}
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -109,7 +113,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             <div className='allocation-card-top no-border'>
               <div className='mm-allocation-overview__block--date'>June 30, 2020</div>
               <div className='mm-allocation-overview__block--title'>Similar Investors</div>
-              <p>Here’s how investors with similar profiles are currently allocated</p>
+              <p className='mm-allocation-overview__block--subtitle'>Here’s how investors with similar profiles are currently allocated</p>
               <div className='mm-allocation-overview__block--action'>
                 <Download className='mr-3' />
                 <Share />

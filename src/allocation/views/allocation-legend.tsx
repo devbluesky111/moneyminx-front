@@ -17,8 +17,8 @@ const AllocationLegend: React.FC<Props> = ({ chartData }) => {
           <div className='legend-row' key={index}>
             <div className='color-title'>
               <span className='legend-color-box' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-              <span>
-                {data.group}-{fNumber(data.per)}%
+              <span className='p-r-1'>
+                {data.group} - {fNumber(data.per)}%
               </span>
             </div>
             <span>${fNumber(data.total)}</span>

@@ -5,6 +5,7 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 
 import useParam from 'common/hooks/useParam';
 import { AuthLayout } from 'layouts/auth.layout';
+import { appRouteConstants } from 'app/app-route.constant';
 import { resetPasswordValidation } from 'auth/auth.validation';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
@@ -44,8 +45,9 @@ export const CreateNewPasswordMainSection = () => {
       data: { expired },
       error,
     } = await checkResetPasswordToken({ token });
+
     if (error || expired) {
-      history.push('/password/token-expired');
+      history.push(appRouteConstants.auth.TOKEN_EXPIRED);
     }
   };
 
@@ -81,7 +83,7 @@ export const CreateNewPasswordMainSection = () => {
   };
 
   if (!token) {
-    return <Redirect to='/auth/forgot-password' />;
+    return <Redirect to={appRouteConstants.auth.FORGOT_PASSWORD} />;
   }
 
   const getVisibilityIcon = (field: 'password' | 'confirmPassword') => {
@@ -160,10 +162,10 @@ export const CreateNewPasswordMainSection = () => {
                 onSubmit={async (values, actions) => {
                   const { error } = await postResetPassword({ password: values.password, token });
                   if (error) {
-                    history.push('/password/token-expired');
+                    history.push(appRouteConstants.auth.TOKEN_EXPIRED);
                   } else {
                     toast('Password reset successful, Please login with new credentials', { type: 'success' });
-                    history.push('/login');
+                    history.push(appRouteConstants.auth.LOGIN);
                   }
                 }}
               >
