@@ -12,6 +12,7 @@ import { ReactComponent as Download } from 'assets/images/allocation/download.sv
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
 
 import AllocationLegend from './allocation-legend';
+import { getStringDate } from 'common/moment.helper';
 
 export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter }) => {
   const [date, setDate] = useState<Date | null>(null);
@@ -30,7 +31,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
       <div className='mm-allocation-overview__block'>
         <div className='allocation-card-top'>
           <div className='mm-allocation-overview__block--date'>
-            June 30, 2020
+            {getStringDate(date || undefined)}
             <span className='float-right'>
               <ReactDatePicker
                 selected={date}
@@ -44,7 +45,9 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
             </span>
           </div>
           <div className='mm-allocation-overview__block--title'>Previous allocations</div>
-          <p className='mm-allocation-overview__block--subtitle'>Use the arrows above to see your previous allocations</p>
+          <p className='mm-allocation-overview__block--subtitle'>
+            Use the arrows above to see your previous allocations
+          </p>
           <div className='mm-allocation-overview__block--action'>
             <SettingsIcon className='mr-3' />
             <Download className='mr-3' />
@@ -66,41 +69,41 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                 </tr>
               </thead>
               <tbody>
-              {Object.keys(allocations).map((allocationKey, index) => {
-                const allocation = allocations[allocationKey];
+                {Object.keys(allocations).map((allocationKey, index) => {
+                  const allocation = allocations[allocationKey];
 
-                return (
-                  <React.Fragment key={index}>
-                    <tr>
-                      <td className='mm-allocation-overview__table--title'>{allocationKey}</td>
-                    </tr>
-                    {allocation?.map((al) => {
-                      return (
-                        <React.Fragment key={al.id}>
-                          <tr className='mm-allocation-overview__table--data-row-mobile'>
-                            <span className='mt-2 mb-0'>{al.description}</span>
-                          </tr>
-                          <tr className='mm-allocation-overview__table--data-row'>
-                            <td>{al.description}</td>
-                            <td>
-                              <span className='d-block'>Allocation</span>
-                              {fNumber(al.per)}%
-                            </td>
-                            <td>
-                              <span className='d-block'>Value</span>${fNumber(al.value)}
-                            </td>
-                          </tr>
-                        </React.Fragment>
-                      );
-                    })}
-                    <tr className='mm-allocation-overview__table--footer'>
-                      <td>Total</td>
-                      <td>{fNumber(getTotal(allocationKey)?.per || 0)}%</td>
-                      <td>${fNumber(getTotal(allocationKey)?.total || 0)}</td>
-                    </tr>
-                  </React.Fragment>
-                );
-              })}
+                  return (
+                    <React.Fragment key={index}>
+                      <tr>
+                        <td className='mm-allocation-overview__table--title'>{allocationKey}</td>
+                      </tr>
+                      {allocation?.map((al) => {
+                        return (
+                          <React.Fragment key={al.id}>
+                            <tr className='mm-allocation-overview__table--data-row-mobile'>
+                              <span className='mt-2 mb-0'>{al.description}</span>
+                            </tr>
+                            <tr className='mm-allocation-overview__table--data-row'>
+                              <td>{al.description}</td>
+                              <td>
+                                <span className='d-block'>Allocation</span>
+                                {fNumber(al.per)}%
+                              </td>
+                              <td>
+                                <span className='d-block'>Value</span>${fNumber(al.value)}
+                              </td>
+                            </tr>
+                          </React.Fragment>
+                        );
+                      })}
+                      <tr className='mm-allocation-overview__table--footer'>
+                        <td>Total</td>
+                        <td>{fNumber(getTotal(allocationKey)?.per || 0)}%</td>
+                        <td>${fNumber(getTotal(allocationKey)?.total || 0)}</td>
+                      </tr>
+                    </React.Fragment>
+                  );
+                })}
               </tbody>
             </table>
           </div>
