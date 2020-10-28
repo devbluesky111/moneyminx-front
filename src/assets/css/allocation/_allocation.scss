@@ -109,7 +109,7 @@
       font-weight: 400;
       font-size: 1rem;
       color: $gray;
-      margin: .5rem 0 .5rem 0;
+      margin: 0.5rem 0 0.5rem 0;
       display: inline-block;
 
       @media (min-width: 1200px) {
@@ -134,7 +134,7 @@
       @media (min-width: 560px) and (max-width: 1199px) {
         float: right;
         display: inline-block;
-        margin: .5rem 0 0 0;
+        margin: 0.5rem 0 0 0;
       }
 
       svg {
@@ -378,8 +378,8 @@
 }
 
 .react-datepicker__input-container svg {
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
 
 .current-allocation-chart-wrapper {
   padding-left: 1rem;
@@ -396,7 +396,6 @@
 }
 
 .allocation-share-card-heading {
-
   &--title {
     font-weight: 500;
     font-size: 0.625rem;
@@ -427,13 +426,12 @@
     color: $gray;
 
     @media (min-width: $sm + 75px) {
-      font-size: 0.625rem;;
+      font-size: 0.625rem;
     }
   }
 }
 
 .allocation-share-card-wrapper {
-
   .chart-legend-wrapper {
     display: flex;
     max-height: 200px;
@@ -484,6 +482,7 @@
       color: $white !important;
       font-weight: 500 !important;
       margin-top: 1rem;
+      border: none;
 
       @media (min-width: $md) {
         width: 135px;
@@ -521,7 +520,6 @@
   }
 
   .outline-button-wrapper {
-
     button {
       width: 100%;
 
