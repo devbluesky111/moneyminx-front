@@ -87,7 +87,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
     }
   };
 
-  const handleCopyToClipboard = async () => {
+  /*const handleCopyToClipboard = async () => {
     if (imageUrl) {
       navigator.clipboard.writeText(imageUrl);
 
@@ -101,7 +101,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
 
       return setCopySuccess(true);
     }
-  };
+  };*/
 
   if (loading) {
     return <CircularSpinner />;
@@ -182,9 +182,10 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
           </div>
           <div className='divider'>or</div>
           <div className='outline-button-wrapper'>
+            {/* ToDo find a solution for copy to clipboard
             <button className='btn-outline-primary mm-btn-animate' onClick={handleCopyToClipboard}>
               {copySuccess ? 'Copied' : 'Copy Image'}
-            </button>
+            </button>*/}
             <button
               className='btn-outline-primary mm-btn-animate'
               onClick={() => df('allocation-share-card', 'my-awesome-allocation')}

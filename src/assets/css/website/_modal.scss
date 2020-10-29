@@ -15,7 +15,7 @@
 }
 
 .modal-mdx {
-  max-width: 600px;
+  max-width: 650px;
 }
 
 .modal-lg {
@@ -64,7 +64,11 @@ button.hidden {
   box-shadow: 2px 2px 16px #c2c9d6, inset 0px -1px 0px #ebecf1;
   border-radius: 6px;
   margin: 0 auto;
-  padding: 1rem 1.5rem 2.5rem 0.75rem;
+  padding: 1rem 1rem 2.5rem 0.75rem;
+
+  @media (min-width: $sm) {
+    padding: 1rem 1.5rem 2.5rem 0.75rem;
+  }
 
   @media (min-width: $md) {
     padding: 1rem 1.5rem 2.5rem 1.5rem;
@@ -72,7 +76,11 @@ button.hidden {
 }
 
 .modal-body {
-  padding: 0 1rem;
+  padding: 0;
+
+  @media (min-width: $sm) {
+    padding: 0 1rem;
+  }
 }
 
 .modal-wrapper .modal-btn-wrapper {
@@ -110,7 +118,11 @@ button.hidden {
 
 .modal-header {
   border-bottom: none;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0;
+
+  @media (min-width: $sm) {
+    padding: 1rem 0.5rem;
+  }
 
   @media (min-width: $md) {
     padding: 1rem;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
 import { ChartData } from 'allocation/allocation.type';
 
@@ -11,7 +11,8 @@ interface MMPieChartProps {
   height?: number;
 }
 
-export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, height = 440, width = 440 }) => {
+export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, height = 400, width = 400 }) => {
+
   const data = chartData.map((item) => ({
     name: item.group,
     value: item.per,
@@ -19,14 +20,16 @@ export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, height = 440,
 
   return (
     <div className='allocation-chart-wrapper'>
-      <PieChart width={width} height={height} onMouseEnter={() => {}} className='mm-allocation-overview__block--chart'>
-        <Pie data={data} cx={250} cy={200} innerRadius={95} outerRadius={155} fill='#000000' stroke='none' dataKey='value'>
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip/>
-      </PieChart>
+      <ResponsiveContainer width={width} height={height} >
+        <PieChart onMouseEnter={() => {}} className='mm-allocation-overview__block--chart'>
+          <Pie data={data} cx={width / 2} cy={width / 2} innerRadius={95} outerRadius={155} fill='#000000' stroke='none' dataKey='value'>
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip/>
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 };

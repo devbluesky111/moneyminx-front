@@ -159,6 +159,7 @@
   &__table {
     padding-top: 2rem;
     border-top: 1px solid $grayOpacity20;
+    overflow-x: scroll;
 
     table {
       width: 100%;
@@ -318,8 +319,17 @@
   }
 }
 
-.mm-allocation-legend-wrapper {
+.allocation-legend-wrapper {
   padding: 1rem 0;
+  overflow-x: scroll;
+
+  @media (min-width: $sm) {
+    overflow-x: initial;
+  }
+
+  @media (min-width: $desk) and (max-width: $lg) {
+    overflow-x: scroll;
+  }
 
   .legend-row {
     color: $gray;
@@ -333,21 +343,21 @@
       color: $green;
     }
 
-      .legend-color-box {
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        border-radius: 2px;
-      }
+    .legend-color-box {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border-radius: 2px;
+      margin-top: 6px;
+    }
+
+    .legend-label {
+      text-align: left;
+    }
 
       span {
         padding-left: 1rem;
       }
-  }
-}
-.allocation-content {
-  svg {
-    margin-left: -6.875rem;
   }
 }
 
@@ -426,9 +436,18 @@
 }
 
 .allocation-share-card-wrapper {
+
+  .allocation-chart-wrapper {
+    width: 46%;
+  }
+
+  .allocation-legend-wrapper {
+    overflow-x: initial;
+  }
+
   .chart-legend-wrapper {
     display: inline-flex;
-    overflow: hidden;
+    width: 100%;
 
     .recharts-wrapper {
       width: 189px !important;
@@ -445,7 +464,6 @@
     }
 
     .legend-row {
-
       display: flex;
       width: 100%;
 
@@ -453,17 +471,23 @@
         width: 12px;
         height: 12px;
         padding-left: 0;
+        margin-top: 4px;
       }
 
       .legend-label {
-        padding-left: 8px;
+        padding-left: 6px;
+        padding-right: 0;
       }
 
       .legend-amount {
-        text-align: right;
-        float: right;
+        display: inline-block;
+        padding: 0;
       }
 
+      &:hover {
+        color: $gray;
+        cursor: default;
+      }
     }
 
   }
