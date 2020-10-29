@@ -209,6 +209,7 @@ textarea.form-control {
   position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 3;
 }
 .message-container.success {
   background-color: $green;

@@ -205,11 +205,11 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
         handleCancelSubscriptionConfirmation={handleCancelSubscriptionConfirmation}
       />
       {cancelSubscriptionError || cancelSubscriptionResponse  ? (
-        <div>
+        <div className='subscription-cancel-confirmation'>
           <Message type={cancelSubscriptionError ? 'error' : 'success'}
                    message={cancelSubscriptionError ?
-                     'Your subscription cannot cancelled right now. Kindly contact service.' :
-                     `Your subscription cancelled successfully. You can use MoneyMinx till ${moment(cancelSubscriptionResponse?.cancelAt).format('MM/DD/YY')}`}
+                     'Your subscription could not be cancelled. Please contact us for support.' :
+                     `Your subscription is now cancelled. You can continue using Money Minx until ${moment(cancelSubscriptionResponse?.cancelAt).format('MM/DD/YY')}.`}
                    onDismiss={handleDismiss} />
         </div>
       ) : null}
