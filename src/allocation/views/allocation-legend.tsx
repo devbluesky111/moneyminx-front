@@ -11,13 +11,13 @@ const COLORS = ['#235ee7', '#10c273', '#e74f99', '#ffd911', '#1f32ad', '#f7b164'
 
 const AllocationLegend: React.FC<Props> = ({ chartData }) => {
   return (
-    <div className='mm-allocation-legend-wrapper'>
+    <div className='allocation-legend-wrapper'>
       {chartData.map((data, index) => {
         return (
           <div className='legend-row' key={index}>
-              <span className='legend-color-box' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-              <span className='legend-label'>{data.group} - {fNumber(data.per)}%</span>
-              <span className='legend-amount'>${fNumber(data.total)}</span>
+            <span className='col-1 pl-0'> <span className='legend-color-box' style={{ backgroundColor: COLORS[index % COLORS.length] }} /></span>
+              <span className='col-8 legend-label'>{data.group} - {fNumber(data.per)}%</span>
+              <span className='col-3 legend-amount'>${fNumber(data.total)}</span>
           </div>
         );
       })}
