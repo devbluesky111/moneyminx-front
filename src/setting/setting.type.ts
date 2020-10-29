@@ -32,6 +32,7 @@ export interface CurrentSubscription {
   cancelAt: Date | number;
   subscriptionEnd: string | number;
   subscriptionStatus: StripeSubscriptionStatus;
+  name: string;
 }
 
 export interface AccountCardProps {

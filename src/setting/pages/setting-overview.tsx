@@ -164,12 +164,10 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
             <div className='mm-setting-card--title'>Subscription</div>
             <div className='mm-setting-form form-group row mt-3'>
               <label className='col-5 col-md-3 col-form-label'>Current Plan</label>
-
-              <span className='col-7 col-md-3 mm-setting-form-info col-form-label ml-0 mb-4'>
-                {capitalize(currentSubscription?.subscriptionStatus || 'FREE')}
+              <span className='col-7 col-md-4 mm-setting-form-info col-form-label ml-0 mb-4'>
+                {capitalize(currentSubscription?.name || 'FREE')}
               </span>
-
-              <div className='col-12 col-md-6'>
+              <div className='col-12 col-md-5'>
                 <button
                   type='button'
                   className='mm-btn-settings mm-btn-animate float-right'
