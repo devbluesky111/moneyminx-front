@@ -4,7 +4,7 @@ import { Modal, ModalType } from 'common/components/modal';
 import { Link } from 'react-router-dom';
 
 interface Props {
-  subscriptionEnd?: number | Date;
+  subscriptionEnd?:  string | number | Date;
   subscriptionCancelModal: ModalType;
   handleCancelSubscriptionConfirmation: () => void;
 }

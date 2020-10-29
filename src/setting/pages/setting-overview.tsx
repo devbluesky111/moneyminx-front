@@ -201,7 +201,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
       <ChangePasswordModal changePasswordModal={changePasswordModal} />
       <SubscriptionCancelModal
         subscriptionCancelModal={subscriptionCancelModal}
-        subscriptionEnd={currentSubscription?.cancelAt}
+        subscriptionEnd={currentSubscription?.subscriptionEnd}
         handleCancelSubscriptionConfirmation={handleCancelSubscriptionConfirmation}
       />
       {cancelSubscriptionError || cancelSubscriptionResponse  ? (
