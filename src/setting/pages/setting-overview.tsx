@@ -29,6 +29,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
   const [cancelSubscriptionResponse, setCancelSubscriptionResponse] = useState<CurrentSubscription>();
   const [cancelSubscriptionError, setCancelSubscriptionError] = useState<boolean>(false);
+  const cancelAtDate = cancelSubscriptionResponse?.cancelAt ? cancelSubscriptionResponse?.cancelAt / 86400: 0;
 
   useEffect(() => {
     if (data) {
@@ -204,12 +205,13 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
         subscriptionEnd={currentSubscription?.subscriptionEnd}
         handleCancelSubscriptionConfirmation={handleCancelSubscriptionConfirmation}
       />
+
       {cancelSubscriptionError || cancelSubscriptionResponse  ? (
         <div className='subscription-cancel-confirmation'>
           <Message type={cancelSubscriptionError ? 'error' : 'success'}
                    message={cancelSubscriptionError ?
                      'Your subscription could not be cancelled. Please contact us for support.' :
-                     `Your subscription is now cancelled. You can continue using Money Minx until ${moment(cancelSubscriptionResponse?.cancelAt).format('MM/DD/YY')}.`}
+                     `Your subscription is now cancelled. You can continue using Money Minx until ${moment('01-01-1970').add(cancelAtDate, 'days').format('MM/DD/YY')}.`}
                    onDismiss={handleDismiss} />
         </div>
       ) : null}

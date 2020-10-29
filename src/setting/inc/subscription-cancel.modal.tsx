@@ -4,13 +4,15 @@ import { Modal, ModalType } from 'common/components/modal';
 import { Link } from 'react-router-dom';
 
 interface Props {
-  subscriptionEnd?:  string | number | Date;
+  subscriptionEnd?:  number;
   subscriptionCancelModal: ModalType;
   handleCancelSubscriptionConfirmation: () => void;
 }
 
 const SubscriptionCancelModal: React.FC<Props> = ({ subscriptionCancelModal, subscriptionEnd , handleCancelSubscriptionConfirmation}) => {
-  const endingDate = subscriptionEnd ? moment(subscriptionEnd).format('MM/DD/YY') : 'xx/xx/xx';
+
+  const subscriptionEndDate = subscriptionEnd ? subscriptionEnd / 86400: 0;
+  const endingDate = subscriptionEndDate ? moment('01-01-1970').add(subscriptionEndDate, 'days').format('MM/DD/YY') : 'xx/xx/xx';
 
   return (
     <Modal {...subscriptionCancelModal.props} title='Sorry to see you go' size='md' canBeClosed>
