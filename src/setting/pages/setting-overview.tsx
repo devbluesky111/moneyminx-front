@@ -13,6 +13,8 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { CurrentSubscription, SettingPageEnum } from 'setting/setting.type';
 import SubscriptionCancelModal from 'setting/inc/subscription-cancel.modal';
 import { patchCancelSubscription, patchEmailSubscription } from 'api/request.api';
+import Message from '../../auth/views/inc/message';
+import moment from 'moment';
 
 interface SettingOverviewProps {
   changeTab: (pageName: SettingPageEnum) => void;
@@ -26,6 +28,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   const [mailChimpSubscription, setMailChimpSubscription] = useState<boolean>(false);
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
   const [cancelSubscriptionResponse, setCancelSubscriptionResponse] = useState<CurrentSubscription>();
+  const [cancelSubscriptionError, setCancelSubscriptionError] = useState<boolean>(false);
 
   useEffect(() => {
     if (data) {
@@ -42,13 +45,21 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   }
 
   const handleCancelSubscription = async () => {
-    const { error: patchError, data: response } = await patchCancelSubscription();
-
-    if (!patchError) {
       return subscriptionCancelModal.open();
-    }
-    setCancelSubscriptionResponse(response);
   };
+
+  const handleCancelSubscriptionConfirmation = async () => {
+    const { error: patchError, data: response } = await patchCancelSubscription();
+    if (!patchError) {
+      setCancelSubscriptionResponse(response);
+    }
+    else {
+      setCancelSubscriptionError(true)
+    }
+    return subscriptionCancelModal.close();
+  };
+
+  const handleDismiss = () => {}
 
   const handleSave = async () => {
     const { error: pathError } = await patchEmailSubscription({ mailChimpSubscription });
@@ -190,8 +201,18 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
       <ChangePasswordModal changePasswordModal={changePasswordModal} />
       <SubscriptionCancelModal
         subscriptionCancelModal={subscriptionCancelModal}
-        subscriptionEnd={cancelSubscriptionResponse?.cancelAt || +currentSubscription?.cancelAt}
+        subscriptionEnd={currentSubscription?.cancelAt}
+        handleCancelSubscriptionConfirmation={handleCancelSubscriptionConfirmation}
       />
+      {cancelSubscriptionError || cancelSubscriptionResponse  ? (
+        <div>
+          <Message type={cancelSubscriptionError ? 'error' : 'success'}
+                   message={cancelSubscriptionError ?
+                     'Your subscription cannot cancelled right now. Kindly contact service.' :
+                     `Your subscription cancelled successfully. You can use MoneyMinx till ${moment(cancelSubscriptionResponse?.cancelAt).format('MM/DD/YY')}`}
+                   onDismiss={handleDismiss} />
+        </div>
+      ) : null}
       <SaveSettings handleSave={handleSave} />
     </section>
   );
