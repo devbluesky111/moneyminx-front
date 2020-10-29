@@ -31,7 +31,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
   const [imageUrl, setImageUrl] = useState<string>();
   const [copySuccess, setCopySuccess] = useState(false);
 
-  const { loading, settings }: { loading: boolean; settings: any } = useAllocationSetting();
+  const { loading, settings } = useAllocationSetting();
 
   const pinterestButtonRef = useRef<any>(null);
   const twitterShareButtonRef = useRef<any>(null);
