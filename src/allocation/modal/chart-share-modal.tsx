@@ -7,9 +7,8 @@ import { Modal, ModalType } from 'common/components/modal';
 import useFileDownload from 'common/hooks/useFileDownload';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
+import { useAllocationState } from 'allocation/allocation.context';
 import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg';
-import useAllocationSetting from 'allocation/hooks/useAllocationSetting';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg';
 import { ReactComponent as PinterestIcon } from 'assets/icons/pinterest.svg';
 
@@ -31,7 +30,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
   const [imageUrl, setImageUrl] = useState<string>();
   const [copySuccess, setCopySuccess] = useState(false);
 
-  const { loading, settings } = useAllocationSetting();
+  const { allocationChartSetting: settings } = useAllocationState();
 
   const pinterestButtonRef = useRef<any>(null);
   const twitterShareButtonRef = useRef<any>(null);
@@ -102,10 +101,6 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
       return setCopySuccess(true);
     }
   };
-
-  if (loading) {
-    return <CircularSpinner />;
-  }
 
   return (
     <Modal {...chartShareModal.props} title='Share' size='mdx' canBeClosed onClose={() => chartShareModal.close()}>

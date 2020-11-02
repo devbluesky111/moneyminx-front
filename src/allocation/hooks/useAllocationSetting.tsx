@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
+
 import { getAllocationChartSetting } from 'api/request.api';
-import { useAllocationDispatch } from 'allocation/allocation.context';
+import { useAllocationDispatch, useAllocationState } from 'allocation/allocation.context';
 
 export interface AllocationChartSetting {
   allocationStyle: string;
@@ -20,6 +21,7 @@ const useAllocationSetting = () => {
   });
 
   const dispatch = useAllocationDispatch();
+  const { allocationChartSetting } = useAllocationState();
 
   useEffect(() => {
     const getChartSetting = async () => {
@@ -35,7 +37,9 @@ const useAllocationSetting = () => {
       return setSettingData({ ...settingData, settings: data });
     };
 
-    getChartSetting();
+    if (!allocationChartSetting) {
+      getChartSetting();
+    }
   }, []);
 
   return { loading: settingData.loading, settings: settingData.settings, error: settingData.error };
