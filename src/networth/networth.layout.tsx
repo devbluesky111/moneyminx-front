@@ -11,7 +11,7 @@ const NetworthLayout: React.FC = ({ children }) => {
 
   return (
     <>
-      <NetworthHeader toggleMenu={() => setOpenNav(!openNav)} />
+      <NetworthHeader toggleMenu={() => setOpenNav(!openNav)} open={openNav} />
       <NetworthSidebar open={openNav} />
       {children}
       <NetworthFooter />
