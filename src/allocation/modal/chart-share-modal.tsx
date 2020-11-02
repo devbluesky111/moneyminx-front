@@ -86,22 +86,6 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
     }
   };
 
-  const handleCopyToClipboard = async () => {
-    if (imageUrl) {
-      navigator.clipboard.writeText(imageUrl);
-
-      return setCopySuccess(true);
-    }
-
-    const imageURl = await getImageURL();
-
-    if (imageURl) {
-      navigator.clipboard.writeText(imageURl);
-
-      return setCopySuccess(true);
-    }
-  };
-
   return (
     <Modal {...chartShareModal.props} title='Share' size='mdx' canBeClosed onClose={() => chartShareModal.close()}>
       <div className='modal-wrapper chart-setting-modal mm-setting-modal'>
@@ -177,9 +161,6 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
           </div>
           <div className='divider'>or</div>
           <div className='outline-button-wrapper'>
-            <button className='btn-outline-primary mm-btn-animate' onClick={handleCopyToClipboard}>
-              {copySuccess ? 'Copied' : 'Copy Image'}
-            </button>
             <button
               className='btn-outline-primary mm-btn-animate'
               onClick={() => df('allocation-share-card', 'my-awesome-allocation')}

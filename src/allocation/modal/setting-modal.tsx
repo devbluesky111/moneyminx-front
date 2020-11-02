@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 
 import { Modal, ModalType } from 'common/components/modal';
 import { patchAllocationChartSettings } from 'api/request.api';
+import { useAllocationDispatch } from 'allocation/allocation.context';
 import useAllocationSetting from 'allocation/hooks/useAllocationSetting';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { useAllocationDispatch } from 'allocation/allocation.context';
 
 interface SettingModalProps {
   settingModal: ModalType;
