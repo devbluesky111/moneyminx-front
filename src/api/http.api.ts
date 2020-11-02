@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
+
+import appEnv from 'app/app.env';
 import { storage } from 'app/app.storage';
 import { STATUS_CODE } from 'app/app.status';
 import { refreshAccessToken } from 'api/request.api';
 import { withError, withData } from 'common/common-helper';
+import { appRouteConstants } from 'app/app-route.constant';
 
 import { urls } from './api.url';
-import appEnv from 'app/app.env';
 
 const axiosInstance = axios.create({
   baseURL: appEnv.BASE_URL,
@@ -53,7 +55,8 @@ axiosInstance.interceptors.response.use(
 
     if (status === STATUS_CODE.UNAUTHORIZED && !isAuthenticating) {
       storage.clear();
-      window.location.replace('/login');
+      window.location.replace(appRouteConstants.auth.LOGIN);
+
       return withError(errorResponse);
     }
 

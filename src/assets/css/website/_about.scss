@@ -155,13 +155,17 @@ ul.owner-list li a {
   outline: none;
   display: inline-block;
 
+  &:hover {
+    color: $darkGray;
+  }
+
   ul.owner-list li {
     width: 100%;
   }
 }
 
 ul.owner-list li a:hover span svg {
-  fill: $twitter;
+  fill: $twitterBlue;
 }
 
 .mm-container-right.owner-section {

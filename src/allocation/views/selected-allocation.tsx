@@ -28,41 +28,44 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
   return (
     <div className='col-xl-4'>
       <div className='mm-allocation-overview__block'>
-        <div className='mm-allocation-overview__block--date'>
-          June 30, 2020
-          <span className='float-right'>
-            <ReactDatePicker
-              selected={date}
-              customInput={<Calendar />}
-              dateFormat='MM/yyyy'
-              showMonthYearPicker
-              onChange={(val: Date) => {
-                setDate(val);
-              }}
-            />
-          </span>
+        <div className='allocation-card-top'>
+          <div className='mm-allocation-overview__block--date'>
+            June 30, 2020
+            <span className='float-right'>
+              <ReactDatePicker
+                selected={date}
+                customInput={<Calendar />}
+                dateFormat='MM/yyyy'
+                showMonthYearPicker
+                onChange={(val: Date) => {
+                  setDate(val);
+                }}
+              />
+            </span>
+          </div>
+          <div className='mm-allocation-overview__block--title'>Previous allocations</div>
+          <p className='mm-allocation-overview__block--subtitle'>Use the arrows above to see your previous allocations</p>
+          <div className='mm-allocation-overview__block--action'>
+            <SettingsIcon className='mr-3' />
+            <Download className='mr-3' />
+            <Share />
+          </div>
         </div>
-        <div className='mm-allocation-overview__block--title'>Previous allocations</div>
-        <p>Use the dropdown above to see your previous allocations</p>
-        <div className='mm-allocation-overview__block--action'>
-          <SettingsIcon className='mr-3' />
-          <Download className='mr-3' />
-          <Share />
-        </div>
-        <hr className='mb-4' />
         <div className='allocation-content'>
           <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center'>
             <MMPieChart chartData={chartData} />
             <AllocationLegend chartData={chartData} />
           </div>
-          <hr className='my-5' />
           <div className='mm-allocation-overview__table'>
             <table>
-              <tr>
-                <th className='mm-allocation-overview__table--head'>Position</th>
-                <th className='mm-allocation-overview__table--head'>Allocation</th>
-                <th className='mm-allocation-overview__table--head'>Value</th>
-              </tr>
+              <thead>
+                <tr>
+                  <th className='mm-allocation-overview__table--head'>Position</th>
+                  <th className='mm-allocation-overview__table--head'>Allocation</th>
+                  <th className='mm-allocation-overview__table--head'>Value</th>
+                </tr>
+              </thead>
+              <tbody>
               {Object.keys(allocations).map((allocationKey, index) => {
                 const allocation = allocations[allocationKey];
 
@@ -75,7 +78,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                       return (
                         <React.Fragment key={al.id}>
                           <tr className='mm-allocation-overview__table--data-row-mobile'>
-                            <p className='mt-2 mb-0'>{al.description}</p>
+                            <span className='mt-2 mb-0'>{al.description}</span>
                           </tr>
                           <tr className='mm-allocation-overview__table--data-row'>
                             <td>{al.description}</td>
@@ -98,6 +101,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                   </React.Fragment>
                 );
               })}
+              </tbody>
             </table>
           </div>
         </div>

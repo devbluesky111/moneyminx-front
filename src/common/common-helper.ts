@@ -1,9 +1,12 @@
+import { v4 } from 'uuid';
 import { groupBy } from 'lodash';
-
 import { ApiResponse } from 'api/api.types';
+
 import { StringKeyObject } from './common.types';
 
 const toString = Object.prototype.toString;
+
+export const shortId = v4();
 
 export const isObject = (arg: any): boolean => {
   return toString.call(arg) === '[object Object]';
@@ -113,9 +116,9 @@ export function enumerate(e: any): number[] {
  * @param {any} e
  * @returns {string[]}
  */
-export function enumerateStr(e: any) {
+export const enumerateStr = (e: any) => {
   return Object.keys(e).map((k) => e[k as any]);
-}
+};
 
 export const capitalize = (word: string) => {
   return word.charAt(0).toUpperCase() + word.slice(1);

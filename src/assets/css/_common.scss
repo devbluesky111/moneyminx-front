@@ -32,6 +32,17 @@ a {
     text-decoration: none;
   }
 }
+textarea.form-control {
+  min-height: 100px;
+}
+
+.link-gray {
+  color: $gray;
+
+  &:hover {
+    color: $darkGray;
+  }
+}
 
 .light {
   opacity: 0.6;
@@ -197,7 +208,9 @@ a {
   box-shadow: 0 2px 8px $whiteFadeShadow;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 100vw;
+  z-index: 3;
+  left: 0;
 }
 .message-container.success {
   background-color: $green;
@@ -457,6 +470,14 @@ hr {
 
 .hide-me {
   display: none;
+}
+
+.hide-sm {
+  display: none;
+
+  @media (min-width: $sm) {
+    display: inline;
+  }
 }
 
 // coming soon badge

@@ -1,6 +1,6 @@
 import { ApiResponse } from 'app/app.types';
 import { EmailSubscriptionPayload } from 'setting/setting.type';
-import { RegisterPayload, ResetPasswordPayload } from 'auth/auth.types';
+import { RegisterPayload, ResetPasswordPayload, VerifyResetPasswordTokenPayload } from 'auth/auth.types';
 
 import { urls } from './api.url';
 import * as http from './http.api';
@@ -34,6 +34,10 @@ export const postForgotPassword = (email: string): Promise<ApiResponse> => {
 
 export const postResetPassword = (payload: ResetPasswordPayload): Promise<ApiResponse> => {
   return http.post(urls.auth.RESET_PASSWORD, payload, false);
+};
+
+export const checkResetPasswordToken = (payload: VerifyResetPasswordTokenPayload): Promise<ApiResponse> => {
+  return http.post(urls.auth.VERIFY_RESET_PASSWORD_TOKEN, payload, false);
 };
 
 export const patchChangePassword = <T>(payload: T): Promise<ApiResponse> => {
@@ -128,4 +132,16 @@ export const getNetworth = <P>(params?: P) => {
 
 export const getAllocations = <P>(params?: P): Promise<ApiResponse> => {
   return http.get(urls.allocations.ALLOCATIONS, params);
+};
+
+export const getAllocationChartSetting = (): Promise<ApiResponse> => {
+  return http.get(urls.allocations.CHART_SETTINGS);
+};
+
+export const patchAllocationChartSettings = <D>(data: D): Promise<ApiResponse> => {
+  return http.patch(urls.allocations.CHART_SETTINGS, data);
+};
+
+export const postUploadChart = <D>(data: D): Promise<ApiResponse> => {
+  return http.post(urls.allocations.UPLOAD_CHART, data);
 };

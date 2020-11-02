@@ -494,6 +494,7 @@ button:focus {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 .content-head .left-box {
   margin-right: auto;
@@ -506,10 +507,24 @@ button:focus {
 }
 .content-head .right-box {
   margin-left: auto;
+  display: flex;
+  order: 2;
+
+  @media (min-width: 905px) {
+    order: 3;
+  }
 }
 .content-head .center-box {
   margin-left: auto;
   margin-right: auto;
+  display: flex;
+  order: 3;
+  margin-top: 12px;
+
+  @media (min-width: 905px) {
+    order: 2;
+    margin-top: 0;
+  }
 }
 .plus-btn {
   width: 34px;

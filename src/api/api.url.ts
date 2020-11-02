@@ -23,6 +23,7 @@ export const urls = {
     ASSOCIATE_MORTGAGE: '/account/me/mortgage-accounts',
     ACCOUNT_SUBTYPE: '/account/account-subtype?accountType=:accountType',
     FORM_FIELD_FILTER: '/account/form-fields-filter?accountType=:accountType&accountSubType=:accountSubType',
+    VERIFY_RESET_PASSWORD_TOKEN: '/profile/password/verify-token',
   },
   subscription: {
     CURRENT_SUB: '/subscription/me',
@@ -38,5 +39,7 @@ export const urls = {
   },
   allocations: {
     ALLOCATIONS: '/allocations',
+    CHART_SETTINGS: '/allocations/me/chart-settings',
+    UPLOAD_CHART: '/allocations/upload-chart',
   },
 };

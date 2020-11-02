@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import footerData from '@mm/data/footer.data.json';
-// TODO this is not necessary use auth-footer.tsx
+// TODO delete this page when confirmed that auth-footer.tsx is used properly
 
 export const FooterSection = () => {
   return (
