@@ -147,7 +147,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
       <SettingModal settingModal={chartSettingModal} />
       <ChartShareModal
         chartShareModal={chartShareModal}
-        chartComponent={<MMPieChart chartData={chartData} />}
+        chartComponent={<MMPieChart chartData={chartData} share />}
         chartLegendComponent={<AllocationLegend chartData={chartData} />}
       />
       <FieldChangeModal fieldChangeModal={fieldChangeModal} />

@@ -146,3 +146,10 @@ export const blobToBase64 = (blob: Blob): Promise<any> => {
     };
   });
 };
+
+export const ellipseText = (text: string, length: number = 20) => {
+  if (text.length > length) {
+    return `${text.substring(0, length)}...`;
+  }
+  return text;
+};

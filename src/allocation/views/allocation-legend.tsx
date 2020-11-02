@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { fNumber } from 'common/number.helper';
+import { ellipseText } from 'common/common-helper';
 import { ChartData } from 'allocation/allocation.type';
 import { useAllocationState } from 'allocation/allocation.context';
 
@@ -41,7 +42,7 @@ const AllocationLegend: React.FC<Props> = ({ chartData }) => {
           <div className='legend-row' key={index}>
             <span className='legend-color-box' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
             <span className='legend-label'>
-              {data.group} - {fNumber(data.per)}%
+              {ellipseText(data.group)} - {fNumber(data.per)}%
             </span>
             {allocationChartSetting?.showAmounts ? <span className='legend-amount'>${fNumber(data.total)}</span> : null}
           </div>
