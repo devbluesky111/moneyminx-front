@@ -27,6 +27,7 @@ const AccountSetting = () => {
   const [completedProviderName, setCompletedProviderName] = useState<string[]>([]);
   const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
   const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
+  const [finish, setFinish] = useState<boolean>(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -56,6 +57,9 @@ const AccountSetting = () => {
     }
   }, [accounts]);
 
+  /**
+   * Get the first Non overridden account
+   */
   useEffect(() => {
     if (accountsByProviderName) {
       const curProviderAccounts = accountsByProviderName[providerName];
@@ -68,12 +72,37 @@ const AccountSetting = () => {
     }
   }, [providerName, accountsByProviderName]);
 
+  /**
+   * set completed account id's
+   */
   useEffect(() => {
     if (accounts) {
       const completedIds = accounts.filter((acc) => acc.accountDetails?.overridden).map((item) => item.id);
       setCompleted(completedIds);
     }
   }, [accounts]);
+
+  /**
+   * If accounts of the current provider is overridden goto next provider
+   * If nextProvider not found set finish true
+   */
+  useEffect(() => {
+    if (currentProviderAccounts && accountsByProviderName) {
+      if (currentProviderAccounts.every((acc) => acc.accountDetails?.overridden)) {
+        const pName = currentProviderAccounts[0]?.providerName;
+        const providerIndex = Object.keys(accountsByProviderName).indexOf(pName);
+        const nextProviderName = Object.keys(accountsByProviderName)[providerIndex + 1];
+
+        if (nextProviderName) {
+          setProviderName(nextProviderName);
+
+          return setCurrentProviderAccounts(accountsByProviderName[nextProviderName]);
+        }
+
+        return setFinish(true);
+      }
+    }
+  }, [currentProviderAccounts, accountsByProviderName]);
 
   if (!accounts || !currentAccount || !currentProviderAccounts) {
     return <CircularSpinner />;
@@ -88,16 +117,15 @@ const AccountSetting = () => {
   };
 
   const getProviderClass = (pName: string) => {
-    let classNames = '';
     if (completedProviderName.includes(pName)) {
-      classNames += ' completed';
+      return ' completed';
     }
 
     if (providerName === pName) {
-      classNames += ' selected';
+      return ' selected';
     }
 
-    return classNames;
+    return '';
   };
 
   return (
@@ -196,7 +224,7 @@ const AccountSetting = () => {
             </div>
           </div>
         </div>
-        <AccountSettingSteps onSkip={() => history.push('/net-worth')} />
+        <AccountSettingSteps onSkip={() => history.push('/net-worth')} isCompleted={finish} />
       </div>
     </AuthLayout>
   );
