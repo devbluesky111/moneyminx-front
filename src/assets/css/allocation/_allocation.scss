@@ -446,8 +446,14 @@
   }
 
   .chart-legend-wrapper {
-    display: inline-flex;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $sm) {
+      display: inline-flex;
+      overflow: hidden;
+      flex-direction: row;
+    }
 
     .recharts-wrapper {
       width: 240px !important;
