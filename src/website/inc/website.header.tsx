@@ -21,11 +21,7 @@ const WebsiteHeader = () => {
       return;
     }
 
-    if (width > 605 && width <= 768) {
-      setExpand('menus');
-    }
-
-    if (width <= 604) {
+    if (width <= 768) {
       setExpand('all');
     }
   };
@@ -50,7 +46,7 @@ const WebsiteHeader = () => {
                   <MoneyMinxLogoMobile className='mr-3' />
                   <Beta />
                 </div>
-                <Cross onClick={handleToggleMenu} />
+                <Cross onClick={handleToggleMenu} className='mr-1' />
               </div>
               <ul className='navbar-nav mr-auto navbar-menu-list'>
                 <li className={navClass('pricing')}>
