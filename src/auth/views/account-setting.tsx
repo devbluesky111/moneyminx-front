@@ -1,5 +1,5 @@
 import { Dictionary } from 'lodash';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import React, { createRef, useCallback, useEffect, useState } from 'react';
 
 import { Account } from 'auth/auth.types';
@@ -13,10 +13,11 @@ import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.sv
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
+import AccountSettingSteps from './inc/connect-steps';
 import AccountSettingForm from './inc/account-setting-form';
-import { ConnectAccountStepsSection } from './inc/connect-steps';
 
 const AccountSetting = () => {
+  const history = useHistory();
   const dispatch = useAuthDispatch();
   const { accounts } = useAuthState();
   const [providerName, setProviderName] = useState('');
@@ -127,30 +128,31 @@ const AccountSetting = () => {
                 <div className='top-content-wrap'>
                   <h2>Organize accounts</h2>
                   <p>
-                    Great! You connected your accounts. Now you can organize them to get better insights into
-                    your portfolio.
+                    Great! You connected your accounts. Now you can organize them to get better insights into your
+                    portfolio.
                   </p>
                 </div>
 
                 <div className='form-wrap'>
                   <ul className='bank-list'>
+                    {accountsByProviderName
+                      ? Object.keys(accountsByProviderName).map((pName, index) => {
+                          const [account] = accountsByProviderName[pName];
 
-                    {
-                     accountsByProviderName ?  Object.keys(accountsByProviderName).map((pName, index)=>{
-                        const [account] = accountsByProviderName[pName];
-
-                        return (
-                          <li
-                            key={index}
-                            onClick={() => handleProviderChange(pName)}
-                            role='button'
-                            className={completedProviderName.includes(pName) ? 'completed' : ''}
-                          >
-                            <Link to='#'>{account.providerLogo ? <img src={account.providerLogo} alt={pName}/>: pName}</Link>
-                          </li>
-                        );
-                     }) : null
-                    }
+                          return (
+                            <li
+                              key={index}
+                              onClick={() => handleProviderChange(pName)}
+                              role='button'
+                              className={completedProviderName.includes(pName) ? 'completed' : ''}
+                            >
+                              <Link to='#'>
+                                {account.providerLogo ? <img src={account.providerLogo} alt={pName} /> : pName}
+                              </Link>
+                            </li>
+                          );
+                        })
+                      : null}
                   </ul>
 
                   <div className='form-heading'>
@@ -169,14 +171,16 @@ const AccountSetting = () => {
 
                   <p className='flex-box learn-more-security'>
                     <SecurityIcon />
-                    <a href='/security' target='_blank' className='purple-links'>Learn about our security</a>
+                    <a href='/security' target='_blank' className='purple-links'>
+                      Learn about our security
+                    </a>
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <ConnectAccountStepsSection />
+        <AccountSettingSteps onSkip={() => history.push('/net-worth')} />
       </div>
     </AuthLayout>
   );

@@ -1,8 +1,11 @@
+import Zabo from 'zabo-sdk-js';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+
 import appEnv from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import FastLinkModal from 'yodlee/fast-link.modal';
-import { Link, useHistory } from 'react-router-dom';
 import useGetFastlink from 'auth/hooks/useGetFastlink';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { appRouteConstants } from 'app/app-route.constant';
@@ -11,15 +14,13 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
-import React, {useEffect, useState} from 'react';
-import Zabo from 'zabo-sdk-js';
 
-import { ConnectAccountStepsSection } from './inc/connect-steps';
+import ConnectAccountSteps from './inc/connect-steps';
 
 const config = {
   clientId: appEnv.ZABO_CONFIGURATION.ZABO_CLIENT_ID,
-  env: appEnv.ZABO_CONFIGURATION.ZABO_ENV
-}
+  env: appEnv.ZABO_CONFIGURATION.ZABO_ENV,
+};
 
 const ConnectAccount = () => {
   return (
@@ -30,13 +31,13 @@ const ConnectAccount = () => {
 };
 export default ConnectAccount;
 export const ConnectAccountMainSection = () => {
-  const [zabo, setZabo] = useState<Record<string,() => Record<string, any>>>({});
+  const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
 
-  useEffect( () => {
+  useEffect(() => {
     const initializeZabo = async () => {
       const zaboConfig = await Zabo.init(config);
       setZabo(zaboConfig);
-    }
+    };
     initializeZabo();
   }, []);
 
@@ -49,20 +50,21 @@ export const ConnectAccountMainSection = () => {
   };
 
   const handleCryptoExchange = () => {
-    zabo.connect()
+    zabo
+      .connect()
       .onConnection((account: Record<string, string>) => {
         // Todo Onconnection implementation
         // tslint:disable-next-line:no-console
-        console.log('account connected:', account)
-    })
-      .onError((errorOnConnection:  Record<string, string>) => {
+        console.log('account connected:', account);
+      })
+      .onError((errorOnConnection: Record<string, string>) => {
         // Todo OnError implementation
       })
-      .onEvent((eventName:  Record<string, string>, metadata:  Record<string, string>) => {
+      .onEvent((eventName: Record<string, string>, metadata: Record<string, string>) => {
         // Todo On each event implementation
         // tslint:disable-next-line:no-console
-        console.info(`[EVENT] ${eventName}`, metadata)
-    })
+        console.info(`[EVENT] ${eventName}`, metadata);
+      });
   };
 
   const handleConnectAccountSuccess = () => {
@@ -97,16 +99,16 @@ export const ConnectAccountMainSection = () => {
               <div className='guide-bottom'>
                 <h4>Serious about security</h4>
                 <div className='guide-icon-wrap'>
-                <span className='locked-icon'>
-                  <LoginLockIcon />
-                </span>
+                  <span className='locked-icon'>
+                    <LoginLockIcon />
+                  </span>
                   <p>The security of your information is our top priority</p>
                 </div>
                 <h4>Trusted by investors</h4>
                 <div className='guide-icon-wrap'>
-                <span className='shield-icon'>
-                  <LoginShieldIcon />
-                </span>
+                  <span className='shield-icon'>
+                    <LoginShieldIcon />
+                  </span>
                   <p>Investors from all over the world are using Money Minx</p>
                 </div>
               </div>
@@ -115,23 +117,26 @@ export const ConnectAccountMainSection = () => {
           <div className='bg-white credentials-wrapper connect-wrap'>
             <div className='credentials-content connect-account'>
               <div className='logo-img-wrapper'>
-                <LogoImg className='auth-logo'/>
+                <LogoImg className='auth-logo' />
               </div>
               <h2>Connect accounts</h2>
               <p>
-                We partnered with financial technology industry veterans, to facilitate aggregation of your accounts. Your account credentials are never shared with Money Minx.
+                We partnered with financial technology industry veterans, to facilitate aggregation of your accounts.
+                Your account credentials are never shared with Money Minx.
               </p>
               <div className='connect-account-buttons'>
                 <button
                   className='connect-account-btn mm-btn-primary mm-btn-animate'
                   type='button'
-                  onClick={handleConnectAccount}>
+                  onClick={handleConnectAccount}
+                >
                   Add Banks and Investments
                 </button>
                 <button
                   className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto'
                   type='button'
-                  onClick={handleCryptoExchange}>
+                  onClick={handleCryptoExchange}
+                >
                   Add Crypto Exchanges
                 </button>
               </div>
@@ -140,7 +145,8 @@ export const ConnectAccountMainSection = () => {
                   <span className='manual-heading'>Add a manual account instead</span>
                 </h2>
                 <p>
-                  If your financial institution is not support or if you want to track a non traditional asset or liability you can add the details manually.
+                  If your financial institution is not support or if you want to track a non traditional asset or
+                  liability you can add the details manually.
                 </p>
                 <button className='connect-account-btn btn-outline-primary mm-btn-animate' type='submit'>
                   Add Manual Account
@@ -153,7 +159,7 @@ export const ConnectAccountMainSection = () => {
                     Add Real Estate
                   </button>
                   <span className='zillow-img'>
-                    <ZillowIcon className='mt-2'/>
+                    <ZillowIcon className='mt-2' />
                   </span>
                 </div>
               </div>
@@ -161,7 +167,7 @@ export const ConnectAccountMainSection = () => {
           </div>
         </div>
       </div>
-      <ConnectAccountStepsSection />
+      <ConnectAccountSteps isConnectAccount />
       <FastLinkModal
         fastLinkModal={fastlinkModal}
         fastLinkOptions={fastLinkOptions}
