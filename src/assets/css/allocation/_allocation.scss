@@ -159,6 +159,7 @@
   &__table {
     padding-top: 2rem;
     border-top: 1px solid $grayOpacity20;
+    overflow-x: scroll;
 
     table {
       width: 100%;
@@ -332,6 +333,15 @@
 
 .mm-allocation-legend-wrapper {
   padding: 1rem 0;
+  overflow-x: scroll;
+
+  @media (min-width: $sm) {
+    overflow-x: initial;
+  }
+
+  @media (min-width: $desk) and (max-width: $lg) {
+    overflow-x: scroll;
+  }
 
   .legend-row {
     color: $gray;
@@ -476,15 +486,17 @@
         width: 12px;
         height: 12px;
         padding-left: 0;
+        margin-top: 4px;
       }
 
       .legend-label {
-        padding-left: 8px;
+        padding-left: 6px;
+        padding-right: 0;
       }
 
       .legend-amount {
-        text-align: right;
-        float: right;
+        display: inline-block;
+        padding: 0;
       }
     }
   }

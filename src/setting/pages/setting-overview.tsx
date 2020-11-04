@@ -13,6 +13,8 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { CurrentSubscription, SettingPageEnum } from 'setting/setting.type';
 import SubscriptionCancelModal from 'setting/inc/subscription-cancel.modal';
 import { patchCancelSubscription, patchEmailSubscription } from 'api/request.api';
+import Message from '../../auth/views/inc/message';
+import moment from 'moment';
 
 interface SettingOverviewProps {
   changeTab: (pageName: SettingPageEnum) => void;
@@ -26,6 +28,8 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   const [mailChimpSubscription, setMailChimpSubscription] = useState<boolean>(false);
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
   const [cancelSubscriptionResponse, setCancelSubscriptionResponse] = useState<CurrentSubscription>();
+  const [cancelSubscriptionError, setCancelSubscriptionError] = useState<boolean>(false);
+  const cancelAtDate = cancelSubscriptionResponse?.cancelAt ? cancelSubscriptionResponse?.cancelAt / 86400: 0;
 
   useEffect(() => {
     if (data) {
@@ -42,13 +46,21 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   }
 
   const handleCancelSubscription = async () => {
-    const { error: patchError, data: response } = await patchCancelSubscription();
-
-    if (!patchError) {
       return subscriptionCancelModal.open();
-    }
-    setCancelSubscriptionResponse(response);
   };
+
+  const handleCancelSubscriptionConfirmation = async () => {
+    const { error: patchError, data: response } = await patchCancelSubscription();
+    if (!patchError) {
+      setCancelSubscriptionResponse(response);
+    }
+    else {
+      setCancelSubscriptionError(true)
+    }
+    return subscriptionCancelModal.close();
+  };
+
+  const handleDismiss = () => {}
 
   const handleSave = async () => {
     const { error: pathError } = await patchEmailSubscription({ mailChimpSubscription });
@@ -164,12 +176,10 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
             <div className='mm-setting-card--title'>Subscription</div>
             <div className='mm-setting-form form-group row mt-3'>
               <label className='col-5 col-md-3 col-form-label'>Current Plan</label>
-
-              <span className='col-7 col-md-3 mm-setting-form-info col-form-label ml-0 mb-4'>
-                {capitalize(currentSubscription?.subscriptionStatus || 'FREE')}
+              <span className='col-7 col-md-4 mm-setting-form-info col-form-label ml-0 mb-4'>
+                {capitalize(currentSubscription?.name || 'FREE')}
               </span>
-
-              <div className='col-12 col-md-6'>
+              <div className='col-12 col-md-5'>
                 <button
                   type='button'
                   className='mm-btn-settings mm-btn-animate float-right'
@@ -192,8 +202,19 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
       <ChangePasswordModal changePasswordModal={changePasswordModal} />
       <SubscriptionCancelModal
         subscriptionCancelModal={subscriptionCancelModal}
-        subscriptionEnd={cancelSubscriptionResponse?.cancelAt || +currentSubscription?.cancelAt}
+        subscriptionEnd={currentSubscription?.subscriptionEnd}
+        handleCancelSubscriptionConfirmation={handleCancelSubscriptionConfirmation}
       />
+
+      {cancelSubscriptionError || cancelSubscriptionResponse  ? (
+        <div className='subscription-cancel-confirmation'>
+          <Message type={cancelSubscriptionError ? 'error' : 'success'}
+                   message={cancelSubscriptionError ?
+                     'Your subscription could not be cancelled. Please contact us for support.' :
+                     `Your subscription is now cancelled. You can continue using Money Minx until ${moment('01-01-1970').add(cancelAtDate, 'days').format('MM/DD/YY')}.`}
+                   onDismiss={handleDismiss} />
+        </div>
+      ) : null}
       <SaveSettings handleSave={handleSave} />
     </section>
   );

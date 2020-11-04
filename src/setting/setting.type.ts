@@ -29,9 +29,10 @@ export interface CurrentSubscription {
   customerId: string;
   id: string | number;
   subscriptionId: string;
-  cancelAt: Date | number;
-  subscriptionEnd: string | number;
+  cancelAt: number;
+  subscriptionEnd: number;
   subscriptionStatus: StripeSubscriptionStatus;
+  name: string;
 }
 
 export interface AccountCardProps {

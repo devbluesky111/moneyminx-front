@@ -208,7 +208,9 @@ textarea.form-control {
   box-shadow: 0 2px 8px $whiteFadeShadow;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 100vw;
+  z-index: 3;
+  left: 0;
 }
 .message-container.success {
   background-color: $green;

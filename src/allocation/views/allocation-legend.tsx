@@ -36,7 +36,7 @@ const AllocationLegend: React.FC<Props> = ({ chartData }) => {
   const { allocationChartSetting } = useAllocationState();
 
   return (
-    <div className='mm-allocation-legend-wrapper'>
+    <div className='allocation-legend-wrapper'>
       {chartData.map((data, index) => {
         return (
           <div className='legend-row' key={index}>

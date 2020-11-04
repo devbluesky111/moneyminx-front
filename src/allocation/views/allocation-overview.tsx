@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { fNumber } from 'common/number.helper';
 import { useModal } from 'common/components/modal';
+import { getStringDate } from 'common/moment.helper';
 import { MMPieChart } from 'common/components/pie-chart';
 import SettingModal from 'allocation/modal/setting-modal';
 import useFileDownload from 'common/hooks/useFileDownload';
+import ChartShareModal from 'allocation/modal/chart-share-modal';
 import FieldChangeModal from 'allocation/modal/field-change-modal';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
@@ -16,9 +19,6 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
-import { Link } from 'react-router-dom';
-import ChartShareModal from 'allocation/modal/chart-share-modal';
-import { getStringDate } from 'common/moment.helper';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
   const { df } = useFileDownload();

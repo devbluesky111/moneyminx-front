@@ -1,9 +1,9 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
-import { ChartData } from 'allocation/allocation.type';
 import useSize from 'common/hooks/useSize';
 import { BreakPoint } from 'app/app.constant';
+import { ChartData } from 'allocation/allocation.type';
 
 const COLORS = [
   '#235ee7',
