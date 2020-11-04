@@ -280,7 +280,11 @@ span.twitter-icon {
 }
 
 .mm-nav-item {
-  margin: 0 1.25rem !important;
+  margin: 0 0.875rem !important;
+
+  @media (min-width: $md + 100) {
+    margin: 0 1.25rem !important;
+  }
 }
 
 .mm-owner-section-img {
