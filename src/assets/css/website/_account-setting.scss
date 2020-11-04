@@ -34,6 +34,10 @@ ul.bank-list {
     box-sizing: border-box;
     border: 1.5px solid $grayOpacity40;
 
+    &.selected {
+      border-color: $primary;
+    }
+
     a {
       outline: none;
       color: $darkGray;

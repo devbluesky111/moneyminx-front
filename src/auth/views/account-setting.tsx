@@ -61,7 +61,10 @@ const AccountSetting = () => {
       const curProviderAccounts = accountsByProviderName[providerName];
       setCurrentProviderAccounts(curProviderAccounts);
       const firstNonOverriddenAccount = curProviderAccounts.find((acc) => acc.accountDetails?.overridden !== true);
-      setCurrentAccount(firstNonOverriddenAccount);
+
+      if (firstNonOverriddenAccount) {
+        setCurrentAccount(firstNonOverriddenAccount);
+      }
     }
   }, [providerName, accountsByProviderName]);
 
@@ -82,6 +85,19 @@ const AccountSetting = () => {
 
   const handleChangeCurrentAccount = (curAccount: Account) => {
     setCurrentAccount(curAccount);
+  };
+
+  const getProviderClass = (pName: string) => {
+    let classNames = '';
+    if (completedProviderName.includes(pName)) {
+      classNames += ' completed';
+    }
+
+    if (providerName === pName) {
+      classNames += ' selected';
+    }
+
+    return classNames;
   };
 
   return (
@@ -144,7 +160,7 @@ const AccountSetting = () => {
                               key={index}
                               onClick={() => handleProviderChange(pName)}
                               role='button'
-                              className={completedProviderName.includes(pName) ? 'completed' : ''}
+                              className={getProviderClass(pName)}
                             >
                               <Link to='#'>
                                 {account.providerLogo ? <img src={account.providerLogo} alt={pName} /> : pName}
