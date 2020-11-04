@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Modal, ModalType } from 'common/components/modal';
 import { patchAllocationChartSettings } from 'api/request.api';
+import { useAllocationDispatch } from 'allocation/allocation.context';
 import useAllocationSetting from 'allocation/hooks/useAllocationSetting';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
@@ -18,6 +19,7 @@ const initialData = {
 
 const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
   const [data, setData] = useState(initialData);
+  const dispatch = useAllocationDispatch();
 
   const { loading, settings } = useAllocationSetting();
 
@@ -37,6 +39,7 @@ const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
     const { data: patchResponse, error } = await patchAllocationChartSettings(data);
 
     if (!error) {
+      dispatch({ type: 'PATCH_ALLOCATION_CHART_SETTING', payload: { patchChartSettings: patchResponse } });
       setData({ ...patchResponse });
       settingModal.close();
     }

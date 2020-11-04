@@ -135,3 +135,22 @@ export const handleStringArrayToggle = <A>(arr: A[], val: any) => {
 
   return arr.concat(val);
 };
+
+export const blobToBase64 = (blob: Blob): Promise<any> => {
+  const reader = new FileReader();
+  reader.readAsDataURL(blob);
+
+  return new Promise((resolve) => {
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
+  });
+};
+
+export const ellipseText = (text: string, length: number = 20) => {
+  if (text.length > length) {
+    return `${text.substring(0, length)}...`;
+  }
+
+  return text;
+};
