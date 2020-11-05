@@ -12,6 +12,7 @@ interface NetworthHeaderProps {
 }
 const NetworthHeader: React.FC<NetworthHeaderProps> = ({ toggleMenu }) => {
   const { user } = useAuthState();
+
   return (
     <header>
       <nav className='navbar navbar-expand-lg money-minx-header'>
@@ -39,7 +40,7 @@ const NetworthHeader: React.FC<NetworthHeaderProps> = ({ toggleMenu }) => {
               Upgrade
             </button>
             <div className='badge-box'>
-                <img src={ProBadge} alt='Pro badge' />
+              <img src={ProBadge} alt='Pro badge' />
             </div>
             <div className='btn-group'>
               <button type='button' className='profile-toggle' onClick={toggleMenu}>

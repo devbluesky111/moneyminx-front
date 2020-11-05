@@ -83,20 +83,6 @@ const WebsiteHeader = () => {
                 </li>
               </ul>
             </div>
-            {/* <div className='auth-btn-wrapper mr-1'>
-              <ul className='navbar-nav'>
-                <li className={navClass('login')}>
-                  <Link className='mm-nav-link' to='login'>
-                    Log In
-                  </Link>
-                </li>
-                <li>
-                  <Link className='mm-nav-link' to='/signup'>
-                    <button className='mm-btn-signup btn-outline-primary mm-btn-animate'>Sign Up</button>
-                  </Link>
-                </li>
-              </ul>
-            </div> */}
           </div>
         </div>
       </div>
