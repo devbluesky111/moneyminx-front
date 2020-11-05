@@ -22,3 +22,5 @@ export const getDate = <T>(inputDate: T) => new Date(moment(inputDate).format('y
 export const getQuarter = <T>(inputDate?: T) => moment(inputDate).format('[Q]Q yyyy');
 
 export const getYear = <T>(inputDate?: T) => moment(inputDate).format('yyyy');
+
+export const getStringDate = <T>(inputDate?: T) => moment(inputDate).format('MMM DD, yyyy');

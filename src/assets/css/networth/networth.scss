@@ -320,6 +320,12 @@ a.upgrader-btn {
   line-height: 18px;
   color: $gray;
 }
+
+.money-minx-header .btn-group .profile-toggle.open:after {
+  transform: rotate(225deg);
+  vertical-align: -2px;
+}
+
 .money-minx-header .btn-group .profile-toggle:after {
   content: '';
   width: 8px;
