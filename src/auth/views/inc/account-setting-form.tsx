@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
@@ -26,6 +26,7 @@ import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
+import { useAuthState } from 'auth/auth.context';
 
 interface Props {
   currentAccount?: Account;
@@ -37,6 +38,8 @@ interface LocationType {
 }
 
 const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) => {
+  const history = useHistory();
+  const { accounts } = useAuthState();
   const { state }: LocationType = useLocation();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
@@ -75,7 +78,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
     fetchingAccountSubType || fetchingAccountType || fetchingFilters || fetchingMortgage || fetchingLoanAccount;
 
   if (hasError) {
-    toast('Error occurred');
+    toast('Error occurred', { type: 'error' });
   }
 
   if (isLoading) {
@@ -91,6 +94,18 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
   const currentFormFields = currentAccount?.accountDetails;
 
   const hasAccountSubType = accountSubTypes.every(Boolean);
+
+  const isLastAccount = (): boolean => {
+    if (accounts && currentAccount) {
+      const { length, [length - 1]: last } = accounts;
+
+      if (last.id === currentAccount.id) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   return (
     <Formik
@@ -176,8 +191,13 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
           return toast('Error Occurred', { type: 'error' });
         }
 
-        handleReload?.();
-        return toast('Successfully updated', { type: 'success' });
+        toast('Successfully updated', { type: 'success' });
+
+        if (isLastAccount()) {
+          return history.push('/net-worth');
+        }
+
+        return handleReload?.();
       }}
     >
       {(props) => {
@@ -516,7 +536,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <div className={`input-wrap performance flex-box ${hc('employerMatchContribution')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>Does your employer match contributions? <InfoIcon className='sm-hide'/></span>
+                    <span className='form-subheading'>
+                      Does your employer match contributions? <InfoIcon className='sm-hide' />
+                    </span>
                   </p>
                 </div>
                 <div className='right-input radio'>
@@ -551,12 +573,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 </div>
                 <div className='right-input'>
                   <div className='form-field-group'>
-                    <Form.Control
-                      type='number'
-                      name='employerMatch'
-                      onChange={handleChange}
-                      placeholder='50'
-                    />
+                    <Form.Control type='number' name='employerMatch' onChange={handleChange} placeholder='50' />
                     <span className='input-add-on'>%</span>
                   </div>
                 </div>
@@ -588,7 +605,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                       />
                       <label>%</label>
                     </span>
-
                   </p>
                 </div>
                 <div className='right-input'>
@@ -608,7 +624,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>Include employer match in performance? <InfoIcon className='sm-hide'/></span>
+                    <span className='form-subheading'>
+                      Include employer match in performance? <InfoIcon className='sm-hide' />
+                    </span>
                   </p>
                 </div>
                 <div className='right-input radio'>
@@ -640,7 +658,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <div className={`input-wrap performance flex-box ${hc('calculateReturns')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>Calculate Returns? <InfoIcon /></span>
+                    <span className='form-subheading'>
+                      Calculate Returns? <InfoIcon />
+                    </span>
                   </p>
                 </div>
                 <div className='right-input radio'>
@@ -705,33 +725,31 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
               <div className='form-field-group single-field'>
                 <Form.Control
-                onChange={handleChange}
-                type='number'
-                placeholder='5'
-                name='estimatedAnnualReturns'
-                value={values.estimatedAnnualReturns}
-              />
-                <span className="input-add-on">%</span>
+                  onChange={handleChange}
+                  type='number'
+                  placeholder='5'
+                  name='estimatedAnnualReturns'
+                  value={values.estimatedAnnualReturns}
+                />
+                <span className='input-add-on'>%</span>
               </div>
-
             </div>
 
             {/* Estimated principal paydown */}
             <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReduction')}`}>
-                <span className='form-subheading'>Estimated principal paydown</span>
-                <span className='sub-label'>This will be used to show projections on your charts.</span>
+              <span className='form-subheading'>Estimated principal paydown</span>
+              <span className='sub-label'>This will be used to show projections on your charts.</span>
 
-                <div className='form-field-group single-field'>
-                  <Form.Control
-                    onChange={handleChange}
-                    type='number'
-                    placeholder='5'
-                    name='estimatedAnnualPrincipalReduction'
-                    value={values.estimatedAnnualPrincipalReduction}
-                  />
-                  <span className="input-add-on">%</span>
-                </div>
-
+              <div className='form-field-group single-field'>
+                <Form.Control
+                  onChange={handleChange}
+                  type='number'
+                  placeholder='5'
+                  name='estimatedAnnualPrincipalReduction'
+                  value={values.estimatedAnnualPrincipalReduction}
+                />
+                <span className='input-add-on'>%</span>
+              </div>
             </div>
 
             {/* Current value */}
@@ -887,11 +905,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                       >
                         {isFromAccount ? 'Cancel' : 'Back'}
                       </button>
-                      <button
-                        className='mm-btn-animate mm-btn-primary estimate-annual-block__btn-save'
-                        type='submit'
-                      >
-                        {isFromAccount ? 'Save' : 'Next'}
+                      <button className='mm-btn-animate mm-btn-primary estimate-annual-block__btn-save' type='submit'>
+                        {isFromAccount ? 'Save' : isLastAccount() ? 'Finish' : 'Next'}
                       </button>
                     </div>
                   </div>
