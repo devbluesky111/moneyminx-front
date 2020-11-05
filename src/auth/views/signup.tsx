@@ -11,6 +11,7 @@ import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
 import { StringKeyObject } from 'common/common.types';
+import { appRouteConstants } from 'app/app-route.constant';
 import { registerValidationSchema } from 'auth/auth.validation';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { signup, associateFacebookUser } from 'auth/auth.service';
@@ -54,13 +55,13 @@ export const SignupMainSection = () => {
   const visibilityIcon = visible ? <VisibleIcon /> : <HiddenIcon />;
 
   const getValidationText = () => {
-    if (validator < 3) {
+    if (validator < 2) {
       return {
         text: 'Weak',
         classNames: 'text-danger ',
       };
     }
-    if (validator < 4) {
+    if (validator < 3) {
       return {
         text: 'Medium',
         classNames: 'text-warning',
@@ -128,16 +129,16 @@ export const SignupMainSection = () => {
               <div className='guide-bottom'>
                 <h4>Serious about security</h4>
                 <div className='guide-icon-wrap'>
-                <span className='locked-icon'>
-                  <LoginLockIcon />
-                </span>
+                  <span className='locked-icon'>
+                    <LoginLockIcon />
+                  </span>
                   <p>The security of your information is our top priority</p>
                 </div>
                 <h4>Trusted by investors</h4>
                 <div className='guide-icon-wrap'>
-                <span className='shield-icon'>
-                  <LoginShieldIcon />
-                </span>
+                  <span className='shield-icon'>
+                    <LoginShieldIcon />
+                  </span>
                   <p>Investors from all over the world are using Money Minx</p>
                 </div>
               </div>
@@ -147,7 +148,7 @@ export const SignupMainSection = () => {
           <div className='bg-white credentials-wrapper'>
             <div className='credentials-content'>
               <div className='logo-img-wrapper'>
-                <LogoImg className='auth-logo'/>
+                <LogoImg className='auth-logo' />
               </div>
               <h2>Track your net worth and portfolio in one place</h2>
               <p>
@@ -270,8 +271,9 @@ export const SignupMainSection = () => {
                           <div className='feedback mt-2'>
                             {props.errors.password === '409' ? (
                               <span>
-                                This email is already registered. Want to <Link to='/login'>login</Link> or
-                                <Link to='/forgot-password'> recover your password?</Link>
+                                This email is already registered. Want to{' '}
+                                <Link to={appRouteConstants.auth.LOGIN}>login</Link> or
+                                <Link to={appRouteConstants.auth.FORGOT_PASSWORD}> recover your password?</Link>
                               </span>
                             ) : (
                               props.errors.password
@@ -342,7 +344,7 @@ export const SignupMainSection = () => {
                         reAuthenticate={true}
                         callback={responseFacebook}
                         scope='public_profile,email'
-                        icon={<LoginFacebookIcon className='social-login-fb'/>}
+                        icon={<LoginFacebookIcon className='social-login-fb' />}
                         appId={env.FACEBOOK_APP_ID || ''}
                         buttonStyle={{
                           background: 'transparent',
@@ -355,7 +357,10 @@ export const SignupMainSection = () => {
 
                 <div>
                   <div className='auth-end-element'>
-                    Already have an account? <Link to='/login' className='purple-links'>Log In</Link>
+                    Already have an account?{' '}
+                    <Link to={appRouteConstants.auth.LOGIN} className='purple-links'>
+                      Log In
+                    </Link>
                   </div>
                 </div>
               </div>

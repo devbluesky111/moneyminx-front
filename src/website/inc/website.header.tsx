@@ -21,11 +21,7 @@ const WebsiteHeader = () => {
       return;
     }
 
-    if (width > 605 && width <= 768) {
-      setExpand('menus');
-    }
-
-    if (width <= 604) {
+    if (width <= 768) {
       setExpand('all');
     }
   };
@@ -42,12 +38,15 @@ const WebsiteHeader = () => {
       </div>
 
       <div className='right-menu-wrapper'>
-        <div className={`${expand === 'all' ? 'expand-all' : ''}`}>
+        <div className={`${expand === 'all' ? 'expand-all' : 'expand-none'}`}>
           <div className={`menu-btn-wrapper`}>
             <div className={`menu-list-wrapper ${expand === 'menus' ? 'expand-menu' : ''}`}>
-              <div className='mm-navbar-logo'>
-                <MoneyMinxLogoMobile className='mr-3' />
-                <Beta />
+              <div className='mm-navbar-logo d-flex justify-content-between d-block d-md-none'>
+                <div>
+                  <MoneyMinxLogoMobile className='mr-3' />
+                  <Beta />
+                </div>
+                <Cross onClick={handleToggleMenu} className='mr-1' />
               </div>
               <ul className='navbar-nav mr-auto navbar-menu-list'>
                 <li className={navClass('pricing')}>
@@ -78,7 +77,7 @@ const WebsiteHeader = () => {
                 </li>
                 <li className='mm-nav-item'>
                   <Link className='mm-nav-link' to='/signup'>
-                    <button className='w-100 mm-btn-signup btn-outline-primary mm-btn-animate'>Sign Up</button>
+                    <button className='w-100 mm-btn-signup btn-outline-primary mm-btn-animate mt-n2'>Sign Up</button>
                   </Link>
                 </li>
               </ul>
@@ -87,9 +86,9 @@ const WebsiteHeader = () => {
         </div>
       </div>
 
-      <button className='navbar-toggler' type='button' onClick={handleToggleMenu}>
-        <span className='navbar-toggler-icon' />
-      </button>
+      <div className='mm-navbar-icon mr-4 d-block d-md-none'>
+        <span className='navbar-toggler-icon' onClick={handleToggleMenu} />
+      </div>
     </nav>
   );
 };

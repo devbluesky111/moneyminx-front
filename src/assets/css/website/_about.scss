@@ -155,13 +155,17 @@ ul.owner-list li a {
   outline: none;
   display: inline-block;
 
+  &:hover {
+    color: $darkGray;
+  }
+
   ul.owner-list li {
     width: 100%;
   }
 }
 
 ul.owner-list li a:hover span svg {
-  fill: $twitter;
+  fill: $twitterBlue;
 }
 
 .mm-container-right.owner-section {
@@ -276,7 +280,11 @@ span.twitter-icon {
 }
 
 .mm-nav-item {
-  margin: 0 1.25rem !important;
+  margin: 0 0.875rem !important;
+
+  @media (min-width: $md + 100) {
+    margin: 0 1.25rem !important;
+  }
 }
 
 .mm-owner-section-img {

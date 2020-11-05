@@ -1,11 +1,11 @@
-import env from 'app/app.env';
 import { Formik } from 'formik';
 import { isEmpty } from 'lodash';
 import { toast } from 'react-toastify';
-import React, {ChangeEvent, useState} from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { useHistory, Link } from 'react-router-dom';
+import React, { ChangeEvent, useState } from 'react';
 
+import env from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
@@ -124,8 +124,8 @@ export const LoginMainSection = () => {
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
               <div className='session-expired hide-me'>
-              <p>We thought you left, so we logged you out to protect your account.</p>
-            </div>
+                <p>We thought you left, so we logged you out to protect your account.</p>
+              </div>
               <div className='form-wrap'>
                 <Formik
                   validateOnChange={false}
@@ -163,9 +163,9 @@ export const LoginMainSection = () => {
                 >
                   {(props) => {
                     const updateEmailAddress = (event: ChangeEvent<HTMLInputElement>) => {
-                      dispatch({type: 'UPDATE_EMAIL_ADDRESS', email: event.target.value})
-                      return props.handleChange(event)
-                    }
+                      dispatch({ type: 'UPDATE_EMAIL_ADDRESS', email: event.target.value });
+                      return props.handleChange(event);
+                    };
                     const { errors } = props;
 
                     const hasError = (field: 'email' | 'password') => errors[field];
@@ -214,7 +214,7 @@ export const LoginMainSection = () => {
 
                         <p>
                           <span className='forgot-pass purple-links'>
-                            <Link to='/auth/forgot-password'>Forgot Password?</Link>
+                            <Link to={appRouteConstants.auth.FORGOT_PASSWORD}>Forgot Password?</Link>
                           </span>
                         </p>
                         <button className='mm-btn-animate mm-btn-primary' type='submit' disabled={props.isSubmitting}>

@@ -1,4 +1,5 @@
 import React, { createContext } from 'react';
+import { AllocationChartSetting } from './hooks/useAllocationSetting';
 
 interface AllocationProviderProps {
   children: React.ReactNode;
@@ -6,17 +7,28 @@ interface AllocationProviderProps {
 
 type Dispatch = (action: any) => void;
 
-interface AllocationProps {}
+interface AllocationProps {
+  allocationChartSetting?: AllocationChartSetting;
+}
 
-const initialState: AllocationProps = {};
+const initialState: AllocationProps = {
+  allocationChartSetting: undefined,
+};
 
 const AllocationStateContext = createContext<AllocationProps | undefined>(undefined);
 const AllocationDispatchContext = createContext<Dispatch | undefined>(undefined);
 
-function allocationReducer(state: AllocationProps, action: any) {
+function allocationReducer(state: AllocationProps, action: any): AllocationProps {
   switch (action.type) {
-    case 'TYPE': {
-      return { ...state };
+    case 'SET_ALLOCATION_CHART_SETTING': {
+      return { ...state, allocationChartSetting: action?.payload?.allocationChartSettings };
+    }
+
+    case 'PATCH_ALLOCATION_CHART_SETTING': {
+      return {
+        ...state,
+        allocationChartSetting: { ...state.allocationChartSetting, ...action?.payload?.patchChartSettings },
+      };
     }
 
     default: {

@@ -1,12 +1,16 @@
+// TODO I don't think this file is used, please confirm and delete
 import React from 'react';
 import { Formik } from 'formik';
 import { Link } from 'react-router-dom';
-import RegisterForm from './register-form';
 import { useTranslation } from 'react-i18next';
+
 import { AuthLayout } from 'layouts/auth.layout';
 import { RegisterPayload } from 'auth/auth.types';
 import { useModal, Modal } from 'common/components/modal';
+import { appRouteConstants } from 'app/app-route.constant';
 import { registerValidationSchema } from 'auth/auth.validation';
+
+import RegisterForm from './register-form';
 
 const initialValues: RegisterPayload = {
   email: '',
@@ -35,7 +39,7 @@ const Register = () => {
           }}
         </Formik>
         <div className='text-center mt-4'>
-          <Link to='/login' className='primary-link text-primary '>
+          <Link to={appRouteConstants.auth.LOGIN} className='primary-link text-primary '>
             {at('ALREADY_HAVE_ACCOUNT')}
           </Link>
         </div>

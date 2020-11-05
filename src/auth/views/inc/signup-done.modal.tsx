@@ -10,12 +10,11 @@ interface Props {
 }
 const SignUpDoneModal: React.FC<Props> = ({ signupModal, message, handleSuccess }) => {
   return (
-    <Modal {...signupModal} title='' onSuccess={handleSuccess}>
-      <div className='modal-wrapper signup-modal modal-md'>
+    <Modal {...signupModal} title='Welcome to Money Minx' size='lg' onSuccess={handleSuccess}>
+      <div className='modal-wrapper signup-modal'>
         <div className='signup-done-modal-logo'>
           <SignupModalLogo />
         </div>
-        <h4>Welcome to Money Minx</h4>
         <p>
           You successfully joined Money Minx. We advise you to go and finish your profile in the settings. There, you
           can also link more accounts and check all the details that you might find interesting.

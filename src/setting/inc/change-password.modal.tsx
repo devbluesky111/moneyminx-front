@@ -36,13 +36,13 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
   const visibilityIcon = (field: string) => (isVisible(field) ? <VisibleIcon /> : <HiddenIcon />);
 
   const getValidationText = () => {
-    if (validator < 3) {
+    if (validator < 2) {
       return {
         text: 'Weak, please choose another',
         classNames: 'text-danger ',
       };
     }
-    if (validator < 4) {
+    if (validator < 3) {
       return {
         text: 'Medium',
         classNames: 'text-warning',
@@ -56,7 +56,7 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
   };
 
   return (
-    <Modal {...changePasswordModal.props} title='Change Password' canBeClosed>
+    <Modal {...changePasswordModal.props} title='Change Password' size='sm' canBeClosed>
       <div className='modal-wrapper change-password-modal'>
         <Formik
           initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
