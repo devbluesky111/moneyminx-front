@@ -21,13 +21,14 @@ const AccountSetting = () => {
   const dispatch = useAuthDispatch();
   const { accounts } = useAuthState();
   const [providerName, setProviderName] = useState('');
+  const [finish, setFinish] = useState<boolean>(false);
   const [reloadCounter, setReloadCounter] = useState(0);
   const [completed, setCompleted] = useState<number[]>([]);
+  const [clickEvent, setClickEvent] = useState<boolean>(false);
   const [currentAccount, setCurrentAccount] = useState<Account>();
   const [completedProviderName, setCompletedProviderName] = useState<string[]>([]);
   const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
   const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
-  const [finish, setFinish] = useState<boolean>(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -87,7 +88,7 @@ const AccountSetting = () => {
    * If nextProvider not found set finish true
    */
   useEffect(() => {
-    if (currentProviderAccounts && accountsByProviderName) {
+    if (currentProviderAccounts && accountsByProviderName && !clickEvent) {
       if (currentProviderAccounts.every((acc) => acc.accountDetails?.overridden)) {
         const pName = currentProviderAccounts[0]?.providerName;
         const providerIndex = Object.keys(accountsByProviderName).indexOf(pName);
@@ -102,13 +103,14 @@ const AccountSetting = () => {
         return setFinish(true);
       }
     }
-  }, [currentProviderAccounts, accountsByProviderName]);
+  }, [currentProviderAccounts, accountsByProviderName, clickEvent]);
 
   if (!accounts || !currentAccount || !currentProviderAccounts) {
     return <CircularSpinner />;
   }
 
   const handleProviderChange = (provider: string) => {
+    setClickEvent(true);
     setProviderName(provider);
   };
 
@@ -117,12 +119,12 @@ const AccountSetting = () => {
   };
 
   const getProviderClass = (pName: string) => {
-    if (completedProviderName.includes(pName)) {
-      return ' completed';
-    }
-
     if (providerName === pName) {
       return ' selected';
+    }
+
+    if (completedProviderName.includes(pName)) {
+      return ' completed';
     }
 
     return '';
