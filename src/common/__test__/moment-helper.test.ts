@@ -1,10 +1,10 @@
-import { curMonthYearStr } from 'common/moment.helper';
+import { getStringDate } from 'common/moment.helper';
 
 describe('Moment helper', () => {
-  test.only('Get Current Month Year Format', () => {
-    const expected = 'Sep 2020';
+  test.only('Get Full string date', () => {
+    const expected = 'Sep 28, 2020';
     const today = new Date('2020-09-28');
 
-    expect(curMonthYearStr(today)).toBe(expected);
+    expect(getStringDate(today)).toBe(expected);
   });
 });

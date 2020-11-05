@@ -7,9 +7,8 @@ import { Modal, ModalType } from 'common/components/modal';
 import useFileDownload from 'common/hooks/useFileDownload';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
+import { useAllocationState } from 'allocation/allocation.context';
 import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg';
-import useAllocationSetting from 'allocation/hooks/useAllocationSetting';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg';
 import { ReactComponent as PinterestIcon } from 'assets/icons/pinterest.svg';
 
@@ -31,7 +30,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
   const [imageUrl, setImageUrl] = useState<string>();
   const [copySuccess, setCopySuccess] = useState(false);
 
-  const { loading, settings }: { loading: boolean; settings: any } = useAllocationSetting();
+  const { allocationChartSetting: settings } = useAllocationState();
 
   const pinterestButtonRef = useRef<any>(null);
   const twitterShareButtonRef = useRef<any>(null);
@@ -86,26 +85,6 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
       return buttonRef?.current?.click();
     }
   };
-
-  /*const handleCopyToClipboard = async () => {
-    if (imageUrl) {
-      navigator.clipboard.writeText(imageUrl);
-
-      return setCopySuccess(true);
-    }
-
-    const imageURl = await getImageURL();
-
-    if (imageURl) {
-      navigator.clipboard.writeText(imageURl);
-
-      return setCopySuccess(true);
-    }
-  };*/
-
-  if (loading) {
-    return <CircularSpinner />;
-  }
 
   return (
     <Modal {...chartShareModal.props} title='Share' size='mdx' canBeClosed onClose={() => chartShareModal.close()}>
@@ -182,10 +161,6 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
           </div>
           <div className='divider'>or</div>
           <div className='outline-button-wrapper'>
-            {/* ToDo find a solution for copy to clipboard
-            <button className='btn-outline-primary mm-btn-animate' onClick={handleCopyToClipboard}>
-              {copySuccess ? 'Copied' : 'Copy Image'}
-            </button>*/}
             <button
               className='btn-outline-primary mm-btn-animate'
               onClick={() => df('allocation-share-card', 'my-awesome-allocation')}
