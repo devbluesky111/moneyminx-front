@@ -128,6 +128,10 @@ const AccountSetting = () => {
     return '';
   };
 
+  const navigateToNetworth = () => {
+    return history.push('/net-worth');
+  };
+
   return (
     <AuthLayout>
       <div className='main-table-wrapper'>
@@ -224,7 +228,7 @@ const AccountSetting = () => {
             </div>
           </div>
         </div>
-        <AccountSettingSteps onSkip={() => history.push('/net-worth')} isCompleted={finish} />
+        <AccountSettingSteps onSkip={navigateToNetworth} isCompleted={finish} onFinish={navigateToNetworth} />
       </div>
     </AuthLayout>
   );
