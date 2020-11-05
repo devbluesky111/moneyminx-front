@@ -269,6 +269,12 @@ button:focus {
   }
 }
 
+a.upgrader-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .upgrader-btn:before {
   content: '';
   position: absolute;
@@ -537,19 +543,22 @@ button:focus {
   }
 }
 .myaccount-drop {
+  position: relative;
   margin-left: 12px;
   color: $gray;
 
   .dropdown-toggle {
     padding: 0;
-    border: 0;
-    background-color: transparent;
+    border: 0 !important;
+    background-color: transparent !important;
     font-weight: 400;
     font-size: 0.9375rem;
-    color: $gray;
-
+    color: $gray !important;
+    box-shadow: none !important;
     &:hover {
       color: $darkGray;
+      background-color: $white;
+      border-color: $white;
     }
   }
 }
@@ -675,7 +684,7 @@ button:focus {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: $white;
+  // color: $white;
 }
 .dropdown-box ul li span {
   font-weight: 500;
@@ -689,7 +698,7 @@ button:focus {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: $white;
+  // color: $white;
 }
 .dropdown-box ul li > div + div,
 .dropdown-box ul li a > div + div {

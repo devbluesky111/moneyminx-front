@@ -8,7 +8,7 @@ import { arrGroupBy, enumerateStr } from 'common/common-helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
 import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
-import { getDate, getMonthYear, getRelativeDate, isAfter } from 'common/moment.helper';
+import { getDate, getMonthYear, getRelativeDate } from 'common/moment.helper';
 
 import {
   setFilterAccount,
@@ -37,15 +37,27 @@ const NetworthFilter = () => {
     fetchCurrentAccount();
   }, []);
 
-  const onChange = (dates: any) => {
-    const [start, end] = dates;
-
-    dispatch(setFilterFromDate(getDate(start)));
-
-    if (!isAfter(end)) {
-      dispatch(setFilterToDate(end ? getDate(end) : undefined));
+  const onChange = (option: string, date: any) => {
+    if (option === 'start') {
+      dispatch(setFilterFromDate(getDate(new Date(date))));
+    } else if (option === 'end') {
+      if (fFromDate !== undefined && getDate(new Date(date)) > fFromDate) {
+        dispatch(setFilterToDate(getDate(new Date(date))));
+      }
     }
   };
+
+  // const onChange = (dates: any) => {
+  //   const [start, end] = dates;
+
+  //   console.log('start', start, 'end', end);
+
+  //   dispatch(setFilterFromDate(getDate(start)));
+
+  //   if (!isAfter(end)) {
+  //     dispatch(setFilterToDate(end ? getDate(end) : undefined));
+  //   }
+  // };
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setFilterCategories(event.target.value));
@@ -173,7 +185,7 @@ const NetworthFilter = () => {
             </Dropdown.Menu>
           </Dropdown>
 
-          <ReactDatePicker
+          {/* <ReactDatePicker
             selected={fFromDate ? new Date(fFromDate) : null}
             onChange={onChange}
             selectsStart
@@ -187,6 +199,40 @@ const NetworthFilter = () => {
                 <div className='date-box'>
                   <input type='text' className='month_year' placeholder={getMonthYear(fFromDate)} />
                   <span>to </span>
+                  <input type='text' className='month_year' placeholder={getMonthYear(fToDate)} />
+                </div>
+              </div>
+            }
+          /> */}
+
+          <ReactDatePicker
+            selected={fFromDate ? new Date(fFromDate) : null}
+            onChange={(date)=>onChange('start', date)}
+            // selectsStart
+            startDate={fFromDate ? new Date(fFromDate) : null}
+            dateFormat='MM/yyyy'
+            showMonthYearPicker
+            // selectsRange
+            customInput={
+              <div className='drop-box'>
+                <div className='date-box'>
+                  <input type='text' className='month_year' placeholder={getMonthYear(fFromDate)} />
+                </div>
+              </div>
+            }
+          />
+          <span>to</span>
+          <ReactDatePicker
+            selected={fToDate ? new Date(fToDate) : null}
+            onChange={(date)=>onChange('end', date)}
+            // selectsStart
+            startDate={fToDate ? new Date(fToDate) : null}
+            dateFormat='MM/yyyy'
+            showMonthYearPicker
+            // selectsRange
+            customInput={
+              <div className='drop-box'>
+                <div className='date-box'>
                   <input type='text' className='month_year' placeholder={getMonthYear(fToDate)} />
                 </div>
               </div>

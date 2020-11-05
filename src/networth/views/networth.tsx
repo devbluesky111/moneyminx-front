@@ -85,10 +85,11 @@ const Networth = () => {
                         <span>Liabilities</span>
                         <h3>${fNumber(currentLiabilities)}</h3>
                       </li>
-                      <li className='nw-data'>
-                        <span>Net Worth</span>
-                        <h3>${fNumber(currentNetworth)}</h3>
-                      </li>
+                      { currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
+                        <li className='nw-data'>
+                          <span>Net Worth</span>
+                          <h3>${fNumber(currentNetworth)}</h3>
+                        </li>) : null } 
                     </ul>
                     <div className='chartbox'>
                       <NetworthBarGraph networth={networth} />
@@ -109,7 +110,7 @@ const Networth = () => {
                       }}
                     >
                       <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
-                      <Link to='#' className='mm-btn-animate mm-btn-primary'>
+                      <Link to='/settings' className='mm-btn-animate mm-btn-primary'>
                         Complete Profile
                       </Link>
                     </div>
@@ -125,7 +126,7 @@ const Networth = () => {
                     <div className='table-holder'>
                       <table className='table'>
                         <thead>
-                          <tr>
+                          <tr data-toggle="collapse">
                             <th>
                               <span>Investment Assets</span>
                             </th>
@@ -159,7 +160,7 @@ const Networth = () => {
                               <Link
                                 to='#'
                                 className='warning-popover'
-                                data-className='warning-pop'
+                                data-classname='warning-pop'
                                 data-container='body'
                                 title='Warning'
                                 data-toggle='popover'
@@ -288,71 +289,73 @@ const Networth = () => {
               </div>
             ) : null}
 
-            <div className='row mb-40'>
-              <div className='col-12'>
-                <div className='ct-box box-v'>
-                  <div className='table-holder'>
-                    <table className='table'>
-                      <thead>
-                        <tr>
-                          <th>
-                            <span>Net Worth</span>
-                          </th>
-                          <th className='tab-hide'>{''}</th>
-                          {networth?.map((nItem, idx) => (
-                            <th key={idx} className={gc(nItem.interval)}>
-                              {nItem.interval}
+            { currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
+              <div className='row mb-40'>
+                <div className='col-12'>
+                  <div className='ct-box box-v'>
+                    <div className='table-holder'>
+                      <table className='table'>
+                        <thead>
+                          <tr>
+                            <th>
+                              <span>Net Worth1</span>
                             </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr data-href='#'>
-                          <td>Investment Assets</td>
-                          <td className='tab-hide'>{''}</td>
-                          {networth?.map((nItem, idx) => (
-                            <td key={idx} className={gc(nItem.interval)}>
-                              {fNumber(nItem.investmentAssets)}
-                            </td>
-                          ))}
-                        </tr>
-                        <tr data-href='#'>
-                          <td>Other Assets</td>
-                          <td className='tab-hide'>{''}</td>
+                            <th className='tab-hide'>{''}</th>
+                            {networth?.map((nItem, idx) => (
+                              <th key={idx} className={gc(nItem.interval)}>
+                                {nItem.interval}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr data-href='#'>
+                            <td>Investment Assets</td>
+                            <td className='tab-hide'>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.investmentAssets)}
+                              </td>
+                            ))}
+                          </tr>
+                          <tr data-href='#'>
+                            <td>Other Assets</td>
+                            <td className='tab-hide'>{''}</td>
 
-                          {networth?.map((nItem, idx) => (
-                            <td key={idx} className={gc(nItem.interval)}>
-                              {fNumber(nItem.otherAssets)}
-                            </td>
-                          ))}
-                        </tr>
-                        <tr data-href='#'>
-                          <td>Liabilities</td>
-                          <td className='tab-hide'>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.otherAssets)}
+                              </td>
+                            ))}
+                          </tr>
+                          <tr data-href='#'>
+                            <td>Liabilities</td>
+                            <td className='tab-hide'>{''}</td>
 
-                          {networth?.map((nItem, idx) => (
-                            <td key={idx} className={gc(nItem.interval)}>
-                              {fNumber(nItem.liabilities)}
-                            </td>
-                          ))}
-                        </tr>
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <td>Net Worth</td>
-                          <td className='tab-hide'>{''}</td>
-                          {networth?.map((nItem, idx) => (
-                            <td key={idx} className={gc(nItem.interval)}>
-                              {fNumber(nItem.networth)}
-                            </td>
-                          ))}
-                        </tr>
-                      </tfoot>
-                    </table>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.liabilities)}
+                              </td>
+                            ))}
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td>Net Worth</td>
+                            <td className='tab-hide'>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={gc(nItem.interval)}>
+                                {fNumber(nItem.networth)}
+                              </td>
+                            ))}
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
         <ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />

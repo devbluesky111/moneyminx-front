@@ -1,6 +1,15 @@
 import moment from 'moment';
 
-export const getMonthYear = (inputDate?: any) => moment(inputDate).format('MMM YYYY');
+export const getMonthYear = (inputDate?: any) => {
+  if (inputDate !== undefined) {
+    const year = moment(inputDate).format('yyyy');
+    const month = moment(inputDate).format('MM');
+    const nextMonthDate = new Date(parseInt(year), parseInt(month), 1);
+    return moment(nextMonthDate).format('MMM YYYY');
+  } else {
+    return moment(inputDate).format('MMM YYYY');
+  }
+}
 
 export const getRelativeDate = (inputDate: string) => moment(inputDate).fromNow();
 

@@ -8,6 +8,9 @@ import { capitalize } from 'common/common-helper';
 import ProBadge from 'assets/images/networth/pro-badge.svg';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 
+import useGetSubscription from 'auth/hooks/useGetSubscription';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
+
 interface AppHeaderProps {
   toggleMenu: () => void;
 }
@@ -15,7 +18,10 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleMenu }) => {
   const { user } = useAuthState();
   const { pathname } = useLocation();
 
-
+  // const { fetchingSubscription, subError, subscription } = useGetSubscription();
+  const { currentSubscription } = useCurrentSubscription();
+  const { subscription } = useGetSubscription(currentSubscription?.priceId);
+  console.log('subscription', JSON.stringify(subscription?.details));
   const navClass = (label: string) => (pathname.includes(label) ? 'mm-app-nav-item active' : 'mm-app-nav-item');
 
   return (
@@ -41,9 +47,11 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleMenu }) => {
             <Link to='/allocation' className={navClass('allocation')}>Allocation</Link>
           </div>
           <div className='head-right'>
-            <button type='button' className='upgrader-btn' data-toggle='modal' data-target='#upgradeModal'>
-              Upgrade
-            </button>
+            {currentSubscription?.subscriptionStatus === 'trialing' ? (
+              <Link to='/settings' type='button' className='upgrader-btn' data-toggle='modal' data-target='#upgradeModal'>
+                Upgrade
+              </Link>
+            ): null}
             <div className='badge-box'>
               <img src={ProBadge} alt='Pro badge' />
             </div>
@@ -52,7 +60,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleMenu }) => {
                 <span>
                   <img src={user?.picture || DefaultAvatar} alt='Profile avatar' />
                 </span>
-                <span>{capitalize(user?.firstName || 'User')}</span>
+                <span>{capitalize(user?.firstName || user?.username || 'My Account')}</span>
               </button>
             </div>
           </div>
