@@ -1,15 +1,17 @@
 import moment from 'moment';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { Link, useHistory, useLocation } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { Account } from 'auth/auth.types';
 import { MMCategories } from 'auth/auth.enum';
 import { patchAccount } from 'api/request.api';
+import { useAuthState } from 'auth/auth.context';
 import { makeFormFields } from 'auth/auth.helper';
+import MMToolTip from 'common/components/tooltip';
 import { enumerateStr } from 'common/common-helper';
 import { StringKeyObject } from 'common/common.types';
 import useAccountType from 'auth/hooks/useAccountType';
@@ -26,7 +28,6 @@ import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
-import { useAuthState } from 'auth/auth.context';
 
 interface Props {
   currentAccount?: Account;
@@ -231,9 +232,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             <div className='account-category'>
               <span className='form-subheading'>
                 Account Category
-                <a href='/link26'>
+                <MMToolTip message='Account Category info here'>
                   <InfoIcon />
-                </a>
+                </MMToolTip>
               </span>
               <ul className='category-list mb-4'>
                 {enumerateStr(MMCategories).map((cat: string, idx: number) => {
@@ -537,7 +538,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 <div className='left-input'>
                   <p>
                     <span className='form-subheading'>
-                      Does your employer match contributions? <InfoIcon className='sm-hide' />
+                      Does your employer match contributions?
+                      <MMToolTip message='Does your employer match contributions? Info'>
+                        <InfoIcon className='sm-hide' />
+                      </MMToolTip>
                     </span>
                   </p>
                 </div>
@@ -625,7 +629,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 <div className='left-input'>
                   <p>
                     <span className='form-subheading'>
-                      Include employer match in performance? <InfoIcon className='sm-hide' />
+                      Include employer match in performance?
+                      <MMToolTip message='Include employer match in performance'>
+                        <InfoIcon className='sm-hide' />
+                      </MMToolTip>
                     </span>
                   </p>
                 </div>
@@ -659,7 +666,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 <div className='left-input'>
                   <p>
                     <span className='form-subheading'>
-                      Calculate Returns? <InfoIcon />
+                      Calculate Returns?
+                      <MMToolTip message='Calculate return info'>
+                        <InfoIcon />
+                      </MMToolTip>
                     </span>
                   </p>
                 </div>
