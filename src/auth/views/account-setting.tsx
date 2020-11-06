@@ -260,7 +260,7 @@ export const AccountNameList: React.FC<AccountNameListProps> = ({
   const scrollToCategory = useCallback(
     (id: number) => {
       if (refList) {
-        refList[id]?.current.scrollIntoView({ inline: 'center' });
+        refList[id]?.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       }
     },
     [refList]
