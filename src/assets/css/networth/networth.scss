@@ -1491,11 +1491,11 @@ ul.charttool li.nw-data:before {
   width: 100% !important;
 }
 .navbar-toggler {
-  // background: none;
+  background: none;
   width: 22px;
   height: 14px;
   border: 0;
-  padding: 0;
+  padding: 0 !important;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
