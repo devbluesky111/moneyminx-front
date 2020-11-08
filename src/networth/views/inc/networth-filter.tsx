@@ -191,7 +191,7 @@ const NetworthFilter = () => {
               </div>
             }
           />
-          <span style={{marginTop: "auto", marginBottom: "auto"}}>to</span>
+          <span style={{marginTop: 'auto', marginBottom: 'auto'}}>to</span>
           <ReactDatePicker
             selected={fToDate ? new Date(fToDate) : null}
             onChange={(date)=>onChange('end', date)}

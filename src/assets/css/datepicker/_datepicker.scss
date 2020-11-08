@@ -8,24 +8,27 @@
 }
 
 .react-datepicker {
+  border: none;
+  border-radius: 6px;
+
   &__navigation {
     &--previous {
       margin-top: 0.5rem;
-      border-right-color: #969eac !important;
+      border-right-color: $gray !important;
     }
     &--next {
       margin-top: 0.5rem;
-      border-right-color: #969eac !important;
+      border-right-color: $gray !important;
     }
   }
 
   &__day {
     color: #ffffff;
     &--keyboard-selected {
-      background-color: #534cea;
+      background-color: $purple;
     }
     &:hover {
-      background-color: #534cea !important;
+      background-color: $purple !important;
     }
   }
 
@@ -52,8 +55,11 @@
 }
 
 .react-datepicker__month-container {
+  border-radius: 6px;
+  box-shadow: 0 4px 28px $darkPurpleOpacity40;
+
   .react-datepicker__header {
-    background-color: #081833;
+    background-color: $darkBg;
     color: $white;
     font-size: 1rem;
     padding: 1rem;

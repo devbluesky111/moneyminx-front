@@ -217,7 +217,7 @@ export const ProfileOverview = () => {
                       <div className='mm-profile-overview__form'>
                         <div className='form-group row align-items-center'>
                           <label htmlFor='fname' className='col-md-3 col-form-label'>
-                            First name
+                            First Name
                             <Info className='mt-n1 ml-2' />
                           </label>
                           <div className='col-md-9'>
@@ -233,7 +233,7 @@ export const ProfileOverview = () => {
                         </div>
                         <div className='form-group row align-items-center'>
                           <label htmlFor='lname' className='col-md-3 col-form-label'>
-                            LastName
+                            Last Name
                             <Info className='mt-n1 ml-2' />
                           </label>
                           <div className='col-md-9'>
