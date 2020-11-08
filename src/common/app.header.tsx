@@ -46,7 +46,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu }
             <span className='navbar-toggler-icon' />
           </button>
           <Link to='/net-worth' className='navbar-brand'>
-            { width >= BreakPoint.MD ? (<img src={Logo} alt='Money Minx Logo' />):(<img src={LogoIcon} alt='Money Minx Icon' />)}
+            { width >= BreakPoint.MD ? (<img src={Logo} alt='Money Minx Logo' className='mm-app-nav-logo'/>):(<img src={LogoIcon} alt='Money Minx Icon' className='mm-app-nav-icon'/>)}
           </Link>
           <div className='headtab'>
             <Link to='/net-worth' className={navClass('net-worth')}>

@@ -193,7 +193,6 @@ button:focus {
 }
 .money-minx-header .navbar-brand {
   margin-right: 0;
-  padding: 12px 0;
 }
 .money-minx-header .navbar-brand {
   img, svg {
@@ -207,7 +206,7 @@ button:focus {
   height: 100%;
   max-height: 58px;
 
-  @media (min-width: $md + 1) {
+  @media (min-width: $md) {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -246,7 +245,7 @@ button:focus {
   display: -webkit-flex;
   display: flex;
   height: 100%;
-  padding-bottom: 16px;
+  padding-bottom: 4px;
 
   @media (min-width: $md) {
     padding-bottom: 0;
@@ -305,7 +304,11 @@ a.upgrader-btn {
 }
 
 .upgrader-btn + .badge-box {
-  margin-left: 20px;
+  margin-left: 0;
+
+  @media (min-width: $med) {
+    margin-left: 20px;
+  }
 }
 .upgrader-btn + .badge-box:before {
   content: '';
@@ -321,6 +324,7 @@ a.upgrader-btn {
 .badge-box span img {
   width: 56px;
   height: 56px;
+  margin-top: 4px;
 }
 .money-minx-header .btn-group .profile-toggle {
   padding: 0;
@@ -354,6 +358,17 @@ a.upgrader-btn {
     color: $darkGray;
   }
 }
+
+.money-minx-header .btn-group .profile-toggle span + span,
+.money-minx-header .btn-group .profile-toggle:after {
+  display: none;
+
+  @media (min-width: $med) {
+    display: inline-block;
+  }
+
+}
+
 .money-minx-header .btn-group .profile-toggle.show:after {
   transform: rotate(225deg);
   vertical-align: 0;
@@ -370,7 +385,6 @@ a.upgrader-btn {
   height: 46px;
   border: 2px solid $grayBorder20;
   border-radius: 50%;
-  margin-bottom: 8px;
 
   &:hover {
     border: 2px solid $purpleOpacity50;
@@ -1852,10 +1866,6 @@ footer p {
   .upgrader-btn {
     margin-right: 20px;
   }
-  .money-minx-header .btn-group .profile-toggle span + span,
-  .money-minx-header .btn-group .profile-toggle:after {
-    display: none;
-  }
   .graphbox {
     -webkit-flex-direction: column-reverse;
     flex-direction: column-reverse;
@@ -2011,10 +2021,6 @@ footer p {
   }
   .mob-btm .ct-box.padd-20 {
     padding: 20px;
-  }
-  .money-minx-header .navbar-brand {
-    width: 32px;
-    overflow: hidden;
   }
   footer .container,
   .money-minx-header .container {
