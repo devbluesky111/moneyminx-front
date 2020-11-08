@@ -2,17 +2,19 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import Logo from 'assets/icons/logo.svg';
+import LogoIcon from 'assets/icons/money-minx-icon.svg';
 import { useAuthState } from 'auth/auth.context';
 import { capitalize } from 'common/common-helper';
-// TODO Badge depends on the plan level
 import GreenBadge from 'assets/badges/green-badge.svg';
 import PlusBadge from 'assets/badges/plus-badge.svg';
 import ProBadge from 'assets/badges/pro-badge.svg';
 import VipBadge from 'assets/badges/vip-badge.svg';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
+import { BreakPoint } from 'app/app.constant';
 
 import useGetSubscription from 'auth/hooks/useGetSubscription';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
+import useSize from './hooks/useSize';
 
 interface AppHeaderProps {
   toggleLeftMenu: () => void;
@@ -21,6 +23,7 @@ interface AppHeaderProps {
 const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu }) => {
   const { user } = useAuthState();
   const { pathname } = useLocation();
+  const { width } = useSize();
 
   // const { fetchingSubscription, subError, subscription } = useGetSubscription();
   const { currentSubscription } = useCurrentSubscription();
@@ -43,7 +46,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu }
             <span className='navbar-toggler-icon' />
           </button>
           <Link to='/net-worth' className='navbar-brand'>
-            <img src={Logo} alt='Money Minx logo' />
+            { width >= BreakPoint.MD ? (<img src={Logo} alt='Money Minx Logo' />):(<img src={LogoIcon} alt='Money Minx Icon' />)}
           </Link>
           <div className='headtab'>
             <Link to='/net-worth' className={navClass('net-worth')}>

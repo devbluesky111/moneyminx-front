@@ -221,8 +221,7 @@
   }
 }
 
-// greater than 768
-@media (min-width: $md + 1) {
+@media (min-width: $md) {
   .navbar-expand-lg .navbar-toggler {
     display: none;
   }

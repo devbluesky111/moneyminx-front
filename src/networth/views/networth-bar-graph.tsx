@@ -3,7 +3,6 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 import { NetworthBarGraphProps } from 'networth/networth.type';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import NetworthBarGraphCustomTooltip from './networth-bar-graph-custom-tooltip';
 
 const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth }) => {
   if (!networth.length) {

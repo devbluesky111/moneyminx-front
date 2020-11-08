@@ -144,19 +144,19 @@ const Networth = () => {
                   <div className='ct-box box-b'>
                     <div className='table-holder'>
                       <ReactHTMLTableToExcel
-                        id="investment-table-xls-button"
-                        className="download-btn"
-                        table="table-investment-xls"
-                        filename="investment_assets_xls"
-                        sheet="tablexls"
+                        id='investment-table-xls-button'
+                        className='download-btn'
+                        table='table-investment-xls'
+                        filename='investment_assets_xls'
+                        sheet='tablexls'
                         buttonText={
                           <span><DownloadExcel />
                           <span className='sm-hide'>Download</span> <span>CSV</span></span>
                         }
                       />
-                      <table className='table' id="table-investment-xls">
+                      <table className='table' id='table-investment-xls'>
                         <thead onClick={toggleInvestment}>
-                          <tr data-toggle="collapse">
+                          <tr data-toggle='collapse'>
                             <th>
                               <span className={(!fToggleInvestment?'t-span':'')}>Investment Assets</span>
                             </th>
@@ -186,8 +186,7 @@ const Networth = () => {
                           })}
                         </tbody>
                         ) : null}
-                        {fToggleInvestment ? (
-                          <tfoot>
+                        <tfoot>
                             <tr data-href='#'>
                               <td>
                                 <Link
@@ -211,7 +210,6 @@ const Networth = () => {
                               ))}
                             </tr>
                           </tfoot>
-                        ): null}
                       </table>
                     </div>
                   </div>
@@ -266,19 +264,17 @@ const Networth = () => {
                             })}
                           </tbody>
                         ):null}
-                        { fToggleOther ? (
-                          <tfoot>
-                            <tr data-href='#'>
-                              <td>Total</td>
-                              <td>{''}</td>
-                              {networth?.map((nItem, idx) => (
-                                <td key={idx} className={gc(nItem.interval)}>
-                                  {numberWithCommas(fNumber(nItem.otherAssets))}
-                                </td>
-                              ))}
-                            </tr>
-                          </tfoot>
-                        ):null}
+                        <tfoot>
+                          <tr data-href='#'>
+                          <td>Total</td>
+                          <td>{''}</td>
+                          {networth?.map((nItem, idx) => (
+                            <td key={idx} className={gc(nItem.interval)}>
+                              {numberWithCommas(fNumber(nItem.otherAssets))}
+                            </td>
+                          ))}
+                        </tr>
+                        </tfoot>
                       </table>
                     </div>
                   </div>
@@ -333,8 +329,7 @@ const Networth = () => {
                             })}
                           </tbody>
                         ):null}
-                        { fToggleLiabilities ? (
-                          <tfoot>
+                        <tfoot>
                             <tr>
                               <td>Total</td>
                               <td>{''}</td>
@@ -345,7 +340,6 @@ const Networth = () => {
                               ))}
                             </tr>
                           </tfoot>
-                        ):null}
                       </table>
                     </div>
                   </div>
@@ -416,8 +410,7 @@ const Networth = () => {
                             </tr>
                           </tbody>
                         ):null}
-                        { fToggleNet ? (
-                          <tfoot>
+                        <tfoot>
                             <tr>
                               <td>Net Worth</td>
                               <td className='tab-hide'>{''}</td>
@@ -428,7 +421,6 @@ const Networth = () => {
                               ))}
                             </tr>
                           </tfoot>
-                        ):null}
                       </table>
                     </div>
                   </div>

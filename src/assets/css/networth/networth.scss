@@ -177,6 +177,7 @@ button:focus {
   height: 60px;
   position: relative;
   z-index: 999;
+  flex-wrap: nowrap;
 }
 .money-minx-header.menu-fixed {
   position: fixed;
@@ -202,10 +203,15 @@ button:focus {
 .money-minx-header .headtab {
   margin: 0;
   margin-right: auto;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
+  display: none;
   height: 100%;
+  max-height: 58px;
+
+  @media (min-width: $md + 1) {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  }
 }
 .money-minx-header .navbar-brand + .headtab {
   margin-left: 60px;
@@ -291,6 +297,11 @@ a.upgrader-btn {
   position: relative;
   margin: auto 0;
   margin-right: 15px;
+  display: none;
+
+  @media (min-width: $sm) {
+    display: inline-block;
+  }
 }
 
 .upgrader-btn + .badge-box {
@@ -488,7 +499,7 @@ a.upgrader-btn {
 }
 .content-head {
   padding: 20px 0;
-  border-bottom: 1px solid rgba(150, 158, 172, 0.2);
+  border-bottom: 1px solid $grayOpacity20;
 }
 .content-head .container {
   max-width: 1440px;
@@ -612,8 +623,6 @@ a.upgrader-btn {
   }
 }
 
-
-
 .download-btn img {
   margin-right: 5px;
   max-width: 18px;
@@ -690,7 +699,7 @@ a.upgrader-btn {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  // color: $white;
+  color: $white;
 }
 .dropdown-box ul li span {
   font-weight: 500;
@@ -704,7 +713,7 @@ a.upgrader-btn {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  // color: $white;
+  color: $white;
 }
 .dropdown-box ul li > div + div,
 .dropdown-box ul li a > div + div {
@@ -884,7 +893,7 @@ a.upgrader-btn {
   color: white !important;
 }
 .react-datepicker__month--disabled {
-  color: #969EAC !important;
+  color: $grayOpacity50 !important;
 }
 .dropdown-box ul li label input {
   opacity: 0;
@@ -1000,7 +1009,7 @@ a.upgrader-btn {
   color: $darkGray;
   padding: 15px 0;
   white-space: nowrap;
-  border-bottom: 1px solid $grayOpacity24;
+  border-bottom: 1px solid $grayOpacity20;
   border-top: none;
 }
 .table thead th.current-m,
@@ -1015,7 +1024,7 @@ a.upgrader-btn {
 .table-holder .table tbody td:first-child,
 .table-holder .table tfoot td:first-child {
   font-weight: 600;
-  color: black;
+  color: $black;
 }
 .table-holder .table tbody td:not(:first-child),
 .table-holder .table tfoot td:not(:first-child) {
@@ -1055,28 +1064,24 @@ a.upgrader-btn {
   content: '';
   width: 8px;
   height: 8px;
-  border: solid 2px #969EAC;
+  border: solid 2px $grayOpacity30;
   border-radius: 5px;
   position: absolute;
   top: -4px;
   left: -4px;
+  background: $lightBg;
 }
 .table-holder .table tbody td:nth-last-of-type(3),
 .table-holder .table tfoot td:nth-last-of-type(3) {
-  // background: linear-gradient(90deg, rgba(84, 76, 234, 0.3) 0%, rgba(83, 76, 234, 0.3) 100%);
-  // background: linear-gradient(90deg, #534CEA 0%, #544ceaaf 100%);
-  background: linear-gradient(90deg, #534CEA1A 0%, #544cea0f 100%);
-  // opacity: 0.1;
+  background: linear-gradient(90deg, $purpleOpacity10 0%, $purpleOpacity06 100%);
 }
 .table-holder .table tbody td:nth-last-of-type(2),
 .table-holder .table tfoot td:nth-last-of-type(2) {
-  background: linear-gradient(90deg, #544cea0f 0%, #544cea08 100%);
-  // opacity: 0.1;
+  background: linear-gradient(90deg, $purpleOpacity06 0%, $purpleOpacity04 100%);
 }
 .table-holder .table tbody td:nth-last-of-type(1),
 .table-holder .table tfoot td:nth-last-of-type(1) {
-  background: linear-gradient(90deg, #544cea08 0%, #534CEA00 100%);
-  // opacity: 0.1;
+  background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity00 100%);
 }
 .warning-pop {
   background: $pink;
@@ -1509,7 +1514,7 @@ ul.charttool li.nw-data:before {
 .navbar-toggler span {
   width: 100%;
   height: 2px;
-  background: #000;
+  background: $black;
   margin: auto;
   position: relative;
 }
@@ -1523,7 +1528,7 @@ ul.charttool li.nw-data:before {
   margin: auto;
   width: 100%;
   height: 2px;
-  background: #000;
+  background: $black;
   transition-property: margin, -webkit-transform;
   -webkit-transition-duration: 0.2s;
   -o-transition-duration: 0.2s;
@@ -1548,7 +1553,7 @@ ul.charttool li.nw-data:before {
   -webkit-transition-delay: 0s, 0.2s;
   -o-transition-delay: 0s, 0.2s;
   transition-delay: 0s, 0.2s;
-  margin-top: 0px;
+  margin-top: 0;
 }
 .navbar-toggler:not(.collapsed) span:after {
   margin-bottom: 0;
@@ -1752,12 +1757,6 @@ footer p {
 }
 
 @media (max-width: 991px) {
-  .money-minx-header .headtab {
-    display: none;
-  }
-  .money-minx-header .navbar-brand {
-    margin-right: auto;
-  }
   .navbar-toggler {
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -1838,7 +1837,7 @@ footer p {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: $med) {
   .table-holder .table tbody td:nth-last-of-type(3),
   .table-holder .table tfoot td:nth-last-of-type(3) {
     background: transparent;
@@ -1847,9 +1846,6 @@ footer p {
     min-height: 300px;
   }
   .badge-box,
-  .money-minx-header .headtab {
-    display: none;
-  }
   .money-minx-header .navbar-brand {
     margin-right: auto;
   }
@@ -1917,7 +1913,7 @@ footer p {
   .table-holder .table thead tr th:first-child {
     width: 100% !important;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(150, 158, 172, 0.2);
+    border-bottom: 1px solid $grayOpacity20;
   }
   .table-holder .table tbody tr,
   .table-holder .table tfoot tr {
@@ -1926,7 +1922,7 @@ footer p {
     justify-content: space-between;
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
-    border-bottom: 1px solid $grayOpacity24;
+    border-bottom: 1px solid $grayOpacity20;
     padding-bottom: 10px;
   }
   .table-holder .table tfoot tr {
