@@ -11,7 +11,8 @@ import { SettingsProps, SettingPageEnum } from './setting.type';
 
 const Settings: React.FC<SettingsProps> = () => {
   const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.ACCOUNTS);
-  const [openNav, setOpenNav] = useState<boolean>(false);
+  const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
+  const [openRightNav, setOpenRightNav] = useState<boolean>(false);
 
   const handlePageSelect = (pageName: SettingPageEnum) => {
     setPage(pageName);
@@ -43,7 +44,10 @@ const Settings: React.FC<SettingsProps> = () => {
 
   return (
     <div className='mm-setting'>
-      <AppHeader toggleMenu={() => setOpenNav(!openNav)} />
+      <AppHeader
+        toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
+        toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+      />
       <div className={containerClass}>
         <SettingTitleSection handlePageSelect={handlePageSelect} pageTitle={page} />
         {renderTabContent()}

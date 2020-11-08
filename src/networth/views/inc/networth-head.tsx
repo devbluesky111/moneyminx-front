@@ -4,19 +4,14 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as DownloadExcel } from '../../../assets/images/allocation/download-excel.svg';
 
 const NetworthHead = () => {
-  // const toggleAccounts = () => {
-  //   console.log("dddddddd");
-  // };
-  // const 
   return (
     <div className='content-head'>
       <div className='container'>
         <div className='left-box'>
           <button className='plus-btn'>+</button>
           <div className='myaccount-drop'>
-            <Dropdown
-            >
-              <Dropdown.Toggle>My Accounts</Dropdown.Toggle>
+            <Dropdown className='drop-box' >
+              <Dropdown.Toggle className='dropdown-toggle'>My Accounts</Dropdown.Toggle>
               <Dropdown.Menu className='dropdown-menu'>
                 <div className='dropdown-head'>
                   <h4>Needs Attention</h4>

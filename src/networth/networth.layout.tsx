@@ -7,12 +7,16 @@ import NetworthSidebar from './views/networth-sidebar';
 import 'assets/css/networth/networth.scss';
 
 const NetworthLayout: React.FC = ({ children }) => {
-  const [openNav, setOpenNav] = useState<boolean>(false);
+  const [openRightNav, setOpenRightNav] = useState<boolean>(false);
+  const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
 
   return (
     <>
-      <AppHeader toggleMenu={() => setOpenNav(!openNav)} />
-      <NetworthSidebar open={openNav} />
+      <AppHeader
+        toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
+        toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+      />
+      <NetworthSidebar openLeft={openLeftNav} openRight={openRightNav} />
       {children}
       <NetworthFooter />
     </>

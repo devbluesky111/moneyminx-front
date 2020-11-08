@@ -5,23 +5,27 @@ import Logo from 'assets/icons/logo.svg';
 import { useAuthState } from 'auth/auth.context';
 import { capitalize } from 'common/common-helper';
 // TODO Badge depends on the plan level
-import ProBadge from 'assets/images/networth/pro-badge.svg';
+import GreenBadge from 'assets/badges/green-badge.svg';
+import PlusBadge from 'assets/badges/plus-badge.svg';
+import ProBadge from 'assets/badges/pro-badge.svg';
+import VipBadge from 'assets/badges/vip-badge.svg';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 
 import useGetSubscription from 'auth/hooks/useGetSubscription';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 
 interface AppHeaderProps {
-  toggleMenu: () => void;
+  toggleLeftMenu: () => void;
+  toggleRightMenu: () => void;
 }
-const AppHeader: React.FC<AppHeaderProps> = ({ toggleMenu }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu }) => {
   const { user } = useAuthState();
   const { pathname } = useLocation();
 
   // const { fetchingSubscription, subError, subscription } = useGetSubscription();
   const { currentSubscription } = useCurrentSubscription();
   const { subscription } = useGetSubscription(currentSubscription?.priceId);
-  console.log('subscription', JSON.stringify(subscription?.details));
+  // console.log('subscription', subscription?.details?subscription?.details['No of connected accounts']:'');
   const navClass = (label: string) => (pathname.includes(label) ? 'mm-app-nav-item active' : 'mm-app-nav-item');
 
   return (
@@ -34,6 +38,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleMenu }) => {
             data-toggle='collapse'
             data-target='#headerMenu'
             aria-expanded='false'
+            onClick={toggleLeftMenu}
           >
             <span className='navbar-toggler-icon' />
           </button>
@@ -47,16 +52,19 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleMenu }) => {
             <Link to='/allocation' className={navClass('allocation')}>Allocation</Link>
           </div>
           <div className='head-right'>
-            {currentSubscription?.subscriptionStatus === 'trialing' ? (
+            {currentSubscription?.subscriptionStatus === 'trialing' || (subscription?.details && subscription?.details['No of connected accounts'] !== 'Unlimited') ? (
               <Link to='/settings' type='button' className='upgrader-btn' data-toggle='modal' data-target='#upgradeModal'>
                 Upgrade
               </Link>
             ): null}
             <div className='badge-box'>
-              <img src={ProBadge} alt='Pro badge' />
+              { subscription?.details?.Name === 'Green' || subscription?.details?.Name === 'GREEN' ? (<img src={GreenBadge} alt='Green badge' />):null}
+              { subscription?.details?.Name === 'Plus' || subscription?.details?.Name === 'PLUS' ? (<img src={PlusBadge} alt='Plus badge' />):null}
+              { subscription?.details?.Name === 'Pro' || subscription?.details?.Name === 'PRO' ? (<img src={ProBadge} alt='Pro badge' />):null}
+              { subscription?.details?.Name === 'Vip' || subscription?.details?.Name === 'VIP' ? (<img src={VipBadge} alt='Vip badge' />):null}
             </div>
             <div className='btn-group'>
-              <button type='button' className='profile-toggle' onClick={toggleMenu}>
+              <button type='button' className='profile-toggle' onClick={toggleRightMenu}>
                 <span>
                   <img src={user?.picture || DefaultAvatar} alt='Profile avatar' />
                 </span>

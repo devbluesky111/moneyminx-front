@@ -13,6 +13,11 @@ const initialState: NetworthState = {
 
   accounts: undefined,
   networth: undefined,
+
+  fToggleInvestment: true,
+  fToggleOther: true,
+  fToggleLiabilities: true,
+  fToggleNet: true,
 };
 
 const NetworthStateContext = createContext<NetworthState | undefined>(undefined);
@@ -52,6 +57,21 @@ function networthReducer(state: NetworthState, action: Action): any {
       return { ...state, accounts: action.payload?.accounts };
     }
 
+    case NetworthActionEnum.SET_F_TOGGLE_INVESTMENT: {
+      return { ...state, fToggleInvestment: action.payload?.fToggleInvestment };
+    }
+
+    case NetworthActionEnum.SET_F_TOGGLE_OTHER: {
+      return { ...state, fToggleOther: action.payload?.fToggleOther };
+    }
+
+    case NetworthActionEnum.SET_F_TOGGLE_LIABILITIES: {
+      return { ...state, fToggleLiabilities: action.payload?.fToggleLiabilities };
+    }
+
+    case NetworthActionEnum.SET_F_TOGGLE_NET: {
+      return { ...state, fToggleNet: action.payload?.fToggleNet };
+    }
     default: {
       throw new Error('Unhandled action type');
     }

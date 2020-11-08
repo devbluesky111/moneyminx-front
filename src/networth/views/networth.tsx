@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { fNumber } from 'common/number.helper';
+import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useAlert } from 'common/components/alert';
 import useNetworth from 'networth/hooks/useNetworth';
 import NetworthLayout from 'networth/networth.layout';
@@ -15,14 +15,20 @@ import NetworthHead from './inc/networth-head';
 import NetworthBarGraph from './networth-bar-graph';
 import NetworthFilter from './inc/networth-filter';
 import ConnectionAlert from './inc/connection-alert';
-import { useNetworthState } from 'networth/networth.context';
+import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
+
+import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { ReactComponent as DownloadExcel } from 'assets/images/allocation/download-excel.svg';
+
 
 const Networth = () => {
   const history = useHistory();
   const connectionAlert = useAlert();
 
   const { loading } = useNetworth();
-  const { accounts, networth } = useNetworthState();
+  const { accounts, networth, fToggleInvestment, fToggleOther, fToggleLiabilities, fToggleNet } = useNetworthState();
+  const dispatch = useNetworthDispatch();
 
   useEffect(() => {
     connectionAlert.open();
@@ -61,6 +67,19 @@ const Networth = () => {
     history.push(`/account-details/${accountId}`);
   };
 
+  const toggleInvestment = () => {
+    dispatch(setToggleInvestment(!fToggleInvestment));
+  };
+  const toggleOther = () => {
+    dispatch(setToggleOther(!fToggleOther));
+  };
+  const toggleLiabilities = () => {
+    dispatch(setToggleLiabilities(!fToggleLiabilities));
+  };
+  const toggleNet = () => {
+    dispatch(setToggleNet(!fToggleNet));
+  };
+
   return (
     <NetworthLayout>
       <section className='content-container'>
@@ -75,20 +94,20 @@ const Networth = () => {
                     <ul>
                       <li className='inv-data'>
                         <span>Investment Assets</span>
-                        <h3>${fNumber(currentInvestmentAsset)}</h3>
+                        <h3>${numberWithCommas(fNumber(currentInvestmentAsset))}</h3>
                       </li>
                       <li className='other-data'>
                         <span>Other Assets</span>
-                        <h3>${fNumber(currentOtherAssets)}</h3>
+                        <h3>${numberWithCommas(fNumber(currentOtherAssets))}</h3>
                       </li>
                       <li className='lty-data'>
                         <span>Liabilities</span>
-                        <h3>${fNumber(currentLiabilities)}</h3>
+                        <h3>${numberWithCommas(fNumber(currentLiabilities))}</h3>
                       </li>
                       { currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
                         <li className='nw-data'>
                           <span>Net Worth</span>
-                          <h3>${fNumber(currentNetworth)}</h3>
+                          <h3>${numberWithCommas(fNumber(currentNetworth))}</h3>
                         </li>) : null } 
                     </ul>
                     <div className='chartbox'>
@@ -124,13 +143,24 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-b'>
                     <div className='table-holder'>
-                      <table className='table'>
-                        <thead>
+                      <ReactHTMLTableToExcel
+                        id="investment-table-xls-button"
+                        className="download-btn"
+                        table="table-investment-xls"
+                        filename="investment_assets_xls"
+                        sheet="tablexls"
+                        buttonText={
+                          <span><DownloadExcel />
+                          <span className='sm-hide'>Download</span> <span>CSV</span></span>
+                        }
+                      />
+                      <table className='table' id="table-investment-xls">
+                        <thead onClick={toggleInvestment}>
                           <tr data-toggle="collapse">
                             <th>
-                              <span>Investment Assets</span>
+                              <span className={(!fToggleInvestment?'t-span':'')}>Investment Assets</span>
                             </th>
-                            <th className='tab-hide'>Type</th>
+                            <th>Type</th>
 
                             {investmentAssets?.[0]?.balances.map((item, idx) => (
                               <th key={idx} className={gc(item.interval)}>
@@ -139,7 +169,8 @@ const Networth = () => {
                             ))}
                           </tr>
                         </thead>
-                        <tbody>
+                        {fToggleInvestment ? (
+                          <tbody>
                           {investmentAssets?.map((iAsset, index) => {
                             return (
                               <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
@@ -154,30 +185,33 @@ const Networth = () => {
                             );
                           })}
                         </tbody>
-                        <tfoot>
-                          <tr data-href='#'>
-                            <td>
-                              <Link
-                                to='#'
-                                className='warning-popover'
-                                data-classname='warning-pop'
-                                data-container='body'
-                                title='Warning'
-                                data-toggle='popover'
-                                data-placement='right'
-                                data-content=''
-                              >
-                                Total
-                              </Link>
-                            </td>
-                            <td>{''}</td>
-                            {networth?.map((nItem, idx) => (
-                              <td key={idx} className={gc(nItem.interval)}>
-                                {fNumber(nItem.investmentAssets)}
+                        ) : null}
+                        {fToggleInvestment ? (
+                          <tfoot>
+                            <tr data-href='#'>
+                              <td>
+                                <Link
+                                  to='#'
+                                  className='warning-popover'
+                                  data-classname='warning-pop'
+                                  data-container='body'
+                                  title='Warning'
+                                  data-toggle='popover'
+                                  data-placement='right'
+                                  data-content=''
+                                >
+                                  Total
+                                </Link>
                               </td>
-                            ))}
-                          </tr>
-                        </tfoot>
+                              <td>{''}</td>
+                              {networth?.map((nItem, idx) => (
+                                <td key={idx} className={gc(nItem.interval)}>
+                                  {numberWithCommas(fNumber(nItem.investmentAssets))}
+                                </td>
+                              ))}
+                            </tr>
+                          </tfoot>
+                        ): null}
                       </table>
                     </div>
                   </div>
@@ -190,11 +224,22 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-g'>
                     <div className='table-holder'>
-                      <table className='table'>
-                        <thead>
+                      <ReactHTMLTableToExcel
+                        id="other-table-xls-button"
+                        className="download-btn"
+                        table="table-other-xls"
+                        filename="other_assets_xls"
+                        sheet="tablexls"
+                        buttonText={
+                          <span><DownloadExcel />
+                          <span className='sm-hide'>Download</span> <span>CSV</span></span>
+                        }
+                      />
+                      <table className='table' id="table-other-xls">
+                        <thead onClick={toggleOther}>
                           <tr>
                             <th>
-                              <span>Other Assets</span>
+                              <span className={(!fToggleOther?'t-span':'')}>Other Assets</span>
                             </th>
                             <th className='tab-hide'>Type</th>
                             {otherAssets?.[0]?.balances.map((item, idx) => (
@@ -204,32 +249,36 @@ const Networth = () => {
                             ))}
                           </tr>
                         </thead>
-                        <tbody>
-                          {otherAssets?.map((oAsset, index) => {
-                            return (
-                              <tr key={index} onClick={() => handleAccountDetail(oAsset.accountId)}>
-                                <td>{oAsset.accountName}</td>
-                                <td>{oAsset.accountType}</td>
-                                {oAsset.balances.map((b, idx) => (
-                                  <td key={`${index}-${idx}`} className={gc(b.interval)}>
-                                    {b.balance}
-                                  </td>
-                                ))}
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                        <tfoot>
-                          <tr data-href='#'>
-                            <td>Total</td>
-                            <td>{''}</td>
-                            {networth?.map((nItem, idx) => (
-                              <td key={idx} className={gc(nItem.interval)}>
-                                {fNumber(nItem.otherAssets)}
-                              </td>
-                            ))}
-                          </tr>
-                        </tfoot>
+                        { fToggleOther ? (
+                          <tbody>
+                            {otherAssets?.map((oAsset, index) => {
+                              return (
+                                <tr key={index} onClick={() => handleAccountDetail(oAsset.accountId)}>
+                                  <td>{oAsset.accountName}</td>
+                                  <td>{oAsset.accountType}</td>
+                                  {oAsset.balances.map((b, idx) => (
+                                    <td key={`${index}-${idx}`} className={gc(b.interval)}>
+                                      {b.balance}
+                                    </td>
+                                  ))}
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        ):null}
+                        { fToggleOther ? (
+                          <tfoot>
+                            <tr data-href='#'>
+                              <td>Total</td>
+                              <td>{''}</td>
+                              {networth?.map((nItem, idx) => (
+                                <td key={idx} className={gc(nItem.interval)}>
+                                  {numberWithCommas(fNumber(nItem.otherAssets))}
+                                </td>
+                              ))}
+                            </tr>
+                          </tfoot>
+                        ):null}
                       </table>
                     </div>
                   </div>
@@ -242,11 +291,22 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-r'>
                     <div className='table-holder'>
-                      <table className='table'>
-                        <thead>
+                      <ReactHTMLTableToExcel
+                        id="liabilities-table-xls-button"
+                        className="download-btn"
+                        table="table-liabilities-xls"
+                        filename="liabilities_assets_xls"
+                        sheet="tablexls"
+                        buttonText={
+                          <span><DownloadExcel />
+                          <span className='sm-hide'>Download</span> <span>CSV</span></span>
+                        }
+                      />
+                      <table className='table' id="table-liabilities-xls">
+                        <thead onClick={toggleLiabilities}>
                           <tr>
                             <th>
-                              <span>Liabilities</span>
+                              <span className={(!fToggleLiabilities?'t-span':'')}>Liabilities</span>
                             </th>
                             <th className='tab-hide'>Type</th>
                             {liabilities?.[0]?.balances.map((item, idx) => (
@@ -256,32 +316,36 @@ const Networth = () => {
                             ))}
                           </tr>
                         </thead>
-                        <tbody>
-                          {liabilities?.map((liability, index) => {
-                            return (
-                              <tr key={index} onClick={() => handleAccountDetail(liability.accountId)}>
-                                <td>{liability.accountName}</td>
-                                <td>{liability.accountType}</td>
-                                {liability.balances.map((b, idx) => (
-                                  <td key={`${index}-${idx}`} className={gc(b.interval)}>
-                                    {b.balance}
-                                  </td>
-                                ))}
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                        <tfoot>
-                          <tr>
-                            <td>Total</td>
-                            <td>{''}</td>
-                            {networth?.map((nItem, idx) => (
-                              <td key={idx} className={gc(nItem.interval)}>
-                                {fNumber(nItem.liabilities)}
-                              </td>
-                            ))}
-                          </tr>
-                        </tfoot>
+                        { fToggleLiabilities ? (
+                          <tbody>
+                            {liabilities?.map((liability, index) => {
+                              return (
+                                <tr key={index} onClick={() => handleAccountDetail(liability.accountId)}>
+                                  <td>{liability.accountName}</td>
+                                  <td>{liability.accountType}</td>
+                                  {liability.balances.map((b, idx) => (
+                                    <td key={`${index}-${idx}`} className={gc(b.interval)}>
+                                      {b.balance}
+                                    </td>
+                                  ))}
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        ):null}
+                        { fToggleLiabilities ? (
+                          <tfoot>
+                            <tr>
+                              <td>Total</td>
+                              <td>{''}</td>
+                              {networth?.map((nItem, idx) => (
+                                <td key={idx} className={gc(nItem.interval)}>
+                                  {numberWithCommas(fNumber(nItem.liabilities))}
+                                </td>
+                              ))}
+                            </tr>
+                          </tfoot>
+                        ):null}
                       </table>
                     </div>
                   </div>
@@ -294,11 +358,22 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-v'>
                     <div className='table-holder'>
-                      <table className='table'>
-                        <thead>
+                      <ReactHTMLTableToExcel
+                        id="net-table-xls-button"
+                        className="download-btn"
+                        table="table-net-xls"
+                        filename="net_assets_xls"
+                        sheet="tablexls"
+                        buttonText={
+                          <span><DownloadExcel />
+                          <span className='sm-hide'>Download</span> <span>CSV</span></span>
+                        }
+                      />
+                      <table className='table' id='table-net-xls'>
+                        <thead onClick={toggleNet}>
                           <tr>
                             <th>
-                              <span>Net Worth1</span>
+                              <span className={(!fToggleNet?'t-span':'')}>Net Worth</span>
                             </th>
                             <th className='tab-hide'>{''}</th>
                             {networth?.map((nItem, idx) => (
@@ -308,48 +383,52 @@ const Networth = () => {
                             ))}
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr data-href='#'>
-                            <td>Investment Assets</td>
-                            <td className='tab-hide'>{''}</td>
-                            {networth?.map((nItem, idx) => (
-                              <td key={idx} className={gc(nItem.interval)}>
-                                {fNumber(nItem.investmentAssets)}
-                              </td>
-                            ))}
-                          </tr>
-                          <tr data-href='#'>
-                            <td>Other Assets</td>
-                            <td className='tab-hide'>{''}</td>
+                        { fToggleNet ? (
+                          <tbody>
+                            <tr data-href='#'>
+                              <td>Investment Assets</td>
+                              <td className='tab-hide'>{''}</td>
+                              {networth?.map((nItem, idx) => (
+                                <td key={idx} className={gc(nItem.interval)}>
+                                  {numberWithCommas(fNumber(nItem.investmentAssets))}
+                                </td>
+                              ))}
+                            </tr>
+                            <tr data-href='#'>
+                              <td>Other Assets</td>
+                              <td className='tab-hide'>{''}</td>
 
-                            {networth?.map((nItem, idx) => (
-                              <td key={idx} className={gc(nItem.interval)}>
-                                {fNumber(nItem.otherAssets)}
-                              </td>
-                            ))}
-                          </tr>
-                          <tr data-href='#'>
-                            <td>Liabilities</td>
-                            <td className='tab-hide'>{''}</td>
+                              {networth?.map((nItem, idx) => (
+                                <td key={idx} className={gc(nItem.interval)}>
+                                  {numberWithCommas(fNumber(nItem.otherAssets))}
+                                </td>
+                              ))}
+                            </tr>
+                            <tr data-href='#'>
+                              <td>Liabilities</td>
+                              <td className='tab-hide'>{''}</td>
 
-                            {networth?.map((nItem, idx) => (
-                              <td key={idx} className={gc(nItem.interval)}>
-                                {fNumber(nItem.liabilities)}
-                              </td>
-                            ))}
-                          </tr>
-                        </tbody>
-                        <tfoot>
-                          <tr>
-                            <td>Net Worth</td>
-                            <td className='tab-hide'>{''}</td>
-                            {networth?.map((nItem, idx) => (
-                              <td key={idx} className={gc(nItem.interval)}>
-                                {fNumber(nItem.networth)}
-                              </td>
-                            ))}
-                          </tr>
-                        </tfoot>
+                              {networth?.map((nItem, idx) => (
+                                <td key={idx} className={gc(nItem.interval)}>
+                                  {numberWithCommas(fNumber(nItem.liabilities))}
+                                </td>
+                              ))}
+                            </tr>
+                          </tbody>
+                        ):null}
+                        { fToggleNet ? (
+                          <tfoot>
+                            <tr>
+                              <td>Net Worth</td>
+                              <td className='tab-hide'>{''}</td>
+                              {networth?.map((nItem, idx) => (
+                                <td key={idx} className={gc(nItem.interval)}>
+                                  {numberWithCommas(fNumber(nItem.networth))}
+                                </td>
+                              ))}
+                            </tr>
+                          </tfoot>
+                        ):null}
                       </table>
                     </div>
                   </div>

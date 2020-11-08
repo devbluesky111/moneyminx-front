@@ -53,6 +53,11 @@ export interface NetworthState {
 
   networth?: NetworthItem[];
   accounts?: Record<AccountCategory, AccountItem[]>;
+
+  fToggleInvestment?: boolean;
+  fToggleOther?: boolean;
+  fToggleLiabilities?: boolean;
+  fToggleNet?: boolean;
 }
 
 export type NetworthPayload = any;
@@ -64,4 +69,8 @@ export interface Action {
 
 export interface NetworthBarGraphProps {
   networth: NetworthItem[];
+}
+
+export interface NetworthBarGraphCustomTooltipProps {
+  netItem: NetworthItem;
 }

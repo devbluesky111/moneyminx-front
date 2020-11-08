@@ -47,18 +47,6 @@ const NetworthFilter = () => {
     }
   };
 
-  // const onChange = (dates: any) => {
-  //   const [start, end] = dates;
-
-  //   console.log('start', start, 'end', end);
-
-  //   dispatch(setFilterFromDate(getDate(start)));
-
-  //   if (!isAfter(end)) {
-  //     dispatch(setFilterToDate(end ? getDate(end) : undefined));
-  //   }
-  // };
-
   const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setFilterCategories(event.target.value));
   };
@@ -185,26 +173,6 @@ const NetworthFilter = () => {
             </Dropdown.Menu>
           </Dropdown>
 
-          {/* <ReactDatePicker
-            selected={fFromDate ? new Date(fFromDate) : null}
-            onChange={onChange}
-            selectsStart
-            startDate={fFromDate ? new Date(fFromDate) : null}
-            endDate={fToDate ? new Date(fToDate) : null}
-            dateFormat='MM/yyyy'
-            showMonthYearPicker
-            selectsRange
-            customInput={
-              <div className='drop-box'>
-                <div className='date-box'>
-                  <input type='text' className='month_year' placeholder={getMonthYear(fFromDate)} />
-                  <span>to </span>
-                  <input type='text' className='month_year' placeholder={getMonthYear(fToDate)} />
-                </div>
-              </div>
-            }
-          /> */}
-
           <ReactDatePicker
             selected={fFromDate ? new Date(fFromDate) : null}
             onChange={(date)=>onChange('start', date)}
@@ -212,6 +180,8 @@ const NetworthFilter = () => {
             startDate={fFromDate ? new Date(fFromDate) : null}
             dateFormat='MM/yyyy'
             showMonthYearPicker
+            minDate={new Date('1900-01-01')}
+            maxDate={new Date()}
             // selectsRange
             customInput={
               <div className='drop-box'>
@@ -221,7 +191,7 @@ const NetworthFilter = () => {
               </div>
             }
           />
-          <span>to</span>
+          <span style={{marginTop: "auto", marginBottom: "auto"}}>to</span>
           <ReactDatePicker
             selected={fToDate ? new Date(fToDate) : null}
             onChange={(date)=>onChange('end', date)}
@@ -229,6 +199,8 @@ const NetworthFilter = () => {
             startDate={fToDate ? new Date(fToDate) : null}
             dateFormat='MM/yyyy'
             showMonthYearPicker
+            minDate={fFromDate ? new Date(fFromDate) : null}
+            maxDate={new Date()}
             // selectsRange
             customInput={
               <div className='drop-box'>

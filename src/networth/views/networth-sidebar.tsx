@@ -9,12 +9,13 @@ import { ReactComponent as ResourceCenter } from 'assets/icons/resource-center.s
 import { ReactComponent as ManageConnection } from 'assets/icons/manage-connection.svg';
 
 interface NetworthSidebarProps {
-  open: boolean;
+  openLeft: boolean;
+  openRight: boolean;
 }
-const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
+const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => {
   return (
     <>
-      <aside className='profilemenu' style={{ right: open ? 0 : -300 }}>
+      <aside className='profilemenu' style={{ right: openRight ? 0 : -300 }}>
         <ul className='prlist-up mb-0 mt-2'>
           <li>
             <Link to='/plan'>
@@ -68,7 +69,7 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
           </li>
         </ul>
       </aside>
-      <aside className='mobmenu collapse' id='headerMenu'>
+      <aside className='mobmenu collapse' id='headerMenu' style={{ left: openLeft ? 0 : -300 }}>
         <div className='headtab'>
           <Link to='#' className='active'>
             Net Worth
