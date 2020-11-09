@@ -94,7 +94,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
   const currentFormFields = currentAccount?.accountDetails;
 
-  const hasAccountSubType = accountSubTypes.every(Boolean);
+  const hasAccountSubType = accountSubTypes.some(Boolean);
 
   const isLastAccount = (): boolean => {
     if (accounts && currentAccount) {
@@ -134,7 +134,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
         originationDate: currentFormFields?.originationDate || new Date(),
         originalBalance: currentFormFields?.originalBalance || '',
         paymentsPerYear: currentFormFields?.paymentsPerYear || '',
-        calculateReturns: currentFormFields?.calculateReturns || '',
         calculatedEquity: currentFormFields?.calculatedEquity || '',
         currentValuation: currentFormFields?.currentValuation || '',
         termForInvestment: currentFormFields?.termForInvestment || '',
@@ -483,52 +482,47 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
             {/* address */}
 
-            <div className='form-divider'>
-              <input
-                type='text'
-                name='streetAddress'
-                onChange={handleChange}
-                placeholder='123 5th Avenue'
-                value={values.streetAddress}
-                className={`w-100 ${hc('streetAddress')}`}
-              />
-              <div className='d-flex align-items-center'>
-                <input
-                  type='text'
-                  name='city'
-                  onChange={handleChange}
-                  placeholder='New York'
-                  value={values.city}
-                  className={`w-50 my-5 mr-2 ${hc('city')}`}
-                />
-                <input
-                  type='text'
-                  name='state'
-                  onChange={handleChange}
-                  placeholder='New York'
-                  value={values.state}
-                  className={`w-50 my-5 ml-2 ${hc('state')}`}
-                />
-              </div>
-
-              <div className='d-flex align-items-center'>
-                <input
-                  type='text'
-                  name='zipCode'
-                  onChange={handleChange}
-                  placeholder='10030'
-                  value={values.zipCode}
-                  className={`w-50 mb-5 mr-2 ${hc('zipCode')}`}
-                />
-                <input
-                  type='text'
-                  name='country'
-                  onChange={handleChange}
-                  placeholder='United States'
-                  value={values.country}
-                  className={`w-50 mb-5 ml-2 ${hc('zipCode')}`}
-                />
-              </div>
+            <div className='account-type'>
+              <ul className='account-type-list'>
+                <li className={`w-100 ${hc('streetAddress')}`}>
+                  <span className='form-subheading'>Street Address</span>
+                  <input
+                    type='text'
+                    name='streetAddress'
+                    onChange={handleChange}
+                    placeholder='123 5th Avenue'
+                    value={values.streetAddress}
+                  />
+                </li>
+                <li className={`${hc('city')}`}>
+                  <span className='form-subheading'>City</span>
+                  <input type='text' name='city' onChange={handleChange} placeholder='New York' value={values.city} />
+                </li>
+                <li className={`${hc('state')}`}>
+                  <span className='form-subheading'>State</span>
+                  <input type='text' name='state' onChange={handleChange} placeholder='New York' value={values.state} />
+                </li>
+                <li className={`${hc('zipCode')}`}>
+                  <span className='form-subheading'>Zip Code</span>
+                  <input
+                    type='text'
+                    name='zipCode'
+                    onChange={handleChange}
+                    placeholder='10030'
+                    value={values.zipCode}
+                  />
+                </li>
+                <li className={`${hc('country')}`}>
+                  <span className='form-subheading'>Country</span>
+                  <input
+                    type='text'
+                    name='country'
+                    onChange={handleChange}
+                    placeholder='United States'
+                    value={values.country}
+                  />
+                </li>
+              </ul>
             </div>
 
             {/* address end */}
@@ -569,61 +563,68 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 </div>
               </div>
 
-              <div className={`input-wrap flex-box ${hc('employerMatch')}`}>
-                <div className='left-input'>
-                  <p>
-                    <span className='form-subheading'>Employer match</span>
-                  </p>
-                </div>
-                <div className='right-input'>
-                  <div className='form-field-group'>
-                    <Form.Control type='number' name='employerMatch' onChange={handleChange} placeholder='50' />
-                    <span className='input-add-on'>%</span>
+              {/* If employerMatchContribution is no hide this field */}
+              {!values.employerMatchContribution ? (
+                <div className={`input-wrap flex-box ${hc('employerMatch')}`}>
+                  <div className='left-input'>
+                    <p>
+                      <span className='form-subheading'>Employer match</span>
+                    </p>
+                  </div>
+                  <div className='right-input'>
+                    <div className='form-field-group'>
+                      <Form.Control type='number' name='employerMatch' onChange={handleChange} placeholder='50' />
+                      <span className='input-add-on'>%</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
 
-              <div className={`input-wrap flex-box ${hc('employerMatchLimitIn')} ${hc('employerMatchLimit')}`}>
-                <div className='left-input employer-match'>
-                  <p>
-                    <span className='form-subheading'>Employer match limit</span>
-                    <span className='employer-match-limits'>
-                      <input
-                        type='radio'
+              {!values.employerMatchContribution ? (
+                <div className={`input-wrap flex-box ${hc('employerMatchLimitIn')} ${hc('employerMatchLimit')}`}>
+                  <div className='left-input employer-match'>
+                    <p>
+                      <span className='form-subheading'>Employer match limit</span>
+                      <span className='employer-match-limits'>
+                        <input
+                          type='radio'
+                          onChange={handleChange}
+                          value={EmployerMatchLimitOptions.AMOUNT}
+                          defaultChecked={false}
+                          name='employerMatchLimitIn'
+                          checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
+                          aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
+                        />
+                        <label>$</label>
+                        <input
+                          type='radio'
+                          onChange={handleChange}
+                          value={EmployerMatchLimitOptions.PERCENTAGE}
+                          defaultChecked={false}
+                          name='employerMatchLimitIn'
+                          checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
+                          aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
+                        />
+                        <label>%</label>
+                      </span>
+                    </p>
+                  </div>
+                  <div className='right-input'>
+                    <div className='form-field-group'>
+                      <Form.Control
+                        type='number'
+                        name='employerMatchLimit'
                         onChange={handleChange}
-                        value={EmployerMatchLimitOptions.AMOUNT}
-                        defaultChecked={false}
-                        name='employerMatchLimitIn'
-                        checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
-                        aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
+                        placeholder='5'
+                        value={values.employerMatchLimit}
                       />
-                      <label>$</label>
-                      <input
-                        type='radio'
-                        onChange={handleChange}
-                        value={EmployerMatchLimitOptions.PERCENTAGE}
-                        defaultChecked={false}
-                        name='employerMatchLimitIn'
-                        checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
-                        aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
-                      />
-                      <label>%</label>
-                    </span>
-                  </p>
-                </div>
-                <div className='right-input'>
-                  <div className='form-field-group'>
-                    <Form.Control
-                      type='number'
-                      name='employerMatchLimit'
-                      onChange={handleChange}
-                      placeholder='5'
-                      value={values.employerMatchLimit}
-                    />
-                    <span className='input-add-on'>$</span>
+                      <span className='input-add-on'>
+                        {values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT ? '$' : '%'}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
 
               <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
                 <div className='left-input'>
@@ -659,41 +660,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                     />
                     <label>No</label>
                   </div>
-                </div>
-              </div>
-
-              <div className={`input-wrap performance flex-box ${hc('calculateReturns')}`}>
-                <div className='left-input'>
-                  <p>
-                    <span className='form-subheading'>
-                      Calculate Returns?
-                      <MMToolTip message='Calculate return info'>
-                        <InfoIcon />
-                      </MMToolTip>
-                    </span>
-                  </p>
-                </div>
-                <div className='right-input radio'>
-                  <input
-                    type='radio'
-                    value='yes'
-                    defaultChecked={false}
-                    onChange={handleChange}
-                    name='calculateReturns'
-                    checked={values.calculateReturns === 'yes' || values.calculateReturns === true}
-                    aria-checked={values.calculateReturns === 'yes' || values.calculateReturns === true}
-                  />
-                  <label>Yes</label>
-                  <input
-                    type='radio'
-                    value='no'
-                    defaultChecked={false}
-                    onChange={handleChange}
-                    name='calculateReturns'
-                    checked={values.calculateReturns === 'no' || values.calculateReturns === false}
-                    aria-checked={values.calculateReturns === 'no' || values.calculateReturns === false}
-                  />
-                  <label>No</label>
                 </div>
               </div>
             </div>
