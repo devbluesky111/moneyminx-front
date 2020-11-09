@@ -30,9 +30,11 @@ ul.bank-list {
     border-radius: 4px;
     margin-right: 22px;
     text-align: center;
-    display: inline-block;
     box-sizing: border-box;
     border: 1.5px solid $grayOpacity40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &.selected {
       border-color: $primary;
