@@ -11,7 +11,9 @@ const AppLayout: React.FC = ({ children }) => {
     <>
       <AppHeader toggleMenu={() => setOpenNav(!openNav)} />
       <AppSidebar open={openNav} />
-      {children}
+      <div onClick={() => setOpenNav(false)} role='button'>
+        {children}
+      </div>
       <AppFooter />
     </>
   );

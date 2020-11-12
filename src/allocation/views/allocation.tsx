@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import AppLayout from 'layouts/app.layout';
 import useAllocation from 'allocation/hooks/useAllocation';
 import { AllocationsFilter } from 'allocation/allocation.enum';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
@@ -7,7 +8,6 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { AllocationProps } from '../allocation.type';
 import AllocationOverview from './allocation-overview';
 import AllocationSubNavigation from './allocation-sub-navigation';
-import AppLayout from 'layouts/app.layout';
 
 const Allocation: React.FC<AllocationProps> = () => {
   const [filter, setFilter] = useState(AllocationsFilter.TYPE);
@@ -25,10 +25,9 @@ const Allocation: React.FC<AllocationProps> = () => {
     <div className='mm-setting mm-allocation'>
       <AppLayout>
         <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
-        <AllocationOverview allocations={allocations} chartData={allocationChartData}
-          filter={filter} />
+        <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
       </AppLayout>
-      <div className="mm-slider-bg-overlay" />
+      <div className='mm-slider-bg-overlay' />
     </div>
   );
 };
