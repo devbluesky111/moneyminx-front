@@ -249,13 +249,14 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <ul className='category-list mb-4'>
                 {enumerateStr(MMCategories).map((cat: string, idx: number) => {
                   return (
-                    <li onClick={() => setCategory(cat)} role='button' key={idx}>
-                      <Link to='#' className={values.mmCategory === cat ? 'active' : ''}>
+                    <li className={values.mmCategory === cat ? 'active' : ''} onClick={() => setCategory(cat)} role='button' key={idx}>
+                      <Link to='#'>
                         {cat}
                       </Link>
                     </li>
                   );
                 })}
+                <div className="border-bg-slider"></div>
               </ul>
             </div>
             <div className='account-type'>
