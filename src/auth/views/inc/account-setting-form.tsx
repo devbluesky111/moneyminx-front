@@ -46,13 +46,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
   const [accountSubtype, setAccountSubtype] = useState('');
 
   const { loading: fetchingAccountType, data: accountTypes, error } = useAccountType();
-  const { loading: fetchingAccountSubType, subType: accountSubTypes, error: subTypeError } = useAccountSubtype(
-    accountType
-  );
+  const { subType: accountSubTypes, error: subTypeError } = useAccountSubtype(accountType);
 
   const { fetchingLoanAccount, loanAccounts, loanAccountError } = useLoanAccount();
   const { fetchingMortgage, mortgageAccounts, mortgageError } = useAssociateMortgage();
-  const { fetchingFilters, accountFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
+  const { accountFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
 
   const isFromAccount = state?.prevPath === '/accounts';
 
@@ -75,8 +73,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
   const hasError = error || subTypeError || filterError || mortgageError || loanAccountError;
 
-  const isLoading =
-    fetchingAccountSubType || fetchingAccountType || fetchingFilters || fetchingMortgage || fetchingLoanAccount;
+  const isLoading = fetchingAccountType || fetchingMortgage || fetchingLoanAccount;
 
   if (hasError) {
     toast('Error occurred', { type: 'error' });
