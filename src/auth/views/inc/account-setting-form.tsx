@@ -664,9 +664,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               </div>
             </div>
 
-            <div className='form-divider'>
+            <div className={`form-divider ${hc('separateLoanBalance')}`}>
               <ul className='account-type-list'>
-                <li className={`w-100 ${hc('separateLoanBalance')}`}>
+                <li className='w-100'>
                   <p>
                     <span className='form-subheading'>How do you want to handle your 401k loan?</span>
                     <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
