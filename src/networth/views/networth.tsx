@@ -57,7 +57,6 @@ const Networth = () => {
   };
 
   const [curNetworthItem] = networth.filter((networthItem) => isCurrent(networthItem.interval));
-
   const currentNetworth = curNetworthItem?.networth || 0;
   const currentOtherAssets = curNetworthItem?.otherAssets || 0;
   const currentLiabilities = curNetworthItem?.liabilities || 0;
@@ -129,7 +128,7 @@ const Networth = () => {
                       }}
                     >
                       <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
-                      <Link to='/settings' className='mm-btn-animate mm-btn-primary'>
+                      <Link to='/settings?active=Profile' className='mm-btn-animate mm-btn-primary'>
                         Complete Profile
                       </Link>
                     </div>
@@ -143,7 +142,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-b'>
                     <div className='table-holder'>
-                      <ReactHTMLTableToExcel
+                      {/* <ReactHTMLTableToExcel
                         id='investment-table-xls-button'
                         className='download-btn'
                         table='table-investment-xls'
@@ -153,7 +152,7 @@ const Networth = () => {
                           <span><DownloadExcel />
                           <span className='sm-hide'>Download</span> <span>CSV</span></span>
                         }
-                      />
+                      /> */}
                       <table className='table' id='table-investment-xls'>
                         <thead onClick={toggleInvestment}>
                           <tr data-toggle='collapse'>
@@ -222,7 +221,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-g'>
                     <div className='table-holder'>
-                      <ReactHTMLTableToExcel
+                      {/* <ReactHTMLTableToExcel
                         id="other-table-xls-button"
                         className="download-btn"
                         table="table-other-xls"
@@ -232,14 +231,14 @@ const Networth = () => {
                           <span><DownloadExcel />
                           <span className='sm-hide'>Download</span> <span>CSV</span></span>
                         }
-                      />
+                      /> */}
                       <table className='table' id="table-other-xls">
                         <thead onClick={toggleOther}>
                           <tr>
                             <th>
                               <span className={(!fToggleOther?'t-span':'')}>Other Assets</span>
                             </th>
-                            <th className='tab-hide'>Type</th>
+                            <th>Type</th>
                             {otherAssets?.[0]?.balances.map((item, idx) => (
                               <th key={idx} className={gc(item.interval)}>
                                 {item.interval}
@@ -287,7 +286,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-r'>
                     <div className='table-holder'>
-                      <ReactHTMLTableToExcel
+                      {/* <ReactHTMLTableToExcel
                         id="liabilities-table-xls-button"
                         className="download-btn"
                         table="table-liabilities-xls"
@@ -297,14 +296,14 @@ const Networth = () => {
                           <span><DownloadExcel />
                           <span className='sm-hide'>Download</span> <span>CSV</span></span>
                         }
-                      />
+                      /> */}
                       <table className='table' id="table-liabilities-xls">
                         <thead onClick={toggleLiabilities}>
                           <tr>
                             <th>
                               <span className={(!fToggleLiabilities?'t-span':'')}>Liabilities</span>
                             </th>
-                            <th className='tab-hide'>Type</th>
+                            <th>Type</th>
                             {liabilities?.[0]?.balances.map((item, idx) => (
                               <th key={idx} className={gc(item.interval)}>
                                 {item.interval}
@@ -352,7 +351,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-v'>
                     <div className='table-holder'>
-                      <ReactHTMLTableToExcel
+                      {/* <ReactHTMLTableToExcel
                         id="net-table-xls-button"
                         className="download-btn"
                         table="table-net-xls"
@@ -362,7 +361,7 @@ const Networth = () => {
                           <span><DownloadExcel />
                           <span className='sm-hide'>Download</span> <span>CSV</span></span>
                         }
-                      />
+                      /> */}
                       <table className='table' id='table-net-xls'>
                         <thead onClick={toggleNet}>
                           <tr>

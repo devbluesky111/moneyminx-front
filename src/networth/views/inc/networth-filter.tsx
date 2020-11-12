@@ -186,7 +186,7 @@ const NetworthFilter = () => {
             customInput={
               <div className='drop-box'>
                 <div className='date-box'>
-                  <input type='text' className='month_year' placeholder={getMonthYear(fFromDate)} />
+                  <input type='text' className='month_year' value={getMonthYear(fFromDate)} />
                 </div>
               </div>
             }
@@ -205,7 +205,7 @@ const NetworthFilter = () => {
             customInput={
               <div className='drop-box'>
                 <div className='date-box'>
-                  <input type='text' className='month_year' placeholder={getMonthYear(fToDate)} />
+                  <input type='text' className='month_year' value={getMonthYear(fToDate)} />
                 </div>
               </div>
             }

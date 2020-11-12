@@ -648,7 +648,7 @@ a.upgrader-btn {
   vertical-align: -2px;
 }
 .dropdown-menu {
-  background: $darkBg;
+  background: $darkBg !important;
   border: 0;
   box-shadow: 0 4px 28px rgba(8, 24, 51, 0.44);
   padding: 0;
@@ -798,6 +798,13 @@ a.upgrader-btn {
   position: relative;
   white-space: nowrap;
 }
+.date-box input:focus {
+  color: $white;
+  background-color: #322ae6;
+  border-color: #271ee5;
+  box-shadow: 0 0 0 0.2rem rgba(109, 103, 237, 0.5);
+}
+
 .date-box > span {
   font-size: 0.875rem;
   display: inline-block;
@@ -909,6 +916,7 @@ a.upgrader-btn {
 .react-datepicker__month--disabled {
   color: $grayOpacity50 !important;
 }
+
 .dropdown-box ul li label input {
   opacity: 0;
   position: absolute;
@@ -1087,15 +1095,15 @@ a.upgrader-btn {
 }
 .table-holder .table tbody td:nth-last-of-type(3),
 .table-holder .table tfoot td:nth-last-of-type(3) {
-  background: linear-gradient(90deg, $purpleOpacity10 0%, $purpleOpacity06 100%);
+  background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity03 100%);
 }
 .table-holder .table tbody td:nth-last-of-type(2),
 .table-holder .table tfoot td:nth-last-of-type(2) {
-  background: linear-gradient(90deg, $purpleOpacity06 0%, $purpleOpacity04 100%);
+  background: linear-gradient(90deg, $purpleOpacity03 0%, $purpleOpacity02 100%);
 }
 .table-holder .table tbody td:nth-last-of-type(1),
 .table-holder .table tfoot td:nth-last-of-type(1) {
-  background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity00 100%);
+  background: linear-gradient(90deg, $purpleOpacity02 0%, $purpleOpacity00 100%);
 }
 .warning-pop {
   background: $pink;

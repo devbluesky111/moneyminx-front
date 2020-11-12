@@ -8,7 +8,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionAlert, mess
   const history = useHistory();
 
   return (
-    <InlineAlert {...connectionAlert.props} message={message} onClick={() => history.push('/settings?tab=plan')} />
+    <InlineAlert {...connectionAlert.props} message={message} onClick={() => history.push('/settings?active=Plan')} />
   );
 };
 

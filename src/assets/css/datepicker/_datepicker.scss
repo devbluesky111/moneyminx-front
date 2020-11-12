@@ -1,10 +1,14 @@
 @import 'node_modules/react-datepicker/src/stylesheets/datepicker.scss';
 @import '../variables';
 
+.react-datepicker-popper[data-placement^='bottom'] {
+  margin-top: 0px;
+}
 .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle,
 .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle::before {
   border-top: none;
-  border-bottom-color: #081833 !important;
+  border-bottom-color: transparent !important;
+  display: none;
 }
 
 .react-datepicker {

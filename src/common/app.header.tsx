@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import Logo from 'assets/icons/logo.svg';
@@ -56,7 +56,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu }
           </div>
           <div className='head-right'>
             {currentSubscription?.subscriptionStatus === 'trialing' || (subscription?.details && subscription?.details['No of connected accounts'] !== 'Unlimited') ? (
-              <Link to='/settings' type='button' className='upgrader-btn' data-toggle='modal' data-target='#upgradeModal'>
+              <Link to='/settings?active=Plan' type='button' className='upgrader-btn' data-toggle='modal' data-target='#upgradeModal'>
                 Upgrade
               </Link>
             ): null}

@@ -18,7 +18,7 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }
       <aside className='profilemenu' style={{ right: openRight ? 0 : -300 }}>
         <ul className='prlist-up mb-0 mt-2'>
           <li>
-            <Link to='/plan'>
+            <Link to='/settings?active=Plan'>
               <Upgrade />
               <i className='icon-upgrade' /> Upgrade
             </Link>
@@ -27,14 +27,14 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }
         <hr className='sidebar-custom-hr' />
         <ul className='prlist-pro mb-0'>
           <li>
-            <Link to='/profile'>
+            <Link to='/settings?active=Profile'>
               <Profile />
               <i className='icon-profile' />
               Profile
             </Link>
           </li>
           <li>
-            <Link to='/settings'>
+            <Link to='/settings?active=Settings'>
               <Settings />
               <i className='icon-settings' />
               Settings

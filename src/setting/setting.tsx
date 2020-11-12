@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom'
 
 import AppHeader from 'common/app.header';
 import FooterSection from 'auth/views/auth.footer';
@@ -14,10 +15,14 @@ const Settings: React.FC<SettingsProps> = () => {
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
 
-  const handlePageSelect = (pageName: SettingPageEnum) => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const activeTab = params.get('active');
+  const handlePageSelect = (pageName: any) => {
     setPage(pageName);
   };
-
+  if (activeTab) setTimeout(function(){handlePageSelect(activeTab)}, 100);
+  
   const containerClass =
     page === SettingPageEnum.PLAN ? 'mm-settings-container mm-profile-container' : 'mm-settings-container';
 
