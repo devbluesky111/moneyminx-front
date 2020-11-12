@@ -22,6 +22,7 @@ import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
+import { SelectInput } from 'common/components/input/select.input';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
 import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
@@ -211,7 +212,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
       }}
     >
       {(props) => {
-        const { setFieldValue, values, handleBlur, handleChange } = props;
+        const { setFieldValue, values, handleBlur, handleChange, setValues } = props;
 
         const setCategory = (cat: string) => {
           setFieldValue('mmCategory', cat);
@@ -220,12 +221,16 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
         const handleAccountChange = (e: React.ChangeEvent<any>) => {
           setAccountType(e.target.value);
           setAccountSubtype('');
-          handleChange(e);
+          setValues({ ...values, [e.target.name]: e.target.value });
         };
 
         const handleSubAccountChange = (e: React.ChangeEvent<any>) => {
           setAccountSubtype(e.target.value);
-          handleChange(e);
+          setValues({ ...values, [e.target.name]: e.target.value });
+        };
+
+        const handleSelectChange = (e: React.ChangeEvent<any>) => {
+          setValues({ ...values, [e.target.name]: e.target.value });
         };
 
         return (
@@ -262,65 +267,43 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <ul className='account-type-list'>
                 <li>
                   <span className='form-subheading'>Account Type</span>
-                  <select
-                    name='mmAccountType'
+                  <SelectInput
+                    args={accountTypes}
                     onChange={handleAccountChange}
-                    onBlur={handleBlur}
                     value={values.mmAccountType}
-                  >
-                    {accountTypes?.map((accType, index) => {
-                      return (
-                        <option value={accType} key={index} aria-selected={!!values.mmAccountType}>
-                          {accType}
-                        </option>
-                      );
-                    })}
-                  </select>
+                    name='mmAccountType'
+                  />
                 </li>
 
                 <li className={hasAccountSubType ? '' : 'hidden'}>
                   <div className='account-list-content'>
                     <span className='form-subheading'>Account Subtype</span>
-                    <select
-                      name='mmAccountSubType'
+                    <SelectInput
+                      args={accountSubTypes}
                       onChange={handleSubAccountChange}
-                      onBlur={handleBlur}
                       value={values.mmAccountSubType}
-                    >
-                      {accountSubTypes?.map((subType, index) => {
-                        return (
-                          <option value={subType} key={index} aria-selected={!!values.mmAccountSubType}>
-                            {subType}
-                          </option>
-                        );
-                      })}
-                    </select>
+                      name='mmAccountSubType'
+                    />
                   </div>
                 </li>
                 <li>
                   <span className='form-subheading'>Currency</span>
-                  <select name='currency' onChange={handleChange} onBlur={handleBlur} value={values.currency}>
-                    {enumerateStr(CurrencyOptions).map((curr, index) => {
-                      return (
-                        <option value={curr} key={index} aria-selected={values.currency === curr}>
-                          {curr}
-                        </option>
-                      );
-                    })}
-                  </select>
+                  <SelectInput
+                    args={enumerateStr(CurrencyOptions)}
+                    onChange={handleSelectChange}
+                    value={values.currency}
+                    name='currency'
+                  />
                 </li>
 
                 <li className={hc('liquidity')}>
                   <span className='form-subheading'>Liquidity</span>
-                  <select name='liquidity' onChange={handleChange} onBlur={handleBlur} value={values.liquidity}>
-                    {enumerateStr(LiquidityOptions).map((curr, index) => {
-                      return (
-                        <option value={curr} key={index} aria-selected={values.liquidity === curr}>
-                          {curr}
-                        </option>
-                      );
-                    })}
-                  </select>
+                  <SelectInput
+                    args={enumerateStr(LiquidityOptions)}
+                    onChange={handleSelectChange}
+                    value={values.liquidity}
+                    name='liquidity'
+                  />
                 </li>
               </ul>
             </div>
