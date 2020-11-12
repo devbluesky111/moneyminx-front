@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import AppHeader from 'common/app.header';
 import NetworthFooter from 'auth/views/auth.footer';
-import NetworthSidebar from './views/networth-sidebar';
+import AppSidebar from '../layouts/inc/app.sidebar';
 
 import 'assets/css/networth/networth.scss';
 
@@ -11,8 +11,8 @@ const NetworthLayout: React.FC = ({ children }) => {
 
   return (
     <>
-      <AppHeader toggleMenu={() => setOpenNav(!openNav)} />
-      <NetworthSidebar open={openNav} />
+      <AppHeader toggleMenu={() => setOpenNav(!openNav)} open={openNav} />
+      <AppSidebar open={openNav} />
       {children}
       <NetworthFooter />
     </>

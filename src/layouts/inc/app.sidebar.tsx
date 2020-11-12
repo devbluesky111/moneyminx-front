@@ -14,7 +14,7 @@ interface AppSidebarProps {
 const AppSidebar: React.FC<AppSidebarProps> = ({ open }) => {
   return (
     <>
-      <aside className='profilemenu' style={{ right: open ? 0 : -300 }}>
+      <aside className={open ? 'profilemenu open-slidebar' : 'profilemenu' }  style={{ right: open ? 0 : -300 }}>
         <ul className='prlist-up mb-0 mt-2'>
           <li>
             <Link to='/plan'>
