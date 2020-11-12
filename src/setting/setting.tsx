@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import AppHeader from 'common/app.header';
-import FooterSection from 'auth/views/auth.footer';
+import AppLayout from 'layouts/app.layout';
+
 import PlanOverview from './pages/plan-overview';
 import SettingOverview from './pages/setting-overview';
 import ProfileOverview from './pages/profile-overview';
@@ -11,7 +11,6 @@ import { SettingsProps, SettingPageEnum } from './setting.type';
 
 const Settings: React.FC<SettingsProps> = () => {
   const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.ACCOUNTS);
-  const [openNav, setOpenNav] = useState<boolean>(false);
 
   const handlePageSelect = (pageName: SettingPageEnum) => {
     setPage(pageName);
@@ -41,14 +40,16 @@ const Settings: React.FC<SettingsProps> = () => {
     }
   };
 
+  // TODO: remove the mm-setting from the
+
   return (
     <div className='mm-setting'>
-      <AppHeader toggleMenu={() => setOpenNav(!openNav)} />
-      <div className={containerClass}>
-        <SettingTitleSection handlePageSelect={handlePageSelect} pageTitle={page} />
-        {renderTabContent()}
-      </div>
-      <FooterSection />
+      <AppLayout>
+        <div className={containerClass}>
+          <SettingTitleSection handlePageSelect={handlePageSelect} pageTitle={page} />
+          {renderTabContent()}
+        </div>
+      </AppLayout>
     </div>
   );
 };

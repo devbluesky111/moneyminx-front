@@ -7,15 +7,15 @@ import useNetworth from 'networth/hooks/useNetworth';
 import NetworthLayout from 'networth/networth.layout';
 import { AccountCategory } from 'networth/networth.enum';
 import MeasureIcon from 'assets/images/networth/measure.svg';
+import { useNetworthState } from 'networth/networth.context';
 import BlurChart from 'assets/images/networth/chart-blur.png';
 import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import NetworthHead from './inc/networth-head';
-import NetworthBarGraph from './networth-bar-graph';
 import NetworthFilter from './inc/networth-filter';
+import NetworthBarGraph from './networth-bar-graph';
 import ConnectionAlert from './inc/connection-alert';
-import { useNetworthState } from 'networth/networth.context';
 
 const Networth = () => {
   const history = useHistory();
@@ -357,6 +357,7 @@ const Networth = () => {
         </div>
         <ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />
       </section>
+      <div className="mm-slider-bg-overlay" />
     </NetworthLayout>
   );
 };

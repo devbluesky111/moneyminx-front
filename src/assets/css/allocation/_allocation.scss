@@ -592,3 +592,17 @@
     }
   }
 }
+
+.profilemenu.open-slidebar {
+  &+.mobmenu {
+    &+.content-container {
+      &+.mm-allocation-overview {
+        &+.mm-container-final {
+          &+.mm-slider-bg-overlay {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
