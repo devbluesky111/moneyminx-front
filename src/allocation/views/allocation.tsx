@@ -21,13 +21,14 @@ const Allocation: React.FC<AllocationProps> = () => {
     setFilter(type);
   };
 
-  // FIXME: remove mm-setting
   return (
     <div className='mm-setting mm-allocation'>
       <AppLayout>
         <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
-        <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
+        <AllocationOverview allocations={allocations} chartData={allocationChartData}
+          filter={filter} />
       </AppLayout>
+      <div className="mm-slider-bg-overlay" />
     </div>
   );
 };

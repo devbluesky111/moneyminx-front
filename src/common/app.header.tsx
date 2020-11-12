@@ -10,8 +10,9 @@ import DefaultAvatar from 'assets/icons/default-avatar.svg';
 
 interface AppHeaderProps {
   toggleMenu: () => void;
+  open: boolean;
 }
-const AppHeader: React.FC<AppHeaderProps> = ({ toggleMenu }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ toggleMenu, open }) => {
   const { user } = useAuthState();
   const { pathname } = useLocation();
 
@@ -48,7 +49,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleMenu }) => {
               <img src={ProBadge} alt='Pro badge' />
             </div>
             <div className='btn-group'>
-              <button type='button' className='profile-toggle' onClick={toggleMenu}>
+              <button type='button' className={open ? 'profile-toggle open' : 'profile-toggle'} onClick={toggleMenu}>
                 <span>
                   <img src={user?.picture || DefaultAvatar} alt='Profile avatar' />
                 </span>

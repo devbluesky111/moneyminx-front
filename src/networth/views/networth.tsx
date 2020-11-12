@@ -357,6 +357,7 @@ const Networth = () => {
         </div>
         <ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />
       </section>
+      <div className="mm-slider-bg-overlay" />
     </NetworthLayout>
   );
 };
