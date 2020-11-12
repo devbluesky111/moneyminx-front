@@ -169,15 +169,15 @@ const Networth = () => {
                           </tr>
                         </thead>
                         {fToggleInvestment ? (
-                          <tbody>
+                          <tbody className={'projection'}>
                           {investmentAssets?.map((iAsset, index) => {
                             return (
                               <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
                                 <td>{iAsset.accountName}</td>
                                 <td>{iAsset.accountType}</td>
                                 {iAsset.balances.map((b, idx) => (
-                                  <td key={`${index}-${idx}`} className={gc(b.interval)}>
-                                    {b.balance}
+                                  <td key={`${index}-${idx}`} className={[b.type===`projection`&&`projection`, gc(b.interval)].join(' ')}>
+                                    {numberWithCommas(fNumber(b.balance))}
                                   </td>
                                 ))}
                               </tr>
@@ -185,7 +185,7 @@ const Networth = () => {
                           })}
                         </tbody>
                         ) : null}
-                        <tfoot>
+                        <tfoot className={'projection'}>
                             <tr data-href='#'>
                               <td>
                                 <Link
@@ -203,7 +203,7 @@ const Networth = () => {
                               </td>
                               <td>{''}</td>
                               {networth?.map((nItem, idx) => (
-                                <td key={idx} className={gc(nItem.interval)}>
+                                <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   {numberWithCommas(fNumber(nItem.investmentAssets))}
                                 </td>
                               ))}
@@ -247,15 +247,15 @@ const Networth = () => {
                           </tr>
                         </thead>
                         { fToggleOther ? (
-                          <tbody>
+                          <tbody className={'projection'}>
                             {otherAssets?.map((oAsset, index) => {
                               return (
                                 <tr key={index} onClick={() => handleAccountDetail(oAsset.accountId)}>
                                   <td>{oAsset.accountName}</td>
                                   <td>{oAsset.accountType}</td>
                                   {oAsset.balances.map((b, idx) => (
-                                    <td key={`${index}-${idx}`} className={gc(b.interval)}>
-                                      {b.balance}
+                                    <td key={`${index}-${idx}`} className={[b.type===`projection`&&`projection`, gc(b.interval)].join(' ')}>
+                                      {numberWithCommas(fNumber(b.balance))}
                                     </td>
                                   ))}
                                 </tr>
@@ -263,12 +263,12 @@ const Networth = () => {
                             })}
                           </tbody>
                         ):null}
-                        <tfoot>
+                        <tfoot className={'projection'}>
                           <tr data-href='#'>
                           <td>Total</td>
                           <td>{''}</td>
                           {networth?.map((nItem, idx) => (
-                            <td key={idx} className={gc(nItem.interval)}>
+                            <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                               {numberWithCommas(fNumber(nItem.otherAssets))}
                             </td>
                           ))}
@@ -312,15 +312,15 @@ const Networth = () => {
                           </tr>
                         </thead>
                         { fToggleLiabilities ? (
-                          <tbody>
+                          <tbody className={'projection'}>
                             {liabilities?.map((liability, index) => {
                               return (
                                 <tr key={index} onClick={() => handleAccountDetail(liability.accountId)}>
                                   <td>{liability.accountName}</td>
                                   <td>{liability.accountType}</td>
                                   {liability.balances.map((b, idx) => (
-                                    <td key={`${index}-${idx}`} className={gc(b.interval)}>
-                                      {b.balance}
+                                    <td key={`${index}-${idx}`} className={[b.type===`projection`&&`projection`, gc(b.interval)].join(' ')}>
+                                      {numberWithCommas(fNumber(b.balance))}
                                     </td>
                                   ))}
                                 </tr>
@@ -328,12 +328,12 @@ const Networth = () => {
                             })}
                           </tbody>
                         ):null}
-                        <tfoot>
+                        <tfoot className={'projection'}>
                             <tr>
                               <td>Total</td>
                               <td>{''}</td>
                               {networth?.map((nItem, idx) => (
-                                <td key={idx} className={gc(nItem.interval)}>
+                                <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   {numberWithCommas(fNumber(nItem.liabilities))}
                                 </td>
                               ))}
@@ -377,12 +377,12 @@ const Networth = () => {
                           </tr>
                         </thead>
                         { fToggleNet ? (
-                          <tbody>
+                          <tbody className={'projection'}>
                             <tr data-href='#'>
                               <td>Investment Assets</td>
                               <td className='tab-hide'>{''}</td>
                               {networth?.map((nItem, idx) => (
-                                <td key={idx} className={gc(nItem.interval)}>
+                                <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   {numberWithCommas(fNumber(nItem.investmentAssets))}
                                 </td>
                               ))}
@@ -392,7 +392,7 @@ const Networth = () => {
                               <td className='tab-hide'>{''}</td>
 
                               {networth?.map((nItem, idx) => (
-                                <td key={idx} className={gc(nItem.interval)}>
+                                <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   {numberWithCommas(fNumber(nItem.otherAssets))}
                                 </td>
                               ))}
@@ -402,19 +402,19 @@ const Networth = () => {
                               <td className='tab-hide'>{''}</td>
 
                               {networth?.map((nItem, idx) => (
-                                <td key={idx} className={gc(nItem.interval)}>
+                                <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   {numberWithCommas(fNumber(nItem.liabilities))}
                                 </td>
                               ))}
                             </tr>
                           </tbody>
                         ):null}
-                        <tfoot>
+                        <tfoot className={'projection'}>
                             <tr>
                               <td>Net Worth</td>
                               <td className='tab-hide'>{''}</td>
                               {networth?.map((nItem, idx) => (
-                                <td key={idx} className={gc(nItem.interval)}>
+                                <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   {numberWithCommas(fNumber(nItem.networth))}
                                 </td>
                               ))}

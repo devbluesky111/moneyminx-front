@@ -31,17 +31,22 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu }
   // console.log('subscription', subscription?.details?subscription?.details['No of connected accounts']:'');
   const navClass = (label: string) => (pathname.includes(label) ? 'mm-app-nav-item active' : 'mm-app-nav-item');
 
+  const [isToggleLeft, setIsToggleLeft] = useState<boolean>(false);
+  const leftClick = () => {
+    toggleLeftMenu();
+    setIsToggleLeft(!isToggleLeft);
+  }
   return (
     <header>
       <nav className='navbar navbar-expand-lg money-minx-header'>
         <div className='container'>
           <button
-            className='navbar-toggler collapsed'
+            className={['navbar-toggler', !isToggleLeft?'collapsed':''].join(' ')}
             type='button'
             data-toggle='collapse'
             data-target='#headerMenu'
             aria-expanded='false'
-            onClick={toggleLeftMenu}
+            onClick={leftClick}
           >
             <span className='navbar-toggler-icon' />
           </button>

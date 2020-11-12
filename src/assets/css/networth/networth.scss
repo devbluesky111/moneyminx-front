@@ -659,7 +659,7 @@ a.upgrader-btn {
   min-width: 240px;
 }
 .dropdown-head {
-  padding: 20px 24px;
+  padding: 20px 24px 10px;
 }
 .dropdown-head h4 {
   font-weight: 600;
@@ -735,6 +735,7 @@ a.upgrader-btn {
 }
 .dropdown-box ul + ul {
   margin-top: 10px;
+  margin-bottom: 5px;
   padding-top: 10px;
   border-top: 1px solid $grayOpacity24;
 }
@@ -1082,7 +1083,7 @@ a.upgrader-btn {
   width: 18%;
 }
 
-.table-holder .table tbody tr:first-child td:nth-last-of-type(3):before {
+.table-holder .table tbody tr:first-child td:nth-last-of-type(3).projection:before {
   content: '';
   width: 8px;
   height: 8px;
@@ -1093,16 +1094,16 @@ a.upgrader-btn {
   left: -4px;
   background: $lightBg;
 }
-.table-holder .table tbody td:nth-last-of-type(3),
-.table-holder .table tfoot td:nth-last-of-type(3) {
+.table-holder .table tbody td:nth-last-of-type(3).projection,
+.table-holder .table tfoot td:nth-last-of-type(3).projection {
   background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity03 100%);
 }
-.table-holder .table tbody td:nth-last-of-type(2),
-.table-holder .table tfoot td:nth-last-of-type(2) {
+.table-holder .table tbody td:nth-last-of-type(2).projection,
+.table-holder .table tfoot td:nth-last-of-type(2).projection {
   background: linear-gradient(90deg, $purpleOpacity03 0%, $purpleOpacity02 100%);
 }
-.table-holder .table tbody td:nth-last-of-type(1),
-.table-holder .table tfoot td:nth-last-of-type(1) {
+.table-holder .table tbody td:nth-last-of-type(1).projection,
+.table-holder .table tfoot td:nth-last-of-type(1).projection {
   background: linear-gradient(90deg, $purpleOpacity02 0%, $purpleOpacity00 100%);
 }
 .warning-pop {
@@ -1158,6 +1159,9 @@ a.upgrader-btn {
 .checkbox-list li {
   padding: 10px 24px;
 }
+.checkbox-list li:hover {
+  background: rgba(83, 76, 234, 0.3);
+}
 .checkbox-list li label {
   position: relative;
   padding-left: 30px;
@@ -1210,6 +1214,9 @@ a.upgrader-btn {
 }
 .radiolist li {
   padding: 10px 24px;
+}
+.radiolist li:hover {
+  background: rgba(83, 76, 234, 0.3);
 }
 .radiolist label {
   position: relative;

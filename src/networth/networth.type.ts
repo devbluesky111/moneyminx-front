@@ -8,6 +8,7 @@ export interface ConnectionAlertProps {
 
 export interface NetworthItem {
   interval: string;
+  type: string;
   networth: number;
   liabilities: number;
   otherAssets: number;
@@ -22,6 +23,7 @@ export interface AccountItem {
   balances: {
     balance: number;
     interval: string;
+    type: string;
   }[];
 }
 
