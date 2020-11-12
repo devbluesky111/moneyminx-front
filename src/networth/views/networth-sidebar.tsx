@@ -55,7 +55,7 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }
           <li>
             <Link to='/blog'>
               <ResourceCenter />
-              <i className='icon-resource-center' /> Resource Center
+              <i className='icon-resource-center' /> Blog
             </Link>
           </li>
         </ul>
