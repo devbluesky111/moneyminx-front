@@ -798,7 +798,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             {/* associate mortgage and loan  ends */}
 
             {/* calculate equity */}
-            <div className={`form-divider ${hc('calculateEquity')}`}>
+            <div className={`form-divider ${hc('calculatedEquity')}`}>
               <div className='d-flex align-items-center justify-content-between'>
                 <p>Calculated Equity</p>
                 <p>{+values.ownEstimate - +values.loanBalance}</p>
