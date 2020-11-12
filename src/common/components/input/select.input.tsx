@@ -1,47 +1,17 @@
 import React from 'react';
-import { SelectProps, OptionType } from '../component.type';
+import Dropdown from 'react-bootstrap/esm/Dropdown';
 
-const SelectInput: React.FC<SelectProps> = ({
-  name,
-  title,
-  value,
-  options,
-  helperText,
-  handleChange,
-  handleOnBlur,
-  error = false,
-}) => {
-  const helperTextClass = error ? `show invalid-feedback` : `form-text text-muted`;
-  const optionElem = options.map((option, index) => {
-    return <Option key={index} value={option.value} name={option.name} />;
-  });
+interface MMSelectProps {
+  title: string;
+}
+
+const MMSelect: React.FC<MMSelectProps> = ({ children, title }) => {
   return (
-    <div className='form-group pt-3'>
-      <label htmlFor={name}>{title}</label>
-      <select
-        className='custom-select'
-        name={name}
-        onChange={handleChange}
-        onBlur={handleOnBlur}
-        value={value as string}
-      >
-        {optionElem}
-      </select>
-      {helperText && (
-        <small id={`inputHelp-${name}`} className={helperTextClass}>
-          {helperText}
-        </small>
-      )}
-    </div>
+    <Dropdown className='drop-box'>
+      <Dropdown.Toggle className='dropdown-toggle'>{title}</Dropdown.Toggle>
+      <Dropdown.Menu className='mm-dropdown-menu'>{children}</Dropdown.Menu>
+    </Dropdown>
   );
 };
 
-const Option: React.FC<OptionType> = ({ value, name }) => {
-  return (
-    <option value={value} role='button'>
-      {name}
-    </option>
-  );
-};
-
-export default SelectInput;
+export default MMSelect;

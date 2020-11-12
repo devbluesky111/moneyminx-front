@@ -54,6 +54,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
   const isFromAccount = state?.prevPath === '/accounts';
 
+  /**
+   * Set account type and account subtype
+   * On current account changes
+   */
   useEffect(() => {
     if (currentAccount) {
       setAccountType(currentAccount.category?.mmAccountType);
@@ -61,15 +65,24 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
     }
   }, [currentAccount]);
 
+  /**
+   * Set First sub type of the account subtypes array
+   * Each time account subtypes changes
+   */
   useEffect(() => {
     if (accountSubTypes?.length) {
-      if (currentAccount?.category?.mmAccountSubType) {
-        return setAccountSubtype(currentAccount?.category?.mmAccountSubType);
-      }
-
-      setAccountSubtype(accountSubTypes[0]);
+      return setAccountSubtype(accountSubTypes[0]);
     }
-  }, [accountSubTypes, currentAccount]);
+  }, [accountSubTypes]);
+
+  /**
+   * Set account subtype for the first time
+   */
+  useEffect(() => {
+    if (currentAccount?.category?.mmAccountSubType) {
+      return setAccountSubtype(currentAccount?.category?.mmAccountSubType);
+    }
+  }, [currentAccount]);
 
   const hasError = error || subTypeError || filterError || mortgageError || loanAccountError;
 
@@ -206,6 +219,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
         const handleAccountChange = (e: React.ChangeEvent<any>) => {
           setAccountType(e.target.value);
+          setAccountSubtype('');
           handleChange(e);
         };
 
