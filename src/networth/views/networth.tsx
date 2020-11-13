@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
+import {Table} from 'react-bootstrap';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useAlert } from 'common/components/alert';
 import useNetworth from 'networth/hooks/useNetworth';
@@ -52,9 +52,18 @@ const Networth = () => {
         return 'current-m';
       }
     }
-
-    return 'tab-hide';
+    // return 'tab-hide';
+    return '';
   };
+  // const gc = (interval: string) => {
+  //   if (interval) {
+  //     if (isCurrent(interval)) {
+  //       return 'current-m';
+  //     }
+  //   }
+  //   // return 'tab-hide';
+  //   return '';
+  // };
 
   const [curNetworthItem] = networth.filter((networthItem) => isCurrent(networthItem.interval));
   const currentNetworth = curNetworthItem?.networth || 0;
@@ -153,7 +162,7 @@ const Networth = () => {
                           <span className='sm-hide'>Download</span> <span>CSV</span></span>
                         }
                       /> */}
-                      <table className='table' id='table-investment-xls'>
+                      <Table responsive id='table-investment-xls'>
                         <thead onClick={toggleInvestment}>
                           <tr data-toggle='collapse'>
                             <th>
@@ -169,14 +178,15 @@ const Networth = () => {
                           </tr>
                         </thead>
                         {fToggleInvestment ? (
-                          <tbody className={'projection'}>
+                          <tbody>
                           {investmentAssets?.map((iAsset, index) => {
                             return (
                               <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
                                 <td>{iAsset.accountName}</td>
-                                <td>{iAsset.accountType}</td>
+                                <td className={`hide-type`}>{iAsset.accountType}</td>
                                 {iAsset.balances.map((b, idx) => (
                                   <td key={`${index}-${idx}`} className={[b.type===`projection`&&`projection`, gc(b.interval)].join(' ')}>
+                                    <span className={gc(b.interval)}>{b.interval}</span>
                                     {numberWithCommas(fNumber(b.balance))}
                                   </td>
                                 ))}
@@ -201,15 +211,16 @@ const Networth = () => {
                                   Total
                                 </Link>
                               </td>
-                              <td>{''}</td>
+                              <td className={`hide-type`}>{''}</td>
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
+                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
                                   {numberWithCommas(fNumber(nItem.investmentAssets))}
                                 </td>
                               ))}
                             </tr>
                           </tfoot>
-                      </table>
+                      </Table>
                     </div>
                   </div>
                 </div>
@@ -232,7 +243,7 @@ const Networth = () => {
                           <span className='sm-hide'>Download</span> <span>CSV</span></span>
                         }
                       /> */}
-                      <table className='table' id="table-other-xls">
+                      <Table responsive id="table-other-xls">
                         <thead onClick={toggleOther}>
                           <tr>
                             <th>
@@ -247,14 +258,15 @@ const Networth = () => {
                           </tr>
                         </thead>
                         { fToggleOther ? (
-                          <tbody className={'projection'}>
+                          <tbody>
                             {otherAssets?.map((oAsset, index) => {
                               return (
                                 <tr key={index} onClick={() => handleAccountDetail(oAsset.accountId)}>
                                   <td>{oAsset.accountName}</td>
-                                  <td>{oAsset.accountType}</td>
+                                  <td className={`hide-type`}>{oAsset.accountType}</td>
                                   {oAsset.balances.map((b, idx) => (
                                     <td key={`${index}-${idx}`} className={[b.type===`projection`&&`projection`, gc(b.interval)].join(' ')}>
+                                      <span className={gc(b.interval)}>{b.interval}</span>
                                       {numberWithCommas(fNumber(b.balance))}
                                     </td>
                                   ))}
@@ -266,15 +278,16 @@ const Networth = () => {
                         <tfoot className={'projection'}>
                           <tr data-href='#'>
                           <td>Total</td>
-                          <td>{''}</td>
+                          <td className={`hide-type`}>{''}</td>
                           {networth?.map((nItem, idx) => (
                             <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
+                              <span className={gc(nItem.interval)}>{nItem.interval}</span>
                               {numberWithCommas(fNumber(nItem.otherAssets))}
                             </td>
                           ))}
                         </tr>
                         </tfoot>
-                      </table>
+                      </Table>
                     </div>
                   </div>
                 </div>
@@ -297,7 +310,7 @@ const Networth = () => {
                           <span className='sm-hide'>Download</span> <span>CSV</span></span>
                         }
                       /> */}
-                      <table className='table' id="table-liabilities-xls">
+                      <Table responsive id="table-liabilities-xls">
                         <thead onClick={toggleLiabilities}>
                           <tr>
                             <th>
@@ -317,9 +330,10 @@ const Networth = () => {
                               return (
                                 <tr key={index} onClick={() => handleAccountDetail(liability.accountId)}>
                                   <td>{liability.accountName}</td>
-                                  <td>{liability.accountType}</td>
+                                  <td className={`hide-type`}>{liability.accountType}</td>
                                   {liability.balances.map((b, idx) => (
                                     <td key={`${index}-${idx}`} className={[b.type===`projection`&&`projection`, gc(b.interval)].join(' ')}>
+                                      <span className={gc(b.interval)}>{b.interval}</span>
                                       {numberWithCommas(fNumber(b.balance))}
                                     </td>
                                   ))}
@@ -331,15 +345,16 @@ const Networth = () => {
                         <tfoot className={'projection'}>
                             <tr>
                               <td>Total</td>
-                              <td>{''}</td>
+                              <td className={`hide-type`}>{''}</td>
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
+                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
                                   {numberWithCommas(fNumber(nItem.liabilities))}
                                 </td>
                               ))}
                             </tr>
                           </tfoot>
-                      </table>
+                      </Table>
                     </div>
                   </div>
                 </div>
@@ -362,7 +377,7 @@ const Networth = () => {
                           <span className='sm-hide'>Download</span> <span>CSV</span></span>
                         }
                       /> */}
-                      <table className='table' id='table-net-xls'>
+                      <Table responsive id='table-net-xls'>
                         <thead onClick={toggleNet}>
                           <tr>
                             <th>
@@ -383,6 +398,7 @@ const Networth = () => {
                               <td className='tab-hide'>{''}</td>
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
+                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
                                   {numberWithCommas(fNumber(nItem.investmentAssets))}
                                 </td>
                               ))}
@@ -393,6 +409,7 @@ const Networth = () => {
 
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
+                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
                                   {numberWithCommas(fNumber(nItem.otherAssets))}
                                 </td>
                               ))}
@@ -403,6 +420,7 @@ const Networth = () => {
 
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
+                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
                                   {numberWithCommas(fNumber(nItem.liabilities))}
                                 </td>
                               ))}
@@ -410,17 +428,18 @@ const Networth = () => {
                           </tbody>
                         ):null}
                         <tfoot className={'projection'}>
-                            <tr>
-                              <td>Net Worth</td>
-                              <td className='tab-hide'>{''}</td>
-                              {networth?.map((nItem, idx) => (
-                                <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
-                                  {numberWithCommas(fNumber(nItem.networth))}
-                                </td>
-                              ))}
-                            </tr>
-                          </tfoot>
-                      </table>
+                          <tr>
+                            <td>Net Worth</td>
+                            <td className='tab-hide'>{''}</td>
+                            {networth?.map((nItem, idx) => (
+                              <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
+                                <span className={gc(nItem.interval)}>{nItem.interval}</span>
+                                {numberWithCommas(fNumber(nItem.networth))}
+                              </td>
+                            ))}
+                          </tr>
+                        </tfoot>
+                      </Table>
                     </div>
                   </div>
                 </div>

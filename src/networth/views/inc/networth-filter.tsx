@@ -74,7 +74,7 @@ const NetworthFilter = () => {
       <div className='col-12'>
         <div className='d-flex dropdowns-holder mb-15 networth-filter-wrapper'>
           <Dropdown className='drop-box'>
-            <Dropdown.Toggle className='dropdown-toggle'>All Categories</Dropdown.Toggle>
+            <Dropdown.Toggle variant=''>All Categories</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
               <ul className='checkbox-list'>
                 {enumerateStr(AccountCategory).map((cat, index) => {
@@ -99,13 +99,7 @@ const NetworthFilter = () => {
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown className='drop-box tab-hide'>
-            <Dropdown.Toggle
-              type='button'
-              className='dropdown-toggle'
-              data-toggle='dropdown'
-              aria-haspopup='true'
-              aria-expanded='false'
-            >
+            <Dropdown.Toggle variant=''>
               All Accounts
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
@@ -140,13 +134,7 @@ const NetworthFilter = () => {
           </Dropdown>
 
           <Dropdown className='drop-box'>
-            <Dropdown.Toggle
-              type='button'
-              className='dropdown-toggle'
-              data-toggle='dropdown'
-              aria-haspopup='true'
-              aria-expanded='false'
-            >
+            <Dropdown.Toggle variant=''>
               All Types
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
@@ -212,13 +200,7 @@ const NetworthFilter = () => {
           />
 
           <Dropdown className='drop-box'>
-            <Dropdown.Toggle
-              type='button'
-              className='dropdown-toggle'
-              data-toggle='dropdown'
-              aria-haspopup='true'
-              aria-expanded='false'
-            >
+            <Dropdown.Toggle variant=''>
               {fTimeInterval || 'Monthly'}
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu dropsm'>

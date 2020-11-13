@@ -821,6 +821,7 @@ a.upgrader-btn {
   font-size: 0.875rem;
   color: $gray;
   max-width: 94px;
+  border-radius: 4px;
 }
 .date-box input::-webkit-input-placeholder {
   color: $gray;
@@ -1741,6 +1742,9 @@ footer p {
   color: $darkGray;
 }
 
+.table-holder tbody tr td span {
+  display: none;
+}
 /** =============================== **/
 /** responsive **/
 /** =============================== **/
@@ -1944,7 +1948,7 @@ footer p {
   .table-holder .table tfoot tr {
     display: -webkit-flex;
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
     border-bottom: 1px solid $grayOpacity20;
@@ -2089,6 +2093,19 @@ footer p {
   }
   .drop-box .dropdown-toggle {
     font-size: 14px;
+  }
+  .table-holder tbody tr td span,
+  .table-holder tfoot tr td span {
+    display: block;
+    color: $gray;
+    font-size: 12px;
+  }
+  .table-holder tbody tr td span.current-m,
+  .table-holder tfoot tr td span.current-m {
+    color: $green;
+  }
+  .hide-type {
+    display:none !important;
   }
 }
 
