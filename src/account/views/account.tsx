@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import Dropdown from 'react-bootstrap/Dropdown';
-import FooterSection from 'auth/views/auth.footer';
+import FooterSection from 'common/app.footer';
 import NavBarSection from 'setting/inc/setting.header';
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as Edit } from 'assets/images/account/edit.svg';

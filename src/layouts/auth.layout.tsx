@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AuthFooter from 'auth/views/auth.footer';
+import AppFooter from 'common/app.footer';
 import useScrollTop from 'common/hooks/useScrollTop';
 
 export const AuthLayout: React.FC = ({ children }) => {
@@ -8,7 +8,7 @@ export const AuthLayout: React.FC = ({ children }) => {
   return (
     <div className='auth-wrapper'>
       {children}
-      <AuthFooter />
+      <AppFooter />
     </div>
   );
 };

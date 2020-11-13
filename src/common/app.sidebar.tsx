@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 import { ReactComponent as Upgrade } from 'assets/icons/upgrade.svg';
 import { ReactComponent as Profile } from 'assets/icons/profile.svg';
@@ -12,7 +12,10 @@ interface NetworthSidebarProps {
   openLeft: boolean;
   openRight: boolean;
 }
-const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => {
+const AppSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => {
+  const { pathname } = useLocation();
+  const sidebarClass = (label: string) => (pathname.includes(label) ? 'mm-sidebar-item active' : 'mm-sidebar-item');
+
   return (
     <>
       <aside className='profilemenu' style={{ right: openRight ? 0 : -300 }}>
@@ -71,14 +74,12 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }
       </aside>
       <aside className='mobmenu collapse' id='headerMenu' style={{ left: openLeft ? 0 : -300 }}>
         <div className='headtab'>
-          <Link to='#' className='active'>
-            Net Worth
-          </Link>
-          <Link to='#'>Allocation</Link>
+          <Link to='/net-worth' className={sidebarClass('net-worth')}>Net Worth</Link>
+          <Link to='/allocation' className={sidebarClass('allocation')}>Allocation</Link>
         </div>
       </aside>
     </>
   );
 };
 
-export default NetworthSidebar;
+export default AppSidebar;

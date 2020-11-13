@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom'
 
 import AppHeader from 'common/app.header';
-import FooterSection from 'auth/views/auth.footer';
+import FooterSection from 'common/app.footer';
 import PlanOverview from './pages/plan-overview';
 import SettingOverview from './pages/setting-overview';
 import ProfileOverview from './pages/profile-overview';
