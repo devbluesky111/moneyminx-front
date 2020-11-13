@@ -18,9 +18,6 @@ import ConnectionAlert from './inc/connection-alert';
 import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
 
 import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import { ReactComponent as DownloadExcel } from 'assets/images/allocation/download-excel.svg';
-
 
 const Networth = () => {
   const history = useHistory();

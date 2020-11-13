@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import AppHeader from 'common/app.header';
-import AppFooter from 'auth/views/auth.footer';
-import NetworthSidebar from './views/networth-sidebar';
+import AppFooter from 'common/app.footer';
+import AppSidebar from 'common/app.sidebar';
 
 import 'assets/css/networth/networth.scss';
 
@@ -16,7 +16,7 @@ const NetworthLayout: React.FC = ({ children }) => {
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
       />
-      <NetworthSidebar openLeft={openLeftNav} openRight={openRightNav} />
+      <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       {children}
       <AppFooter />
     </>

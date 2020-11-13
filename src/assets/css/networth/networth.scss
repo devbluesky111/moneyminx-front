@@ -487,6 +487,7 @@ a.upgrader-btn {
   padding-top: 75px;
   transition: 0.3s all;
   left: -300px;
+  z-index: 10;
 }
 .mobmenu.show {
   left: 0;

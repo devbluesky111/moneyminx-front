@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import AppHeader from 'common/app.header';
-import FooterSection from 'auth/views/auth.footer';
+import FooterSection from 'common/app.footer';
+import AppSidebar from 'common/app.sidebar';
 import useAllocation from 'allocation/hooks/useAllocation';
 import { AllocationsFilter } from 'allocation/allocation.enum';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
@@ -30,6 +31,7 @@ const Allocation: React.FC<AllocationProps> = () => {
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
       />
+      <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
       <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
       <FooterSection />

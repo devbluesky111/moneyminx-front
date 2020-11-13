@@ -25,10 +25,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu }
   const { pathname } = useLocation();
   const { width } = useSize();
 
-  // const { fetchingSubscription, subError, subscription } = useGetSubscription();
   const { currentSubscription } = useCurrentSubscription();
   const { subscription } = useGetSubscription(currentSubscription?.priceId);
-  // console.log('subscription', subscription?.details?subscription?.details['No of connected accounts']:'');
   const navClass = (label: string) => (pathname.includes(label) ? 'mm-app-nav-item active' : 'mm-app-nav-item');
 
   const [isToggleLeft, setIsToggleLeft] = useState<boolean>(false);
