@@ -9,7 +9,7 @@ import env from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
-import { postFacebookLogin } from 'api/request.api';
+import {getCurrentSubscription, postFacebookLogin, getAccount} from 'api/request.api';
 import { appRouteConstants } from 'app/app-route.constant';
 import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -149,13 +149,19 @@ export const LoginMainSection = () => {
                     actions.setSubmitting(false);
 
                     if (!error) {
-                      toast('Sign in Success', { type: 'success' });
-                      return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
+                      const { data } = await getCurrentSubscription();
+                      if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
+                        toast('Sign in Success', { type: 'success' });
+                        const accounts = await getAccount();
+                        if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
+                        else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
+                      }
+                      else toast('Subscription page is under construction. Just wait for one more day.', { type: 'error' });
                     }
 
                     actions.setFieldError(
                       'password',
-                      error.message && typeof error.message !== 'object'
+                      error?.message && typeof error.message !== 'object'
                         ? error.message
                         : 'Please enter valid credentials'
                     );
