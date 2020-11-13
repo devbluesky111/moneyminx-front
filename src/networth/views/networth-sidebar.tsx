@@ -8,13 +8,13 @@ import { ReactComponent as Settings } from 'assets/icons/settings.svg';
 import { ReactComponent as ResourceCenter } from 'assets/icons/resource-center.svg';
 import { ReactComponent as ManageConnection } from 'assets/icons/manage-connection.svg';
 
-interface AppSidebarProps {
+interface NetworthSidebarProps {
   open: boolean;
 }
-const AppSidebar: React.FC<AppSidebarProps> = ({ open }) => {
+const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
   return (
     <>
-      <aside className={open ? 'profilemenu open-slidebar' : 'profilemenu' }  style={{ right: open ? 0 : -300 }}>
+      <aside className='profilemenu' style={{ right: open ? 0 : -300 }}>
         <ul className='prlist-up mb-0 mt-2'>
           <li>
             <Link to='/plan'>
@@ -80,4 +80,4 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ open }) => {
   );
 };
 
-export default AppSidebar;
+export default NetworthSidebar;
