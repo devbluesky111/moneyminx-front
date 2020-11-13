@@ -30,9 +30,15 @@ ul.bank-list {
     border-radius: 4px;
     margin-right: 22px;
     text-align: center;
-    display: inline-block;
     box-sizing: border-box;
     border: 1.5px solid $grayOpacity40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.selected {
+      border-color: $primary;
+    }
 
     a {
       outline: none;
@@ -176,7 +182,7 @@ ul.bank-list {
 
 .account-category .category-list {
   display: table;
-  border: 1.5px solid $grayOpacity24;
+  // border: 1.5px solid $grayOpacity24;
   width: 100%;
   border-radius: 4px;
   padding-left: 0;
@@ -198,16 +204,56 @@ ul.bank-list {
   }
 }
 
-.account-category .category-list a.active::before {
-  position: absolute;
+.account-category .category-list li {
+  border: 1.5px solid $grayOpacity24;
+}
+
+.account-category {
+  .category-list {
+    li {
+      &:nth-child(2),
+      &:first-child {
+        border-right: none;
+      }
+
+      &:nth-child(2),
+      &:nth-child(3) {
+        border-left: none;
+      }
+    }
+  }
+}
+
+.account-category .category-list li.active a {
+  color: $primary;
+}
+
+
+.account-category .category-list li.active ~ .border-bg-slider{
   border: 1.5px solid $primary;
-  height: 100%;
-  width: 100%;
-  content: '';
   border-radius: 4px;
-  left: -1px;
-  top: 0;
-  z-index: 999;
+  width: 11.813rem;
+  height: 100%;
+  position: absolute;
+}
+
+.account-category ul.category-list {
+  position: relative;
+} 
+
+.account-category .category-list li:first-child.active ~ .border-bg-slider {
+  transform: translateX(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+.account-category .category-list li:nth-child(2).active ~ .border-bg-slider{
+  transform: translateX(190px);
+  transition: transform 0.2s ease-in-out;
+}
+
+.account-category .category-list li:nth-child(3).active ~ .border-bg-slider{
+  transform: translateX(380px);
+  transition: transform 0.2s ease-in-out;
 }
 
 .account-category .category-list a:hover {
@@ -396,6 +442,7 @@ ul.bank-list {
 .form-divider {
   border-top: 1px solid $grayOpacity24;
   padding-top: 34px;
+  margin-top: 1rem;
 }
 
 .estimated-top-content .form-subheading-right {

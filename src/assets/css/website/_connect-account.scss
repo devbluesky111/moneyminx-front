@@ -13,7 +13,7 @@
 }
 
 .zillow-wrap {
-  button{
+  button {
     margin-right: 40px;
   }
 }
@@ -81,8 +81,8 @@ span.zillow-img {
   }
 
   @media (min-width: $med) {
-      display: none;
-    }
+    display: none;
+  }
 }
 
 .connect-steps-wrap {
@@ -178,11 +178,14 @@ span.zillow-img {
 .step-icon.icon-two {
   left: 21%;
 }
-.step-icon.icon-three {
+.step-icon.icon-three:not(.selected) {
   left: 48%;
   top: 11%;
-  background: $white;
 }
+.step-icon.icon-three {
+  left: 40%;
+}
+
 .connect-text {
   margin-right: 13px;
 }
@@ -201,5 +204,5 @@ span.zillow-img {
 }
 .action-next-step {
   color: $gray;
-  opacity: 0.40;
+  opacity: 0.4;
 }

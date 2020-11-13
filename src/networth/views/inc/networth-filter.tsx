@@ -18,6 +18,7 @@ import {
   setFilterTimeInterval,
   setFilterToDate,
 } from 'networth/networth.actions';
+import MMSelect from 'common/components/input/select.input';
 
 const NetworthFilter = () => {
   const dispatch = useNetworthDispatch();
@@ -73,31 +74,28 @@ const NetworthFilter = () => {
     <div className='row'>
       <div className='col-12'>
         <div className='d-flex dropdowns-holder mb-15 networth-filter-wrapper'>
-          <Dropdown className='drop-box'>
-            <Dropdown.Toggle className='dropdown-toggle'>All Categories</Dropdown.Toggle>
-            <Dropdown.Menu className='mm-dropdown-menu'>
-              <ul className='checkbox-list'>
-                {enumerateStr(AccountCategory).map((cat, index) => {
-                  return (
-                    <li key={index}>
-                      <label>
-                        <input
-                          name='category'
-                          type='checkbox'
-                          aria-describedby={cat}
-                          value={cat}
-                          aria-checked={fCategories?.includes(cat)}
-                          checked={fCategories?.includes(cat)}
-                          onChange={handleCategoryChange}
-                        />
-                        <span>{cat}</span>
-                      </label>
-                    </li>
-                  );
-                })}
-              </ul>
-            </Dropdown.Menu>
-          </Dropdown>
+          <MMSelect title='All Categories'>
+            <ul className='checkbox-list'>
+              {enumerateStr(AccountCategory).map((cat, index) => {
+                return (
+                  <li key={index}>
+                    <label>
+                      <input
+                        name='category'
+                        type='checkbox'
+                        aria-describedby={cat}
+                        value={cat}
+                        aria-checked={fCategories?.includes(cat)}
+                        checked={fCategories?.includes(cat)}
+                        onChange={handleCategoryChange}
+                      />
+                      <span>{cat}</span>
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </MMSelect>
           <Dropdown className='drop-box tab-hide'>
             <Dropdown.Toggle
               type='button'
