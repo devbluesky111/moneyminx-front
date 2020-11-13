@@ -513,7 +513,7 @@ a.upgrader-btn {
   position: relative;
 }
 .content-head {
-  padding: 20px 0;
+  padding: 12px 0;
   border-bottom: 1px solid $grayOpacity20;
 }
 .content-head .container {
@@ -758,6 +758,12 @@ a.upgrader-btn {
   width: auto;
   height: 48px;
   padding: 0 20px;
+
+  &:focus, &:hover {
+    box-shadow: none;
+    color: $darkGray;
+    border: 1px solid $gray;
+  }
 }
 .drop-box .dropdown-toggle:after {
   width: 8px;
@@ -770,15 +776,9 @@ a.upgrader-btn {
 }
 
 .drop-box.show .dropdown-toggle:after {
-  // width: 8px;
-  // height: 8px;
-  // border: 2px solid $gray;
-  // border-top: 0;
-  // border-left: 0;
   transform: rotate(-135deg);
-  // margin-bottom: -3px;
-  vertical-align: 0px;
-  // margin-left: 10px;
+  vertical-align: 0;
+  transition: 0.3s all;
 }
 
 .drop-box + .drop-box {
@@ -799,12 +799,15 @@ a.upgrader-btn {
   padding: 0;
   position: relative;
   white-space: nowrap;
+  cursor: pointer;
+
+  &:hover{
+    border: 1px solid $gray;
+  }
 }
 .date-box input:focus {
-  color: $white;
-  background-color: #322ae6;
-  border-color: #271ee5;
-  box-shadow: 0 0 0 0.2rem rgba(109, 103, 237, 0.5);
+  color: $darkGray;
+  border: 1px solid $gray;
 }
 
 .date-box > span {
@@ -823,6 +826,11 @@ a.upgrader-btn {
   color: $gray;
   max-width: 94px;
   border-radius: 4px;
+  cursor: pointer;
+
+  &:hover{
+    color: $darkGray;
+  }
 }
 .date-box input::-webkit-input-placeholder {
   color: $gray;
