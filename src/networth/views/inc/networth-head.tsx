@@ -12,7 +12,6 @@ const NetworthHead = () => {
   useEffect(() => {
     const fetchCurrentAccount = async () => {
       const { data, error } = await getAccount();
-console.log("dddddddddddddddddddddddddddd");
       if (!error) {
         setCurrentAccount(data);
       }
