@@ -8,11 +8,7 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth }) => {
   if (!networth.length) {
     return <CircularSpinner />;
   }
-  // console.log('networth investment', networth);
 
-  // const chartPayload = (payload) => {
-  //   console.log('payload', payload);
-  // }
   return (
     <div style={{ overflow: 'scroll' }}>
       <BarChart
@@ -40,12 +36,6 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth }) => {
           stroke='#969eac'
           tickFormatter={(tick) => `$${tick}m`}
         />
-        {/* <Tooltip
-          separator=''
-          cursor={false}
-          content={<NetworthBarGraphCustomTooltip netItem={chartPayload} />}
-        />
-        /> */}
         <Tooltip
           separator=''
           cursor={false}

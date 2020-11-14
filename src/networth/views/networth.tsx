@@ -23,7 +23,7 @@ const Networth = () => {
   const history = useHistory();
   const connectionAlert = useAlert();
 
-  const { loading } = useNetworth();
+  // const { loading } = useNetworth();
   const { accounts, networth, fToggleInvestment, fToggleOther, fToggleLiabilities, fToggleNet } = useNetworthState();
   const dispatch = useNetworthDispatch();
 
@@ -32,9 +32,13 @@ const Networth = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading || !networth || !accounts) {
+  if (!networth || !accounts) {
     return <CircularSpinner />;
   }
+
+  // if (loading || !networth || !accounts) {
+  //   return <CircularSpinner />;
+  // }
 
   const otherAssets = accounts[AccountCategory.OTHER_ASSETS];
   const liabilities = accounts[AccountCategory.LIABILITIES];

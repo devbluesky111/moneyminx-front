@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ReactComponent as DownloadExcel } from '../../../assets/images/allocation/download-excel.svg';
-// import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Account } from 'auth/auth.types';
 import { getAccount } from 'api/request.api';
 import { getRelativeDate } from 'common/moment.helper';
@@ -104,17 +103,6 @@ const NetworthHead = () => {
             <DownloadExcel />
             <span className='sm-hide'>Download</span> <span>CSV</span>
           </button>
-          {/* <ReactHTMLTableToExcel
-            id='investment-table-xls-button'
-            className='download-btn'
-            table='table'
-            filename='investment_assets_xls'
-            sheet='tablexls'
-            buttonText={
-              <span><DownloadExcel />
-              <span className='sm-hide'>Download</span> <span>CSV</span></span>
-            }
-          /> */}
         </div>
       </div>
     </div>
