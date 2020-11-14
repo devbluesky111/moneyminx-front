@@ -145,7 +145,7 @@ const Networth = () => {
                             <th>
                               <span className={(!fToggleInvestment?'t-span':'')}>Investment Assets</span>
                             </th>
-                            <th>Type</th>
+                            <th className={(!fToggleInvestment?'d-hide':'')}>Type</th>
 
                             {investmentAssets?.[0]?.balances.map((item, idx) => (
                               <th key={idx} className={gc(item.interval)}>
@@ -188,7 +188,7 @@ const Networth = () => {
                                   Total
                                 </Link>
                               </td>
-                              <td className={`hide-type`}>{''}</td>
+                              <td className={[(!fToggleInvestment?'d-hide':''), `hide-type`].join(' ')}>{''}</td>
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
@@ -215,7 +215,7 @@ const Networth = () => {
                             <th>
                               <span className={(!fToggleOther?'t-span':'')}>Other Assets</span>
                             </th>
-                            <th>Type</th>
+                            <th className={(!fToggleOther?'d-hide':'')}>Type</th>
                             {otherAssets?.[0]?.balances.map((item, idx) => (
                               <th key={idx} className={gc(item.interval)}>
                                 {item.interval}
@@ -244,7 +244,7 @@ const Networth = () => {
                         <tfoot className={'projection'}>
                           <tr data-href='#'>
                           <td>Total</td>
-                          <td className={`hide-type`}>{''}</td>
+                          <td className={[(!fToggleOther?'d-hide':''), `hide-type`].join(' ')}>{''}</td>
                           {networth?.map((nItem, idx) => (
                             <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                               <span className={gc(nItem.interval)}>{nItem.interval}</span>
@@ -271,7 +271,7 @@ const Networth = () => {
                             <th>
                               <span className={(!fToggleLiabilities?'t-span':'')}>Liabilities</span>
                             </th>
-                            <th>Type</th>
+                            <th className={(!fToggleLiabilities?'d-hide':'')}>Type</th>
                             {liabilities?.[0]?.balances.map((item, idx) => (
                               <th key={idx} className={gc(item.interval)}>
                                 {item.interval}
@@ -300,7 +300,7 @@ const Networth = () => {
                         <tfoot className={'projection'}>
                             <tr>
                               <td>Total</td>
-                              <td className={`hide-type`}>{''}</td>
+                              <td className={[(!fToggleInvestment?'d-hide':''), `hide-type`].join(' ')}>{''}</td>
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
