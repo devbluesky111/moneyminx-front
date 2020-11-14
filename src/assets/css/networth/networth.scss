@@ -978,10 +978,18 @@ a.upgrader-btn {
   background: $white;
   box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border-radius: 6px;
-  padding: 25px 20px 16px 20px;
+  padding: 16px 8px 8px 8px;
   height: 100%;
   position: relative;
+
+  @media (min-width: $sm) {
+    padding: 20px 8px 20px 8px;
+  }
+  @media (min-width: $med) {
+      padding: 28px 20px 20px 20px;
+  }
 }
+
 .ct-box:before {
   content: '';
   position: absolute;
@@ -2069,10 +2077,6 @@ footer p {
     right: 0;
     width: 30px;
     background: linear-gradient(to right, rgba(250, 251, 253, 0.8) 0%, $lightBg 100%);
-  }
-  .ct-box {
-    padding: 20px;
-    padding-left: 40px;
   }
   .mob-btm .ct-box {
     padding: 15px;
