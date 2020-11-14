@@ -52,12 +52,12 @@ const NetworthHead = () => {
           </div>
         </div>
 
-        <div className='right-box'>
+        {/*<div className='right-box'>
           <button type='button' className='download-btn'>
             <DownloadExcel />
             <span className='sm-hide'>Download</span> <span>CSV</span>
           </button>
-        </div>
+        </div>*/}
       </div>
     </div>
   );

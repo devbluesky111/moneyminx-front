@@ -123,12 +123,12 @@ export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = (
           </label>
           <div className='mm-radio-bg' />
         </div>
-        <div className='right-box'>
+        {/*<div className='right-box'>
           <button type='button' className='download-btn'>
             <DownloadExcel />
             <span className='sm-hide'>Download</span> <span>CSV</span>
           </button>
-        </div>
+        </div>*/}
       </div>
       </div>
     </section>
