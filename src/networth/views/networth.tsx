@@ -52,15 +52,6 @@ const Networth = () => {
     // return 'tab-hide';
     return '';
   };
-  // const gc = (interval: string) => {
-  //   if (interval) {
-  //     if (isCurrent(interval)) {
-  //       return 'current-m';
-  //     }
-  //   }
-  //   // return 'tab-hide';
-  //   return '';
-  // };
 
   const [curNetworthItem] = networth.filter((networthItem) => isCurrent(networthItem.interval));
   const currentNetworth = curNetworthItem?.networth || 0;
@@ -148,18 +139,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-b'>
                     <div className='table-holder'>
-                      {/* <ReactHTMLTableToExcel
-                        id='investment-table-xls-button'
-                        className='download-btn'
-                        table='table-investment-xls'
-                        filename='investment_assets_xls'
-                        sheet='tablexls'
-                        buttonText={
-                          <span><DownloadExcel />
-                          <span className='sm-hide'>Download</span> <span>CSV</span></span>
-                        }
-                      /> */}
-                      <Table responsive id='table-investment-xls'>
+                      <Table className="tb-responsive" id='table-investment-xls'>
                         <thead onClick={toggleInvestment}>
                           <tr data-toggle='collapse'>
                             <th>
@@ -229,18 +209,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-g'>
                     <div className='table-holder'>
-                      {/* <ReactHTMLTableToExcel
-                        id="other-table-xls-button"
-                        className="download-btn"
-                        table="table-other-xls"
-                        filename="other_assets_xls"
-                        sheet="tablexls"
-                        buttonText={
-                          <span><DownloadExcel />
-                          <span className='sm-hide'>Download</span> <span>CSV</span></span>
-                        }
-                      /> */}
-                      <Table responsive id="table-other-xls">
+                      <Table className="tb-responsive" id="table-other-xls">
                         <thead onClick={toggleOther}>
                           <tr>
                             <th>
@@ -296,18 +265,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-r'>
                     <div className='table-holder'>
-                      {/* <ReactHTMLTableToExcel
-                        id="liabilities-table-xls-button"
-                        className="download-btn"
-                        table="table-liabilities-xls"
-                        filename="liabilities_assets_xls"
-                        sheet="tablexls"
-                        buttonText={
-                          <span><DownloadExcel />
-                          <span className='sm-hide'>Download</span> <span>CSV</span></span>
-                        }
-                      /> */}
-                      <Table responsive id="table-liabilities-xls">
+                      <Table className="tb-responsive" id="table-liabilities-xls">
                         <thead onClick={toggleLiabilities}>
                           <tr>
                             <th>
@@ -363,18 +321,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-v'>
                     <div className='table-holder'>
-                      {/* <ReactHTMLTableToExcel
-                        id="net-table-xls-button"
-                        className="download-btn"
-                        table="table-net-xls"
-                        filename="net_assets_xls"
-                        sheet="tablexls"
-                        buttonText={
-                          <span><DownloadExcel />
-                          <span className='sm-hide'>Download</span> <span>CSV</span></span>
-                        }
-                      /> */}
-                      <Table responsive id='table-net-xls'>
+                      <Table className="tb-responsive" id='table-net-xls'>
                         <thead onClick={toggleNet}>
                           <tr>
                             <th>

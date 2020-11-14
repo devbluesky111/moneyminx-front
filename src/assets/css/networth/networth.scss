@@ -963,7 +963,7 @@ a.upgrader-btn {
   background: $white;
   box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border-radius: 6px;
-  padding: 25px 40px 16px 40px;
+  padding: 25px 20px 16px 20px;
   height: 100%;
   position: relative;
 }
@@ -1043,8 +1043,8 @@ a.upgrader-btn {
   color: $green;
 }
 .table thead th:not(:first-child) {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .table-holder .table tbody td:first-child,
 .table-holder .table tfoot td:first-child {
@@ -1053,7 +1053,7 @@ a.upgrader-btn {
 }
 .table-holder .table tbody td:not(:first-child),
 .table-holder .table tfoot td:not(:first-child) {
-  padding: 15px 10px;
+  padding: 15px 5px;
 }
 .table-holder .table tfoot td {
   font-weight: 500;
@@ -1075,9 +1075,10 @@ a.upgrader-btn {
   transition: 0.3s all;
 }
 .table thead th:first-child,
-.table thead th:first-child,
+.table tbody td:first-child,
 .table tfoot td:first-child {
   width: 16%;
+  // padding-left:20px;
 }
 .table thead th:nth-child(2),
 .table tbody td:nth-child(2),
@@ -1743,8 +1744,16 @@ footer p {
   color: $darkGray;
 }
 
-.table-holder tbody tr td span {
+.table-holder tbody tr td span,
+.table-holder tfoot tr td span {
   display: none;
+}
+
+.tb-responsive {
+  overflow-x: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: -20px;
 }
 /** =============================== **/
 /** responsive **/
@@ -1767,9 +1776,10 @@ footer p {
     transition: 0.3s all;
   }
   .table thead th:first-child,
-  .table thead th:first-child,
+  .table tbody td:first-child,
   .table tfoot td:first-child {
     width: 14%;
+    // padding-left:20px;
   }
   .table thead th:nth-child(2),
   .table tbody td:nth-child(2),
@@ -1831,6 +1841,10 @@ footer p {
   }
 }
 
+.table tbody tr td {
+  position: relative;
+  transition: 0.1s all;
+} 
 @media (min-width: 768px) {
   .table tbody tr {
     transition: 0.1s all;
