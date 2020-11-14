@@ -4,12 +4,12 @@ export const getMonthYear = (inputDate?: any) => {
   if (inputDate !== undefined) {
     const year = moment(inputDate).format('yyyy');
     const month = moment(inputDate).format('MM');
-    const nextMonthDate = new Date(parseInt(year), parseInt(month), 1);
+    const nextMonthDate = new Date(parseInt(year, 10), parseInt(month, 10), 1);
     return moment(nextMonthDate).format('MMM YYYY');
   } else {
     return moment(inputDate).format('MMM YYYY');
   }
-}
+};
 
 export const getRelativeDate = (inputDate: string) => moment(inputDate).fromNow();
 
