@@ -50,7 +50,7 @@ export const LoginMainSection = () => {
       const { error } = await postFacebookLogin({
         accessToken: response.accessToken,
         mailChimpSubscription: true,
-        subscriptionPriceId: 'price_1H9iXSAjc68kwXCHsFEhWShL',
+        subscriptionPriceId: 'price_1HnCFAAjc68kwXCHBj66nCW0',
       });
 
       if (!error) {
