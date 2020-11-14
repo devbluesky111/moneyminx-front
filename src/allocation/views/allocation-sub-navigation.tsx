@@ -3,7 +3,6 @@ import React from 'react';
 import { AllocationsFilter } from 'allocation/allocation.enum';
 import { AllocationSubNavigationProps } from 'allocation/allocation.type';
 
-import { ReactComponent as DownloadExcel } from '../../assets/images/allocation/download-excel.svg';
 import { Link } from 'react-router-dom';
 
 export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = ({ onTypeChange, filter }) => {

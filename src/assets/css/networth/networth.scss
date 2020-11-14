@@ -568,7 +568,7 @@ a.upgrader-btn {
   font-size: 1.375rem;
   line-height: 1.375rem;
   border-radius: 50%;
-  padding-bottom: 5px;
+  padding: 0;
 
   &:hover {
     box-shadow: 0 4px 12px $darkPurpleOpacity40;
@@ -598,7 +598,11 @@ a.upgrader-btn {
   }
 
   .drop-box {
-    width: 300px;
+    width: 98vw;
+
+    @media (min-width: $med) {
+      width: 300px;
+    }
   }
 }
 

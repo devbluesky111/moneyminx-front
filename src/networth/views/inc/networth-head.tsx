@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { ReactComponent as DownloadExcel } from '../../../assets/images/allocation/download-excel.svg';
 import { Account } from 'auth/auth.types';
 import { getAccount } from 'api/request.api';
 import { getRelativeDate } from 'common/moment.helper';
