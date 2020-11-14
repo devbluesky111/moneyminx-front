@@ -18,7 +18,6 @@ import {
   setFilterTimeInterval,
   setFilterToDate,
 } from 'networth/networth.actions';
-import MMSelect from 'common/components/input/select.input';
 
 const NetworthFilter = () => {
   const dispatch = useNetworthDispatch();
