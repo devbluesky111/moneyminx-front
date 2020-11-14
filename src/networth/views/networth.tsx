@@ -36,10 +36,6 @@ const Networth = () => {
     return <CircularSpinner />;
   }
 
-  // if (loading || !networth || !accounts) {
-  //   return <CircularSpinner />;
-  // }
-
   const otherAssets = accounts[AccountCategory.OTHER_ASSETS];
   const liabilities = accounts[AccountCategory.LIABILITIES];
   const investmentAssets = accounts[AccountCategory.INVESTMENT_ASSETS];
