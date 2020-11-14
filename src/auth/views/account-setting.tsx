@@ -1,5 +1,5 @@
 import { Dictionary } from 'lodash';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import React, { createRef, useCallback, useEffect, useState } from 'react';
 
 import { Account } from 'auth/auth.types';
@@ -13,15 +13,18 @@ import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.sv
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
+import AccountSettingSteps from './inc/connect-steps';
 import AccountSettingForm from './inc/account-setting-form';
-import { ConnectAccountStepsSection } from './inc/connect-steps';
 
 const AccountSetting = () => {
+  const history = useHistory();
   const dispatch = useAuthDispatch();
   const { accounts } = useAuthState();
   const [providerName, setProviderName] = useState('');
+  const [finish, setFinish] = useState<boolean>(false);
   const [reloadCounter, setReloadCounter] = useState(0);
   const [completed, setCompleted] = useState<number[]>([]);
+  const [clickEvent, setClickEvent] = useState<boolean>(false);
   const [currentAccount, setCurrentAccount] = useState<Account>();
   const [completedProviderName, setCompletedProviderName] = useState<string[]>([]);
   const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
@@ -55,15 +58,24 @@ const AccountSetting = () => {
     }
   }, [accounts]);
 
+  /**
+   * Get the first Non overridden account
+   */
   useEffect(() => {
     if (accountsByProviderName) {
       const curProviderAccounts = accountsByProviderName[providerName];
       setCurrentProviderAccounts(curProviderAccounts);
       const firstNonOverriddenAccount = curProviderAccounts.find((acc) => acc.accountDetails?.overridden !== true);
-      setCurrentAccount(firstNonOverriddenAccount);
+
+      if (firstNonOverriddenAccount) {
+        setCurrentAccount(firstNonOverriddenAccount);
+      }
     }
   }, [providerName, accountsByProviderName]);
 
+  /**
+   * set completed account id's
+   */
   useEffect(() => {
     if (accounts) {
       const completedIds = accounts.filter((acc) => acc.accountDetails?.overridden).map((item) => item.id);
@@ -71,16 +83,55 @@ const AccountSetting = () => {
     }
   }, [accounts]);
 
+  /**
+   * If accounts of the current provider is overridden goto next provider
+   * If nextProvider not found set finish true
+   */
+  useEffect(() => {
+    if (currentProviderAccounts && accountsByProviderName && !clickEvent) {
+      if (currentProviderAccounts.every((acc) => acc.accountDetails?.overridden)) {
+        const pName = currentProviderAccounts[0]?.providerName;
+        const providerIndex = Object.keys(accountsByProviderName).indexOf(pName);
+        const nextProviderName = Object.keys(accountsByProviderName)[providerIndex + 1];
+
+        if (nextProviderName) {
+          setProviderName(nextProviderName);
+
+          return setCurrentProviderAccounts(accountsByProviderName[nextProviderName]);
+        }
+
+        return setFinish(true);
+      }
+    }
+  }, [currentProviderAccounts, accountsByProviderName, clickEvent]);
+
   if (!accounts || !currentAccount || !currentProviderAccounts) {
     return <CircularSpinner />;
   }
 
   const handleProviderChange = (provider: string) => {
+    setClickEvent(true);
     setProviderName(provider);
   };
 
   const handleChangeCurrentAccount = (curAccount: Account) => {
     setCurrentAccount(curAccount);
+  };
+
+  const getProviderClass = (pName: string) => {
+    if (providerName === pName) {
+      return ' selected';
+    }
+
+    if (completedProviderName.includes(pName)) {
+      return ' completed';
+    }
+
+    return '';
+  };
+
+  const navigateToNetworth = () => {
+    return history.push('/net-worth');
   };
 
   return (
@@ -127,30 +178,31 @@ const AccountSetting = () => {
                 <div className='top-content-wrap'>
                   <h2>Organize accounts</h2>
                   <p>
-                    Great! You connected your accounts. Now you can organize them to get better insights into
-                    your portfolio.
+                    Great! You connected your accounts. Now you can organize them to get better insights into your
+                    portfolio.
                   </p>
                 </div>
 
                 <div className='form-wrap'>
                   <ul className='bank-list'>
+                    {accountsByProviderName
+                      ? Object.keys(accountsByProviderName).map((pName, index) => {
+                          const [account] = accountsByProviderName[pName];
 
-                    {
-                     accountsByProviderName ?  Object.keys(accountsByProviderName).map((pName, index)=>{
-                        const [account] = accountsByProviderName[pName];
-
-                        return (
-                          <li
-                            key={index}
-                            onClick={() => handleProviderChange(pName)}
-                            role='button'
-                            className={completedProviderName.includes(pName) ? 'completed' : ''}
-                          >
-                            <Link to='#'>{account.providerLogo ? <img src={account.providerLogo} alt={pName}/>: pName}</Link>
-                          </li>
-                        );
-                     }) : null
-                    }
+                          return (
+                            <li
+                              key={index}
+                              onClick={() => handleProviderChange(pName)}
+                              role='button'
+                              className={getProviderClass(pName)}
+                            >
+                              <Link to='#'>
+                                {account.providerLogo ? <img src={account.providerLogo} alt={pName} /> : pName}
+                              </Link>
+                            </li>
+                          );
+                        })
+                      : null}
                   </ul>
 
                   <div className='form-heading'>
@@ -169,14 +221,16 @@ const AccountSetting = () => {
 
                   <p className='flex-box learn-more-security'>
                     <SecurityIcon />
-                    <a href='/security' target='_blank' className='purple-links'>Learn about our security</a>
+                    <a href='/security' target='_blank' className='purple-links'>
+                      Learn about our security
+                    </a>
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <ConnectAccountStepsSection />
+        <AccountSettingSteps onSkip={navigateToNetworth} isCompleted={finish} onFinish={navigateToNetworth} />
       </div>
     </AuthLayout>
   );
@@ -206,7 +260,7 @@ export const AccountNameList: React.FC<AccountNameListProps> = ({
   const scrollToCategory = useCallback(
     (id: number) => {
       if (refList) {
-        refList[id]?.current.scrollIntoView({ inline: 'center' });
+        refList[id]?.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       }
     },
     [refList]
