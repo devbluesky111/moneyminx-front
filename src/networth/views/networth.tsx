@@ -96,7 +96,7 @@ const Networth = () => {
                         <span>Other Assets</span>
                         <h3>${numberWithCommas(fNumber(currentOtherAssets, 0))}</h3>
                       </li>
-                      <li className='lty-data'>rd
+                      <li className='lty-data'>
                         <span>Liabilities</span>
                         <h3>${numberWithCommas(fNumber(currentLiabilities, 0))}</h3>
                       </li>
