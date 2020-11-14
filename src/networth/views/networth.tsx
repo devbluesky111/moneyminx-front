@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import {Table} from 'react-bootstrap';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useAlert } from 'common/components/alert';
-import useNetworth from 'networth/hooks/useNetworth';
+// import useNetworth from 'networth/hooks/useNetworth';
 import NetworthLayout from 'networth/networth.layout';
 import { AccountCategory } from 'networth/networth.enum';
 import MeasureIcon from 'assets/images/networth/measure.svg';
