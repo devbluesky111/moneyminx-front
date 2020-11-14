@@ -90,20 +90,20 @@ const Networth = () => {
                     <ul>
                       <li className='inv-data'>
                         <span>Investment Assets</span>
-                        <h3>${numberWithCommas(fNumber(currentInvestmentAsset))}</h3>
+                        <h3>${numberWithCommas(fNumber(currentInvestmentAsset, 0))}</h3>
                       </li>
                       <li className='other-data'>
                         <span>Other Assets</span>
-                        <h3>${numberWithCommas(fNumber(currentOtherAssets))}</h3>
+                        <h3>${numberWithCommas(fNumber(currentOtherAssets, 0))}</h3>
                       </li>
                       <li className='lty-data'>
                         <span>Liabilities</span>
-                        <h3>${numberWithCommas(fNumber(currentLiabilities))}</h3>
+                        <h3>${numberWithCommas(fNumber(currentLiabilities, 0))}</h3>
                       </li>
                       { currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
                         <li className='nw-data'>
                           <span>Net Worth</span>
-                          <h3>${numberWithCommas(fNumber(currentNetworth))}</h3>
+                          <h3>${numberWithCommas(fNumber(currentNetworth, 0))}</h3>
                         </li>) : null } 
                     </ul>
                     <div className='chartbox'>
@@ -164,7 +164,7 @@ const Networth = () => {
                                 {iAsset.balances.map((b, idx) => (
                                   <td key={`${index}-${idx}`} className={[b.type===`projection`&&`projection`, gc(b.interval)].join(' ')}>
                                     <span className={gc(b.interval)}>{b.interval}</span>
-                                    {numberWithCommas(fNumber(b.balance))}
+                                    {numberWithCommas(fNumber(b.balance, 2))}
                                   </td>
                                 ))}
                               </tr>
@@ -192,7 +192,7 @@ const Networth = () => {
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {numberWithCommas(fNumber(nItem.investmentAssets))}
+                                  {numberWithCommas(fNumber(nItem.investmentAssets, 2))}
                                 </td>
                               ))}
                             </tr>
@@ -233,7 +233,7 @@ const Networth = () => {
                                   {oAsset.balances.map((b, idx) => (
                                     <td key={`${index}-${idx}`} className={[b.type===`projection`&&`projection`, gc(b.interval)].join(' ')}>
                                       <span className={gc(b.interval)}>{b.interval}</span>
-                                      {numberWithCommas(fNumber(b.balance))}
+                                      {numberWithCommas(fNumber(b.balance, 2))}
                                     </td>
                                   ))}
                                 </tr>
@@ -248,7 +248,7 @@ const Networth = () => {
                           {networth?.map((nItem, idx) => (
                             <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                               <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                              {numberWithCommas(fNumber(nItem.otherAssets))}
+                              {numberWithCommas(fNumber(nItem.otherAssets, 2))}
                             </td>
                           ))}
                         </tr>
@@ -289,7 +289,7 @@ const Networth = () => {
                                   {liability.balances.map((b, idx) => (
                                     <td key={`${index}-${idx}`} className={[b.type===`projection`&&`projection`, gc(b.interval)].join(' ')}>
                                       <span className={gc(b.interval)}>{b.interval}</span>
-                                      {numberWithCommas(fNumber(b.balance))}
+                                      {numberWithCommas(fNumber(b.balance, 2))}
                                     </td>
                                   ))}
                                 </tr>
@@ -304,7 +304,7 @@ const Networth = () => {
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {numberWithCommas(fNumber(nItem.liabilities))}
+                                  {numberWithCommas(fNumber(nItem.liabilities, 2))}
                                 </td>
                               ))}
                             </tr>
@@ -343,7 +343,7 @@ const Networth = () => {
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {numberWithCommas(fNumber(nItem.investmentAssets))}
+                                  {numberWithCommas(fNumber(nItem.investmentAssets, 2))}
                                 </td>
                               ))}
                             </tr>
@@ -354,7 +354,7 @@ const Networth = () => {
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {numberWithCommas(fNumber(nItem.otherAssets))}
+                                  {numberWithCommas(fNumber(nItem.otherAssets, 2))}
                                 </td>
                               ))}
                             </tr>
@@ -365,7 +365,7 @@ const Networth = () => {
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {numberWithCommas(fNumber(nItem.liabilities))}
+                                  {numberWithCommas(fNumber(nItem.liabilities, 2))}
                                 </td>
                               ))}
                             </tr>
@@ -378,7 +378,7 @@ const Networth = () => {
                             {networth?.map((nItem, idx) => (
                               <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
                                 <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                {numberWithCommas(fNumber(nItem.networth))}
+                                {numberWithCommas(fNumber(nItem.networth, 2))}
                               </td>
                             ))}
                           </tr>

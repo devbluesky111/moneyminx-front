@@ -42,9 +42,9 @@ const AllocationLegend: React.FC<Props> = ({ chartData }) => {
           <div className='legend-row' key={index}>
             <span className='legend-color-box' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
             <span className='legend-label'>
-              {ellipseText(data.group)} - {fNumber(data.per)}%
+              {ellipseText(data.group)} - {fNumber(data.per, 2)}%
             </span>
-            {allocationChartSetting?.showAmounts ? <span className='legend-amount'>${fNumber(data.total)}</span> : null}
+            {allocationChartSetting?.showAmounts ? <span className='legend-amount'>${fNumber(data.total, 2)}</span> : null}
           </div>
         );
       })}

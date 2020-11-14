@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom'
 
 import AppHeader from 'common/app.header';
-import FooterSection from 'common/app.footer';
+import AppFooter from 'common/app.footer';
+import AppSidebar from 'common/app.sidebar';
 import PlanOverview from './pages/plan-overview';
 import SettingOverview from './pages/setting-overview';
 import ProfileOverview from './pages/profile-overview';
@@ -53,11 +54,12 @@ const Settings: React.FC<SettingsProps> = () => {
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
       />
+      <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className={containerClass}>
         <SettingTitleSection handlePageSelect={handlePageSelect} pageTitle={page} />
         {renderTabContent()}
       </div>
-      <FooterSection />
+      <AppFooter />
     </div>
   );
 };

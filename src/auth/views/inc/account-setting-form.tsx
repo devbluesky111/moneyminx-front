@@ -1,15 +1,17 @@
 import moment from 'moment';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { Link, useLocation } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { Account } from 'auth/auth.types';
 import { MMCategories } from 'auth/auth.enum';
 import { patchAccount } from 'api/request.api';
+import { useAuthState } from 'auth/auth.context';
 import { makeFormFields } from 'auth/auth.helper';
+import MMToolTip from 'common/components/tooltip';
 import { enumerateStr } from 'common/common-helper';
 import { StringKeyObject } from 'common/common.types';
 import useAccountType from 'auth/hooks/useAccountType';
@@ -20,6 +22,7 @@ import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
+import { SelectInput } from 'common/components/input/select.input';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
 import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
@@ -37,21 +40,25 @@ interface LocationType {
 }
 
 const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) => {
+  const history = useHistory();
+  const { accounts } = useAuthState();
   const { state }: LocationType = useLocation();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
 
   const { loading: fetchingAccountType, data: accountTypes, error } = useAccountType();
-  const { loading: fetchingAccountSubType, subType: accountSubTypes, error: subTypeError } = useAccountSubtype(
-    accountType
-  );
+  const { subType: accountSubTypes, error: subTypeError } = useAccountSubtype(accountType);
 
   const { fetchingLoanAccount, loanAccounts, loanAccountError } = useLoanAccount();
   const { fetchingMortgage, mortgageAccounts, mortgageError } = useAssociateMortgage();
-  const { fetchingFilters, accountFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
+  const { accountFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
 
   const isFromAccount = state?.prevPath === '/accounts';
 
+  /**
+   * Set account type and account subtype
+   * On current account changes
+   */
   useEffect(() => {
     if (currentAccount) {
       setAccountType(currentAccount.category?.mmAccountType);
@@ -59,23 +66,31 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
     }
   }, [currentAccount]);
 
+  /**
+   * Set First sub type of the account subtypes array
+   * Each time account subtypes changes
+   */
   useEffect(() => {
     if (accountSubTypes?.length) {
-      if (currentAccount?.category?.mmAccountSubType) {
-        return setAccountSubtype(currentAccount?.category?.mmAccountSubType);
-      }
-
-      setAccountSubtype(accountSubTypes[0]);
+      return setAccountSubtype(accountSubTypes[0]);
     }
-  }, [accountSubTypes, currentAccount]);
+  }, [accountSubTypes]);
+
+  /**
+   * Set account subtype for the first time
+   */
+  useEffect(() => {
+    if (currentAccount?.category?.mmAccountSubType) {
+      return setAccountSubtype(currentAccount?.category?.mmAccountSubType);
+    }
+  }, [currentAccount]);
 
   const hasError = error || subTypeError || filterError || mortgageError || loanAccountError;
 
-  const isLoading =
-    fetchingAccountSubType || fetchingAccountType || fetchingFilters || fetchingMortgage || fetchingLoanAccount;
+  const isLoading = fetchingAccountType || fetchingMortgage || fetchingLoanAccount;
 
   if (hasError) {
-    toast('Error occurred');
+    toast('Error occurred', { type: 'error' });
   }
 
   if (isLoading) {
@@ -90,7 +105,19 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
   const currentFormFields = currentAccount?.accountDetails;
 
-  const hasAccountSubType = accountSubTypes.every(Boolean);
+  const hasAccountSubType = accountSubTypes.some(Boolean);
+
+  const isLastAccount = (): boolean => {
+    if (accounts && currentAccount) {
+      const { length, [length - 1]: last } = accounts;
+
+      if (last.id === currentAccount.id) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   return (
     <Formik
@@ -118,7 +145,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
         originationDate: currentFormFields?.originationDate || new Date(),
         originalBalance: currentFormFields?.originalBalance || '',
         paymentsPerYear: currentFormFields?.paymentsPerYear || '',
-        calculateReturns: currentFormFields?.calculateReturns || '',
         calculatedEquity: currentFormFields?.calculatedEquity || '',
         currentValuation: currentFormFields?.currentValuation || '',
         termForInvestment: currentFormFields?.termForInvestment || '',
@@ -176,12 +202,17 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
           return toast('Error Occurred', { type: 'error' });
         }
 
-        handleReload?.();
-        return toast('Successfully updated', { type: 'success' });
+        toast('Successfully updated', { type: 'success' });
+
+        if (isLastAccount()) {
+          return history.push('/net-worth');
+        }
+
+        return handleReload?.();
       }}
     >
       {(props) => {
-        const { setFieldValue, values, handleBlur, handleChange } = props;
+        const { setFieldValue, values, handleBlur, handleChange, setValues } = props;
 
         const setCategory = (cat: string) => {
           setFieldValue('mmCategory', cat);
@@ -189,12 +220,17 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
         const handleAccountChange = (e: React.ChangeEvent<any>) => {
           setAccountType(e.target.value);
-          handleChange(e);
+          setAccountSubtype('');
+          setValues({ ...values, [e.target.name]: e.target.value });
         };
 
         const handleSubAccountChange = (e: React.ChangeEvent<any>) => {
           setAccountSubtype(e.target.value);
-          handleChange(e);
+          setValues({ ...values, [e.target.name]: e.target.value });
+        };
+
+        const handleSelectChange = (e: React.ChangeEvent<any>) => {
+          setValues({ ...values, [e.target.name]: e.target.value });
         };
 
         return (
@@ -211,85 +247,64 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             <div className='account-category'>
               <span className='form-subheading'>
                 Account Category
-                <a href='/link26'>
+                <MMToolTip message='Account Category info here'>
                   <InfoIcon />
-                </a>
+                </MMToolTip>
               </span>
               <ul className='category-list mb-4'>
                 {enumerateStr(MMCategories).map((cat: string, idx: number) => {
                   return (
-                    <li onClick={() => setCategory(cat)} role='button' key={idx}>
-                      <Link to='#' className={values.mmCategory === cat ? 'active' : ''}>
+                    <li className={values.mmCategory === cat ? 'active' : ''} onClick={() => setCategory(cat)} role='button' key={idx}>
+                      <Link to='#'>
                         {cat}
                       </Link>
                     </li>
                   );
                 })}
+                <div className="border-bg-slider"></div>
               </ul>
             </div>
             <div className='account-type'>
               <ul className='account-type-list'>
                 <li>
                   <span className='form-subheading'>Account Type</span>
-                  <select
-                    name='mmAccountType'
+                  <SelectInput
+                    args={accountTypes}
                     onChange={handleAccountChange}
-                    onBlur={handleBlur}
                     value={values.mmAccountType}
-                  >
-                    {accountTypes?.map((accType, index) => {
-                      return (
-                        <option value={accType} key={index} aria-selected={!!values.mmAccountType}>
-                          {accType}
-                        </option>
-                      );
-                    })}
-                  </select>
+                    name='mmAccountType'
+                  />
                 </li>
 
                 <li className={hasAccountSubType ? '' : 'hidden'}>
                   <div className='account-list-content'>
                     <span className='form-subheading'>Account Subtype</span>
-                    <select
-                      name='mmAccountSubType'
+                    <SelectInput
+                      args={accountSubTypes}
                       onChange={handleSubAccountChange}
-                      onBlur={handleBlur}
                       value={values.mmAccountSubType}
-                    >
-                      {accountSubTypes?.map((subType, index) => {
-                        return (
-                          <option value={subType} key={index} aria-selected={!!values.mmAccountSubType}>
-                            {subType}
-                          </option>
-                        );
-                      })}
-                    </select>
+                      name='mmAccountSubType'
+                    />
                   </div>
                 </li>
                 <li>
                   <span className='form-subheading'>Currency</span>
-                  <select name='currency' onChange={handleChange} onBlur={handleBlur} value={values.currency}>
-                    {enumerateStr(CurrencyOptions).map((curr, index) => {
-                      return (
-                        <option value={curr} key={index} aria-selected={values.currency === curr}>
-                          {curr}
-                        </option>
-                      );
-                    })}
-                  </select>
+                  <SelectInput
+                    args={enumerateStr(CurrencyOptions)}
+                    onChange={handleSelectChange}
+                    value={values.currency}
+                    name='currency'
+                  />
                 </li>
 
                 <li className={hc('liquidity')}>
                   <span className='form-subheading'>Liquidity</span>
-                  <select name='liquidity' onChange={handleChange} onBlur={handleBlur} value={values.liquidity}>
-                    {enumerateStr(LiquidityOptions).map((curr, index) => {
-                      return (
-                        <option value={curr} key={index} aria-selected={values.liquidity === curr}>
-                          {curr}
-                        </option>
-                      );
-                    })}
-                  </select>
+                  <SelectInput
+                    args={enumerateStr(LiquidityOptions)}
+                    onChange={handleSelectChange}
+                    value={values.liquidity}
+                    name='liquidity'
+                  />
                 </li>
               </ul>
             </div>
@@ -462,52 +477,47 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
             {/* address */}
 
-            <div className='form-divider'>
-              <input
-                type='text'
-                name='streetAddress'
-                onChange={handleChange}
-                placeholder='123 5th Avenue'
-                value={values.streetAddress}
-                className={`w-100 ${hc('streetAddress')}`}
-              />
-              <div className='d-flex align-items-center'>
-                <input
-                  type='text'
-                  name='city'
-                  onChange={handleChange}
-                  placeholder='New York'
-                  value={values.city}
-                  className={`w-50 my-5 mr-2 ${hc('city')}`}
-                />
-                <input
-                  type='text'
-                  name='state'
-                  onChange={handleChange}
-                  placeholder='New York'
-                  value={values.state}
-                  className={`w-50 my-5 ml-2 ${hc('state')}`}
-                />
-              </div>
-
-              <div className='d-flex align-items-center'>
-                <input
-                  type='text'
-                  name='zipCode'
-                  onChange={handleChange}
-                  placeholder='10030'
-                  value={values.zipCode}
-                  className={`w-50 mb-5 mr-2 ${hc('zipCode')}`}
-                />
-                <input
-                  type='text'
-                  name='country'
-                  onChange={handleChange}
-                  placeholder='United States'
-                  value={values.country}
-                  className={`w-50 mb-5 ml-2 ${hc('zipCode')}`}
-                />
-              </div>
+            <div className='account-type'>
+              <ul className='account-type-list'>
+                <li className={`w-100 ${hc('streetAddress')}`}>
+                  <span className='form-subheading'>Street Address</span>
+                  <input
+                    type='text'
+                    name='streetAddress'
+                    onChange={handleChange}
+                    placeholder='123 5th Avenue'
+                    value={values.streetAddress}
+                  />
+                </li>
+                <li className={`${hc('city')}`}>
+                  <span className='form-subheading'>City</span>
+                  <input type='text' name='city' onChange={handleChange} placeholder='New York' value={values.city} />
+                </li>
+                <li className={`${hc('state')}`}>
+                  <span className='form-subheading'>State</span>
+                  <input type='text' name='state' onChange={handleChange} placeholder='New York' value={values.state} />
+                </li>
+                <li className={`${hc('zipCode')}`}>
+                  <span className='form-subheading'>Zip Code</span>
+                  <input
+                    type='text'
+                    name='zipCode'
+                    onChange={handleChange}
+                    placeholder='10030'
+                    value={values.zipCode}
+                  />
+                </li>
+                <li className={`${hc('country')}`}>
+                  <span className='form-subheading'>Country</span>
+                  <input
+                    type='text'
+                    name='country'
+                    onChange={handleChange}
+                    placeholder='United States'
+                    value={values.country}
+                  />
+                </li>
+              </ul>
             </div>
 
             {/* address end */}
@@ -516,7 +526,12 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <div className={`input-wrap performance flex-box ${hc('employerMatchContribution')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>Does your employer match contributions? <InfoIcon className='sm-hide'/></span>
+                    <span className='form-subheading'>
+                      Does your employer match contributions?
+                      <MMToolTip message='Does your employer match contributions? Info'>
+                        <InfoIcon className='sm-hide' />
+                      </MMToolTip>
+                    </span>
                   </p>
                 </div>
                 <div className='right-input radio'>
@@ -543,72 +558,78 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 </div>
               </div>
 
-              <div className={`input-wrap flex-box ${hc('employerMatch')}`}>
-                <div className='left-input'>
-                  <p>
-                    <span className='form-subheading'>Employer match</span>
-                  </p>
-                </div>
-                <div className='right-input'>
-                  <div className='form-field-group'>
-                    <Form.Control
-                      type='number'
-                      name='employerMatch'
-                      onChange={handleChange}
-                      placeholder='50'
-                    />
-                    <span className='input-add-on'>%</span>
+              {/* If employerMatchContribution is no hide this field */}
+              {!values.employerMatchContribution ? (
+                <div className={`input-wrap flex-box ${hc('employerMatch')}`}>
+                  <div className='left-input'>
+                    <p>
+                      <span className='form-subheading'>Employer match</span>
+                    </p>
+                  </div>
+                  <div className='right-input'>
+                    <div className='form-field-group'>
+                      <Form.Control type='number' name='employerMatch' onChange={handleChange} placeholder='50' />
+                      <span className='input-add-on'>%</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
 
-              <div className={`input-wrap flex-box ${hc('employerMatchLimitIn')} ${hc('employerMatchLimit')}`}>
-                <div className='left-input employer-match'>
-                  <p>
-                    <span className='form-subheading'>Employer match limit</span>
-                    <span className='employer-match-limits'>
-                      <input
-                        type='radio'
+              {!values.employerMatchContribution ? (
+                <div className={`input-wrap flex-box ${hc('employerMatchLimitIn')} ${hc('employerMatchLimit')}`}>
+                  <div className='left-input employer-match'>
+                    <p>
+                      <span className='form-subheading'>Employer match limit</span>
+                      <span className='employer-match-limits'>
+                        <input
+                          type='radio'
+                          onChange={handleChange}
+                          value={EmployerMatchLimitOptions.AMOUNT}
+                          defaultChecked={false}
+                          name='employerMatchLimitIn'
+                          checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
+                          aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
+                        />
+                        <label>$</label>
+                        <input
+                          type='radio'
+                          onChange={handleChange}
+                          value={EmployerMatchLimitOptions.PERCENTAGE}
+                          defaultChecked={false}
+                          name='employerMatchLimitIn'
+                          checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
+                          aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
+                        />
+                        <label>%</label>
+                      </span>
+                    </p>
+                  </div>
+                  <div className='right-input'>
+                    <div className='form-field-group'>
+                      <Form.Control
+                        type='number'
+                        name='employerMatchLimit'
                         onChange={handleChange}
-                        value={EmployerMatchLimitOptions.AMOUNT}
-                        defaultChecked={false}
-                        name='employerMatchLimitIn'
-                        checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
-                        aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
+                        placeholder='5'
+                        value={values.employerMatchLimit}
                       />
-                      <label>$</label>
-                      <input
-                        type='radio'
-                        onChange={handleChange}
-                        value={EmployerMatchLimitOptions.PERCENTAGE}
-                        defaultChecked={false}
-                        name='employerMatchLimitIn'
-                        checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
-                        aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
-                      />
-                      <label>%</label>
-                    </span>
-
-                  </p>
-                </div>
-                <div className='right-input'>
-                  <div className='form-field-group'>
-                    <Form.Control
-                      type='number'
-                      name='employerMatchLimit'
-                      onChange={handleChange}
-                      placeholder='5'
-                      value={values.employerMatchLimit}
-                    />
-                    <span className='input-add-on'>$</span>
+                      <span className='input-add-on'>
+                        {values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT ? '$' : '%'}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
 
               <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>Include employer match in performance? <InfoIcon className='sm-hide'/></span>
+                    <span className='form-subheading'>
+                      Include employer match in performance?
+                      <MMToolTip message='Include employer match in performance'>
+                        <InfoIcon className='sm-hide' />
+                      </MMToolTip>
+                    </span>
                   </p>
                 </div>
                 <div className='right-input radio'>
@@ -636,41 +657,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                   </div>
                 </div>
               </div>
-
-              <div className={`input-wrap performance flex-box ${hc('calculateReturns')}`}>
-                <div className='left-input'>
-                  <p>
-                    <span className='form-subheading'>Calculate Returns? <InfoIcon /></span>
-                  </p>
-                </div>
-                <div className='right-input radio'>
-                  <input
-                    type='radio'
-                    value='yes'
-                    defaultChecked={false}
-                    onChange={handleChange}
-                    name='calculateReturns'
-                    checked={values.calculateReturns === 'yes' || values.calculateReturns === true}
-                    aria-checked={values.calculateReturns === 'yes' || values.calculateReturns === true}
-                  />
-                  <label>Yes</label>
-                  <input
-                    type='radio'
-                    value='no'
-                    defaultChecked={false}
-                    onChange={handleChange}
-                    name='calculateReturns'
-                    checked={values.calculateReturns === 'no' || values.calculateReturns === false}
-                    aria-checked={values.calculateReturns === 'no' || values.calculateReturns === false}
-                  />
-                  <label>No</label>
-                </div>
-              </div>
             </div>
 
-            <div className='form-divider'>
+            <div className={`form-divider ${hc('separateLoanBalance')}`}>
               <ul className='account-type-list'>
-                <li className={`w-100 ${hc('separateLoanBalance')}`}>
+                <li className='w-100'>
                   <p>
                     <span className='form-subheading'>How do you want to handle your 401k loan?</span>
                     <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
@@ -705,33 +696,31 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
               <div className='form-field-group single-field'>
                 <Form.Control
-                onChange={handleChange}
-                type='number'
-                placeholder='5'
-                name='estimatedAnnualReturns'
-                value={values.estimatedAnnualReturns}
-              />
-                <span className="input-add-on">%</span>
+                  onChange={handleChange}
+                  type='number'
+                  placeholder='5'
+                  name='estimatedAnnualReturns'
+                  value={values.estimatedAnnualReturns}
+                />
+                <span className='input-add-on'>%</span>
               </div>
-
             </div>
 
             {/* Estimated principal paydown */}
             <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReduction')}`}>
-                <span className='form-subheading'>Estimated principal paydown</span>
-                <span className='sub-label'>This will be used to show projections on your charts.</span>
+              <span className='form-subheading'>Estimated principal paydown</span>
+              <span className='sub-label'>This will be used to show projections on your charts.</span>
 
-                <div className='form-field-group single-field'>
-                  <Form.Control
-                    onChange={handleChange}
-                    type='number'
-                    placeholder='5'
-                    name='estimatedAnnualPrincipalReduction'
-                    value={values.estimatedAnnualPrincipalReduction}
-                  />
-                  <span className="input-add-on">%</span>
-                </div>
-
+              <div className='form-field-group single-field'>
+                <Form.Control
+                  onChange={handleChange}
+                  type='number'
+                  placeholder='5'
+                  name='estimatedAnnualPrincipalReduction'
+                  value={values.estimatedAnnualPrincipalReduction}
+                />
+                <span className='input-add-on'>%</span>
+              </div>
             </div>
 
             {/* Current value */}
@@ -804,7 +793,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             {/* associate mortgage and loan  ends */}
 
             {/* calculate equity */}
-            <div className={`form-divider ${hc('calculateEquity')}`}>
+            <div className={`form-divider ${hc('calculatedEquity')}`}>
               <div className='d-flex align-items-center justify-content-between'>
                 <p>Calculated Equity</p>
                 <p>{+values.ownEstimate - +values.loanBalance}</p>
@@ -887,11 +876,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                       >
                         {isFromAccount ? 'Cancel' : 'Back'}
                       </button>
-                      <button
-                        className='mm-btn-animate mm-btn-primary estimate-annual-block__btn-save'
-                        type='submit'
-                      >
-                        {isFromAccount ? 'Save' : 'Next'}
+                      <button className='mm-btn-animate mm-btn-primary estimate-annual-block__btn-save' type='submit'>
+                        {isFromAccount ? 'Save' : isLastAccount() ? 'Finish' : 'Next'}
                       </button>
                     </div>
                   </div>

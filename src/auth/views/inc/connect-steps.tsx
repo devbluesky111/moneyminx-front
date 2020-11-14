@@ -2,12 +2,14 @@ import React from 'react';
 import { ReactComponent as CheckIcon } from 'assets/images/signup/check-icon.svg';
 import { ReactComponent as SelectedIcon } from 'assets/images/signup/selected.svg';
 import { ReactComponent as CircleIcon } from 'assets/images/signup/circle-icon.svg';
+interface StepProps {
+  isConnectAccount?: boolean;
+  isCompleted?: boolean;
+  onSkip?: () => void;
+  onFinish?: () => void;
+}
 
-const ConnectAccountSteps = () => {
-  return <ConnectAccountStepsSection />;
-};
-export default ConnectAccountSteps;
-export const ConnectAccountStepsSection = () => {
+const ConnectAccountSteps: React.FC<StepProps> = ({ isConnectAccount, isCompleted, onSkip, onFinish }) => {
   return (
     <div className='row'>
       <div className='action-overlay'>
@@ -27,25 +29,25 @@ export const ConnectAccountStepsSection = () => {
               <span className='connect-text text-left'>Sign up</span>
             </div>
             <div className='step-content'>
-              <div className='step-icon icon-two'>
-                <SelectedIcon />
-              </div>
+              <div className='step-icon icon-two'>{isConnectAccount ? <SelectedIcon /> : <CheckIcon />}</div>
               <span className='connect-text'>Connect accounts </span>
             </div>
             <div className='step-content right-border'>
-              <div className='step-icon icon-three'>
-                <CircleIcon />
+              <div className={`step-icon icon-three ${!isConnectAccount ? 'selected' : ''}`}>
+                {isConnectAccount ? <CircleIcon /> : <SelectedIcon />}
               </div>
               <span className='connect-text text-right action-next-step'>Link accounts</span>
             </div>
           </div>
         </div>
         <div className='subs-content four'>
-          <button className='finish-btn'>
-            <a href='link11'>Next Step</a>
+          <button className='finish-btn' onClick={isCompleted ? onFinish : onSkip}>
+            {isCompleted ? 'Finish' : 'Skip'}
           </button>
         </div>
       </div>
     </div>
   );
 };
+
+export default ConnectAccountSteps;

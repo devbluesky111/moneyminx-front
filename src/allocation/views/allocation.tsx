@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import AppHeader from 'common/app.header';
-import FooterSection from 'common/app.footer';
+import AppFooter from 'common/app.footer';
 import AppSidebar from 'common/app.sidebar';
 import useAllocation from 'allocation/hooks/useAllocation';
 import { AllocationsFilter } from 'allocation/allocation.enum';
@@ -34,7 +34,7 @@ const Allocation: React.FC<AllocationProps> = () => {
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
       <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
-      <FooterSection />
+      <AppFooter />
     </div>
   );
 };

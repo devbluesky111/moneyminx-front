@@ -591,10 +591,9 @@ a.upgrader-btn {
     font-size: 0.9375rem;
     color: $gray !important;
     box-shadow: none !important;
-    &:hover {
-      color: $darkGray;
-      background-color: $white;
-      border-color: $white;
+
+    &:hover, &:active, &:focus {
+      color: $darkGray !important;
     }
   }
 

@@ -2,21 +2,23 @@ import { storage } from 'app/app.storage';
 import { ApiResponse } from 'api/api.types';
 import {
   postLogin,
-  postRegister,
-  postFacebookAssociation,
-  getRefreshedAccount,
   getProfile,
+  postRegister,
+  getRefreshedAccount,
   patchChangePassword,
+  postFacebookAssociation,
 } from 'api/request.api';
 
 import { auth } from './auth-context.types';
 import {
-  LoginServicePayload,
-  RegisterServicePayload,
-  FBAssociationPayload,
+  Account,
   Dispatch,
+  LoginServicePayload,
+  FBAssociationPayload,
+  RegisterServicePayload,
   ChangePasswordServicePayload,
 } from './auth.types';
+import { groupByProviderName } from './auth.helper';
 
 export const login = async ({ dispatch, payload }: LoginServicePayload): Promise<ApiResponse> => {
   dispatch({ type: auth.LOGIN });
@@ -67,6 +69,14 @@ export const signup = async ({ dispatch, payload }: RegisterServicePayload): Pro
   return { data, error };
 };
 
+export const pickByProviderName = (data: Account[], count: number = 2) => {
+  const accountByProviderName = groupByProviderName(data);
+
+  const filteredData = Object.values(accountByProviderName).map((accountArr) => accountArr.slice(0, count));
+
+  return filteredData.flat();
+};
+
 export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }): Promise<ApiResponse> => {
   dispatch({ type: auth.FETCH_ACCOUNT });
   const { data, error } = await getRefreshedAccount();
@@ -74,9 +84,12 @@ export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }):
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
+    const pickedData = pickByProviderName(data);
+
     dispatch({
       type: auth.FETCH_ACCOUNT_SUCCESS,
-      payload: { user: data },
+
+      payload: { user: pickedData },
     });
   }
 

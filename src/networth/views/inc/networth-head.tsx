@@ -40,7 +40,7 @@ const NetworthHead = () => {
                               <h5>{account.accountName}</h5>
                               <span>{getRelativeDate(account.balancesFetchedAt)}</span>
                             </div>
-                            <div>${numberWithCommas(fNumber(account.balance))}</div>
+                            <div>${numberWithCommas(fNumber(account.balance, 2))}</div>
                           </Link>
                         </li>
                       )

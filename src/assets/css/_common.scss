@@ -518,3 +518,14 @@ select {
     border: 1px solid $gray;
   }
 }
+
+.dropdown-select-input {
+  .checkbox-list {
+    overflow-x: scroll;
+    max-height: 500px;
+    li {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}
