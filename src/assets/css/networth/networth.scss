@@ -1783,6 +1783,12 @@ footer p {
 .dropdowns-container {
   display: flex !important;
 }
+
+.dflex-center {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
 /** =============================== **/
 /** responsive **/
 /** =============================== **/

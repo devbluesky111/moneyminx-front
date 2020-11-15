@@ -72,7 +72,7 @@ const NetworthFilter = () => {
   return (
     <div className='row'>
       <div className='col-12 dropdowns-container'>
-        <div className='d-flex mb-15'>
+        <div className='dflex-center mb-15'>
           <Dropdown className='drop-box'>
             <Dropdown.Toggle variant=''>All Categories</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
@@ -161,7 +161,7 @@ const NetworthFilter = () => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        <div className='d-flex mb-15'>
+        <div className='dflex-center mb-15'>
           <ReactDatePicker
             selected={fFromDate ? new Date(fFromDate) : null}
             onChange={(date) => onChange('start', date)}
