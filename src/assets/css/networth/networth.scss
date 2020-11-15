@@ -2002,7 +2002,7 @@ footer p {
   }
   .table-holder .table tbody td,
   .table tfoot td {
-    font-size: 14px;
+    font-size: 12px;
   }
   .table-holder .table tbody td:not(:first-child),
   .table-holder .table tfoot td:not(:first-child) {
@@ -2058,18 +2058,18 @@ footer p {
     padding: 10px 0;
   }
   .dropdowns-holder {
-    overflow-y: auto;
+    overflow-x: auto;
     margin-right: -15px;
   }
-  .dropdowns-holder:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 30px;
-    background: linear-gradient(to right, rgba(250, 251, 253, 0.8) 0%, $lightBg 100%);
-  }
+  // .dropdowns-holder:after {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   bottom: 0;
+  //   right: 0;
+  //   width: 30px;
+  //   background: linear-gradient(to right, rgba(250, 251, 253, 0.8) 0%, $lightBg 100%);
+  // }
   .ct-box {
     padding: 20px;
     padding-left: 40px;
