@@ -44,3 +44,23 @@ export const setAccounts = (accounts: Record<AccountCategory, AccountItem[]>) =>
   type: NetworthActionEnum.SET_ACCOUNTS,
   payload: { accounts },
 });
+
+export const setToggleInvestment = (fToggleInvestment: boolean) => ({
+  type: NetworthActionEnum.SET_F_TOGGLE_INVESTMENT,
+  payload: { fToggleInvestment },
+});
+
+export const setToggleOther = (fToggleOther: boolean) => ({
+  type: NetworthActionEnum.SET_F_TOGGLE_OTHER,
+  payload: { fToggleOther },
+});
+
+export const setToggleLiabilities = (fToggleLiabilities: boolean) => ({
+  type: NetworthActionEnum.SET_F_TOGGLE_LIABILITIES,
+  payload: { fToggleLiabilities },
+});
+
+export const setToggleNet = (fToggleNet: boolean) => ({
+  type: NetworthActionEnum.SET_F_TOGGLE_NET,
+  payload: { fToggleNet },
+});

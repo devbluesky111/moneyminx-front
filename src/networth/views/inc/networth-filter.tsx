@@ -8,7 +8,7 @@ import { arrGroupBy, enumerateStr } from 'common/common-helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
 import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
-import { getDate, getMonthYear, getRelativeDate, isAfter } from 'common/moment.helper';
+import { getDate, getMonthYear, getRelativeDate } from 'common/moment.helper';
 
 import {
   setFilterAccount,
@@ -18,7 +18,6 @@ import {
   setFilterTimeInterval,
   setFilterToDate,
 } from 'networth/networth.actions';
-import MMSelect from 'common/components/input/select.input';
 
 const NetworthFilter = () => {
   const dispatch = useNetworthDispatch();
@@ -38,13 +37,13 @@ const NetworthFilter = () => {
     fetchCurrentAccount();
   }, []);
 
-  const onChange = (dates: any) => {
-    const [start, end] = dates;
-
-    dispatch(setFilterFromDate(getDate(start)));
-
-    if (!isAfter(end)) {
-      dispatch(setFilterToDate(end ? getDate(end) : undefined));
+  const onChange = (option: string, date: any) => {
+    if (option === 'start') {
+      dispatch(setFilterFromDate(getDate(new Date(date))));
+    } else if (option === 'end') {
+      if (fFromDate !== undefined && getDate(new Date(date)) > fFromDate) {
+        dispatch(setFilterToDate(getDate(new Date(date))));
+      }
     }
   };
 
@@ -72,38 +71,35 @@ const NetworthFilter = () => {
 
   return (
     <div className='row'>
-      <div className='col-12'>
-        <div className='d-flex dropdowns-holder mb-15 networth-filter-wrapper'>
-          <MMSelect title='All Categories'>
-            <ul className='checkbox-list'>
-              {enumerateStr(AccountCategory).map((cat, index) => {
-                return (
-                  <li key={index}>
-                    <label>
-                      <input
-                        name='category'
-                        type='checkbox'
-                        aria-describedby={cat}
-                        value={cat}
-                        aria-checked={fCategories?.includes(cat)}
-                        checked={fCategories?.includes(cat)}
-                        onChange={handleCategoryChange}
-                      />
-                      <span>{cat}</span>
-                    </label>
-                  </li>
-                );
-              })}
-            </ul>
-          </MMSelect>
+      <div className='col-12 dropdowns-container'>
+        <div className='dflex-center mb-15'>
+          <Dropdown className='drop-box'>
+            <Dropdown.Toggle variant=''>All Categories</Dropdown.Toggle>
+            <Dropdown.Menu className='mm-dropdown-menu'>
+              <ul className='checkbox-list'>
+                {enumerateStr(AccountCategory).map((cat, index) => {
+                  return (
+                    <li key={index}>
+                      <label>
+                        <input
+                          name='category'
+                          type='checkbox'
+                          aria-describedby={cat}
+                          value={cat}
+                          aria-checked={fCategories?.includes(cat)}
+                          checked={fCategories?.includes(cat)}
+                          onChange={handleCategoryChange}
+                        />
+                        <span>{cat}</span>
+                      </label>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Dropdown.Menu>
+          </Dropdown>
           <Dropdown className='drop-box tab-hide'>
-            <Dropdown.Toggle
-              type='button'
-              className='dropdown-toggle'
-              data-toggle='dropdown'
-              aria-haspopup='true'
-              aria-expanded='false'
-            >
+            <Dropdown.Toggle variant=''>
               All Accounts
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
@@ -138,13 +134,7 @@ const NetworthFilter = () => {
           </Dropdown>
 
           <Dropdown className='drop-box'>
-            <Dropdown.Toggle
-              type='button'
-              className='dropdown-toggle'
-              data-toggle='dropdown'
-              aria-haspopup='true'
-              aria-expanded='false'
-            >
+            <Dropdown.Toggle variant=''>
               All Types
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
@@ -170,35 +160,47 @@ const NetworthFilter = () => {
               </ul>
             </Dropdown.Menu>
           </Dropdown>
-
+        </div>
+        <div className='dflex-center mb-15'>
           <ReactDatePicker
             selected={fFromDate ? new Date(fFromDate) : null}
-            onChange={onChange}
-            selectsStart
+            onChange={(date) => onChange('start', date)}
+            // selectsStart
             startDate={fFromDate ? new Date(fFromDate) : null}
-            endDate={fToDate ? new Date(fToDate) : null}
             dateFormat='MM/yyyy'
             showMonthYearPicker
-            selectsRange
+            minDate={new Date('1900-01-01')}
+            maxDate={new Date()}
+            // selectsRange
             customInput={
               <div className='drop-box'>
                 <div className='date-box'>
-                  <input type='text' className='month_year' placeholder={getMonthYear(fFromDate)} />
-                  <span>to </span>
-                  <input type='text' className='month_year' placeholder={getMonthYear(fToDate)} />
+                  <input type='text' className='month_year' value={getMonthYear(fFromDate)} />
                 </div>
               </div>
             }
           />
-
+          <span style={{ marginTop: 'auto', marginBottom: 'auto' }}>to</span>
+          <ReactDatePicker
+            selected={fToDate ? new Date(fToDate) : null}
+            onChange={(date) => onChange('end', date)}
+            // selectsStart
+            startDate={fToDate ? new Date(fToDate) : null}
+            dateFormat='MM/yyyy'
+            showMonthYearPicker
+            minDate={fFromDate ? new Date(fFromDate) : null}
+            maxDate={new Date()}
+            // selectsRange
+            customInput={
+              <div className='drop-box'>
+                <div className='date-box'>
+                  <input type='text' className='month_year' value={getMonthYear(fToDate)} />
+                </div>
+              </div>
+            }
+          />
           <Dropdown className='drop-box'>
-            <Dropdown.Toggle
-              type='button'
-              className='dropdown-toggle'
-              data-toggle='dropdown'
-              aria-haspopup='true'
-              aria-expanded='false'
-            >
+            <Dropdown.Toggle variant=''>
               {fTimeInterval || 'Monthly'}
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu dropsm'>

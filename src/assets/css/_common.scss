@@ -144,15 +144,15 @@ textarea.form-control {
 .drop-box.dropdown {
   border-radius: 4px;
   color: $gray;
-  background: $white;
-  border: 1px solid $grayOpacity24;
+  // background: $white;
+  // border: 1px solid $grayOpacity24;
 
   &:hover,
   &:focus,
   &:active {
     color: $darkGray;
-    border: 1px solid $gray;
-    background: $white;
+    // border: 1px solid $gray;
+    // background: $white;
     box-shadow: none;
   }
 

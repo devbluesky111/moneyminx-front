@@ -177,6 +177,7 @@ button:focus {
   height: 60px;
   position: relative;
   z-index: 999;
+  flex-wrap: nowrap;
 }
 .money-minx-header.menu-fixed {
   position: fixed;
@@ -192,7 +193,6 @@ button:focus {
 }
 .money-minx-header .navbar-brand {
   margin-right: 0;
-  padding: 12px 0;
 }
 .money-minx-header .navbar-brand {
   img, svg {
@@ -202,10 +202,15 @@ button:focus {
 .money-minx-header .headtab {
   margin: 0;
   margin-right: auto;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
+  display: none;
   height: 100%;
+  max-height: 58px;
+
+  @media (min-width: $md) {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  }
 }
 .money-minx-header .navbar-brand + .headtab {
   margin-left: 60px;
@@ -240,7 +245,7 @@ button:focus {
   display: -webkit-flex;
   display: flex;
   height: 100%;
-  padding-bottom: 16px;
+  padding-bottom: 4px;
 
   @media (min-width: $md) {
     padding-bottom: 0;
@@ -269,6 +274,12 @@ button:focus {
   }
 }
 
+a.upgrader-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .upgrader-btn:before {
   content: '';
   position: absolute;
@@ -285,10 +296,19 @@ button:focus {
   position: relative;
   margin: auto 0;
   margin-right: 15px;
+  display: none;
+
+  @media (min-width: $sm) {
+    display: inline-block;
+  }
 }
 
 .upgrader-btn + .badge-box {
-  margin-left: 20px;
+  margin-left: 0;
+
+  @media (min-width: $med) {
+    margin-left: 20px;
+  }
 }
 .upgrader-btn + .badge-box:before {
   content: '';
@@ -304,6 +324,7 @@ button:focus {
 .badge-box span img {
   width: 56px;
   height: 56px;
+  margin-top: 4px;
 }
 .money-minx-header .btn-group .profile-toggle {
   padding: 0;
@@ -337,6 +358,17 @@ button:focus {
     color: $darkGray;
   }
 }
+
+.money-minx-header .btn-group .profile-toggle span + span,
+.money-minx-header .btn-group .profile-toggle:after {
+  display: none;
+
+  @media (min-width: $med) {
+    display: inline-block;
+  }
+
+}
+
 .money-minx-header .btn-group .profile-toggle.show:after {
   transform: rotate(225deg);
   vertical-align: 0;
@@ -353,7 +385,6 @@ button:focus {
   height: 46px;
   border: 2px solid $grayBorder20;
   border-radius: 50%;
-  margin-bottom: 8px;
 
   &:hover {
     border: 2px solid $purpleOpacity50;
@@ -456,6 +487,7 @@ button:focus {
   padding-top: 75px;
   transition: 0.3s all;
   left: -300px;
+  z-index: 10;
 }
 .mobmenu.show {
   left: 0;
@@ -481,8 +513,8 @@ button:focus {
   position: relative;
 }
 .content-head {
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(150, 158, 172, 0.2);
+  padding: 12px 0;
+  border-bottom: 1px solid $grayOpacity20;
 }
 .content-head .container {
   max-width: 1440px;
@@ -536,27 +568,37 @@ button:focus {
   font-size: 1.375rem;
   line-height: 1.375rem;
   border-radius: 50%;
-  padding-bottom: 5px;
+  padding: 0;
 
   &:hover {
     box-shadow: 0 4px 12px $darkPurpleOpacity40;
   }
 }
 .myaccount-drop {
+  position: relative;
   margin-left: 12px;
   color: $gray;
 
+  &:hover {
+    color: $darkGray;
+  }
+
   .dropdown-toggle {
     padding: 0;
-    border: 0;
-    background-color: transparent;
+    border: 0 !important;
+    background-color: transparent !important;
     font-weight: 400;
     font-size: 0.9375rem;
-    color: $gray;
+    color: $gray !important;
+    box-shadow: none !important;
 
-    &:hover {
-      color: $darkGray;
+    &:hover, &:active, &:focus {
+      color: $darkGray !important;
     }
+  }
+
+  .drop-box {
+    width: 300px;
   }
 }
 
@@ -574,7 +616,7 @@ button:focus {
     color: $darkGray;
   }
 }
-.myaccount-drop.show .dropdown-toggle:after {
+.myaccount-drop .show .dropdown-toggle:after {
   transform: rotate(-135deg);
   vertical-align: -2px;
 }
@@ -603,8 +645,6 @@ button:focus {
   }
 }
 
-
-
 .download-btn img {
   margin-right: 5px;
   max-width: 18px;
@@ -616,7 +656,7 @@ button:focus {
   vertical-align: -2px;
 }
 .dropdown-menu {
-  background: $darkBg;
+  background: $darkBg !important;
   border: 0;
   box-shadow: 0 4px 28px rgba(8, 24, 51, 0.44);
   padding: 0;
@@ -627,7 +667,7 @@ button:focus {
   min-width: 240px;
 }
 .dropdown-head {
-  padding: 20px 24px;
+  padding: 20px 24px 10px;
 }
 .dropdown-head h4 {
   font-weight: 600;
@@ -703,6 +743,7 @@ button:focus {
 }
 .dropdown-box ul + ul {
   margin-top: 10px;
+  margin-bottom: 5px;
   padding-top: 10px;
   border-top: 1px solid $grayOpacity24;
 }
@@ -723,7 +764,13 @@ button:focus {
   border-radius: 4px;
   width: auto;
   height: 48px;
-  padding: 0 20px;
+  padding: 0 10px;
+
+  &:focus, &:hover {
+    box-shadow: none;
+    color: $darkGray;
+    border: 1px solid $gray;
+  }
 }
 .drop-box .dropdown-toggle:after {
   width: 8px;
@@ -734,6 +781,13 @@ button:focus {
   transform: rotate(45deg);
   margin-left: 10px;
 }
+
+.drop-box.show .dropdown-toggle:after {
+  transform: rotate(-135deg);
+  vertical-align: 0;
+  transition: 0.3s all;
+}
+
 .drop-box + .drop-box {
   margin-left: 12px;
 }
@@ -752,7 +806,17 @@ button:focus {
   padding: 0;
   position: relative;
   white-space: nowrap;
+  cursor: pointer;
+
+  &:hover{
+    border: 1px solid $gray;
+  }
 }
+.date-box input:focus {
+  color: $darkGray;
+  border: 1px solid $gray;
+}
+
 .date-box > span {
   font-size: 0.875rem;
   display: inline-block;
@@ -760,14 +824,20 @@ button:focus {
   margin-right: 5px;
 }
 .date-box input {
-  padding: 0 20px;
+  padding: 0 10px;
   padding-right: 5px;
   background-color: transparent;
   height: 100%;
   border: 0;
   font-size: 0.875rem;
   color: $gray;
-  max-width: 94px;
+  max-width: 80px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover{
+    color: $darkGray;
+  }
 }
 .date-box input::-webkit-input-placeholder {
   color: $gray;
@@ -857,6 +927,14 @@ button:focus {
 .datepicker-dropdown .table-condensed tbody td span.active {
   background: $purple !important;
 }
+
+.react-datepicker__month-container {
+  color: white !important;
+}
+.react-datepicker__month--disabled {
+  color: $grayOpacity50 !important;
+}
+
 .dropdown-box ul li label input {
   opacity: 0;
   position: absolute;
@@ -900,10 +978,18 @@ button:focus {
   background: $white;
   box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border-radius: 6px;
-  padding: 25px 40px 16px 40px;
+  padding: 25px 20px 16px 20px;
   height: 100%;
   position: relative;
+
+  @media (min-width: $sm) {
+    padding: 20px 8px 20px 8px;
+  }
+  @media (min-width: $med) {
+    padding: 28px 20px 20px 20px;
+  }
 }
+
 .ct-box:before {
   content: '';
   position: absolute;
@@ -946,22 +1032,23 @@ button:focus {
   position: relative;
   cursor: pointer;
 }
+
 .table thead th span:before {
   position: absolute;
   left: -18px;
-  top: 11px;
+  top: 6px;
   content: '';
   width: 8px;
   height: 8px;
   border: 2px solid $gray;
   border-top: 0;
   border-left: 0;
-  transform: rotate(-135deg);
+  transform: rotate(45deg);
   transition: 0.3s all;
 }
 .table thead th span.t-span:before {
-  transform: rotate(45deg);
-  top: 6px;
+  transform: rotate(-135deg);
+  top: 8px;
 }
 .table-holder .table tbody td {
   font-weight: 500;
@@ -970,25 +1057,27 @@ button:focus {
   color: $darkGray;
   padding: 15px 0;
   white-space: nowrap;
-  border-bottom: 1px solid $grayOpacity24;
+  border-bottom: 1px solid $grayOpacity20;
   border-top: none;
 }
 .table thead th.current-m,
 .table tbody td.current-m,
-.table tfoot td.current-m {
+.table tfoot td.current-m,
+.table-holder .table tfoot td.current-m {
   color: $green;
 }
 .table thead th:not(:first-child) {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .table-holder .table tbody td:first-child,
 .table-holder .table tfoot td:first-child {
   font-weight: 600;
+  color: $black;
 }
 .table-holder .table tbody td:not(:first-child),
 .table-holder .table tfoot td:not(:first-child) {
-  padding: 15px 10px;
+  padding: 15px 5px;
 }
 .table-holder .table tfoot td {
   font-weight: 500;
@@ -1010,18 +1099,39 @@ button:focus {
   transition: 0.3s all;
 }
 .table thead th:first-child,
-.table thead th:first-child,
+.table tbody td:first-child,
 .table tfoot td:first-child {
   width: 16%;
+  // padding-left:20px;
 }
 .table thead th:nth-child(2),
 .table tbody td:nth-child(2),
 .table tfoot td:nth-child(2) {
   width: 18%;
 }
-.table-holder .table tbody td:nth-last-of-type(3),
-.table-holder .table tfoot td:nth-last-of-type(3) {
-  background: linear-gradient(90deg, rgba(83, 76, 234, 0.04) 0%, rgba(83, 76, 234, 0) 100%);
+
+.table-holder .table tbody tr:first-child td:nth-last-of-type(3).projection:before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border: solid 2px $grayOpacity30;
+  border-radius: 5px;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  background: $lightBg;
+}
+.table-holder .table tbody td:nth-last-of-type(3).projection,
+.table-holder .table tfoot td:nth-last-of-type(3).projection {
+  background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity03 100%);
+}
+.table-holder .table tbody td:nth-last-of-type(2).projection,
+.table-holder .table tfoot td:nth-last-of-type(2).projection {
+  background: linear-gradient(90deg, $purpleOpacity03 0%, $purpleOpacity02 100%);
+}
+.table-holder .table tbody td:nth-last-of-type(1).projection,
+.table-holder .table tfoot td:nth-last-of-type(1).projection {
+  background: linear-gradient(90deg, $purpleOpacity02 0%, $purpleOpacity00 100%);
 }
 .warning-pop {
   background: $pink;
@@ -1076,6 +1186,9 @@ button:focus {
 .checkbox-list li {
   padding: 10px 24px;
 }
+.checkbox-list li:hover {
+  background: rgba(83, 76, 234, 0.3);
+}
 .checkbox-list li label {
   position: relative;
   padding-left: 30px;
@@ -1128,6 +1241,9 @@ button:focus {
 }
 .radiolist li {
   padding: 10px 24px;
+}
+.radiolist li:hover {
+  background: rgba(83, 76, 234, 0.3);
 }
 .radiolist label {
   position: relative;
@@ -1440,7 +1556,7 @@ ul.charttool li.nw-data:before {
   width: 22px;
   height: 14px;
   border: 0;
-  padding: 0;
+  padding: 0 !important;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
@@ -1454,7 +1570,7 @@ ul.charttool li.nw-data:before {
 .navbar-toggler span {
   width: 100%;
   height: 2px;
-  background: #000;
+  background: $black;
   margin: auto;
   position: relative;
 }
@@ -1468,7 +1584,7 @@ ul.charttool li.nw-data:before {
   margin: auto;
   width: 100%;
   height: 2px;
-  background: #000;
+  background: $black;
   transition-property: margin, -webkit-transform;
   -webkit-transition-duration: 0.2s;
   -o-transition-duration: 0.2s;
@@ -1490,19 +1606,25 @@ ul.charttool li.nw-data:before {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-  -webkit-transition-delay: 0s, 0.2s;
-  -o-transition-delay: 0s, 0.2s;
-  transition-delay: 0s, 0.2s;
-  margin-top: 0px;
+  // -webkit-transition-delay: 0s, 0.5s;
+  // -o-transition-delay: 0s, 0.5s;
+  // transition-delay: 0s, 0.5s;
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+  margin-top: 0;
 }
 .navbar-toggler:not(.collapsed) span:after {
   margin-bottom: 0;
   -webkit-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
-  -webkit-transition-delay: 0s, 0.2s;
-  -o-transition-delay: 0s, 0.2s;
-  transition-delay: 0s, 0.2s;
+  // -webkit-transition-delay: 0s, 0.5s;
+  // -o-transition-delay: 0s, 0.5s;
+  // transition-delay: 0s, 0.5s;
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
   width: 100%;
 }
 .warning-toast {
@@ -1652,6 +1774,30 @@ footer p {
   color: $darkGray;
 }
 
+.table-holder tbody tr td span,
+.table-holder tfoot tr td span {
+  display: none;
+}
+
+.tb-responsive {
+  overflow-x: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: -20px;
+}
+.d-hide {
+  display: none! important;
+}
+
+.dropdowns-container {
+  display: flex !important;
+}
+
+.dflex-center {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
 /** =============================== **/
 /** responsive **/
 /** =============================== **/
@@ -1673,14 +1819,18 @@ footer p {
     transition: 0.3s all;
   }
   .table thead th:first-child,
-  .table thead th:first-child,
+  .table tbody td:first-child,
   .table tfoot td:first-child {
     width: 14%;
+    // padding-left:20px;
   }
   .table thead th:nth-child(2),
   .table tbody td:nth-child(2),
   .table tfoot td:nth-child(2) {
     width: 15%;
+  }
+  .tab-hide {
+    display: none !important;
   }
 }
 
@@ -1694,12 +1844,6 @@ footer p {
 }
 
 @media (max-width: 991px) {
-  .money-minx-header .headtab {
-    display: none;
-  }
-  .money-minx-header .navbar-brand {
-    margin-right: auto;
-  }
   .navbar-toggler {
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -1740,6 +1884,10 @@ footer p {
   }
 }
 
+.table tbody tr td {
+  position: relative;
+  transition: 0.1s all;
+} 
 @media (min-width: 768px) {
   .table tbody tr {
     transition: 0.1s all;
@@ -1753,7 +1901,7 @@ footer p {
     color: $white;
   }
   .table tbody tr:hover td {
-    color: $white;
+    color: $white !important;
     border-bottom-color: transparent;
   }
   .table tbody tr td:first-child:before,
@@ -1780,7 +1928,7 @@ footer p {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: $med) {
   .table-holder .table tbody td:nth-last-of-type(3),
   .table-holder .table tfoot td:nth-last-of-type(3) {
     background: transparent;
@@ -1789,18 +1937,11 @@ footer p {
     min-height: 300px;
   }
   .badge-box,
-  .money-minx-header .headtab {
-    display: none;
-  }
   .money-minx-header .navbar-brand {
     margin-right: auto;
   }
   .upgrader-btn {
     margin-right: 20px;
-  }
-  .money-minx-header .btn-group .profile-toggle span + span,
-  .money-minx-header .btn-group .profile-toggle:after {
-    display: none;
   }
   .graphbox {
     -webkit-flex-direction: column-reverse;
@@ -1859,15 +2000,16 @@ footer p {
   .table-holder .table thead tr th:first-child {
     width: 100% !important;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(150, 158, 172, 0.2);
+    border-bottom: 1px solid $grayOpacity20;
   }
   .table-holder .table tbody tr,
   .table-holder .table tfoot tr {
     display: -webkit-flex;
     display: flex;
+    // justify-content: space-between;
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
-    border-bottom: 1px solid $grayOpacity24;
+    border-bottom: 1px solid $grayOpacity20;
     padding-bottom: 10px;
   }
   .table-holder .table tfoot tr {
@@ -1879,7 +2021,7 @@ footer p {
   }
   .table-holder .table tbody td,
   .table tfoot td {
-    font-size: 14px;
+    font-size: 12px;
   }
   .table-holder .table tbody td:not(:first-child),
   .table-holder .table tfoot td:not(:first-child) {
@@ -1934,32 +2076,27 @@ footer p {
   .table-holder .table tfoot td:not(:first-child) {
     padding: 10px 0;
   }
-  .dropdowns-holder {
-    overflow-y: auto;
-    margin-right: -15px;
-  }
-  .dropdowns-holder:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 30px;
-    background: linear-gradient(to right, rgba(250, 251, 253, 0.8) 0%, $lightBg 100%);
-  }
-  .ct-box {
-    padding: 20px;
-    padding-left: 40px;
+  // .dropdowns-holder {
+  //   overflow-x: auto;
+  //   margin-right: -15px;
+  // }
+  // .dropdowns-holder:after {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   bottom: 0;
+  //   right: 0;
+  //   width: 30px;
+  //   background: linear-gradient(to right, rgba(250, 251, 253, 0.8) 0%, $lightBg 100%);
+  // }
+  .dropdowns-container {
+    display: block !important;
   }
   .mob-btm .ct-box {
     padding: 15px;
   }
   .mob-btm .ct-box.padd-20 {
     padding: 20px;
-  }
-  .money-minx-header .navbar-brand {
-    width: 32px;
-    overflow: hidden;
   }
   footer .container,
   .money-minx-header .container {
@@ -2013,6 +2150,19 @@ footer p {
   }
   .drop-box .dropdown-toggle {
     font-size: 14px;
+  }
+  .table-holder tbody tr td span,
+  .table-holder tfoot tr td span {
+    display: block;
+    color: $gray;
+    font-size: 12px;
+  }
+  .table-holder tbody tr td span.current-m,
+  .table-holder tfoot tr td span.current-m {
+    color: $green;
+  }
+  .hide-type {
+    display:none !important;
   }
 }
 
@@ -2086,12 +2236,5 @@ $start-width: 100%;
     .#{$class-name}-xl-#{$var} {
       -webkit-flex: 0 0 $start-width / $var;
     }
-  }
-}
-
-.networth-filter-wrapper {
-  .react-datepicker-wrapper {
-    width: auto;
-    margin: 0 12px;
   }
 }

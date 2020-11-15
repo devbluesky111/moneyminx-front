@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 import { ReactComponent as Upgrade } from 'assets/icons/upgrade.svg';
 import { ReactComponent as Profile } from 'assets/icons/profile.svg';
@@ -9,15 +9,19 @@ import { ReactComponent as ResourceCenter } from 'assets/icons/resource-center.s
 import { ReactComponent as ManageConnection } from 'assets/icons/manage-connection.svg';
 
 interface NetworthSidebarProps {
-  open: boolean;
+  openLeft: boolean;
+  openRight: boolean;
 }
-const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
+const AppSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => {
+  const { pathname } = useLocation();
+  const sidebarClass = (label: string) => (pathname.includes(label) ? 'mm-sidebar-item active' : 'mm-sidebar-item');
+
   return (
     <>
-      <aside className='profilemenu' style={{ right: open ? 0 : -300 }}>
+      <aside className={ openRight ? 'profilemenu open-slidebar' : 'profilemenu'} style={{ right: openRight ? 0 : -300 }}>
         <ul className='prlist-up mb-0 mt-2'>
           <li>
-            <Link to='/plan'>
+            <Link to='/settings?active=Plan'>
               <Upgrade />
               <i className='icon-upgrade' /> Upgrade
             </Link>
@@ -26,21 +30,21 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
         <hr className='sidebar-custom-hr' />
         <ul className='prlist-pro mb-0'>
           <li>
-            <Link to='/profile'>
+            <Link to='/settings?active=Profile'>
               <Profile />
               <i className='icon-profile' />
               Profile
             </Link>
           </li>
           <li>
-            <Link to='/settings'>
+            <Link to='/settings?active=Settings'>
               <Settings />
               <i className='icon-settings' />
               Settings
             </Link>
           </li>
           <li>
-            <Link to='/connections'>
+            <Link to='/settings?active=Accounts'>
               <ManageConnection />
               <i className='icon-manage-connections' /> Manage Connections
             </Link>
@@ -54,7 +58,7 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
           <li>
             <Link to='/blog'>
               <ResourceCenter />
-              <i className='icon-resource-center' /> Resource Center
+              <i className='icon-resource-center' /> Blog
             </Link>
           </li>
         </ul>
@@ -68,16 +72,14 @@ const NetworthSidebar: React.FC<NetworthSidebarProps> = ({ open }) => {
           </li>
         </ul>
       </aside>
-      <aside className='mobmenu collapse' id='headerMenu'>
+      <aside className='mobmenu collapse' id='headerMenu' style={{ left: openLeft ? 0 : -300 }}>
         <div className='headtab'>
-          <Link to='#' className='active'>
-            Net Worth
-          </Link>
-          <Link to='#'>Allocation</Link>
+          <Link to='/net-worth' className={sidebarClass('net-worth')}>Net Worth</Link>
+          <Link to='/allocation' className={sidebarClass('allocation')}>Allocation</Link>
         </div>
       </aside>
     </>
   );
 };
 
-export default NetworthSidebar;
+export default AppSidebar;

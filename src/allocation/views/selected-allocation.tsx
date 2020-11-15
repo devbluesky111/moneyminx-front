@@ -98,10 +98,10 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                               <td>{al.description}</td>
                               <td>
                                 <span className='d-block'>Allocation</span>
-                                {fNumber(al.per)}%
+                                {fNumber(al.per, 2)}%
                               </td>
                               <td>
-                                <span className='d-block'>Value</span>${fNumber(al.value)}
+                                <span className='d-block'>Value</span>${fNumber(al.value, 2)}
                               </td>
                             </tr>
                           </React.Fragment>
@@ -109,8 +109,8 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                       })}
                       <tr className='mm-allocation-overview__table--footer'>
                         <td>Total</td>
-                        <td>{fNumber(getTotal(allocationKey)?.per || 0)}%</td>
-                        <td>${fNumber(getTotal(allocationKey)?.total || 0)}</td>
+                        <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
+                        <td>${fNumber(getTotal(allocationKey)?.total || 0, 2)}</td>
                       </tr>
                     </React.Fragment>
                   );

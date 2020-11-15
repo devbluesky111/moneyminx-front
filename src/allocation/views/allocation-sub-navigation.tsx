@@ -3,7 +3,6 @@ import React from 'react';
 import { AllocationsFilter } from 'allocation/allocation.enum';
 import { AllocationSubNavigationProps } from 'allocation/allocation.type';
 
-import { ReactComponent as DownloadExcel } from '../../assets/images/allocation/download-excel.svg';
 import { Link } from 'react-router-dom';
 
 export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = ({ onTypeChange, filter }) => {
@@ -123,12 +122,12 @@ export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = (
           </label>
           <div className='mm-radio-bg' />
         </div>
-        <div className='right-box'>
+        {/*<div className='right-box'>
           <button type='button' className='download-btn'>
             <DownloadExcel />
             <span className='sm-hide'>Download</span> <span>CSV</span>
           </button>
-        </div>
+        </div>*/}
       </div>
       </div>
     </section>

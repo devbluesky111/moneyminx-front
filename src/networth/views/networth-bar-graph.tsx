@@ -41,8 +41,8 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth }) => {
           cursor={false}
         />
         <Bar dataKey='investmentAssets' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]}/>
-        <Bar dataKey='liabilities' barSize={10} fill='#29CFD6' radius={[2, 2, 0, 0]}/>
-        <Bar dataKey='otherAssets' barSize={10} fill='#D3365F' radius={[2, 2, 0, 0]}/>
+        <Bar dataKey='otherAssets' barSize={10} fill='#29CFD6' radius={[2, 2, 0, 0]}/>
+        <Bar dataKey='liabilities' barSize={10} fill='#D3365F' radius={[2, 2, 0, 0]}/>
       </BarChart>
     </div>
   );

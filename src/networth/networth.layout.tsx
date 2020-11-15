@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 
 import AppHeader from 'common/app.header';
-import NetworthFooter from 'auth/views/auth.footer';
-import NetworthSidebar from './views/networth-sidebar';
+import AppFooter from 'common/app.footer';
+import AppSidebar from 'common/app.sidebar';
 
 import 'assets/css/networth/networth.scss';
 
 const NetworthLayout: React.FC = ({ children }) => {
-  const [openNav, setOpenNav] = useState<boolean>(false);
+  const [openRightNav, setOpenRightNav] = useState<boolean>(false);
+  const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
 
   return (
     <>
-      <AppHeader toggleMenu={() => setOpenNav(!openNav)} />
-      <NetworthSidebar open={openNav} />
+      <AppHeader
+        toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
+        toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+        open={openRightNav}
+      />
+      <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       {children}
-      <NetworthFooter />
+      <div className='mm-slider-bg-overlay'/>
+      <AppFooter />
     </>
   );
 };
