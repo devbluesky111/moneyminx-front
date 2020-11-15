@@ -55,8 +55,8 @@ export const PricingTable = () => {
     return <CircularSpinner />;
   }
 
-  const monthlyPricingList = subscription?.filter((sub: any) => sub.duration === 'month');
-  const annualPricingList = subscription?.filter((sub: any) => sub.duration === 'year');
+  const monthlyPricingList = subscription?.filter((sub: any) => sub.duration === 'month' && sub.active === true);
+  const annualPricingList = subscription?.filter((sub: any) => sub.duration === 'year' && sub.active === true);
 
   const pricingList = type === 'monthly' ? monthlyPricingList : annualPricingList;
 
@@ -82,8 +82,10 @@ export const PricingTable = () => {
               <div className='price-table' key={index}>
                 <div className='price-heading'>
                   <h2>{pt.name}</h2>
-                  <p>{type === 'yearly' ? `$${pt.price}/Year` : `$${pt.price}/Month`}</p>
-                  {type === 'yearly' ? <span className='save-percentage'>Save ${pt.save}</span> : null}
+                  <p>
+                    {type === 'yearly' ? `$${pt.price}/Year` : `$${pt.price}/Month`}
+                    {type === 'yearly' ? <span className='save-percentage'>Save ${pt.save}</span> : null}
+                  </p>
                 </div>
                 <ul className='features-list'>
                   <li>

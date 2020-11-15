@@ -80,7 +80,7 @@ ul.features-list {
   color: $white;
 }
 
-.price-table:nth-child(2)::before {
+.price-table:nth-child(3)::before {
   content: '';
   width: 100%;
   background: $purple;
@@ -133,7 +133,7 @@ ul.features-list {
   color: $white !important;
 }
 
-.price-table:nth-child(2) .trial-btn {
+.price-table:nth-child(3) .trial-btn {
   background-color: $purple;
   color: $white;
 }
@@ -142,7 +142,7 @@ ul.features-list {
   position: relative;
 }
 
-.price-table:nth-child(2)::after {
+.price-table:nth-child(3)::after {
   content: 'RECOMMENDED';
   position: absolute;
   font-size: 0.6875rem;
@@ -239,7 +239,7 @@ ul.features-list {
     margin: 0 20px;
   }
 
-  .download-btn-wrapper svg:nth-child(2) {
+  .download-btn-wrapper svg:nth-child(3) {
     margin-left: 0 !important;
   }
 }

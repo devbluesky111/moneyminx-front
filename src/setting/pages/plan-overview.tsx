@@ -64,8 +64,8 @@ export const PlanOverview = () => {
     }
   };
 
-  const monthlyPricingList = subscription?.filter((sub: any) => sub.duration === 'month');
-  const annualPricingList = subscription?.filter((sub: any) => sub.duration === 'year');
+  const monthlyPricingList = subscription?.filter((sub: any) => sub.duration === 'month' && sub.active === true);
+  const annualPricingList = subscription?.filter((sub: any) => sub.duration === 'year' && sub.active === true);
 
   const planBtnClasses = 'mm-btn-animate trial-btn ml-3 btn-xs-block';
 
@@ -77,8 +77,8 @@ export const PlanOverview = () => {
         <div className='mm-plan-radios m-auto'>
           <input type='radio' id='mm-plan-month' value='monthly' name='mm-radio-time-interval' checked={type==='month'} />
           <label className='labels' htmlFor='mm-plan-month' onClick={() => setType('month')}>Monthly</label>
-          <input type='radio' id='mm-plan-year' value='annually'  name='mm-radio-time-interval' checked={type==='year'} />
-          <label className='labels' htmlFor='mm-plan-year' onClick={() => setType('year')}>Annually</label>
+          <input type='radio' id='mm-plan-year' value='annually'  name='mm-radio-time-interval' checked={type==='yearly'} />
+          <label className='labels' htmlFor='mm-plan-year' onClick={() => setType('yearly')}>Annually</label>
           <span className='save-text' />
           <div className='mm-radio-bg'/>
           </div>
