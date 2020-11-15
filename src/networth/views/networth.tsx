@@ -243,7 +243,7 @@ const Networth = () => {
                         ):null}
                         <tfoot className={'projection'}>
                           <tr data-href='#'>
-                          <td>Total</td>
+                          <td className={'text--primary'}>Total</td>
                           <td className={[(!fToggleOther?'d-hide':''), `hide-type`].join(' ')}>{''}</td>
                           {networth?.map((nItem, idx) => (
                             <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
@@ -299,7 +299,7 @@ const Networth = () => {
                         ):null}
                         <tfoot className={'projection'}>
                             <tr>
-                              <td>Total</td>
+                              <td className={'text--primary'}>Total</td>
                               <td className={[(!fToggleInvestment?'d-hide':''), `hide-type`].join(' ')}>{''}</td>
                               {networth?.map((nItem, idx) => (
                                 <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>
@@ -325,7 +325,7 @@ const Networth = () => {
                         <thead onClick={toggleNet}>
                           <tr>
                             <th>
-                              <span className={(!fToggleNet?'t-span':'')}>Net Worth</span>
+                              <span className={(!fToggleNet?'t-span text--primary':'text--primary')}>Net Worth</span>
                             </th>
                             <th className='tab-hide'>{''}</th>
                             {networth?.map((nItem, idx) => (
@@ -373,7 +373,7 @@ const Networth = () => {
                         ):null}
                         <tfoot className={'projection'}>
                           <tr>
-                            <td>Net Worth</td>
+                            <td className={'text--primary'}>Net Worth</td>
                             <td className='tab-hide'>{''}</td>
                             {networth?.map((nItem, idx) => (
                               <td key={idx} className={[nItem.type===`projection`&&`projection`, gc(nItem.interval)].join(' ')}>

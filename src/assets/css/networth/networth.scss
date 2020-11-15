@@ -981,7 +981,15 @@ a.upgrader-btn {
   padding: 25px 20px 16px 20px;
   height: 100%;
   position: relative;
+
+  @media (min-width: $sm) {
+    padding: 20px 8px 20px 8px;
+  }
+  @media (min-width: $med) {
+    padding: 28px 20px 20px 20px;
+  }
 }
+
 .ct-box:before {
   content: '';
   position: absolute;
@@ -1028,19 +1036,19 @@ a.upgrader-btn {
 .table thead th span:before {
   position: absolute;
   left: -18px;
-  top: 11px;
+  top: 6px;
   content: '';
   width: 8px;
   height: 8px;
   border: 2px solid $gray;
   border-top: 0;
   border-left: 0;
-  transform: rotate(-135deg);
+  transform: rotate(45deg);
   transition: 0.3s all;
 }
 .table thead th span.t-span:before {
-  transform: rotate(45deg);
-  top: 6px;
+  transform: rotate(-135deg);
+  top: 8px;
 }
 .table-holder .table tbody td {
   font-weight: 500;
@@ -1054,7 +1062,8 @@ a.upgrader-btn {
 }
 .table thead th.current-m,
 .table tbody td.current-m,
-.table tfoot td.current-m {
+.table tfoot td.current-m,
+.table-holder .table tfoot td.current-m {
   color: $green;
 }
 .table thead th:not(:first-child) {
@@ -2082,10 +2091,6 @@ footer p {
   // }
   .dropdowns-container {
     display: block !important;
-  }
-  .ct-box {
-    padding: 20px;
-    padding-left: 40px;
   }
   .mob-btm .ct-box {
     padding: 15px;
