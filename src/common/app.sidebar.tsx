@@ -18,7 +18,7 @@ const AppSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => 
 
   return (
     <>
-      <aside className='profilemenu' style={{ right: openRight ? 0 : -300 }}>
+      <aside className={ openRight ? 'profilemenu open-slidebar' : 'profilemenu'} style={{ right: openRight ? 0 : -300 }}>
         <ul className='prlist-up mb-0 mt-2'>
           <li>
             <Link to='/settings?active=Plan'>

@@ -18,6 +18,7 @@ const NetworthLayout: React.FC = ({ children }) => {
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       {children}
+      <div className='mm-slider-bg-overlay'/>
       <AppFooter />
     </>
   );
