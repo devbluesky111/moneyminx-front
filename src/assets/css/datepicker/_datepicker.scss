@@ -2,7 +2,7 @@
 @import '../variables';
 
 .react-datepicker-popper[data-placement^='bottom'] {
-  margin-top: 0px;
+  margin-top: 0;
 }
 .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle,
 .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle::before {

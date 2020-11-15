@@ -33,6 +33,7 @@ const Allocation: React.FC<AllocationProps> = () => {
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
+      <div className='mm-slider-bg-overlay' />
       <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
       <AppFooter />
     </div>

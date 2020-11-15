@@ -59,6 +59,7 @@ const Settings: React.FC<SettingsProps> = () => {
         <SettingTitleSection handlePageSelect={handlePageSelect} pageTitle={page} />
         {renderTabContent()}
       </div>
+      <div className='mm-slider-bg-overlay' />
       <AppFooter />
     </div>
   );
