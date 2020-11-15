@@ -71,8 +71,8 @@ const NetworthFilter = () => {
 
   return (
     <div className='row'>
-      <div className='col-12'>
-        <div className='d-flex dropdowns-holder mb-15 networth-filter-wrapper'>
+      <div className='col-12 dropdowns-container'>
+        <div className='d-flex mb-15'>
           <Dropdown className='drop-box'>
             <Dropdown.Toggle variant=''>All Categories</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
@@ -160,10 +160,11 @@ const NetworthFilter = () => {
               </ul>
             </Dropdown.Menu>
           </Dropdown>
-
+        </div>
+        <div className='d-flex mb-15'>
           <ReactDatePicker
             selected={fFromDate ? new Date(fFromDate) : null}
-            onChange={(date)=>onChange('start', date)}
+            onChange={(date) => onChange('start', date)}
             // selectsStart
             startDate={fFromDate ? new Date(fFromDate) : null}
             dateFormat='MM/yyyy'
@@ -179,10 +180,10 @@ const NetworthFilter = () => {
               </div>
             }
           />
-          <span style={{marginTop: 'auto', marginBottom: 'auto'}}>to</span>
+          <span style={{ marginTop: 'auto', marginBottom: 'auto' }}>to</span>
           <ReactDatePicker
             selected={fToDate ? new Date(fToDate) : null}
-            onChange={(date)=>onChange('end', date)}
+            onChange={(date) => onChange('end', date)}
             // selectsStart
             startDate={fToDate ? new Date(fToDate) : null}
             dateFormat='MM/yyyy'
@@ -198,7 +199,6 @@ const NetworthFilter = () => {
               </div>
             }
           />
-
           <Dropdown className='drop-box'>
             <Dropdown.Toggle variant=''>
               {fTimeInterval || 'Monthly'}

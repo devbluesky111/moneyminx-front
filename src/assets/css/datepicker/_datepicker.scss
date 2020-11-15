@@ -56,6 +56,11 @@
       }
     }
   }
+
+  &-wrapper {
+    width: auto;
+    margin: 0 12px;
+  }
 }
 
 .react-datepicker__month-container {

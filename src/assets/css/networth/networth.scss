@@ -764,7 +764,7 @@ a.upgrader-btn {
   border-radius: 4px;
   width: auto;
   height: 48px;
-  padding: 0 20px;
+  padding: 0 10px;
 
   &:focus, &:hover {
     box-shadow: none;
@@ -824,14 +824,14 @@ a.upgrader-btn {
   margin-right: 5px;
 }
 .date-box input {
-  padding: 0 20px;
+  padding: 0 10px;
   padding-right: 5px;
   background-color: transparent;
   height: 100%;
   border: 0;
   font-size: 0.875rem;
   color: $gray;
-  max-width: 94px;
+  max-width: 80px;
   border-radius: 4px;
   cursor: pointer;
 
@@ -1779,6 +1779,10 @@ footer p {
 .d-hide {
   display: none! important;
 }
+
+.dropdowns-container {
+  display: flex !important;
+}
 /** =============================== **/
 /** responsive **/
 /** =============================== **/
@@ -2057,10 +2061,10 @@ footer p {
   .table-holder .table tfoot td:not(:first-child) {
     padding: 10px 0;
   }
-  .dropdowns-holder {
-    overflow-y: auto;
-    margin-right: -15px;
-  }
+  // .dropdowns-holder {
+  //   overflow-x: auto;
+  //   margin-right: -15px;
+  // }
   // .dropdowns-holder:after {
   //   content: '';
   //   position: absolute;
@@ -2070,6 +2074,9 @@ footer p {
   //   width: 30px;
   //   background: linear-gradient(to right, rgba(250, 251, 253, 0.8) 0%, $lightBg 100%);
   // }
+  .dropdowns-container {
+    display: block !important;
+  }
   .ct-box {
     padding: 20px;
     padding-left: 40px;
@@ -2218,12 +2225,5 @@ $start-width: 100%;
     .#{$class-name}-xl-#{$var} {
       -webkit-flex: 0 0 $start-width / $var;
     }
-  }
-}
-
-.networth-filter-wrapper {
-  .react-datepicker-wrapper {
-    width: auto;
-    margin: 0 12px;
   }
 }
