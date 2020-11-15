@@ -19,8 +19,9 @@ import useSize from './hooks/useSize';
 interface AppHeaderProps {
   toggleLeftMenu: () => void;
   toggleRightMenu: () => void;
+  open: boolean;
 }
-const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, open }) => {
   const { user } = useAuthState();
   const { pathname } = useLocation();
   const { width } = useSize();
@@ -70,7 +71,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu }
               { subscription?.details?.Name === 'Vip' || subscription?.details?.Name === 'VIP' ? (<img src={VipBadge} alt='Vip badge' />):null}
             </div>
             <div className='btn-group'>
-              <button type='button' className='profile-toggle' onClick={toggleRightMenu}>
+              <button type='button' className={open ? 'profile-toggle open' : 'profile-toggle'} onClick={toggleRightMenu}>
                 <span>
                   <img src={user?.picture || DefaultAvatar} alt='Profile avatar' />
                 </span>

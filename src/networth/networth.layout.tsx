@@ -15,6 +15,7 @@ const NetworthLayout: React.FC = ({ children }) => {
       <AppHeader
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+        open={openRightNav}
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       {children}

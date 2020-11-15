@@ -30,6 +30,7 @@ const Allocation: React.FC<AllocationProps> = () => {
       <AppHeader
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+        open={openRightNav}
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />

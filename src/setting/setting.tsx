@@ -53,6 +53,7 @@ const Settings: React.FC<SettingsProps> = () => {
       <AppHeader
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+        open={openRightNav}
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className={containerClass}>
