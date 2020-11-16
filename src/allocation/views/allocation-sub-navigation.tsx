@@ -3,7 +3,6 @@ import React from 'react';
 import { AllocationsFilter } from 'allocation/allocation.enum';
 import { AllocationSubNavigationProps } from 'allocation/allocation.type';
 
-import { Link } from 'react-router-dom';
 import AppSubHeader from '../../common/app.sub-header';
 
 export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = ({ onTypeChange, filter }) => {

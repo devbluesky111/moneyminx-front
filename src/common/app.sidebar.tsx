@@ -57,7 +57,7 @@ const AppSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => 
             </a>
           </li>
           <li>
-            <a target='_blank' href='https://www.moneyminx.com/blog'>
+            <a target='_blank' href='https://www.moneyminx.com/blog' rel='noopener noreferrer'>
               <ResourceCenter />
               <i className='icon-resource-center' />
               Blog
