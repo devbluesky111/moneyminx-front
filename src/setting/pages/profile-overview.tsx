@@ -12,7 +12,6 @@ import { useAuthState } from 'auth/auth.context';
 import { enumerateStr } from 'common/common-helper';
 import SaveSettings from 'setting/inc/save-settings';
 import ProfilePicture from 'setting/inc/profile-picture';
-import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as Shield } from 'assets/icons/shield.svg';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { HouseHoldIncomeOptions, MaritalStatusOptions, RiskToleranceOptions } from 'setting/setting.enum';
