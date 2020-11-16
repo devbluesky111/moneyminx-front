@@ -192,7 +192,11 @@ button:focus {
   height: 60px;
 }
 .money-minx-header .navbar-brand {
-  margin-right: 0;
+  margin-right: auto;
+
+  @media (min-width: $md) {
+    margin-right: 0;
+  }
 }
 .money-minx-header .navbar-brand {
   img, svg {
@@ -233,7 +237,7 @@ button:focus {
 .headtab a:hover,
 .headtab a.active {
   color: $darkGray;
-  border-bottom: 1.5px solid $purple;
+  border-bottom: 2px solid $purple;
   box-sizing: border-box;
 }
 .headtab a + a {
@@ -568,10 +572,12 @@ a.upgrader-btn {
   font-size: 1.375rem;
   line-height: 1.375rem;
   border-radius: 50%;
-  padding: 0;
+  padding: 4px 0 0 0;
+  text-align: center;
 
   &:hover {
     box-shadow: 0 4px 12px $darkPurpleOpacity40;
+    color: $white;
   }
 }
 .myaccount-drop {
@@ -673,7 +679,7 @@ a.upgrader-btn {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: $redAlert;
+  color: $green;
 }
 .dropdown-box {
   padding-bottom: 10px;
