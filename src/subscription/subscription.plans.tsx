@@ -74,7 +74,19 @@ const SubscriptionPlans = () => {
                       <div className='tick-icon'>
                         <PricingTickIcon />
                       </div>
-                      Early Adopter badge
+                      Support for syncing with over 25,000 institutions
+                    </li>
+                    <li>
+                      <div className='tick-icon'>
+                        <PricingTickIcon />
+                      </div>
+                      Add custom manual accounts, positions and transactions
+                    </li>
+                    <li>
+                      <div className='tick-icon'>
+                        <PricingTickIcon />
+                      </div>
+                      Calculate net worth projections
                     </li>
                     <li>
                       <div className='tick-icon'>
@@ -83,24 +95,20 @@ const SubscriptionPlans = () => {
                       {pt.details[pricingDetailConstant.NAME]} badge
                     </li>
                     <li>
-                      <div className='tick-icon'>
-                        <PricingTickIcon />
+                      <div className=''>
+                        Coming Soon!
                       </div>
-                      New features as being developed
                     </li>
                     <li>
                       <div className='tick-icon'>
                         <PricingTickIcon />
                       </div>
-                      Early adopter access to founders
-                    </li>
-                    <li>
-                      <div className='tick-icon'>
-                        <PricingTickIcon />
-                      </div>
-                      Early adopter access to request new features for consideration
+                      {pt.details[pricingDetailConstant.CURRENCY] === 'USD'
+                        ? 'USD support only '
+                        : `USD, EUR, JPY, CHF and more currencies supported `}
                     </li>
                   </ul>
+
                   <Link to={`/auth/signup?priceId=${pt.priceId}`}>
                     <button className='mm-btn-animate trial-btn ml-3 btn-xs-block'>
                       Start 14 day trial
