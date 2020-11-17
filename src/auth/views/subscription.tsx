@@ -1,13 +1,13 @@
 import React  from 'react';
 
-import {PricingTable} from '../../website/views/pricing'
+import SubscriptionPlans from 'common/subscription.plans'
 import {ReactComponent as SubscriptionWarning} from '../../assets/images/subscription/warning.svg';
 
 const Subscription = ({subscriptionEnded = true}) => {
   return (
     <div className='sub-ended-wrapper'>
       {subscriptionEnded && <PricingTopSection />}
-      <PricingTable />
+      <SubscriptionPlans />
     </div>
   );
 };
