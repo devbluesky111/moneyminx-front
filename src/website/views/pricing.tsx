@@ -28,7 +28,7 @@ export const PricingTopSection = () => {
               <span className='block'>Early adopter </span>pricing (25% off)
             </h1>
             <p className='text'>
-              No credit card needed, sign up now and use Money Minx free for 30 days.
+              No credit card needed, sign up now and use Money Minx free for 14 days.
             </p>
 
             <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
@@ -143,7 +143,7 @@ export const PricingTable = () => {
                 </ul>
                 <Link to={`/auth/signup?priceId=${pt.priceId}`}>
                   <button className='mm-btn-animate trial-btn ml-3 btn-xs-block'>
-                    Start 30 day trial
+                    Start 14 day trial
                   </button>
                 </Link>
               </div>
