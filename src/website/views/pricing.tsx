@@ -3,7 +3,7 @@ import React from 'react';
 import WebsiteLayout from 'website/website.layout';
 import { ReactComponent as PricingPieChart } from 'assets/images/pricing/pricing-pie-chart.svg';
 import { ReactComponent as PricingPieChartMobile } from 'assets/images/pricing/pricing-pie-chart-mobile.svg';
-import SubscriptionPlans from 'common/subscription.plans';
+import SubscriptionPlans from 'subscription/subscription.plans';
 
 const Pricing = () => {
   return (

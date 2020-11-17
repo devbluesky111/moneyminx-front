@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { ReactComponent as PricingTickIcon } from '../assets/images/pricing/tick-icon.svg';
-import { pricingDetailConstant } from './common.constant';
+import { pricingDetailConstant } from '../common/common.constant';
 import { Link } from 'react-router-dom';
 import useGetSubscription from '../auth/hooks/useGetSubscription';
-import CircularSpinner from './components/spinner/circular-spinner';
+import CircularSpinner from '../common/components/spinner/circular-spinner';
 
 const SubscriptionPlans = () => {
 
