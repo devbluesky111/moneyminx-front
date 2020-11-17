@@ -39,7 +39,7 @@ export const appRouteConstants = {
     ACCOUNT: '/account-details/:accountId',
   },
 
-  pricing: {
-    PRICING_DETAILS: '/pricing-details',
+  subscription: {
+    SUBSCRIPTION: '/subscription',
   },
 };

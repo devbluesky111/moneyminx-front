@@ -156,7 +156,7 @@ export const LoginMainSection = () => {
                         if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
                         else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                       }
-                      else return history.push(appRouteConstants.pricing.PRICING_DETAILS);
+                      else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
                     }
 
                     actions.setFieldError(

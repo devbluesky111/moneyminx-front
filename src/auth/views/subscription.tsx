@@ -3,7 +3,7 @@ import React  from 'react';
 import {PricingTable} from '../../website/views/pricing'
 import {ReactComponent as SubscriptionWarning} from '../../assets/images/subscription/warning.svg';
 
-const PricingDetails = ({subscriptionEnded = true}) => {
+const Subscription = ({subscriptionEnded = true}) => {
   return (
     <div className='sub-ended-wrapper'>
       {subscriptionEnded && <PricingTopSection />}
@@ -11,7 +11,7 @@ const PricingDetails = ({subscriptionEnded = true}) => {
     </div>
   );
 };
-export default PricingDetails;
+export default Subscription;
 export const PricingTopSection = () => {
   return (
     <div className='container'>
