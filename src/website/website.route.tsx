@@ -15,6 +15,7 @@ import {
   SubscriptionEnded,
   SubscriptionEndedTwo,
   SubscriptionEndedThree,
+  FeaturesNetWorth
 } from './views';
 
 const {
@@ -30,6 +31,7 @@ const {
   SUBSCRIPTION_ENDED,
   SUBSCRIPTION_ENDED_TWO,
   SUBSCRIPTION_ENDED_THREE,
+  FEATURES_NET_WORTH,
 } = websiteRouteConstant;
 
 function WebsiteRoute() {
@@ -48,6 +50,7 @@ function WebsiteRoute() {
         <Route exact path={SUBSCRIPTION_ENDED} component={SubscriptionEnded} />
         <Route exact path={SUBSCRIPTION_ENDED_TWO} component={SubscriptionEndedTwo} />
         <Route exact path={SUBSCRIPTION_ENDED_THREE} component={SubscriptionEndedThree} />
+        <Route exact path={FEATURES_NET_WORTH} component={FeaturesNetWorth} />
         <Redirect to={NOT_FOUND} />
       </Switch>
     </WebsiteProvider>

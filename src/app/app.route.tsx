@@ -8,7 +8,7 @@ import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
 import AccountRoute from 'account/account.route';
 import { NetworthProvider } from 'networth/networth.context';
-import { Home, TermNService, Notice, Privacy, About, Pricing, Security } from 'website/views';
+import { Home, TermNService, Notice, Privacy, About, Pricing, Security, FeaturesNetWorth } from 'website/views';
 
 import {
   Networth,
@@ -27,6 +27,7 @@ import { ForgotPassword } from 'auth/views';
 const {
   home,
   web: { SECURITY },
+  features: { FEATURES_NET_WORTH },
   account: { ACCOUNT },
   settings: { SETTINGS },
   networth: { NET_WORTH },
@@ -69,6 +70,7 @@ function AppRoute() {
         <Route exact path={FORGOT_PASSWORD} component={ForgotPassword} />
         <Route exact path={SETTINGS} component={Setting} />
         <Route exact path={SECURITY} component={Security} />
+        <Route exact path={FEATURES_NET_WORTH} component={FeaturesNetWorth} />
         <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
         <Route exact path={STRIPE_SUCCESS} component={StripeSuccess} />
         <Route exact path={STRIPE_FAILURE} component={StripeFailure} />
