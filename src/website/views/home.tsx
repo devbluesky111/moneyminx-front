@@ -8,12 +8,13 @@ import { BreakPoint } from 'app/app.constant';
 import WebsiteLayout from 'website/website.layout';
 import { fetchBlogs } from 'website/website.service';
 import { appRouteConstants } from 'app/app-route.constant';
-import HomeBlogImgOne from 'assets/images/home/home-blog-img1.png';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
-import Faraz from 'assets/images/testimonials/faraz-sharafi.jpeg';
 import Joe from 'assets/images/testimonials/joe-magnotti.jpeg';
 import Zahid from 'assets/images/testimonials/zahid-lilani.jpg';
+import Faraz from 'assets/images/testimonials/faraz-sharafi.jpeg';
+import HomeBlogImgOne from 'assets/images/home/home-blog-img1.png';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
+import { ReactComponent as Quotes } from 'assets/images/testimonials/quote.svg';
 import { ReactComponent as FeatureIconOne } from 'assets/images/home/feature-icon1.svg';
 import { ReactComponent as FeatureIconTwo } from 'assets/images/home/feature-icon2.svg';
 import { ReactComponent as FeatureIconSix } from 'assets/images/home/feature-icon6.svg';
@@ -28,7 +29,6 @@ import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-ado
 import { ReactComponent as PerformanceLegend } from 'assets/images/home/performance-legend.svg';
 import { ReactComponent as HomePerformanceChart } from 'assets/images/home/performance-chart.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
-import { ReactComponent as Quotes } from 'assets/images/testimonials/quote.svg';
 
 const Home = () => {
   return (
