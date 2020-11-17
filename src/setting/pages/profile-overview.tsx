@@ -12,10 +12,11 @@ import { useAuthState } from 'auth/auth.context';
 import { enumerateStr } from 'common/common-helper';
 import SaveSettings from 'setting/inc/save-settings';
 import ProfilePicture from 'setting/inc/profile-picture';
-import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as Shield } from 'assets/icons/shield.svg';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { HouseHoldIncomeOptions, MaritalStatusOptions, RiskToleranceOptions } from 'setting/setting.enum';
+import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
+import MMToolTip from '../../common/components/tooltip';
 
 export const ProfileOverview = () => {
   const {
@@ -26,7 +27,7 @@ export const ProfileOverview = () => {
   const { user } = useAuthState();
 
   if (error) {
-    toast('Error occured fetching your profile', { type: 'error' });
+    toast('Error occurred fetching your profile', { type: 'error' });
   }
 
   if (loading || !user) {
@@ -43,7 +44,9 @@ export const ProfileOverview = () => {
           <div className='mm-profile-overview__title'>
             {fullName || 'My Account'}
             <span className='text-primary px-2'>#{user.id}</span>
-            <Info className='mt-n1' />
+            <MMToolTip placement='top' message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'>
+              <InfoIcon className='mt-n1'/>
+            </MMToolTip>
           </div>
           <div className='d-flex align-items-center'>
             <div className='text--gray mr-4 sm-hide'>Profile complete</div>
@@ -138,7 +141,9 @@ export const ProfileOverview = () => {
                     </div>
                     <div className='card-section d-md-flex align-items-center justify-content-between mm-asset-allocation'>
                       <p>Do you want to share your asset allocation on your profile page?
-                        <Info className='mt-n1 ml-2' />
+                        <MMToolTip placement='top' message='Coming Soon. You can share your allocation chart on your profile page to engage in conversations with Money Minx users'>
+                          <InfoIcon className='mt-n1 ml-2'/>
+                        </MMToolTip>
                       </p>
                       <div className='mm-radio-block mr-n2 ml-n2 ml-md-0'>
                         <label className='mm-radio mr-3'>
@@ -169,7 +174,9 @@ export const ProfileOverview = () => {
                     </div>
                     <div className='card-section--last d-md-flex align-items-center justify-content-between'>
                       <p>Do you want to share asset values on your profile page?
-                        <Info className='mt-n1 ml-2' />
+                        <MMToolTip placement='top' message='Coming Soon. If your chart is shared, you can choose to also show amounts in addition to percentages only'>
+                          <InfoIcon className='mt-n1 ml-2'/>
+                        </MMToolTip>
                       </p>
                       <div className='mm-radio-block mr-md-n2 ml-n2 ml-md-0'>
                         <label className='mm-radio mr-3'>
@@ -218,7 +225,9 @@ export const ProfileOverview = () => {
                         <div className='form-group row align-items-center'>
                           <label htmlFor='fname' className='col-md-3 col-form-label'>
                             First Name
-                            <Info className='mt-n1 ml-2' />
+                            <MMToolTip placement='top' message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'>
+                              <InfoIcon className='mt-n1 ml-2'/>
+                            </MMToolTip>
                           </label>
                           <div className='col-md-9'>
                             <input
@@ -234,7 +243,9 @@ export const ProfileOverview = () => {
                         <div className='form-group row align-items-center'>
                           <label htmlFor='lname' className='col-md-3 col-form-label'>
                             Last Name
-                            <Info className='mt-n1 ml-2' />
+                            <MMToolTip placement='top' message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'>
+                              <InfoIcon className='mt-n1 ml-2'/>
+                            </MMToolTip>
                           </label>
                           <div className='col-md-9'>
                             <input
@@ -250,7 +261,9 @@ export const ProfileOverview = () => {
                         <div className='form-group row align-items-center'>
                           <label htmlFor='username' className='col-md-3 col-form-label'>
                             Username
-                            <Info className='mt-n1 ml-2' />
+                            <MMToolTip placement='top' message='Your username will be your profile URL when profiles and conversations launch, you will be able to change this and turn it off at any time'>
+                              <InfoIcon className='mt-n1 ml-2'/>
+                            </MMToolTip>
                           </label>
                           <div className='col-md-9'>
                             <div className='mm-prepend-text text--gray'>@</div>
@@ -318,7 +331,9 @@ export const ProfileOverview = () => {
                 <div className='card-body'>
                   <div className='mm-profile-overview__title mm-profile-overview__profile-page'>
                     Specialized Intelligence
-                    <Info className='mt-n1 ml-2' />
+                    <MMToolTip placement='top' message='Money Minx is working on a machine learning algorithm that will help investors compare their results to others. If you fill your profile, you will be able to get better insights and comparisons'>
+                      <InfoIcon className='mt-n1 ml-2'/>
+                    </MMToolTip>
                     <Shield className='float-right mt-1' />
                     <div className='card-sub-title'>
                       Enter your data below and opt-in for specialized insights including Minks Winks and Minks
