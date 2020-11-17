@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
+
+import { Account } from 'auth/auth.types';
+import { getAccount } from 'api/request.api';
 import { getRelativeDate } from './moment.helper';
 import { fNumber, numberWithCommas } from './number.helper';
-import { Account } from '../auth/auth.types';
-import { getAccount } from '../api/request.api';
 
 const AppSubHeader = () => {
   const [currentAccount, setCurrentAccount] = useState<Account[]>();
