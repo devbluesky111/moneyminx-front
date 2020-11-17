@@ -38,4 +38,8 @@ export const appRouteConstants = {
   account: {
     ACCOUNT: '/account-details/:accountId',
   },
+
+  subscription: {
+    SUBSCRIPTION: '/subscription',
+  },
 };
