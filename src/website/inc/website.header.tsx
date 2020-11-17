@@ -3,7 +3,6 @@ import useSize from 'common/hooks/useSize';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { ReactComponent as Beta } from 'assets/icons/beta.svg';
-import { ReactComponent as Cross } from 'assets/icons/cross.svg';
 import { ReactComponent as MoneyMinxLogoMobile } from 'assets/icons/money-minx-logo-mobile.svg';
 
 interface LeftMenuType {
@@ -38,7 +37,7 @@ const WebsiteHeader = () => {
       </div>
 
       <div className='right-menu-wrapper'>
-        <div className={`${expand === 'all' ? 'expand-all' : 'expand-none'}`}>
+        <div className={`${expand === 'all' ? 'expand-all nav-none' : 'expand-all nav-all'}`}>
           <div className={`menu-btn-wrapper`}>
             <div className={`menu-list-wrapper ${expand === 'menus' ? 'expand-menu' : ''}`}>
               <div className='mm-navbar-logo d-flex justify-content-between d-block d-md-none'>
@@ -46,7 +45,6 @@ const WebsiteHeader = () => {
                   <MoneyMinxLogoMobile className='mr-3' />
                   <Beta />
                 </div>
-                <Cross onClick={handleToggleMenu} className='mr-1' />
               </div>
               <ul className='navbar-nav mr-auto navbar-menu-list'>
                 <li className={navClass('pricing')}>
@@ -86,8 +84,13 @@ const WebsiteHeader = () => {
         </div>
       </div>
 
-      <div className='mm-navbar-icon mr-4 d-block d-md-none'>
-        <span className='navbar-toggler-icon' onClick={handleToggleMenu} />
+      <div className='mm-navbar-icon mr-4'>
+        <div className='mm-menuToggle'>
+          <input type='checkbox' onClick={handleToggleMenu} />
+          <span/>
+          <span/>
+          <span/>
+        </div>
       </div>
     </nav>
   );
