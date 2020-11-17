@@ -1,7 +1,7 @@
 import React  from 'react';
 
 import SubscriptionPlans from 'subscription/subscription.plans'
-import {ReactComponent as SubscriptionWarning} from '../../assets/images/subscription/warning.svg';
+import {ReactComponent as SubscriptionWarning} from 'assets/images/subscription/warning.svg';
 
 const Subscription = ({subscriptionEnded = true}) => {
   return (

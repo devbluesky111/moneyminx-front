@@ -41,5 +41,3 @@ export const PricingTopSection = () => {
     </div>
   );
 };
-
-
