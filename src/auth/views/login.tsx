@@ -156,7 +156,7 @@ export const LoginMainSection = () => {
                         if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
                         else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                       }
-                      else toast('Subscription page is under construction. Just wait for one more day.', { type: 'error' });
+                      else return history.push(appRouteConstants.pricing.PRICING_DETAILS);
                     }
 
                     actions.setFieldError(

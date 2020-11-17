@@ -1,5 +1,6 @@
 export { default as TokenExpired } from 'auth/views/expired-link';
 export { default as AccountSetting } from 'auth/views/account-setting';
+export { default as PricingDetails } from 'auth/views/pricing-details';
 export { default as ConnectAccount } from 'auth/views/connect-account';
 export { default as ResetPassword } from 'auth/views/create-new-password';
 export { default as StripeSuccess } from 'setting/pages/stripe-checkout-success';

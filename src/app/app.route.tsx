@@ -18,6 +18,7 @@ import {
   StripeFailure,
   AccountSetting,
   ConnectAccount,
+  PricingDetails
 } from './app.view';
 
 import { appRouteConstants } from './app-route.constant';
@@ -29,6 +30,7 @@ const {
   web: { SECURITY },
   account: { ACCOUNT },
   settings: { SETTINGS },
+  pricing: { PRICING_DETAILS },
   networth: { NET_WORTH },
   allocation: { ALLOCATION },
   misc: { STRIPE_FAILURE, STRIPE_SUCCESS },
@@ -68,6 +70,7 @@ function AppRoute() {
         <Route exact path={'/terms'} component={TermNService} />
         <Route exact path={FORGOT_PASSWORD} component={ForgotPassword} />
         <Route exact path={SETTINGS} component={Setting} />
+        <Route exact path={PRICING_DETAILS} component={PricingDetails} />
         <Route exact path={SECURITY} component={Security} />
         <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
         <Route exact path={STRIPE_SUCCESS} component={StripeSuccess} />
