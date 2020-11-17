@@ -105,14 +105,12 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
         <div className='card-body'>
           <form>
             <div className='mm-setting-card--title'>Security</div>
-
-            <div className='mm-setting-form form-group row mt-3'>
-              <label className='col-md-3 col-form-label'>Email Address</label>
-              <div className='col-md-9'>
-                <input type='email' className='mm-form-field' placeholder='Enter email' value={user?.email} />
-              </div>
+            <div className='mm-setting-form row'>
+              <label className='col-5 col-md-3 col-form-label'>Email Address</label>
+              <span className='col-7 col-md-4 mm-setting-form-info col-form-label ml-0 mb-4'>
+                {user?.email}
+              </span>
             </div>
-
             <div className='mm-setting-form form-group row'>
               <label className='col-5 col-md-3 col-form-label'>Password</label>
               <span className='col-7 col-md-3 mm-setting-form-info col-form-label ml-0 mb-4'>
