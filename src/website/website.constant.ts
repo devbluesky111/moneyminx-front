@@ -16,4 +16,5 @@ export const websiteRouteConstant = {
   LOGIN_SESSION_EXPIRED: '/w/login-session-expired',
   SUBSCRIPTION_ENDED_TWO: '/w/subscription-ended-two',
   SUBSCRIPTION_ENDED_THREE: '/w/subscription-ended-three',
+  FEATURES_NET_WORTH: '/w/features-net-worth',
 };

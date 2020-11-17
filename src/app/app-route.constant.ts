@@ -29,6 +29,10 @@ export const appRouteConstants = {
     SECURITY: '/security',
   },
 
+  features: {
+    FEATURES_NET_WORTH: '/features/net-worth',
+  },
+
   misc: {
     NOT_FOUND: '/404',
     STRIPE_SUCCESS: '/stripe/success',

@@ -8,9 +8,13 @@ import { BreakPoint } from 'app/app.constant';
 import WebsiteLayout from 'website/website.layout';
 import { fetchBlogs } from 'website/website.service';
 import { appRouteConstants } from 'app/app-route.constant';
+import Joe from 'assets/images/testimonials/joe-magnotti.jpeg';
+import Zahid from 'assets/images/testimonials/zahid-lilani.jpg';
+import Faraz from 'assets/images/testimonials/faraz-sharafi.jpeg';
 import HomeBlogImgOne from 'assets/images/home/home-blog-img1.png';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
+import { ReactComponent as Quotes } from 'assets/images/testimonials/quote.svg';
 import { ReactComponent as FeatureIconOne } from 'assets/images/home/feature-icon1.svg';
 import { ReactComponent as FeatureIconTwo } from 'assets/images/home/feature-icon2.svg';
 import { ReactComponent as FeatureIconSix } from 'assets/images/home/feature-icon6.svg';
@@ -31,14 +35,15 @@ const Home = () => {
     <WebsiteLayout>
       <div className='mm-new-container'>
         <HomeTopSection />
-        <HomeEarlyAdopterSection />
+        {/*<HomeEarlyAdopterSection />*/}
         <HomeFeatureSection />
-        <HomeBlogSection />
+        <HomeTestimonials />
         <HomeNetWorthSection />
         <HomeAllocationSection />
         <HomePerformanceSection />
         <MinxWinksSection />
         <MinxMeasureSection />
+        <HomeBlogSection />
       </div>
     </WebsiteLayout>
   );
@@ -194,6 +199,43 @@ export const HomeFeatureSection = () => {
     </section>
   );
 };
+
+export const HomeTestimonials = () => {
+  return (
+    <section className='testimonial'>
+      <div className=''>
+        <h3 className='black title-in-post'>What users are saying</h3>
+        <div className='testimonial-row'>
+          <div className='testimonial-block'>
+            <Quotes className='testimonial-quote'/>
+            <div className='testimonial-card'>
+              <p>I am most looking forward to seeing the fancy charts telling me where my money is at!</p>
+            </div>
+            <img className='testimonial-user' src={Joe} alt='Joe Magnotti'/>
+            <div className='testimonial-name'>Joe Magnotti <span>Empire Flippers</span></div>
+          </div>
+          <div className='testimonial-block'>
+            <Quotes className='testimonial-quote'/>
+            <div className='testimonial-card'>
+              <p>I am most excited to see the accumulated value of my portfolio with a future forecast.</p>
+            </div>
+            <img className='testimonial-user' src={Faraz} alt='Faraz Sharafi'/>
+            <div className='testimonial-name'>Faraz Sharafi <span>Intuit</span></div>
+          </div>
+          <div className='testimonial-block'>
+            <Quotes className='testimonial-quote'/>
+            <div className='testimonial-card'>
+              <p>I am looking forward to learning about my income projections based on my dividend portfolio.</p>
+            </div>
+            <img className='testimonial-user' src={Zahid} alt='Zahid Lilani'/>
+            <div className='testimonial-name'>Zahid Lilani <span>Dividend.fun</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 
 export const HomeBlogSection = () => {
   const { width } = useSize();
