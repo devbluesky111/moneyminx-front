@@ -13,6 +13,7 @@ export const urls = {
     PROFILE_PICTURE: '/profile/picture',
     ACCOUNTS: '/account/me?refresh=false',
     ACCOUNTS_REFRESH: '/account/me?refresh=true',
+    ACCOUNTS_COUNT: '/account/me/counts',
     ACCOUNT_CATEGORY: '/account/category',
     ACCOUNT_TYPE: '/account/account-type',
     ASSOCIATE_LOGIN: '/facebook/associate',

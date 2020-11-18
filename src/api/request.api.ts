@@ -68,6 +68,10 @@ export const getRefreshedAccount = () => {
   return http.get(urls.auth.ACCOUNTS_REFRESH);
 };
 
+export const getAccountsCount = () => {
+  return http.get(urls.auth.ACCOUNTS_COUNT);
+};
+
 export const getAccount = (): Promise<ApiResponse> => {
   return http.get(urls.auth.ACCOUNTS);
 };
