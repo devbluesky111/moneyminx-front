@@ -50,16 +50,18 @@ const AppSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => 
             </Link>
           </li>
           <li>
-            <Link to='mailto:hello@moneyminx.com'>
+            <a href='mailto:hello@moneyminx.com?subject=Money%20Minx%20Help'>
               <Support />
-              <i className='icon-support' /> Support
-            </Link>
+              <i className='icon-support' />
+              Support
+            </a>
           </li>
           <li>
-            <Link to='/blog'>
+            <a target='_blank' href='https://www.moneyminx.com/blog' rel='noopener noreferrer'>
               <ResourceCenter />
-              <i className='icon-resource-center' /> Blog
-            </Link>
+              <i className='icon-resource-center' />
+              Blog
+            </a>
           </li>
         </ul>
         <hr className='sidebar-custom-hr' />

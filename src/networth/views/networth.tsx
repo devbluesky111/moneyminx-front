@@ -391,6 +391,7 @@ const Networth = () => {
             ) : null}
           </div>
         </div>
+        {/*Todo show an alert when connections are broken with count of broken connections*/}
         {/*<ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />*/}
       </section>
     </NetworthLayout>
