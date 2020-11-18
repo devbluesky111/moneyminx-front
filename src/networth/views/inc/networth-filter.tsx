@@ -171,6 +171,7 @@ const NetworthFilter = () => {
             showMonthYearPicker
             minDate={new Date('1900-01-01')}
             maxDate={new Date()}
+            className='m-l-3'
             // selectsRange
             customInput={
               <div className='drop-box'>
@@ -180,7 +181,7 @@ const NetworthFilter = () => {
               </div>
             }
           />
-          <span style={{ marginTop: 'auto', marginBottom: 'auto' }}>to</span>
+          <span className='date-separator'>to</span>
           <ReactDatePicker
             selected={fToDate ? new Date(fToDate) : null}
             onChange={(date) => onChange('end', date)}
@@ -190,6 +191,7 @@ const NetworthFilter = () => {
             showMonthYearPicker
             minDate={fFromDate ? new Date(fFromDate) : null}
             maxDate={new Date()}
+            className='m-l-1'
             // selectsRange
             customInput={
               <div className='drop-box'>
@@ -199,7 +201,7 @@ const NetworthFilter = () => {
               </div>
             }
           />
-          <Dropdown className='drop-box'>
+          <Dropdown className='drop-box m-l-2'>
             <Dropdown.Toggle variant=''>
               {fTimeInterval || 'Monthly'}
             </Dropdown.Toggle>
