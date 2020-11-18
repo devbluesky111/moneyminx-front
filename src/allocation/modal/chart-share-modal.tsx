@@ -87,7 +87,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
   };
 
   return (
-    <Modal {...chartShareModal.props} title='Share' size='mdx' canBeClosed onClose={() => chartShareModal.close()}>
+    <Modal {...chartShareModal.props} title='Share' size='lg' canBeClosed onClose={() => chartShareModal.close()}>
       <div className='modal-wrapper chart-setting-modal mm-setting-modal'>
         <div className='allocation-share-card-wrapper'>
           <div id='allocation-share-card'>
@@ -163,7 +163,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
           <div className='outline-button-wrapper'>
             <button
               className='btn-outline-primary mm-btn-animate'
-              onClick={() => df('allocation-share-card', 'my-awesome-allocation')}
+              onClick={() => df('allocation-share-card', settings?.title || 'My awesome chart')}
             >
               Download
             </button>

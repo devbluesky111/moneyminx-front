@@ -11,7 +11,7 @@ export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = (
       <div className='content-head'>
         <div className='container'>
         <AppSubHeader/>
-        <div className='center-box mm-plan-radios mm-allocation-radios mm-allocation-sub-navigation__category'>
+        <div className='mm-plan-radios mm-allocation-radios mm-allocation-sub-navigation__category'>
           <input
             type='radio'
             id='mm-allocation-type'

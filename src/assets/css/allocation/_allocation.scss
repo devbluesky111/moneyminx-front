@@ -319,19 +319,7 @@
   }
 }
 
-.allocation-chart-wrapper {
-  width: 300px;
-  height: 300px;
-  text-align: center;
-  vertical-align: center;
-
-  @media (min-width: $md) {
-    width: 440px;
-    height: 440px;
-  }
-}
-
-.mm-allocation-legend-wrapper {
+.allocation-legend-wrapper {
   padding: 1rem 0;
   overflow-x: scroll;
 
@@ -348,6 +336,7 @@
     display: flex;
     cursor: pointer;
     align-items: center;
+    justify-content: space-between;
     margin: 0.5rem 0;
 
     &:hover {
@@ -358,7 +347,18 @@
       display: inline-block;
       width: 18px;
       height: 18px;
+      max-width: 18px;
       border-radius: 2px;
+      margin-top: 6px;
+    }
+
+    .legend-label {
+      text-align: left;
+    }
+
+    .legend-amount {
+      text-align: right;
+      float: right;
     }
 
     span {
@@ -409,6 +409,10 @@
   padding: 1.25rem;
   position: relative;
   margin-bottom: 20px;
+
+  @media (min-width: $md) {
+    width: 100%;
+  }
 }
 
 .allocation-share-card-heading {
@@ -448,22 +452,18 @@
 }
 
 .allocation-share-card-wrapper {
+
   .allocation-chart-wrapper {
-    width: 300px;
-    height: 300px;
-    text-align: center;
-    vertical-align: center;
+    width: 50%;
+  }
+
+  .allocation-legend-wrapper {
+    overflow-x: initial;
   }
 
   .chart-legend-wrapper {
-    display: flex;
-    flex-direction: column;
-
-    @media (min-width: $sm) {
-      display: inline-flex;
-      overflow: hidden;
-      flex-direction: row;
-    }
+    display: inline-flex;
+    width: 100%;
 
     .recharts-wrapper {
       width: 240px !important;
@@ -479,12 +479,14 @@
     }
 
     .legend-row {
-      display: flex;
+      display: inline-flex;
       width: 100%;
+      margin: 0;
 
       .legend-color-box {
         width: 12px;
         height: 12px;
+        max-width: 12px;
         padding-left: 0;
         margin-top: 4px;
       }
@@ -497,6 +499,11 @@
       .legend-amount {
         display: inline-block;
         padding: 0;
+      }
+
+      &:hover {
+        color: $gray;
+        cursor: default;
       }
     }
   }
