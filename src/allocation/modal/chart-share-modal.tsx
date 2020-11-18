@@ -163,7 +163,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
           <div className='outline-button-wrapper'>
             <button
               className='btn-outline-primary mm-btn-animate'
-              onClick={() => df('allocation-share-card', 'my-awesome-allocation')}
+              onClick={() => df('allocation-share-card', settings?.title || 'My awesome chart')}
             >
               Download
             </button>
