@@ -8,7 +8,7 @@ import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
 import AccountRoute from 'account/account.route';
 import { NetworthProvider } from 'networth/networth.context';
-import { Home, TermNService, Notice, Privacy, About, Pricing, Security } from 'website/views';
+import { Home, TermNService, Notice, Privacy, About, Pricing, Security, FeaturesNetWorth } from 'website/views';
 
 import {
   Networth,
@@ -18,7 +18,7 @@ import {
   StripeFailure,
   AccountSetting,
   ConnectAccount,
-  PricingDetails
+  Subscription
 } from './app.view';
 
 import { appRouteConstants } from './app-route.constant';
@@ -28,9 +28,10 @@ import { ForgotPassword } from 'auth/views';
 const {
   home,
   web: { SECURITY },
+  features: { FEATURES_NET_WORTH },
   account: { ACCOUNT },
   settings: { SETTINGS },
-  pricing: { PRICING_DETAILS },
+  subscription: { SUBSCRIPTION },
   networth: { NET_WORTH },
   allocation: { ALLOCATION },
   misc: { STRIPE_FAILURE, STRIPE_SUCCESS },
@@ -70,8 +71,9 @@ function AppRoute() {
         <Route exact path={'/terms'} component={TermNService} />
         <Route exact path={FORGOT_PASSWORD} component={ForgotPassword} />
         <Route exact path={SETTINGS} component={Setting} />
-        <Route exact path={PRICING_DETAILS} component={PricingDetails} />
+        <Route exact path={SUBSCRIPTION} component={Subscription} />
         <Route exact path={SECURITY} component={Security} />
+        <Route exact path={FEATURES_NET_WORTH} component={FeaturesNetWorth} />
         <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
         <Route exact path={STRIPE_SUCCESS} component={StripeSuccess} />
         <Route exact path={STRIPE_FAILURE} component={StripeFailure} />

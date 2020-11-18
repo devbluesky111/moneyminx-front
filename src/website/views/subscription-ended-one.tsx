@@ -100,7 +100,7 @@ export const PricingTable = () => {
               </li>
             </ul>
             <button className='mm-btn-animate trial-btn bg-white text-primary ml-3 btn-xs-block'>
-              Start 30 day trial
+              Start 14 day trial
             </button>
           </div>
           <div className='price-table'>
@@ -165,7 +165,7 @@ export const PricingTable = () => {
               </li>
             </ul>
             <button className='mm-btn-animate trial-btn bg-white text-primary ml-3 btn-xs-block'>
-              Start 30 day trial
+              Start 14 day trial
             </button>
           </div>
           <div className='price-table'>
@@ -230,7 +230,7 @@ export const PricingTable = () => {
               </li>
             </ul>
             <button className='mm-btn-animate trial-btn bg-white text-primary ml-3 btn-xs-block'>
-              Start 30 day trial
+              Start 14 day trial
             </button>
           </div>
           <div className='price-table'>
@@ -295,7 +295,7 @@ export const PricingTable = () => {
               </li>
             </ul>
             <button className='mm-btn-animate trial-btn bg-white text-primary ml-3 btn-xs-block'>
-              Start 30 day trial
+              Start 14 day trial
             </button>
           </div>
         </div>

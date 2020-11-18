@@ -14,7 +14,7 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import NetworthHead from './inc/networth-head';
 import NetworthBarGraph from './networth-bar-graph';
 import NetworthFilter from './inc/networth-filter';
-import ConnectionAlert from './inc/connection-alert';
+/*import ConnectionAlert from './inc/connection-alert';*/
 import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
 
 import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
@@ -391,7 +391,8 @@ const Networth = () => {
             ) : null}
           </div>
         </div>
-        <ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />
+        {/*Todo show an alert when connections are broken with count of broken connections*/}
+        {/*<ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />*/}
       </section>
     </NetworthLayout>
   );

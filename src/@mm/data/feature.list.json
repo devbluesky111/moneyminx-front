@@ -2,8 +2,8 @@
   "title": "Features",
   "list": [
     {
-      "name": "Holdings",
-      "link": "/about"
+      "name": "Net Worth Tracker",
+      "link": "/features/net-worth"
     },
     {
       "name": "Allocations",

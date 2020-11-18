@@ -29,6 +29,10 @@ export const appRouteConstants = {
     SECURITY: '/security',
   },
 
+  features: {
+    FEATURES_NET_WORTH: '/features/net-worth',
+  },
+
   misc: {
     NOT_FOUND: '/404',
     STRIPE_SUCCESS: '/stripe/success',
@@ -39,7 +43,7 @@ export const appRouteConstants = {
     ACCOUNT: '/account-details/:accountId',
   },
 
-  pricing: {
-    PRICING_DETAILS: '/pricing-details',
+  subscription: {
+    SUBSCRIPTION: '/subscription',
   },
 };

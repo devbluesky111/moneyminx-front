@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 
-import {ReactComponent as SubscriptionWarning} from '../../assets/images/subscription/warning.svg';
+import {ReactComponent as SubscriptionWarning} from 'assets/images/subscription/warning.svg';
 import useGetSubscription from '../hooks/useGetSubscription';
 import CircularSpinner from '../../common/components/spinner/circular-spinner';
-import {ReactComponent as PricingTickIcon} from '../../assets/images/pricing/tick-icon.svg';
+import {ReactComponent as PricingTickIcon} from 'assets/images/pricing/tick-icon.svg';
 import {pricingDetailConstant} from '../../common/common.constant';
 import {getAccountsCount, postSubscriptionCheckout} from 'api/request.api';
 import {useHistory} from 'react-router-dom';
@@ -13,15 +13,15 @@ import appEnv from '../../app/app.env';
 
 const stripePromise = loadStripe(appEnv.STRIPE_PUBLIC_KEY);
 
-const PricingDetails = ({subscriptionEnded = true}) => {
+const Subscription = ({subscriptionEnded = true}) => {
   return (
     <div className='sub-ended-wrapper'>
       {subscriptionEnded && <PricingTopSection />}
-      <PricingTable />
+      <SubscriptionPlansTable />
     </div>
   );
 };
-export default PricingDetails;
+export default Subscription;
 export const PricingTopSection = () => {
   return (
     <div className='container'>
@@ -40,7 +40,7 @@ export const PricingTopSection = () => {
   );
 };
 
-const PricingTable = () => {
+const SubscriptionPlansTable = () => {
   const history = useHistory();
   const [type, setType] = useState<string>('monthly');
   const [connectedAccountState, setConnectedAccounts] = useState<number>(0);
