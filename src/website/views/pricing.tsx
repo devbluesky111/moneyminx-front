@@ -21,7 +21,7 @@ export const PricingTopSection = () => {
         <div className='col-lg-5'>
           <div className='pricing-left-banner'>
             <h1>
-              <span className='block'>Early adopter </span>pricing (25% off)
+              <span className='block'>Get started with a free trial!</span>
             </h1>
             <p className='text'>
               No credit card needed, sign up now and use Money Minx free for 14 days.
