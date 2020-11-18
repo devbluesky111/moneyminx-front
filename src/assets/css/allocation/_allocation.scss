@@ -409,6 +409,8 @@
   padding: 1.25rem;
   position: relative;
   margin-bottom: 20px;
+  width: 555px;
+  overflow: scroll;
 }
 
 .allocation-share-card-heading {
@@ -448,6 +450,9 @@
 }
 
 .allocation-share-card-wrapper {
+  position: relative;
+  overflow: scroll;
+
   .allocation-chart-wrapper {
     width: 300px;
     height: 300px;
@@ -463,6 +468,10 @@
       display: inline-flex;
       overflow: hidden;
       flex-direction: row;
+    }
+
+    @media (min-width: $lg) {
+      overflow: hidden;
     }
 
     .recharts-wrapper {

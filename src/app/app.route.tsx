@@ -18,7 +18,7 @@ import {
   StripeFailure,
   AccountSetting,
   ConnectAccount,
-  Subscription
+  Subscription,
 } from './app.view';
 
 import { appRouteConstants } from './app-route.constant';
