@@ -411,6 +411,10 @@
   margin-bottom: 20px;
   width: 555px;
   overflow: scroll;
+
+  @media (min-width: $md) {
+    width: 100%;
+  }
 }
 
 .allocation-share-card-heading {
