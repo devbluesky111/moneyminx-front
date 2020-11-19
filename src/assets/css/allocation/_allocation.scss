@@ -185,11 +185,38 @@
       }
     }
 
+    &--title-collapse {
+      &:after {
+        margin-top: 12px !important;
+        transform: rotate(225deg) !important;
+      }
+    }
+
     &--title {
       font-weight: 600;
       font-size: 1.25rem;
       padding-top: 2rem;
       padding-bottom: 1.25rem;
+
+      span {
+        &:first-child {
+          &:after {
+            width: 8px;
+            left: 10px;
+            content: '';
+            height: 8px;
+            border-top: 0;
+            border-left: 0;
+            margin-top: 8px;
+            position: absolute;
+            vertical-align: 3px;
+            transition: 0.3s all;
+            display: inline-block;
+            transform: rotate(45deg);
+            border: 1.5px solid #969eac;
+          }
+        }
+      }
     }
 
     &--data-row {

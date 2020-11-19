@@ -81,9 +81,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                         <tbody>
                           <tr>
                             <td className='mm-allocation-overview__table--title'>
-                              <span onClick={() => toggleAllocation(allocationKey)} role='button'>
-                                ^
-                              </span>
+                              <span className={isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''} onClick={() => toggleAllocation(allocationKey)} role='button' />
                               <span onClick={() => fieldChangeModal.open()} role='button'>
                                 {allocationKey}
                               </span>

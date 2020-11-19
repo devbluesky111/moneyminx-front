@@ -96,9 +96,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                     <tbody>
                       <tr>
                         <td className='mm-allocation-overview__table--title'>
-                          <span onClick={() => toggleAllocation(allocationKey)} role='button'>
-                            ^
-                          </span>
+                          <span className={isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''} onClick={() => toggleAllocation(allocationKey)} role='button' />
                           <span role='button'>{allocationKey}</span>
                         </td>
                       </tr>
