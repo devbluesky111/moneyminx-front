@@ -1476,6 +1476,51 @@ a.upgrader-btn {
 .graphbox ul li.nw-data {
   color: $purple;
 }
+
+.responsive-container {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cccccc;
+
+  // net-worth barchart tooltip customization
+  .bar-tooltip {
+    background-color: #081833;
+    color: #FFFFFF;
+    box-shadow: 0px 4px 28px rgba(8, 24, 51, 0.44);
+    border-radius: 4px;
+    padding: 20px 12px 4px;
+  
+    .item-name {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+  
+      div {
+        width: 10px;
+        height: 10px;
+        margin-right: 12px;
+      }
+  
+      span {
+        font-family: "Mulish";
+        font-size: 14px;
+        line-height: 16px;
+      }
+    }
+  
+    .item-value {
+      margin-left: 22px;
+      margin-bottom: 16px;
+      font-family: "Mulish";
+      font-style: normal;
+      font-size: 24px;
+      font-weight: 300;
+      line-height: 30px; 
+    }
+  }
+}
+
 ul.charttool {
   background: $darkBg;
   box-shadow: 0px 4px 28px rgba(8, 24, 51, 0.44);
