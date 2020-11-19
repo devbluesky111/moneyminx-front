@@ -201,19 +201,19 @@
       span {
         &:first-child {
           &:after {
-            width: 8px;
-            left: 10px;
             content: '';
+            width: 8px;
             height: 8px;
+            border: 1.5px solid #969eac;
             border-top: 0;
             border-left: 0;
-            margin-top: 8px;
             position: absolute;
-            vertical-align: 3px;
-            transition: 0.3s all;
-            display: inline-block;
             transform: rotate(45deg);
-            border: 1.5px solid #969eac;
+            display: inline-block;
+            vertical-align: 3px;
+            left: 10px;
+            margin-top: 8px;
+            transition: 0.3s all;
           }
         }
       }
