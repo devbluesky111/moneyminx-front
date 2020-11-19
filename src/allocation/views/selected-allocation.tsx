@@ -7,13 +7,11 @@ import { getStringDate } from 'common/moment.helper';
 import { MMPieChart } from 'common/components/pie-chart';
 import SettingModal from 'allocation/modal/setting-modal';
 import useAllocation from 'allocation/hooks/useAllocation';
-import useFileDownload from 'common/hooks/useFileDownload';
 import ChartShareModal from 'allocation/modal/chart-share-modal';
 import { SelectedAllocationProps } from 'allocation/allocation.type';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Calendar } from 'assets/images/allocation/calendar.svg';
-import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
 
 import AllocationLegend from './allocation-legend';
@@ -21,7 +19,6 @@ import AllocationLegend from './allocation-legend';
 export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter }) => {
   const [date, setDate] = useState<Date | null>(null);
   const { fetching, allocations, error, allocationChartData: chartData } = useAllocation(filter, date?.toISOString());
-  const { df } = useFileDownload();
 
   const chartSettingModal = useModal();
   const chartShareModal = useModal();
@@ -58,7 +55,6 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
           </p>
           <div className='mm-allocation-overview__block--action'>
             <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
-            <Download className='mr-3' onClick={() => df('selected-allocation-pie-chart', 'selected-allocation')} />
             <Share onClick={() => chartShareModal.open()} />
           </div>
         </div>
