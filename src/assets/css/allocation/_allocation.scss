@@ -204,7 +204,7 @@
             content: '';
             width: 8px;
             height: 8px;
-            border: 1.5px solid #969eac;
+            border: 1.5px solid $gray;
             border-top: 0;
             border-left: 0;
             position: absolute;
@@ -511,6 +511,20 @@
     @media (min-width: $sm + 75px) {
       font-size: 0.625rem;
     }
+  }
+}
+.allocation-page-chart-wrapper {
+
+  .allocation-chart-wrapper {
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    vertical-align: center;
+
+    @media (min-width:$md) {
+    width: 440px;
+    height: 440px;
+  }
   }
 }
 

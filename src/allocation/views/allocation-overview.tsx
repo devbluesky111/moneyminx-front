@@ -75,7 +75,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
               </div>
               <div className='allocation-content'>
                 <div
-                  className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center p-b-4'
+                  className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center p-b-4 allocation-page-chart-wrapper'
                   id='current-allocation-pie-chart'
                 >
                   <MMPieChart chartData={chartData} />
