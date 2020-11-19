@@ -335,6 +335,42 @@
       color: $darkGray;
     }
   }
+
+  &__navigation {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $gray;
+    min-width: 38rem;
+    overflow: hidden;
+    position: relative;
+
+    @media (min-width: $desk + 176){
+      display: none;
+    }
+  }
+
+  &__navigation-title {
+    margin: 0 3.75rem 2.5rem 0;
+    cursor: pointer;
+    padding-bottom: 0.875rem;
+
+    &:hover {
+      color: $darkGray;
+    }
+
+    &--active {
+      color: $darkGray;
+      border-bottom: 1.5px solid $primary;
+    }
+  }
+
+  &__line {
+    border-top: 1px solid $gray;
+    opacity: 0.24;
+    position: absolute;
+    top: 2.625rem;
+    width: 100%;
+  }
 }
 
 .allocation-card-top {
