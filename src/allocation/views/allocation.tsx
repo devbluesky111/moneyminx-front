@@ -12,16 +12,23 @@ import AllocationOverview from './allocation-overview';
 import AllocationSubNavigation from './allocation-sub-navigation';
 
 const Allocation: React.FC<AllocationProps> = () => {
+  const [counter, setCounter] = useState<number>(0);
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
-  const [filter, setFilter] = useState(AllocationsFilter.TYPE);
-  const { fetching, allocations, error, allocationChartData } = useAllocation(filter);
 
-  if (fetching || error || !allocations || !allocationChartData) {
+  const [filter, setFilter] = useState(AllocationsFilter.TYPE);
+  const { fetching, allocations, allocationChartData } = useAllocation(filter);
+
+  if (!allocations || !allocationChartData) {
+    return <CircularSpinner />;
+  }
+
+  if (fetching && !counter) {
     return <CircularSpinner />;
   }
 
   const handleTypeChange = (type: AllocationsFilter) => {
+    setCounter((c) => c + 1);
     setFilter(type);
   };
 
