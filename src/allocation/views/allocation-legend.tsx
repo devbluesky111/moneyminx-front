@@ -39,6 +39,8 @@ const AllocationLegend: React.FC<Props> = ({ chartData, sharing = false }) => {
 
   const hasAmount = (sharing && showAmounts) || !sharing;
 
+  const sortedChartData = chartData.sort((a, b) => b.total - a.total);
+
   const renderLegendData = (data: ChartDatum) => {
     if (hasAmount) {
       return (
@@ -61,7 +63,7 @@ const AllocationLegend: React.FC<Props> = ({ chartData, sharing = false }) => {
 
   return (
     <div className='allocation-legend-wrapper'>
-      {chartData.map((data, index) => {
+      {sortedChartData.map((data, index) => {
         return (
           <div className='legend-row' key={index}>
             <span className='legend-color-box pl-0 col-1' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
