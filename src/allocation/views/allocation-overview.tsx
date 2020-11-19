@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { fNumber } from 'common/number.helper';
@@ -26,9 +26,23 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
   const fieldChangeModal = useModal();
   const chartSettingModal = useModal();
 
+  const [hidden, setHidden] = useState<string[]>(['']);
+
   const getTotal = (key: string) => {
     return chartData.find((datum) => datum.group === key);
   };
+
+  const toggleAllocation = (key: string) => {
+    if (hidden.includes(key)) {
+      const tempArr = hidden.filter((item) => item !== key);
+
+      return setHidden(tempArr);
+    }
+
+    return setHidden([...hidden, key]);
+  };
+
+  const isHidden = (key: string) => hidden.includes(key);
 
   return (
     <section className='mm-allocation-overview'>
@@ -62,20 +76,24 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                       <th className='mm-allocation-overview__table--head'>Value</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {Object.keys(allocations).map((allocationKey, index) => {
-                      const allocation = allocations[allocationKey];
+                  {Object.keys(allocations).map((allocationKey, index) => {
+                    const allocation = allocations[allocationKey];
 
-                      return (
-                        <React.Fragment key={index}>
+                    return (
+                      <React.Fragment key={index}>
+                        <tbody>
                           <tr>
-                            <td
-                              className='mm-allocation-overview__table--title'
-                              onClick={() => fieldChangeModal.open()}
-                            >
-                              {allocationKey}
+                            <td className='mm-allocation-overview__table--title'>
+                              <span onClick={() => toggleAllocation(allocationKey)} role='button'>
+                                ^
+                              </span>
+                              <span onClick={() => fieldChangeModal.open()} role='button'>
+                                {allocationKey}
+                              </span>
                             </td>
                           </tr>
+                        </tbody>
+                        <tbody className={isHidden(allocationKey) ? 'hide-me' : ''}>
                           {allocation?.map((al) => {
                             return (
                               <React.Fragment key={al.id}>
@@ -100,10 +118,10 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                             <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
                             <td>${fNumber(getTotal(allocationKey)?.total || 0, 2)}</td>
                           </tr>
-                        </React.Fragment>
-                      );
-                    })}
-                  </tbody>
+                        </tbody>
+                      </React.Fragment>
+                    );
+                  })}
                 </table>
               </div>
             </div>
