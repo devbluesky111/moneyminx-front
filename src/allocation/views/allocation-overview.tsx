@@ -150,7 +150,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                     <div className='mm-allocation-overview__block-element--text ml-2'>Minx Measure-up</div>
                   </div>
                   <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
-                  <Link to='#' className='mm-btn-animate mm-btn-primary'>
+                  <Link to='/settings?active=Profile' className='mm-btn-animate mm-btn-primary'>
                     Complete Profile
                   </Link>
                 </div>
