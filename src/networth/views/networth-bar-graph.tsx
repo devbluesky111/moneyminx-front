@@ -56,7 +56,6 @@ const renderCustomRALabel = (props: any) => {
 };
 
 const formatter = (value: number) => {
-  console.log(value)
   if (value < 1000000) {
     return `$${value / 1000}k`;
   } else {
@@ -64,11 +63,11 @@ const formatter = (value: number) => {
   }
 }
 
-const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth }) => {
+const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
+  const { networth, fCategories } = props;
   if (!networth.length) {
     return <CircularSpinner />;
   }
-
   return (
     <div className="responsive-container">
       <ResponsiveContainer width="100%" height="100%">
@@ -119,7 +118,9 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth }) => {
             cursor={false}
             content={<CustomTooltip />}
           />
-          <Area dataKey='networth' type="monotone" stroke="#8884d8" strokeOpacity="0" fill="url(#colorUv)" />
+          {
+            fCategories && (fCategories.length === 1 || fCategories.length === 2) ? null : <Area dataKey='networth' type="monotone" stroke="#8884d8" strokeOpacity="0" fill="url(#colorUv)" />
+          }
           <Bar dataKey='investmentAssets' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]} />
           <Bar dataKey='otherAssets' barSize={10} fill='#29CFD6' radius={[2, 2, 0, 0]} />
           <Bar dataKey='liabilities' barSize={10} fill='#D3365F' radius={[2, 2, 0, 0]} />

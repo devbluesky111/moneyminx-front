@@ -71,6 +71,7 @@ export interface Action {
 
 export interface NetworthBarGraphProps {
   networth: NetworthItem[];
+  fCategories: string[];
 }
 
 export type NetworthBarGraphCustomTooltipProps = any;
