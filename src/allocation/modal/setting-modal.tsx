@@ -20,6 +20,7 @@ const initialData = {
 const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
   const [data, setData] = useState(initialData);
   const dispatch = useAllocationDispatch();
+  const [error, setError] = useState<boolean>(false);
 
   const { loading, settings } = useAllocationSetting();
 
@@ -29,16 +30,29 @@ const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
     }
   }, [settings]);
 
+  const validate = (e: React.ChangeEvent<any>) => {
+    if (e.target.name === 'title' && e.target.value?.length > 70) {
+      return setError(true);
+    }
+
+    return setError(false);
+  };
+
   const handleChange = (e: React.ChangeEvent<any>) => {
+    validate(e);
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const handleCancel = () => settingModal.close();
 
   const handleSubmit = async () => {
-    const { data: patchResponse, error } = await patchAllocationChartSettings(data);
+    if (error) {
+      return;
+    }
 
-    if (!error) {
+    const { data: patchResponse, error: allocationError } = await patchAllocationChartSettings(data);
+
+    if (!allocationError) {
       dispatch({ type: 'PATCH_ALLOCATION_CHART_SETTING', payload: { patchChartSettings: patchResponse } });
       setData({ ...patchResponse });
       settingModal.close();
@@ -62,6 +76,7 @@ const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
                   onChange={handleChange}
                   name='title'
                   value={data.title}
+                  isInvalid={error}
                 />
               </Form.Group>
               <Form.Group controlId='exampleForm.ControlTextarea1'>
