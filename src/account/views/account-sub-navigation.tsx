@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReactComponent as Chase } from '../../assets/images/account/chase.svg';
-import { ReactComponent as DownloadExcel } from '../../assets/images/allocation/download-excel.svg';
 import AppSubHeader from '../../common/app.sub-header';
 
 export const AccountSubNavigation = () => {
