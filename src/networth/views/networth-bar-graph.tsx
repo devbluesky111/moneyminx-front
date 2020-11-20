@@ -77,7 +77,12 @@ const formatter = (value: number) => {
     return `$${value / 1000000}m`;
   }
 }
-
+const getInterval = (max: number) => {
+  let _interval = max / 4;
+  let _l = Number(_interval.toString().split('.')[0].length) - 1;
+  let _maxFloor = Math.ceil(_interval / (Math.pow(10, _l)));
+  return _maxFloor * Math.pow(10, _l);
+}
 const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
   const { networth, fCategories } = props;
   if (!networth.length) {
@@ -99,7 +104,10 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
       break;
     }
   }
-  console.log('max, ', max);
+  let _interval = getInterval(max);
+  if (max > _interval * 3.5) {
+    _interval = getInterval(max + _interval / 2);
+  }
   return (
     <div className='responsive-container'>
       <ResponsiveContainer width='100%' height='100%'>
@@ -137,11 +145,14 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
             tickSize={0}
             tickMargin={10}
             tick={{ fontSize: 14 }}
+            interval="preserveStartEnd"
             stroke='#969eac'
             tickFormatter={(tick) => formatter(tick)}
+            domain={[0, _interval * 4]}
           />
           <ReferenceArea
             x1={first_projection}
+            y1={0}
             label={renderCustomRALabel}
             fill='url(#colorPr)'
           />
