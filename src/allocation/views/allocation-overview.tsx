@@ -18,11 +18,13 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
+import { AllocationSectionEnum } from 'allocation/allocation.enum';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
   const chartShareModal = useModal();
   const fieldChangeModal = useModal();
   const chartSettingModal = useModal();
+  const [section, setSection] = useState<AllocationSectionEnum>(AllocationSectionEnum.MY_ALLOCATION);
 
   const [hidden, setHidden] = useState<string[]>(['']);
 
@@ -42,28 +44,59 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
 
   const isHidden = (key: string) => hidden.includes(key);
 
+  const changeAllocationSection = (sec: AllocationSectionEnum) => {
+    setSection(sec);
+  };
+
+  const getSectionTitleClass = (sec: AllocationSectionEnum) => {
+    if (section === sec) {
+      return 'mm-allocation-overview__navigation-title mm-allocation-overview__navigation-title--active';
+    }
+
+    return 'mm-allocation-overview__navigation-title';
+  };
+
+  const getSectionClass = (sec: AllocationSectionEnum) => {
+    if (section !== sec) {
+      return 'col-xl-4 d-none d-xl-block';
+    }
+
+    return 'col-xl-4';
+  };
+
   return (
     <section className='mm-allocation-overview'>
       <div className='mm-allocation-overview__wrapper'>
-        
         <div className='mm-allocation-overview__navigation'>
           <div className='d-flex'>
-            <div className='mm-allocation-overview__navigation-title mm-allocation-overview__navigation-title--active'>
+            <div
+              className={getSectionTitleClass(AllocationSectionEnum.MY_ALLOCATION)}
+              onClick={() => changeAllocationSection(AllocationSectionEnum.MY_ALLOCATION)}
+              role='button'
+            >
               My Allocation
             </div>
-            <div className='mm-allocation-overview__navigation-title'>
+            <div
+              className={getSectionTitleClass(AllocationSectionEnum.PREVIOUS_ALLOCATION)}
+              onClick={() => changeAllocationSection(AllocationSectionEnum.PREVIOUS_ALLOCATION)}
+              role='button'
+            >
               Previous Allocation
             </div>
-            <div className='mm-allocation-overview__navigation-title'>
+            <div
+              className={getSectionTitleClass(AllocationSectionEnum.SIMILAR_ALLOCATION)}
+              onClick={() => changeAllocationSection(AllocationSectionEnum.SIMILAR_ALLOCATION)}
+              role='button'
+            >
               Similar Allocation
             </div>
           </div>
           <div className='mm-allocation-overview__line' />
         </div>
-        
+
         <div className='row'>
-          <div className='col-xl-4'>
-            <div className='mm-allocation-overview__block'>
+          <div className={getSectionClass(AllocationSectionEnum.MY_ALLOCATION)}>
+            <div className='mm-allocation-overview__block d-md-none d-lg-block'>
               <div className='allocation-card-top'>
                 <div className='mm-allocation-overview__block--date'>{getStringDate()}</div>
                 <div className='mm-allocation-overview__block--title'>Current allocation</div>
@@ -98,7 +131,13 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                           <tbody>
                             <tr>
                               <td className='mm-allocation-overview__table--title'>
-                                <span className={isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''} onClick={() => toggleAllocation(allocationKey)} role='button' />
+                                <span
+                                  className={
+                                    isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''
+                                  }
+                                  onClick={() => toggleAllocation(allocationKey)}
+                                  role='button'
+                                />
                                 <span onClick={() => fieldChangeModal.open()} role='button'>
                                   {allocationKey}
                                 </span>
@@ -125,6 +164,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                 </React.Fragment>
                               );
                             })}
+                          </tbody>
+                          <tbody>
                             <tr className='mm-allocation-overview__table--footer'>
                               <td>Total</td>
                               <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
@@ -140,9 +181,11 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             </div>
           </div>
 
-          <SelectedAllocations filter={filter} />
+          <div className={getSectionClass(AllocationSectionEnum.PREVIOUS_ALLOCATION)}>
+            <SelectedAllocations filter={filter} />
+          </div>
 
-          <div className='col-xl-4'>
+          <div className={getSectionClass(AllocationSectionEnum.SIMILAR_ALLOCATION)}>
             <div className='mm-allocation-overview__block'>
               <div className='allocation-card-top no-border'>
                 <div className='mm-allocation-overview__block--date'>{getStringDate()}</div>
