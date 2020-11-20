@@ -8,7 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import AccountSubNavigation from './account-sub-navigation';
 
 import { ReactComponent as Info } from 'assets/icons/info.svg';
-import { ReactComponent as Edit } from 'assets/images/account/edit.svg';
+import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as Chart } from 'assets/images/account/chart.svg';
 import { ReactComponent as ChartTab } from 'assets/images/account/chart-tab.svg';
 import { ReactComponent as ChartMobile } from 'assets/images/account/chart-mobile.svg';
@@ -35,7 +35,7 @@ const Account: React.FC<AccountProps> = () => {
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-account'>
         <div className='mm-account__selection mb-3'>
-          <Edit className='float-left mr-3' />
+          <SettingsGear className='float-left mr-3 settings-gear-button' />
           <div className='mm-account__selection--info float-lg-left mr-md-3 d-md-inline-block'>
             <ul>
               <li>401K - Job 1</li>

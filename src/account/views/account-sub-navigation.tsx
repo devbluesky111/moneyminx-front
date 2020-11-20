@@ -6,16 +6,13 @@ export const AccountSubNavigation = () => {
 return (
 <section>
   <div className='content-container mm-account-sub-nav'>
-    <div className='content-head'>
-      <div className='container'>
+    <div className='app-subheader-container'>
     <AppSubHeader/>
-    <div className='order-3 order-md-2'>
+    <div className='middle-box'>
       <Chase />
     </div>
   </div>
-    </div>
   </div>
-
 </section>
 );
 };

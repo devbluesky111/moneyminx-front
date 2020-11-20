@@ -4,8 +4,7 @@ import AppSubHeader from '../../../common/app.sub-header';
 const NetworthHead = () => {  
 
   return (
-    <div className='content-head'>
-      <div className='container'>
+    <div className='app-subheader-container'>
         <AppSubHeader/>
 
         {/*<div className='right-box'>
@@ -15,7 +14,6 @@ const NetworthHead = () => {
           </button>
         </div>*/}
       </div>
-    </div>
   );
 };
 

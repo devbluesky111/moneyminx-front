@@ -242,3 +242,20 @@
     }
   }
 }
+.settings-gear-button {
+  border: 1px solid $purple;
+  border-radius: 4px;
+  padding: 12px;
+  height: 48px;
+  width: 48px;
+
+  &:hover {
+    background-color: $purple;
+    color: $white;
+    stroke: $white;
+
+    .gear-color {
+      stroke: $white;
+    }
+  }
+}
