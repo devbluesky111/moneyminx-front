@@ -139,8 +139,8 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
       <SettingModal settingModal={chartSettingModal} />
       <ChartShareModal
         chartShareModal={chartShareModal}
-        chartComponent={<MMPieChart chartData={chartData} />}
-        chartLegendComponent={<AllocationLegend chartData={chartData} />}
+        chartComponent={<MMPieChart chartData={chartData} share />}
+        chartLegendComponent={<AllocationLegend chartData={chartData} sharing />}
       />
     </div>
   );

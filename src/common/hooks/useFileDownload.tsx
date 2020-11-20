@@ -3,8 +3,8 @@ import fileDownload from 'js-file-download';
 
 const useFileDownload = () => {
   return {
-    df: (id: string, name: string) => {
-      const domNode = document.getElementById(id) as any;
+    df: (ref: any, name: string) => {
+      const domNode = ref.current;
       const scale = 3;
       domToImage
         .toBlob(domNode, {
@@ -16,13 +16,15 @@ const useFileDownload = () => {
           },
         })
         .then((blob) => {
-          fileDownload(blob, name + '.png');
+          if (blob) {
+            fileDownload(blob, name + '.png');
+          }
         });
     },
 
-    getImage: async (id: string): Promise<{ image: any; error: any }> => {
+    getImage: async (ref: any): Promise<{ image: any; error: any }> => {
       return new Promise((resolve, reject) => {
-        const node = document.getElementById(id) as any;
+        const node = ref.current;
         const scale = 3;
 
         domToImage
