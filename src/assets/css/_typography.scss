@@ -28,6 +28,14 @@
   }
 }
 
+.highlighted-text-light {
+  font-size: 0.875rem;
+  letter-spacing: 0.125em;
+  color: $purple;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
 .purple-links {
   &:hover {
     border-bottom: 1.5px solid $purple;

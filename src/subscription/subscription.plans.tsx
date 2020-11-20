@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { ReactComponent as PricingTickIcon } from '../assets/images/pricing/tick-icon.svg';
-import { pricingDetailConstant } from '../common/common.constant';
 import { Link } from 'react-router-dom';
+
+import { ReactComponent as PricingTickIcon } from '../assets/images/pricing/tick-icon.svg';
+import { ReactComponent as PricingTickIconCS } from '../assets/images/pricing/tick-icon-cs.svg';
+
+import { pricingDetailConstant } from '../common/common.constant';
 import useGetSubscription from '../auth/hooks/useGetSubscription';
 import CircularSpinner from '../common/components/spinner/circular-spinner';
 
@@ -94,14 +97,14 @@ const SubscriptionPlans = () => {
                       </div>
                       {pt.details[pricingDetailConstant.NAME]} badge
                     </li>
-                    <li>
-                      <div className=''>
+                    <li className='cs-list'>
+                      <div className='highlighted-text-light'>
                         Coming Soon!
                       </div>
                     </li>
                     <li>
                       <div className='tick-icon'>
-                        <PricingTickIcon />
+                        <PricingTickIconCS />
                       </div>
                       {pt.details[pricingDetailConstant.CURRENCY] === 'USD'
                         ? 'USD support only '
