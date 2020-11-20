@@ -7,21 +7,19 @@ import { getStringDate } from 'common/moment.helper';
 import { MMPieChart } from 'common/components/pie-chart';
 import SettingModal from 'allocation/modal/setting-modal';
 import useAllocation from 'allocation/hooks/useAllocation';
-import useFileDownload from 'common/hooks/useFileDownload';
 import ChartShareModal from 'allocation/modal/chart-share-modal';
 import { SelectedAllocationProps } from 'allocation/allocation.type';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Calendar } from 'assets/images/allocation/calendar.svg';
-import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
 
 import AllocationLegend from './allocation-legend';
 
 export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter }) => {
   const [date, setDate] = useState<Date | null>(null);
+  const [hidden, setHidden] = useState<string[]>(['']);
   const { fetching, allocations, error, allocationChartData: chartData } = useAllocation(filter, date?.toISOString());
-  const { df } = useFileDownload();
 
   const chartSettingModal = useModal();
   const chartShareModal = useModal();
@@ -29,6 +27,18 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
   if (fetching || error || !allocations || !chartData) {
     return <CircularSpinner />;
   }
+
+  const toggleAllocation = (key: string) => {
+    if (hidden.includes(key)) {
+      const tempArr = hidden.filter((item) => item !== key);
+
+      return setHidden(tempArr);
+    }
+
+    return setHidden([...hidden, key]);
+  };
+
+  const isHidden = (key: string) => hidden.includes(key);
 
   const getTotal = (key: string) => {
     return chartData.find((datum) => datum.group === key);
@@ -58,7 +68,6 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
           </p>
           <div className='mm-allocation-overview__block--action'>
             <SettingsIcon className='mr-3' onClick={() => chartSettingModal.open()} />
-            <Download className='mr-3' onClick={() => df('selected-allocation-pie-chart', 'selected-allocation')} />
             <Share onClick={() => chartShareModal.open()} />
           </div>
         </div>
@@ -79,15 +88,20 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                   <th className='mm-allocation-overview__table--head'>Value</th>
                 </tr>
               </thead>
-              <tbody>
-                {Object.keys(allocations).map((allocationKey, index) => {
-                  const allocation = allocations[allocationKey];
+              {Object.keys(allocations).map((allocationKey, index) => {
+                const allocation = allocations[allocationKey];
 
-                  return (
-                    <React.Fragment key={index}>
+                return (
+                  <React.Fragment key={index}>
+                    <tbody>
                       <tr>
-                        <td className='mm-allocation-overview__table--title'>{allocationKey}</td>
+                        <td className='mm-allocation-overview__table--title'>
+                          <span className={isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''} onClick={() => toggleAllocation(allocationKey)} role='button' />
+                          <span role='button'>{allocationKey}</span>
+                        </td>
                       </tr>
+                    </tbody>
+                    <tbody className={isHidden(allocationKey) ? 'hide-me' : ''}>
                       {allocation?.map((al) => {
                         return (
                           <React.Fragment key={al.id}>
@@ -112,10 +126,10 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                         <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
                         <td>${fNumber(getTotal(allocationKey)?.total || 0, 2)}</td>
                       </tr>
-                    </React.Fragment>
-                  );
-                })}
-              </tbody>
+                    </tbody>
+                  </React.Fragment>
+                );
+              })}
             </table>
           </div>
         </div>

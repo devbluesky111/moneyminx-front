@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
 import AppHeader from 'common/app.header';
 import AppFooter from 'common/app.footer';
@@ -19,11 +19,16 @@ const Settings: React.FC<SettingsProps> = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const activeTab = params.get('active');
+
   const handlePageSelect = (pageName: any) => {
     setPage(pageName);
   };
-  if (activeTab) setTimeout(function(){handlePageSelect(activeTab)}, 100);
-  
+
+  if (activeTab)
+    setTimeout(function () {
+      handlePageSelect(activeTab);
+    }, 100);
+
   const containerClass =
     page === SettingPageEnum.PLAN ? 'mm-settings-container mm-profile-container' : 'mm-settings-container';
 
