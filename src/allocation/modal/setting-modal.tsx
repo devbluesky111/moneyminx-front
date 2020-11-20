@@ -1,6 +1,7 @@
 import Form from 'react-bootstrap/Form';
 import React, { useEffect, useState } from 'react';
 
+import { FormControl } from 'react-bootstrap';
 import { Modal, ModalType } from 'common/components/modal';
 import { patchAllocationChartSettings } from 'api/request.api';
 import { useAllocationDispatch } from 'allocation/allocation.context';
@@ -78,6 +79,9 @@ const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
                   value={data.title}
                   isInvalid={error}
                 />
+                <FormControl.Feedback type='invalid' className='feedback text-right'>
+                  Chart titles can't be longer than 70 characters.
+                </FormControl.Feedback>
               </Form.Group>
               <Form.Group controlId='exampleForm.ControlTextarea1'>
                 <Form.Label className='mm-setting-modal__sub-title'>Chart Description</Form.Label>

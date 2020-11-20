@@ -164,6 +164,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                 </React.Fragment>
                               );
                             })}
+                          </tbody>
+                          <tbody>
                             <tr className='mm-allocation-overview__table--footer'>
                               <td>Total</td>
                               <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
