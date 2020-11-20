@@ -19,12 +19,12 @@ import AllocationLegend from './allocation-legend';
 export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter }) => {
   const [date, setDate] = useState<Date | null>(null);
   const [hidden, setHidden] = useState<string[]>(['']);
-  const { fetching, allocations, error, allocationChartData: chartData } = useAllocation(filter, date?.toISOString());
+  const { allocations, allocationChartData: chartData } = useAllocation(filter, date?.toISOString());
 
   const chartSettingModal = useModal();
   const chartShareModal = useModal();
 
-  if (fetching || error || !allocations || !chartData) {
+  if (!allocations || !chartData) {
     return <CircularSpinner />;
   }
 
@@ -96,7 +96,11 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                     <tbody>
                       <tr>
                         <td className='mm-allocation-overview__table--title'>
-                          <span className={isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''} onClick={() => toggleAllocation(allocationKey)} role='button' />
+                          <span
+                            className={isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''}
+                            onClick={() => toggleAllocation(allocationKey)}
+                            role='button'
+                          />
                           <span role='button'>{allocationKey}</span>
                         </td>
                       </tr>
