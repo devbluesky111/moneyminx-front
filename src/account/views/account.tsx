@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import Dropdown from 'react-bootstrap/Dropdown';
 import AppFooter from 'common/app.footer';
-import NavBarSection from 'setting/inc/setting.header';
+import AppHeader from '../../common/app.header';
+import Dropdown from 'react-bootstrap/Dropdown';
+import AccountSubNavigation from './account-sub-navigation';
+
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as Edit } from 'assets/images/account/edit.svg';
 import { ReactComponent as Chart } from 'assets/images/account/chart.svg';
@@ -15,13 +17,22 @@ import { ReactComponent as CheckCircle } from 'assets/images/account/check-circl
 import AccountTable from './account-table';
 import ActivityTable from './activity-table';
 import { AccountProps } from '../account.type';
-import AccountSubNavigation from './account-sub-navigation';
+import AppSidebar from '../../common/app.sidebar';
 
 const Account: React.FC<AccountProps> = () => {
+
+  const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
+  const [openRightNav, setOpenRightNav] = useState<boolean>(false);
+
   return (
     <div className='mm-setting'>
-      <NavBarSection />
+      <AppHeader
+        toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
+        toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+        open={openRightNav}
+      />
       <AccountSubNavigation />
+      <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-account'>
         <div className='mm-account__selection mb-3'>
           <Edit className='float-left mr-3' />
