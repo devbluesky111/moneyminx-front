@@ -88,18 +88,27 @@ const Networth = () => {
                 <div className='ct-box'>
                   <div className='graphbox'>
                     <ul>
-                      <li className='inv-data'>
-                        <span>Investment Assets</span>
-                        <h3>${numberWithCommas(fNumber(currentInvestmentAsset, 0))}</h3>
-                      </li>
-                      <li className='other-data'>
-                        <span>Other Assets</span>
-                        <h3>${numberWithCommas(fNumber(currentOtherAssets, 0))}</h3>
-                      </li>
-                      <li className='lty-data'>
-                        <span>Liabilities</span>
-                        <h3>${numberWithCommas(fNumber(currentLiabilities, 0))}</h3>
-                      </li>
+                      {currentInvestmentAsset ? (
+                        <li className='inv-data'>
+                          <span>Investment Assets</span>
+                          <h3>${numberWithCommas(fNumber(currentInvestmentAsset, 0))}</h3>
+                        </li>
+                      ) : null
+                      }
+                      {currentOtherAssets ? (
+                        <li className='other-data'>
+                          <span>Other Assets</span>
+                          <h3>${numberWithCommas(fNumber(currentOtherAssets, 0))}</h3>
+                        </li>
+                      ) : null
+                      }
+                      {currentLiabilities ? (
+                        <li className='lty-data'>
+                          <span>Liabilities</span>
+                          <h3>${numberWithCommas(fNumber(currentLiabilities, 0))}</h3>
+                        </li>
+                      ) : null
+                      }
                       {currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
                         <li className='nw-data'>
                           <span>Net Worth</span>
