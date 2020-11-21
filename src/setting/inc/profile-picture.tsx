@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import React, { useRef, useState } from 'react';
 
 import { patchProfilePicture } from 'api/request.api';
-import OwnerOneImg from 'assets/images/about/hussein.png';
+import ProfileDefaultPic from 'assets/images/settings/mm-default-avatar.svg';
 import ImageInput from 'common/components/input/image.input';
 
 interface ProfilePictureProps {
@@ -10,7 +10,7 @@ interface ProfilePictureProps {
 }
 const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
   const ppRef = useRef(null);
-  const [profileURL, setProfileURL] = useState<string>(pictureURL || OwnerOneImg);
+  const [profileURL, setProfileURL] = useState<string>(pictureURL || ProfileDefaultPic);
   const [profilePicture, setProfilePicture] = useState<File>();
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +45,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
         <div className='mm-profile-overview__title'>
           Profile Picture
           <div className='mm-profile-overview__title-pp' onClick={() => handleFileBrowserOpen(ppRef)} role='button'>
-            <img alt='Owner' src={profileURL} className='rounded-circle mr-2 profile-pic-large' width='100' height='100' />
+            <img alt='Money Minx Investor' src={profileURL} className='rounded-circle mr-2 profile-pic-large' width='100' height='100' />
           </div>
         </div>
         <div className='mt-4 mt-sm-0'>
