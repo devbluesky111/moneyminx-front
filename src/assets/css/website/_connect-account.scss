@@ -154,6 +154,11 @@ span.zillow-img {
   z-index: 99;
   opacity: 0.4;
 }
+.step-content.left-border.bg-purple::before {
+  background: $purple;
+  opacity: 1;
+}
+
 .step-content.left-border::after {
   content: '';
   width: 100%;

@@ -761,7 +761,7 @@ a.upgrader-btn {
   padding-right: 40px;
 }
 .drop-box .dropdown-toggle {
-  background-color: $lightBg;
+  background: none;
   font-weight: 500;
   font-size: 0.875rem;
   color: $gray;
@@ -769,12 +769,14 @@ a.upgrader-btn {
   border-radius: 4px;
   width: auto;
   height: 48px;
-  padding: 0 10px;
+  padding: 0 20px;
+  min-width: 120px;
 
-  &:focus, &:hover {
-    box-shadow: none;
-    color: $darkGray;
-    border: 1px solid $gray;
+  &:focus, &:hover, &:active {
+    background: none !important;
+    box-shadow: none !important;
+    color: $darkGray !important;
+    border: 1px solid $gray !important;
   }
 }
 .drop-box .dropdown-toggle:after {
@@ -784,7 +786,10 @@ a.upgrader-btn {
   border-top: 0;
   border-left: 0;
   transform: rotate(45deg);
+  transition: 0.3s all;
   margin-left: 10px;
+  margin-top: 5px;
+  float: right;
 }
 
 .drop-box.show .dropdown-toggle:after {
