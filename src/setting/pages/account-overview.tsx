@@ -14,9 +14,18 @@ import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as PeerStreet } from 'assets/icons/peer-street.svg';
 import { ReactComponent as WealthLogo } from 'assets/icons/wealth-logo.svg';
-import { AccountCardProps, AccountRowProps, ManualAccountProps } from 'setting/setting.type';
+import {
+  AccountCardProps,
+  AccountRowProps,
+  ManualAccountProps,
+  SettingPageEnum
+} from 'setting/setting.type';
 
-export const AccountOverview = () => {
+interface AccountOverviewProps {
+  changeTab: (pageName: SettingPageEnum) => void;
+}
+
+export const AccountOverview: React.FC<AccountOverviewProps> = ({ changeTab }) => {
   const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
@@ -48,16 +57,25 @@ export const AccountOverview = () => {
     <section className='mm-account-overview'>
       {Object.entries(accountsByProvider).map((providerAccounts, index) => {
         return (
-          <AccountCard key={index} providerAccounts={providerAccounts} availableAccounts={numberOfConnectedAccounts} />
+          <AccountCard key={index} providerAccounts={providerAccounts} availableAccounts={numberOfConnectedAccounts} changeTab={changeTab} />
         );
       })}
-      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} />
+      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} changeTab={changeTab} />
     </section>
   );
 };
 
-export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList, availableAccounts }) => {
+export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList, availableAccounts, changeTab }) => {
   const history = useHistory();
+  const needUpgrade = manualAccountList.length >= availableAccounts;
+
+  const addAccount = () => {
+    if (!needUpgrade) {
+      history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
+    } else {
+      changeTab(SettingPageEnum.PLAN);
+    }
+  }
 
   return (
     <>
@@ -65,15 +83,18 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
         <div className='card-body'>
           <div className='d-md-flex flex-wrap justify-content-between align-items-center'>
             <div className='mm-account-overview__add-account m-b-8 mb-md-0'>
-              Manual Accounts ({manualAccountList.length}/{availableAccounts})
+              <span>Manual Accounts ({manualAccountList.length}/{availableAccounts})</span>
+              { needUpgrade &&
+              <span className='upgrade-caption'>Upgrade your account to add more connections</span>
+              }
             </div>
             <div>
               <button
                 type='button'
                 className='btn btn-outline-primary mm-button btn-lg'
-                onClick={() => history.push(appRouteConstants.auth.CONNECT_ACCOUNT)}
+                onClick={addAccount}
               >
-                Add Account
+                {needUpgrade ? 'Upgrade Plan' : 'Add Account' }
               </button>
             </div>
           </div>
@@ -107,11 +128,20 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   );
 };
 
-export const AccountCard: React.FC<AccountCardProps> = ({ providerAccounts, availableAccounts }) => {
+export const AccountCard: React.FC<AccountCardProps> = ({ providerAccounts, availableAccounts, changeTab }) => {
   const history = useHistory();
   const [providerName, acts] = providerAccounts;
 
   const accountList: Account[] = acts;
+  const needUpgrade = accountList.length >= availableAccounts;
+
+  const addAccount = () => {
+    if (!needUpgrade) {
+      history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
+    } else {
+      changeTab(SettingPageEnum.PLAN);
+    }
+  }
 
   return (
     <>
@@ -119,15 +149,18 @@ export const AccountCard: React.FC<AccountCardProps> = ({ providerAccounts, avai
         <div className='card-body'>
           <div className='d-md-flex flex-wrap justify-content-between align-items-center'>
             <div className='mm-account-overview__add-account m-b-8 mb-md-0'>
-              Connected Accounts ({accountList.length}/{availableAccounts})
+              <span>Connected Accounts ({accountList.length}/{availableAccounts})</span>
+              { needUpgrade &&
+                <span className='upgrade-caption'>Upgrade your account to add more connections</span>
+              }
             </div>
             <div>
               <button
                 type='button'
                 className='btn btn-outline-primary mm-button btn-lg'
-                onClick={() => history.push(appRouteConstants.auth.CONNECT_ACCOUNT)}
+                onClick={addAccount}
               >
-                Add Account
+                {needUpgrade ? 'Upgrade Plan' : 'Add Account' }
               </button>
             </div>
           </div>

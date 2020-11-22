@@ -22,7 +22,10 @@ const Settings: React.FC<SettingsProps> = () => {
   const handlePageSelect = (pageName: any) => {
     setPage(pageName);
   };
-  if (activeTab) setTimeout(function(){handlePageSelect(activeTab)}, 100);
+
+  if (activeTab) {
+    setTimeout(() => {handlePageSelect(activeTab)}, 100);
+  }
 
   const containerClass =
     page === SettingPageEnum.PLAN ? 'mm-settings-container mm-profile-container' : 'mm-settings-container';
@@ -39,11 +42,11 @@ const Settings: React.FC<SettingsProps> = () => {
         return <PlanOverview />;
       }
       case SettingPageEnum.ACCOUNTS: {
-        return <AccountOverview />;
+        return <AccountOverview changeTab={handlePageSelect}/>;
       }
 
       default: {
-        return <AccountOverview />;
+        return <AccountOverview changeTab={handlePageSelect} />;
       }
     }
   };
@@ -65,4 +68,5 @@ const Settings: React.FC<SettingsProps> = () => {
     </div>
   );
 };
+
 export default Settings;

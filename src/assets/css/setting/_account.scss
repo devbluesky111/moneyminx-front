@@ -2,6 +2,13 @@
   &__add-account {
     font-weight: 500;
     font-size: 1.25rem;
+
+    .upgrade-caption {
+      display: block;
+      font-size: 0.875rem;
+      color: #969eac;
+      margin-top: 5px;
+    }
   }
 
   &__error {
