@@ -411,9 +411,9 @@
     .disabled.arrow-left,
     .disabled.arrow-right {
       &::after {
+        border: 1.5px solid $gray;
         border-top: 0;
         border-left: 0;
-        border: 1.5px solid $gray;
       }
     }
   }
