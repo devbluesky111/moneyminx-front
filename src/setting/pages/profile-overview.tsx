@@ -4,6 +4,8 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { FormControl } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 import useProfile from 'auth/hooks/useProfile';
 import { patchProfile } from 'api/request.api';
@@ -17,15 +19,22 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { HouseHoldIncomeOptions, MaritalStatusOptions, RiskToleranceOptions } from 'setting/setting.enum';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
 import MMToolTip from '../../common/components/tooltip';
+import { ProfileType } from 'auth/auth.types';
 
 export const ProfileOverview = () => {
   const {
     loading,
-    response: { error },
+    response: { error }
   } = useProfile();
 
   const { user } = useAuthState();
   const [saving, setSaving] = useState<boolean>(false);
+  const [progress, setProgress] = useState(0);
+  const [change, setChange] = useState(false);
+
+  let curProgress = 0;
+  const singlePropertyCounts = 13;
+  const marriedPropertyCounts = 15;
 
   if (error) {
     toast('Error occurred fetching your profile', { type: 'error' });
@@ -35,8 +44,66 @@ export const ProfileOverview = () => {
     return <CircularSpinner />;
   }
 
+  const getProfileProgress = (userInfo: ProfileType) => {
+    let count = 0;
+    const profileDetail = userInfo.profileDetails;
+    const isSingle = profileDetail.maritalStatus === 'Single';
+    const propertyCount = isSingle ? singlePropertyCounts : marriedPropertyCounts;
+
+    if (userInfo.firstName) count++;
+    if (userInfo.lastName) count++;
+    if (userInfo.username) count++;
+    if (userInfo.bio) count++;
+    if (userInfo.website) count++;
+    if (userInfo.investingSince) count++;
+    if (profileDetail.countryOfResidence) count++;
+    if (profileDetail.householdIncome) count++;
+    if (profileDetail.riskTolerance) count++;
+    if (profileDetail.dob) count++;
+    if (profileDetail.alreadyRetired || profileDetail.targetedRetirementAge > 0) count++;
+    if (profileDetail.maritalStatus) count++;
+    if (profileDetail.dependants > 0) count++;
+
+    if (!isSingle) {
+      if (profileDetail.spouseDob) count++;
+      if (profileDetail.spouseAlreadyRetired || profileDetail.spouseTargetedRetirementAge > 0) count++;
+    }
+
+    curProgress = Math.round(count / propertyCount * 100);
+  }
+
+  const checkProfileCompletionProgress = (values: any) => {
+    let count = 0;
+    const isSingle = values.maritalStatus === 'Single';
+    const propertyCount = isSingle ? singlePropertyCounts : marriedPropertyCounts;
+    if (!change) setChange(true);
+
+    if (values.firstName) count++;
+    if (values.lastName) count++;
+    if (values.username) count++;
+    if (values.bio) count++;
+    if (values.website) count++;
+    if (values.investingSince) count++;
+    if (values.countryOfResidence) count++;
+    if (values.householdIncome) count++;
+    if (values.riskTolerance) count++;
+    if (values.dob) count++;
+    if (values.alreadyRetired || values.targetedRetirementAge > 0) count++;
+    if (values.maritalStatus) count++;
+    if (values.dependants > 0) count++;
+
+    if (!isSingle) {
+      if (values.spouseDob) count++;
+      if (values.spouseAlreadyRetired || values.spouseTargetedRetirementAge > 0) count++;
+    }
+
+    setProgress(Math.round(count / propertyCount * 100));
+  }
+
+
   const fullName = `${user.firstName} ${user.lastName}`;
   const { profileDetails } = user;
+  getProfileProgress(user);
 
   return (
     <section className='mm-profile-overview'>
@@ -51,10 +118,9 @@ export const ProfileOverview = () => {
           </div>
           <div className='d-flex align-items-center'>
             <div className='text--gray mr-4 sm-hide'>Profile complete</div>
-            <div className='mm-radial'>
-              <div className='mm-radial__progress-bar mm-radial__progress-bar-progress'>
-                <div className='mm-radial__progress-bar--overlay'>87%</div>
-              </div>
+            <div className='mm-radial__progress-bar'>
+              <CircularProgressbar value={change ? progress : curProgress}
+                                   text={`${change ? progress : curProgress}%`}/>
             </div>
           </div>
         </div>
@@ -96,6 +162,7 @@ export const ProfileOverview = () => {
           }
           setSaving(false);
         }}
+        validate={checkProfileCompletionProgress}
       >
         {(props) => {
           const { handleChange, handleBlur, values, setFieldValue, handleSubmit } = props;
@@ -106,7 +173,7 @@ export const ProfileOverview = () => {
 
           const handleRadioCheck = (e: React.ChangeEvent<any>) => {
             const name = e.target.name;
-            const value = e.target.value === 'true' ? true : false;
+            const value = e.target.value === 'true';
             setFieldValue(name, value);
           };
 
@@ -551,6 +618,7 @@ export const ProfileOverview = () => {
                               aria-checked={values.minxMeasureUp}
                               className='mm-switch-input'
                               checked={values.minxMeasureUp}
+                              onChange={() => {}}
                             />
                             <label
                               className='mm-switch mt-md-0 mt-sm-3'
@@ -578,6 +646,7 @@ export const ProfileOverview = () => {
                               aria-checked={values.minxWinks}
                               className='mm-switch-input'
                               checked={values.minxWinks}
+                              onChange={() => {}}
                             />
                             <label
                               className='mm-switch mt-md-0 mt-sm-3'
