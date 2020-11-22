@@ -76,6 +76,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
     }
 
     setIsDateValid(true);
+
     return true;
   };
 

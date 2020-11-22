@@ -1,10 +1,11 @@
+import React, { createContext } from 'react';
+
 import { storage } from 'app/app.storage';
 import { StorageKey } from 'app/app.types';
-import React, { createContext } from 'react';
 import { Children, Dispatch } from 'common/common.types';
 
-import { auth, subscription } from './auth-context.types';
 import { AuthType, AuthState } from './auth.types';
+import { auth, subscription } from './auth-context.types';
 
 const initialState: AuthType = {
   email: '',

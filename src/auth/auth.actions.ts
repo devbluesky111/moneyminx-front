@@ -1,5 +1,5 @@
-import { subscription } from './auth-context.types';
 import { SubscriptionDetail } from './auth.types';
+import { subscription } from './auth-context.types';
 
 export const setSubscriptionDetail = (subscriptionDetail?: SubscriptionDetail) => {
   return {
