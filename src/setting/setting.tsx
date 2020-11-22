@@ -12,7 +12,7 @@ import SettingTitleSection from './partials/setting-title';
 import { SettingsProps, SettingPageEnum } from './setting.type';
 
 const Settings: React.FC<SettingsProps> = () => {
-  const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.ACCOUNTS);
+  const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.SETTINGS);
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
 
@@ -23,7 +23,7 @@ const Settings: React.FC<SettingsProps> = () => {
     setPage(pageName);
   };
   if (activeTab) setTimeout(function(){handlePageSelect(activeTab)}, 100);
-  
+
   const containerClass =
     page === SettingPageEnum.PLAN ? 'mm-settings-container mm-profile-container' : 'mm-settings-container';
 
