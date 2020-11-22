@@ -15,20 +15,20 @@ import HomeBlogImgOne from 'assets/images/home/home-blog-img1.png';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import { ReactComponent as Quotes } from 'assets/images/testimonials/quote.svg';
-import { ReactComponent as FeatureIconOne } from 'assets/images/home/feature-icon1.svg';
+import { ReactComponent as CSMinxWinks } from 'assets/images/home/cs-minx-winks.svg';
+import { ReactComponent as FeatureIconRealEstate } from 'assets/icons/icon-real-estate.svg';
 import { ReactComponent as FeatureIconTwo } from 'assets/images/home/feature-icon2.svg';
 import { ReactComponent as FeatureIconSix } from 'assets/images/home/feature-icon6.svg';
 import { ReactComponent as HomeBannerImg } from 'assets/images/home/home-banner-img.svg';
-import { ReactComponent as HomeMinxMeasure } from 'assets/images/home/measure-chart.svg';
+import { ReactComponent as SyncedOrManual } from 'assets/images/home/synced-or-manual.svg';
 import { ReactComponent as FeatureIconFour } from 'assets/images/home/feature-icon4.svg';
-import { ReactComponent as HomeMinxwinksImg } from 'assets/images/home/minxwinks-img.svg';
 import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-icon3.svg';
 import { ReactComponent as HomeNetWorthChart } from 'assets/images/home/home-networth.svg';
-import { ReactComponent as CSMinxWinks } from 'assets/images/home/cs-minx-winks.svg';
 import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-adopter-icon.svg';
 import { ReactComponent as PerformanceLegend } from 'assets/images/home/performance-legend.svg';
-import { ReactComponent as HomePerformanceChart } from 'assets/images/home/performance-chart.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
+import { ReactComponent as InvestmentsAndCryptos} from 'assets/images/home/investment-assets-cryptos.svg';
+import { ReactComponent as HomeNetWorthProjections } from 'assets/images/home/net-worth-projections.svg';
 
 
 const Home = () => {
@@ -183,7 +183,7 @@ export const HomeFeatureSection = () => {
           <div className='col-12 col-md-6 col-xl-4'>
             <div className='feature-content'>
               <div className='feature-icon py-3'>
-                <FeatureIconOne />
+                <FeatureIconRealEstate />
               </div>
                 <h2 className='py-3'>Real Estate</h2>
               <p>Add the addresses of your properties and we'll track the market value for you.</p>
@@ -394,7 +394,7 @@ export const HomePerformanceSection = () => {
           </div>
           <div className='col-xl-7'>
             <div className='mm-home-performance-section-chart'>
-              <HomePerformanceChart />
+              <HomeNetWorthProjections />
             </div>
           </div>
         </div>
@@ -419,7 +419,7 @@ export const MinxWinksSection = () => {
           </div>
           <div className='col-xl-7'>
             <div className='networth-chart'>
-              <HomeMinxwinksImg className='mm-custom-networth-chart' />
+              <InvestmentsAndCryptos className='mm-custom-networth-chart' />
             </div>
           </div>
         </div>
@@ -445,7 +445,7 @@ export const MinxMeasureSection = () => {
           </div>
           <div className='col-lg-7'>
             <div className='mm-networth-chart'>
-              <HomeMinxMeasure />
+              <SyncedOrManual />
             </div>
           </div>
           {/*<div className='home-coming-soon'>
