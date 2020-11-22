@@ -92,17 +92,13 @@
       left: -1rem;
       top: 40%;
       transition: 0.3s all;
-
-      &.disabled {
-        border: 1.5px solid $gray;
-      }
     }
 
     .arrow-right:after {
       content: '';
       width: 8px;
       height: 8px;
-      border: 1.5px solid $gray;
+      border: 1.5px solid $black;
       border-top: 0;
       border-left: 0;
       position: absolute;
@@ -410,8 +406,20 @@
     top: 2.625rem;
     width: 100%;
   }
+
+  .selected-date-string {
+    .disabled.arrow-left,
+    .disabled.arrow-right {
+      &::after {
+        border-top: 0;
+        border-left: 0;
+        border: 1.5px solid $gray;
+      }
+    }
+  }
 }
 
+.mm-allocation-overview .selected-date-string .arrow-left:after
 .allocation-card-top {
   padding: 0 1rem 1rem 1rem;
   border-bottom: 1px solid $grayOpacity20;
@@ -711,5 +719,61 @@
         margin-left: 2rem;
       }
     }
+  }
+}
+
+.mm-tooltip {
+  &:hover {
+    .mm-tooltip {
+      &__body {
+        visibility: visible;
+      }
+    }
+  }
+
+  &__body {
+    z-index: 1;
+    top: 0.5rem;
+    left: 33.875rem;
+    width: 17.375rem;
+    height: 6.5rem;
+    color: $white;
+    padding: 1rem;
+    visibility: hidden;
+    position: absolute;
+    border-radius: 4px;
+    background-color: $pink;
+    box-shadow: 0px 4px 8px rgba($red, 0.3);
+
+    &::after {
+      top: 50%;
+      content: "";
+      right: 100%;
+      margin-top: -5px;
+      border-width: 5px;
+      position: absolute;
+      border-style: solid;
+      border-color: transparent $pink transparent transparent;
+    }
+
+    &--title {
+      color: $white;
+      font-size: 1rem;
+      font-weight: bold;
+      line-height: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    &--text {
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.125rem;
+    }
+  }
+}
+
+.react-datepicker {
+  &__month-text {
+    color: $gray;
   }
 }

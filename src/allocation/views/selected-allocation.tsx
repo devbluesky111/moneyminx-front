@@ -97,11 +97,11 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
       <div className='allocation-card-top'>
         <div className='mm-allocation-overview__block--date'>
           <div className='selected-date-string'>
-            <span className='arrow-left disabled' role='button' onClick={setPreviousMonth} />
+            <span className='disabled arrow-left' role='button' onClick={setPreviousMonth} />
             {getStringDate(date || undefined)}
             <span className='arrow-right' role='button' onClick={setNextMonth} />
           </div>
-          <span className='float-right'>
+          <span className='float-right mm-tooltip'>
             <ReactDatePicker
               selected={date}
               customInput={<Calendar />}
@@ -113,6 +113,14 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                 }
               }}
             />
+            <div className='mm-tooltip__body'>
+              <div className='mm-tooltip__body--title'>
+                Upgrade Plan
+              </div>
+              <div className='mm-tooltip__body--text'>
+                Your plan only allows you to go back 1 month. Upgrade for more history.
+              </div>
+            </div>
           </span>
         </div>
         <div className='mm-allocation-overview__block--title'>Previous allocations</div>
