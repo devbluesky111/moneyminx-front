@@ -101,7 +101,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
         </div>
       </div>
       <div className='card mm-setting-card mm-account-overview__account'>
-        <div className='card-body'>
+        <div className='card-body manual'>
           <div className='row pb-2 pt-1'>
             <div className='col-10 col-md-6'>
               <div>
@@ -167,7 +167,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ providerAccounts, avai
         </div>
       </div>
       <div className='card mm-setting-card mm-account-overview__peer-street'>
-        <div className='card-body'>
+        <div className='card-body connected'>
           <div className='row pb-2 pt-1'>
             <div className='col-10 col-md-6'>
               <div>

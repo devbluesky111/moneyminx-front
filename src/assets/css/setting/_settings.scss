@@ -110,6 +110,16 @@
       @media (min-width: $md) {
         padding: 1.5rem 2.5rem;
       }
+
+      &.connected {
+        border-left: 3px solid #10C273;
+        border-radius: 6px;
+      }
+
+      &.manual {
+        border-left: 3px solid #235EE7;
+        border-radius: 6px;
+      }
     }
 
     input {
