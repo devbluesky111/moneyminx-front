@@ -33,7 +33,7 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDa
         return data;
       }
 
-      return setError(err?.message || 'Error on fetching Allocations');
+      return setError(err.message || 'Error on fetching Allocations');
     };
 
     fetchAllocations();

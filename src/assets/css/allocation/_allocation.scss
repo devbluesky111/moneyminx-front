@@ -75,6 +75,45 @@
 }
 
 .mm-allocation-overview {
+  .selected-date-string {
+    position: relative;
+    display: inline-flex;
+
+    .arrow-left:after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border: 1.5px solid $black;
+      border-top: 0;
+      border-left: 0;
+      position: absolute;
+      transform: rotate(135deg);
+      display: inline-block;
+      left: -1rem;
+      top: 40%;
+      transition: 0.3s all;
+
+      &.disabled {
+        border: 1.5px solid $gray;
+      }
+    }
+
+    .arrow-right:after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border: 1.5px solid $gray;
+      border-top: 0;
+      border-left: 0;
+      position: absolute;
+      transform: rotate(-45deg);
+      display: inline-block;
+      right: -1rem;
+      top: 40%;
+      margin-bottom: 8px;
+      transition: 0.3s all;
+    }
+  }
   &__wrapper {
     padding-left: 1.125rem;
     padding-right: 1.125rem;
@@ -344,7 +383,7 @@
     overflow: hidden;
     position: relative;
 
-    @media (min-width: $desk + 176){
+    @media (min-width: $desk + 176) {
       display: none;
     }
   }
@@ -520,10 +559,10 @@
     text-align: center;
     vertical-align: center;
 
-    @media (min-width:$md) {
-    width: 440px;
-    height: 440px;
-  }
+    @media (min-width: $md) {
+      width: 440px;
+      height: 440px;
+    }
   }
 }
 

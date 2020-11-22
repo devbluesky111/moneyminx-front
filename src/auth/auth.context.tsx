@@ -3,7 +3,7 @@ import { StorageKey } from 'app/app.types';
 import React, { createContext } from 'react';
 import { Children, Dispatch } from 'common/common.types';
 
-import { auth } from './auth-context.types';
+import { auth, subscription } from './auth-context.types';
 import { AuthType, AuthState } from './auth.types';
 
 const initialState: AuthType = {
@@ -16,6 +16,7 @@ const initialState: AuthType = {
   accounts: undefined,
   isAuthenticated: false,
   authState: AuthState.INITIAL,
+  subscriptionDetail: undefined,
 };
 
 const AuthStateContext = createContext<AuthType | undefined>(undefined);
@@ -100,7 +101,11 @@ function authReducer(state: AuthType = initialState, action: any) {
       return { ...state };
     }
     case auth.UPDATE_EMAIL_ADDRESS: {
-      return { ...state, email: action.email};
+      return { ...state, email: action.email };
+    }
+
+    case subscription.SET_SUBSCRIPTION_DETAIL: {
+      return { ...state, subscriptionDetail: action.payload.subscriptionDetail };
     }
 
     default: {
