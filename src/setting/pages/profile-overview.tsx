@@ -209,10 +209,13 @@ export const ProfileOverview = () => {
                         />
                       </span>
                     </div>
-                    <div className='card-section d-md-flex align-items-center justify-content-between mm-asset-allocation'>
+                    {values.profileEnabled &&
+                    <div
+                      className='card-section d-md-flex align-items-center justify-content-between mm-asset-allocation'>
                       <p>Do you want to share your asset allocation on your profile page?
-                        <MMToolTip placement='top' message='Coming Soon. You can share your allocation chart on your profile page to engage in conversations with Money Minx users'>
-                          <InfoIcon className='mt-n1 ml-2'/>
+                        <MMToolTip placement='top'
+                                   message='Coming Soon. You can share your allocation chart on your profile page to engage in conversations with Money Minx users'>
+                          <InfoIcon className='mt-n1 ml-2' />
                         </MMToolTip>
                       </p>
                       <div className='mm-radio-block mr-n2 ml-n2 ml-md-0'>
@@ -242,10 +245,14 @@ export const ProfileOverview = () => {
                         </label>
                       </div>
                     </div>
-                    <div className='card-section--last d-md-flex align-items-center justify-content-between'>
+                    }
+                    {values.profileEnabled &&
+                    <div
+                      className='card-section--last d-md-flex align-items-center justify-content-between'>
                       <p>Do you want to share asset values on your profile page?
-                        <MMToolTip placement='top' message='Coming Soon. If your chart is shared, you can choose to also show amounts in addition to percentages only'>
-                          <InfoIcon className='mt-n1 ml-2'/>
+                        <MMToolTip placement='top'
+                                   message='Coming Soon. If your chart is shared, you can choose to also show amounts in addition to percentages only'>
+                          <InfoIcon className='mt-n1 ml-2' />
                         </MMToolTip>
                       </p>
                       <div className='mm-radio-block mr-md-n2 ml-n2 ml-md-0'>
@@ -275,6 +282,7 @@ export const ProfileOverview = () => {
                         </label>
                       </div>
                     </div>
+                    }
                   </div>
                 </div>
               </div>
