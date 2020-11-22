@@ -4,12 +4,13 @@ import { ReactComponent as SelectedIcon } from 'assets/images/signup/selected.sv
 import { ReactComponent as CircleIcon } from 'assets/images/signup/circle-icon.svg';
 interface StepProps {
   isConnectAccount?: boolean;
+  isAccountSettings?: boolean;
   isCompleted?: boolean;
   onSkip?: () => void;
   onFinish?: () => void;
 }
 
-const ConnectAccountSteps: React.FC<StepProps> = ({ isConnectAccount, isCompleted, onSkip, onFinish }) => {
+const ConnectAccountSteps: React.FC<StepProps> = ({ isConnectAccount, isAccountSettings, isCompleted, onSkip, onFinish }) => {
   return (
     <div className='row'>
       <div className='action-overlay'>
@@ -18,11 +19,11 @@ const ConnectAccountSteps: React.FC<StepProps> = ({ isConnectAccount, isComplete
             <p>
               <span className='step'>STEP</span>
               <br />
-              2/3
+              {isAccountSettings ? '3/3' : '2/3'}
             </p>
           </div>
           <div className='connect-steps-wrap'>
-            <div className='step-content left-border'>
+            <div className={`step-content left-border ${isAccountSettings ? 'bg-purple' : ''}`}>
               <div className='step-icon'>
                 <CheckIcon />
               </div>
@@ -36,11 +37,11 @@ const ConnectAccountSteps: React.FC<StepProps> = ({ isConnectAccount, isComplete
               <div className={`step-icon icon-three ${!isConnectAccount ? 'selected' : ''}`}>
                 {isConnectAccount ? <CircleIcon /> : <SelectedIcon />}
               </div>
-              <span className='connect-text text-right action-next-step'>Link accounts</span>
+              <span className={`connect-text text-right ${!isAccountSettings ? 'action-next-step' : ''}`}>Link accounts</span>
             </div>
           </div>
         </div>
-        <div className='subs-content four'>
+        <div className={!isConnectAccount ? 'subs-content four' : 'hide-me'}>
           <button className='finish-btn' onClick={isCompleted ? onFinish : onSkip}>
             {isCompleted ? 'Finish' : 'Skip'}
           </button>
