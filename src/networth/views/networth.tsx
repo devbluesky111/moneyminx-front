@@ -80,7 +80,7 @@ const Networth = () => {
     <NetworthLayout>
       <section className='content-container'>
         <NetworthHead />
-        <div className='content-wraper'>
+        <div className='content-wrapper'>
           <div className='container'>
             <NetworthFilter />
             <div className='row mb-40'>
@@ -148,7 +148,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-b'>
                     <div className='table-holder'>
-                      <Table className="tb-responsive" id='table-investment-xls'>
+                      <Table className='tb-responsive' id='table-investment-xls'>
                         <thead onClick={toggleInvestment}>
                           <tr data-toggle='collapse'>
                             <th>
@@ -218,7 +218,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-g'>
                     <div className='table-holder'>
-                      <Table className="tb-responsive" id="table-other-xls">
+                      <Table className='tb-responsive' id='table-other-xls'>
                         <thead onClick={toggleOther}>
                           <tr>
                             <th>
@@ -274,7 +274,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-r'>
                     <div className='table-holder'>
-                      <Table className="tb-responsive" id="table-liabilities-xls">
+                      <Table className='tb-responsive' id='table-liabilities-xls'>
                         <thead onClick={toggleLiabilities}>
                           <tr>
                             <th>
@@ -330,7 +330,7 @@ const Networth = () => {
                 <div className='col-12'>
                   <div className='ct-box box-v'>
                     <div className='table-holder'>
-                      <Table className="tb-responsive" id='table-net-xls'>
+                      <Table className='tb-responsive' id='table-net-xls'>
                         <thead onClick={toggleNet}>
                           <tr>
                             <th>

@@ -8,10 +8,9 @@ import AppSubHeader from 'common/app.sub-header';
 export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = ({ onTypeChange, filter }) => {
   return (
     <section className='content-container mm-allocation-sub-navigation'>
-      <div className='content-head'>
-        <div className='container'>
+      <div className='app-subheader-container'>
         <AppSubHeader/>
-        <div className='mm-plan-radios mm-allocation-radios mm-allocation-sub-navigation__category'>
+        <div className='mm-plan-radios mm-allocation-radios middle-box'>
           <input
             type='radio'
             id='mm-allocation-type'
@@ -68,7 +67,6 @@ export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = (
             <span className='sm-hide'>Download</span> <span>CSV</span>
           </button>
         </div>*/}
-      </div>
       </div>
     </section>
   );
