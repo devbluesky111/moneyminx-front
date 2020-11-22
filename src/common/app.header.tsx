@@ -75,7 +75,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, 
                 <span>
                   <img src={user?.picture || DefaultAvatar} alt='Profile avatar' />
                 </span>
-                <span>{capitalize(user?.firstName || user?.username || 'My Account')}</span>
+                <span>{capitalize(`${user?.firstName} ${user?.lastName}` || user?.username || 'My Account')}</span>
               </button>
             </div>
           </div>

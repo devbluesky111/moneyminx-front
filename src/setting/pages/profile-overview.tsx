@@ -10,7 +10,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import useProfile from 'auth/hooks/useProfile';
 import { patchProfile } from 'api/request.api';
 import countries from '@mm/data/countries.json';
-import { useAuthState } from 'auth/auth.context';
+import { useAuthState, useAuthDispatch } from 'auth/auth.context';
 import { enumerateStr } from 'common/common-helper';
 import SaveSettings from 'setting/inc/save-settings';
 import ProfilePicture from 'setting/inc/profile-picture';
@@ -19,7 +19,9 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { HouseHoldIncomeOptions, MaritalStatusOptions, RiskToleranceOptions } from 'setting/setting.enum';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
 import MMToolTip from '../../common/components/tooltip';
+
 import { ProfileType } from 'auth/auth.types';
+import { fetchProfile } from 'auth/auth.service';
 
 export const ProfileOverview = () => {
   const {
@@ -28,6 +30,7 @@ export const ProfileOverview = () => {
   } = useProfile();
 
   const { user } = useAuthState();
+  const dispatch = useAuthDispatch();
   const [saving, setSaving] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
   const [change, setChange] = useState(false);
@@ -160,6 +163,8 @@ export const ProfileOverview = () => {
           if (patchError) {
             return toast('Could not save profile', { type: 'error' });
           }
+
+          const result = await fetchProfile({ dispatch });
           setSaving(false);
         }}
         validate={checkProfileCompletionProgress}
