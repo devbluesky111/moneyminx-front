@@ -47,7 +47,7 @@ export const ProfileOverview = () => {
   const getProfileProgress = (userInfo: ProfileType) => {
     let count = 0;
     const profileDetail = userInfo.profileDetails;
-    const isSingle = profileDetail.maritalStatus === 'Single';
+    const isSingle = profileDetail.maritalStatus === MaritalStatusOptions.SINGLE;
     const propertyCount = isSingle ? singlePropertyCounts : marriedPropertyCounts;
 
     if (userInfo.firstName) count++;
@@ -74,7 +74,7 @@ export const ProfileOverview = () => {
 
   const checkProfileCompletionProgress = (values: any) => {
     let count = 0;
-    const isSingle = values.maritalStatus === 'Single';
+    const isSingle = values.maritalStatus === MaritalStatusOptions.SINGLE;
     const propertyCount = isSingle ? singlePropertyCounts : marriedPropertyCounts;
     if (!change) setChange(true);
 
@@ -545,50 +545,56 @@ export const ProfileOverview = () => {
                             </select>
                           </div>
                         </div>
-                        <div className='form-group row align-items-center'>
-                          <label className='col-md-3 col-form-label'>Spouse’s date of birth</label>
-                          <div className='col-md-5'>
-                            <ReactDatePicker
-                              className='form-control form-control-lg mr-sm-2'
-                              name='spouseDob'
-                              selected={new Date(values.spouseDob)}
-                              onChange={(val: Date) => {
-                                setFieldValue('spouseDob', moment(val).toISOString());
-                              }}
-                            />
-                          </div>
-                        </div>
-                        <div className='form-group row align-items-center'>
-                          <label className='col-md-3 col-form-label'>Spouse’s retirement age</label>
-                          <div className='col-md-5'>
-                            <FormControl
-                              type='number'
-                              name='spouseTargetedRetirementAge'
-                              value={values.spouseTargetedRetirementAge  || ''}
-                              onChange={handleChange}
-                              className='mr-sm-2 form-control form-control-lg'
-                              disabled={values.spouseAlreadyRetired}
-                            />
-                          </div>
-                          <div className='col text-md-center mt-3 mt-md-0'>
-                            <div className='form-wrap'>
-                              <span className='checkbox-item'>
-                                <label className='check-box'>
-                                  Already retired
-                                  <input
-                                    type='checkbox'
-                                    name='spouseAlreadyRetired'
-                                    value='true'
-                                    checked={values.spouseAlreadyRetired}
-                                    onChange={() => toggleFormCheck('spouseAlreadyRetired')}
-                                    aria-checked={values.spouseAlreadyRetired}
-                                  />
-                                  <span className='geekmark' />
-                                </label>
-                              </span>
+                        {values.maritalStatus !== MaritalStatusOptions.SINGLE &&
+                          <>
+                            <div className='form-group row align-items-center'>
+                              <label className='col-md-3 col-form-label'>Spouse’s date of
+                                birth</label>
+                              <div className='col-md-5'>
+                                <ReactDatePicker
+                                  className='form-control form-control-lg mr-sm-2'
+                                  name='spouseDob'
+                                  selected={new Date(values.spouseDob)}
+                                  onChange={(val: Date) => {
+                                    setFieldValue('spouseDob', moment(val).toISOString());
+                                  }}
+                                />
+                              </div>
                             </div>
-                          </div>
-                        </div>
+                            <div className='form-group row align-items-center'>
+                              <label className='col-md-3 col-form-label'>Spouse’s retirement
+                                age</label>
+                              <div className='col-md-5'>
+                                <FormControl
+                                  type='number'
+                                  name='spouseTargetedRetirementAge'
+                                  value={values.spouseTargetedRetirementAge || ''}
+                                  onChange={handleChange}
+                                  className='mr-sm-2 form-control form-control-lg'
+                                  disabled={values.spouseAlreadyRetired}
+                                />
+                              </div>
+                              <div className='col text-md-center mt-3 mt-md-0'>
+                                <div className='form-wrap'>
+                          <span className='checkbox-item'>
+                          <label className='check-box'>
+                          Already retired
+                          <input
+                            type='checkbox'
+                            name='spouseAlreadyRetired'
+                            value='true'
+                            checked={values.spouseAlreadyRetired}
+                            onChange={() => toggleFormCheck('spouseAlreadyRetired')}
+                            aria-checked={values.spouseAlreadyRetired}
+                          />
+                          <span className='geekmark' />
+                          </label>
+                          </span>
+                                </div>
+                              </div>
+                            </div>
+                        </>
+                        }
                         <div className='form-group row align-items-center'>
                           <label className='col-md-3 col-form-label'>Dependants</label>
                           <div className='col-md-5'>
