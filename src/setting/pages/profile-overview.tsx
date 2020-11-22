@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
@@ -25,6 +25,7 @@ export const ProfileOverview = () => {
   } = useProfile();
 
   const { user } = useAuthState();
+  const [saving, setSaving] = useState<boolean>(false);
 
   if (error) {
     toast('Error occurred fetching your profile', { type: 'error' });
@@ -87,11 +88,13 @@ export const ProfileOverview = () => {
           minxWinks: profileDetails?.minxWinks || false,
         }}
         onSubmit={async (values, actions) => {
+          setSaving(true);
           const { error: patchError } = await patchProfile(values);
 
           if (patchError) {
             return toast('Could not save profile', { type: 'error' });
           }
+          setSaving(false);
         }}
       >
         {(props) => {
@@ -592,7 +595,7 @@ export const ProfileOverview = () => {
                   </div>
                 </div>
               </div>
-              <SaveSettings handleSave={handleSubmit} />
+              <SaveSettings handleSave={handleSubmit} status={saving} />
             </form>
           );
         }}
