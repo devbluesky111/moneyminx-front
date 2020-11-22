@@ -18,8 +18,10 @@ import NetworthFilter from './inc/networth-filter';
 import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
 
 import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
+import useProfile from '../../auth/hooks/useProfile';
 
 const Networth = () => {
+  useProfile();
   const history = useHistory();
   const connectionAlert = useAlert();
 
@@ -104,7 +106,7 @@ const Networth = () => {
                         <li className='nw-data'>
                           <span>Net Worth</span>
                           <h3>${numberWithCommas(fNumber(currentNetworth, 0))}</h3>
-                        </li>) : null } 
+                        </li>) : null }
                     </ul>
                     <div className='chartbox'>
                       <NetworthBarGraph networth={networth} />
