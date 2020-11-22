@@ -419,8 +419,7 @@
   }
 }
 
-.mm-allocation-overview .selected-date-string .arrow-left:after
-.allocation-card-top {
+.mm-allocation-overview .selected-date-string .arrow-left:after .allocation-card-top {
   padding: 0 1rem 1rem 1rem;
   border-bottom: 1px solid $grayOpacity20;
 
@@ -734,7 +733,7 @@
   &__body {
     z-index: 1;
     top: 0.5rem;
-    left: 34.875rem;
+    left: 98%;
     width: 17.375rem;
     height: 6.5rem;
     color: $white;
@@ -747,7 +746,7 @@
 
     &::after {
       top: 50%;
-      content: "";
+      content: '';
       right: 100%;
       margin-top: -5px;
       border-width: 5px;

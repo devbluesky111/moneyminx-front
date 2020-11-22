@@ -44,3 +44,5 @@ export const getNextMonth = <T extends Date | null>(inputDate?: T) => {
 };
 
 export const getMonthSubtracted = (month: number) => moment().subtract(month, 'month').toDate();
+
+export const getLastDateOfMonth = (date: Date) => moment(date).endOf('month').toDate();

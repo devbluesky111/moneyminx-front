@@ -10,6 +10,7 @@ import {
   getStringDate,
   getPreviousMonth,
   getMonthSubtracted,
+  getLastDateOfMonth,
 } from 'common/moment.helper';
 import { useAuthState } from 'auth/auth.context';
 import { MMPieChart } from 'common/components/pie-chart';
@@ -28,13 +29,13 @@ import RestrictedChartView from './restricted-chart-view';
 
 export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter }) => {
   const { subscriptionDetail } = useAuthState();
-  const [date, setDate] = useState<Date>(getPreviousMonth());
   const [hidden, setHidden] = useState<string[]>(['']);
   const [isDateValid, setIsDateValid] = useState<boolean>(true);
+  const [date, setDate] = useState<Date>(getLastDateOfMonth(getPreviousMonth()));
   const { allocations, allocationChartData: chartData } = useAllocation(filter, date?.toISOString());
 
-  const chartSettingModal = useModal();
   const chartShareModal = useModal();
+  const chartSettingModal = useModal();
 
   if (!allocations || !chartData) {
     return <CircularSpinner />;
@@ -97,7 +98,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
       <div className='allocation-card-top'>
         <div className='mm-allocation-overview__block--date'>
           <div className='selected-date-string'>
-            <span className='disabled arrow-left' role='button' onClick={setPreviousMonth} />
+            <span className='arrow-left' role='button' onClick={setPreviousMonth} />
             {getStringDate(date || undefined)}
             <span className='arrow-right' role='button' onClick={setNextMonth} />
           </div>
@@ -109,18 +110,18 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
               showMonthYearPicker
               onChange={(val: Date) => {
                 if (validateDate(val)) {
-                  setDate(val);
+                  setDate(getLastDateOfMonth(val));
                 }
               }}
             />
-            <div className='mm-tooltip__body'>
-              <div className='mm-tooltip__body--title'>
-                Upgrade Plan
+            {!isDateValid ? (
+              <div className='mm-tooltip__body'>
+                <div className='mm-tooltip__body--title'>Upgrade Plan</div>
+                <div className='mm-tooltip__body--text'>
+                  Your plan only allows you to go back {getNumberOfChartHistory()} month. Upgrade for more history.
+                </div>
               </div>
-              <div className='mm-tooltip__body--text'>
-                Your plan only allows you to go back 1 month. Upgrade for more history.
-              </div>
-            </div>
+            ) : null}
           </span>
         </div>
         <div className='mm-allocation-overview__block--title'>Previous allocations</div>
@@ -131,7 +132,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
         </div>
       </div>
       {!isDateValid ? (
-        <RestrictedChartView />
+        <RestrictedChartView noOfMonth={getNumberOfChartHistory()} />
       ) : (
         <div className='allocation-content'>
           <div
