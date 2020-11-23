@@ -8,6 +8,9 @@ import PlanChangedModal from 'setting/inc/plan-changed.modal';
 import SubscriptionModal from 'setting/inc/subscription.modal';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import {getAccountsCount, getSubscription} from '../../api/request.api';
+import {pricingDetailConstant} from '../../common/common.constant';
+import {appRouteConstants} from '../../app/app-route.constant';
 
 const StripeCheckoutSuccess = () => {
   const location = useLocation();
@@ -17,7 +20,7 @@ const StripeCheckoutSuccess = () => {
   const subscriptionModal = useModal();
   const planChangedModal = useModal();
 
-  const { fetchingCurrentSubscription, currentSubError } = useCurrentSubscription();
+  const { fetchingCurrentSubscription, currentSubError, currentSubscription } = useCurrentSubscription();
 
   if (currentSubError) {
     toast('Error on getting current subscription', { type: 'error' });
@@ -35,8 +38,14 @@ const StripeCheckoutSuccess = () => {
     return <CircularSpinner />;
   }
 
-  const redirectToNetworth = () => {
-    history.push('/net-worth');
+  const redirectToNetworth = async () => {
+    const { priceId } = currentSubscription
+    const { data: { connectedAccounts, manualAccounts }} = await getAccountsCount();
+    const { data: { details }} = await getSubscription({priceId})
+    if(connectedAccounts >= details[pricingDetailConstant.CONNECTED_ACCOUNT] || manualAccounts >= details[pricingDetailConstant.MANUAL_ACCOUNT]) {
+      history.push(appRouteConstants.account.REMOVE_ACCOUNT)
+    }
+    else history.push(appRouteConstants.networth.NET_WORTH);
   };
 
   return (

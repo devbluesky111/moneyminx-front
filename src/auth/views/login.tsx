@@ -2,14 +2,19 @@ import { Formik } from 'formik';
 import { isEmpty } from 'lodash';
 import { toast } from 'react-toastify';
 import FacebookLogin from 'react-facebook-login';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 import React, { ChangeEvent, useState } from 'react';
 
 import env from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
-import {getCurrentSubscription, postFacebookLogin, getAccount} from 'api/request.api';
+import {
+  getCurrentSubscription,
+  postFacebookLogin,
+  getAccount,
+  getSubscription
+} from 'api/request.api';
 import { appRouteConstants } from 'app/app-route.constant';
 import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -22,6 +27,7 @@ import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/faceboo
 
 import EmailNeededModal from './inc/email-needed.modal';
 import AssociateEmailModal from './inc/associate-email.modal';
+import {pricingDetailConstant} from '../../common/common.constant';
 
 const Login = () => {
   return (
@@ -35,6 +41,7 @@ export default Login;
 
 export const LoginMainSection = () => {
   const history = useHistory();
+  const { search } = useLocation();
   const associateModal = useModal();
   const dispatch = useAuthDispatch();
   const emailNeededModal = useModal();
@@ -43,6 +50,8 @@ export const LoginMainSection = () => {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
   const visibilityIcon = passwordVisible ? <VisibleIcon /> : <HiddenIcon />;
+
+  const isExpired = search.includes('?expired=true');
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
@@ -57,11 +66,11 @@ export const LoginMainSection = () => {
         history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
         toast('Successfully logged in', { type: 'success' });
       } else {
-        if (error?.statusCode === 400 && error?.message) {
+        if (error.statusCode === 400 && error.message) {
           emailNeededModal.open();
         }
 
-        if (error?.statusCode === 409 && error?.message) {
+        if (error.statusCode === 409 && error.message) {
           setAssociateMessage(error.message);
           associateModal.open();
         }
@@ -123,7 +132,7 @@ export const LoginMainSection = () => {
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
-              <div className='session-expired hide-me'>
+              <div className={isExpired ? 'session-expired' : 'session-expired hide-me'}>
                 <p>We thought you left, so we logged you out to protect your account.</p>
               </div>
               <div className='form-wrap'>
@@ -151,12 +160,17 @@ export const LoginMainSection = () => {
                     if (!error) {
                       const { data } = await getCurrentSubscription();
                       if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
-                        toast('Sign in Success', { type: 'success' });
                         const accounts = await getAccount();
-                        if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
+                        const manualAccounts = accounts?.data?.filter((account: Record<string, string>) => account.isManual).length
+                        const autoAccounts = accounts?.data?.filter((account: Record<string, string>) => !account.isManual).length
+                        const subscriptionDetails = await getSubscription({priceId:data.priceId})
+                        toast('Sign in Success', { type: 'success' });
+                        if(autoAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] || manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]) {
+                          history.push(appRouteConstants.account.REMOVE_ACCOUNT)
+                        }
+                        else if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
                         else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
-                      }
-                      else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
+                      } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
                     }
 
                     actions.setFieldError(

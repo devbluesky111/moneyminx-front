@@ -34,10 +34,12 @@ interface MMPieChartProps {
 }
 
 export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, share = false }) => {
-  const data = chartData.map((item) => ({
-    name: item.group,
-    value: item.per,
-  }));
+  const data = chartData
+    .map((item) => ({
+      name: item.group,
+      value: item.per,
+    }))
+    .sort((a, b) => b.value - a.value);
 
   let w = 440;
   let h = 440;

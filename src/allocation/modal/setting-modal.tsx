@@ -1,6 +1,7 @@
 import Form from 'react-bootstrap/Form';
 import React, { useEffect, useState } from 'react';
 
+import { FormControl } from 'react-bootstrap';
 import { Modal, ModalType } from 'common/components/modal';
 import { patchAllocationChartSettings } from 'api/request.api';
 import { useAllocationDispatch } from 'allocation/allocation.context';
@@ -20,6 +21,7 @@ const initialData = {
 const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
   const [data, setData] = useState(initialData);
   const dispatch = useAllocationDispatch();
+  const [error, setError] = useState<boolean>(false);
 
   const { loading, settings } = useAllocationSetting();
 
@@ -29,16 +31,29 @@ const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
     }
   }, [settings]);
 
+  const validate = (e: React.ChangeEvent<any>) => {
+    if (e.target.name === 'title' && e.target.value?.length > 70) {
+      return setError(true);
+    }
+
+    return setError(false);
+  };
+
   const handleChange = (e: React.ChangeEvent<any>) => {
+    validate(e);
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const handleCancel = () => settingModal.close();
 
   const handleSubmit = async () => {
-    const { data: patchResponse, error } = await patchAllocationChartSettings(data);
+    if (error) {
+      return;
+    }
 
-    if (!error) {
+    const { data: patchResponse, error: allocationError } = await patchAllocationChartSettings(data);
+
+    if (!allocationError) {
       dispatch({ type: 'PATCH_ALLOCATION_CHART_SETTING', payload: { patchChartSettings: patchResponse } });
       setData({ ...patchResponse });
       settingModal.close();
@@ -62,7 +77,11 @@ const SettingModal: React.FC<SettingModalProps> = ({ settingModal }) => {
                   onChange={handleChange}
                   name='title'
                   value={data.title}
+                  isInvalid={error}
                 />
+                <FormControl.Feedback type='invalid' className='feedback text-right'>
+                  Chart titles can't be longer than 70 characters.
+                </FormControl.Feedback>
               </Form.Group>
               <Form.Group controlId='exampleForm.ControlTextarea1'>
                 <Form.Label className='mm-setting-modal__sub-title'>Chart Description</Form.Label>

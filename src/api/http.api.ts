@@ -55,7 +55,7 @@ axiosInstance.interceptors.response.use(
 
     if (status === STATUS_CODE.UNAUTHORIZED && !isAuthenticating) {
       storage.clear();
-      window.location.replace(appRouteConstants.auth.LOGIN);
+      window.location.replace(`${appRouteConstants.auth.LOGIN}?expired=true`);
 
       return withError(errorResponse);
     }

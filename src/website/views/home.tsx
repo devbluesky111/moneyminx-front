@@ -15,20 +15,21 @@ import HomeBlogImgOne from 'assets/images/home/home-blog-img1.png';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import { ReactComponent as Quotes } from 'assets/images/testimonials/quote.svg';
-import { ReactComponent as FeatureIconOne } from 'assets/images/home/feature-icon1.svg';
+import { ReactComponent as CSMinxWinks } from 'assets/images/home/cs-minx-winks.svg';
+import { ReactComponent as FeatureIconRealEstate } from 'assets/icons/icon-real-estate.svg';
 import { ReactComponent as FeatureIconTwo } from 'assets/images/home/feature-icon2.svg';
 import { ReactComponent as FeatureIconSix } from 'assets/images/home/feature-icon6.svg';
 import { ReactComponent as HomeBannerImg } from 'assets/images/home/home-banner-img.svg';
-import { ReactComponent as HomeMinxMeasure } from 'assets/images/home/measure-chart.svg';
+import { ReactComponent as SyncedOrManual } from 'assets/images/home/synced-or-manual.svg';
 import { ReactComponent as FeatureIconFour } from 'assets/images/home/feature-icon4.svg';
-import { ReactComponent as FeatureIconFive } from 'assets/images/home/feature-icon5.svg';
-import { ReactComponent as HomeMinxwinksImg } from 'assets/images/home/minxwinks-img.svg';
 import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-icon3.svg';
 import { ReactComponent as HomeNetWorthChart } from 'assets/images/home/home-networth.svg';
 import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-adopter-icon.svg';
 import { ReactComponent as PerformanceLegend } from 'assets/images/home/performance-legend.svg';
-import { ReactComponent as HomePerformanceChart } from 'assets/images/home/performance-chart.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
+import { ReactComponent as InvestmentsAndCryptos} from 'assets/images/home/investment-assets-cryptos.svg';
+import { ReactComponent as HomeNetWorthProjections } from 'assets/images/home/net-worth-projections.svg';
+
 
 const Home = () => {
   return (
@@ -36,13 +37,13 @@ const Home = () => {
       <div className='mm-new-container'>
         <HomeTopSection />
         {/*<HomeEarlyAdopterSection />*/}
-        <HomeFeatureSection />
         <HomeTestimonials />
         <HomeNetWorthSection />
         <HomeAllocationSection />
         <HomePerformanceSection />
         <MinxWinksSection />
         <MinxMeasureSection />
+        <HomeFeatureSection />
         <HomeBlogSection />
       </div>
     </WebsiteLayout>
@@ -130,34 +131,26 @@ export const HomeFeatureSection = () => {
   return (
     <section>
       <div className='mm-home-feature-section'>
+        <div className='highlighted-text p-b-12'>And Much More Coming Soon!</div>
         <div className='row mm-home-feature-wrapper'>
           <div className='col-12 col-md-6 col-xl-4'>
             <div className='feature-content'>
               <div className='feature-icon py-3'>
-                <FeatureIconOne />
+                <FeatureIconTwo />
               </div>
-              <h2 className='py-3'>Asset Allocation</h2>
-              <p>Simple, up-to-date and shareable asset allocation charts</p>
+              <h2 className='py-3'>Multi Currency</h2>
+              <p>Track your investments and assets in multiple currencies: USD, EUR, CHF, GBP and more.</p>
             </div>
           </div>
           <div className='col-12 col-md-6 col-xl-4'>
             <div className='feature-content'>
               <div className='feature-icon py-3'>
                 <Link to='/net-worth'>
-                  <FeatureIconTwo />
+                  <CSMinxWinks />
                 </Link>
               </div>
-              <h2 className='py-3'>Net Worth</h2>
-              <p>Ready to view networth summary categories by investments, assets and liabilities</p>
-            </div>
-          </div>
-          <div className='col-12 col-md-6 col-xl-4'>
-            <div className='feature-content'>
-              <div className='feature-icon py-3'>
-                <FeatureIconThree />
-              </div>
-              <h2 className='py-3'>Account Details</h2>
-              <p>View the details behind each account in one place.</p>
+              <h2 className='py-3'>Minx Winks</h2>
+              <p>Get tips and strategies from our wealth of investment knowledge</p>
             </div>
           </div>
           <div className='col-12 col-md-6 col-xl-4'>
@@ -165,17 +158,17 @@ export const HomeFeatureSection = () => {
               <div className='feature-icon py-3'>
                 <FeatureIconFour />
               </div>
-              <h2 className='py-3'>Synced Automatically</h2>
-              <p>We sync directly with your banks and brokerages to keep your information up to date.</p>
+              <h2 className='py-3'>Minx Measure-up</h2>
+              <p>Compare your portfolio to other investors with similar profiles and get helpful insights from others with real world experience.</p>
             </div>
           </div>
           <div className='col-12 col-md-6 col-xl-4'>
             <div className='feature-content'>
               <div className='feature-icon py-3'>
-                <FeatureIconFive />
+                <FeatureIconThree />
               </div>
-              <h2 className='py-3'>Bank Level Security</h2>
-              <p>We utilizing banking level security to keep your account safe and secure.</p>
+              <h2 className='py-3'>Performance Tracking</h2>
+              <p>See how all of your investments are performing in one full financial picture. Money Weighted or Time Weighted returns.</p>
             </div>
           </div>
           <div className='col-12 col-md-6 col-xl-4'>
@@ -183,15 +176,17 @@ export const HomeFeatureSection = () => {
               <div className='feature-icon py-3'>
                 <FeatureIconSix />
               </div>
-              <div className=''>
-                <h2 className='py-3'>
-                  Income Projections <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
-                </h2>
+              <h2 className='py-3'>Income Projections</h2>
+              <p>Track which investments are paying interest, dividends or royalties and create an income projection schedule.</p>
+            </div>
+          </div>
+          <div className='col-12 col-md-6 col-xl-4'>
+            <div className='feature-content'>
+              <div className='feature-icon py-3'>
+                <FeatureIconRealEstate />
               </div>
-              <p>
-                Track which investments are paying interest, dividends or royalties and create an income projection
-                schedule
-              </p>
+                <h2 className='py-3'>Real Estate</h2>
+              <p>Add the addresses of your properties and we'll track the market value for you.</p>
             </div>
           </div>
         </div>
@@ -390,17 +385,16 @@ export const HomePerformanceSection = () => {
           <div className='col-xl-5'>
             <div className='networth-text'>
               <h2>
-                Performance<span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
+                Net Worth Projections{/*<span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>*/}
               </h2>
               <p className='text'>
-                Easy to use dashboard of your investments, assets, liabilities and net worth, from all your
-                institutions, all consolidated in one place.
+                Money Minx will use the data your provide and estimated returns to give you a sense of what your net worth will look like into the future.
               </p>
             </div>
           </div>
           <div className='col-xl-7'>
             <div className='mm-home-performance-section-chart'>
-              <HomePerformanceChart />
+              <HomeNetWorthProjections />
             </div>
           </div>
         </div>
@@ -416,18 +410,16 @@ export const MinxWinksSection = () => {
         <div className='row align-items-center'>
           <div className='col-xl-5'>
             <div className='networth-text pt-4 mb-5'>
-              <h2>
-                <span className='badge badge-pill badge-primary mm-coming-soon'>!Coming Soon</span>Minx Winks
-              </h2>
+              <h2>Investments, Assets & Cryptos</h2>
               <p className='text'>
-                Get inside insights, recommendations, and tips from Money Minx. Get inside insights, recommendations,
-                and tips from Money Minx. Get inside insights, recommendations, and tips from Money Minx.
+                Track your stocks, bonds, mutual funds, ETFS, crypto wallets and more all in one place.
+                Sync your account with over 25,000 institutions world wide and most crypto wallets out there.
               </p>
             </div>
           </div>
           <div className='col-xl-7'>
             <div className='networth-chart'>
-              <HomeMinxwinksImg className='mm-custom-networth-chart' />
+              <InvestmentsAndCryptos className='mm-custom-networth-chart' />
             </div>
           </div>
         </div>
@@ -444,22 +436,21 @@ export const MinxMeasureSection = () => {
           <div className='col-lg-5'>
             <div className='networth-text'>
               <h2>
-                Minx Measure-up<span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
+                Synced or Manual Accounts
               </h2>
               <p className='text'>
-                Put your portfolio to the test against similar investors. How does yours stack up? What do you need to
-                add? How can you further diversify?
+                You can sync your accounts or manually update them if you prefer. Manual accounts are a great way to track non-traditional investments, like comic books, art, rare legos and more.
               </p>
             </div>
           </div>
           <div className='col-lg-7'>
             <div className='mm-networth-chart'>
-              <HomeMinxMeasure />
+              <SyncedOrManual />
             </div>
           </div>
-          <div className='home-coming-soon'>
+          {/*<div className='home-coming-soon'>
             <span className='highlighted-text'>And Much More Coming Soon!</span>
-          </div>
+          </div>*/}
         </div>
       </div>
     </section>

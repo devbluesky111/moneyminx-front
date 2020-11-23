@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { fNumber } from 'common/number.helper';
 import { ellipseText } from 'common/common-helper';
-import { ChartData } from 'allocation/allocation.type';
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import { ChartData, ChartDatum } from 'allocation/allocation.type';
 import { useAllocationState } from 'allocation/allocation.context';
 
 interface Props {
   chartData: ChartData;
+  sharing?: boolean;
 }
 
 const COLORS = [
@@ -32,19 +33,41 @@ const COLORS = [
   '#14b8b8',
 ];
 
-const AllocationLegend: React.FC<Props> = ({ chartData }) => {
+const AllocationLegend: React.FC<Props> = ({ chartData, sharing = false }) => {
   const { allocationChartSetting } = useAllocationState();
+  const showAmounts = allocationChartSetting?.showAmounts;
+
+  const hasAmount = (sharing && showAmounts) || !sharing;
+
+  const sortedChartData = chartData.sort((a, b) => b.total - a.total);
+
+  const renderLegendData = (data: ChartDatum) => {
+    if (hasAmount) {
+      return (
+        <>
+          <span className='legend-label col-8'>
+            {ellipseText(data.group)} - {fNumber(data.per, 2)}%
+          </span>
+          <span className='legend-amount col-3'>${numberWithCommas(fNumber(data.total, 0))}</span>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <span className='legend-label col-9'>{ellipseText(data.group)}</span>
+        <span className='legend-amount col-2'>{fNumber(data.per, 2)}%</span>
+      </>
+    );
+  };
 
   return (
     <div className='allocation-legend-wrapper'>
-      {chartData.map((data, index) => {
+      {sortedChartData.map((data, index) => {
         return (
           <div className='legend-row' key={index}>
-            <span className='legend-color-box' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-            <span className='legend-label'>
-              {ellipseText(data.group)} - {fNumber(data.per, 2)}%
-            </span>
-            {allocationChartSetting?.showAmounts ? <span className='legend-amount'>${fNumber(data.total, 2)}</span> : null}
+            <span className='legend-color-box pl-0 col-1' style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+            {renderLegendData(data)}
           </div>
         );
       })}
