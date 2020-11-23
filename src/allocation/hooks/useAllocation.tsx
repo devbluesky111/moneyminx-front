@@ -8,6 +8,7 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDa
   const [error, setError] = useState();
   const [fetching, setFetching] = useState<boolean>(false);
   const [allocations, setAllocations] = useState<Allocations>();
+  const [lastAvailableDate, setLastAvailableDate] = useState<Date>();
   const [allocationChartData, setAllocationChartData] = useState<ChartData>();
 
   useEffect(() => {
@@ -26,6 +27,10 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDa
           setAllocations(data?.allocations);
         }
 
+        if (data?.lastAvailableDate) {
+          setLastAvailableDate(new Date(data?.lastAvailableDate));
+        }
+
         if (data?.chartData) {
           setAllocationChartData(data?.chartData);
         }
@@ -39,7 +44,7 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDa
     fetchAllocations();
   }, [filter, forDate]);
 
-  return { fetching, error, allocations, allocationChartData };
+  return { fetching, error, allocations, allocationChartData, lastAvailableDate };
 };
 
 export default useAllocation;

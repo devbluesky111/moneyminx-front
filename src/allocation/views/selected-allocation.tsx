@@ -32,7 +32,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
   const [hidden, setHidden] = useState<string[]>(['']);
   const [isDateValid, setIsDateValid] = useState<boolean>(true);
   const [date, setDate] = useState<Date>(getLastDateOfMonth(getPreviousMonth()));
-  const { allocations, allocationChartData: chartData } = useAllocation(filter, date?.toISOString());
+  const { allocations, allocationChartData: chartData, lastAvailableDate } = useAllocation(filter, date?.toISOString());
 
   const chartShareModal = useModal();
   const chartSettingModal = useModal();
@@ -108,7 +108,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
               customInput={<Calendar />}
               dateFormat='MM/yyyy'
               showMonthYearPicker
-              minDate={getMonthSubtracted(getNumberOfChartHistory())}
+              minDate={lastAvailableDate}
               maxDate={new Date()}
               onChange={(val: Date) => {
                 if (validateDate(val)) {
