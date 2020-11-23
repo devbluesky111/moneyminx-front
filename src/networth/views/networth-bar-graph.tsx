@@ -1,9 +1,9 @@
 import React from 'react';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Area, ReferenceArea } from 'recharts';
 
-import { NetworthBarGraphProps } from 'networth/networth.type';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { fNumber, numberWithCommas } from 'common/number.helper';
+import { NetworthBarGraphProps } from 'networth/networth.type';
 
 const CustomTooltip = (props: any) => {
   const { active, payload } = props;

@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { ChartData, ChartDatum } from 'allocation/allocation.type';
 import { ellipseText } from 'common/common-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import { ChartData, ChartDatum } from 'allocation/allocation.type';
 import { useAllocationState } from 'allocation/allocation.context';
 
 interface Props {
