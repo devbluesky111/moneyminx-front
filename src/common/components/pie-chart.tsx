@@ -1,11 +1,11 @@
 import React from 'react';
-import { fNumber, numberWithCommas } from 'common/number.helper';
 import { ellipseText } from 'common/common-helper';
-import { useAllocationState } from 'allocation/allocation.context';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import { fNumber, numberWithCommas } from 'common/number.helper';
 import useSize from 'common/hooks/useSize';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { BreakPoint } from 'app/app.constant';
 import { ChartData } from 'allocation/allocation.type';
+import { useAllocationState } from 'allocation/allocation.context';
 
 const COLORS = [
   '#235ee7',
