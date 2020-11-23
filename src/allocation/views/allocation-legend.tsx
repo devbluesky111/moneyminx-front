@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { ChartData, ChartDatum } from 'allocation/allocation.type';
 import { ellipseText } from 'common/common-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import { ChartData, ChartDatum } from 'allocation/allocation.type';
 import { useAllocationState } from 'allocation/allocation.context';
 
 interface Props {
@@ -45,18 +45,18 @@ const AllocationLegend: React.FC<Props> = ({ chartData, sharing = false }) => {
     if (hasAmount) {
       return (
         <>
-          <span className='legend-label col-8'>
+          <span className='legend-label col-7'>
             {ellipseText(data.group)} - {fNumber(data.per, 2)}%
           </span>
-          <span className='legend-amount col-3'>${numberWithCommas(fNumber(data.total, 0))}</span>
+          <span className='legend-amount col-4'>${numberWithCommas(fNumber(data.total, 0))}</span>
         </>
       );
     }
 
     return (
       <>
-        <span className='legend-label col-9'>{ellipseText(data.group)}</span>
-        <span className='legend-amount col-2'>{fNumber(data.per, 2)}%</span>
+        <span className='legend-label col-8'>{ellipseText(data.group)}</span>
+        <span className='legend-amount col-3'>{fNumber(data.per, 2)}%</span>
       </>
     );
   };

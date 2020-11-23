@@ -96,7 +96,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
 
         <div className='row'>
           <div className={getSectionClass(AllocationSectionEnum.MY_ALLOCATION)}>
-            <div className='mm-allocation-overview__block d-md-none d-lg-block'>
+            <div className='mm-allocation-overview__block d-lg-block'>
               <div className='allocation-card-top'>
                 <div className='mm-allocation-overview__block--date'>{getStringDate()}</div>
                 <div className='mm-allocation-overview__block--title'>Current allocation</div>
@@ -108,7 +108,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
               </div>
               <div className='allocation-content'>
                 <div
-                  className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center p-b-4 allocation-page-chart-wrapper'
+                  className='text-center text-md-left d-xl-block d-md-flex align-items-md-center p-b-4 allocation-page-chart-wrapper'
                   id='current-allocation-pie-chart'
                 >
                   <MMPieChart chartData={chartData} />
