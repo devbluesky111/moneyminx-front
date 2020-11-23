@@ -1,9 +1,9 @@
 import React from 'react';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import { BreakPoint } from 'app/app.constant';
 import { ellipseText } from 'common/common-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import useSize from 'common/hooks/useSize';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
-import { BreakPoint } from 'app/app.constant';
 import { ChartData } from 'allocation/allocation.type';
 import { useAllocationState } from 'allocation/allocation.context';
 
