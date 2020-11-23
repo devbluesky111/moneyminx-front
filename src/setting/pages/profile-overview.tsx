@@ -161,10 +161,14 @@ export const ProfileOverview = () => {
           const { error: patchError } = await patchProfile(values);
 
           if (patchError) {
+            setStatusText('Save Changes');
             return toast('Could not save profile', { type: 'error' });
           }
 
           const result = await fetchProfile({ dispatch });
+          if (result.error) {
+            toast('Could not update profile', { type: 'error' });
+          }
           setStatusText('Saved');
           setTimeout(() => {
             setStatusText('Save Changes')
