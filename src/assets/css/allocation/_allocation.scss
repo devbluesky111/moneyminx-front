@@ -83,6 +83,31 @@
       padding-left: 2.75rem;
       padding-right: 2.75rem;
     }
+
+    .allocation-pie-tooltip {
+      padding: 16px 20px;
+      background-color: $darkBg;
+      color: white;
+      box-shadow: 0px 4px 28px rgba(8, 24, 51, 0.44);
+      border-radius: 4px;
+
+      font-family: "Mulish";
+      font-style: normal;
+      text-align: left;
+
+      .name {
+        font-weight: $bolder;
+        font-size: 1rem;
+        line-height: 20px;
+      }
+
+      .value {
+        font-weight: 300;
+        font-size: 2rem;
+        line-height: 40px;
+        letter-spacing: 0.02em;
+      }
+    }
   }
 
   &__block {
@@ -93,6 +118,14 @@
     margin-bottom: 2rem;
     position: relative;
     min-height: 810px;
+
+    @media (min-width: 1200px) and (max-width: 1240px) {
+      padding: 2.188rem 1rem;
+    }
+
+    .allocation-content div {
+      justify-content: space-around;
+    }
 
     &--date {
       font-weight: normal;
@@ -390,10 +423,6 @@
     overflow-x: initial;
   }
 
-  @media (min-width: $desk) and (max-width: $lg) {
-    overflow-x: scroll;
-  }
-
   .legend-row {
     color: $gray;
     display: flex;
@@ -404,6 +433,15 @@
 
     &:hover {
       color: $green;
+
+      .legend-color-box {
+        width: 22px;
+        height: 22px;
+        max-width: 22px;
+        max-height: 22px;
+        margin-top: 0;
+        margin-left: 0;
+      }
     }
 
     .legend-color-box {
@@ -411,8 +449,10 @@
       width: 18px;
       height: 18px;
       max-width: 18px;
+      max-height: 18px;
       border-radius: 2px;
-      margin-top: 6px;
+      margin-top: 2px;
+      margin-left: 2px;
     }
 
     .legend-label {
@@ -427,12 +467,6 @@
     span {
       padding-left: 1rem;
     }
-  }
-}
-
-.allocation-content {
-  svg {
-    margin-left: -6.875rem;
   }
 }
 
@@ -515,15 +549,17 @@
 }
 .allocation-page-chart-wrapper {
   .allocation-chart-wrapper {
-    width: 300px;
-    height: 300px;
-    text-align: center;
-    vertical-align: center;
+    min-width: 250px;
+    height: 250px;
+
+    @media (min-width: 450px) {
+      min-width: 350px;
+      height: 300px;
+    }
 
     @media (min-width:$md) {
-    width: 440px;
-    height: 440px;
-  }
+      height: 440px;
+    }
   }
 }
 
@@ -540,13 +576,21 @@
     display: inline-flex;
     width: 100%;
 
-    .recharts-wrapper {
-      width: 240px !important;
-      height: 240px !important;
+    @media (min-width: 0) and (max-width: 530px) {
+      display: block;
 
-      svg {
-        width: 240px !important;
+      .allocation-chart-wrapper {
+        height: 250px;
+        width: 100%;
+
+        div {
+          margin: auto;
+        }
       }
+    }
+
+    .recharts-wrapper {
+      height: 200px !important;
     }
 
     span {

@@ -1,6 +1,8 @@
 import React from 'react';
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import { ellipseText } from 'common/common-helper';
+import { useAllocationState } from 'allocation/allocation.context';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
-
 import useSize from 'common/hooks/useSize';
 import { BreakPoint } from 'app/app.constant';
 import { ChartData } from 'allocation/allocation.type';
@@ -33,18 +35,33 @@ interface MMPieChartProps {
   share?: boolean;
 }
 
+const CustomTooltip = (props: any) => {
+  const { active, payload } = props;
+  const { allocationChartSetting } = useAllocationState();
+
+  if (active) {
+    return (
+      <div className='allocation-pie-tooltip'>
+        <div className='name'>{ellipseText(payload[0].name)} - {fNumber(payload[0].value, 2)}%</div>
+        {allocationChartSetting?.showAmounts && <div className='value'>${numberWithCommas(fNumber(payload[0].payload.total, 0))}</div>}
+      </div>
+    );
+  }
+
+  return null;
+};
+
 export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, share = false }) => {
   const data = chartData
     .map((item) => ({
       name: item.group,
-      value: item.per,
+      per: item.per,
+      total: item.total,
     }))
-    .sort((a, b) => b.value - a.value);
+    .sort((a, b) => b.per - a.per);
 
   let w = 440;
   let h = 440;
-  let cx = 250;
-  let cy = 250;
   let ir = 95;
   let outR = 155;
 
@@ -52,31 +69,33 @@ export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, share = false
   if (width < BreakPoint.MD || share) {
     w = 350;
     h = 350;
-    cx = 180;
-    cy = 150;
     ir = 70;
     outR = 100;
+  }
+  if (share) {
+    w = 200;
+    h = 200;
+    ir = 55;
+    outR = 75;
   }
 
   return (
     <div className='allocation-chart-wrapper'>
-      <ResponsiveContainer width={w} height='100%'>
-        <PieChart width={w} height={h} onMouseEnter={() => {}} className='mm-allocation-overview__block--chart'>
+      <ResponsiveContainer width={!share?'100%':w} height='100%'>
+        <PieChart onMouseEnter={() => {}} className='mm-allocation-overview__block--chart'>
           <Pie
             data={data}
-            cx={cx}
-            cy={cy}
             innerRadius={ir}
             outerRadius={outR}
             fill='#000000'
             stroke='none'
-            dataKey='value'
+            dataKey='per'
           >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip />
+          {!share && <Tooltip content={<CustomTooltip />} />}
         </PieChart>
       </ResponsiveContainer>
     </div>
