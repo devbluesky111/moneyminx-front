@@ -10,6 +10,7 @@ import {useHistory} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {loadStripe} from '@stripe/stripe-js';
 import appEnv from '../../app/app.env';
+import {appRouteConstants} from '../../app/app-route.constant';
 
 const stripePromise = loadStripe(appEnv.STRIPE_PUBLIC_KEY);
 
@@ -99,7 +100,7 @@ const SubscriptionPlansTable = () => {
 
   const handleBuyPlan = (stripePlan:any) => {
     if(connectedAccountState >= stripePlan?.details[pricingDetailConstant.CONNECTED_ACCOUNT] || manualAccountState >= stripePlan?.details[pricingDetailConstant.MANUAL_ACCOUNT]) {
-      history.push('w/subscription-ended-two')
+      history.push(appRouteConstants.account.REMOVE_ACCOUNT)
     }
     else {
       connectStripe(stripePlan?.priceId)

@@ -85,26 +85,34 @@ ul.subscribed-list li .account-wrap {
 ul.subscribed-list li:last-child {
   margin-bottom: 41px;
 }
-.delete-btn {
+
+.trash-icon {
   float: right;
   margin-top: -46px;
   font-size: 0.87rem;
-  width: 159px;
-  height: 49px;
+  width: 50px;
+  height: 50px;
   border: 1.5px solid $redAlert;
+  stroke: $redAlert;
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 50%;
   display: inline-block;
   padding: 12px;
   background: none;
   text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $redAlert;
+    stroke: $white;
+    box-shadow: 2px 4px 8px $pinterestRedGlow;
+
+    .trash-icon-color {
+      stroke: $white;
+    }
+  }
 }
-.delete-btn a {
-  color: $redAlert;
-  font-size: 0.87rem;
-  font-weight: 400;
-  text-decoration: none;
-}
+
 .container-fluid.subscription-ended {
   background: $white;
 }
@@ -231,7 +239,6 @@ ul.subscribed-list li:last-child {
   .delete-btn {
     float: none;
     margin-top: 21px;
-
     width: 100%;
   }
   ul.subscribed-list li .account-wrap {

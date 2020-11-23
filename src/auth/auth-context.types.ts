@@ -9,3 +9,7 @@ export const auth = {
   ...makeTypes('FETCH_PROFILE'),
   ...makeTypes('UPDATE_EMAIL_ADDRESS'),
 };
+
+export const subscription = {
+  SET_SUBSCRIPTION_DETAIL: 'SET_SUBSCRIPTION_DETAIL',
+};

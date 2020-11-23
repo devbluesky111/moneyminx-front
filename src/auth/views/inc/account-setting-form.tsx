@@ -212,7 +212,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
       }}
     >
       {(props) => {
-        const { setFieldValue, values, handleBlur, handleChange, setValues } = props;
+        const { setFieldValue, values, handleChange, setValues } = props;
 
         const setCategory = (cat: string) => {
           setFieldValue('mmCategory', cat);
@@ -239,7 +239,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               type='text'
               className='w-100 mb-4'
               onChange={props.handleChange}
-              onBlur={props.handleBlur}
               value={props.values.accountName}
               name='accountName'
               placeholder='Sapphire Credit Card'
@@ -247,7 +246,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             <div className='account-category'>
               <span className='form-subheading'>
                 Account Category
-                <MMToolTip message='Account Category info here'>
+                <MMToolTip placement='top' message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'>
                   <InfoIcon />
                 </MMToolTip>
               </span>
@@ -261,7 +260,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                     </li>
                   );
                 })}
-                <div className="border-bg-slider"></div>
+                <div className='border-bg-slider'></div>
               </ul>
             </div>
             <div className='account-type'>
@@ -528,9 +527,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                   <p>
                     <span className='form-subheading'>
                       Does your employer match contributions?
-                      <MMToolTip message='Does your employer match contributions? Info'>
-                        <InfoIcon className='sm-hide' />
-                      </MMToolTip>
                     </span>
                   </p>
                 </div>
@@ -626,7 +622,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                   <p>
                     <span className='form-subheading'>
                       Include employer match in performance?
-                      <MMToolTip message='Include employer match in performance'>
+                      <MMToolTip message='Some investors think employer match should be counted as income so they do not include it as performance returns, some believe should be counted as a return. The choice is yours'>
                         <InfoIcon className='sm-hide' />
                       </MMToolTip>
                     </span>
@@ -771,11 +767,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <ul className='account-type-list'>
                 <li className={`mt-5 ${hc('associatedMortgage')}`}>
                   <span className='form-subheading'>Associated Mortgage</span>
-                  <select
+                  <SelectInput
+                    args={mortgageAccounts}
                     name='associatedMortgage'
-                    className='retirement'
                     onChange={handleChange}
-                    onBlur={handleBlur}
                     value={values.associatedMortgage}
                   >
                     {mortgageAccounts?.map((accType, index) => {
@@ -785,7 +780,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                         </option>
                       );
                     })}
-                  </select>
+                  </SelectInput>
                 </li>
               </ul>
             </div>
@@ -802,6 +797,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
             <div className={`form-row mt-0 ${hc('calculateReturnsOn')}`}>
               <span className='form-subheading'>How do you prefer to calculate real estate returns?</span>
+              <MMToolTip placement='top' message='Some investors track a return in real estate only when the value of the property goes up, others track a return when their equity goes goes. We recommend to track the equity when it is an investment property and the home value when it is your primary residence.'>
+                <InfoIcon />
+              </MMToolTip>
               <div className='form-check w-100 my-2'>
                 <input
                   value={CalculateRealEstateReturnOptions.EQUITY}

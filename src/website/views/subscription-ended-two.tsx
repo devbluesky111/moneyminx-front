@@ -6,6 +6,7 @@ import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import MerrilEdgeLogo from 'assets/images/subscription/merriledgelogo.png';
+import { ReactComponent as IconTrash } from 'assets/icons/icon-trash.svg';
 
 const SubscriptionEnded = () => {
   return (
@@ -43,9 +44,7 @@ export const PricingTable = () => {
                         </span>
                         Wealthfront
                       </p>
-                      <button className='delete-btn mm-btn-animate'>
-                        <a href='link9'>Delete Account</a>
-                      </button>
+                      <IconTrash className='trash-icon'/>
                     </div>
                   </li>
                   <li>
@@ -56,9 +55,7 @@ export const PricingTable = () => {
                         </span>
                         Peer Street
                       </p>
-                      <button className='delete-btn mm-btn-animate'>
-                        <a href='link9'>Delete Account</a>
-                      </button>
+                      <IconTrash className='trash-icon'/>
                     </div>
                   </li>
                   <li>
@@ -69,9 +66,7 @@ export const PricingTable = () => {
                         </span>
                         Merill Edge IRA
                       </p>
-                      <button className='delete-btn mm-btn-animate'>
-                        <a href='link9'>Delete Account</a>
-                      </button>
+                      <IconTrash className='trash-icon'/>
                     </div>
                   </li>
                 </ul>
@@ -85,9 +80,7 @@ export const PricingTable = () => {
                         </span>
                         My own account
                       </p>
-                      <button className='delete-btn mm-btn-animate'>
-                        <a href='link9'>Delete Account</a>
-                      </button>
+                      <IconTrash className='trash-icon'/>
                     </div>
                   </li>
                 </ul>

@@ -516,11 +516,17 @@ a.upgrader-btn {
 .content-container {
   position: relative;
 }
-.content-head {
-  padding: 12px 0;
+.app-subheader-container {
+  padding: 0.75rem 1.625rem;
   border-bottom: 1px solid $grayOpacity20;
+  display: flex;
+
+.middle-box {
+  margin: auto;
 }
-.content-head .container {
+
+}
+.app-subheader-container .container {
   max-width: 1440px;
   padding-left: 25px;
   padding-right: 25px;
@@ -532,7 +538,7 @@ a.upgrader-btn {
   align-items: center;
   flex-wrap: wrap;
 }
-.content-head .left-box {
+.app-subheader-container .left-box {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
@@ -540,7 +546,7 @@ a.upgrader-btn {
   -webkit-align-items: center;
   align-items: center;
 }
-.content-head .right-box {
+.app-subheader-container .right-box {
   margin-left: auto;
   display: flex;
   order: 2;
@@ -549,7 +555,7 @@ a.upgrader-btn {
     order: 3;
   }
 }
-.content-head .center-box {
+.app-subheader-container .center-box {
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -581,7 +587,6 @@ a.upgrader-btn {
 }
 .myaccount-drop {
   position: relative;
-  margin-left: 12px;
   color: $gray;
 
   &:hover {
@@ -752,16 +757,16 @@ a.upgrader-btn {
   padding-top: 10px;
   border-top: 1px solid $grayOpacity24;
 }
-.content-wraper {
+.content-wrapper {
   padding: 15px 0;
 }
-.content-wraper .container {
+.content-wrapper .container {
   max-width: 1440px;
   padding-left: 40px;
   padding-right: 40px;
 }
 .drop-box .dropdown-toggle {
-  background-color: $lightBg;
+  background: none;
   font-weight: 500;
   font-size: 0.875rem;
   color: $gray;
@@ -769,12 +774,14 @@ a.upgrader-btn {
   border-radius: 4px;
   width: auto;
   height: 48px;
-  padding: 0 10px;
+  padding: 0 20px;
+  min-width: 120px;
 
-  &:focus, &:hover {
-    box-shadow: none;
-    color: $darkGray;
-    border: 1px solid $gray;
+  &:focus, &:hover, &:active {
+    background: none !important;
+    box-shadow: none !important;
+    color: $darkGray !important;
+    border: 1px solid $gray !important;
   }
 }
 .drop-box .dropdown-toggle:after {
@@ -784,7 +791,10 @@ a.upgrader-btn {
   border-top: 0;
   border-left: 0;
   transform: rotate(45deg);
+  transition: 0.3s all;
   margin-left: 10px;
+  margin-top: 5px;
+  float: right;
 }
 
 .drop-box.show .dropdown-toggle:after {
@@ -1915,7 +1925,7 @@ footer p {
   .foot-link li a {
     font-size: 14px;
   }
-  .content-wraper .container {
+  .content-wrapper .container {
     padding-left: 20px;
     padding-right: 20px;
   }

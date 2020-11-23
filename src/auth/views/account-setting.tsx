@@ -13,7 +13,7 @@ import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.sv
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
-import AccountSettingSteps from './inc/connect-steps';
+import ConnectAccountSteps from './inc/connect-steps';
 import AccountSettingForm from './inc/account-setting-form';
 
 const AccountSetting = () => {
@@ -230,7 +230,7 @@ const AccountSetting = () => {
             </div>
           </div>
         </div>
-        <AccountSettingSteps onSkip={navigateToNetworth} isCompleted={finish} onFinish={navigateToNetworth} />
+        <ConnectAccountSteps isAccountSettings onSkip={navigateToNetworth} isCompleted={finish} onFinish={navigateToNetworth} />
       </div>
     </AuthLayout>
   );
