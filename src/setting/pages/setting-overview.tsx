@@ -25,7 +25,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   const changePasswordModal = useModal();
   const subscriptionCancelModal = useModal();
   const { loading, data, error } = useSettings();
-  const [saving, setSaving] = useState<boolean>(false);
+  const [statusText, setStatusText] = useState('Save Changes');
   const [mailChimpSubscription, setMailChimpSubscription] = useState<boolean>(false);
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
   const [cancelSubscriptionResponse, setCancelSubscriptionResponse] = useState<CurrentSubscription>();
@@ -64,12 +64,15 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   const handleDismiss = () => {}
 
   const handleSave = async () => {
-    setSaving(true);
+    setStatusText('Saving...');
     const { error: pathError } = await patchEmailSubscription({ mailChimpSubscription });
     if (pathError) {
       return toast('Error on Adding Subscription', { type: 'error' });
     }
-    setSaving(false);
+    setStatusText('Saved');
+    setTimeout(() => {
+      setStatusText('Save Changes')
+    }, 1000);
   };
 
   return (
@@ -216,7 +219,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
                    onDismiss={handleDismiss} />
         </div>
       ) : null}
-      <SaveSettings handleSave={handleSave} status={saving} />
+      <SaveSettings handleSave={handleSave} statusText={statusText} />
     </section>
   );
 };

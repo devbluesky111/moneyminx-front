@@ -31,7 +31,7 @@ export const ProfileOverview = () => {
 
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
-  const [saving, setSaving] = useState<boolean>(false);
+  const [statusText, setStatusText] = useState('Save Changes');
   const [progress, setProgress] = useState(0);
   const [change, setChange] = useState(false);
 
@@ -157,7 +157,7 @@ export const ProfileOverview = () => {
           minxWinks: profileDetails?.minxWinks || false,
         }}
         onSubmit={async (values, actions) => {
-          setSaving(true);
+          setStatusText('Saving...');
           const { error: patchError } = await patchProfile(values);
 
           if (patchError) {
@@ -165,7 +165,10 @@ export const ProfileOverview = () => {
           }
 
           const result = await fetchProfile({ dispatch });
-          setSaving(false);
+          setStatusText('Saved');
+          setTimeout(() => {
+            setStatusText('Save Changes')
+          }, 1000);
         }}
         validate={checkProfileCompletionProgress}
       >
@@ -683,7 +686,7 @@ export const ProfileOverview = () => {
                   </div>
                 </div>
               </div>
-              <SaveSettings handleSave={handleSubmit} status={saving} />
+              <SaveSettings handleSave={handleSubmit} statusText={statusText} />
             </form>
           );
         }}
