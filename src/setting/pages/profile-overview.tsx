@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { FormControl } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 import useProfile from 'auth/hooks/useProfile';
@@ -17,7 +17,7 @@ import ProfilePicture from 'setting/inc/profile-picture';
 import { ReactComponent as Shield } from 'assets/icons/shield.svg';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { HouseHoldIncomeOptions, MaritalStatusOptions, RiskToleranceOptions } from 'setting/setting.enum';
-import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
+import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import MMToolTip from '../../common/components/tooltip';
 
 import { ProfileType } from 'auth/auth.types';
@@ -123,7 +123,15 @@ export const ProfileOverview = () => {
             <div className='text--gray mr-4 sm-hide'>Profile complete</div>
             <div className='mm-radial__progress-bar'>
               <CircularProgressbar value={change ? progress : curProgress}
-                                   text={`${change ? progress : curProgress}%`}/>
+                                   text={`${change ? progress : curProgress}%`}
+                                   strokeWidth={4}
+                                   styles={buildStyles({
+                                     textSize: '1.5rem',
+                                     pathTransitionDuration: 0.5,
+                                     pathColor: '#10C273',
+                                     textColor: '#10C273',
+                                     trailColor: '#969EAC4D'
+                                   })}/>
             </div>
           </div>
         </div>
