@@ -70,7 +70,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
                   disabled={!profileChanged}>
             {changing && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'/>}
             <MMToolTip placement='top' message='To change your profile pic, click on the current image on the left.'>
-              <span className={'ml-1'}> {changing ? 'Changing...' : 'Change Picture'}</span>
+              <span className={'ml-1'}> {changing ? 'Saving...' : 'Save Picture'}</span>
             </MMToolTip>
           </button>
         </div>
