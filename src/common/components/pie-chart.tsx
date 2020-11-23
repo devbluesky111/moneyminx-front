@@ -71,14 +71,18 @@ export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, share = false
 
   const { width } = useSize();
   if (width < BreakPoint.MD || share) {
-    w = 350;
-    ir = 70;
+    w = 354;
+    ir = 60;
     outR = 100;
   }
-  if (share) {
-    w = 200;
-    ir = 55;
-    outR = 75;
+  if (width < BreakPoint.MED && share) {
+    w = 190;
+    ir = 40;
+    outR = 80;
+  } else if (share) {
+    w = 260;
+    ir = 64;
+    outR = 124;
   }
 
   return (
