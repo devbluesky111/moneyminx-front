@@ -119,12 +119,12 @@
     position: relative;
     min-height: 810px;
 
-    @media (min-width: 1200px) and (max-width: 1240px) {
+    @media (min-width: 1200px) and (max-width: 1360px) {
       padding: 2.188rem 1rem;
     }
 
-    .allocation-content div {
-      justify-content: space-around;
+    .allocation-content>:first-child>div{
+      flex: 0.5;
     }
 
     &--date {
@@ -553,7 +553,7 @@
     height: 250px;
 
     @media (min-width: 450px) {
-      min-width: 350px;
+      min-width: 300px;
       height: 300px;
     }
 
@@ -576,7 +576,7 @@
     display: inline-flex;
     width: 100%;
 
-    @media (min-width: 0) and (max-width: 530px) {
+    @media (min-width: 0) and (max-width: 630px) {
       display: block;
 
       .allocation-chart-wrapper {

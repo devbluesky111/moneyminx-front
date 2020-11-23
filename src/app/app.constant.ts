@@ -1,5 +1,5 @@
 export const BreakPoint = {
   MD: 768,
-  MED: 576,
+  CMED: 630,
   DESK: 1024,
 };
