@@ -108,6 +108,8 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
               customInput={<Calendar />}
               dateFormat='MM/yyyy'
               showMonthYearPicker
+              minDate={getMonthSubtracted(getNumberOfChartHistory())}
+              maxDate={new Date()}
               onChange={(val: Date) => {
                 if (validateDate(val)) {
                   setDate(getLastDateOfMonth(val));
