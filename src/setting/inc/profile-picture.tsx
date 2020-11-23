@@ -17,6 +17,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
   const ppRef = useRef(null);
   const [profileURL, setProfileURL] = useState<string>(pictureURL || OwnerOneImg);
   const [profilePicture, setProfilePicture] = useState<File>();
+  const [profileChanged, setProfileChanged] = useState<boolean>(false);
   const [changing, setChanging] = useState<boolean>(false);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +27,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
         setProfilePicture(file);
         const url = URL.createObjectURL(file);
         setProfileURL(url);
+        setProfileChanged(true);
       }
     }
   };
@@ -48,6 +50,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
       if (result.error) {
         toast('Error on changing picture', {type: 'error'});
       }
+      setProfileChanged(false);
       setChanging(false);
     }
   };
@@ -62,7 +65,8 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
           </div>
         </div>
         <div className='mt-4 mt-sm-0'>
-          <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleProfileChange}>
+          <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleProfileChange}
+                  disabled={!profileChanged}>
             {changing && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'/>}
             <span className={'ml-1'}> {changing ? 'Changing...' : 'Change Picture'}</span>
           </button>
