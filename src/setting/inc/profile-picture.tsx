@@ -7,6 +7,7 @@ import { useAuthDispatch } from 'auth/auth.context';
 import { patchProfilePicture } from 'api/request.api';
 import ProfileDefaultPic from 'assets/images/settings/mm-default-avatar.svg';
 import ImageInput from 'common/components/input/image.input';
+import MMToolTip from '../../common/components/tooltip';
 
 interface ProfilePictureProps {
   pictureURL?: string;
@@ -68,7 +69,9 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
           <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleProfileChange}
                   disabled={!profileChanged}>
             {changing && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'/>}
-            <span className={'ml-1'}> {changing ? 'Changing...' : 'Change Picture'}</span>
+            <MMToolTip placement='top' message='To change your profile pic, click on the current image on the left.'>
+              <span className={'ml-1'}> {changing ? 'Changing...' : 'Change Picture'}</span>
+            </MMToolTip>
           </button>
         </div>
       </div>
