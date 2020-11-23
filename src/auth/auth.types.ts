@@ -94,6 +94,28 @@ export interface ProfileType {
   profileDetails: ProfileDetails;
 }
 
+export interface Subscription {
+  cancelAt: Date | null;
+  customerId: string;
+  id: number;
+  name: string;
+  priceId: string;
+  subscriptionEnd: number | string;
+  subscriptionId: string;
+  subscriptionStatus: string;
+}
+
+export interface SubscriptionDetail {
+  active: boolean;
+  currency: string;
+  details: Record<string, string>;
+  duration: string;
+  name: string;
+  nickname: string;
+  price: number;
+  priceId: string;
+}
+
 export interface AuthType {
   email: string;
   expires?: number;
@@ -104,6 +126,8 @@ export interface AuthType {
   isSigningIn: boolean;
   isAuthenticated: boolean;
   accounts?: Account[];
+  currentSubscription?: any;
+  subscriptionDetail?: SubscriptionDetail;
 }
 
 export interface LoginFormProps {
