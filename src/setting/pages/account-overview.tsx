@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
@@ -14,12 +14,15 @@ import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as PeerStreet } from 'assets/icons/peer-street.svg';
 import { ReactComponent as WealthLogo } from 'assets/icons/wealth-logo.svg';
+import { ReactComponent as DefaultProviderLogo} from 'assets/icons/mm-default-provider.svg';
+
 import {
   AccountCardProps,
   AccountRowProps,
   ManualAccountProps,
   SettingPageEnum
 } from 'setting/setting.type';
+import { getRelativeDate } from '../../common/moment.helper';
 
 interface AccountOverviewProps {
   changeTab: (pageName: SettingPageEnum) => void;
@@ -105,6 +108,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
           <div className='row pb-2 pt-1'>
             <div className='col-10 col-md-6'>
               <div>
+                <DefaultProviderLogo className='mr-3 mr-md-4'/>
                 <span className='mm-account-overview__block-title'>My own account</span>
               </div>
             </div>
@@ -179,7 +183,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ providerAccounts, avai
               <Refresh />
             </div>
             <div className='col-12 col-md-5 order-md-1 text-md-right pt-2 pt-md-0'>
-              <small className='text-gray'>Last updated 10 days ago</small>
+              <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
             </div>
           </div>
 
@@ -208,17 +212,20 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
     <div className='row py-3'>
       <div className='col col-md-8'>
         <div className='d-flex justify-content-between justify-content-md-start'>
-          <span className='mm-switch-block mr-md-4'>
-            <input type='checkbox' className='mm-switch-input' id='mc3' name='Switch' />
-            <label className='mm-switch' htmlFor='mc3'></label>
+          <span className='mm-switch-block mr-md-2'>
+            <input type='checkbox' className='mm-switch-input' id={`mc3-${account.id}`} name='Switch' />
+            <label className='mm-switch' htmlFor={`mc3-${account.id}`}></label>
           </span>
-          <span className='connections-account-name'>{account.accountName}</span>
+          <span className='connections-account-name mr-2'>{account.accountName}</span>
+          <span className='connections-account-name'>({account.accountNumber.slice(-4)})</span>
         </div>
       </div>
       <div className='col col-md-4'>
         <div className='d-flex justify-content-between align-items-center'>
           <div className='mm-account-overview__amount'>$ {account.balance}</div>
-          <Edited />
+          <Link to='/settings?active=Plan'>
+            <Edited />
+          </Link>
         </div>
       </div>
     </div>

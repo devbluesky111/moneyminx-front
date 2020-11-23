@@ -32,6 +32,7 @@ export interface Account {
   id: number;
   yodleeId: number;
   accountName: string;
+  accountNumber: string;
   providerName: string;
   providerLogo: string;
   profileId: number;
