@@ -1,10 +1,11 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+
+import useSize from 'common/hooks/useSize';
 import { BreakPoint } from 'app/app.constant';
 import { ellipseText } from 'common/common-helper';
-import { fNumber, numberWithCommas } from 'common/number.helper';
-import useSize from 'common/hooks/useSize';
 import { ChartData } from 'allocation/allocation.type';
+import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useAllocationState } from 'allocation/allocation.context';
 
 const COLORS = [
@@ -42,8 +43,12 @@ const CustomTooltip = (props: any) => {
   if (active) {
     return (
       <div className='allocation-pie-tooltip'>
-        <div className='name'>{ellipseText(payload[0].name)} - {fNumber(payload[0].value, 2)}%</div>
-        {allocationChartSetting?.showAmounts && <div className='value'>${numberWithCommas(fNumber(payload[0].payload.total, 0))}</div>}
+        <div className='name'>
+          {ellipseText(payload[0].name)} - {fNumber(payload[0].value, 2)}%
+        </div>
+        {allocationChartSetting?.showAmounts && (
+          <div className='value'>${numberWithCommas(fNumber(payload[0].payload.total, 0))}</div>
+        )}
       </div>
     );
   }
@@ -78,16 +83,9 @@ export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, share = false
 
   return (
     <div className='allocation-chart-wrapper'>
-      <ResponsiveContainer width={!share?'100%':w} height='100%'>
+      <ResponsiveContainer width={!share ? '100%' : w} height='100%'>
         <PieChart onMouseEnter={() => {}} className='mm-allocation-overview__block--chart'>
-          <Pie
-            data={data}
-            innerRadius={ir}
-            outerRadius={outR}
-            fill='#000000'
-            stroke='none'
-            dataKey='per'
-          >
+          <Pie data={data} innerRadius={ir} outerRadius={outR} fill='#000000' stroke='none' dataKey='per'>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
