@@ -13,7 +13,7 @@ import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
-import { ReactComponent as Refresh } from 'assets/icons/refresh.svg';
+/*import { ReactComponent as Refresh } from 'assets/icons/refresh.svg';*/
 import { ReactComponent as IconEdit } from 'assets/icons/icon-edit.svg';
 import { ReactComponent as IconTrash } from 'assets/icons/icon-trash.svg';
 import { ReactComponent as DefaultProviderLogo} from 'assets/icons/mm-default-provider.svg';
@@ -172,10 +172,11 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                     <span className='mm-account-overview__block-title'>{providerName}</span>
                   </div>
                 </div>
+                {/* TODO Refresh single account when API is ready
                 <div className='col-2 col-md-1 order-md-2 text-right'>
                   <Refresh />
-                </div>
-                <div className='col-12 col-md-5 order-md-1 text-md-right pt-2 pt-md-0'>
+                </div>*/}
+                <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
                   <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
                 </div>
               </div>
