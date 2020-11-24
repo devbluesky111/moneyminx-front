@@ -16,7 +16,7 @@ import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-ic
 import ConnectAccountSteps from './inc/connect-steps';
 import AccountSettingForm from './inc/account-setting-form';
 
-const AccountSetting = () => {
+const AccountSettings = () => {
   const history = useHistory();
   const dispatch = useAuthDispatch();
   const { accounts } = useAuthState();
@@ -236,7 +236,7 @@ const AccountSetting = () => {
   );
 };
 
-export default AccountSetting;
+export default AccountSettings;
 
 interface AccountNameListProps {
   currentProviderAccounts: Account[];
