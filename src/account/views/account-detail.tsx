@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import ReactDatePicker from 'react-datepicker';
 
 import AppFooter from 'common/app.footer';
 import AppHeader from '../../common/app.header';
 import Dropdown from 'react-bootstrap/Dropdown';
 import AccountSubNavigation from './account-sub-navigation';
 
+import { Account } from 'auth/auth.types';
+
+import { patchAccount } from 'api/request.api';
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as Chart } from 'assets/images/account/chart.svg';
@@ -19,10 +23,24 @@ import ActivityTable from './activity-table';
 import { AccountProps } from '../account.type';
 import AppSidebar from '../../common/app.sidebar';
 
-const Account: React.FC<AccountProps> = () => {
+const AccountDetail: React.FC<AccountProps> = (props: any) => {
 
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
+  const [PatchAccount, setPatchAccount] = useState<Account>();
+
+  React.useEffect(() => {
+    const { accountId } = props.match.params;
+    const fetchPatchAccount = async () => {
+      const { data, error } = await patchAccount(accountId, []);
+      if (!error) {
+        console.log(data);
+        setPatchAccount(data);
+      }
+    };
+
+    fetchPatchAccount();
+  }, []);
 
   return (
     <div className='mm-setting'>
@@ -38,43 +56,77 @@ const Account: React.FC<AccountProps> = () => {
           <SettingsGear className='float-left mr-3 settings-gear-button' />
           <div className='mm-account__selection--info float-lg-left mr-md-3 d-md-inline-block'>
             <ul>
-              <li>401K - Job 1</li>
-              <li>Investment Assets</li>
-              <li>401K</li>
-              <li>Retirement</li>
-              <li>USD</li>
+              <li>{PatchAccount?.accountName}</li>
+              <li>{PatchAccount?.category?.mmCategory}</li>
+              <li>{PatchAccount?.category?.mmAccountType}</li>
+              <li>{PatchAccount?.category?.mmAccountSubType}</li>
+              <li>{PatchAccount?.accountDetails?.currency}</li>
             </ul>
           </div>
           <div className='d-md-flex justify-content-between mt-3'>
             <div className='d-flex'>
-              <div className=''>
-                <Dropdown>
-                  <Dropdown.Toggle variant='outline-secondary' id='dropdown-year'>
-                    Dropdown Button
+              <div className='dflex-center mb-15'>
+                <ReactDatePicker
+                  onChange={(date) => { }}
+                  // selectsStart
+                  dateFormat='MM/yyyy'
+                  showMonthYearPicker
+                  minDate={new Date('1900-01-01')}
+                  maxDate={new Date()}
+                  className='m-l-3'
+                  // selectsRange
+                  customInput={
+                    <div className='drop-box'>
+                      <div className='date-box'>
+                        <input type='text' className='month_year' />
+                      </div>
+                    </div>
+                  }
+                />
+                <span className='date-separator'>to</span>
+                <ReactDatePicker
+                  onChange={(date) => { }}
+                  // selectsStart
+                  dateFormat='MM/yyyy'
+                  maxDate={new Date()}
+                  className='m-l-1'
+                  // selectsRange
+                  customInput={
+                    <div className='drop-box'>
+                      <div className='date-box'>
+                        <input type='text' className='month_year' />
+                      </div>
+                    </div>
+                  }
+                />
+                <Dropdown className='drop-box m-l-2'>
+                  <Dropdown.Toggle variant=''>
+                    Monthly
                   </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-2'>Another action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-3'>Something else</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-              <div>
-                <Dropdown>
-                  <Dropdown.Toggle variant='outline-secondary' id='dropdown-month'>
-                    Dropdown Button
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href='#/action-1'>Action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-2'>Another action</Dropdown.Item>
-                    <Dropdown.Item href='#/action-3'>Something else</Dropdown.Item>
+                  <Dropdown.Menu className='mm-dropdown-menu dropsm'>
+                    <ul className='radiolist'>
+                      {['Yearly', 'Monthly', 'Quarterly'].map((interval, index) => {
+                        return (
+                          <li key={interval}>
+                            <label>
+                              <input
+                                type='radio'
+                                name='m-list'
+                                value={interval}
+                              />
+                              <span>{interval}</span>
+                            </label>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
             </div>
             <div className='mm-account__selection--type float-right'>
               <CheckCircle />
-              <span>Manual</span>
+              {PatchAccount?.isManual ? <span className='manual'>Manual</span> : <span className='good'>Good</span>}
             </div>
           </div>
         </div>
@@ -197,4 +249,4 @@ const Account: React.FC<AccountProps> = () => {
   );
 };
 
-export default Account;
+export default AccountDetail;

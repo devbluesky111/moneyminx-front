@@ -32,7 +32,7 @@ const AppSubHeader = () => {
               <ul className='success'>
                 {currentAccount?.map((account, index) => {
                   return (
-                    <li>
+                    <li key="index">
                       <Link to='#'>
                         <div>
                           <h5>{account.accountName}</h5>
