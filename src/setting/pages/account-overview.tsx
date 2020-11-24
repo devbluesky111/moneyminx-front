@@ -73,7 +73,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
     if (!needUpgrade) {
       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
     } else {
-      changeTab(SettingPageEnum.PLAN);
+      history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`)
     }
   }
 
@@ -138,7 +138,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     if (!needUpgrade) {
       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
     } else {
-      changeTab(SettingPageEnum.PLAN);
+      history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`)
     }
   }
 
@@ -213,7 +213,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
       <div className='col col-md-8'>
         <div className='d-flex justify-content-between justify-content-md-start'>
           <span className='mm-switch-block mr-md-2'>
-            <input type='checkbox' className='mm-switch-input' id={`mc3-${account.id}`} name='Switch' />
+            <input type='checkbox' checked={true} className='mm-switch-input' id={`mc3-${account.id}`} name='Switch' />
             <label className='mm-switch' htmlFor={`mc3-${account.id}`}></label>
           </span>
           <span className='connections-account-name mr-2'>{account.accountName}</span>
