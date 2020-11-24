@@ -7,6 +7,8 @@ import {
   getRefreshedAccount,
   patchChangePassword,
   postFacebookAssociation,
+  deleteAccount,
+  getAccount,
 } from 'api/request.api';
 
 import { auth } from './auth-context.types';
@@ -17,8 +19,10 @@ import {
   FBAssociationPayload,
   RegisterServicePayload,
   ChangePasswordServicePayload,
+  DeleteAccountPayload,
 } from './auth.types';
 import { groupByProviderName } from './auth.helper';
+import exp from 'constants';
 
 export const login = async ({ dispatch, payload }: LoginServicePayload): Promise<ApiResponse> => {
   dispatch({ type: auth.LOGIN });
@@ -86,6 +90,30 @@ export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }):
   } else {
     // const pickedData = pickByProviderName(data);
 
+    dispatch({
+      type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
+    });
+  }
+
+  return { data, error };
+};
+
+export const deleteAccounts = async ({ dispatch, accounts }: DeleteAccountPayload): Promise<ApiResponse> => {
+  const deleteAccountById = async () => {
+    return Promise.all(
+      accounts.map(async (account) => {
+        await deleteAccount(`${account.id}`);
+      })
+    );
+  };
+
+  const result = await deleteAccountById();
+  const { data, error } = await getAccount();
+
+  if (error) {
+    dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
+  } else {
     dispatch({
       type: auth.FETCH_ACCOUNT_SUCCESS,
       payload: { user: data },

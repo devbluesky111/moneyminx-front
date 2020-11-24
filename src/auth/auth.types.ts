@@ -136,3 +136,8 @@ export interface ChangePasswordServicePayload {
     oldPassword: string;
   };
 }
+
+export interface DeleteAccountPayload {
+  dispatch: Dispatch;
+  accounts: Account[];
+}

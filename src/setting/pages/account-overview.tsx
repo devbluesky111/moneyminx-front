@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
-import { getRefreshedProfile } from 'auth/auth.service';
+import { getRefreshedProfile, deleteAccounts } from 'auth/auth.service';
 import { appRouteConstants } from 'app/app-route.constant';
 import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { pricingDetailConstant } from 'common/common.constant';
@@ -25,6 +25,7 @@ import {
 } from 'setting/setting.type';
 import { getRelativeDate } from '../../common/moment.helper';
 import { fNumber, numberWithCommas } from '../../common/number.helper';
+import { boolean } from 'yup';
 
 export const AccountOverview = () => {
   const { accounts } = useAuthState();
@@ -63,6 +64,8 @@ export const AccountOverview = () => {
 
 export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList, availableAccounts}) => {
   const history = useHistory();
+  const dispatch = useAuthDispatch();
+  const [deleting, setDeleting] = useState<boolean>(false);
   const needUpgrade = manualAccountList.length >= availableAccounts;
 
   const addAccount = () => {
@@ -71,6 +74,14 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
     } else {
       history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`)
     }
+  }
+
+  const removeAccounts = async (accounts: Account[]) => {
+    console.log('DELETING TRUE');
+    setDeleting(true);
+    const { error } = await deleteAccounts({ dispatch, accounts });
+    console.log('DELETING FALSE');
+    setDeleting(false);
   }
 
   return (
@@ -113,10 +124,13 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
 
           <div className='row py-3'>
             <div className='col-12 col-md-6' />
-            <div className='col-12 col-md-6'>
-              <div className='text-danger text-md-right mm-account-overview__delete-link'>
-                Delete account and remove data
-              </div>
+            <div className='col-12 col-md-6 text-right'>
+              <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
+                      onClick={() => {removeAccounts(manualAccountList)}}
+                      disabled={deleting}>
+                {deleting && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'/>}
+                <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
+              </button>
             </div>
           </div>
         </div>
@@ -127,6 +141,8 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
 
 export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts}) => {
   const history = useHistory();
+  const dispatch = useAuthDispatch();
+  const [deleting, setDeleting] = useState<boolean>(false);
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
 
@@ -136,6 +152,12 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     } else {
       history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`)
     }
+  }
+
+  const removeAccounts = async (accounts: Account[]) => {
+    setDeleting(true);
+    const { error } = await deleteAccounts({ dispatch, accounts });
+    setDeleting(false);
   }
 
   return (
@@ -189,10 +211,13 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                 <div className='col-12 col-md-6'>
                   <div className='text-primary mm-account-overview__update-link mb-3 mb-md-0'>Update Credentials</div>
                 </div>
-                <div className='col-12 col-md-6'>
-                  <div className='text-danger text-md-right mm-account-overview__delete-link'>
-                    Delete account and remove data
-                  </div>
+                <div className='col-12 col-md-6 text-right'>
+                  <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
+                          onClick={() => {removeAccounts(accounts)}}
+                          disabled={deleting}>
+                    {deleting && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'/>}
+                    <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
+                  </button>
                 </div>
               </div>
             </div>

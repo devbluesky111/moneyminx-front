@@ -134,6 +134,15 @@
     border: 1.5px solid $purple;
     height: 48px;
 
+    &__flat {
+      padding: 0;
+      border: 0;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
     &:disabled {
       cursor: not-allowed;
     }
