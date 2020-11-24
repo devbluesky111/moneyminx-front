@@ -50,19 +50,14 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ changeTab }) =
   }
 
   const manualAccounts = accounts.filter((acc) => acc.isManual);
-  const nonManualAccounts = accounts.filter((acc) => !acc.isManual);
+  const connectedAccounts = accounts.filter((acc) => !acc.isManual);
 
-  const accountsByProvider = groupByProviderName(nonManualAccounts);
   const numberOfConnectedAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || 0;
   const numberOfManualAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || 0;
 
   return (
     <section className='mm-account-overview'>
-      {Object.entries(accountsByProvider).map((providerAccounts, index) => {
-        return (
-          <AccountCard key={index} providerAccounts={providerAccounts} availableAccounts={numberOfConnectedAccounts} changeTab={changeTab} />
-        );
-      })}
+      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} changeTab={changeTab} />
       <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} changeTab={changeTab} />
     </section>
   );
@@ -132,12 +127,10 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   );
 };
 
-export const AccountCard: React.FC<AccountCardProps> = ({ providerAccounts, availableAccounts, changeTab }) => {
+export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts, changeTab }) => {
   const history = useHistory();
-  const [providerName, acts] = providerAccounts;
-
-  const accountList: Account[] = acts;
   const needUpgrade = accountList.length >= availableAccounts;
+  const accountsByProvider = groupByProviderName(accountList);
 
   const addAccount = () => {
     if (!needUpgrade) {
@@ -170,39 +163,44 @@ export const AccountCard: React.FC<AccountCardProps> = ({ providerAccounts, avai
           </div>
         </div>
       </div>
-      <div className='card mm-setting-card mm-account-overview__peer-street'>
-        <div className='card-body connected'>
-          <div className='row pb-2 pt-1'>
-            <div className='col-10 col-md-6'>
-              <div>
-                <PeerStreet className='mr-3 mr-md-4' />
-                <span className='mm-account-overview__block-title'>{providerName}</span>
+
+      {Object.entries(accountsByProvider).map(([providerName, accounts], index) => (
+        <div key={index}>
+          <div className='card mm-setting-card mm-account-overview__peer-street'>
+            <div className='card-body connected'>
+              <div className='row pb-2 pt-1'>
+                <div className='col-10 col-md-6'>
+                  <div>
+                    <PeerStreet className='mr-3 mr-md-4' />
+                    <span className='mm-account-overview__block-title'>{providerName}</span>
+                  </div>
+                </div>
+                <div className='col-2 col-md-1 order-md-2 text-right'>
+                  <Refresh />
+                </div>
+                <div className='col-12 col-md-5 order-md-1 text-md-right pt-2 pt-md-0'>
+                  <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
+                </div>
               </div>
-            </div>
-            <div className='col-2 col-md-1 order-md-2 text-right'>
-              <Refresh />
-            </div>
-            <div className='col-12 col-md-5 order-md-1 text-md-right pt-2 pt-md-0'>
-              <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
-            </div>
-          </div>
 
-          {accountList.map((account, index) => {
-            return <AccountRow key={index} account={account} />;
-          })}
+              {accounts.map((account, accountIndex) => {
+                return <AccountRow key={accountIndex} account={account} />;
+              })}
 
-          <div className='row py-3'>
-            <div className='col-12 col-md-6'>
-              <div className='text-primary mm-account-overview__update-link mb-3 mb-md-0'>Update Credentials</div>
-            </div>
-            <div className='col-12 col-md-6'>
-              <div className='text-danger text-md-right mm-account-overview__delete-link'>
-                Delete account and remove data
+              <div className='row py-3'>
+                <div className='col-12 col-md-6'>
+                  <div className='text-primary mm-account-overview__update-link mb-3 mb-md-0'>Update Credentials</div>
+                </div>
+                <div className='col-12 col-md-6'>
+                  <div className='text-danger text-md-right mm-account-overview__delete-link'>
+                    Delete account and remove data
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ))}
     </>
   );
 };

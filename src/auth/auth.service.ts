@@ -84,12 +84,11 @@ export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }):
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
-    const pickedData = pickByProviderName(data);
+    // const pickedData = pickByProviderName(data);
 
     dispatch({
       type: auth.FETCH_ACCOUNT_SUCCESS,
-
-      payload: { user: pickedData },
+      payload: { user: data },
     });
   }
 
