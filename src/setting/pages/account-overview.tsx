@@ -23,6 +23,7 @@ import {
   SettingPageEnum
 } from 'setting/setting.type';
 import { getRelativeDate } from '../../common/moment.helper';
+import { fNumber, numberWithCommas } from '../../common/number.helper';
 
 interface AccountOverviewProps {
   changeTab: (pageName: SettingPageEnum) => void;
@@ -220,7 +221,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
       </div>
       <div className='col col-md-4'>
         <div className='d-flex justify-content-between align-items-center'>
-          <div className='mm-account-overview__amount'>$ {account.balance}</div>
+          <div className='mm-account-overview__amount'>${numberWithCommas(fNumber(account.balance, 0))}</div>
           <Link to='/settings?active=Plan'>
             <Edited />
           </Link>
