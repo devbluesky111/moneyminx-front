@@ -1493,6 +1493,10 @@ a.upgrader-btn {
   width: 100%;
   height: 100%;
 
+  &>div {
+    min-height: 306px;
+  }
+
   // net-worth barchart tooltip customization
   .bar-tooltip {
     background-color: $darkBg;
