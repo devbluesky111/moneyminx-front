@@ -216,8 +216,8 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
             <input type='checkbox' className='mm-switch-input' id={`mc3-${account.id}`} name='Switch' />
             <label className='mm-switch' htmlFor={`mc3-${account.id}`}></label>
           </span>
-          <span className='connections-account-name mr-2'>{account.accountName}</span>
-          <span className='connections-account-name'>({account.accountNumber.slice(-4)})</span>
+          <span className='connections-account-name'>{account.accountName}</span>
+          <span className='connections-account-name'>{account.accountNumber? `(${account.accountNumber.slice(-4)})` : null}</span>
         </div>
       </div>
       <div className='col col-md-4'>
