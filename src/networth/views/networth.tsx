@@ -80,6 +80,7 @@ const Networth = () => {
     <NetworthLayout>
       <section className='content-container'>
         <NetworthHead />
+        <hr className='m-0' />
         <div className='content-wrapper'>
           <div className='container'>
             <NetworthFilter />

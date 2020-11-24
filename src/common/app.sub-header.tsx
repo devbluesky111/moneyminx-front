@@ -19,7 +19,7 @@ const AppSubHeader = () => {
     fetchCurrentAccount();
   }, []);
   return (
-    <div className='left-box'>
+    <div className='left-box d-flex align-items-center float-lg-left'>
       <Link to='/connect-account' className='plus-btn'>+</Link>
       <div className='myaccount-drop'>
         <Dropdown className='drop-box' >

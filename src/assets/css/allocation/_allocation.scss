@@ -3,7 +3,10 @@
 }
 
 .mm-allocation-sub-navigation {
-  margin-bottom: 2.313rem;
+  .mm-allocation-sub-header {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
 
   &__row {
     padding: 1.25rem 1rem;
@@ -402,9 +405,12 @@
     font-size: 1.125rem;
     font-weight: 600;
     color: $gray;
-    min-width: 38rem;
     overflow: hidden;
     position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
 
     @media (min-width: $desk + 176) {
       display: none;
@@ -412,7 +418,7 @@
   }
 
   &__navigation-title {
-    margin: 0 3.75rem 2.5rem 0;
+    margin: 0 3.75rem 1.5rem 0;
     cursor: pointer;
     padding-bottom: 0.875rem;
 
@@ -431,7 +437,7 @@
     opacity: 0.24;
     position: absolute;
     top: 2.625rem;
-    width: 100%;
+    width: 34rem;
   }
 
   .selected-date-string {
