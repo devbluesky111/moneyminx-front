@@ -15,6 +15,7 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as PeerStreet } from 'assets/icons/peer-street.svg';
 import { ReactComponent as WealthLogo } from 'assets/icons/wealth-logo.svg';
 import { ReactComponent as DefaultProviderLogo} from 'assets/icons/mm-default-provider.svg';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
 
 import {
   AccountCardProps,
@@ -172,7 +173,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
               <div className='row pb-2 pt-1'>
                 <div className='col-10 col-md-6'>
                   <div>
-                    <PeerStreet className='mr-3 mr-md-4' />
+                    <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4' alt='logo' />
                     <span className='mm-account-overview__block-title'>{providerName}</span>
                   </div>
                 </div>
@@ -221,7 +222,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
       </div>
       <div className='col col-md-4'>
         <div className='d-flex justify-content-between align-items-center'>
-          <div className='mm-account-overview__amount'>${numberWithCommas(fNumber(account.balance, 0))}</div>
+          <div className='mm-account-overview__amount'>${numberWithCommas(fNumber(account.balance, 2))}</div>
           <Link to={`/account-details/${account.id}`}>
             <Edited />
           </Link>
