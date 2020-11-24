@@ -10,13 +10,14 @@ import AccountSubNavigation from './account-sub-navigation';
 
 import { Account } from 'auth/auth.types';
 
-import { patchAccount } from 'api/request.api';
+import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as Chart } from 'assets/images/account/chart.svg';
 import { ReactComponent as ChartTab } from 'assets/images/account/chart-tab.svg';
 import { ReactComponent as ChartMobile } from 'assets/images/account/chart-mobile.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
+import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 
 import AccountTable from './account-table';
 import ActivityTable from './activity-table';
@@ -27,19 +28,38 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
 
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
-  const [PatchAccount, setPatchAccount] = useState<Account>();
+  const [AccountDetails, setAccountDetails] = useState<Account>();
+  const [AccountHoldings, setAccountHoldings] = useState<Account[]>();
+  const [AccountActivity, setAccountActivity] = useState<Account[]>();
+  const [tableType, setTableType] = useState<string>('holdings');
+  const [accountId, setAccountId] = useState<string>(props.match.params.accountId);
+
+  const fetchAccountDetails = async (accountId: string) => {
+    const { data, error } = await getAccountDetails(accountId);
+    if (!error) {
+      console.log('fetchAccountDetails: ', data);
+      setAccountDetails(data);
+    }
+  };
+  const fetchAccountHoldings = async (accountId: string) => {
+    const { data, error } = await getAccountHoldings(accountId);
+    if (!error) {
+      console.log('fetchAccountHoldings: ', data);
+      setAccountHoldings(data);
+    }
+  };
+
+  const fetchAccountActivity = async (accountId: string) => {
+    const { data, error } = await getAccountActivity(accountId);
+    if (!error) {
+      console.log('fetchAccountActivity: ', data);
+      setAccountActivity(data);
+    }
+  };
 
   React.useEffect(() => {
-    const { accountId } = props.match.params;
-    const fetchPatchAccount = async () => {
-      const { data, error } = await patchAccount(accountId, []);
-      if (!error) {
-        console.log(data);
-        setPatchAccount(data);
-      }
-    };
-
-    fetchPatchAccount();
+    fetchAccountDetails(accountId);
+    fetchAccountHoldings(accountId);
   }, []);
 
   return (
@@ -56,11 +76,11 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
           <SettingsGear className='float-left mr-3 settings-gear-button' />
           <div className='mm-account__selection--info float-lg-left mr-md-3 d-md-inline-block'>
             <ul>
-              <li>{PatchAccount?.accountName}</li>
-              <li>{PatchAccount?.category?.mmCategory}</li>
-              <li>{PatchAccount?.category?.mmAccountType}</li>
-              <li>{PatchAccount?.category?.mmAccountSubType}</li>
-              <li>{PatchAccount?.accountDetails?.currency}</li>
+              <li>{AccountDetails?.accountName}</li>
+              <li>{AccountDetails?.category?.mmCategory}</li>
+              <li>{AccountDetails?.category?.mmAccountType}</li>
+              {AccountDetails?.category?.mmAccountSubType && <li>{AccountDetails?.category?.mmAccountSubType}</li>}
+              <li>{AccountDetails?.accountDetails?.currency}</li>
             </ul>
           </div>
           <div className='d-md-flex justify-content-between mt-3'>
@@ -125,8 +145,17 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               </div>
             </div>
             <div className='mm-account__selection--type float-right'>
-              <CheckCircle />
-              {PatchAccount?.isManual ? <span className='manual'>Manual</span> : <span className='good'>Good</span>}
+              {AccountDetails?.isManual ? (
+                <>
+                  <CheckCircle />
+                  <span className='manual'>Manual</span>
+                </>
+              ) : (
+                  <>
+                    <CheckCircleGreen />
+                    <span className='good'>Good</span>
+                  </>
+                )}
             </div>
           </div>
         </div>
@@ -141,8 +170,9 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               type='radio'
               id='mm-account-holding'
               value='holdings'
-              name='mm-radio-time-interval'
+              name='mm-radio-holding-activity'
               aria-checked='true'
+              onClick={(e) => { setTableType('holdings'); fetchAccountHoldings(accountId); }}
             />
             <label className='labels' htmlFor='mm-account-holding'>
               Holdings
@@ -151,8 +181,9 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               type='radio'
               id='mm-account-activity'
               value='activity'
-              name='mm-radio-time-interval'
+              name='mm-radio-holding-activity'
               aria-checked='false'
+              onChange={(e) => { setTableType('activity'); fetchAccountActivity(accountId); }}
             />
             <label className='labels' htmlFor='mm-account-activity'>
               Activity
@@ -163,7 +194,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
             Add Position
           </Button>
         </div>
-        <AccountTable />
+        {tableType === 'holdings' && <AccountTable data={AccountHoldings} />}
 
         {/* contain for selection of Activity*/}
         <div className='mm-account-activity-block mt-5'>
@@ -176,7 +207,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               <Info />
             </div>
           </div>
-          <ActivityTable />
+          {tableType === 'activity' && <ActivityTable data={AccountActivity} />}
         </div>
 
         {/* add activity popup modal section */}

@@ -130,6 +130,18 @@ export const patchAccount = (id: string, data: any) => {
   return http.patch(urls.auth.PATCH_ACCOUNT.replace(':id', id), data);
 };
 
+export const getAccountDetails = (id: string) => {
+  return http.get(urls.auth.GET_ACCOUNT_DETAILS.replace(':id', id));
+};
+
+export const getAccountHoldings = (id: string) => {
+  return http.get(urls.auth.GET_ACCOUNT_HOLDINGS.replace(':id', id));
+};
+
+export const getAccountActivity = (id: string) => {
+  return http.get(urls.auth.GET_ACCOUNT_ACTIVITY.replace(':id', id));
+};
+
 export const getNetworth = <P>(params?: P) => {
   return http.get(urls.networth.NETWORTH, params);
 };
