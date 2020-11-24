@@ -222,7 +222,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
       <div className='col col-md-4'>
         <div className='d-flex justify-content-between align-items-center'>
           <div className='mm-account-overview__amount'>${numberWithCommas(fNumber(account.balance, 0))}</div>
-          <Link to='/settings?active=Plan'>
+          <Link to={`/account-details/${account.id}`}>
             <Edited />
           </Link>
         </div>
