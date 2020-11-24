@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
+import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
 import { getRefreshedProfile, deleteAccounts } from 'auth/auth.service';
 import { appRouteConstants } from 'app/app-route.constant';
@@ -74,10 +75,8 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   }
 
   const removeAccounts = async (accounts: Account[]) => {
-    console.log('DELETING TRUE');
     setDeleting(true);
     const { error } = await deleteAccounts({ dispatch, accounts });
-    console.log('DELETING FALSE');
     setDeleting(false);
   }
 
