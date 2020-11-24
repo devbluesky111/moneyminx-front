@@ -44,11 +44,11 @@ const Settings: React.FC<SettingsProps> = () => {
         return <PlanOverview />;
       }
       case SettingPageEnum.ACCOUNTS: {
-        return <AccountOverview changeTab={handlePageSelect}/>;
+        return <AccountOverview />;
       }
 
       default: {
-        return <AccountOverview changeTab={handlePageSelect} />;
+        return <AccountOverview />;
       }
     }
   };

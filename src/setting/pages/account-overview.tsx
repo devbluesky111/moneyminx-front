@@ -26,11 +26,7 @@ import {
 import { getRelativeDate } from '../../common/moment.helper';
 import { fNumber, numberWithCommas } from '../../common/number.helper';
 
-interface AccountOverviewProps {
-  changeTab: (pageName: SettingPageEnum) => void;
-}
-
-export const AccountOverview: React.FC<AccountOverviewProps> = ({ changeTab }) => {
+export const AccountOverview = () => {
   const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
@@ -59,13 +55,13 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ changeTab }) =
 
   return (
     <section className='mm-account-overview'>
-      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} changeTab={changeTab} />
-      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} changeTab={changeTab} />
+      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} />
+      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} />
     </section>
   );
 };
 
-export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList, availableAccounts, changeTab }) => {
+export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList, availableAccounts}) => {
   const history = useHistory();
   const needUpgrade = manualAccountList.length >= availableAccounts;
 
@@ -129,7 +125,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   );
 };
 
-export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts, changeTab }) => {
+export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts}) => {
   const history = useHistory();
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
@@ -173,7 +169,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
               <div className='row pb-2 pt-1'>
                 <div className='col-10 col-md-6'>
                   <div>
-                    <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4' alt='logo' />
+                    <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4 accounts-provider-logo' alt={`${providerName} logo`} />
                     <span className='mm-account-overview__block-title'>{providerName}</span>
                   </div>
                 </div>
@@ -212,12 +208,13 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
     <div className='row py-3'>
       <div className='col col-md-8'>
         <div className='d-flex justify-content-between justify-content-md-start'>
-          <span className='mm-switch-block mr-md-2'>
-            <input type='checkbox' checked={true} className='mm-switch-input' id={`mc3-${account.id}`} name='Switch' />
+          {/*TODO Ability to switch accounts on or off (needs API)*/}
+          {/*<span className='mm-switch-block mr-md-2'>
+            <input type='checkbox' className='mm-switch-input' id={`mc3-${account.id}`} name='Switch' />
             <label className='mm-switch' htmlFor={`mc3-${account.id}`}></label>
-          </span>
-          <span className='connections-account-name mr-2'>{account.accountName}</span>
-          <span className='connections-account-name'>({account.accountNumber.slice(-4)})</span>
+          </span>*/}
+          <span className='connections-account-name'>{account.accountName}</span>
+          <span className='connections-account-name'>{account.accountNumber? `(${account.accountNumber.slice(-4)})` : null}</span>
         </div>
       </div>
       <div className='col col-md-4'>

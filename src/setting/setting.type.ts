@@ -38,13 +38,11 @@ export interface CurrentSubscription {
 export interface AccountCardProps {
   accountList: Account[];
   availableAccounts: string | number;
-  changeTab: (pageName: SettingPageEnum) => void;
 }
 
 export interface ManualAccountProps {
   manualAccountList: Account[];
   availableAccounts: string | number;
-  changeTab: (pageName: SettingPageEnum) => void;
 }
 
 export interface AccountRowProps {
