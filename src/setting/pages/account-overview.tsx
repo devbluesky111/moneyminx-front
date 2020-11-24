@@ -173,7 +173,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
               <div className='row pb-2 pt-1'>
                 <div className='col-10 col-md-6'>
                   <div>
-                    <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4' alt='logo' />
+                    <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4 accounts-provider-logo' alt={`${providerName} logo`} />
                     <span className='mm-account-overview__block-title'>{providerName}</span>
                   </div>
                 </div>
@@ -212,10 +212,11 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
     <div className='row py-3'>
       <div className='col col-md-8'>
         <div className='d-flex justify-content-between justify-content-md-start'>
-          <span className='mm-switch-block mr-md-2'>
+          {/*TODO Ability to switch accounts on or off (needs API)*/}
+          {/*<span className='mm-switch-block mr-md-2'>
             <input type='checkbox' className='mm-switch-input' id={`mc3-${account.id}`} name='Switch' />
             <label className='mm-switch' htmlFor={`mc3-${account.id}`}></label>
-          </span>
+          </span>*/}
           <span className='connections-account-name'>{account.accountName}</span>
           <span className='connections-account-name'>{account.accountNumber? `(${account.accountNumber.slice(-4)})` : null}</span>
         </div>
