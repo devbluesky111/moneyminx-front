@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
@@ -77,6 +78,9 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   const removeAccounts = async (accounts: Account[]) => {
     setDeleting(true);
     const { error } = await deleteAccounts({ dispatch, accounts });
+    if (error) {
+      toast('Error occurred deleting account', { type: 'error' });
+    }
     setDeleting(false);
   }
 
@@ -153,6 +157,9 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const removeAccounts = async (accounts: Account[]) => {
     setDeleting(true);
     const { error } = await deleteAccounts({ dispatch, accounts });
+    if (error) {
+      toast('Error occurred deleting account', { type: 'error' });
+    }
     setDeleting(false);
   }
 
@@ -231,7 +238,10 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
 
   const deleteAccount = async (id: number) => {
     setDeleting(true);
-    await deleteAccountById({ dispatch, id });
+    const {error} = await deleteAccountById({ dispatch, id });
+    if (error) {
+      toast('Error occurred deleting account', { type: 'error' });
+    }
     setDeleting(false);
   }
 

@@ -22,7 +22,6 @@ import {
   DeleteAccountPayload,
 } from './auth.types';
 import { groupByProviderName } from './auth.helper';
-import exp from 'constants';
 
 export const login = async ({ dispatch, payload }: LoginServicePayload): Promise<ApiResponse> => {
   dispatch({ type: auth.LOGIN });
@@ -108,7 +107,7 @@ export const deleteAccounts = async ({ dispatch, accounts }: DeleteAccountPayloa
     );
   };
 
-  const result = await deleteAccountList();
+  await deleteAccountList();
   const { data, error } = await getAccount();
 
   if (error) {
