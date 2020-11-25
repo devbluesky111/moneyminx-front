@@ -181,8 +181,7 @@ ul.bank-list {
 }
 
 .account-category .category-list {
-  display: table;
-  // border: 1.5px solid $grayOpacity24;
+  display: flex;
   width: 100%;
   border-radius: 4px;
   padding-left: 0;
@@ -191,12 +190,13 @@ ul.bank-list {
 .account-category .category-list a {
   color: #969eac;
   height: 48px;
-  display: inline-block;
-  padding-top: 4px;
+  display: inline-flex;
   width: 100%;
   position: relative;
   font-size: 0.875rem;
   font-weight: 400;
+  justify-content: center;
+  align-items: center;
 
   &.active,
   &:hover {
@@ -206,6 +206,7 @@ ul.bank-list {
 
 .account-category .category-list li {
   border: 1.5px solid $grayOpacity24;
+  border-radius: 4px;
 }
 
 .account-category {
@@ -214,11 +215,15 @@ ul.bank-list {
       &:nth-child(2),
       &:first-child {
         border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
       }
 
       &:nth-child(2),
       &:nth-child(3) {
         border-left: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
       }
     }
   }
@@ -228,8 +233,7 @@ ul.bank-list {
   color: $primary;
 }
 
-
-.account-category .category-list li.active ~ .border-bg-slider{
+.account-category .category-list li.active ~ .border-bg-slider {
   border: 1.5px solid $primary;
   border-radius: 4px;
   width: 11.813rem;
@@ -239,19 +243,19 @@ ul.bank-list {
 
 .account-category ul.category-list {
   position: relative;
-} 
+}
 
 .account-category .category-list li:first-child.active ~ .border-bg-slider {
   transform: translateX(0);
   transition: transform 0.2s ease-in-out;
 }
 
-.account-category .category-list li:nth-child(2).active ~ .border-bg-slider{
+.account-category .category-list li:nth-child(2).active ~ .border-bg-slider {
   transform: translateX(190px);
   transition: transform 0.2s ease-in-out;
 }
 
-.account-category .category-list li:nth-child(3).active ~ .border-bg-slider{
+.account-category .category-list li:nth-child(3).active ~ .border-bg-slider {
   transform: translateX(380px);
   transition: transform 0.2s ease-in-out;
 }

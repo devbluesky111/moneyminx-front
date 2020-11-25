@@ -246,21 +246,27 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             <div className='account-category'>
               <span className='form-subheading'>
                 Account Category
-                <MMToolTip placement='top' message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'>
+                <MMToolTip
+                  placement='top'
+                  message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'
+                >
                   <InfoIcon />
                 </MMToolTip>
               </span>
               <ul className='category-list mb-4'>
                 {enumerateStr(MMCategories).map((cat: string, idx: number) => {
                   return (
-                    <li className={values.mmCategory === cat ? 'active' : ''} onClick={() => setCategory(cat)} role='button' key={idx}>
-                      <Link to='#'>
-                        {cat}
-                      </Link>
+                    <li
+                      className={values.mmCategory === cat ? 'active' : ''}
+                      onClick={() => setCategory(cat)}
+                      role='button'
+                      key={idx}
+                    >
+                      <Link to='#'>{cat}</Link>
                     </li>
                   );
                 })}
-                <div className='border-bg-slider'></div>
+                <div className='border-bg-slider' />
               </ul>
             </div>
             <div className='account-type'>
@@ -525,9 +531,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <div className={`input-wrap performance flex-box ${hc('employerMatchContribution')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>
-                      Does your employer match contributions?
-                    </span>
+                    <span className='form-subheading'>Does your employer match contributions?</span>
                   </p>
                 </div>
                 <div className='right-input radio'>
@@ -797,7 +801,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
             <div className={`form-row mt-0 ${hc('calculateReturnsOn')}`}>
               <span className='form-subheading'>How do you prefer to calculate real estate returns?</span>
-              <MMToolTip placement='top' message='Some investors track a return in real estate only when the value of the property goes up, others track a return when their equity goes goes. We recommend to track the equity when it is an investment property and the home value when it is your primary residence.'>
+              <MMToolTip
+                placement='top'
+                message='Some investors track a return in real estate only when the value of the property goes up, others track a return when their equity goes goes. We recommend to track the equity when it is an investment property and the home value when it is your primary residence.'
+              >
                 <InfoIcon />
               </MMToolTip>
               <div className='form-check w-100 my-2'>
