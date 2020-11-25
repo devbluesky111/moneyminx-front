@@ -626,7 +626,10 @@ export const ProfileOverview = () => {
                         <div className='form-group row align-items-center'>
                           <label className='col-md-3 col-form-label'>Dependants</label>
                           <div className='col-md-5'>
-                            <select className='form-control form-control-lg mr-sm-2'>
+                            <select className='form-control form-control-lg mr-sm-2'
+                                    name='dependants'
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}>
                               {[0, 1, 2, 3, 4].map((dependant, index) => {
                                 return (
                                   <option value={dependant} aria-selected={values.dependants === dependant} key={index}>
