@@ -272,6 +272,12 @@ ul.bank-list {
 
 .account-type-list {
   margin-bottom: 0;
+  .drop-box.show {
+    .btn-primary {
+      background-color: transparent;
+      color: #969eac;
+    }
+  }
 }
 
 .account-type select {

@@ -107,6 +107,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
   const hasAccountSubType = accountSubTypes.some(Boolean);
 
+  const dMortgageAccounts: string[] = mortgageAccounts?.length ? ['', ...mortgageAccounts] : [''];
+
   const isLastAccount = (): boolean => {
     if (accounts && currentAccount) {
       const { length, [length - 1]: last } = accounts;
@@ -772,19 +774,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 <li className={`mt-5 ${hc('associatedMortgage')}`}>
                   <span className='form-subheading'>Associated Mortgage</span>
                   <SelectInput
-                    args={mortgageAccounts}
+                    args={dMortgageAccounts}
                     name='associatedMortgage'
                     onChange={handleChange}
                     value={values.associatedMortgage}
-                  >
-                    {mortgageAccounts?.map((accType, index) => {
-                      return (
-                        <option value={accType} key={index} aria-selected={!!values.mmAccountType}>
-                          {accType}
-                        </option>
-                      );
-                    })}
-                  </SelectInput>
+                  />
                 </li>
               </ul>
             </div>
