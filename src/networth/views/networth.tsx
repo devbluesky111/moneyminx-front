@@ -1,26 +1,25 @@
+import { Table } from 'react-bootstrap';
 import React, { useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { Table } from 'react-bootstrap';
-import { fNumber, numberWithCommas } from 'common/number.helper';
+
 import { useAlert } from 'common/components/alert';
+import { useModal } from 'common/components/modal';
 import useNetworth from 'networth/hooks/useNetworth';
 import NetworthLayout from 'networth/networth.layout';
 import { AccountCategory } from 'networth/networth.enum';
+import { appRouteConstants } from 'app/app-route.constant';
 import MeasureIcon from 'assets/images/networth/measure.svg';
 import BlurChart from 'assets/images/networth/chart-blur.png';
+import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
+import { fNumber, numberWithCommas } from 'common/number.helper';
 import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
+import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
 
 import NetworthHead from './inc/networth-head';
-import NetworthBarGraph from './networth-bar-graph';
 import NetworthFilter from './inc/networth-filter';
-/*import ConnectionAlert from './inc/connection-alert';*/
-import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
-
-import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
-import { useModal } from 'common/components/modal';
-import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
-import { appRouteConstants } from 'app/app-route.constant';
+import NetworthBarGraph from './networth-bar-graph';
 
 const Networth = () => {
   const history = useHistory();

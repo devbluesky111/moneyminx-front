@@ -17,8 +17,8 @@ const SignUpDoneModal: React.FC<Props> = ({ signupModal, handleSuccess }) => {
           <SignupModalLogo />
         </div>
         <p>
-          You successfully joined Money Minx. We advise you to go and finish your profile in the settings. There, you
-          can also link more accounts and check all the details that you might find interesting.
+          Thanks for joining, we are thrilled to have you! Money Minx works best when you add all of your external
+          accounts or track your accounts manually. Do you want to add more accounts now?
         </p>
         <div className='modal-btn-wrapper'>
           <button className='mm-btn bg-primary mm-btn-primary-outline text-white' onClick={handleSuccess}>
