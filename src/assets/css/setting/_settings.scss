@@ -145,6 +145,9 @@
 
     &:disabled {
       cursor: not-allowed;
+      background: $grayOpacity40;
+      color: $white;
+      border: none;
     }
 
     @media (max-width: $md - 1) {
