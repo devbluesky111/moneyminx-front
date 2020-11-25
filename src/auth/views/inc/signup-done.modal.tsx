@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { Modal } from 'common/components/modal';
 import { ReactComponent as SignupModalLogo } from 'assets/images/signup/signup-modal-logo.svg';
 
 interface Props {
   signupModal: any;
-  message: string;
   handleSuccess: () => void;
 }
-const SignUpDoneModal: React.FC<Props> = ({ signupModal, message, handleSuccess }) => {
+
+const SignUpDoneModal: React.FC<Props> = ({ signupModal, handleSuccess }) => {
   return (
-    <Modal {...signupModal} title='Welcome to Money Minx' size='lg' onSuccess={handleSuccess}>
+    <Modal {...signupModal.props} title='Welcome to Money Minx' size='lg' onSuccess={handleSuccess} canBeClosed>
       <div className='modal-wrapper signup-modal'>
         <div className='signup-done-modal-logo'>
           <SignupModalLogo />
@@ -24,7 +25,9 @@ const SignUpDoneModal: React.FC<Props> = ({ signupModal, message, handleSuccess 
             Go to Account Settings
           </button>
           <div className='create-new-btn text-center'>
-            <Link to='/dashboard'>Go to Dashboard instead</Link>
+            <Link to='#' onClick={signupModal.close}>
+              Go to Dashboard instead
+            </Link>
           </div>
         </div>
       </div>

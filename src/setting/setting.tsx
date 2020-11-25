@@ -25,7 +25,7 @@ const Settings: React.FC<SettingsProps> = () => {
   };
 
   if (activeTab)
-    setTimeout(function () {
+    setTimeout(() => {
       handlePageSelect(activeTab);
     }, 100);
 
