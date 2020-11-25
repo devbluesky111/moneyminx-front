@@ -2,37 +2,33 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ReactDatePicker from 'react-datepicker';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import AppFooter from 'common/app.footer';
-import AppHeader from '../../common/app.header';
-import Dropdown from 'react-bootstrap/Dropdown';
-import AccountSubNavigation from './account-sub-navigation';
-
 import { Account } from 'auth/auth.types';
-
 import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
-import { ReactComponent as Chart } from 'assets/images/account/chart.svg';
-import { ReactComponent as ChartTab } from 'assets/images/account/chart-tab.svg';
-import { ReactComponent as ChartMobile } from 'assets/images/account/chart-mobile.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 
+import AccountSubNavigation from './account-sub-navigation';
+import AppHeader from '../../common/app.header';
 import AccountTable from './account-table';
 import ActivityTable from './activity-table';
-import { AccountProps } from '../account.type';
 import AppSidebar from '../../common/app.sidebar';
+import AccountBarGraph from './account-bar-graph';
+import { AccountProps } from '../account.type';
 
 const AccountDetail: React.FC<AccountProps> = (props: any) => {
 
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [AccountDetails, setAccountDetails] = useState<Account>();
-  const [AccountHoldings, setAccountHoldings] = useState<Account[]>();
-  const [AccountActivity, setAccountActivity] = useState<Account[]>();
+  const [AccountHoldings, setAccountHoldings] = useState<any>();
+  const [AccountActivity, setAccountActivity] = useState<any>();
   const [tableType, setTableType] = useState<string>('holdings');
-  const [accountId, setAccountId] = useState<string>(props.match.params.accountId);
+  const accountId = props.match.params.accountId;
 
   const fetchAccountDetails = async (accountId: string) => {
     const { data, error } = await getAccountDetails(accountId);
@@ -85,7 +81,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
           </div>
           <div className='d-md-flex justify-content-between mt-3'>
             <div className='d-flex'>
-              <div className='dflex-center mb-15'>
+              <div className='dflex-center'>
                 <ReactDatePicker
                   onChange={(date) => { }}
                   // selectsStart
@@ -144,7 +140,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                 </Dropdown>
               </div>
             </div>
-            <div className='mm-account__selection--type float-right'>
+            <div className='mm-account__selection--type'>
               {AccountDetails?.isManual ? (
                 <>
                   <CheckCircle />
@@ -159,10 +155,18 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
             </div>
           </div>
         </div>
-        <div className='mb-4'>
-          <Chart className='w-100 d-none d-xl-block' />
-          <ChartTab className='w-100 d-none d-md-block d-xl-none' />
-          <ChartMobile className='w-100 d-md-none' />
+        <div className='account-ct-box mb-40'>
+          <div className='graphbox'>
+            <ul>
+              <li className='inv-data'>
+                <span>Value</span>
+                <h3>$555,000</h3>
+              </li>
+            </ul>
+            <div className='chartbox'>
+              <AccountBarGraph account={AccountHoldings?.charts} />
+            </div>
+          </div>
         </div>
         <div className='d-flex justify-content-between flex-wrap'>
           <div className='mm-plan-radios mb-4'>
@@ -190,25 +194,33 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
             </label>
             <div className='mm-radio-bg' />
           </div>
-          <Button variant='primary' className='mb-4 mm-account__btn'>
-            Add Position
+          {AccountDetails?.isManual && tableType === 'holdings' &&
+            <Button variant='primary' className='mb-4 mm-account__btn'>
+              Add Position
           </Button>
+          }
+          {AccountDetails?.isManual && tableType === 'activity' &&
+            <Button variant='primary' className='mb-4 mm-account__btn'>
+              Add Activity
+          </Button>
+          }
         </div>
-        {tableType === 'holdings' && <AccountTable data={AccountHoldings} />}
+        {tableType === 'holdings' && <AccountTable data={AccountHoldings?.holdings} />}
 
-        {/* contain for selection of Activity*/}
-        <div className='mm-account-activity-block mt-5'>
-          <div className='d-flex align-items-center mb-4'>
-            <p className='mb-0'>
-              To properly calculate performance make sure that all withdrawals and deposits are accurately tracked below
-              as Cash Flow
+        {tableType === 'activity' &&
+          <div className='mm-account-activity-block'>
+            <div className='d-flex align-items-center mb-4'>
+              <p className='mb-0'>
+                To properly calculate performance make sure that all withdrawals and deposits are accurately tracked below
+                as Cash Flow
             </p>
-            <div className='ml-2'>
-              <Info />
+              <div className='ml-2'>
+                <Info />
+              </div>
             </div>
+            <ActivityTable data={AccountActivity?.transactions} />
           </div>
-          {tableType === 'activity' && <ActivityTable data={AccountActivity} />}
-        </div>
+        }
 
         {/* add activity popup modal section */}
         <div className='mm-add-activity-modal mt-5'>

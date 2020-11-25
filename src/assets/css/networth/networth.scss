@@ -1860,7 +1860,6 @@ footer p {
 .dflex-center {
   display: flex !important;
   justify-content: center;
-  align-items: center;
 }
 /** =============================== **/
 /** responsive **/
@@ -2303,7 +2302,7 @@ $start-width: 100%;
   }
 }
 .date-separator {
-  margin: auto 0.25rem;
+  margin: 1rem 0.25rem;
   color: $gray;
   font-size: 0.875rem
 }
