@@ -53,6 +53,7 @@ ul.features-list {
 .pricing-table-wrapper {
   display: flex;
   flex-wrap: wrap;
+  margin: auto;
 }
 
 .price-table {
@@ -65,13 +66,14 @@ ul.features-list {
   margin: 0 12px 22px 12px;
   transition: 0.8s ease;
   position: relative;
+  max-width: 320px;
 
   @media (min-width: $md) {
-      flex: 0 46.5%;
-      margin-bottom: 27px;
+    flex: 0 29.8%;
+    margin-bottom: 27px;
   }
   @media (min-width: $desk) {
-    flex: 0 22.5%;
+    flex: 0 30.7%;
     margin-bottom: 27px;
   }
 }
@@ -80,7 +82,7 @@ ul.features-list {
   color: $white;
 }
 
-.price-table:nth-child(3)::before {
+.price-table:nth-child(2)::before {
   content: '';
   width: 100%;
   background: $purple;
@@ -133,7 +135,7 @@ ul.features-list {
   color: $white !important;
 }
 
-.price-table:nth-child(3) .trial-btn {
+.price-table:nth-child(2) .trial-btn {
   background-color: $purple;
   color: $white;
 }
@@ -142,7 +144,7 @@ ul.features-list {
   position: relative;
 }
 
-.price-table:nth-child(3)::after {
+.price-table:nth-child(2)::after {
   content: 'RECOMMENDED';
   position: absolute;
   font-size: 0.6875rem;
@@ -239,7 +241,7 @@ ul.features-list {
     margin: 0 20px;
   }
 
-  .download-btn-wrapper svg:nth-child(3) {
+  .download-btn-wrapper svg:nth-child(2) {
     margin-left: 0 !important;
   }
 }
