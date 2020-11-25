@@ -100,7 +100,7 @@ export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }):
 };
 
 export const deleteAccounts = async ({ dispatch, accounts }: DeleteAccountPayload): Promise<ApiResponse> => {
-  const deleteAccountById = async () => {
+  const deleteAccountList = async () => {
     return Promise.all(
       accounts.map(async (account) => {
         await deleteAccount(`${account.id}`);
@@ -108,7 +108,23 @@ export const deleteAccounts = async ({ dispatch, accounts }: DeleteAccountPayloa
     );
   };
 
-  const result = await deleteAccountById();
+  const result = await deleteAccountList();
+  const { data, error } = await getAccount();
+
+  if (error) {
+    dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
+  } else {
+    dispatch({
+      type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
+    });
+  }
+
+  return { data, error };
+};
+
+export const deleteAccountById = async ({ dispatch, id }: { dispatch: Dispatch; id: number }): Promise<ApiResponse> => {
+  await deleteAccount(`${id}`);
   const { data, error } = await getAccount();
 
   if (error) {

@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
-import { getRefreshedProfile, deleteAccounts } from 'auth/auth.service';
+import { getRefreshedProfile, deleteAccounts, deleteAccountById } from 'auth/auth.service';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getRelativeDate } from '../../common/moment.helper';
 import useGetSubscription from 'auth/hooks/useGetSubscription';
@@ -226,6 +226,15 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
 };
 
 export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
+  const dispatch = useAuthDispatch();
+  const [deleting, setDeleting] = useState<boolean>(false);
+
+  const deleteAccount = async (id: number) => {
+    setDeleting(true);
+    await deleteAccountById({ dispatch, id });
+    setDeleting(false);
+  }
+
   return (
     <div className='row py-3'>
       <div className='col-12 col-md-8'>
@@ -248,7 +257,11 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
           <Link to={`/account-details/${account.id}`}>
             <IconEdit className='edit-icon small-icon mr-2'/>
           </Link>
-          <IconTrash className='trash-icon small-icon'/>
+          <button className='btn mm-button__flat text-danger' onClick={() => deleteAccount(account.id)}>
+            {deleting ? <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true'/> :
+              <IconTrash className='trash-icon small-icon'/>
+            }
+          </button>
         </div>
       </div>
     </div>
