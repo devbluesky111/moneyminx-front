@@ -9,7 +9,6 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Account } from 'auth/auth.types';
 import { MMCategories } from 'auth/auth.enum';
 import { patchAccount } from 'api/request.api';
-import { useAuthState } from 'auth/auth.context';
 import { makeFormFields } from 'auth/auth.helper';
 import MMToolTip from 'common/components/tooltip';
 import { enumerateStr } from 'common/common-helper';
@@ -33,15 +32,15 @@ import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estat
 interface Props {
   currentAccount?: Account;
   handleReload?: () => void;
+  isLastAccount: boolean;
 }
 
 interface LocationType {
   state?: Record<string, string>;
 }
 
-const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) => {
+const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isLastAccount }) => {
   const history = useHistory();
-  const { accounts } = useAuthState();
   const { state }: LocationType = useLocation();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
@@ -108,18 +107,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
   const hasAccountSubType = accountSubTypes.some(Boolean);
 
   const dMortgageAccounts: string[] = mortgageAccounts?.length ? ['', ...mortgageAccounts] : [''];
-
-  const isLastAccount = (): boolean => {
-    if (accounts && currentAccount) {
-      const { length, [length - 1]: last } = accounts;
-
-      if (last.id === currentAccount.id) {
-        return true;
-      }
-    }
-
-    return false;
-  };
 
   return (
     <Formik
@@ -206,7 +193,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
         toast('Successfully updated', { type: 'success' });
 
-        if (isLastAccount()) {
+        if (isLastAccount) {
           return history.push('/net-worth');
         }
 
@@ -561,7 +548,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               </div>
 
               {/* If employerMatchContribution is no hide this field */}
-              {!values.employerMatchContribution ? (
+              {values.employerMatchContribution !== 'no' ? (
                 <div className={`input-wrap flex-box ${hc('employerMatch')}`}>
                   <div className='left-input'>
                     <p>
@@ -577,7 +564,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 </div>
               ) : null}
 
-              {!values.employerMatchContribution ? (
+              {values.employerMatchContribution !== 'no' ? (
                 <div className={`input-wrap flex-box ${hc('employerMatchLimitIn')} ${hc('employerMatchLimit')}`}>
                   <div className='left-input employer-match'>
                     <p>
@@ -876,7 +863,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                         {isFromAccount ? 'Cancel' : 'Back'}
                       </button>
                       <button className='mm-btn-animate mm-btn-primary estimate-annual-block__btn-save' type='submit'>
-                        {isFromAccount ? 'Save' : isLastAccount() ? 'Finish' : 'Next'}
+                        {isFromAccount ? 'Save' : isLastAccount ? 'Finish' : 'Next'}
                       </button>
                     </div>
                   </div>
