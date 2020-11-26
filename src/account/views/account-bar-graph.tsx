@@ -11,7 +11,7 @@ const CustomTooltip = (props: any) => {
     return (
       <div className='bar-tooltip'>
         <div className='item-name'>
-          {payload[0].interval}
+          {payload[0].payload.interval}
         </div>
         <div className='item-value'>
           {`$${numberWithCommas(fNumber(payload[0].payload.value, 0))}`}
@@ -19,7 +19,6 @@ const CustomTooltip = (props: any) => {
       </div>
     )
   }
-
   return null;
 };
 

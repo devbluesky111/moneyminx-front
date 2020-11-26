@@ -26,7 +26,6 @@ export const ActivityTable = (props: any) => {
               <div className='col-md mm-activity-table__head--data d-md-block'>Income</div>
               <div className='col-md mm-activity-table__head--data d-md-block'>Cash Flow</div>
               <div className='col-md-1 mm-activity-table__head--data d-md-block'><Info /></div>
-
             </div>
           </div>
           <div className='mm-activity-table__body'>

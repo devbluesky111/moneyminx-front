@@ -52,7 +52,6 @@ const CustomTooltip = (props: any) => {
       </div>
     );
   }
-
   return null;
 };
 
@@ -77,12 +76,14 @@ const formatter = (value: number) => {
     return `$${value / 1000000}m`;
   }
 }
+
 const getInterval = (max: number) => {
   let _interval = max / 4;
   let _l = Number(_interval.toString().split('.')[0].length) - 1;
   let _maxFloor = Math.ceil(_interval / (Math.pow(10, _l)));
   return _maxFloor * Math.pow(10, _l);
 }
+
 const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
   const { networth, fCategories } = props;
   if (!networth.length) {
@@ -108,6 +109,7 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
   if (max > _interval * 3.5) {
     _interval = getInterval(max + _interval / 2);
   }
+
   return (
     <div className='responsive-container'>
       <ResponsiveContainer width='100%' height='100%'>
