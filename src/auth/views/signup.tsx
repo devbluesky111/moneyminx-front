@@ -81,7 +81,7 @@ export const SignupMainSection = () => {
       const { error } = await postFacebookLogin({
         accessToken: response.accessToken,
         mailChimpSubscription: true,
-        subscriptionPriceId: 'price_1HnCFAAjc68kwXCHBj66nCW0',
+        subscriptionPriceId: env.STRIPE_DEFAULT_PLAN,
       });
 
       if (!error) {
@@ -162,7 +162,7 @@ export const SignupMainSection = () => {
                     password: '',
                     termsAccepted: false,
                     mailChimpSubscription: false,
-                    subscriptionPriceId: priceId || 'price_1HnCFAAjc68kwXCHBj66nCW0',
+                    subscriptionPriceId: priceId || env.STRIPE_DEFAULT_PLAN,
                   }}
                   validate={async (values) => {
                     if (!values.password) {
