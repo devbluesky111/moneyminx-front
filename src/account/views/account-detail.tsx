@@ -6,6 +6,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import AppFooter from 'common/app.footer';
 import { Account } from 'auth/auth.types';
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
@@ -18,7 +20,7 @@ import AccountTable from './account-table';
 import ActivityTable from './activity-table';
 import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
-import { AccountProps } from '../account.type';
+import { AccountItem, AccountProps } from '../account.type';
 
 const AccountDetail: React.FC<AccountProps> = (props: any) => {
 
@@ -57,6 +59,15 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
     fetchAccountDetails(accountId);
     fetchAccountHoldings(accountId);
   }, []);
+
+  const isCurrent = (interval: string) =>
+    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+
+  let curAccountItem = undefined;
+  if (AccountHoldings?.charts) {
+    curAccountItem = AccountHoldings?.charts.filter((accountItem: AccountItem) => isCurrent(accountItem.interval));
+  }
+  // const [curAccountItem] = AccountHoldings?.charts.filter((accountItem: AccountItem) => isCurrent(accountItem.interval));
 
   return (
     <div className='mm-setting'>
@@ -160,7 +171,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
             <ul>
               <li className='inv-data'>
                 <span>Value</span>
-                <h3>$555,000</h3>
+                <h3>${curAccountItem ? numberWithCommas(fNumber(curAccountItem[0].value, 0)) : ''}</h3>
               </li>
             </ul>
             <div className='chartbox'>
@@ -223,7 +234,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
         }
 
         {/* add activity popup modal section */}
-        <div className='mm-add-activity-modal mt-5'>
+        <div className='mm-add-activity-modal'>
           <div className='row mb-4'>
             <div className='col-md-5'>
               <div className='d-md-flex align-items-baseline'>

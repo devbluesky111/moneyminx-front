@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
@@ -32,7 +33,7 @@ export const AccountTable = (props: any) => {
                 <div className='col-md mm-account-table__head--data d-xl-block'>Symbol</div>
                 <div className='col-md mm-account-table__head--data d-xl-block'>Cost</div>
                 {intervals?.length > 0 && intervals.map((item, index) => (
-                  index === 3 ?
+                  index === 4 ?
                     (<div className='col-md mm-account-table__head--data d-xl-block text-green' key={index}>{item}</div>)
                     :
                     (
@@ -47,7 +48,14 @@ export const AccountTable = (props: any) => {
               <div key={index}>
                 <div className='d-md-none mm-account-table__body--sm-title mt-3'>Position 01</div>
                 <div className='row no-gutters mm-account-table__body--wrapper' onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>
-                  <div className='col-4 col-md mm-account-table__body--data d-none d-md-block'>Holding</div>
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      <Tooltip id={item.description}>
+                        <div className="tc-text">{item.description}</div>
+                      </Tooltip>}>
+                    <div className='col-4 col-md mm-account-table__body--data d-none d-md-block' onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>{item.description.substring(0, 15)}{item.description.length > 15 ? '...' : ''}</div>
+                  </OverlayTrigger>
                   <div className='col-4 col-md mm-account-table__body--data order-1 order-md-0'><span className='d-block d-md-none'>Price</span> ${numberWithCommas(fNumber(item.price, 0))}</div>
                   <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{item.quantity}</div>
                   <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{item.symbol}</div>
@@ -55,8 +63,8 @@ export const AccountTable = (props: any) => {
                   <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>${item.intervalValues[0].value}</div>
                   <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[1].interval}</span>${item.intervalValues[1].value}</div>
                   <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[2].interval}</span>${item.intervalValues[2].value}</div>
-                  <div className='col-4 col-md mm-account-table__body--data green-text'><span className='d-block d-md-none'>{item.intervalValues[3].interval}</span>${item.intervalValues[3].value}</div>
-                  <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[4].interval}</span>${item.intervalValues[4].value}</div>
+                  <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[3].interval}</span>${item.intervalValues[3].value}</div>
+                  <div className='col-4 col-md mm-account-table__body--data green-text'><span className='d-block d-md-none'>{item.intervalValues[4].interval}</span>${item.intervalValues[4].value}</div>
                   <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>{item.intervalValues[5].interval}</span>${item.intervalValues[5].value}</div>
                   <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[6].interval}</span>${item.intervalValues[6].value}</div>
                   <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[7].interval}</span>${item.intervalValues[7].value}</div>
@@ -67,7 +75,7 @@ export const AccountTable = (props: any) => {
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 

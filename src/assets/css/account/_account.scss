@@ -20,7 +20,7 @@
     background: $white;
     box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
     border-radius: 6px;
-    padding: 25px 20px 16px 20px;
+    padding: 20px;
     height: 100%;
     position: relative;
 
@@ -35,14 +35,6 @@
       font-size: 1.5rem;
       line-height: 1.875rem;
     }
-   
-    @media (min-width: $sm) {
-      padding: 20px 8px 20px 8px;
-    }
-    @media (min-width: $med) {
-      padding: 28px 20px 20px 20px;
-    }
-
 
   }
 
@@ -170,6 +162,10 @@
       &--data {
         padding-bottom: 1.563rem;
         display: none;
+
+        @media (min-width: $desk){
+          padding-left: 1rem;
+        }
       }
     }
 
@@ -182,7 +178,7 @@
         padding-top: 1rem;
         padding-bottom: 1rem;
 
-        &:nth-child(10) {
+        &:nth-child(11) {
           background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity00 100%);
         }
       }
@@ -190,6 +186,14 @@
       &--wrapper {
         border-bottom: 1px solid $grayOpacity20;
         position: relative;
+
+        @media (min-width: $desk){
+          &>div {
+            padding-left: 1rem;
+          }
+          
+        }
+
         .green-text {
           color: $green;
         }
@@ -199,7 +203,7 @@
             color: $white;
           }
 
-          @media (min-width: 768px){
+          @media (min-width: $med){
               background: $darkBg;
               color: $white;
               border-radius: 6px;
@@ -313,6 +317,7 @@
     border-radius: 6px;
     color: $white;
     padding: 1.25rem 1.25rem;
+    margin-top: 2.063rem;
 
     p {
       font-weight: 500;

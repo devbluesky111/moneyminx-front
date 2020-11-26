@@ -992,16 +992,9 @@ a.upgrader-btn {
   background: $white;
   box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border-radius: 6px;
-  padding: 25px 20px 16px 20px;
+  padding: 20px;
   height: 100%;
   position: relative;
-
-  @media (min-width: $sm) {
-    padding: 20px 8px 20px 8px;
-  }
-  @media (min-width: $med) {
-    padding: 28px 20px 20px 20px;
-  }
 }
 
 .ct-box:before {
@@ -1851,6 +1844,12 @@ footer p {
 .d-hide {
   display: none! important;
 }
+.s-hide {
+  display: none !important;
+  @media (min-width: $med) {
+    display: block !important;
+  }
+}
 
 .dropdowns-container {
   display: flex !important;
@@ -1970,9 +1969,21 @@ footer p {
   .table tbody tr td:last-child:after {
     content: '';
     position: absolute;
+    top: -1px;
+    bottom: 0;
+    width: 20px;
+    height: 52px;
+    background: transparent;
+    transition: 0.1s all;
+  }
+  .table tbody tr:first-child td:first-child:before,
+  .table tbody tr:first-child td:last-child:after {
+    content: '';
+    position: absolute;
     top: 0;
     bottom: 0;
     width: 20px;
+    height: 51px;
     background: transparent;
     transition: 0.1s all;
   }
@@ -2017,10 +2028,9 @@ footer p {
     display: flex;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-top: 40px;
+    margin-top: 20px;
   }
   .graphbox ul li {
-    margin-bottom: 20px;
     -webkit-flex: 0 0 50%;
     flex: 0 0 50%;
     max-width: 50%;
