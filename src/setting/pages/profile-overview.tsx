@@ -166,6 +166,10 @@ export const ProfileOverview = () => {
         }}
         onSubmit={async (values, actions) => {
           setStatusText('Saving...');
+
+          if (typeof values.dependants === 'string') {
+            values.dependants = parseInt(values.dependants, 10);
+          }
           const { error: patchError } = await patchProfile(values);
 
           if (patchError) {
