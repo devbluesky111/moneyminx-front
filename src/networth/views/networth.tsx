@@ -18,8 +18,10 @@ import NetworthFilter from './inc/networth-filter';
 import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
 
 import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
+import useProfile from 'auth/hooks/useProfile';
 
 const Networth = () => {
+  useProfile();
   const history = useHistory();
   const connectionAlert = useAlert();
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactComponent as Info } from '../../assets/icons/info.svg';
 import { ReactComponent as Revert } from '../../assets/icons/revert.svg';
-import { ReactComponent as Edited } from '../../assets/icons/edited.svg';
+import { ReactComponent as Edited } from '../../assets/icons/icon-edit.svg';
 
 export const ActivityTable = () => {
 return (
@@ -9,7 +9,7 @@ return (
   <div className='mm-activity-table'>
     <div className='mm-activity-table__overview'>
       <div className='mm-activity-table__head'>
-        <div className="row no-gutters">
+        <div className='row no-gutters'>
           <div className='col-md mm-activity-table__head--data d-md-block'>Date</div>
           <div className='col-md mm-activity-table__head--data d-md-block'>Activity Type</div>
           <div className='col-md mm-activity-table__head--data d-xl-block'>Description </div>
