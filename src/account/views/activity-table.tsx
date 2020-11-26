@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ReactComponent as Info } from '../../assets/icons/info.svg';
 import { ReactComponent as Revert } from '../../assets/icons/revert.svg';
-import { ReactComponent as Edited } from '../../assets/icons/edited.svg';
+import { ReactComponent as Edited } from '../../assets/icons/icon-edit.svg';
 
 export const ActivityTable = (props: any) => {
 

@@ -86,7 +86,7 @@ export const PlanOverview = () => {
 
       <div className='container-fluid'>
       <div className='row'>
-        <div className='plan-table-wrapper'>
+        <div className='pricing-table-wrapper'>
         {pricingList?.map((pt: any, index: number) => {
           return (
               <div className='price-table' key={index}>

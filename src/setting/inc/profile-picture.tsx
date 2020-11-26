@@ -1,17 +1,25 @@
 import { toast } from 'react-toastify';
 import React, { useRef, useState } from 'react';
 
+import { fetchProfile } from 'auth/auth.service';
+import { useAuthDispatch } from 'auth/auth.context';
+
 import { patchProfilePicture } from 'api/request.api';
 import ProfileDefaultPic from 'assets/images/settings/mm-default-avatar.svg';
 import ImageInput from 'common/components/input/image.input';
+import MMToolTip from '../../common/components/tooltip';
 
 interface ProfilePictureProps {
   pictureURL?: string;
 }
 const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
+
+  const dispatch = useAuthDispatch();
   const ppRef = useRef(null);
   const [profileURL, setProfileURL] = useState<string>(pictureURL || ProfileDefaultPic);
   const [profilePicture, setProfilePicture] = useState<File>();
+  const [profileChanged, setProfileChanged] = useState<boolean>(false);
+  const [changing, setChanging] = useState<boolean>(false);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length !== 0) {
@@ -20,6 +28,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
         setProfilePicture(file);
         const url = URL.createObjectURL(file);
         setProfileURL(url);
+        setProfileChanged(true);
       }
     }
   };
@@ -30,12 +39,20 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
 
   const handleProfileChange = async () => {
     if (profilePicture) {
+      setChanging(true);
       const formData = new FormData();
       formData.append('file', profilePicture);
       const { error } = await patchProfilePicture(formData);
       if (error) {
         toast('Error on uploading picture', { type: 'error' });
       }
+
+      const result = await fetchProfile({ dispatch });
+      if (result.error) {
+        toast('Error on changing picture', {type: 'error'});
+      }
+      setProfileChanged(false);
+      setChanging(false);
     }
   };
 
@@ -49,8 +66,12 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
           </div>
         </div>
         <div className='mt-4 mt-sm-0'>
-          <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleProfileChange}>
-            Change Picture
+          <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleProfileChange}
+                  disabled={!profileChanged}>
+            {changing && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'/>}
+            <MMToolTip placement='top' message='To change your profile pic, click on the current image on the left.'>
+              <span className={'ml-1'}> {changing ? 'Saving...' : 'Save Picture'}</span>
+            </MMToolTip>
           </button>
         </div>
       </div>

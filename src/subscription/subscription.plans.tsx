@@ -91,12 +91,13 @@ const SubscriptionPlans = () => {
                       </div>
                       Calculate net worth projections
                     </li>
+                    {/* TODO add badges once community is ready
                     <li>
                       <div className='tick-icon'>
                         <PricingTickIcon />
                       </div>
                       {pt.details[pricingDetailConstant.NAME]} badge
-                    </li>
+                    </li>*/}
                     <li className='cs-list'>
                       <div className='highlighted-text-light'>
                         Coming Soon!

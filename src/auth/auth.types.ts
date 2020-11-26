@@ -32,6 +32,7 @@ export interface Account {
   id: number;
   yodleeId: number;
   accountName: string;
+  accountNumber: string;
   providerName: string;
   providerLogo: string;
   profileId: number;
@@ -158,4 +159,9 @@ export interface ChangePasswordServicePayload {
     newPassword: string;
     oldPassword: string;
   };
+}
+
+export interface DeleteAccountPayload {
+  dispatch: Dispatch;
+  accounts: Account[];
 }
