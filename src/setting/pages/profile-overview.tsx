@@ -634,7 +634,7 @@ export const ProfileOverview = () => {
                                     name='dependants'
                                     onChange={handleChange}
                                     onBlur={handleBlur}>
-                              {[0, 1, 2, 3, 4].map((dependant, index) => {
+                              {[0, 1, 2, 3, 4, 5, 6].map((dependant, index) => {
                                 return (
                                   <option value={dependant} aria-selected={values.dependants === dependant} key={index}>
                                     {dependant  || ''}
