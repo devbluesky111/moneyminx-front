@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { fNumber } from 'common/number.helper';
+import { shortId } from 'common/common-helper';
 import { useModal } from 'common/components/modal';
 import { getStringDate } from 'common/moment.helper';
 import { MMPieChart } from 'common/components/pie-chart';
 import SettingModal from 'allocation/modal/setting-modal';
 import ChartShareModal from 'allocation/modal/chart-share-modal';
 import FieldChangeModal from 'allocation/modal/field-change-modal';
+import { AllocationSectionEnum } from 'allocation/allocation.enum';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
@@ -18,7 +20,6 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
-import { AllocationSectionEnum } from 'allocation/allocation.enum';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
   const chartShareModal = useModal();
@@ -147,7 +148,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                           <tbody className={isHidden(allocationKey) ? 'hide-me' : ''}>
                             {allocation?.map((al) => {
                               return (
-                                <React.Fragment key={al.id}>
+                                <React.Fragment key={shortId}>
                                   <tr className='mm-allocation-overview__table--data-row-mobile'>
                                     <p className='mt-2 mb-0'>{al.description}</p>
                                   </tr>
@@ -158,7 +159,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                       {fNumber(al.per, 2)}%
                                     </td>
                                     <td>
-                                      <span className='d-block'>Value</span>${fNumber(al.value, 2)}
+                                      <span className='d-block'>Value</span>${fNumber(al.allocationValue, 2)}
                                     </td>
                                   </tr>
                                 </React.Fragment>
