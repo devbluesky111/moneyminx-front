@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
@@ -27,7 +26,7 @@ export const AccountTable = (props: any) => {
           <div className='mm-account-table__head'>
             {holdings?.length > 0 &&
               <div className="row no-gutters">
-                <div className='col-md mm-account-table__head--data d-md-block'>Holdings</div>
+                <div className='col-md mm-account-table__head--data d-md-block' style={{ minWidth: '200px' }}>Holdings</div>
                 <div className='col-md mm-account-table__head--data d-md-block'>Price</div>
                 <div className='col-md mm-account-table__head--data d-xl-block'>Quantity</div>
                 <div className='col-md mm-account-table__head--data d-xl-block'>Symbol</div>
@@ -48,14 +47,7 @@ export const AccountTable = (props: any) => {
               <div key={index}>
                 <div className='d-md-none mm-account-table__body--sm-title mt-3'>Position 01</div>
                 <div className='row no-gutters mm-account-table__body--wrapper' onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>
-                  <OverlayTrigger
-                    placement="top"
-                    overlay={
-                      <Tooltip id={item.description}>
-                        <div className="tc-text">{item.description}</div>
-                      </Tooltip>}>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-md-block' onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>{item.description.substring(0, 15)}{item.description.length > 15 ? '...' : ''}</div>
-                  </OverlayTrigger>
+                  <div className='col-4 col-md mm-account-table__body--data d-none d-md-block' style={{ minWidth: '200px' }}>{item.description}</div>
                   <div className='col-4 col-md mm-account-table__body--data order-1 order-md-0'><span className='d-block d-md-none'>Price</span> ${numberWithCommas(fNumber(item.price, 0))}</div>
                   <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{item.quantity}</div>
                   <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{item.symbol}</div>
