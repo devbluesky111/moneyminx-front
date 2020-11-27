@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ReactDatePicker from 'react-datepicker';
@@ -31,9 +31,14 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
   const [AccountActivity, setAccountActivity] = useState<any>();
   const [fFromDate, setFfromDate] = useState<any>();
   const [fToDate, setFtoDate] = useState<any>();
-  const [fTimeInterval, setFtimeInterval] = useState<string>('Monthly');
+  const [fTimeInterval, setFtimeInterval] = useState<string>('Yearly');
   const [tableType, setTableType] = useState<string>('holdings');
   const accountId = props.match.params.accountId;
+  const dropdownToggle = useRef(null);
+
+  const clickElement = (dropdownToggle: any) => {
+    dropdownToggle.current?.click();
+  }
 
   const fetchAccountDetails = async (accountId: string) => {
     const { data, error } = await getAccountDetails(accountId);
@@ -42,6 +47,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
       setAccountDetails(data);
     }
   };
+
   const fetchAccountHoldings = async (accountId: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
     const { data, error } = await getAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
     if (!error) {
@@ -50,8 +56,8 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
     }
   };
 
-  const fetchAccountActivity = async (accountId: string) => {
-    const { data, error } = await getAccountActivity(accountId);
+  const fetchAccountActivity = async (accountId: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
+    const { data, error } = await getAccountActivity(accountId, fFromDate, fToDate, fTimeInterval);
     if (!error) {
       console.log('fetchAccountActivity: ', data);
       setAccountActivity(data);
@@ -77,19 +83,24 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
   }
 
   const onChange = (option: string, date: any) => {
+    date.setMonth(date.getMonth() - 1);
     if (option === 'start') {
       setFfromDate(date);
     } else if (option === 'end') {
       setFtoDate(date);
       if (fFromDate !== undefined && getDate(new Date(date)) > fFromDate) {
         fetchAccountDetails(accountId);
-        fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
+        if (tableType === 'holdings') fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
+        if (tableType === 'activity') fetchAccountActivity(accountId, fFromDate, fToDate, fTimeInterval);
+
       }
     }
   };
 
   const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
+    setFtimeInterval(event.target.value);
+    if (tableType === 'holdings') fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
+    if (tableType === 'activity') fetchAccountActivity(accountId, fFromDate, fToDate, fTimeInterval);
   };
 
   return (
@@ -149,14 +160,14 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className='month_year' value={getMonthYear(fFromDate)} />
+                        <input type='text' className='month_year' value={getMonthYear(fToDate)} />
                       </div>
                     </div>
                   }
                 />
                 <Dropdown className='drop-box m-l-2'>
-                  <Dropdown.Toggle variant=''>
-                    {fTimeInterval || 'Monthly'}
+                  <Dropdown.Toggle variant='' ref={dropdownToggle}>
+                    {fTimeInterval}
                   </Dropdown.Toggle>
                   <Dropdown.Menu className='mm-dropdown-menu dropsm'>
                     <ul className='radiolist'>
@@ -171,6 +182,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                                 value={interval}
                                 checked={fTimeInterval === interval}
                                 onChange={handleIntervalChange}
+                                onClick={() => clickElement(dropdownToggle)}
                               />
                               <span>{interval}</span>
                             </label>
@@ -245,7 +257,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               value='activity'
               name='mm-radio-holding-activity'
               aria-checked='false'
-              onChange={(e) => { setTableType('activity'); fetchAccountActivity(accountId); }}
+              onChange={(e) => { setTableType('activity'); fetchAccountActivity(accountId, fFromDate, fToDate, fTimeInterval); }}
             />
             <label className='labels' htmlFor='mm-account-activity'>
               Activity

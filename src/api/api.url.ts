@@ -11,8 +11,9 @@ export const urls = {
     PATCH_ACCOUNT: '/account/:id',
     GET_ACCOUNT_DETAILS: '/account/:id',
     GET_ACCOUNT_HOLDINGS:
-      '/account-details/holdings?accountId=:idfromDate=:fromDatetoDate=:toDatetimeInterval=:timeIntervalrefresh=true',
-    GET_ACCOUNT_ACTIVITY: '/account-details/transactions?accountId=:idrefresh=true',
+      '/account-details/holdings?accountId=:id&fromDate=:fromDate&toDate=:toDate&timeInterval=:timeInterval&refresh=true',
+    GET_ACCOUNT_ACTIVITY:
+      '/account-details/transactions?accountId=:id&fromDate=:fromDate&toDate=:toDate&timeInterval=:timeInterval&refresh=true',
     FACEBOOK_LOGIN: '/facebook/login',
     PROFILE_PICTURE: '/profile/picture',
     ACCOUNTS: '/account/me?refresh=false',

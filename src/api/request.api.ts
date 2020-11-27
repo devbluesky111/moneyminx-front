@@ -135,15 +135,29 @@ export const getAccountDetails = (id: string) => {
 };
 
 export const getAccountHoldings = (id: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
-  if (!fFromDate) fFromDate = '';
-  if (!fToDate) fToDate = '';
-  if (!fTimeInterval) fTimeInterval = '';
-  return http.get('/account-details/holdings?accountId=:idrefresh=true'.replace(':id', id));
-  // return http.get(urls.auth.GET_ACCOUNT_HOLDINGS.replace(':id', id).replace(':fromDate', fFromDate).replace(':toDate', fToDate).replace(':timeInterval', fTimeInterval));
+  let url = urls.auth.GET_ACCOUNT_HOLDINGS;
+  if (!fFromDate) url = url.replace('&fromDate=:fromDate', '');
+  if (!fToDate) url = url.replace('&toDate=:toDate', '');
+  if (!fTimeInterval) url = url.replace('&timeInterval=:timeInterval', '');
+  url = url
+    .replace(':id', id)
+    .replace(':fromDate', fFromDate)
+    .replace(':toDate', fToDate)
+    .replace(':timeInterval', fTimeInterval);
+  return http.get(url);
 };
 
-export const getAccountActivity = (id: string) => {
-  return http.get(urls.auth.GET_ACCOUNT_ACTIVITY.replace(':id', id));
+export const getAccountActivity = (id: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
+  let url = urls.auth.GET_ACCOUNT_ACTIVITY;
+  if (!fFromDate) url = url.replace('&fromDate=:fromDate', '');
+  if (!fToDate) url = url.replace('&toDate=:toDate', '');
+  if (!fTimeInterval) url = url.replace('&timeInterval=:timeInterval', '');
+  url = url
+    .replace(':id', id)
+    .replace(':fromDate', fFromDate)
+    .replace(':toDate', fToDate)
+    .replace(':timeInterval', fTimeInterval);
+  return http.get(url);
 };
 
 export const deleteAccount = (id: string): Promise<ApiResponse> => {
