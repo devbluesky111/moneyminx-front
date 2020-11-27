@@ -315,6 +315,10 @@
     }
   }
 
+  .no-data {
+    margin-left: calc(50% - 62.21px);
+  }
+
   .mm-add-activity-modal {
     background: $darkBg;
     box-shadow: 0px 4px 28px rgba($darkBg, 0.44);

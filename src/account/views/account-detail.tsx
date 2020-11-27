@@ -63,11 +63,15 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
   const isCurrent = (interval: string) =>
     getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
 
-  let curAccountItem = undefined;
+  let curAccountHoldingsItem = undefined;
   if (AccountHoldings?.charts) {
-    curAccountItem = AccountHoldings?.charts.filter((accountItem: AccountItem) => isCurrent(accountItem.interval));
+    curAccountHoldingsItem = AccountHoldings?.charts.filter((accountItem: AccountItem) => isCurrent(accountItem.interval));
   }
-  // const [curAccountItem] = AccountHoldings?.charts.filter((accountItem: AccountItem) => isCurrent(accountItem.interval));
+
+  let curAccountActivityItem = undefined;
+  if (AccountActivity?.charts) {
+    curAccountActivityItem = AccountActivity?.charts.filter((accountItem: AccountItem) => isCurrent(accountItem.interval));
+  }
 
   return (
     <div className='mm-setting'>
@@ -169,13 +173,28 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
         <div className='account-ct-box mb-40'>
           <div className='graphbox'>
             <ul>
-              <li className='inv-data'>
-                <span>Value</span>
-                <h3>${curAccountItem ? numberWithCommas(fNumber(curAccountItem?.[0].value, 0)) : ''}</h3>
-              </li>
+              {AccountDetails?.category.mmCategory === 'Investment Assets' &&
+                <li className='inv-data'>
+                  <span>Value</span>
+                  <h3>${curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
+                </li>
+              }
+              {AccountDetails?.category.mmCategory === 'Other Assets' &&
+                <li className='other-data'>
+                  <span>Value</span>
+                  <h3>${curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
+                </li>
+              }
+              {AccountDetails?.category.mmCategory === 'Liabilities' &&
+                <li className='lty-data'>
+                  <span>Value</span>
+                  <h3>${curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
+                </li>
+              }
             </ul>
             <div className='chartbox'>
-              <AccountBarGraph account={AccountHoldings?.charts} curInterval={curAccountItem?.[0].interval} />
+              {tableType === 'holdings' && <AccountBarGraph account={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0].interval} />}
+              {tableType === 'activity' && <AccountBarGraph account={AccountActivity?.charts} curInterval={curAccountActivityItem?.[0].interval} />}
             </div>
           </div>
         </div>
@@ -299,7 +318,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
         </div>
       </div>
       <AppFooter />
-    </div>
+    </div >
   );
 };
 
