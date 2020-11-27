@@ -21,6 +21,8 @@ import ActivityTable from './activity-table';
 import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
 import { AccountItem, AccountProps } from '../account.type';
+import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
+import MMToolTip from '../../common/components/tooltip';
 
 const AccountDetail: React.FC<AccountProps> = (props: any) => {
 
@@ -111,6 +113,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
         open={openRightNav}
       />
       <AccountSubNavigation />
+      <hr className='mt-0 mb-4' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-account'>
         <div className='mm-account__selection mb-3'>
@@ -284,16 +287,17 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                 To properly calculate performance make sure that all withdrawals and deposits are accurately tracked below
                 as Cash Flow
             </p>
-              <div className='ml-2'>
-                <Info />
-              </div>
+              <MMToolTip placement='top'
+                         message='Performance calculations are coming soon. To ensure proper performance returns please mark cash flow transactions properly.'>
+                <InfoIcon className='mt-n1 ml-2' />
+              </MMToolTip>
             </div>
             <ActivityTable data={AccountActivity?.transactions} />
           </div>
         }
 
         {/* add activity popup modal section */}
-        <div className='mm-add-activity-modal'>
+        {/*<div className='mm-add-activity-modal'>
           <div className='row mb-4'>
             <div className='col-md-5'>
               <div className='d-md-flex align-items-baseline'>
@@ -355,7 +359,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               </Button>
             </div>
           </div>
-        </div>
+        </div>*/}
       </div>
       <AppFooter />
     </div >

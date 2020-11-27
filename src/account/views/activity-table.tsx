@@ -21,7 +21,7 @@ export const ActivityTable = (props: any) => {
           <div className='mm-activity-table__overview'>
             <div className='mm-activity-table__head'>
 
-              <div className="row no-gutters">
+              <div className='row no-gutters'>
                 <div className='col-md mm-activity-table__head--data d-md-block'>Date</div>
                 <div className='col-md mm-activity-table__head--data d-md-block'>Activity Type</div>
                 <div className='col-md mm-activity-table__head--data d-xl-block'>Description </div>
@@ -48,7 +48,7 @@ export const ActivityTable = (props: any) => {
             </div>
           </div>
         </div>
-      ) : (<span className="no-data">No transaction data</span>)}
+      ) : (<span className='no-data'>No transaction data</span>)}
     </section>
   );
 };
