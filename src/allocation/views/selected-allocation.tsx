@@ -12,6 +12,7 @@ import {
   getMonthSubtracted,
   getLastDateOfMonth,
 } from 'common/moment.helper';
+import { shortId } from 'common/common-helper';
 import { useAuthState } from 'auth/auth.context';
 import { MMPieChart } from 'common/components/pie-chart';
 import SettingModal from 'allocation/modal/setting-modal';
@@ -173,7 +174,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                     <tbody className={isHidden(allocationKey) ? 'hide-me' : ''}>
                       {allocation?.map((al) => {
                         return (
-                          <React.Fragment key={al.id}>
+                          <React.Fragment key={shortId}>
                             <tr className='mm-allocation-overview__table--data-row-mobile'>
                               <span className='mt-2 mb-0'>{al.description}</span>
                             </tr>
@@ -184,7 +185,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                                 {fNumber(al.per, 2)}%
                               </td>
                               <td>
-                                <span className='d-block'>Value</span>${fNumber(al.value, 2)}
+                                <span className='d-block'>Value</span>${fNumber(al.allocationValue, 2)}
                               </td>
                             </tr>
                           </React.Fragment>
