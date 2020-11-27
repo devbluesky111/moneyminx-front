@@ -10,7 +10,8 @@ export const urls = {
     COMPLETE_SIGNUP: '/complete',
     PATCH_ACCOUNT: '/account/:id',
     GET_ACCOUNT_DETAILS: '/account/:id',
-    GET_ACCOUNT_HOLDINGS: '/account-details/holdings?accountId=:idrefresh=true',
+    GET_ACCOUNT_HOLDINGS:
+      '/account-details/holdings?accountId=:idfromDate=:fromDatetoDate=:toDatetimeInterval=:timeIntervalrefresh=true',
     GET_ACCOUNT_ACTIVITY: '/account-details/transactions?accountId=:idrefresh=true',
     FACEBOOK_LOGIN: '/facebook/login',
     PROFILE_PICTURE: '/profile/picture',

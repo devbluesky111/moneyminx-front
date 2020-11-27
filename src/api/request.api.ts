@@ -134,8 +134,12 @@ export const getAccountDetails = (id: string) => {
   return http.get(urls.auth.GET_ACCOUNT_DETAILS.replace(':id', id));
 };
 
-export const getAccountHoldings = (id: string) => {
-  return http.get(urls.auth.GET_ACCOUNT_HOLDINGS.replace(':id', id));
+export const getAccountHoldings = (id: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
+  if (!fFromDate) fFromDate = '';
+  if (!fToDate) fToDate = '';
+  if (!fTimeInterval) fTimeInterval = '';
+  return http.get('/account-details/holdings?accountId=:idrefresh=true'.replace(':id', id));
+  // return http.get(urls.auth.GET_ACCOUNT_HOLDINGS.replace(':id', id).replace(':fromDate', fFromDate).replace(':toDate', fToDate).replace(':timeInterval', fTimeInterval));
 };
 
 export const getAccountActivity = (id: string) => {

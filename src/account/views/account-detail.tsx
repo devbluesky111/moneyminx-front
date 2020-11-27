@@ -7,7 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import AppFooter from 'common/app.footer';
 import { Account } from 'auth/auth.types';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
+import { getDate, getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
@@ -29,6 +29,9 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
   const [AccountDetails, setAccountDetails] = useState<Account>();
   const [AccountHoldings, setAccountHoldings] = useState<any>();
   const [AccountActivity, setAccountActivity] = useState<any>();
+  const [fFromDate, setFfromDate] = useState<any>();
+  const [fToDate, setFtoDate] = useState<any>();
+  const [fTimeInterval, setFtimeInterval] = useState<string>('Monthly');
   const [tableType, setTableType] = useState<string>('holdings');
   const accountId = props.match.params.accountId;
 
@@ -39,8 +42,8 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
       setAccountDetails(data);
     }
   };
-  const fetchAccountHoldings = async (accountId: string) => {
-    const { data, error } = await getAccountHoldings(accountId);
+  const fetchAccountHoldings = async (accountId: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
+    const { data, error } = await getAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
     if (!error) {
       console.log('fetchAccountHoldings: ', data);
       setAccountHoldings(data);
@@ -57,7 +60,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
 
   React.useEffect(() => {
     fetchAccountDetails(accountId);
-    fetchAccountHoldings(accountId);
+    fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
   }, []);
 
   const isCurrent = (interval: string) =>
@@ -73,6 +76,22 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
     curAccountActivityItem = AccountActivity?.charts.filter((accountItem: AccountItem) => isCurrent(accountItem.interval));
   }
 
+  const onChange = (option: string, date: any) => {
+    if (option === 'start') {
+      setFfromDate(date);
+    } else if (option === 'end') {
+      setFtoDate(date);
+      if (fFromDate !== undefined && getDate(new Date(date)) > fFromDate) {
+        fetchAccountDetails(accountId);
+        fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
+      }
+    }
+  };
+
+  const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  };
+
   return (
     <div className='mm-setting'>
       <AppHeader
@@ -84,8 +103,8 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-account'>
         <div className='mm-account__selection mb-3'>
-          <SettingsGear className='float-left mr-3 settings-gear-button' />
           <div className='mm-account__selection--info float-lg-left'>
+            <SettingsGear className='float-left mr-3 settings-gear-button' />
             <ul>
               <li>{AccountDetails?.accountName}</li>
               <li>{AccountDetails?.category?.mmCategory}</li>
@@ -98,8 +117,10 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
             <div className='d-flex'>
               <div className='dflex-center'>
                 <ReactDatePicker
-                  onChange={(date) => { }}
+                  selected={fFromDate ? new Date(fFromDate) : null}
+                  onChange={(date) => onChange('start', date)}
                   // selectsStart
+                  startDate={fFromDate ? new Date(fFromDate) : null}
                   dateFormat='MM/yyyy'
                   showMonthYearPicker
                   minDate={new Date('1900-01-01')}
@@ -108,30 +129,34 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className='month_year' />
+                        <input type='text' className='month_year' value={getMonthYear(fFromDate)} />
                       </div>
                     </div>
                   }
                 />
                 <span className='date-separator'>to</span>
                 <ReactDatePicker
-                  onChange={(date) => { }}
+                  selected={fToDate ? new Date(fToDate) : null}
+                  onChange={(date) => onChange('end', date)}
                   // selectsStart
+                  startDate={fToDate ? new Date(fToDate) : null}
                   dateFormat='MM/yyyy'
+                  showMonthYearPicker
+                  minDate={fFromDate ? new Date(fFromDate) : null}
                   maxDate={new Date()}
                   className='m-l-1'
                   // selectsRange
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className='month_year' />
+                        <input type='text' className='month_year' value={getMonthYear(fFromDate)} />
                       </div>
                     </div>
                   }
                 />
                 <Dropdown className='drop-box m-l-2'>
                   <Dropdown.Toggle variant=''>
-                    Monthly
+                    {fTimeInterval || 'Monthly'}
                   </Dropdown.Toggle>
                   <Dropdown.Menu className='mm-dropdown-menu dropsm'>
                     <ul className='radiolist'>
@@ -142,7 +167,10 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                               <input
                                 type='radio'
                                 name='m-list'
+                                aria-checked={fTimeInterval === interval}
                                 value={interval}
+                                checked={fTimeInterval === interval}
+                                onChange={handleIntervalChange}
                               />
                               <span>{interval}</span>
                             </label>
@@ -206,7 +234,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               value='holdings'
               name='mm-radio-holding-activity'
               aria-checked='true'
-              onClick={(e) => { setTableType('holdings'); fetchAccountHoldings(accountId); }}
+              onClick={(e) => { setTableType('holdings'); fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval); }}
             />
             <label className='labels' htmlFor='mm-account-holding'>
               Holdings
