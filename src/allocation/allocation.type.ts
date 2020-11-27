@@ -4,6 +4,7 @@ import { AllocationsFilter } from './allocation.enum';
 
 export interface AllocationProps {}
 
+// todo: response changed see api docs.
 export interface Allocation {
   id: string;
   per: number;

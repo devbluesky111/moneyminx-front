@@ -158,7 +158,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                       {fNumber(al.per, 2)}%
                                     </td>
                                     <td>
-                                      <span className='d-block'>Value</span>${fNumber(al.value, 2)}
+                                      <span className='d-block'>Value</span>${fNumber(al.allocationValue, 2)}
                                     </td>
                                   </tr>
                                 </React.Fragment>
