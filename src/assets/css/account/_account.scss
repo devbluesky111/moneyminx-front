@@ -152,7 +152,7 @@
     background: $white;
     box-shadow: 0px 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
     border-radius: 6px;
-    padding: 1.875rem;
+    padding: 1.875rem 1.875rem 1.875rem 0.875rem;
 
     &__head {
       font-weight: 600;
@@ -162,10 +162,7 @@
       &--data {
         padding-bottom: 1.563rem;
         display: none;
-
-        @media (min-width: $desk){
-          padding-left: 1rem;
-        }
+        padding-left: 1rem;
       }
     }
 
@@ -173,6 +170,18 @@
       font-weight: 500;
       font-size: 0.875rem;
       color: $darkGray;
+
+      >div:first-child>:nth-child(2) div:nth-child(11):before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border: solid 2px #969eac4d;
+        border-radius: 5px;
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        background: #fafbfd;
+      }
 
       &--data {
         padding-top: 1rem;
@@ -187,11 +196,8 @@
         border-bottom: 1px solid $grayOpacity20;
         position: relative;
 
-        @media (min-width: $desk){
-          &>div {
-            padding-left: 1rem;
-          }
-          
+        &>div {
+          padding-left: 1rem;
         }
 
         .green-text {
@@ -202,12 +208,9 @@
           .green-text {
             color: $white;
           }
-
-          @media (min-width: $med){
-              background: $darkBg;
-              color: $white;
-              border-radius: 6px;
-          }
+          background: $darkBg;
+          color: $white;
+          border-radius: 6px;
         }
 
         .edited-icon {
@@ -232,6 +235,7 @@
         font-weight: 500;
         font-size: 1rem;
         color: $black;
+        padding-left: 1rem;
       }
     }
   }

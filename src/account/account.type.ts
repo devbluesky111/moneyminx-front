@@ -8,4 +8,5 @@ export interface AccountItem {
 
 export interface AccountBarGraphProps {
   account: AccountItem[];
+  curInterval: string;
 }

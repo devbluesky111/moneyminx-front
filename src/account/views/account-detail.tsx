@@ -171,11 +171,11 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
             <ul>
               <li className='inv-data'>
                 <span>Value</span>
-                <h3>${curAccountItem ? numberWithCommas(fNumber(curAccountItem[0].value, 0)) : ''}</h3>
+                <h3>${curAccountItem ? numberWithCommas(fNumber(curAccountItem?.[0].value, 0)) : ''}</h3>
               </li>
             </ul>
             <div className='chartbox'>
-              <AccountBarGraph account={AccountHoldings?.charts} />
+              <AccountBarGraph account={AccountHoldings?.charts} curInterval={curAccountItem?.[0].interval} />
             </div>
           </div>
         </div>

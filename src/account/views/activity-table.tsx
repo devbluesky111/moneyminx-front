@@ -6,7 +6,7 @@ import { ReactComponent as Edited } from '../../assets/icons/icon-edit.svg';
 
 export const ActivityTable = (props: any) => {
 
-  const [transactions, setTransactions] = useState<any[]>([{}, {}, {}]);
+  const [transactions, setTransactions] = useState<any[]>([]);
 
   React.useEffect(() => {
     // setTransactions(props?.data?.transactions)
@@ -17,16 +17,18 @@ export const ActivityTable = (props: any) => {
       <div className='mm-activity-table'>
         <div className='mm-activity-table__overview'>
           <div className='mm-activity-table__head'>
-            <div className="row no-gutters">
-              <div className='col-md mm-activity-table__head--data d-md-block'>Date</div>
-              <div className='col-md mm-activity-table__head--data d-md-block'>Activity Type</div>
-              <div className='col-md mm-activity-table__head--data d-xl-block'>Description </div>
-              <div className='col-md mm-activity-table__head--data d-md-block'>Amount</div>
-              <div className='col-md mm-activity-table__head--data d-md-block'>Balance</div>
-              <div className='col-md mm-activity-table__head--data d-md-block'>Income</div>
-              <div className='col-md mm-activity-table__head--data d-md-block'>Cash Flow</div>
-              <div className='col-md-1 mm-activity-table__head--data d-md-block'><Info /></div>
-            </div>
+            {transactions?.length > 0 &&
+              <div className="row no-gutters">
+                <div className='col-md mm-activity-table__head--data d-md-block'>Date</div>
+                <div className='col-md mm-activity-table__head--data d-md-block'>Activity Type</div>
+                <div className='col-md mm-activity-table__head--data d-xl-block'>Description </div>
+                <div className='col-md mm-activity-table__head--data d-md-block'>Amount</div>
+                <div className='col-md mm-activity-table__head--data d-md-block'>Balance</div>
+                <div className='col-md mm-activity-table__head--data d-md-block'>Income</div>
+                <div className='col-md mm-activity-table__head--data d-md-block'>Cash Flow</div>
+                <div className='col-md-1 mm-activity-table__head--data d-md-block'><Info /></div>
+              </div>
+            }
           </div>
           <div className='mm-activity-table__body'>
             {transactions?.length > 0 && transactions.map((item, index) => (
@@ -42,6 +44,7 @@ export const ActivityTable = (props: any) => {
               </div>
             ))}
           </div>
+          {(!transactions || transactions?.length === 0) && <span>No transaction data</span>}
         </div>
       </div>
     </section>

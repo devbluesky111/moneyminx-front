@@ -53,6 +53,7 @@ const getInterval = (max: number) => {
 
 const AccountBarGraph: React.FC<AccountBarGraphProps> = (props) => {
   const account = props.account;
+  const curInterval = props.curInterval;
   if (!account?.length) {
     return <CircularSpinner />;
   }
@@ -117,7 +118,7 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = (props) => {
             domain={[0, _interval * 4]}
           />
           <ReferenceArea
-            x1={first_projection}
+            x1={curInterval}
             y1={0}
             label={renderCustomRALabel}
             fill='url(#colorPr)'
