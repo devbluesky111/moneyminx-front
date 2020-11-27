@@ -104,7 +104,7 @@ export const ProfileOverview = () => {
   }
 
 
-  const fullName = `${user.firstName} ${user.lastName}`;
+  const fullName = `${user.firstName || ''} ${user.lastName || ''}`;
   const { profileDetails } = user;
   getProfileProgress(user);
 
@@ -113,7 +113,7 @@ export const ProfileOverview = () => {
       <div className='card mm-setting-card'>
         <div className='card-body d-flex justify-content-between align-items-center'>
           <div className='mm-profile-overview__title'>
-            {fullName || 'My Account'}
+            {fullName}
             <span className='text-primary px-2'>#{user.id}</span>
             <MMToolTip placement='top' message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'>
               <InfoIcon className='mt-n1'/>
