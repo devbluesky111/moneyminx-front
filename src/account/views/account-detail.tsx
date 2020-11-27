@@ -85,7 +85,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
       <div className='mm-account'>
         <div className='mm-account__selection mb-3'>
           <SettingsGear className='float-left mr-3 settings-gear-button' />
-          <div className='mm-account__selection--info float-lg-left mr-md-3 d-md-inline-block'>
+          <div className='mm-account__selection--info float-lg-left'>
             <ul>
               <li>{AccountDetails?.accountName}</li>
               <li>{AccountDetails?.category?.mmCategory}</li>
@@ -104,7 +104,6 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                   showMonthYearPicker
                   minDate={new Date('1900-01-01')}
                   maxDate={new Date()}
-                  className='m-l-3'
                   // selectsRange
                   customInput={
                     <div className='drop-box'>
@@ -154,38 +153,39 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
-            </div>
-            <div className='mm-account__selection--type'>
-              {AccountDetails?.isManual ? (
-                <>
-                  <CheckCircle />
-                  <span className='manual'>Manual</span>
-                </>
-              ) : (
+              <div className='mm-account__selection--type'>
+                {AccountDetails?.isManual ? (
                   <>
-                    <CheckCircleGreen />
-                    <span className='good'>Good</span>
+                    <CheckCircle />
+                    <span className='manual'>Manual</span>
                   </>
-                )}
+                ) : (
+                    <>
+                      <CheckCircleGreen />
+                      <span className='good'>Good</span>
+                    </>
+                  )}
+              </div>
             </div>
+
           </div>
         </div>
         <div className='account-ct-box mb-40'>
           <div className='graphbox'>
             <ul>
-              {AccountDetails?.category.mmCategory === 'Investment Assets' &&
+              {AccountDetails?.category?.mmCategory === 'Investment Assets' &&
                 <li className='inv-data'>
                   <span>Value</span>
                   <h3>${curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
                 </li>
               }
-              {AccountDetails?.category.mmCategory === 'Other Assets' &&
+              {AccountDetails?.category?.mmCategory === 'Other Assets' &&
                 <li className='other-data'>
                   <span>Value</span>
                   <h3>${curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
                 </li>
               }
-              {AccountDetails?.category.mmCategory === 'Liabilities' &&
+              {AccountDetails?.category?.mmCategory === 'Liabilities' &&
                 <li className='lty-data'>
                   <span>Value</span>
                   <h3>${curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
