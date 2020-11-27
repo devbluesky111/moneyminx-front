@@ -49,7 +49,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
   };
 
   const fetchAccountHoldings = async (accountId: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
-    const { data, error } = await getAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
+    const { data, error } = await getAccountHoldings({ accountId, fFromDate, fToDate, fTimeInterval });
     if (!error) {
       console.log('fetchAccountHoldings: ', data);
       setAccountHoldings(data);
@@ -57,7 +57,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
   };
 
   const fetchAccountActivity = async (accountId: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
-    const { data, error } = await getAccountActivity(accountId, fFromDate, fToDate, fTimeInterval);
+    const { data, error } = await getAccountActivity({ accountId, fFromDate, fToDate, fTimeInterval });
     if (!error) {
       console.log('fetchAccountActivity: ', data);
       setAccountActivity(data);
@@ -85,9 +85,9 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
   const onChange = (option: string, date: any) => {
     date.setMonth(date.getMonth() - 1);
     if (option === 'start') {
-      setFfromDate(date);
+      setFfromDate(getDate(new Date(date)));
     } else if (option === 'end') {
-      setFtoDate(date);
+      setFtoDate(getDate(new Date(date)));
       if (fFromDate !== undefined && getDate(new Date(date)) > fFromDate) {
         fetchAccountDetails(accountId);
         if (tableType === 'holdings') fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
