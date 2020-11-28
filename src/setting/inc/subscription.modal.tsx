@@ -16,7 +16,7 @@ const SubscriptionModal: React.FC<Props> = ({ subscriptionModal, onSuccess }) =>
           futures and functionality to Money Minx.
         </p>
         <div className='modal-btn-wrapper'>
-          <button className='mm-btn bg-primary mm-btn-primary-outline text-white' onClick={onSuccess}>
+          <button className='mm-btn-animate mm-btn-primary' onClick={onSuccess}>
             Onwards!
           </button>
         </div>

@@ -130,6 +130,10 @@ export const patchAccount = (id: string, data: any) => {
   return http.patch(urls.auth.PATCH_ACCOUNT.replace(':id', id), data);
 };
 
+export const deleteAccount = (id: string): Promise<ApiResponse> => {
+  return http.remove(urls.auth.PATCH_ACCOUNT.replace(':id', id));
+};
+
 export const getNetworth = <P>(params?: P) => {
   return http.get(urls.networth.NETWORTH, params);
 };

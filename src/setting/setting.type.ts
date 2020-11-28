@@ -36,7 +36,7 @@ export interface CurrentSubscription {
 }
 
 export interface AccountCardProps {
-  providerAccounts: any[];
+  accountList: Account[];
   availableAccounts: string | number;
 }
 

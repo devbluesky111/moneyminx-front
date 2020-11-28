@@ -2,6 +2,7 @@ import { Table } from 'react-bootstrap';
 import React, { useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
+import useProfile from 'auth/hooks/useProfile';
 import { useAlert } from 'common/components/alert';
 import { useModal } from 'common/components/modal';
 import useNetworth from 'networth/hooks/useNetworth';
@@ -22,6 +23,7 @@ import NetworthFilter from './inc/networth-filter';
 import NetworthBarGraph from './networth-bar-graph';
 
 const Networth = () => {
+  useProfile();
   const history = useHistory();
   const location = useLocation();
   const connectionAlert = useAlert();

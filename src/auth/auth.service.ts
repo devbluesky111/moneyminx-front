@@ -7,6 +7,8 @@ import {
   getRefreshedAccount,
   patchChangePassword,
   postFacebookAssociation,
+  deleteAccount,
+  getAccount,
 } from 'api/request.api';
 
 import { auth } from './auth-context.types';
@@ -17,6 +19,7 @@ import {
   FBAssociationPayload,
   RegisterServicePayload,
   ChangePasswordServicePayload,
+  DeleteAccountPayload,
 } from './auth.types';
 import { groupByProviderName } from './auth.helper';
 
@@ -84,12 +87,51 @@ export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }):
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
-    const pickedData = pickByProviderName(data);
+    // const pickedData = pickByProviderName(data);
 
     dispatch({
       type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
+    });
+  }
 
-      payload: { user: pickedData },
+  return { data, error };
+};
+
+export const deleteAccounts = async ({ dispatch, accounts }: DeleteAccountPayload): Promise<ApiResponse> => {
+  const deleteAccountList = async () => {
+    return Promise.all(
+      accounts.map(async (account) => {
+        await deleteAccount(`${account.id}`);
+      })
+    );
+  };
+
+  await deleteAccountList();
+  const { data, error } = await getAccount();
+
+  if (error) {
+    dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
+  } else {
+    dispatch({
+      type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
+    });
+  }
+
+  return { data, error };
+};
+
+export const deleteAccountById = async ({ dispatch, id }: { dispatch: Dispatch; id: number }): Promise<ApiResponse> => {
+  await deleteAccount(`${id}`);
+  const { data, error } = await getAccount();
+
+  if (error) {
+    dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
+  } else {
+    dispatch({
+      type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
     });
   }
 

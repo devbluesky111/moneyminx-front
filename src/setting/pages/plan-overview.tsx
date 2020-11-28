@@ -34,7 +34,11 @@ export const PlanOverview = () => {
   }
 
   const isCurrentPlan = (priceId: string) => currentSubscription.priceId === priceId;
-  const ac = (priceId: string) => (isCurrentPlan(priceId) ? 'mm-plan-overview__plan-btn--current' : '');
+  const ac = (priceId: string) => {
+    if (currentSubscription?.subscriptionStatus !== 'trialing' && isCurrentPlan(priceId)) {
+      return 'mm-plan-overview__plan-btn--current'
+    }
+  }
 
   const changePlan = async (priceId: string) => {
     if (!priceId) {
@@ -86,7 +90,7 @@ export const PlanOverview = () => {
 
       <div className='container-fluid'>
       <div className='row'>
-        <div className='plan-table-wrapper'>
+        <div className='pricing-table-wrapper'>
         {pricingList?.map((pt: any, index: number) => {
           return (
               <div className='price-table' key={index}>
@@ -159,7 +163,8 @@ export const PlanOverview = () => {
                       type='button'
                       className={`${planBtnClasses} ${ac(pt.priceId)}`}
                       onClick={() => changePlan(pt.priceId)}>
-                      {isCurrentPlan(pt.priceId) ? 'Current Plan' : 'Change Plan'}
+                      {currentSubscription?.subscriptionStatus === 'trialing' ? 'Choose Plan' :
+                        isCurrentPlan(pt.priceId) ? 'Current Plan' : 'Change Plan' }
                     </button>
                   </div>
             </div>

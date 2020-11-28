@@ -1,22 +1,12 @@
-import { CurrencyOptions } from 'auth/enum/currency-options';
-
 import { AllocationsFilter } from './allocation.enum';
 
 export interface AllocationProps {}
 
 export interface Allocation {
-  id: string;
-  per: number;
-  value: number;
-  accountId: number;
-  allocation: number;
-  description: string;
-  holdingType: string;
-  securityType: string;
   allocationValue: number;
-  currency: CurrencyOptions;
-  classificationType: string;
   classificationValue: string;
+  description: string;
+  per: number;
 }
 
 export interface ChartDatum {
