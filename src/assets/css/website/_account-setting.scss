@@ -977,3 +977,58 @@ span.next-icon {
     padding-left: 1rem;
   }
 }
+
+.mm-checked-icon {
+  &:before {
+    width: 0;
+    top: 40%;
+    height: 0;
+    left: 0.75rem;
+    content: " ";
+    display: block;
+    margin-top: 6px;
+    border-radius: 50%;
+    position: absolute;
+    border: solid 15px $primary;
+  }
+
+  &:after {
+    top: 40%;
+    width: 7px;
+    left: 1.5rem;
+    content: " ";
+    height: 0.813rem;
+    display: block;
+    margin-top: 0.75rem;
+    border: solid #fff;
+    position: absolute;
+    transform: rotate(45deg);
+    border-width: 0 2px 2px 0;
+    -o-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+}
+
+.mm-selected-icon {
+  margin-top: 8px;
+
+  &__outer {
+    width: 2rem;
+    height: 2rem;
+    position: relative;
+    border-radius: 50%;
+    background: $white;
+    box-shadow: 0px 2px 8px #E2E8F3;
+  }
+
+  &__inner {
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    position: relative;
+    border-radius: 50%;
+    background-color: $primary;
+  }
+}
