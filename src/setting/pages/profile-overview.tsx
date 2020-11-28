@@ -5,28 +5,29 @@ import { toast } from 'react-toastify';
 import { FormControl } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
+
 import 'react-circular-progressbar/dist/styles.css';
 
+import { ProfileType } from 'auth/auth.types';
 import useProfile from 'auth/hooks/useProfile';
 import { patchProfile } from 'api/request.api';
 import countries from '@mm/data/countries.json';
-import { useAuthState, useAuthDispatch } from 'auth/auth.context';
+import { fetchProfile } from 'auth/auth.service';
 import { enumerateStr } from 'common/common-helper';
 import SaveSettings from 'setting/inc/save-settings';
 import ProfilePicture from 'setting/inc/profile-picture';
+import { useAuthState, useAuthDispatch } from 'auth/auth.context';
 import { ReactComponent as Shield } from 'assets/icons/shield.svg';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { HouseHoldIncomeOptions, MaritalStatusOptions, RiskToleranceOptions } from 'setting/setting.enum';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
-import MMToolTip from '../../common/components/tooltip';
+import { HouseHoldIncomeOptions, MaritalStatusOptions, RiskToleranceOptions } from 'setting/setting.enum';
 
-import { ProfileType } from 'auth/auth.types';
-import { fetchProfile } from 'auth/auth.service';
+import MMToolTip from '../../common/components/tooltip';
 
 export const ProfileOverview = () => {
   const {
     loading,
-    response: { error }
+    response: { error },
   } = useProfile();
 
   const { user } = useAuthState();
@@ -46,6 +47,10 @@ export const ProfileOverview = () => {
   if (loading || !user) {
     return <CircularSpinner />;
   }
+
+  const maritalStatus = [null, ...enumerateStr(MaritalStatusOptions)];
+  const householdIncomeList = [null, ...enumerateStr(HouseHoldIncomeOptions)];
+  const riskToleranceList = [null, ...enumerateStr(RiskToleranceOptions)];
 
   const getProfileProgress = (userInfo: ProfileType) => {
     let count = 0;
@@ -72,8 +77,8 @@ export const ProfileOverview = () => {
       if (profileDetail.spouseAlreadyRetired || profileDetail.spouseTargetedRetirementAge > 0) count++;
     }
 
-    curProgress = Math.round(count / propertyCount * 100);
-  }
+    curProgress = Math.round((count / propertyCount) * 100);
+  };
 
   const checkProfileCompletionProgress = (values: any) => {
     let count = 0;
@@ -100,9 +105,8 @@ export const ProfileOverview = () => {
       if (values.spouseAlreadyRetired || values.spouseTargetedRetirementAge > 0) count++;
     }
 
-    setProgress(Math.round(count / propertyCount * 100));
-  }
-
+    setProgress(Math.round((count / propertyCount) * 100));
+  };
 
   const fullName = `${user.firstName || ''} ${user.lastName || ''}`;
   const { profileDetails } = user;
@@ -115,23 +119,28 @@ export const ProfileOverview = () => {
           <div className='mm-profile-overview__title'>
             {fullName}
             <span className='text-primary px-2'>#{user.id}</span>
-            <MMToolTip placement='top' message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'>
-              <InfoIcon className='mt-n1'/>
+            <MMToolTip
+              placement='top'
+              message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'
+            >
+              <InfoIcon className='mt-n1' />
             </MMToolTip>
           </div>
           <div className='d-flex align-items-center'>
             <div className='text--gray mr-4 sm-hide'>Profile complete</div>
             <div className='mm-radial__progress-bar'>
-              <CircularProgressbar value={change ? progress : curProgress}
-                                   text={`${change ? progress : curProgress}%`}
-                                   strokeWidth={4}
-                                   styles={buildStyles({
-                                     textSize: '1.5rem',
-                                     pathTransitionDuration: 0.5,
-                                     pathColor: '#10C273',
-                                     textColor: '#10C273',
-                                     trailColor: '#969EAC4D'
-                                   })}/>
+              <CircularProgressbar
+                value={change ? progress : curProgress}
+                text={`${change ? progress : curProgress}%`}
+                strokeWidth={4}
+                styles={buildStyles({
+                  textSize: '1.5rem',
+                  pathTransitionDuration: 0.5,
+                  pathColor: '#10C273',
+                  textColor: '#10C273',
+                  trailColor: '#969EAC4D',
+                })}
+              />
             </div>
           </div>
         </div>
@@ -141,23 +150,23 @@ export const ProfileOverview = () => {
 
       <Formik
         initialValues={{
-          firstName: user.firstName || '',
-          lastName: user.lastName || '',
-          username: user.username || '',
-          bio: user.bio || '',
-          website: user.website || '',
-          investingSince: user.investingSince || '',
+          firstName: user.firstName || null,
+          lastName: user.lastName || null,
+          username: user.username || null,
+          bio: user.bio || null,
+          website: user.website || null,
+          investingSince: user.investingSince || null,
           profileEnabled: profileDetails?.profileEnabled || false,
           shareAssetAllocation: profileDetails?.shareAssetAllocation || false,
           shareAssetValues: profileDetails?.shareAssetValues || false,
-          countryOfResidence: profileDetails?.countryOfResidence || 'US',
-          householdIncome: profileDetails?.householdIncome || HouseHoldIncomeOptions.OPT_1,
-          riskTolerance: profileDetails?.riskTolerance || RiskToleranceOptions.CONSERVATIVE,
-          dob: profileDetails?.dob || new Date(),
-          spouseDob: profileDetails?.spouseDob || new Date(),
+          countryOfResidence: profileDetails?.countryOfResidence || null,
+          householdIncome: profileDetails?.householdIncome || null,
+          riskTolerance: profileDetails?.riskTolerance || null,
+          dob: profileDetails?.dob || null,
+          spouseDob: profileDetails?.spouseDob || null,
           targetedRetirementAge: profileDetails?.targetedRetirementAge || 0,
           alreadyRetired: profileDetails?.alreadyRetired || false,
-          maritalStatus: profileDetails?.maritalStatus || MaritalStatusOptions.SINGLE,
+          maritalStatus: profileDetails?.maritalStatus || null,
           spouseTargetedRetirementAge: profileDetails?.spouseTargetedRetirementAge || 0,
           spouseAlreadyRetired: profileDetails?.spouseAlreadyRetired || false,
           dependants: profileDetails?.dependants || 0,
@@ -170,6 +179,13 @@ export const ProfileOverview = () => {
           if (typeof values.dependants === 'string') {
             values.dependants = parseInt(values.dependants, 10);
           }
+
+          Object.keys(values).forEach((key: string) => {
+            if ((values as any)[key] === '') {
+              (values as any)[key] = null;
+            }
+          });
+
           const { error: patchError } = await patchProfile(values);
 
           if (patchError) {
@@ -183,7 +199,7 @@ export const ProfileOverview = () => {
           }
           setStatusText('Saved');
           setTimeout(() => {
-            setStatusText('Save Changes')
+            setStatusText('Save Changes');
           }, 1000);
         }}
         validate={checkProfileCompletionProgress}
@@ -207,9 +223,7 @@ export const ProfileOverview = () => {
                 <div className='card-body'>
                   <div className='mm-profile-overview__profile-page'>
                     <span className='mm-profile-overview__title'>Profile Page</span>
-                    <span className='mm-profile-overview__profile-page--tag text--primary m-l-15'>
-                      Coming Soon!
-                    </span>
+                    <span className='mm-profile-overview__profile-page--tag text--primary m-l-15'>Coming Soon!</span>
                     <div className='card-sub-title'>
                       Profile pages and conversations are coming mid-2021. Get a head start by getting your profile
                       ready for when we launch.
@@ -224,7 +238,7 @@ export const ProfileOverview = () => {
                           className='mm-switch-input'
                           checked={values.profileEnabled}
                           aria-checked={values.profileEnabled}
-                          onChange={() => { }}
+                          onChange={() => {}}
                         />
                         <label
                           className='mm-switch mt-md-0 mt-3'
@@ -233,80 +247,84 @@ export const ProfileOverview = () => {
                         />
                       </span>
                     </div>
-                    {values.profileEnabled &&
-                    <div
-                      className='card-section d-md-flex align-items-center justify-content-between mm-asset-allocation'>
-                      <p>Do you want to share your asset allocation on your profile page?
-                        <MMToolTip placement='top'
-                                   message='Coming Soon. You can share your allocation chart on your profile page to engage in conversations with Money Minx users'>
-                          <InfoIcon className='mt-n1 ml-2' />
-                        </MMToolTip>
-                      </p>
-                      <div className='mm-radio-block mr-n2 ml-n2 ml-md-0'>
-                        <label className='mm-radio mr-3'>
-                          <input
-                            type='radio'
-                            name='shareAssetAllocation'
-                            value='true'
-                            checked={values.shareAssetAllocation}
-                            aria-checked={values.shareAssetAllocation}
-                            onChange={handleRadioCheck}
-                          />
-                          <span className='mm-checkmark' />
-                          Yes
-                        </label>
-                        <label className='mm-radio ml-3'>
-                          <input
-                            type='radio'
-                            name='shareAssetAllocation'
-                            value='false'
-                            checked={!values.shareAssetAllocation}
-                            aria-checked={!values.shareAssetAllocation}
-                            onChange={handleRadioCheck}
-                          />
-                          <span className='mm-checkmark' />
-                          No
-                        </label>
+                    {values.profileEnabled && (
+                      <div className='card-section d-md-flex align-items-center justify-content-between mm-asset-allocation'>
+                        <p>
+                          Do you want to share your asset allocation on your profile page?
+                          <MMToolTip
+                            placement='top'
+                            message='Coming Soon. You can share your allocation chart on your profile page to engage in conversations with Money Minx users'
+                          >
+                            <InfoIcon className='mt-n1 ml-2' />
+                          </MMToolTip>
+                        </p>
+                        <div className='mm-radio-block mr-n2 ml-n2 ml-md-0'>
+                          <label className='mm-radio mr-3'>
+                            <input
+                              type='radio'
+                              name='shareAssetAllocation'
+                              value='true'
+                              checked={values.shareAssetAllocation}
+                              aria-checked={values.shareAssetAllocation}
+                              onChange={handleRadioCheck}
+                            />
+                            <span className='mm-checkmark' />
+                            Yes
+                          </label>
+                          <label className='mm-radio ml-3'>
+                            <input
+                              type='radio'
+                              name='shareAssetAllocation'
+                              value='false'
+                              checked={!values.shareAssetAllocation}
+                              aria-checked={!values.shareAssetAllocation}
+                              onChange={handleRadioCheck}
+                            />
+                            <span className='mm-checkmark' />
+                            No
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                    }
-                    {values.profileEnabled &&
-                    <div
-                      className='card-section--last d-md-flex align-items-center justify-content-between'>
-                      <p>Do you want to share asset values on your profile page?
-                        <MMToolTip placement='top'
-                                   message='Coming Soon. If your chart is shared, you can choose to also show amounts in addition to percentages only'>
-                          <InfoIcon className='mt-n1 ml-2' />
-                        </MMToolTip>
-                      </p>
-                      <div className='mm-radio-block mr-md-n2 ml-n2 ml-md-0'>
-                        <label className='mm-radio mr-3'>
-                          <input
-                            type='radio'
-                            name='shareAssetValues'
-                            value='true'
-                            checked={values.shareAssetValues}
-                            aria-checked={values.shareAssetValues}
-                            onChange={handleRadioCheck}
-                          />
-                          <span className='mm-checkmark' />
-                          Yes
-                        </label>
-                        <label className='mm-radio ml-3'>
-                          <input
-                            type='radio'
-                            name='shareAssetValues'
-                            value='false'
-                            checked={!values.shareAssetValues}
-                            aria-checked={!values.shareAssetValues}
-                            onChange={handleRadioCheck}
-                          />
-                          <span className='mm-checkmark' />
-                          No
-                        </label>
+                    )}
+                    {values.profileEnabled && (
+                      <div className='card-section--last d-md-flex align-items-center justify-content-between'>
+                        <p>
+                          Do you want to share asset values on your profile page?
+                          <MMToolTip
+                            placement='top'
+                            message='Coming Soon. If your chart is shared, you can choose to also show amounts in addition to percentages only'
+                          >
+                            <InfoIcon className='mt-n1 ml-2' />
+                          </MMToolTip>
+                        </p>
+                        <div className='mm-radio-block mr-md-n2 ml-n2 ml-md-0'>
+                          <label className='mm-radio mr-3'>
+                            <input
+                              type='radio'
+                              name='shareAssetValues'
+                              value='true'
+                              checked={values.shareAssetValues}
+                              aria-checked={values.shareAssetValues}
+                              onChange={handleRadioCheck}
+                            />
+                            <span className='mm-checkmark' />
+                            Yes
+                          </label>
+                          <label className='mm-radio ml-3'>
+                            <input
+                              type='radio'
+                              name='shareAssetValues'
+                              value='false'
+                              checked={!values.shareAssetValues}
+                              aria-checked={!values.shareAssetValues}
+                              onChange={handleRadioCheck}
+                            />
+                            <span className='mm-checkmark' />
+                            No
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                    }
+                    )}
                   </div>
                 </div>
               </div>
@@ -315,9 +333,7 @@ export const ProfileOverview = () => {
                 <div className='card-body'>
                   <div className='mm-profile-overview__title mm-profile-overview__profile-page'>
                     About You
-                    <span className='mm-profile-overview__profile-page--tag text--primary m-l-15'>
-                      Coming Soon!
-                    </span>
+                    <span className='mm-profile-overview__profile-page--tag text--primary m-l-15'>Coming Soon!</span>
                     <div className='card-sub-title'>
                       Profile pages and conversations are coming mid-2021. Get a head start by getting your profile
                       ready for when we launch.
@@ -327,8 +343,11 @@ export const ProfileOverview = () => {
                         <div className='form-group row align-items-center'>
                           <label htmlFor='fname' className='col-md-3 col-form-label'>
                             First Name
-                            <MMToolTip placement='top' message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'>
-                              <InfoIcon className='mt-n1 ml-2'/>
+                            <MMToolTip
+                              placement='top'
+                              message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'
+                            >
+                              <InfoIcon className='mt-n1 ml-2' />
                             </MMToolTip>
                           </label>
                           <div className='col-md-9'>
@@ -336,7 +355,7 @@ export const ProfileOverview = () => {
                               type='text'
                               name='firstName'
                               placeholder='John'
-                              value={values.firstName}
+                              value={values.firstName || ''}
                               onChange={handleChange}
                               className='form-control form-control-lg'
                             />
@@ -345,8 +364,11 @@ export const ProfileOverview = () => {
                         <div className='form-group row align-items-center'>
                           <label htmlFor='lname' className='col-md-3 col-form-label'>
                             Last Name
-                            <MMToolTip placement='top' message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'>
-                              <InfoIcon className='mt-n1 ml-2'/>
+                            <MMToolTip
+                              placement='top'
+                              message='Your name is not shared anywhere publicly this just helps us communicate with you better when needed'
+                            >
+                              <InfoIcon className='mt-n1 ml-2' />
                             </MMToolTip>
                           </label>
                           <div className='col-md-9'>
@@ -354,7 +376,7 @@ export const ProfileOverview = () => {
                               type='text'
                               name='lastName'
                               placeholder='Doe'
-                              value={values.lastName}
+                              value={values.lastName || ''}
                               onChange={handleChange}
                               className='form-control form-control-lg'
                             />
@@ -363,8 +385,11 @@ export const ProfileOverview = () => {
                         <div className='form-group row align-items-center'>
                           <label htmlFor='username' className='col-md-3 col-form-label'>
                             Username
-                            <MMToolTip placement='top' message='Your username will be your profile URL when profiles and conversations launch, you will be able to change this and turn it off at any time'>
-                              <InfoIcon className='mt-n1 ml-2'/>
+                            <MMToolTip
+                              placement='top'
+                              message='Your username will be your profile URL when profiles and conversations launch, you will be able to change this and turn it off at any time'
+                            >
+                              <InfoIcon className='mt-n1 ml-2' />
                             </MMToolTip>
                           </label>
                           <div className='col-md-9'>
@@ -373,7 +398,7 @@ export const ProfileOverview = () => {
                               type='text'
                               name='username'
                               placeholder='john'
-                              value={values.username}
+                              value={values.username || ''}
                               onChange={handleChange}
                               className='form-control form-control-lg mm-username-input-form'
                             />
@@ -386,7 +411,7 @@ export const ProfileOverview = () => {
                           <div className='col-md-9'>
                             <textarea
                               name='bio'
-                              value={values.bio}
+                              value={values.bio || ''}
                               onChange={handleChange}
                               placeholder='Your bio'
                               className='form-control mm-form-textarea'
@@ -401,7 +426,7 @@ export const ProfileOverview = () => {
                             <input
                               type='text'
                               name='website'
-                              value={values.website}
+                              value={values.website || ''}
                               onChange={handleChange}
                               placeholder='www.moneyminx.com'
                               className='form-control form-control-lg mm-form-website'
@@ -416,7 +441,7 @@ export const ProfileOverview = () => {
                             <FormControl
                               type='number'
                               name='investingSince'
-                              value={values.investingSince}
+                              value={values.investingSince || ''}
                               onChange={handleChange}
                               placeholder='2015'
                               className='form-control form-control-lg'
@@ -433,8 +458,11 @@ export const ProfileOverview = () => {
                 <div className='card-body'>
                   <div className='mm-profile-overview__title mm-profile-overview__profile-page'>
                     Specialized Intelligence
-                    <MMToolTip placement='top' message='Money Minx is working on a machine learning algorithm that will help investors compare their results to others. If you fill your profile, you will be able to get better insights and comparisons'>
-                      <InfoIcon className='mt-n1 ml-2'/>
+                    <MMToolTip
+                      placement='top'
+                      message='Money Minx is working on a machine learning algorithm that will help investors compare their results to others. If you fill your profile, you will be able to get better insights and comparisons'
+                    >
+                      <InfoIcon className='mt-n1 ml-2' />
                     </MMToolTip>
                     <Shield className='float-right mt-1' />
                     <div className='card-sub-title'>
@@ -453,12 +481,12 @@ export const ProfileOverview = () => {
                               name='countryOfResidence'
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.countryOfResidence}
+                              value={values.countryOfResidence || ''}
                             >
                               {countries.data.map((country) => {
                                 return (
                                   <option
-                                    value={country.code}
+                                    value={country.code || ''}
                                     key={country.id}
                                     aria-selected={values.countryOfResidence === country.code}
                                   >
@@ -477,8 +505,9 @@ export const ProfileOverview = () => {
                               name='householdIncome'
                               onChange={handleChange}
                               onBlur={handleBlur}
+                              value={values.householdIncome || ''}
                             >
-                              {enumerateStr(HouseHoldIncomeOptions).map((householdIncome, index) => {
+                              {householdIncomeList.map((householdIncome, index) => {
                                 return (
                                   <option
                                     value={householdIncome}
@@ -495,8 +524,14 @@ export const ProfileOverview = () => {
                         <div className='form-group row align-items-center'>
                           <label className='col-md-3 col-form-label'>Risk tolerance</label>
                           <div className='col-md-5'>
-                            <select className='form-control form-control-lg mr-sm-2'>
-                              {enumerateStr(RiskToleranceOptions).map((tolerateOption, index) => {
+                            <select
+                              className='form-control form-control-lg mr-sm-2'
+                              value={values.riskTolerance || ''}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              name='riskTolerance'
+                            >
+                              {riskToleranceList.map((tolerateOption, index) => {
                                 return (
                                   <option
                                     value={tolerateOption}
@@ -516,7 +551,7 @@ export const ProfileOverview = () => {
                             <ReactDatePicker
                               className='form-control form-control-lg mr-sm-2'
                               name='dob'
-                              selected={new Date(values.dob)}
+                              selected={values.dob ? new Date(values.dob) : undefined}
                               onChange={(val: Date) => {
                                 setFieldValue('dob', moment(val).toISOString());
                               }}
@@ -562,31 +597,27 @@ export const ProfileOverview = () => {
                               name='maritalStatus'
                               onChange={handleChange}
                               onBlur={handleBlur}
+                              value={values.maritalStatus || ''}
                             >
-                              {enumerateStr(MaritalStatusOptions).map((maritalStatus, index) => {
+                              {maritalStatus.map((mStatus, index) => {
                                 return (
-                                  <option
-                                    value={maritalStatus}
-                                    aria-selected={values.maritalStatus === maritalStatus}
-                                    key={index}
-                                  >
-                                    {maritalStatus}
+                                  <option value={mStatus} aria-selected={values.maritalStatus === mStatus} key={index}>
+                                    {mStatus}
                                   </option>
                                 );
                               })}
                             </select>
                           </div>
                         </div>
-                        {values.maritalStatus !== MaritalStatusOptions.SINGLE &&
+                        {values.maritalStatus !== MaritalStatusOptions.SINGLE && (
                           <>
                             <div className='form-group row align-items-center'>
-                              <label className='col-md-3 col-form-label'>Spouse’s date of
-                                birth</label>
+                              <label className='col-md-3 col-form-label'>Spouse’s date of birth</label>
                               <div className='col-md-5'>
                                 <ReactDatePicker
                                   className='form-control form-control-lg mr-sm-2'
                                   name='spouseDob'
-                                  selected={new Date(values.spouseDob)}
+                                  selected={values.spouseDob ? new Date(values.spouseDob) : undefined}
                                   onChange={(val: Date) => {
                                     setFieldValue('spouseDob', moment(val).toISOString());
                                   }}
@@ -594,8 +625,7 @@ export const ProfileOverview = () => {
                               </div>
                             </div>
                             <div className='form-group row align-items-center'>
-                              <label className='col-md-3 col-form-label'>Spouse’s retirement
-                                age</label>
+                              <label className='col-md-3 col-form-label'>Spouse’s retirement age</label>
                               <div className='col-md-5'>
                                 <FormControl
                                   type='number'
@@ -608,36 +638,39 @@ export const ProfileOverview = () => {
                               </div>
                               <div className='col text-md-center mt-3 mt-md-0'>
                                 <div className='form-wrap'>
-                          <span className='checkbox-item'>
-                          <label className='check-box'>
-                          Already retired
-                          <input
-                            type='checkbox'
-                            name='spouseAlreadyRetired'
-                            value='true'
-                            checked={values.spouseAlreadyRetired}
-                            onChange={() => toggleFormCheck('spouseAlreadyRetired')}
-                            aria-checked={values.spouseAlreadyRetired}
-                          />
-                          <span className='geekmark' />
-                          </label>
-                          </span>
+                                  <span className='checkbox-item'>
+                                    <label className='check-box'>
+                                      Already retired
+                                      <input
+                                        type='checkbox'
+                                        name='spouseAlreadyRetired'
+                                        value='true'
+                                        checked={values.spouseAlreadyRetired}
+                                        onChange={() => toggleFormCheck('spouseAlreadyRetired')}
+                                        aria-checked={values.spouseAlreadyRetired}
+                                      />
+                                      <span className='geekmark' />
+                                    </label>
+                                  </span>
                                 </div>
                               </div>
                             </div>
-                        </>
-                        }
+                          </>
+                        )}
                         <div className='form-group row align-items-center'>
                           <label className='col-md-3 col-form-label'>Dependants</label>
                           <div className='col-md-5'>
-                            <select className='form-control form-control-lg mr-sm-2'
-                                    name='dependants'
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}>
+                            <select
+                              className='form-control form-control-lg mr-sm-2'
+                              name='dependants'
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.dependants || 0}
+                            >
                               {[0, 1, 2, 3, 4, 5, 6].map((dependant, index) => {
                                 return (
                                   <option value={dependant} aria-selected={values.dependants === dependant} key={index}>
-                                    {dependant  || ''}
+                                    {dependant || ''}
                                   </option>
                                 );
                               })}
