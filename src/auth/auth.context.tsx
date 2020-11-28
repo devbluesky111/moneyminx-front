@@ -10,6 +10,7 @@ import { auth, subscription } from './auth-context.types';
 const initialState: AuthType = {
   email: '',
   expires: undefined,
+  onboarded: false,
   user: undefined,
   token: undefined,
   roles: undefined,
@@ -38,6 +39,7 @@ function authReducer(state: AuthType = initialState, action: any) {
         token: action.payload.token,
         expires: action.payload.expires,
         authState: AuthState.AUTHENTICATED,
+        onboarded: action.payload.onboarded,
       };
     }
 
@@ -58,6 +60,7 @@ function authReducer(state: AuthType = initialState, action: any) {
         token: action.payload.token,
         expires: action.payload.expires,
         authState: AuthState.AUTHENTICATED,
+        onboarded: action.payload.onboarded,
       };
     }
 

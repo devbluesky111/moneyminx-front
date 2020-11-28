@@ -3,12 +3,12 @@ import { ApiResponse } from 'api/api.types';
 import {
   postLogin,
   getProfile,
+  getAccount,
   postRegister,
+  deleteAccount,
   getRefreshedAccount,
   patchChangePassword,
   postFacebookAssociation,
-  deleteAccount,
-  getAccount,
 } from 'api/request.api';
 
 import { auth } from './auth-context.types';
@@ -17,10 +17,11 @@ import {
   Dispatch,
   LoginServicePayload,
   FBAssociationPayload,
+  DeleteAccountPayload,
   RegisterServicePayload,
   ChangePasswordServicePayload,
-  DeleteAccountPayload,
 } from './auth.types';
+import { setLoginSuccess } from './auth.actions';
 import { groupByProviderName } from './auth.helper';
 
 export const login = async ({ dispatch, payload }: LoginServicePayload): Promise<ApiResponse> => {
@@ -31,10 +32,7 @@ export const login = async ({ dispatch, payload }: LoginServicePayload): Promise
     storage.clear();
     dispatch({ type: auth.LOGIN_FAILURE });
   } else {
-    dispatch({
-      type: auth.LOGIN_SUCCESS,
-      payload: { token: data.token, expires: data.expires },
-    });
+    dispatch(setLoginSuccess({ token: data.token, expires: data.expires, onboarded: data.onboarded }));
   }
 
   return { data, error };
@@ -48,10 +46,7 @@ export const associateFacebookUser = async ({ dispatch, token }: FBAssociationPa
     storage.clear();
     dispatch({ type: auth.LOGIN_FAILURE });
   } else {
-    dispatch({
-      type: auth.LOGIN_SUCCESS,
-      payload: { token: data.token, expires: data.expires },
-    });
+    dispatch(setLoginSuccess({ token: data.token, expires: data.expires, onboarded: data.onboarded }));
   }
 
   return { data, error };
@@ -63,10 +58,7 @@ export const signup = async ({ dispatch, payload }: RegisterServicePayload): Pro
   if (error) {
     dispatch({ type: auth.REGISTER_FAILURE });
   } else {
-    dispatch({
-      type: auth.REGISTER_SUCCESS,
-      payload: { token: data.token, expires: data.expires },
-    });
+    dispatch(setLoginSuccess({ token: data.token, expires: data.expires, onboarded: data.onboarded }));
   }
 
   return { data, error };
