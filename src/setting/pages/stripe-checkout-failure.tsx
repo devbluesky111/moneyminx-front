@@ -1,7 +1,10 @@
-import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import React from 'react';
 import { toast } from 'react-toastify';
+import { Redirect } from 'react-router-dom';
+
+import { appRouteConstants } from 'app/app-route.constant';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 const StripeCheckoutSuccess = () => {
   const { fetchingCurrentSubscription, currentSubError } = useCurrentSubscription();
@@ -12,7 +15,7 @@ const StripeCheckoutSuccess = () => {
     return <CircularSpinner />;
   }
 
-  return <div>Failure</div>;
+  return <Redirect to={`${appRouteConstants.settings.SETTINGS}?active=Plan`} />;
 };
 
 export default StripeCheckoutSuccess;
