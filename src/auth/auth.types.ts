@@ -8,6 +8,12 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface ILoginResponse {
+  expires: number;
+  token: string;
+  onboarded: boolean;
+}
+
 export interface RegisterPayload {
   email: string;
   password: string;
@@ -119,14 +125,15 @@ export interface SubscriptionDetail {
 
 export interface AuthType {
   email: string;
-  expires?: number;
   token?: string;
+  expires?: number;
+  onboarded: boolean;
   user?: ProfileType;
   roles?: RoleEnum[];
   authState: AuthState;
   isSigningIn: boolean;
-  isAuthenticated: boolean;
   accounts?: Account[];
+  isAuthenticated: boolean;
   currentSubscription?: any;
   subscriptionDetail?: SubscriptionDetail;
 }

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import useProfile from 'auth/hooks/useProfile';
+import { useAuthState } from 'auth/auth.context';
 import { useAlert } from 'common/components/alert';
 import { useModal } from 'common/components/modal';
 import useNetworth from 'networth/hooks/useNetworth';
@@ -30,14 +31,15 @@ const Networth = () => {
   const signupDoneModal = useModal();
 
   const { loading } = useNetworth();
+  const { onboarded } = useAuthState();
   const {
     accounts,
     networth,
-    fToggleInvestment,
-    fToggleOther,
-    fToggleLiabilities,
     fToggleNet,
     fCategories,
+    fToggleOther,
+    fToggleInvestment,
+    fToggleLiabilities,
   } = useNetworthState();
   const dispatch = useNetworthDispatch();
 
@@ -45,7 +47,7 @@ const Networth = () => {
   const from = params.get('from');
 
   useEffect(() => {
-    if (from === 'accountSettings') {
+    if (from === 'accountSettings' && !onboarded) {
       signupDoneModal.open();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,7 +79,7 @@ const Networth = () => {
         return 'current-m';
       }
     }
-    // return 'tab-hide';
+
     return '';
   };
 
