@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ReactDatePicker from 'react-datepicker';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -9,7 +8,6 @@ import { Account } from 'auth/auth.types';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { getDate, getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
-import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
