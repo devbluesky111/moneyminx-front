@@ -44,7 +44,7 @@ export interface AccountHoldingItem {
   maturityDate: any;
   optionType: string;
   price: number;
-  priceCurrency: String;
+  priceCurrency: string;
   providerAccountId: number;
   quantity: number;
   securityType: string;
@@ -64,12 +64,12 @@ export interface AccountHoldingItem {
   vestedValue: any;
   vestedValueCurrency: string;
   yodleeId: number;
-};
+}
 
 export interface AccountHolingsProps {
   charts: AccountChartItem[];
   holdings: AccountHoldingItem[];
-};
+}
 
 export interface AccountHolingsTableProps {
   holdings: AccountHoldingItem[];
@@ -86,7 +86,7 @@ export interface AccountTransactionItem {
   date: string;
   description: string;
   id: number;
-  income: boolean
+  income: boolean;
   isIgnored: boolean;
   isManual: boolean;
   type: string;
@@ -100,4 +100,4 @@ export interface AccountTransactionTableProps {
 export interface AccountTransactionsProps {
   charts: AccountChartItem[];
   transactions: AccountTransactionItem[];
-};
+}

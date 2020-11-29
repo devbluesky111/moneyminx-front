@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
-import Button from 'react-bootstrap/Button';
+import { Button, Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
-import Dropdown from 'react-bootstrap/Dropdown';
 
 import AppFooter from 'common/app.footer';
 import { Account } from 'auth/auth.types';
+import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { getDate, getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
@@ -18,9 +18,9 @@ import AccountTable from './account-table';
 import ActivityTable from './activity-table';
 import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
+import MMToolTip from '../../common/components/tooltip';
 import { AccountChartItem, AccountProps, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
-import MMToolTip from '../../common/components/tooltip';
 
 const AccountDetail: React.FC<AccountProps> = (props) => {
 
@@ -211,7 +211,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               {AccountDetails?.category?.mmCategory === 'Investment Assets' &&
                 <li className='inv-data'>
                   <span>Value</span>
-                  <h3>${curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
+                  <h3>{AccountDetails?.accountDetails?.currency ? getCurrencySymbol(AccountDetails?.accountDetails?.currency) : ''}{curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
                 </li>
               }
               {AccountDetails?.category?.mmCategory === 'Other Assets' &&
