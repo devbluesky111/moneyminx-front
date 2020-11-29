@@ -1966,16 +1966,16 @@ footer p {
     position: relative;
     transition: 0.1s all;
   }
-  .table tbody tr:hover {
+  .table tbody:not(.networth) tr:hover {
     background: $darkBg;
     color: $white;
   }
-  .table tbody tr:hover td {
+  .table tbody:not(.networth) tr:hover td {
     color: $white !important;
     border-bottom-color: transparent;
   }
-  .table tbody tr td:first-child:before,
-  .table tbody tr td:last-child:after {
+  .table tbody:not(.networth) tr td:first-child:before,
+  .table tbody:not(.networth) tr td:last-child:after {
     content: '';
     position: absolute;
     top: -1px;
@@ -1985,8 +1985,8 @@ footer p {
     background: transparent;
     transition: 0.1s all;
   }
-  .table tbody tr:first-child td:first-child:before,
-  .table tbody tr:first-child td:last-child:after {
+  .table tbody:not(.networth) tr:first-child td:first-child:before,
+  .table tbody:not(.networth) tr:first-child td:last-child:after {
     content: '';
     position: absolute;
     top: 0;
