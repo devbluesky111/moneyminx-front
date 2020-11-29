@@ -18,8 +18,9 @@ import {
   setFilterTimeInterval,
   setFilterToDate,
 } from 'networth/networth.actions';
+import { NetworthFilterProps } from 'networth/networth.type';
 
-const NetworthFilter = () => {
+const NetworthFilter = (props: NetworthFilterProps) => {
   const dispatch = useNetworthDispatch();
   const [currentAccount, setCurrentAccount] = useState<Account[]>();
 
@@ -39,27 +40,40 @@ const NetworthFilter = () => {
 
   const onChange = (option: string, date: any) => {
     if (option === 'start') {
-      dispatch(setFilterFromDate(getDate(new Date(date))));
-    } else if (option === 'end') {
+      props.handleLoad();
+
+      return dispatch(setFilterFromDate(getDate(new Date(date))));
+    }
+    if (option === 'end') {
       if (fFromDate !== undefined && getDate(new Date(date)) > fFromDate) {
-        dispatch(setFilterToDate(getDate(new Date(date))));
+        props.handleLoad();
+
+        return dispatch(setFilterToDate(getDate(new Date(date))));
       }
     }
   };
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setFilterCategories(event.target.value));
+    props.handleLoad();
+
+    return dispatch(setFilterCategories(event.target.value));
   };
 
   const handleAccountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleLoad();
+
     dispatch(setFilterAccount(+event.target.value));
   };
 
   const handleAccountTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleLoad();
+
     dispatch(setFilterAccountType(event.target.value));
   };
 
   const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleLoad();
+
     dispatch(setFilterTimeInterval(event.target.value as TimeIntervalEnum));
   };
 
@@ -99,9 +113,7 @@ const NetworthFilter = () => {
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown className='drop-box tab-hide'>
-            <Dropdown.Toggle variant=''>
-              All Accounts
-            </Dropdown.Toggle>
+            <Dropdown.Toggle variant=''>All Accounts</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
               <div className='dropdown-box'>
                 <ul className='success'>
@@ -134,9 +146,7 @@ const NetworthFilter = () => {
           </Dropdown>
 
           <Dropdown className='drop-box'>
-            <Dropdown.Toggle variant=''>
-              All Types
-            </Dropdown.Toggle>
+            <Dropdown.Toggle variant=''>All Types</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
               <ul className='checkbox-list'>
                 {Object.keys(currentAccountByType)?.map((accountName, index) => {
@@ -202,9 +212,7 @@ const NetworthFilter = () => {
             }
           />
           <Dropdown className='drop-box m-l-2'>
-            <Dropdown.Toggle variant=''>
-              {fTimeInterval || 'Monthly'}
-            </Dropdown.Toggle>
+            <Dropdown.Toggle variant=''>{fTimeInterval || 'Monthly'}</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu dropsm'>
               <ul className='radiolist'>
                 {enumerateStr(TimeIntervalEnum).map((interval, index) => {

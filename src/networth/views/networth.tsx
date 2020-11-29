@@ -1,5 +1,5 @@
 import { Table } from 'react-bootstrap';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import useProfile from 'auth/hooks/useProfile';
@@ -42,6 +42,7 @@ const Networth = () => {
     fToggleLiabilities,
   } = useNetworthState();
   const dispatch = useNetworthDispatch();
+  const [loadCounter, setCounter] = useState(0);
 
   const params = new URLSearchParams(location.search);
   const from = params.get('from');
@@ -58,13 +59,21 @@ const Networth = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading || !networth || !accounts) {
+  if (!networth || !accounts) {
+    return <CircularSpinner />;
+  }
+
+  if (loading && !loadCounter) {
     return <CircularSpinner />;
   }
 
   const otherAssets = accounts[AccountCategory.OTHER_ASSETS];
   const liabilities = accounts[AccountCategory.LIABILITIES];
   const investmentAssets = accounts[AccountCategory.INVESTMENT_ASSETS];
+
+  const handleLoad = () => {
+    setCounter((c) => c + 1);
+  };
 
   const isCurrent = (interval: string) =>
     getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
@@ -113,7 +122,7 @@ const Networth = () => {
         <hr className='m-0' />
         <div className='content-wrapper'>
           <div className='container'>
-            <NetworthFilter />
+            <NetworthFilter handleLoad={handleLoad} />
             <div className='row mb-40'>
               <div className='col-lg-9 mob-btm'>
                 <div className='ct-box'>
