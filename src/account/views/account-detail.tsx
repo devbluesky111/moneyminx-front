@@ -242,6 +242,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               value='holdings'
               name='mm-radio-holding-activity'
               aria-checked='true'
+              checked={tableType === 'holdings' ? true : false}
               onClick={(e) => { setTableType('holdings'); fetchAccountHoldings(accountId, fromDate, toDate, timeInterval); }}
             />
             <label className='labels' htmlFor='mm-account-holding'>
@@ -253,6 +254,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               value='activity'
               name='mm-radio-holding-activity'
               aria-checked='false'
+              checked={tableType === 'activity' ? true : false}
               onChange={(e) => { setTableType('activity'); fetchAccountActivity(accountId, fromDate, toDate, timeInterval); }}
             />
             <label className='labels' htmlFor='mm-account-activity'>
