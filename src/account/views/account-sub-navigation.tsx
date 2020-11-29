@@ -10,7 +10,7 @@ export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = (props)
   return (
     <section>
       <div className='content-container mm-account-sub-nav'>
-        <div className='app-subheader-container account'>
+        <div className='app-subheader-container px-4 account'>
           <AppSubHeader />
           <div className='middle-box'>
             {providerLogo ?

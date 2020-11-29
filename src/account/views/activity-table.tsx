@@ -49,7 +49,7 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = (props) => 
             </div>
           </div>
         </div>
-      ) : (<span className="no-data">No transaction data</span>)}
+      ) : (<span className='no-data'>No transaction data</span>)}
     </section>
   );
 };

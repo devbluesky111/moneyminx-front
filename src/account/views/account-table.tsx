@@ -45,7 +45,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
                     <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.price) ? `$${numberWithCommas(fNumber(item.price, 0))}` : 0}</div>
                     <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Quantity</span>{item.quantity}</div>
                     <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{item.symbol}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.quantity * item.price) ? `$${numberWithCommas(fNumber(item.quantity * item.price, 0))}` : 0}</div>
+                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.costBasis) ? `$${numberWithCommas(fNumber(item.costBasis, 2))}` : 0}</div>
                     <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.intervalValues[0].value) ? `$${numberWithCommas(fNumber(item.intervalValues[0].value, 0))}` : 0}</div>
                     <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>{item.intervalValues[1].interval}</span>{(item.intervalValues[1].value) ? `$${numberWithCommas(fNumber(item.intervalValues[1].value, 0))}` : 0}</div>
                     <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[2].interval}</span>{(item.intervalValues[2].value) ? `$${numberWithCommas(fNumber(item.intervalValues[2].value, 0))}` : 0}</div>
@@ -61,7 +61,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
             </div>
           </div>
         </div>
-      ) : (<span className="no-data">No holdings data</span>)}
+      ) : (<span className='no-data'>No holdings data</span>)}
     </section >
   );
 };

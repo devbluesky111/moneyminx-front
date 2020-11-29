@@ -111,18 +111,19 @@
     }
 
     &--info {
-      background: $darkBlueOpacity03;
-      border: 1px solid $grayOpacity24;
-      box-sizing: border-box;
-      border-radius: 4px;
-      overflow-y: auto;
-      white-space: nowrap;
+
 
       @media(min-width: 992px) {
         margin-right: 1rem
       }
 
       ul {
+        background: $darkBlueOpacity03;
+        border: 1px solid $grayOpacity24;
+        box-sizing: border-box;
+        border-radius: 4px;
+        overflow-y: auto;
+        white-space: nowrap;
         display: flex;
         justify-content: space-between;
         margin: 0;

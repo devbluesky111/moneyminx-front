@@ -590,6 +590,7 @@ a.upgrader-btn {
 
   &:hover {
     color: $darkGray;
+    border: none;
   }
 
   .dropdown-toggle {
@@ -603,6 +604,7 @@ a.upgrader-btn {
 
     &:hover, &:active, &:focus {
       color: $darkGray !important;
+      border: none !important;
     }
   }
 
