@@ -72,6 +72,19 @@ function networthReducer(state: NetworthState, action: Action): any {
     case NetworthActionEnum.SET_F_TOGGLE_NET: {
       return { ...state, fToggleNet: action.payload?.fToggleNet };
     }
+
+    case NetworthActionEnum.CLEAR_FILTER: {
+      return {
+        ...state,
+        fTypes: [],
+        fAccounts: [],
+        fCategories: [],
+        fToDate: undefined,
+        fFromDate: undefined,
+        fTimeInterval: undefined,
+      };
+    }
+
     default: {
       throw new Error('Unhandled action type');
     }

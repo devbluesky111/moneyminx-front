@@ -11,6 +11,7 @@ import { useNetworthDispatch, useNetworthState } from 'networth/networth.context
 import { getDate, getMonthYear, getRelativeDate } from 'common/moment.helper';
 
 import {
+  clearFilter,
   setFilterAccount,
   setFilterAccountType,
   setFilterCategories,
@@ -81,12 +82,21 @@ const NetworthFilter = (props: NetworthFilterProps) => {
     return <CircularSpinner />;
   }
 
+  const clearNetworthFilter = () => {
+    return dispatch(clearFilter());
+  };
+
   const currentAccountByType = arrGroupBy(currentAccount, 'category.mmAccountType');
 
   return (
     <div className='row'>
       <div className='col-12 dropdowns-container'>
         <div className='dflex-center mb-15'>
+          <div className='drop-box clear-filter'>
+            <button className='dropdown-toggle' onClick={clearNetworthFilter}>
+              Clear Filter
+            </button>
+          </div>
           <Dropdown className='drop-box'>
             <Dropdown.Toggle variant=''>All Categories</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
@@ -149,7 +159,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
             <Dropdown.Toggle variant=''>All Types</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
               <ul className='checkbox-list'>
-                {Object.keys(currentAccountByType)?.map((accountName, index) => {
+                {Object.keys(currentAccountByType).map((accountName, index) => {
                   return (
                     <li key={index}>
                       <label>
@@ -212,7 +222,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
             }
           />
           <Dropdown className='drop-box m-l-2'>
-            <Dropdown.Toggle variant=''>{fTimeInterval || 'Monthly'}</Dropdown.Toggle>
+            <Dropdown.Toggle>{fTimeInterval || 'Monthly'}</Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu dropsm'>
               <ul className='radiolist'>
                 {enumerateStr(TimeIntervalEnum).map((interval, index) => {
