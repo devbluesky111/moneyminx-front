@@ -4,9 +4,11 @@ import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, Cartesi
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { AccountBarGraphProps } from 'account/account.type';
 import { fNumber, numberWithCommas } from 'common/number.helper';
+import { formatter, getInterval } from 'common/bar-graph-helper';
 
 const CustomTooltip = (props: any) => {
   const { active, payload } = props;
+
   if (active) {
     return (
       <div className='bar-tooltip'>
@@ -19,11 +21,13 @@ const CustomTooltip = (props: any) => {
       </div>
     )
   }
+
   return null;
 };
 
 const renderCustomRALabel = (props: any) => {
   const { x, y } = props.viewBox;
+
   return <text style={{
     fontFamily: 'Mulish',
     lineHeight: '150%',
@@ -36,40 +40,29 @@ const renderCustomRALabel = (props: any) => {
   }} x={x + 15} y={y + 25} fill='#534CEA' fillOpacity='0.4'>projected</text>;
 };
 
-const formatter = (value: number) => {
-  if (value < 1000000) {
-    return `$${value / 1000}k`;
-  } else {
-    return `$${value / 1000000}m`;
-  }
-}
-
-const getInterval = (max: number) => {
-  let _interval = max / 4;
-  let _l = Number(_interval.toString().split('.')[0].length) - 1;
-  let _maxFloor = Math.ceil(_interval / (Math.pow(10, _l)));
-  return _maxFloor * Math.pow(10, _l);
-}
-
 const AccountBarGraph: React.FC<AccountBarGraphProps> = (props) => {
-  const account = props.account;
+  const data = props.data;
   const curInterval = props.curInterval;
-  if (!account?.length) {
+
+  if (!data?.length) {
     return <CircularSpinner />;
   }
+
   let max = 0;
-  for (let i = 0; i < account.length; i++) {
-    if (account[i].value > max) {
-      max = account[i].value;
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].value > max) {
+      max = data[i].value;
     }
   }
-  let first_projection = undefined;
-  for (let i = 0; i < account.length; i++) {
-    if (account[i].type === 'projection') {
-      first_projection = account[i].interval;
-      break;
-    }
-  }
+
+  // let first_projection = undefined;
+  // for (let i = 0; i < data.length; i++) {
+  //   if (data[i].type === 'projection') {
+  //     first_projection = data[i].interval;
+  //     break;
+  //   }
+  // }
+
   let _interval = getInterval(max);
   if (max > _interval * 3.5) {
     _interval = getInterval(max + _interval / 2);
@@ -81,7 +74,7 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = (props) => {
         <ComposedChart
           width={800}
           height={354}
-          data={account}
+          data={data}
           barGap={2}
           barCategoryGap={20}
           margin={{

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
 
-import AccountDetail from './views/account-detail';
 import { NotFound } from 'website/views';
+
+import AccountDetail from './views/account-detail';
 import { AccountProvider } from './account.context';
 
 function AccountRoute() {

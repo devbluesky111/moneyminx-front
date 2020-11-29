@@ -780,7 +780,6 @@ a.upgrader-btn {
     background: none !important;
     box-shadow: none !important;
     color: $darkGray !important;
-    border: 1px solid $gray !important;
   }
 }
 .drop-box .dropdown-toggle:after {
@@ -1467,17 +1466,25 @@ a.upgrader-btn {
 .graphbox ul li + li {
   margin-top: 22px;
 }
+.graphbox ul li {
+  margin-left: -20px;
+  padding-left: 20px;
+}
 .graphbox ul li.inv-data {
   color: $blue;
+  border-left: 2px solid $blue;
 }
 .graphbox ul li.other-data {
   color: $cyan;
+  border-left: 2px solid $cyan;
 }
 .graphbox ul li.lty-data {
   color: $red;
+  border-left: 2px solid $red;
 }
 .graphbox ul li.nw-data {
   color: $purple;
+  border-left: 2px solid $purple;
 }
 
 .responsive-container {

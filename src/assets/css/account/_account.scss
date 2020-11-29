@@ -4,7 +4,15 @@
     flex: 0.5;
   }
   .middle-box {
-    flex: 0.5
+    flex: 0.5;
+    
+    .providerLogo {
+      height: 48px;
+    }
+
+    span {
+      font-weight: bold;
+    }
   }
 }
 
@@ -194,6 +202,10 @@
         padding-bottom: 1.563rem;
         display: none;
         padding-left: 1rem;
+
+        &:first-child {
+          min-width: 200px;
+        }
       }
     }
 
@@ -206,17 +218,21 @@
         content: '';
         width: 8px;
         height: 8px;
-        border: solid 2px #969eac4d;
+        border: solid 2px $grayOpacity30;
         border-radius: 5px;
         position: absolute;
         top: -4px;
         left: -4px;
-        background: #fafbfd;
+        background: $lightBg;
       }
 
       &--data {
         padding-top: 1rem;
         padding-bottom: 1rem;
+
+        &:first-child {
+          min-width: 200px;
+        }
 
         &:nth-child(11) {
           background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity00 100%);

@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
 
+import { AccountTransactionTableProps, AccountTransactionItem } from '../account.type';
 import { ReactComponent as Info } from '../../assets/icons/info.svg';
 import { ReactComponent as Revert } from '../../assets/icons/revert.svg';
 import { ReactComponent as Edited } from '../../assets/icons/icon-edit.svg';
 
-export const ActivityTable = (props: any) => {
 
-  const [transactions, setTransactions] = useState<any[]>([]);
+export const ActivityTable: React.FC<AccountTransactionTableProps> = (props) => {
+
+  const [transactions, setTransactions] = useState<AccountTransactionItem[]>([]);
 
   React.useEffect(() => {
-    setTransactions(props?.data);
-  }, [props.data]);
+    setTransactions(props?.transactions);
+  }, [props]);
 
   return (
     <section>
@@ -20,7 +22,6 @@ export const ActivityTable = (props: any) => {
         <div className='mm-activity-table'>
           <div className='mm-activity-table__overview'>
             <div className='mm-activity-table__head'>
-
               <div className="row no-gutters">
                 <div className='col-md mm-activity-table__head--data d-md-block'>Date</div>
                 <div className='col-md mm-activity-table__head--data d-md-block'>Activity Type</div>

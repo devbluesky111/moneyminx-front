@@ -20,18 +20,18 @@ import AccountTable from './account-table';
 import ActivityTable from './activity-table';
 import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
-import { AccountItem, AccountProps } from '../account.type';
+import { AccountChartItem, AccountProps, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 
-const AccountDetail: React.FC<AccountProps> = (props: any) => {
+const AccountDetail: React.FC<AccountProps> = (props) => {
 
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [AccountDetails, setAccountDetails] = useState<Account>();
-  const [AccountHoldings, setAccountHoldings] = useState<any>();
-  const [AccountActivity, setAccountActivity] = useState<any>();
-  const [fFromDate, setFfromDate] = useState<any>();
-  const [fToDate, setFtoDate] = useState<any>();
-  const [fTimeInterval, setFtimeInterval] = useState<string>('Yearly');
+  const [AccountHoldings, setAccountHoldings] = useState<AccountHolingsProps>();
+  const [AccountActivity, setAccountActivity] = useState<AccountTransactionsProps>();
+  const [fromDate, setFromDate] = useState<string>();
+  const [toDate, setToDate] = useState<string>();
+  const [timeInterval, setTimeInterval] = useState<string>('Yearly');
   const [tableType, setTableType] = useState<string>('holdings');
   const accountId = props.match.params.accountId;
   const dropdownToggle = useRef(null);
@@ -48,16 +48,16 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
     }
   };
 
-  const fetchAccountHoldings = async (accountId: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
-    const { data, error } = await getAccountHoldings({ accountId, fFromDate, fToDate, fTimeInterval });
+  const fetchAccountHoldings = async (accountId: string, fromDate: any, toDate: any, timeInterval: string) => {
+    const { data, error } = await getAccountHoldings({ accountId, fromDate, toDate, timeInterval });
     if (!error) {
       console.log('fetchAccountHoldings: ', data);
       setAccountHoldings(data);
     }
   };
 
-  const fetchAccountActivity = async (accountId: string, fFromDate: any, fToDate: any, fTimeInterval: string) => {
-    const { data, error } = await getAccountActivity({ accountId, fFromDate, fToDate, fTimeInterval });
+  const fetchAccountActivity = async (accountId: string, fromDate: any, toDate: any, timeInterval: string) => {
+    const { data, error } = await getAccountActivity({ accountId, fromDate, toDate, timeInterval });
     if (!error) {
       console.log('fetchAccountActivity: ', data);
       setAccountActivity(data);
@@ -66,41 +66,35 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
 
   React.useEffect(() => {
     fetchAccountDetails(accountId);
-    fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
-  }, []);
+    fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
+  }, [accountId, fromDate, toDate, timeInterval]);
 
   const isCurrent = (interval: string) =>
     getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
 
   let curAccountHoldingsItem = undefined;
   if (AccountHoldings?.charts) {
-    curAccountHoldingsItem = AccountHoldings?.charts.filter((accountItem: AccountItem) => isCurrent(accountItem.interval));
-  }
-
-  let curAccountActivityItem = undefined;
-  if (AccountActivity?.charts) {
-    curAccountActivityItem = AccountActivity?.charts.filter((accountItem: AccountItem) => isCurrent(accountItem.interval));
+    curAccountHoldingsItem = AccountHoldings?.charts.filter((accountChartItem: AccountChartItem) => isCurrent(accountChartItem.interval));
   }
 
   const onChange = (option: string, date: any) => {
     date.setMonth(date.getMonth() - 1);
     if (option === 'start') {
-      setFfromDate(getDate(new Date(date)));
+      setFromDate(getDate(new Date(date)));
     } else if (option === 'end') {
-      setFtoDate(getDate(new Date(date)));
-      if (fFromDate !== undefined && getDate(new Date(date)) > fFromDate) {
+      setToDate(getDate(new Date(date)));
+      if (fromDate !== undefined && getDate(new Date(date)) > fromDate) {
         fetchAccountDetails(accountId);
-        if (tableType === 'holdings') fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
-        if (tableType === 'activity') fetchAccountActivity(accountId, fFromDate, fToDate, fTimeInterval);
-
+        if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
+        if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
       }
     }
   };
 
   const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFtimeInterval(event.target.value);
-    if (tableType === 'holdings') fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval);
-    if (tableType === 'activity') fetchAccountActivity(accountId, fFromDate, fToDate, fTimeInterval);
+    setTimeInterval(event.target.value);
+    if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
+    if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
   };
 
   return (
@@ -109,8 +103,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
-      />
-      <AccountSubNavigation />
+      />{AccountDetails && <AccountSubNavigation providerLogo={AccountDetails?.providerLogo} providerName={AccountDetails?.providerName} />}
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-account'>
         <div className='mm-account__selection mb-3'>
@@ -128,10 +121,10 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
             <div className='d-flex'>
               <div className='dflex-center'>
                 <ReactDatePicker
-                  selected={fFromDate ? new Date(fFromDate) : null}
+                  selected={fromDate ? new Date(fromDate) : null}
                   onChange={(date) => onChange('start', date)}
                   // selectsStart
-                  startDate={fFromDate ? new Date(fFromDate) : null}
+                  startDate={fromDate ? new Date(fromDate) : null}
                   dateFormat='MM/yyyy'
                   showMonthYearPicker
                   minDate={new Date('1900-01-01')}
@@ -140,34 +133,34 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className='month_year' value={getMonthYear(fFromDate)} />
+                        <input type='text' className='month_year' value={getMonthYear(fromDate)} />
                       </div>
                     </div>
                   }
                 />
                 <span className='date-separator'>to</span>
                 <ReactDatePicker
-                  selected={fToDate ? new Date(fToDate) : null}
+                  selected={toDate ? new Date(toDate) : null}
                   onChange={(date) => onChange('end', date)}
                   // selectsStart
-                  startDate={fToDate ? new Date(fToDate) : null}
+                  startDate={toDate ? new Date(toDate) : null}
                   dateFormat='MM/yyyy'
                   showMonthYearPicker
-                  minDate={fFromDate ? new Date(fFromDate) : null}
+                  minDate={fromDate ? new Date(fromDate) : null}
                   maxDate={new Date()}
                   className='m-l-1'
                   // selectsRange
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className='month_year' value={getMonthYear(fToDate)} />
+                        <input type='text' className='month_year' value={getMonthYear(toDate)} />
                       </div>
                     </div>
                   }
                 />
                 <Dropdown className='drop-box m-l-2'>
                   <Dropdown.Toggle variant='' ref={dropdownToggle}>
-                    {fTimeInterval}
+                    {timeInterval}
                   </Dropdown.Toggle>
                   <Dropdown.Menu className='mm-dropdown-menu dropsm'>
                     <ul className='radiolist'>
@@ -178,9 +171,9 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                               <input
                                 type='radio'
                                 name='m-list'
-                                aria-checked={fTimeInterval === interval}
+                                aria-checked={timeInterval === interval}
                                 value={interval}
-                                checked={fTimeInterval === interval}
+                                checked={timeInterval === interval}
                                 onChange={handleIntervalChange}
                                 onClick={() => clickElement(dropdownToggle)}
                               />
@@ -233,8 +226,9 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               }
             </ul>
             <div className='chartbox'>
-              {tableType === 'holdings' && <AccountBarGraph account={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0].interval} />}
-              {tableType === 'activity' && <AccountBarGraph account={AccountActivity?.charts} curInterval={curAccountActivityItem?.[0].interval} />}
+              {(AccountHoldings && curAccountHoldingsItem) &&
+                <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0].interval} />
+              }
             </div>
           </div>
         </div>
@@ -246,7 +240,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               value='holdings'
               name='mm-radio-holding-activity'
               aria-checked='true'
-              onClick={(e) => { setTableType('holdings'); fetchAccountHoldings(accountId, fFromDate, fToDate, fTimeInterval); }}
+              onClick={(e) => { setTableType('holdings'); fetchAccountHoldings(accountId, fromDate, toDate, timeInterval); }}
             />
             <label className='labels' htmlFor='mm-account-holding'>
               Holdings
@@ -257,7 +251,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
               value='activity'
               name='mm-radio-holding-activity'
               aria-checked='false'
-              onChange={(e) => { setTableType('activity'); fetchAccountActivity(accountId, fFromDate, fToDate, fTimeInterval); }}
+              onChange={(e) => { setTableType('activity'); fetchAccountActivity(accountId, fromDate, toDate, timeInterval); }}
             />
             <label className='labels' htmlFor='mm-account-activity'>
               Activity
@@ -275,7 +269,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
           </Button>
           }
         </div>
-        {tableType === 'holdings' && <AccountTable data={AccountHoldings?.holdings} />}
+        {(AccountHoldings && tableType === 'holdings') && <AccountTable holdings={AccountHoldings?.holdings} />}
 
         {tableType === 'activity' &&
           <div className='mm-account-activity-block'>
@@ -288,7 +282,7 @@ const AccountDetail: React.FC<AccountProps> = (props: any) => {
                 <Info />
               </div>
             </div>
-            <ActivityTable data={AccountActivity?.transactions} />
+            {AccountActivity && <ActivityTable transactions={AccountActivity?.transactions} />}
           </div>
         }
 

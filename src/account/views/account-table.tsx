@@ -3,14 +3,16 @@ import React, { useState } from 'react';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
 
-export const AccountTable = (props: any) => {
+import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
 
-  const [holdings, setHoldings] = useState<any[]>([]);
+export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
+
+  const [holdings, setHoldings] = useState<AccountHoldingItem[]>([]);
   const [editIndex, setEditIndex] = useState<number>(-1);
 
   React.useEffect(() => {
-    setHoldings(props?.data);
-  }, [props.data]);
+    setHoldings(props.holdings);
+  }, [props]);
 
   return (
     <section>
@@ -19,7 +21,7 @@ export const AccountTable = (props: any) => {
           <div className='mm-account-table__overview'>
             <div className='mm-account-table__head'>
               <div className="row no-gutters">
-                <div className='col-md mm-account-table__head--data d-md-block' style={{ minWidth: '200px' }}>Holdings</div>
+                <div className='col-md mm-account-table__head--data d-md-block'>Holdings</div>
                 <div className='col-md mm-account-table__head--data d-xl-block'>Price</div>
                 <div className='col-md mm-account-table__head--data d-md-block'>Quantity</div>
                 <div className='col-md mm-account-table__head--data d-xl-block'>Symbol</div>
@@ -39,7 +41,7 @@ export const AccountTable = (props: any) => {
                 <div key={index}>
                   <div className='d-md-none mm-account-table__body--sm-title mt-3'>{item.description}</div>
                   <div className='row no-gutters mm-account-table__body--wrapper' onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-md-block' style={{ minWidth: '200px' }}>{item.description}</div>
+                    <div className='col-4 col-md mm-account-table__body--data d-none d-md-block' >{item.description}</div>
                     <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.price) ? `$${numberWithCommas(fNumber(item.price, 0))}` : 0}</div>
                     <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Quantity</span>{item.quantity}</div>
                     <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{item.symbol}</div>
