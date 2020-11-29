@@ -24,7 +24,6 @@ const NetworthFilter = () => {
   const [currentAccount, setCurrentAccount] = useState<Account[]>();
 
   const { fCategories, fTypes, fAccounts, fFromDate, fToDate, fTimeInterval } = useNetworthState();
-
   useEffect(() => {
     const fetchCurrentAccount = async () => {
       const { data, error } = await getAccount();

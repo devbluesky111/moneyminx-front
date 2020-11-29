@@ -392,7 +392,7 @@ const Networth = () => {
                           </tr>
                         </thead>
                         {fToggleNet ? (
-                          <tbody className={'projection'}>
+                          <tbody className={'projection networth'}>
                             <tr data-href='#'>
                               <td>Investment Assets</td>
                               <td className='tab-hide'>{''}</td>

@@ -1,63 +1,33 @@
 import React from 'react';
-import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Area, ReferenceArea } from 'recharts';
+import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceArea } from 'recharts';
 
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { AccountBarGraphProps } from 'account/account.type';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import { NetworthBarGraphProps } from 'networth/networth.type';
 import { formatter, getInterval } from 'common/bar-graph-helper';
 
 const CustomTooltip = (props: any) => {
   const { active, payload } = props;
+
   if (active) {
-    let networth = undefined;
-    for (let i = 0; i < payload.length; i++) {
-      if (payload[i].name === 'networth') {
-        networth = payload[i];
-        payload.splice(i, 1);
-      }
-    }
-    if (networth) {
-      payload.push(networth);
-    }
     return (
       <div className='bar-tooltip'>
-        { payload.map((item: any, index: number) => (
-          <div key={index}>
-            {item.value ?
-              (
-                <>
-                  <div className='item-name'>
-                    <div style={{ backgroundColor: item.color }}></div>
-                    {item.name === 'investmentAssets' &&
-                      <span>Investment Assets</span>
-                    }
-                    {item.name === 'otherAssets' &&
-                      <span>Other Assets</span>
-                    }
-                    {item.name === 'liabilities' &&
-                      <span>Liabilities Assets</span>
-                    }
-                    {item.name === 'networth' &&
-                      <span>Net Worth</span>
-                    }
-                  </div>
-                  <div className='item-value'>
-                    {`$${numberWithCommas(fNumber(item.value, 0))}`}
-                  </div>
-                </>
-              ) : null
-            }
-          </div>
-        ))}
-
+        <div className='item-name'>
+          {payload?.[0]?.payload.interval}
+        </div>
+        <div className='item-value'>
+          {payload?.[0]?.payload.value ? `$${numberWithCommas(fNumber(payload?.[0]?.payload.value, 0))}` : 0}
+        </div>
       </div>
-    );
+    )
   }
+
   return null;
 };
 
 const renderCustomRALabel = (props: any) => {
   const { x, y } = props.viewBox;
+
   return <text style={{
     fontFamily: 'Mulish',
     lineHeight: '150%',
@@ -70,30 +40,28 @@ const renderCustomRALabel = (props: any) => {
   }} x={x + 15} y={y + 25} fill='#534CEA' fillOpacity='0.4'>projected</text>;
 };
 
-const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
-  const { networth, fCategories } = props;
+const AccountBarGraph: React.FC<AccountBarGraphProps> = (props) => {
+  const data = props.data;
+  const curInterval = props.curInterval;
 
-  if (!networth.length) {
+  if (!data?.length) {
     return <CircularSpinner />;
   }
 
   let max = 0;
-  for (let i = 0; i < networth.length; i++) {
-    let values = Object.values(networth[i]);
-    for (let j = 1; j < values.length - 1; j++) {
-      if (values[j] > max) {
-        max = values[j];
-      }
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].value > max) {
+      max = data[i].value;
     }
   }
 
-  let first_projection = undefined;
-  for (let i = 0; i < networth.length; i++) {
-    if (networth[i].type === 'projection') {
-      first_projection = networth[i].interval;
-      break;
-    }
-  }
+  // let first_projection = undefined;
+  // for (let i = 0; i < data.length; i++) {
+  //   if (data[i].type === 'projection') {
+  //     first_projection = data[i].interval;
+  //     break;
+  //   }
+  // }
 
   let _interval = getInterval(max);
   if (max > _interval * 3.5) {
@@ -101,12 +69,12 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
   }
 
   return (
-    <div className='responsive-container'>
+    <div className='account-responsive-container'>
       <ResponsiveContainer width='100%' height='100%'>
         <ComposedChart
           width={800}
           height={354}
-          data={networth}
+          data={data}
           barGap={2}
           barCategoryGap={20}
           margin={{
@@ -143,7 +111,7 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
             domain={[0, _interval * 4]}
           />
           <ReferenceArea
-            x1={first_projection}
+            x1={curInterval}
             y1={0}
             label={renderCustomRALabel}
             fill='url(#colorPr)'
@@ -153,16 +121,11 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
             cursor={false}
             content={<CustomTooltip />}
           />
-          {
-            fCategories && (fCategories.length === 1 || fCategories.length === 2) ? null : <Area dataKey='networth' type='monotone' stroke='#534cea' strokeOpacity='0' fill='url(#colorUv)' />
-          }
-          <Bar dataKey='investmentAssets' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]} />
-          <Bar dataKey='otherAssets' barSize={10} fill='#29CFD6' radius={[2, 2, 0, 0]} />
-          <Bar dataKey='liabilities' barSize={10} fill='#D3365F' radius={[2, 2, 0, 0]} />
+          <Bar dataKey='value' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]} />
         </ComposedChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-export default NetworthBarGraph;
+export default AccountBarGraph;
