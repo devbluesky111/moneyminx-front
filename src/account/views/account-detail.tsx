@@ -66,8 +66,10 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
 
   React.useEffect(() => {
     fetchAccountDetails(accountId);
-    if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
-    if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
+    if ((fromDate === undefined && toDate === undefined) || (fromDate !== undefined && toDate !== undefined && new Date(toDate) > new Date(fromDate))) {
+      if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
+      if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
+    }
   }, [accountId, fromDate, toDate, timeInterval, tableType]);
 
   const isCurrent = (interval: string) =>
@@ -79,7 +81,6 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
   }
 
   const onChange = (option: string, date: any) => {
-    date.setMonth(date.getMonth() - 1);
     if (option === 'start') {
       setFromDate(getDate(new Date(date)));
     } else if (option === 'end') {
@@ -205,19 +206,19 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               {AccountDetails?.category?.mmCategory === 'Investment Assets' &&
                 <li className='inv-data'>
                   <span>Value</span>
-                  <h3>{AccountDetails?.accountDetails?.currency ? getCurrencySymbol(AccountDetails?.accountDetails?.currency) : ''}{curAccountHoldingsItem?.[0]?.value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0)) : 0}</h3>
+                  <h3>{getCurrencySymbol(AccountDetails?.accountDetails?.currency)}{curAccountHoldingsItem?.[0]?.value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0)) : 0}</h3>
                 </li>
               }
               {AccountDetails?.category?.mmCategory === 'Other Assets' &&
                 <li className='other-data'>
                   <span>Value</span>
-                  <h3>${curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
+                  <h3>{getCurrencySymbol(AccountDetails?.accountDetails?.currency)}{curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
                 </li>
               }
               {AccountDetails?.category?.mmCategory === 'Liabilities' &&
                 <li className='lty-data'>
                   <span>Value</span>
-                  <h3>${curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
+                  <h3>{getCurrencySymbol(AccountDetails?.accountDetails?.currency)}{curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
                 </li>
               }
             </ul>

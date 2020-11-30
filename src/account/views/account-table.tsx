@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Table } from 'react-bootstrap';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
+import { getCurrencySymbol } from 'common/currency-helper';
 import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
 
 import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
@@ -55,17 +56,16 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
                     {holdings?.length > 0 && holdings.map((item, index) => (
                       <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>
                         <td>{item.description}</td>
-                        <td className='hide-type'>${item.price}</td>
+                        <td className='hide-type'>{item.price ? getCurrencySymbol(item.costBasisCurrency) : ''}{item.price}</td>
                         <td >{item.quantity}</td>
                         <td className='hide-type'>{item.symbol}</td>
-                        <td className='hide-type'>${numberWithCommas(fNumber(item.price * item.quantity, 0))}</td>
+                        <td className='hide-type'>{item.costBasis ? getCurrencySymbol(item.costBasisCurrency) : ''}{item.costBasis ? numberWithCommas(fNumber(item.costBasis, 2)) : 0}</td>
                         {item.intervalValues.map((ins: any, i: number) => (
                           <td key={i} className={[ins.type === `projection` && `projection`, gc(ins.interval)].join(' ')}>
-                            <span className={gc(ins.interval)}>{ins.interval}</span>${ numberWithCommas(fNumber(ins.value, 0))}
+                            <span className={gc(ins.interval)}>{ins.interval}</span>{ins.value ? getCurrencySymbol(item.costBasisCurrency) : ''}{numberWithCommas(fNumber(ins.value, 2))}
                             {(editIndex === index && i === (item.intervalValues.length - 1)) ? <Edited className='edited-icon' /> : <></>}
                           </td>
                         ))}
-
                       </tr>
                     ))}
                   </tbody>
