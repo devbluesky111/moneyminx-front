@@ -1,7 +1,6 @@
 import React from 'react';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceArea } from 'recharts';
 
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { AccountBarGraphProps } from 'account/account.type';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { formatter, getInterval } from 'common/bar-graph-helper';
@@ -43,10 +42,6 @@ const renderCustomRALabel = (props: any) => {
 const AccountBarGraph: React.FC<AccountBarGraphProps> = (props) => {
   const data = props.data;
   const curInterval = props.curInterval;
-
-  if (!data?.length) {
-    return <CircularSpinner />;
-  }
 
   let max = 0;
   for (let i = 0; i < data.length; i++) {
