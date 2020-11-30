@@ -33,7 +33,9 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
   const [toDate, setToDate] = useState<string>();
   const [timeInterval, setTimeInterval] = useState<string>('Monthly');
   const [tableType, setTableType] = useState<string>('holdings');
-  const [filterOn, setFilterOn] = useState<boolean>(false);
+  const [dateFromFilterOn, setDateFromFilterOn] = useState<boolean>(false);
+  const [dateToFilterOn, setDateToFilterOn] = useState<boolean>(false);
+  const [intervalFilterOn, setIntervalFilterOn] = useState<boolean>(false);
   const accountId = props.match.params.accountId;
   const dropdownToggle = useRef(null);
 
@@ -82,22 +84,24 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
   }
 
   const onChange = (option: string, date: any) => {
-    setFilterOn(true);
     if (option === 'start') {
+      setDateFromFilterOn(true);
       setFromDate(getDate(new Date(date)));
-      setToDate(getDate(new Date()));
     } else if (option === 'end') {
+      setDateToFilterOn(true);
       setToDate(getDate(new Date(date)));
     }
   };
 
   const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterOn(true);
+    setIntervalFilterOn(true);
     setTimeInterval(event.target.value);
   };
 
   const clearFilters = () => {
-    setFilterOn(false);
+    setDateFromFilterOn(false);
+    setDateToFilterOn(false);
+    setIntervalFilterOn(false);
     setToDate(undefined);
     setFromDate(undefined);
     setTimeInterval('Monthly');
@@ -128,7 +132,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
           <div className='d-md-flex justify-content-between mt-3'>
             <div className='d-flex'>
               <div className='dflex-center'>
-                {filterOn && <button type="button" className="btn btn-outline-danger clear-filter" onClick={clearFilters}>Clear Filters</button>}
+                {(dateFromFilterOn || dateToFilterOn || intervalFilterOn) && <button type="button" className="btn btn-outline-danger clear-filter" onClick={clearFilters}>Clear Filters</button>}
                 <ReactDatePicker
                   selected={fromDate ? new Date(fromDate) : null}
                   onChange={(date) => onChange('start', date)}
@@ -142,12 +146,12 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className={['month_year', filterOn ? 'active' : ''].join(' ')} value={getMonthYear(fromDate)} readOnly />
+                        <input type='text' className={['month_year', dateFromFilterOn ? 'active' : ''].join(' ')} value={getMonthYear(fromDate)} readOnly />
                       </div>
                     </div>
                   }
                 />
-                <span className={['date-separator', filterOn ? 'active' : ''].join(' ')}>to</span>
+                <span className={['date-separator', (dateFromFilterOn && dateToFilterOn) ? 'active' : ''].join(' ')}>to</span>
                 <ReactDatePicker
                   selected={toDate ? new Date(toDate) : null}
                   onChange={(date) => onChange('end', date)}
@@ -162,12 +166,12 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className={['month_year', filterOn ? 'active' : ''].join(' ')} value={getMonthYear(toDate)} readOnly />
+                        <input type='text' className={['month_year', dateToFilterOn ? 'active' : ''].join(' ')} value={getMonthYear(toDate)} readOnly />
                       </div>
                     </div>
                   }
                 />
-                <Dropdown className={['drop-box m-l-2', filterOn ? 'active' : ''].join(' ')}>
+                <Dropdown className={['drop-box m-l-2', intervalFilterOn ? 'active' : ''].join(' ')}>
                   <Dropdown.Toggle variant='' ref={dropdownToggle}>
                     {timeInterval}
                   </Dropdown.Toggle>
