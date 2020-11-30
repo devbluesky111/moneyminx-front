@@ -610,6 +610,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
                 </div>
               ) : null}
 
+              {values.employerMatchContribution !== 'no' ? (
               <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
                 <div className='left-input'>
                   <p>
@@ -646,8 +647,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
                   </div>
                 </div>
               </div>
+              ) : null}
             </div>
-
             <div className={`form-divider ${hc('separateLoanBalance')}`}>
               <ul className='account-type-list'>
                 <li className='w-100'>
