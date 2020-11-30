@@ -186,6 +186,11 @@ ul.bank-list {
   border-radius: 4px;
   padding-left: 0;
   border: 1px solid rgba($gray, 0.24);
+
+  // necessary to fit content width of Segmented Control
+  @media (min-width: $med + 89) and (max-width: $md) {
+    width: fit-content;
+  }
 }
 
 .account-category .category-list a {
@@ -269,9 +274,14 @@ ul.bank-list {
 }
 
 .account-type-list li {
-  width: 47%;
-  float: left;
-  margin-bottom: 33px;
+  width: 100%;
+  margin-bottom: 2.063rem;
+
+  @media (min-width: $md) {
+    width: 47%;
+    float: left;
+    margin-bottom: 2.063rem;
+  }
 }
 
 .account-type-list {
@@ -312,6 +322,12 @@ ul.bank-list {
   justify-content: space-between;
   width: 100%;
   padding-left: 0;
+
+  .dropdown {
+    .dropdown-toggle {
+      white-space: unset;
+    }
+  }
 }
 
 .form-wrap .estimated-annual-return input {
@@ -335,11 +351,15 @@ ul.bank-list {
 }
 
 .right-input {
-  position: absolute;
-  display: contents;
-  right: 0;
-  top: -2%;
-  width: 47%;
+  width: 100%;
+
+  @media (min-width: $md) {
+    position: absolute;
+    display: contents;
+    right: 0;
+    top: -2%;
+    width: 47%;
+  }
 
   &.radio {
     top: 25%;
