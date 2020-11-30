@@ -23,7 +23,7 @@ import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
+/*import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';*/
 import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
