@@ -66,8 +66,8 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
 
   React.useEffect(() => {
     fetchAccountDetails(accountId);
-    fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
-  }, [accountId, fromDate, toDate, timeInterval]);
+    fetchAccountHoldings(accountId, null, null, 'Yearly');
+  }, [accountId]);
 
   const isCurrent = (interval: string) =>
     getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
@@ -84,7 +84,6 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
     } else if (option === 'end') {
       setToDate(getDate(new Date(date)));
       if (fromDate !== undefined && getDate(new Date(date)) > fromDate) {
-        fetchAccountDetails(accountId);
         if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
         if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
       }
@@ -211,7 +210,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               {AccountDetails?.category?.mmCategory === 'Investment Assets' &&
                 <li className='inv-data'>
                   <span>Value</span>
-                  <h3>{AccountDetails?.accountDetails?.currency ? getCurrencySymbol(AccountDetails?.accountDetails?.currency) : ''}{curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
+                  <h3>{AccountDetails?.accountDetails?.currency ? getCurrencySymbol(AccountDetails?.accountDetails?.currency) : ''}{curAccountHoldingsItem?.[0]?.value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0)) : 0}</h3>
                 </li>
               }
               {AccountDetails?.category?.mmCategory === 'Other Assets' &&
@@ -229,7 +228,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
             </ul>
             <div className='chartbox'>
               {(AccountHoldings && curAccountHoldingsItem) &&
-                <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0].interval} />
+                <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} />
               }
             </div>
           </div>

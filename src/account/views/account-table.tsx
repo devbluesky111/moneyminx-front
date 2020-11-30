@@ -4,6 +4,7 @@ import { fNumber, numberWithCommas } from 'common/number.helper';
 import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
 
 import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
+import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 
 export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
 
@@ -13,6 +14,19 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
   React.useEffect(() => {
     setHoldings(props.holdings);
   }, [props]);
+
+  const isCurrent = (interval: string) =>
+    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+
+  const gc = (interval: string) => {
+    if (interval) {
+      if (isCurrent(interval)) {
+        return 'current-m';
+      }
+    }
+    // return 'tab-hide';
+    return '';
+  };
 
   return (
     <section>
@@ -26,14 +40,11 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
                 <div className='col-md mm-account-table__head--data d-md-block'>Quantity</div>
                 <div className='col-md mm-account-table__head--data d-xl-block'>Symbol</div>
                 <div className='col-md mm-account-table__head--data d-xl-block'>Cost</div>
-                <div className='col-md mm-account-table__head--data d-xl-block'>{holdings[0].intervalValues[0].interval}</div>
-                <div className='col-md mm-account-table__head--data d-xl-block'>{holdings[0].intervalValues[1].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block'>{holdings[0].intervalValues[2].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block'>{holdings[0].intervalValues[3].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block text-green'>{holdings[0].intervalValues[4].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block'>{holdings[0].intervalValues[5].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block'>{holdings[0].intervalValues[6].interval}</div>
-                <div className='col-md mm-account-table__head--data d-xl-block'>{holdings[0].intervalValues[7].interval}</div>
+                {holdings?.[0]?.intervalValues.map((item: any, idx: number) => (
+                  <div key={idx} className={['col-md mm-account-table__head--data d-xl-block', gc(item.interval)].join(' ')}>
+                    {item.interval}
+                  </div>
+                ))}
               </div>
             </div>
             <div className='mm-account-table__body'>
@@ -46,14 +57,11 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
                     <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Quantity</span>{item.quantity}</div>
                     <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{item.symbol}</div>
                     <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.costBasis) ? `$${numberWithCommas(fNumber(item.costBasis, 2))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.intervalValues[0].value) ? `$${numberWithCommas(fNumber(item.intervalValues[0].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>{item.intervalValues[1].interval}</span>{(item.intervalValues[1].value) ? `$${numberWithCommas(fNumber(item.intervalValues[1].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[2].interval}</span>{(item.intervalValues[2].value) ? `$${numberWithCommas(fNumber(item.intervalValues[2].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[3].interval}</span>{(item.intervalValues[3].value) ? `$${numberWithCommas(fNumber(item.intervalValues[3].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data green-text'><span className='d-block d-md-none'>{item.intervalValues[4].interval}</span>{(item.intervalValues[4].value) ? `$${numberWithCommas(fNumber(item.intervalValues[4].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[5].interval}</span>{(item.intervalValues[5].value) ? `$${numberWithCommas(fNumber(item.intervalValues[5].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[6].interval}</span>{(item.intervalValues[6].value) ? `$${numberWithCommas(fNumber(item.intervalValues[6].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>{item.intervalValues[7].interval}</span>{(item.intervalValues[7].value) ? `$${numberWithCommas(fNumber(item.intervalValues[7].value, 0))}` : 0}</div>
+                    {item.intervalValues.map((ins: any, i: number) => (
+                      <div key={i} className={[ins.type === `projection` && `projection`, 'col-4 col-md mm-account-table__body--data d-none d-md-block', gc(ins.interval)].join(' ')}>
+                        <span className={['d-block d-md-none', gc(ins.interval)].join(' ')}>{ins.interval}</span>${ numberWithCommas(fNumber(ins.value, 0))}
+                      </div>
+                    ))}
                     {editIndex === index ? <Edited className='edited-icon mt-2' /> : <></>}
                   </div>
                 </div>

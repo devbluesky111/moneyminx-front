@@ -207,6 +207,11 @@
         &:first-child {
           min-width: 200px;
         }
+
+        &.current-m {
+          color: $green;
+        }
+
       }
     }
 
@@ -237,6 +242,10 @@
 
         &:nth-child(11) {
           background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity00 100%);
+        }
+
+        &.current-m {
+          color: $green;
         }
       }
 
