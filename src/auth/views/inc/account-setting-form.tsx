@@ -717,6 +717,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
             <div className={`form-divider ${hc('useZestimate')}`}>
               <span className='form-subheading'>Current Value</span>
               <div className='d-flex align-items-start'>
+                {/* TODO Needs Zillow integration
                 <div className='w-50 mr-2 d-flex flex-column'>
                   <div className='form-check ml-0 pl-0 mt-4 mb-5'>
                     <input
@@ -733,9 +734,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
                     </label>
                   </div>
                   <ZillowImage />
-                </div>
+                </div>*/}
                 <div className='w-50 mr-2 d-flex flex-column'>
-                  <div className='form-check ml-0 pl-0 mt-4 mb-5'>
+                  {/*<div className='form-check ml-0 pl-0 mt-4 mb-5'>
                     <input
                       value='no'
                       type='radio'
@@ -748,7 +749,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
                     <label className='form-check-label ml-4' htmlFor='useZestimate'>
                       Use my own estimate
                     </label>
-                  </div>
+                  </div>*/}
                   <Form.Control onChange={handleChange} type='number' name='ownEstimate' value={values.ownEstimate} />
                 </div>
               </div>
