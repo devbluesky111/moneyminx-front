@@ -28,6 +28,7 @@ import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
+import { fNumber, numberWithCommas } from '../../../common/number.helper';
 
 interface Props {
   currentAccount?: Account;
@@ -778,7 +779,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
             <div className={`form-divider ${hc('calculatedEquity')}`}>
               <div className='d-flex align-items-center justify-content-between'>
                 <p>Calculated Equity</p>
-                <p>{+values.ownEstimate - +values.loanBalance}</p>
+                <p>{numberWithCommas(fNumber(+values.ownEstimate - +values.loanBalance, 0))}</p>
               </div>
             </div>
 
