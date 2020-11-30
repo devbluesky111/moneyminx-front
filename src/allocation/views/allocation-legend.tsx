@@ -46,7 +46,7 @@ const AllocationLegend: React.FC<Props> = ({ chartData, sharing = false }) => {
       return (
         <>
           <span className='legend-label col-7'>
-            {ellipseText(data.group)} - {fNumber(data.per, 2)}%
+            {ellipseText(data.group)} - {fNumber(data.per || 0, 2)}%
           </span>
           <span className='legend-amount col-4'>${numberWithCommas(fNumber(data.total, 0))}</span>
         </>
@@ -56,7 +56,7 @@ const AllocationLegend: React.FC<Props> = ({ chartData, sharing = false }) => {
     return (
       <>
         <span className='legend-label col-8'>{ellipseText(data.group)}</span>
-        <span className='legend-amount col-3'>{fNumber(data.per, 2)}%</span>
+        <span className='legend-amount col-3'>{fNumber(data.per || 0, 2)}%</span>
       </>
     );
   };
