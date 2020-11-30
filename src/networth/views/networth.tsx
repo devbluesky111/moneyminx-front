@@ -461,7 +461,7 @@ const Networth = () => {
                                 className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
                               >
                                 <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                {numberWithCommas(fNumber(nItem.networth, 2))}
+                                {numberWithCommas(fNumber(nItem.networth || 0, 2))}
                               </td>
                             ))}
                           </tr>

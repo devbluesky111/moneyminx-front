@@ -8,16 +8,16 @@ import { arrGroupBy, enumerateStr } from 'common/common-helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
 import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
-import { getDate, getMonthYear, getRelativeDate } from 'common/moment.helper';
+import { getDate, getMonthYear, getRelativeDate, getUTC } from 'common/moment.helper';
 
 import {
   clearFilter,
-  setFilterAccount,
-  setFilterAccountType,
-  setFilterCategories,
-  setFilterFromDate,
-  setFilterTimeInterval,
   setFilterToDate,
+  setFilterAccount,
+  setFilterFromDate,
+  setFilterCategories,
+  setFilterAccountType,
+  setFilterTimeInterval,
 } from 'networth/networth.actions';
 import { NetworthFilterProps } from 'networth/networth.type';
 
@@ -25,7 +25,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
   const dispatch = useNetworthDispatch();
   const [currentAccount, setCurrentAccount] = useState<Account[]>();
 
-  const { fCategories, fTypes, fAccounts, fFromDate, fToDate, fTimeInterval } = useNetworthState();
+  const { fCategories, fTypes, fAccounts, fFromDate, fToDate, fTimeInterval, networth } = useNetworthState();
 
   useEffect(() => {
     const fetchCurrentAccount = async () => {
@@ -39,17 +39,20 @@ const NetworthFilter = (props: NetworthFilterProps) => {
     fetchCurrentAccount();
   }, []);
 
+  const fromInterval = networth?.[0].interval || '';
+  const fromDate = getUTC(fromInterval);
+
   const onChange = (option: string, date: any) => {
     if (option === 'start') {
       props.handleLoad();
 
-      return dispatch(setFilterFromDate(getDate(new Date(date))));
+      return dispatch(setFilterFromDate(getDate(getUTC(date))));
     }
     if (option === 'end') {
-      if (fFromDate !== undefined && getDate(new Date(date)) > fFromDate) {
+      if (fFromDate !== undefined && getDate(getUTC(date)) > fFromDate) {
         props.handleLoad();
 
-        return dispatch(setFilterToDate(getDate(new Date(date))));
+        return dispatch(setFilterToDate(getDate(getUTC(date))));
       }
     }
   };
@@ -183,34 +186,38 @@ const NetworthFilter = (props: NetworthFilterProps) => {
         </div>
         <div className='dflex-center mb-15'>
           <ReactDatePicker
-            selected={fFromDate ? new Date(fFromDate) : null}
+            selected={fFromDate ? getUTC(fFromDate) : fromDate}
             onChange={(date) => onChange('start', date)}
             // selectsStart
-            startDate={fFromDate ? new Date(fFromDate) : null}
+            startDate={fFromDate ? getUTC(fFromDate) : fromDate}
             dateFormat='MM/yyyy'
             showMonthYearPicker
-            minDate={new Date('1900-01-01')}
-            maxDate={new Date()}
+            minDate={getUTC('1900-01-01')}
+            maxDate={getUTC()}
             className='m-l-3'
             // selectsRange
             customInput={
               <div className='drop-box'>
                 <div className='date-box'>
-                  <input type='text' className='month_year' value={getMonthYear(fFromDate)} />
+                  <input
+                    type='text'
+                    className='month_year'
+                    value={fFromDate ? getMonthYear(fFromDate) : getMonthYear(fromDate)}
+                  />
                 </div>
               </div>
             }
           />
           <span className='date-separator'>to</span>
           <ReactDatePicker
-            selected={fToDate ? new Date(fToDate) : null}
+            selected={fToDate ? getUTC(fToDate) : null}
             onChange={(date) => onChange('end', date)}
             // selectsStart
-            startDate={fToDate ? new Date(fToDate) : null}
+            startDate={fToDate ? getUTC(fToDate) : null}
             dateFormat='MM/yyyy'
             showMonthYearPicker
-            minDate={fFromDate ? new Date(fFromDate) : null}
-            maxDate={new Date()}
+            minDate={fFromDate ? getUTC(fFromDate) : null}
+            maxDate={getUTC()}
             className='m-l-1'
             // selectsRange
             customInput={
