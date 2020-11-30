@@ -66,8 +66,9 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
 
   React.useEffect(() => {
     fetchAccountDetails(accountId);
-    fetchAccountHoldings(accountId, null, null, 'Yearly');
-  }, [accountId]);
+    if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
+    if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
+  }, [accountId, fromDate, toDate, timeInterval, tableType]);
 
   const isCurrent = (interval: string) =>
     getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
@@ -83,17 +84,11 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
       setFromDate(getDate(new Date(date)));
     } else if (option === 'end') {
       setToDate(getDate(new Date(date)));
-      if (fromDate !== undefined && getDate(new Date(date)) > fromDate) {
-        if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
-        if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
-      }
     }
   };
 
   const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTimeInterval(event.target.value);
-    if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
-    if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
   };
 
   return (
@@ -242,7 +237,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               name='mm-radio-holding-activity'
               aria-checked='true'
               checked={tableType === 'holdings' ? true : false}
-              onClick={(e) => { setTableType('holdings'); fetchAccountHoldings(accountId, fromDate, toDate, timeInterval); }}
+              onClick={(e) => setTableType('holdings')}
             />
             <label className='labels' htmlFor='mm-account-holding'>
               Holdings
@@ -254,7 +249,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               name='mm-radio-holding-activity'
               aria-checked='false'
               checked={tableType === 'activity' ? true : false}
-              onChange={(e) => { setTableType('activity'); fetchAccountActivity(accountId, fromDate, toDate, timeInterval); }}
+              onChange={(e) => setTableType('activity')}
             />
             <label className='labels' htmlFor='mm-account-activity'>
               Activity
