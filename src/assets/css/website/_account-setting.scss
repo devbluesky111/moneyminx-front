@@ -185,18 +185,19 @@ ul.bank-list {
   width: 100%;
   border-radius: 4px;
   padding-left: 0;
+  border: 1px solid rgba($gray, 0.24);
 }
 
 .account-category .category-list a {
   color: #969eac;
   height: 48px;
   display: inline-flex;
-  width: 100%;
   position: relative;
   font-size: 0.875rem;
   font-weight: 400;
   justify-content: center;
   align-items: center;
+  width: 11.938rem;
 
   &.active,
   &:hover {
@@ -205,13 +206,16 @@ ul.bank-list {
 }
 
 .account-category .category-list li {
-  border: 1.5px solid $grayOpacity24;
   border-radius: 4px;
 }
 
 .account-category {
   .category-list {
+    overflow-x: auto;
+    
     li {
+      width: 11.938rem;
+
       &:nth-child(2),
       &:first-child {
         border-right: none;
@@ -236,7 +240,7 @@ ul.bank-list {
 .account-category .category-list li.active ~ .border-bg-slider {
   border: 1.5px solid $primary;
   border-radius: 4px;
-  width: 11.813rem;
+  width: 12.063rem;
   height: 100%;
   position: absolute;
 }
