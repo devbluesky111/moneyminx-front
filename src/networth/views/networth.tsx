@@ -171,8 +171,7 @@ const Networth = () => {
                 </div>
               </div>
             </div>
-
-            {investmentAssets?.length ? (
+            {(fCategories.length === 0 || fCategories.includes('Investment Assets')) &&
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-b'>
@@ -246,9 +245,8 @@ const Networth = () => {
                   </div>
                 </div>
               </div>
-            ) : null}
-
-            {otherAssets?.length ? (
+            }
+            {(fCategories.length === 0 || fCategories.includes('Other Assets')) &&
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-g'>
@@ -308,9 +306,8 @@ const Networth = () => {
                   </div>
                 </div>
               </div>
-            ) : null}
-
-            {liabilities?.length ? (
+            }
+            {(fCategories.length === 0 || fCategories.includes('Liabilities')) &&
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-r'>
@@ -370,9 +367,8 @@ const Networth = () => {
                   </div>
                 </div>
               </div>
-            ) : null}
-
-            {currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
+            }
+            {(fCategories.length === 0 || fCategories.length === 3) &&
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-v'>
@@ -462,7 +458,7 @@ const Networth = () => {
                   </div>
                 </div>
               </div>
-            ) : null}
+            }
           </div>
         </div>
 

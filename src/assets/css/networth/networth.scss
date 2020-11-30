@@ -1807,8 +1807,8 @@ ul.charttool li.nw-data:before {
 .table-holder .table tbody td.dataTables_empty {
   display: none;
 }
-.table tbody tr:hover,
-.table tfoot tr:hover {
+.table:not(#table-net-xls) tbody tr:hover,
+.table:not(#table-net-xls) tfoot tr:hover {
   cursor: pointer;
 }
 
@@ -1988,11 +1988,11 @@ footer p {
     position: relative;
     transition: 0.1s all;
   }
-  .table tbody tr:hover {
+  .table:not(#table-net-xls) tbody tr:hover {
     background: $darkBg;
     color: $white;
   }
-  .table tbody tr:hover td {
+  .table:not(#table-net-xls) tbody tr:hover td {
     color: $white !important;
     border-bottom-color: transparent;
   }
@@ -2026,8 +2026,8 @@ footer p {
     right: -20px;
     border-radius: 0 6px 6px 0;
   }
-  .table tbody tr:hover td:first-child:before,
-  .table tbody tr:hover td:last-child:after {
+  .table:not(#table-net-xls) tbody tr:hover td:first-child:before,
+  .table:not(#table-net-xls) tbody tr:hover td:last-child:after {
     background: $darkBg;
   }
 }
