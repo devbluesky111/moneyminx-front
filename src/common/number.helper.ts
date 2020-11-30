@@ -6,8 +6,11 @@ export const fNumber = (num: number | string, digits: any | 2) => {
   if (isString(num)) {
     return Number.parseFloat(num).toFixed(digits);
   }
-
-  return num.toFixed(digits);
+  if (num) {
+    return num.toFixed(digits);
+  } else {
+    return 0;
+  }
 };
 
 export const numberWithCommas = (num: number | string) => {

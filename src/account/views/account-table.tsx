@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { Table } from 'react-bootstrap';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
+import { getCurrencySymbol } from 'common/currency-helper';
 import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
 
 import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
+import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 
 export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
 
@@ -14,50 +17,60 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
     setHoldings(props.holdings);
   }, [props]);
 
+  const isCurrent = (interval: string) =>
+    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+
+  const gc = (interval: string) => {
+    if (interval) {
+      if (isCurrent(interval)) {
+        return 'current-m';
+      }
+    }
+    // return 'tab-hide';
+    return '';
+  };
+
   return (
     <section>
       {holdings?.length > 0 ? (
-        <div className='mm-account-table'>
-          <div className='mm-account-table__overview'>
-            <div className='mm-account-table__head'>
-              <div className="row no-gutters">
-                <div className='col-md mm-account-table__head--data d-md-block'>Holdings</div>
-                <div className='col-md mm-account-table__head--data d-xl-block'>Price</div>
-                <div className='col-md mm-account-table__head--data d-md-block'>Quantity</div>
-                <div className='col-md mm-account-table__head--data d-xl-block'>Symbol</div>
-                <div className='col-md mm-account-table__head--data d-xl-block'>Cost</div>
-                <div className='col-md mm-account-table__head--data d-xl-block'>{holdings[0].intervalValues[0].interval}</div>
-                <div className='col-md mm-account-table__head--data d-xl-block'>{holdings[0].intervalValues[1].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block'>{holdings[0].intervalValues[2].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block'>{holdings[0].intervalValues[3].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block text-green'>{holdings[0].intervalValues[4].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block'>{holdings[0].intervalValues[5].interval}</div>
-                <div className='col-md mm-account-table__head--data d-md-block'>{holdings[0].intervalValues[6].interval}</div>
-                <div className='col-md mm-account-table__head--data d-xl-block'>{holdings[0].intervalValues[7].interval}</div>
+        <div className='row mb-40'>
+          <div className='col-12'>
+            <div className='ct-box'>
+              <div className='table-holder'>
+                <Table className='tb-responsive account' id='table-account-xls'>
+                  <thead>
+                    <tr>
+                      <th className='s-hide'>Holdings</th>
+                      <th className='hide-type'>Price</th>
+                      <th>Quantity</th>
+                      <th className='hide-type'>Symbol</th>
+                      <th className='hide-type'>Cost</th>
+                      {holdings?.[0]?.intervalValues.map((item: any, idx: number) => (
+                        <th key={idx} className={gc(item.interval)}>
+                          {item.interval}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {holdings?.length > 0 && holdings.map((item, index) => (
+                      <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>
+                        <td>{item.description}</td>
+                        <td className='hide-type'>{item.price ? getCurrencySymbol(item.costBasisCurrency) : ''}{item.price}</td>
+                        <td >{item.quantity}</td>
+                        <td className='hide-type'>{item.symbol}</td>
+                        <td className='hide-type'>{item.costBasis ? getCurrencySymbol(item.costBasisCurrency) : ''}{item.costBasis ? numberWithCommas(fNumber(item.costBasis, 2)) : 0}</td>
+                        {item.intervalValues.map((ins: any, i: number) => (
+                          <td key={i} className={[ins.type === `projection` && `projection`, gc(ins.interval)].join(' ')}>
+                            <span className={gc(ins.interval)}>{ins.interval}</span>{ins.value ? getCurrencySymbol(item.costBasisCurrency) : ''}{numberWithCommas(fNumber(ins.value, 2))}
+                            {(editIndex === index && i === (item.intervalValues.length - 1)) ? <Edited className='edited-icon' /> : <></>}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
               </div>
-            </div>
-            <div className='mm-account-table__body'>
-              {holdings.map((item, index) => (
-                <div key={index}>
-                  <div className='d-md-none mm-account-table__body--sm-title mt-3'>{item.description}</div>
-                  <div className='row no-gutters mm-account-table__body--wrapper' onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-md-block' >{item.description}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.price) ? `$${numberWithCommas(fNumber(item.price, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Quantity</span>{item.quantity}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{item.symbol}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.costBasis) ? `$${numberWithCommas(fNumber(item.costBasis, 2))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>{(item.intervalValues[0].value) ? `$${numberWithCommas(fNumber(item.intervalValues[0].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>{item.intervalValues[1].interval}</span>{(item.intervalValues[1].value) ? `$${numberWithCommas(fNumber(item.intervalValues[1].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[2].interval}</span>{(item.intervalValues[2].value) ? `$${numberWithCommas(fNumber(item.intervalValues[2].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[3].interval}</span>{(item.intervalValues[3].value) ? `$${numberWithCommas(fNumber(item.intervalValues[3].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data green-text'><span className='d-block d-md-none'>{item.intervalValues[4].interval}</span>{(item.intervalValues[4].value) ? `$${numberWithCommas(fNumber(item.intervalValues[4].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[5].interval}</span>{(item.intervalValues[5].value) ? `$${numberWithCommas(fNumber(item.intervalValues[5].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>{item.intervalValues[6].interval}</span>{(item.intervalValues[6].value) ? `$${numberWithCommas(fNumber(item.intervalValues[6].value, 0))}` : 0}</div>
-                    <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>{item.intervalValues[7].interval}</span>{(item.intervalValues[7].value) ? `$${numberWithCommas(fNumber(item.intervalValues[7].value, 0))}` : 0}</div>
-                    {editIndex === index ? <Edited className='edited-icon mt-2' /> : <></>}
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
