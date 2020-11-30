@@ -142,7 +142,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className={['month_year', filterOn ? 'active' : ''].join(' ')} value={getMonthYear(fromDate)} />
+                        <input type='text' className={['month_year', filterOn ? 'active' : ''].join(' ')} value={getMonthYear(fromDate)} readOnly />
                       </div>
                     </div>
                   }
@@ -162,7 +162,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className={['month_year', filterOn ? 'active' : ''].join(' ')} value={getMonthYear(toDate)} />
+                        <input type='text' className={['month_year', filterOn ? 'active' : ''].join(' ')} value={getMonthYear(toDate)} readOnly />
                       </div>
                     </div>
                   }
@@ -250,7 +250,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               name='mm-radio-holding-activity'
               aria-checked='true'
               checked={tableType === 'holdings' ? true : false}
-              onClick={(e) => setTableType('holdings')}
+              onChange={(e) => setTableType('holdings')}
             />
             <label className='labels' htmlFor='mm-account-holding'>
               Holdings
