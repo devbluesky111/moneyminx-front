@@ -781,7 +781,9 @@ a.upgrader-btn {
   &:focus, &:hover, &:active {
     background: none !important;
     box-shadow: none !important;
-    color: $darkGray !important;
+  }
+  &:hover, &:active {
+    border: 1px solid $gray;
   }
 }
 .drop-box .dropdown-toggle:after {
@@ -852,6 +854,10 @@ a.upgrader-btn {
 
   &:hover{
     color: $darkGray;
+  }
+
+  &.active {
+    color: $purple;
   }
 }
 .date-box input::-webkit-input-placeholder {
@@ -1247,6 +1253,9 @@ a.upgrader-btn {
 }
 .drop-box .dropdown-menu.dropsm {
   min-width: inherit;
+}
+.drop-box.active button {
+  color: $purple !important;
 }
 .radiolist {
   padding: 10px 0;
@@ -1871,6 +1880,26 @@ footer p {
 .dflex-center {
   display: flex !important;
   justify-content: center;
+
+  .clear-filter {
+    margin-right: 0.5rem;
+    background: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: $red;
+    border: 1px solid rgba($red, 0.24);
+    border-radius: 4px;
+    width: auto;
+    height: 48px;
+    padding: 0 20px;
+    min-width: 122px;
+
+    &:focus, &:hover, &:active {
+      background: none !important;
+      box-shadow: none !important;
+      color: $red !important;
+    }
+  }
 }
 /** =============================== **/
 /** responsive **/
@@ -2316,4 +2345,7 @@ $start-width: 100%;
   margin: 1rem 0.25rem;
   color: $gray;
   font-size: 0.875rem
+}
+.date-separator.active {
+  color: $purple;
 }

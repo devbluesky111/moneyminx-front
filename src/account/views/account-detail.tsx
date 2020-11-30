@@ -31,10 +31,19 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
   const [AccountActivity, setAccountActivity] = useState<AccountTransactionsProps>();
   const [fromDate, setFromDate] = useState<string>();
   const [toDate, setToDate] = useState<string>();
-  const [timeInterval, setTimeInterval] = useState<string>('Yearly');
+  const [timeInterval, setTimeInterval] = useState<string>('Monthly');
   const [tableType, setTableType] = useState<string>('holdings');
+  const [filterOn, setFilterOn] = useState<boolean>(false);
   const accountId = props.match.params.accountId;
   const dropdownToggle = useRef(null);
+
+  React.useEffect(() => {
+    fetchAccountDetails(accountId);
+    if ((fromDate === undefined && toDate === undefined) || (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))) {
+      if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
+      if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
+    }
+  }, [accountId, fromDate, toDate, timeInterval, tableType]);
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
@@ -64,14 +73,6 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
     }
   };
 
-  React.useEffect(() => {
-    fetchAccountDetails(accountId);
-    if ((fromDate === undefined && toDate === undefined) || (fromDate !== undefined && toDate !== undefined && new Date(toDate) > new Date(fromDate))) {
-      if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
-      if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
-    }
-  }, [accountId, fromDate, toDate, timeInterval, tableType]);
-
   const isCurrent = (interval: string) =>
     getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
 
@@ -81,16 +82,26 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
   }
 
   const onChange = (option: string, date: any) => {
+    setFilterOn(true);
     if (option === 'start') {
       setFromDate(getDate(new Date(date)));
+      setToDate(getDate(new Date()));
     } else if (option === 'end') {
       setToDate(getDate(new Date(date)));
     }
   };
 
   const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterOn(true);
     setTimeInterval(event.target.value);
   };
+
+  const clearFilters = () => {
+    setFilterOn(false);
+    setToDate(undefined);
+    setFromDate(undefined);
+    setTimeInterval('Monthly');
+  }
 
   return (
     <div className='mm-setting'>
@@ -105,7 +116,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
       <div className='mm-account'>
         <div className='mm-account__selection mb-3'>
           <div className='mm-account__selection--info float-lg-left'>
-            <SettingsGear className='float-left mr-3 settings-gear-button' />
+            <SettingsGear className='float-left mr-2 settings-gear-button' />
             <ul>
               <li>{AccountDetails?.accountName}</li>
               <li>{AccountDetails?.category?.mmCategory}</li>
@@ -117,6 +128,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
           <div className='d-md-flex justify-content-between mt-3'>
             <div className='d-flex'>
               <div className='dflex-center'>
+                {filterOn && <button type="button" className="btn btn-outline-danger clear-filter" onClick={clearFilters}>Clear Filters</button>}
                 <ReactDatePicker
                   selected={fromDate ? new Date(fromDate) : null}
                   onChange={(date) => onChange('start', date)}
@@ -130,12 +142,12 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className='month_year' value={getMonthYear(fromDate)} />
+                        <input type='text' className={['month_year', filterOn ? 'active' : ''].join(' ')} value={getMonthYear(fromDate)} />
                       </div>
                     </div>
                   }
                 />
-                <span className='date-separator'>to</span>
+                <span className={['date-separator', filterOn ? 'active' : ''].join(' ')}>to</span>
                 <ReactDatePicker
                   selected={toDate ? new Date(toDate) : null}
                   onChange={(date) => onChange('end', date)}
@@ -150,12 +162,12 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                   customInput={
                     <div className='drop-box'>
                       <div className='date-box'>
-                        <input type='text' className='month_year' value={getMonthYear(toDate)} />
+                        <input type='text' className={['month_year', filterOn ? 'active' : ''].join(' ')} value={getMonthYear(toDate)} />
                       </div>
                     </div>
                   }
                 />
-                <Dropdown className='drop-box m-l-2'>
+                <Dropdown className={['drop-box m-l-2', filterOn ? 'active' : ''].join(' ')}>
                   <Dropdown.Toggle variant='' ref={dropdownToggle}>
                     {timeInterval}
                   </Dropdown.Toggle>
@@ -163,7 +175,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                     <ul className='radiolist'>
                       {['Yearly', 'Monthly', 'Quarterly'].map((interval, index) => {
                         return (
-                          <li key={interval}>
+                          <li key={index}>
                             <label>
                               <input
                                 type='radio'
