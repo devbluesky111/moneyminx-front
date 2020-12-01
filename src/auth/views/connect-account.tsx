@@ -151,7 +151,7 @@ export const ConnectAccountMainSection = () => {
                   If your financial institution is not support or if you want to track a non traditional asset or
                   liability you can add the details manually.
                 </p>
-                <button className='connect-account-btn btn-outline-primary mm-btn-animate' type='submit'>
+                <button className='connect-account-btn btn-outline-primary mm-btn-animate' type='submit' onClick={() => window.location.replace('/manual-account')}>
                   Add Manual Account
                 </button>
                 <h2>

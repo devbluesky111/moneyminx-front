@@ -10,6 +10,7 @@ export const appRouteConstants = {
     TOKEN_EXPIRED: '/token-expired',
     CONNECT_ACCOUNT: '/connect-account',
     ACCOUNT_SETTING: '/account-settings',
+    MANUAL_ACCOUNT: '/manual-account',
     FORGOT_PASSWORD: '/forgot-password',
   },
 
