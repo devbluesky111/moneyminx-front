@@ -3,7 +3,7 @@ import React, { createContext } from 'react';
 import { NetworthActionEnum } from './networth.enum';
 import { NetworthDispatch, NetworthState, NetworthProviderProps, Action } from './networth.type';
 
-const initialState: NetworthState = {
+export const initialState: NetworthState = {
   fTypes: [],
   fAccounts: [],
   fCategories: [],

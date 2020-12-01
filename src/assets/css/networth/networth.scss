@@ -2299,8 +2299,24 @@ $start-width: 100%;
 .clear-filter {
   .dropdown-toggle {
     color: $red;
+    &:hover,
+    &:visited,
+    &:active {
+      color: $red !important;
+    }
     &:after {
       display: none;
+    }
+  }
+}
+
+.drop-box {
+  .filtered {
+    color: $primary;
+    &:hover,
+    &:visited,
+    &:active {
+      color: $primary !important;
     }
   }
 }
