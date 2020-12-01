@@ -10,6 +10,7 @@ import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { appRouteConstants } from 'app/app-route.constant';
+import { pricingDetailConstant } from 'common/common.constant';
 import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { EMAIL_IS_EMPTY, PWD_IS_EMPTY } from 'lang/en/validation.json';
@@ -22,7 +23,6 @@ import { getCurrentSubscription, postFacebookLogin, getAccount, getSubscription 
 
 import EmailNeededModal from './inc/email-needed.modal';
 import AssociateEmailModal from './inc/associate-email.modal';
-import { pricingDetailConstant } from '../../common/common.constant';
 
 const Login = () => {
   return (
@@ -47,6 +47,7 @@ export const LoginMainSection = () => {
   const visibilityIcon = passwordVisible ? <VisibleIcon /> : <HiddenIcon />;
 
   const isExpired = search.includes('?expired=true');
+  const isLoggedOut = search.includes('?action=logout');
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
@@ -127,6 +128,9 @@ export const LoginMainSection = () => {
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
+              <div className={isLoggedOut ? 'session-expired' : 'session-expired hide-me'}>
+                <p>Thanks for visiting. See you next time.</p>
+              </div>
               <div className={isExpired ? 'session-expired' : 'session-expired hide-me'}>
                 <p>We thought you left, so we logged you out to protect your account.</p>
               </div>
