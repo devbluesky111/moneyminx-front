@@ -7,10 +7,17 @@ import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/weal
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import MerrilEdgeLogo from 'assets/images/subscription/merriledgelogo.png';
 import { ReactComponent as IconTrash } from 'assets/icons/icon-trash.svg';
+import {AccountOverview} from '../../setting/pages/account-overview';
 
 const SubscriptionEnded = () => {
   return (
-    <PricingTable />
+    <section>
+      <div className='subscription-ended bottom py-5'>
+        <div className='container'>
+          <AccountOverview updateAccountsFlag={true}/>
+        </div>
+      </div>
+    </section>
   );
 };
 

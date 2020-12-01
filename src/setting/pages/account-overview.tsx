@@ -23,10 +23,16 @@ import { ReactComponent as DefaultProviderLogo} from 'assets/icons/mm-default-pr
 import {
   AccountCardProps,
   AccountRowProps,
-  ManualAccountProps
+  ManualAccountProps,
+  AccountOverviewProps,
+  SubscriptionConnectionWarningProps,
+  AccountDialogBoxProps
 } from 'setting/setting.type';
+import {ReactComponent as SubscriptionWarning} from '../../assets/images/subscription/warning.svg';
+import {ReactComponent as BackIcon} from '../../assets/images/subscription/back-btn.svg';
 
-export const AccountOverview = () => {
+export const AccountOverview: React.FC<AccountOverviewProps> = ({updateAccountsFlag}) => {
+  const history = useHistory();
   const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
@@ -53,10 +59,20 @@ export const AccountOverview = () => {
   const numberOfConnectedAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || 0;
   const numberOfManualAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || 0;
 
+  const verifyAccountNumbers = (event: React.ChangeEvent<any>) => {
+    event.preventDefault()
+    if(manualAccounts.length <= numberOfManualAccounts && connectedAccounts.length <= numberOfConnectedAccounts) {
+      history.push(appRouteConstants.networth.NET_WORTH)
+    }
+    else toast('Kindly remove accounts first.', { type: 'error' });
+  }
+
   return (
     <section className='mm-account-overview'>
+      {updateAccountsFlag && <SubscriptionConnectionWarning availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts}/>}
       <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} />
       <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} />
+      {updateAccountsFlag && <AccountDialogBox verifyAccountNumbers={verifyAccountNumbers} availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} accountList={connectedAccounts} manualAccountList={manualAccounts}/>}
     </section>
   );
 };
@@ -277,3 +293,64 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
     </div>
   );
 };
+
+export const SubscriptionConnectionWarning: React.FC<SubscriptionConnectionWarningProps> = ({availableConnectedAccounts, availableManualAccounts}) => {
+  return (
+    <div className='row'>
+      <div className='subs-ended-msg-box'>
+        <div className='subs-ended-left'>
+          <h4>Too many connections for current plan!</h4>
+          <p>
+            Your current plan only allows for {availableConnectedAccounts} connections, please remove connections to continue
+            using Money Minx.
+          </p>
+        </div>
+        <span className='warning-icon'>
+          <SubscriptionWarning/>
+        </span>
+      </div>
+    </div>
+  )
+};
+
+const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({verifyAccountNumbers, availableConnectedAccounts, availableManualAccounts, manualAccountList, accountList}) => {
+  let connectedAccountDiff = 0;
+  let manualAccountDiff = 0;
+  if (typeof availableConnectedAccounts === 'string') {
+    // tslint:disable-next-line:radix
+    connectedAccountDiff = accountList.length - parseInt(availableConnectedAccounts)
+  }
+  if (typeof availableManualAccounts === 'string') {
+    // tslint:disable-next-line:radix
+    manualAccountDiff = manualAccountList.length - parseInt(availableManualAccounts)
+  }
+
+  return (
+    <div className='action-overlay'>
+      <div className='subscription-bottom-text'>
+        <div className='subs-content one'>
+          <a href='link12' onClick={(event) => {verifyAccountNumbers(event)}}>
+            <span className='back-btn'>
+              <BackIcon/>
+            </span>
+          </a>
+        </div>
+        <div className='subs-content two'>
+          <p>
+            {accountList.length}/{availableConnectedAccounts} <span className='hidden-text'>connected </span>
+            <br/>
+            {manualAccountList.length}/{availableManualAccounts} <span className='hidden-text'>manual</span>
+          </p>
+        </div>
+        <div className='subs-content three'>
+          <p>You need to delete {connectedAccountDiff > 0 ? connectedAccountDiff : 0} connected accounts and {manualAccountDiff > 0 ? manualAccountDiff : 0} manual to be able to use this plan.</p>
+        </div>
+        <div className='subs-content four'>
+          <button className='finish-btn' onClick={(event) => {verifyAccountNumbers(event)}}>
+            Finish
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
