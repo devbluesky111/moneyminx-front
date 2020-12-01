@@ -16,6 +16,7 @@ import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.s
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
 import ConnectAccountSteps from './inc/connect-steps';
+import ManucalAccountModal from './inc/manual-account.modal';
 
 const config = {
   clientId: appEnv.ZABO_CONFIGURATION.ZABO_CLIENT_ID,
@@ -31,6 +32,7 @@ const ConnectAccount = () => {
 };
 export default ConnectAccount;
 export const ConnectAccountMainSection = () => {
+  const manualAccountModal = useModal();
   const location = useLocation();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
 
@@ -151,7 +153,7 @@ export const ConnectAccountMainSection = () => {
                   If your financial institution is not support or if you want to track a non traditional asset or
                   liability you can add the details manually.
                 </p>
-                <button className='connect-account-btn btn-outline-primary mm-btn-animate' type='submit' onClick={() => window.location.replace('/manual-account')}>
+                <button className='connect-account-btn btn-outline-primary mm-btn-animate' type='submit' onClick={() => manualAccountModal.open()}>
                   Add Manual Account
                 </button>
                 <h2>
@@ -170,6 +172,7 @@ export const ConnectAccountMainSection = () => {
           </div>
         </div>
       </div>
+      <ManucalAccountModal manualAccountModal={manualAccountModal} />
       <ConnectAccountSteps isConnectAccount />
       <FastLinkModal
         fastLinkModal={fastlinkModal}
