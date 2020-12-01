@@ -1,112 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Table } from 'react-bootstrap';
 
-export const AccountTable = () => {
-return (
-<section>
-  <div className='mm-account-table'>
-    <div className='mm-account-table__overview'>
-      <div className='mm-account-table__head'>
-        <div className="row no-gutters">
-          <div className='col-md mm-account-table__head--data d-md-block'>Holdings</div>
-          <div className='col-md mm-account-table__head--data d-md-block'>Type</div>
-          <div className='col-md mm-account-table__head--data d-xl-block'>Class</div>
-          <div className='col-md mm-account-table__head--data d-xl-block'>Country</div>
-          <div className='col-md mm-account-table__head--data d-xl-block'>Cost</div>
-          <div className='col-md mm-account-table__head--data d-xl-block'>Mar 2020</div>
-          <div className='col-md mm-account-table__head--data d-md-block'>Apr 2020</div>
-          <div className='col-md mm-account-table__head--data d-md-block'>May 2020</div>
-          <div className='col-md mm-account-table__head--data d-md-block text-green'>June 2020</div>
-          <div className='col-md mm-account-table__head--data d-md-block'>Jul 2020</div>
-          <div className='col-md mm-account-table__head--data d-xl-block'>Aug 2020</div>
-          <div className='col-md mm-account-table__head--data d-md-block'>Sep 2020</div>
-        </div>
-      </div>
-      <div className='mm-account-table__body'>
-        <div className='d-md-none mm-account-table__body--sm-title mt-3'>Position 01</div>
-        <div className='row no-gutters mm-account-table__body--wrapper'>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-md-block'>Position 01</div>
-          <div className='col-4 col-md mm-account-table__body--data order-1 order-md-0'><span className='d-block d-md-none'>Type</span> Stocks</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>Process Industries</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>United States</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$13,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$78,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Apr 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>May 2020</span>$88,000</div>
-          <div className='col-4 col-md mm-account-table__body--data text-green'><span className='d-block d-md-none'>June 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Jul 2020</span>$94,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>Aug 2020</span>$32,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Sep 2020</span>$32,000</div>
-        </div>
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import { getCurrencySymbol } from 'common/currency-helper';
+import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
 
+import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
+import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 
-        <div className='d-md-none mm-account-table__body--sm-title mt-3'>Position 02</div>
-        <div className='row no-gutters mm-account-table__body--wrapper'>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-md-block'>Position 01</div>
-          <div className='col-4 col-md mm-account-table__body--data order-1 order-md-0'><span className='d-block d-md-none'>Type</span> Stocks</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>Process Industries</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>United States</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$13,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$78,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Apr 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>May 2020</span>$88,000</div>
-          <div className='col-4 col-md mm-account-table__body--data text-green'><span className='d-block d-md-none'>June 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Jul 2020</span>$94,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>Aug 2020</span>$32,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Sep 2020</span>$32,000</div>
-        </div>
+export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
 
-        <div className='d-md-none mm-account-table__body--sm-title mt-3'>Position 03</div>
-        <div className='row no-gutters mm-account-table__body--wrapper'>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-md-block'>Position 01</div>
-          <div className='col-4 col-md mm-account-table__body--data order-1 order-md-0'><span className='d-block d-md-none'>Type</span> Stocks</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>Process Industries</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>United States</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$13,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$78,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Apr 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>May 2020</span>$88,000</div>
-          <div className='col-4 col-md mm-account-table__body--data text-green'><span className='d-block d-md-none'>June 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Jul 2020</span>$94,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>Aug 2020</span>$32,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Sep 2020</span>$32,000</div>
-        </div>
+  const [holdings, setHoldings] = useState<AccountHoldingItem[]>([]);
+  const [editIndex, setEditIndex] = useState<number>(-1);
 
-        <div className='d-md-none mm-account-table__body--sm-title mt-3'>Position 04</div>
-        <div className='row no-gutters mm-account-table__body--wrapper'>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-md-block'>Position 01</div>
-          <div className='col-4 col-md mm-account-table__body--data order-1 order-md-0'><span className='d-block d-md-none'>Type</span> Stocks</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>Process Industries</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>United States</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$13,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$78,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Apr 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>May 2020</span>$88,000</div>
-          <div className='col-4 col-md mm-account-table__body--data text-green'><span className='d-block d-md-none'>June 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Jul 2020</span>$94,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>Aug 2020</span>$32,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Sep 2020</span>$32,000</div>
-        </div>
+  React.useEffect(() => {
+    setHoldings(props.holdings);
+  }, [props]);
 
-        <div className='d-md-none mm-account-table__body--sm-title mt-3'>Position 05</div>
-        <div className='row no-gutters mm-account-table__body--wrapper'>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-md-block'>Position 01</div>
-          <div className='col-4 col-md mm-account-table__body--data order-1 order-md-0'><span className='d-block d-md-none'>Type</span> Stocks</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>Process Industries</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>United States</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$13,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'>$78,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Apr 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>May 2020</span>$88,000</div>
-          <div className='col-4 col-md mm-account-table__body--data text-green'><span className='d-block d-md-none'>June 2020</span>$83,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Jul 2020</span>$94,000</div>
-          <div className='col-4 col-md mm-account-table__body--data d-none d-xl-block'><span className='d-block d-md-none'>Aug 2020</span>$32,000</div>
-          <div className='col-4 col-md mm-account-table__body--data'><span className='d-block d-md-none'>Sep 2020</span>$32,000</div>
+  const isCurrent = (interval: string) =>
+    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+
+  const gc = (interval: string) => {
+    if (interval) {
+      if (isCurrent(interval)) {
+        return 'current-m';
+      }
+    }
+    // return 'tab-hide';
+    return '';
+  };
+
+  return (
+    <section>
+      {holdings?.length > 0 ? (
+        <div className='row mb-40'>
+          <div className='col-12'>
+            <div className='ct-box'>
+              <div className='table-holder'>
+                <Table className='tb-responsive account' id='table-account-xls'>
+                  <thead>
+                    <tr>
+                      <th className='s-hide'>Holdings</th>
+                      <th className='hide-type'>Price</th>
+                      <th>Quantity</th>
+                      <th className='hide-type'>Symbol</th>
+                      <th className='hide-type'>Cost</th>
+                      {holdings?.[0]?.intervalValues.map((item: any, idx: number) => (
+                        <th key={idx} className={gc(item.interval)}>
+                          {item.interval}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {holdings?.length > 0 && holdings.map((item, index) => (
+                      <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>
+                        <td>{item.description}</td>
+                        <td className='hide-type'>{item.price ? getCurrencySymbol(item.costBasisCurrency) : ''}{item.price}</td>
+                        <td >{item.quantity}</td>
+                        <td className='hide-type'>{item.symbol}</td>
+                        <td className='hide-type'>{item.costBasis ? getCurrencySymbol(item.costBasisCurrency) : ''}{item.costBasis ? numberWithCommas(fNumber(item.costBasis, 2)) : 0}</td>
+                        {item.intervalValues.map((ins: any, i: number) => (
+                          <td key={i} className={[ins.type === `projection` && `projection`, gc(ins.interval)].join(' ')}>
+                            <span className={gc(ins.interval)}>{ins.interval}</span>{ins.value ? getCurrencySymbol(item.costBasisCurrency) : ''}{numberWithCommas(fNumber(ins.value, 2))}
+                            {(editIndex === index && i === (item.intervalValues.length - 1)) ? <Edited className='edited-icon' /> : <></>}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-);
+      ) : (<span className='no-data'>No holdings data</span>)}
+    </section >
+  );
 };
 
 export default AccountTable;

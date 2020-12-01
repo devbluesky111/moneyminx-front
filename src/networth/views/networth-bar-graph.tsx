@@ -4,6 +4,7 @@ import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, Cartesi
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { NetworthBarGraphProps } from 'networth/networth.type';
+import { formatter, getInterval } from 'common/bar-graph-helper';
 
 const CustomTooltip = (props: any) => {
   const { active, payload } = props;
@@ -52,7 +53,6 @@ const CustomTooltip = (props: any) => {
       </div>
     );
   }
-
   return null;
 };
 
@@ -70,24 +70,13 @@ const renderCustomRALabel = (props: any) => {
   }} x={x + 15} y={y + 25} fill='#534CEA' fillOpacity='0.4'>projected</text>;
 };
 
-const formatter = (value: number) => {
-  if (value < 1000000) {
-    return `$${value / 1000}k`;
-  } else {
-    return `$${value / 1000000}m`;
-  }
-}
-const getInterval = (max: number) => {
-  let _interval = max / 4;
-  let _l = Number(_interval.toString().split('.')[0].length) - 1;
-  let _maxFloor = Math.ceil(_interval / (Math.pow(10, _l)));
-  return _maxFloor * Math.pow(10, _l);
-}
 const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
   const { networth, fCategories } = props;
+
   if (!networth.length) {
     return <CircularSpinner />;
   }
+
   let max = 0;
   for (let i = 0; i < networth.length; i++) {
     let values = Object.values(networth[i]);
@@ -97,6 +86,7 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
       }
     }
   }
+
   let first_projection = undefined;
   for (let i = 0; i < networth.length; i++) {
     if (networth[i].type === 'projection') {
@@ -104,10 +94,12 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
       break;
     }
   }
+
   let _interval = getInterval(max);
   if (max > _interval * 3.5) {
     _interval = getInterval(max + _interval / 2);
   }
+
   return (
     <div className='responsive-container'>
       <ResponsiveContainer width='100%' height='100%'>

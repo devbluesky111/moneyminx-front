@@ -19,6 +19,7 @@
 
     label {
       border: none;
+      margin-bottom: 0;
     }
 
     .mm-radio-bg {
@@ -629,7 +630,7 @@
         height: 250px;
         width: 100%;
 
-        div {
+        &>div {
           margin: auto;
         }
       }

@@ -589,6 +589,7 @@ a.upgrader-btn {
 
   &:hover {
     color: $darkGray;
+    border: none;
   }
 
   .dropdown-toggle {
@@ -604,6 +605,7 @@ a.upgrader-btn {
     &:active,
     &:focus {
       color: $darkGray !important;
+      border: none !important;
     }
   }
 
@@ -775,15 +777,16 @@ a.upgrader-btn {
   width: auto;
   height: 48px;
   padding: 0 20px;
-  min-width: 120px;
+  min-width: 122px;
 
   &:focus,
   &:hover,
   &:active {
     background: none !important;
     box-shadow: none !important;
-    color: $darkGray !important;
-    border: 1px solid $gray !important;
+  }
+  &:hover, &:active {
+    border: 1px solid $gray;
   }
 }
 .drop-box .dropdown-toggle:after {
@@ -854,6 +857,10 @@ a.upgrader-btn {
 
   &:hover {
     color: $darkGray;
+  }
+
+  &.active {
+    color: $purple;
   }
 }
 .date-box input::-webkit-input-placeholder {
@@ -995,16 +1002,9 @@ a.upgrader-btn {
   background: $white;
   box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border-radius: 6px;
-  padding: 25px 20px 16px 20px;
+  padding: 20px;
   height: 100%;
   position: relative;
-
-  @media (min-width: $sm) {
-    padding: 20px 8px 20px 8px;
-  }
-  @media (min-width: $med) {
-    padding: 28px 20px 20px 20px;
-  }
 }
 
 .ct-box:before {
@@ -1077,6 +1077,9 @@ a.upgrader-btn {
   border-bottom: 1px solid $grayOpacity20;
   border-top: none;
 }
+.table-holder .table.account tbody td {
+  white-space: pre-wrap;
+}
 .table thead th.current-m,
 .table tbody td.current-m,
 .table tfoot td.current-m,
@@ -1091,6 +1094,10 @@ a.upgrader-btn {
 .table-holder .table tfoot td:first-child {
   font-weight: 600;
   color: $black;
+}
+.table-holder .table.account tbody td:first-child {
+  min-width: 300px;
+  overflow-wrap: break-word; 
 }
 .table-holder .table tbody td:not(:first-child),
 .table-holder .table tfoot td:not(:first-child) {
@@ -1114,17 +1121,14 @@ a.upgrader-btn {
 .table tfoot td {
   width: 7%;
   transition: 0.3s all;
-}
-.table thead th:first-child,
-.table tbody td:first-child,
-.table tfoot td:first-child {
-  width: 16%;
-  // padding-left:20px;
-}
-.table thead th:nth-child(2),
-.table tbody td:nth-child(2),
-.table tfoot td:nth-child(2) {
-  width: 18%;
+
+  .edited-icon {
+    position: absolute;
+    right: -15px;
+    top: 7px;
+    z-index: 100;
+  }
+
 }
 
 .table-holder .table tbody tr:first-child td:nth-last-of-type(3).projection:before {
@@ -1252,6 +1256,9 @@ a.upgrader-btn {
 }
 .drop-box .dropdown-menu.dropsm {
   min-width: inherit;
+}
+.drop-box.active button {
+  color: $purple !important;
 }
 .radiolist {
   padding: 10px 0;
@@ -1477,17 +1484,25 @@ a.upgrader-btn {
 .graphbox ul li + li {
   margin-top: 22px;
 }
+.graphbox ul li {
+  margin-left: -20px;
+  padding-left: 20px;
+}
 .graphbox ul li.inv-data {
   color: $blue;
+  border-left: 2px solid $blue;
 }
 .graphbox ul li.other-data {
   color: $cyan;
+  border-left: 2px solid $cyan;
 }
 .graphbox ul li.lty-data {
   color: $red;
+  border-left: 2px solid $red;
 }
 .graphbox ul li.nw-data {
   color: $purple;
+  border-left: 2px solid $purple;
 }
 
 .responsive-container {
@@ -1793,8 +1808,8 @@ ul.charttool li.nw-data:before {
 .table-holder .table tbody td.dataTables_empty {
   display: none;
 }
-.table tbody tr:hover,
-.table tfoot tr:hover {
+.table:not(#table-net-xls) tbody tr:hover,
+.table:not(#table-net-xls) tfoot tr:hover {
   cursor: pointer;
 }
 
@@ -1852,6 +1867,12 @@ footer p {
 .d-hide {
   display: none !important;
 }
+.s-hide {
+  display: none !important;
+  @media (min-width: $med) {
+    display: block !important;
+  }
+}
 
 .dropdowns-container {
   display: flex !important;
@@ -1860,7 +1881,26 @@ footer p {
 .dflex-center {
   display: flex !important;
   justify-content: center;
-  align-items: center;
+
+  .clear-filter {
+    margin-right: 0.5rem;
+    background: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: $red;
+    border: 1px solid rgba($red, 0.24);
+    border-radius: 4px;
+    width: auto;
+    height: 48px;
+    padding: 0 20px;
+    min-width: 122px;
+
+    &:focus, &:hover, &:active {
+      background: none !important;
+      box-shadow: none !important;
+      color: $red !important;
+    }
+  }
 }
 /** =============================== **/
 /** responsive **/
@@ -1881,17 +1921,6 @@ footer p {
   .table tfoot td {
     width: 6%;
     transition: 0.3s all;
-  }
-  .table thead th:first-child,
-  .table tbody td:first-child,
-  .table tfoot td:first-child {
-    width: 14%;
-    // padding-left:20px;
-  }
-  .table thead th:nth-child(2),
-  .table tbody td:nth-child(2),
-  .table tfoot td:nth-child(2) {
-    width: 15%;
   }
   .tab-hide {
     display: none !important;
@@ -1960,11 +1989,11 @@ footer p {
     position: relative;
     transition: 0.1s all;
   }
-  .table tbody tr:hover {
+  .table:not(#table-net-xls) tbody tr:hover {
     background: $darkBg;
     color: $white;
   }
-  .table tbody tr:hover td {
+  .table:not(#table-net-xls) tbody tr:hover td {
     color: $white !important;
     border-bottom-color: transparent;
   }
@@ -1972,9 +2001,21 @@ footer p {
   .table tbody tr td:last-child:after {
     content: '';
     position: absolute;
+    top: -1px;
+    bottom: 0;
+    width: 20px;
+    height: calc(100% + 1px);
+    background: transparent;
+    transition: 0.1s all;
+  }
+  .table tbody tr:first-child td:first-child:before,
+  .table tbody tr:first-child td:last-child:after {
+    content: '';
+    position: absolute;
     top: 0;
     bottom: 0;
     width: 20px;
+    height: 51px;
     background: transparent;
     transition: 0.1s all;
   }
@@ -1986,8 +2027,8 @@ footer p {
     right: -20px;
     border-radius: 0 6px 6px 0;
   }
-  .table tbody tr:hover td:first-child:before,
-  .table tbody tr:hover td:last-child:after {
+  .table:not(#table-net-xls) tbody tr:hover td:first-child:before,
+  .table:not(#table-net-xls) tbody tr:hover td:last-child:after {
     background: $darkBg;
   }
 }
@@ -2019,10 +2060,9 @@ footer p {
     display: flex;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-top: 40px;
+    margin-top: 20px;
   }
   .graphbox ul li {
-    margin-bottom: 20px;
     -webkit-flex: 0 0 50%;
     flex: 0 0 50%;
     max-width: 50%;
@@ -2291,7 +2331,7 @@ $start-width: 100%;
   }
 }
 .date-separator {
-  margin: auto 0.25rem;
+  margin: 1rem 0.25rem;
   color: $gray;
   font-size: 0.875rem;
 }
@@ -2319,4 +2359,7 @@ $start-width: 100%;
       color: $primary !important;
     }
   }
+}
+.date-separator.active {
+  color: $purple;
 }
