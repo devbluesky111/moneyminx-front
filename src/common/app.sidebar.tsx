@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+
+import { logout } from 'auth/auth.service';
 import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 import { ReactComponent as Upgrade } from 'assets/icons/upgrade.svg';
 import { ReactComponent as Profile } from 'assets/icons/profile.svg';
@@ -18,7 +20,10 @@ const AppSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => 
 
   return (
     <>
-      <aside className={ openRight ? 'profilemenu open-slidebar' : 'profilemenu'} style={{ right: openRight ? 0 : -300 }}>
+      <aside
+        className={openRight ? 'profilemenu open-slidebar' : 'profilemenu'}
+        style={{ right: openRight ? 0 : -300 }}
+      >
         <ul className='prlist-up mb-0 mt-2'>
           <li>
             <Link to='/settings?active=Plan'>
@@ -67,7 +72,7 @@ const AppSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => 
         <hr className='sidebar-custom-hr' />
         <ul className='prlist-log mb-0'>
           <li>
-            <Link to='#'>
+            <Link to='#' onClick={logout}>
               <Logout />
               <i className='icon-logout' /> Logout
             </Link>
@@ -76,8 +81,12 @@ const AppSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => 
       </aside>
       <aside className='mobmenu collapse' id='headerMenu' style={{ left: openLeft ? 0 : -300 }}>
         <div className='headtab'>
-          <Link to='/net-worth' className={sidebarClass('net-worth')}>Net Worth</Link>
-          <Link to='/allocation' className={sidebarClass('allocation')}>Allocation</Link>
+          <Link to='/net-worth' className={sidebarClass('net-worth')}>
+            Net Worth
+          </Link>
+          <Link to='/allocation' className={sidebarClass('allocation')}>
+            Allocation
+          </Link>
         </div>
       </aside>
     </>

@@ -157,3 +157,9 @@ export const changePassword = async ({ dispatch, payload }: ChangePasswordServic
 
   return { data, error };
 };
+
+export const logout = () => {
+  storage.clear();
+
+  return window.location.assign('/login?action=logout');
+};

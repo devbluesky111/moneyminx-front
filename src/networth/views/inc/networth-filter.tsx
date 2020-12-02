@@ -19,7 +19,7 @@ import {
   setFilterAccountType,
   setFilterTimeInterval,
 } from 'networth/networth.actions';
-import { NetworthFilterProps, NetworthState } from 'networth/networth.type';
+import { NetworthFilterProps, NetworthState, TFilterKey } from 'networth/networth.type';
 
 const NetworthFilter = (props: NetworthFilterProps) => {
   const dispatch = useNetworthDispatch();
@@ -90,6 +90,12 @@ const NetworthFilter = (props: NetworthFilterProps) => {
     return dispatch(clearFilter());
   };
 
+  const hasFiltered = () => {
+    const filterKey: TFilterKey[] = ['fCategories', 'fTypes', 'fAccounts', 'fToDate', 'fFromDate', 'fTimeInterval'];
+
+    return filterKey.some((key) => isFiltered(key));
+  };
+
   const isFiltered = (key: keyof NetworthState) => {
     if (serialize(networthState[key] as any) !== serialize(initialState[key] as any)) {
       return true;
@@ -105,11 +111,13 @@ const NetworthFilter = (props: NetworthFilterProps) => {
     <div className='row'>
       <div className='col-12 dropdowns-container'>
         <div className='dflex-center mb-15'>
-          <div className='drop-box clear-filter'>
-            <button className='dropdown-toggle' onClick={clearNetworthFilter}>
-              Clear Filter
-            </button>
-          </div>
+          {hasFiltered() ? (
+            <div className='drop-box clear-filter'>
+              <button className='dropdown-toggle' onClick={clearNetworthFilter}>
+                Clear Filter
+              </button>
+            </div>
+          ) : null}
           <Dropdown className='drop-box'>
             <Dropdown.Toggle variant='' className={fc('fCategories')}>
               All Categories
