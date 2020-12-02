@@ -122,7 +122,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
         <ManualAccountForm closeSidebar={() => setAccSetting(false)} />
       </aside>
-      {accSetting && <div className='backdrop'></div>}
+      {accSetting && <div className='backdrop' onClick={() => setAccSetting(false)}></div>}
       <AppHeader
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
