@@ -5,28 +5,26 @@ import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.sv
 import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
 import { Link } from 'react-router-dom';
-import { ReactComponent as HomeNetWorthProjections } from '../../assets/images/home/net-worth-projections.svg';
 
-const FeaturesNetWorth = () => {
+const FeaturesTransactionHistory = () => {
   return (
     <WebsiteLayout>
       <div className='mm-new-container'>
-        <FeaturesNetWorthTopSection />
-        <FeaturesNetWorthNetWorthSection />
-        <FeaturesNetWorthProjections />
+        <FeaturesTransactionHistoryTopSection />
+        <FeaturesTransactionHistoryBottomSection />
       </div>
     </WebsiteLayout>
   );
 };
-export default FeaturesNetWorth;
+export default FeaturesTransactionHistory;
 
-export const FeaturesNetWorthTopSection = () => {
+export const FeaturesTransactionHistoryTopSection = () => {
   return (
     <section>
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
           <div className=''>
-            <h1>Net Worth Tracker</h1>
+            <h1>TransactionHistory</h1>
             <div className='p-b-10'>
               <p className='text'>
                 Money Minx allows you to track all of your assets and liabilities in one place to help you track your net worth.
@@ -103,49 +101,23 @@ export const FeaturesNetWorthTopSection = () => {
   );
 };
 
-export const FeaturesNetWorthNetWorthSection = () => {
+export const FeaturesTransactionHistoryBottomSection = () => {
   return (
-    <section>
-        <div className='row'>
-          <div className='col-xl-5'>
-            <div className='networth-text'>
-              <h2>Net Worth Charts</h2>
-              <p className='text'>
-                Once your accounts are added we will keep them in sync so you will always know what your current net worth is,
-                You can also keep an eye on your historical net worth and see it grow with time.
-              </p>
-            </div>
-          </div>
-          <div className='col-xl-7'>
-            <div className='mm-networth-chart text-center'>
-              <AboutNetWorthChart className='mm-about-net-worth-chart' />
-            </div>
-          </div>
-        </div>
-    </section>
-
-  );
-};
-export const FeaturesNetWorthProjections = () => {
-  return (
-    <section>
-      <div className='mm-home-performance-section networth-section rtl'>
-        <div className='row'>
-          <div className='col-xl-5'>
-            <div className='networth-text'>
-              <h2>Net Worth Projections</h2>
-              <p className='text'>
-                Money Minx will use the data your provide and estimated returns to give you a sense of what your net worth will look like into the future.
-              </p>
-            </div>
-          </div>
-          <div className='col-xl-7'>
-            <div className='mm-home-performance-section-chart'>
-              <HomeNetWorthProjections />
-            </div>
-          </div>
+    <div className='row'>
+      <div className='col-xl-5'>
+        <div className='networth-text'>
+          <h2>Account Holdings</h2>
+          <p className='text'>
+            Once your accounts are added we will keep them in sync so you will always know what your current net worth is,
+            You can also keep an eye on your historical net worth and see it grow with time.
+          </p>
         </div>
       </div>
-    </section>
+      <div className='col-xl-7'>
+        <div className='mm-networth-chart text-center'>
+          <AboutNetWorthChart className='mm-about-net-worth-chart' />
+        </div>
+      </div>
+    </div>
   );
 };

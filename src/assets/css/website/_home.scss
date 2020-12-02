@@ -1,7 +1,13 @@
 .rtl {
   direction: rtl;
 }
+.feature-links h2 {
+  color: $black;
 
+  &:hover {
+    color: $purple;
+  }
+}
 .home-top {
   h1 {
     padding-bottom: 1.3rem;
