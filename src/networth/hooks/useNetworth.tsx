@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { getNetworth } from 'api/request.api';
+import { TimeIntervalEnum } from 'networth/networth.enum';
 import { NetworthItem, NetworthType } from 'networth/networth.type';
 import { setAccounts, setNetWorth } from 'networth/networth.actions';
-import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
 import { parseAccountDetails, parseIntervalList } from 'common/interval-parser';
-import { logger } from 'common/logger.helper';
-import { TimeIntervalEnum } from 'networth/networth.enum';
+import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
 
 const useNetworth = () => {
   const dispatch = useNetworthDispatch();
@@ -50,13 +49,11 @@ const useNetworth = () => {
 
       if (data?.networth) {
         const parsedNetworth: NetworthItem[] = parseIntervalList(data.networth, isQuarter) as any;
-        logger.log('Parsed Networth', parsedNetworth);
         dispatch(setNetWorth(parsedNetworth));
       }
 
       if (data?.accounts) {
         const parsedAccountDetails = parseAccountDetails(data.accounts, isQuarter);
-        logger.log('parsed Account details', parsedAccountDetails);
 
         dispatch(setAccounts(parsedAccountDetails));
       }
