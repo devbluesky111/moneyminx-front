@@ -7,7 +7,7 @@ import { getAccount } from 'api/request.api';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { arrGroupBy, enumerateStr, serialize } from 'common/common-helper';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
-import { getDate, getMonthYear, getRelativeDate, getUTC, parseDate } from 'common/moment.helper';
+import { getDate, getMonthYear, getRelativeDate, getUTC, parseDateFromString } from 'common/moment.helper';
 import { initialState, useNetworthDispatch, useNetworthState } from 'networth/networth.context';
 
 import {
@@ -41,7 +41,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
   }, []);
 
   const fromInterval = networth?.[0].interval || '';
-  const fromDate = parseDate(fromInterval);
+  const fromDate = parseDateFromString(fromInterval);
 
   const onChange = (option: string, date: any) => {
     if (option === 'start') {
@@ -113,9 +113,9 @@ const NetworthFilter = (props: NetworthFilterProps) => {
       <div className='col-12 dropdowns-container'>
         <div className='dflex-center mb-15'>
           {hasFiltered() ? (
-              <button className='btn btn-outline-danger clear-filter' onClick={clearNetworthFilter}>
-                Clear Filters
-              </button>
+            <button className='btn btn-outline-danger clear-filter' onClick={clearNetworthFilter}>
+              Clear Filters
+            </button>
           ) : null}
           <Dropdown className='drop-box'>
             <Dropdown.Toggle variant='' className={fc('fCategories')}>

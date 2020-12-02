@@ -1,15 +1,23 @@
 import moment from 'moment';
 
+/**
+ *
+ * @param inputDate
+ * used just for parsing not calculation please
+ */
 export const getMonthYear = (inputDate?: any) => {
-  if (inputDate !== undefined) {
-    const year = moment.utc(inputDate).format('yyyy');
-    const month = moment.utc(inputDate).format('MM');
-    const nextMonthDate = new Date(parseInt(year, 10), parseInt(month, 10), 1);
+  return moment(inputDate).format('MMM YYYY');
+};
 
-    return moment.utc(nextMonthDate).format('MMM YYYY');
+export const parseDateFromString = (dateString: string) => {
+  if (dateString.includes('Q')) {
+    const qDate = moment(dateString, 'Q YYYY').toDate();
+
+    return qDate;
   }
 
-  return moment.utc(inputDate).format('MMM YYYY');
+  const myDate = moment(dateString, 'MMM YYYY').toDate();
+  return myDate;
 };
 
 export const parseUTCString = (str: string, isQuarter?: boolean) => {
