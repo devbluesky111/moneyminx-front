@@ -1,12 +1,12 @@
 import React from 'react';
-import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
-import { ReactComponent as OwnAccountIcon } from 'assets/images/subscription/own-account-icon.svg';
-import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
-
-import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
+import Button from 'react-bootstrap/Button';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import MerrilEdgeLogo from 'assets/images/subscription/merriledgelogo.png';
-import { ReactComponent as IconTrash } from 'assets/icons/icon-trash.svg';
+
+import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
+import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
+import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
+import { ReactComponent as OwnAccountIcon } from 'assets/images/subscription/own-account-icon.svg';
 
 const SubscriptionEnded = () => {
   return (
@@ -32,55 +32,106 @@ export const PricingTable = () => {
                 <SubscriptionWarning />
               </span>
             </div>
+
             <div className='col-lg-12'>
               <div className='subscription-account-wrap'>
-                <h3>Connected Accounts</h3>
-                <ul className='subscribed-list'>
+                <div className='subscription-account-wrap__title d-md-flex justify-content-between align-items-center'>
+                  <div className='subscription-account-wrap__title--text text-danger'>
+                    Connected Accounts (14/5)
+                    <small>
+                      Upgrade your account to add more connections
+                    </small>
+                  </div>
+                  <Button className='subscription-account-wrap__title--button mt-2' variant='outline-primary'>Upgrade</Button>
+                </div>
+
+                <ul className='subscribed-list mm-connected-accounts'>
                   <li>
                     <div className='account-wrap mr-0'>
-                      <p>
-                        <span className='logo-icon'>
-                          <AboutWealthFrontIcon />
-                        </span>
-                        Wealthfront
-                      </p>
-                      <IconTrash className='trash-icon'/>
+                      <div className='row no-gutters align-items-center justify-content-between mb-3 account-wrap__header'>
+                        <p>
+                          <span className='logo-icon'>
+                            <img alt='Peer Street' src={PeerStreetLogo} />
+                          </span>
+                          Peer Street
+                        </p>
+                        <small className='mt-3 mt-md-0'>Last updated 10 days ago</small>
+                      </div>
+                      <div className='row no-gutters align-items-center py-3 account-wrap__body'>
+                        <div className='col-7 col-md-8'>Account 01 (3432)</div>
+                        <div className='col-3 col-md-3'>$1,222</div>
+                        <div className='col-auto ml-auto'><DeleteIcon /></div>
+                      </div>
+                      <div className='row no-gutters align-items-center py-3 account-wrap__body'>
+                        <div className='col-7 col-md-8'>Account 02 (1321)</div>
+                        <div className='col-3 col-md-3'>$683,086</div>
+                        <div className='col-auto ml-auto'><DeleteIcon /></div>
+                      </div>
+                      <div className='row no-gutters pt-3 account-wrap__footer'>
+                        <div className='col-auto ml-md-auto'>
+                          <small>
+                            Delete account and remove data
+                          </small>
+                        </div>
+                      </div>
                     </div>
                   </li>
+
                   <li>
                     <div className='account-wrap mr-0'>
-                      <p>
-                        <span className='logo-icon'>
-                          <img alt='Peer Street' src={PeerStreetLogo} />
-                        </span>
-                        Peer Street
-                      </p>
-                      <IconTrash className='trash-icon'/>
-                    </div>
-                  </li>
-                  <li>
-                    <div className='account-wrap mr-0'>
-                      <p>
-                        <span className='logo-icon'>
-                          <img src={MerrilEdgeLogo} alt='Peer Street' />
-                        </span>
-                        Merill Edge IRA
-                      </p>
-                      <IconTrash className='trash-icon'/>
+                      <div className='row no-gutters align-items-center justify-content-between mb-3 account-wrap__header'>
+                        <p>
+                          <span className='logo-icon'>
+                            <img src={MerrilEdgeLogo} alt='Peer Street' />
+                          </span>
+                          Merill Edge IRA
+                        </p>
+                        <small className='mt-3 mt-md-0'>Last updated 10 days ago</small>
+                      </div>
+                      <div className='row no-gutters align-items-center py-3 account-wrap__body'>
+                        <div className='col-7 col-md-8'>Account 01 (3212)</div>
+                        <div className='col-3 col-md-3'>$4,234</div>
+                        <div className='col-auto ml-auto'><DeleteIcon /></div>
+                      </div>
+                      <div className='row no-gutters align-items-center py-3 account-wrap__body'>
+                        <div className='col-7 col-md-8'>Account 02 (2321)</div>
+                        <div className='col-3 col-md-3'>$855,345</div>
+                        <div className='col-auto ml-auto'><DeleteIcon /></div>
+                      </div>
+                      <div className='row no-gutters pt-3 account-wrap__footer'>
+                        <div className='col-auto ml-md-auto'>
+                          <small>
+                            Delete account and remove data
+                          </small>
+                        </div>
+                      </div>
                     </div>
                   </li>
                 </ul>
-                <h3>Manual Accounts</h3>
-                <ul className='subscribed-list'>
+
+                <div className='subscription-account-wrap__title d-md-flex justify-content-between align-items-center'>
+                  <div className='subscription-account-wrap__title--text'>
+                    Manual Accounts (3/4)
+                  </div>
+                  <Button className='subscription-account-wrap__title--button mt-2' variant='outline-primary'>Upgrade</Button>
+                </div>
+
+                <ul className='subscribed-list mm-manual-accounts'>
                   <li>
                     <div className='account-wrap mr-0'>
-                      <p>
-                        <span className='logo-icon'>
-                          <OwnAccountIcon />
-                        </span>
-                        My own account
-                      </p>
-                      <IconTrash className='trash-icon'/>
+                      <div className='row no-gutters align-items-center justify-content-between mb-3 account-wrap__header'>
+                        <p>
+                          <span className='logo-icon'>
+                            <OwnAccountIcon />
+                          </span>
+                          Money Minx Manual
+                        </p>
+                      </div>
+                      <div className='row no-gutters align-items-center py-3 account-wrap__body'>
+                        <div className='col-7 col-md-8'>Account 01</div>
+                        <div className='col-3 col-md-3'>$7,235</div>
+                        <div className='col-auto ml-auto'><DeleteIcon /></div>
+                      </div>
                     </div>
                   </li>
                 </ul>
