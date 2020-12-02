@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import CircularSpinner from 'common/components/spinner/circular-spinner';
@@ -20,11 +20,15 @@ import { loginValidationSchema } from 'auth/auth.validation';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import { MMCategories } from 'auth/auth.enum';
 import { makeFormFields } from 'auth/auth.helper';
-import { patchAccount } from 'api/request.api';
+import { deleteAccount, patchAccount } from 'api/request.api';
 import { SelectInput } from 'common/components/input/select.input';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
 import { StringKeyObject } from 'common/common.types';
+import { useModal } from 'common/components/modal';
+
+import DeleteAccountModal from './delete-account.modal';
+
 
 interface Props {
   currentAccount?: Account;
@@ -32,6 +36,7 @@ interface Props {
 }
 
 const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) => {
+  const history = useHistory();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
 
@@ -41,6 +46,8 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
   const { fetchingLoanAccount, loanAccountError } = useLoanAccount();
   const { fetchingMortgage, mortgageError } = useAssociateMortgage();
   const { accountFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
+
+  const deleteAccountModal = useModal();
 
   /**
    * Set account type and account subtype
@@ -93,6 +100,18 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
   const currentFormFields = currentAccount?.accountDetails;
 
   const hasAccountSubType = accountSubTypes.some(Boolean);
+
+  const deleteAccountById = async () => {
+    if (currentAccount?.id) {
+      const { error } = await deleteAccount(currentAccount.id.toString());
+      if (!error) {
+        toast('Delete Success', { type: 'success' });
+        history.push('/net-worth');
+      } else {
+        toast('Delete Failed', { type: 'error' });
+      }
+    }
+  }
 
   return (
     <Formik
@@ -443,6 +462,7 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
                           <button
                             className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete'
                             type='button'
+                            onClick={() => deleteAccountModal.open()}
                           >
                             Delete Account
                           </button>
@@ -465,7 +485,7 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
                   </div>
 
                 </form>
-
+                <DeleteAccountModal deleteAccountModal={deleteAccountModal} deleteAccountById={deleteAccountById} />
                 <p className='flex-box learn-more-security'>
                   <SecurityIcon />
                   <a href='/security' target='_blank' className='purple-links'>

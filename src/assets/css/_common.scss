@@ -107,6 +107,18 @@ textarea.form-control {
   }
 }
 
+.mm-btn-secondary {
+  color: $red;
+  &:hover {
+    color: $white;
+    box-shadow: 0 4px 12px $pinkShadow30;
+    background: $red;
+  }
+  &:disabled {
+    opacity: 0.7;
+  }
+}
+
 .mm-btn-primary-outline {
   color: $lightBg;
   border: 1.5px solid $white;
