@@ -12,6 +12,8 @@ export const getMonthYear = (inputDate?: any) => {
   return moment.utc(inputDate).format('MMM YYYY');
 };
 
+export const parseDate = (str: string) => moment.utc(str, 'MMM YYYY').toDate();
+
 export const getUTC = <T>(inputDate?: T) => moment.utc(inputDate).toDate();
 
 export const getRelativeDate = (inputDate: string) => moment.utc(inputDate).fromNow();
