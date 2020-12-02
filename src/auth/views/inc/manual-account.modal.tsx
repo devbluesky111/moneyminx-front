@@ -3,10 +3,11 @@ import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { currencyArray } from 'common/currency-helper';
-import { Modal, ModalType } from 'common/components/modal';
-import { getManualAccountType, postManualAccount } from 'api/request.api';
 import { appRouteConstants } from 'app/app-route.constant';
+import { CurrencyOptions } from 'auth/enum/currency-options';
+import { getManualAccountType, postManualAccount } from 'api/request.api';
+import { enumerateStr, formater } from 'common/common-helper';
+import { Modal, ModalType } from 'common/components/modal';
 import { useHistory } from 'react-router-dom';
 
 interface SettingModalProps {
@@ -28,7 +29,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
     const [AccountTypes, setAccountTypes] = useState([]);
     const [disabled, setDisabled] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
-    const curArr = currencyArray();
+    const curArr = enumerateStr(CurrencyOptions);
 
     const handleChange = (e: React.ChangeEvent<any>) => {
         if (e.target.name === 'balance') {
@@ -77,7 +78,6 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
     }, [manualAccountModal])
 
     React.useEffect(() => {
-        console.log(Object.values(values))
         for (let i = 0; i < Object.values(values).length; i++) {
             if (!Object.values(values)[i]) {
                 setDisabled(true);
@@ -126,7 +126,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
                                 >
                                     <option value=''>Select Account Type</option>
                                     {AccountTypes.map((item, index) => (
-                                        <option key={index} value={item}>{item}</option>
+                                        <option key={index} value={item}>{formater(item)}</option>
                                     ))}
                                 </Form.Control>
                             </Form.Group>
