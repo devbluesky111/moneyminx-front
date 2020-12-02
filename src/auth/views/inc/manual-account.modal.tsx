@@ -1,12 +1,13 @@
-import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
+
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { currencyArray } from 'common/currency-helper';
 import { Modal, ModalType } from 'common/components/modal';
 import { getManualAccountType, postManualAccount } from 'api/request.api';
 import { appRouteConstants } from 'app/app-route.constant';
 import { useHistory } from 'react-router-dom';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 interface SettingModalProps {
     manualAccountModal: ModalType;
@@ -55,7 +56,6 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
             history.push(appRouteConstants.account.ACCOUNT.replace(':accountId', res.id));
         } else {
             console.log(err);
-            setValues(initialValues);
             setLoading(false);
             toast(' Add Failed', { type: 'error' });
         }
@@ -77,6 +77,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
     }, [manualAccountModal])
 
     React.useEffect(() => {
+        console.log(Object.values(values))
         for (let i = 0; i < Object.values(values).length; i++) {
             if (!Object.values(values)[i]) {
                 setDisabled(true);
