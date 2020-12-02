@@ -258,7 +258,9 @@ const NetworthFilter = (props: NetworthFilterProps) => {
             }
           />
           <Dropdown className='drop-box m-l-2'>
-            <Dropdown.Toggle className={fc('fTimeInterval')}>{fTimeInterval || 'Monthly'}</Dropdown.Toggle>
+            <Dropdown.Toggle variant='' className={fc('fTimeInterval')}>
+              {fTimeInterval || 'Monthly'}
+            </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu dropsm'>
               <ul className='radiolist'>
                 {enumerateStr(TimeIntervalEnum).map((interval, index) => {

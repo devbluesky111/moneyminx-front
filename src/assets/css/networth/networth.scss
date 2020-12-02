@@ -784,6 +784,7 @@ a.upgrader-btn {
   &:active {
     background: none !important;
     box-shadow: none !important;
+    color: $darkGray;
   }
   &:hover,
   &:active {
@@ -807,6 +808,19 @@ a.upgrader-btn {
   transform: rotate(-135deg);
   vertical-align: 0;
   transition: 0.3s all;
+}
+
+.drop-box {
+  .show {
+    button.dropdown-toggle {
+      &:hover,
+      &:active,
+      &:visited {
+        color: $darkGray;
+        background: none;
+      }
+    }
+  }
 }
 
 .drop-box + .drop-box {
