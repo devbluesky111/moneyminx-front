@@ -326,11 +326,14 @@
   overflow-y: scroll;
   top: 0;
   bottom: 0;
-  width: 665px;
+  max-width: 665px;
   margin: 0;
   background: $white;
   box-shadow: 0 2px 8px $whiteShadow, inset 0px -1px 0px $whiteInsetShadow;
-  padding: 25px;
   transition: 0.3s all;
   z-index: 1000;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
