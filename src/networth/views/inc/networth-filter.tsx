@@ -8,7 +8,7 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { arrGroupBy, enumerateStr, serialize } from 'common/common-helper';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
 import { initialState, useNetworthDispatch, useNetworthState } from 'networth/networth.context';
-import { getISOString, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
+import { getDateString, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
 
 import {
   clearFilter,
@@ -49,14 +49,14 @@ const NetworthFilter = (props: NetworthFilterProps) => {
     if (option === 'start') {
       props.handleLoad();
 
-      return dispatch(setFilterFromDate(getISOString(date)));
+      return dispatch(setFilterFromDate(getDateString(date)));
     }
 
     if (option === 'end') {
-      if (fFromDate !== undefined && getISOString(date) > fFromDate) {
+      if (fFromDate !== undefined && getDateString(date) > fFromDate) {
         props.handleLoad();
 
-        return dispatch(setFilterToDate(getISOString(date)));
+        return dispatch(setFilterToDate(getDateString(date)));
       }
     }
   };

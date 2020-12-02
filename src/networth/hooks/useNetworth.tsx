@@ -6,6 +6,7 @@ import { NetworthItem, NetworthType } from 'networth/networth.type';
 import { setAccounts, setNetWorth } from 'networth/networth.actions';
 import { parseAccountDetails, parseIntervalList } from 'common/interval-parser';
 import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
+import { getUTC } from 'common/moment.helper';
 
 const useNetworth = () => {
   const dispatch = useNetworthDispatch();
@@ -34,8 +35,8 @@ const useNetworth = () => {
         accountType,
         timeInterval,
         category,
-        fromDate,
-        toDate,
+        fromDate: fromDate ? getUTC(fromDate) : undefined,
+        toDate: toDate ? getUTC(toDate) : undefined,
         accountId,
       });
 
