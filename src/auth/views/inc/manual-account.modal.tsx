@@ -93,12 +93,12 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
     return (
         <Modal {...manualAccountModal.props} title='Add Manual Accounts' size='lg' canBeClosed onClose={() => manualAccountModal.close()}>
             <div className='modal-wrapper mm-manual-account-modal'>
-                <span className='description'>With manual accounts you can track any asset and liablity that is not currently supported by our integration partners.</span>
+                <span className='description'>With manual accounts you can track any asset or liability that is not currently supported by our integration partners.</span>
                 <div className='mm-manual-account-modal__title mt-3'>
-                    <Form>
+                    <Form className='mm-form'>
                         <div className='row-set'>
                             <Form.Group controlId='ManualAccountForm.AccountName' className='child'>
-                                <Form.Label className='mm-manual-account-modal__sub-title'>Account Name</Form.Label>
+                                <Form.Label className='form-subheading'>Account Name</Form.Label>
                                 <Form.Control
                                     type='text'
                                     placeholder='Sapphire Credit Card'
@@ -108,7 +108,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
                                 />
                             </Form.Group>
                             <Form.Group controlId='ManualAccountForm.nickname' className='child'>
-                                <Form.Label className='mm-manual-account-modal__sub-title'>Nick Name</Form.Label>
+                                <Form.Label className='form-subheading'>Nickname</Form.Label>
                                 <Form.Control
                                     type='text'
                                     placeholder='Sapphire'
@@ -121,9 +121,9 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
                         </div>
                         <div className='row-set'>
                             <Form.Group controlId='ManualAccountForm.AccountType' className='child'>
-                                <Form.Label className='mm-manual-account-modal__sub-title'>Account Type</Form.Label>
+                                <Form.Label className='form-subheading'>Account Type</Form.Label>
                                 <Form.Control
-                                    as="select"
+                                    as='select'
                                     name='yodleeAccountType'
                                     onChange={handleChange}
                                 >
@@ -134,7 +134,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group controlId='ManualAccountForm.AccountNumber' className='child'>
-                                <Form.Label className='mm-manual-account-modal__sub-title'>Account Number</Form.Label>
+                                <Form.Label className='form-subheading'>Account Number</Form.Label>
                                 <Form.Control
                                     name='accountNumber'
                                     type='number'
@@ -147,18 +147,18 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
                         </div>
                         <div className='row-set'>
                             <Form.Group controlId='ManualAccountForm.CurrentBalance' className='child'>
-                                <Form.Label className='mm-manual-account-modal__sub-title'>Current Balance</Form.Label>
+                                <Form.Label className='form-subheading'>Current Balance</Form.Label>
                                 <Form.Control
                                     name='balance'
                                     type='number'
-                                    placeholder='43,233'
+                                    placeholder='43233.32'
                                     onChange={handleChange}
                                     value={values.balance}
                                     required
                                 />
                             </Form.Group>
                             <Form.Group controlId='ManualAccountForm.Currency' className='child'>
-                                <Form.Label className='mm-manual-account-modal__sub-title'>Currency</Form.Label>
+                                <Form.Label className='form-subheading'>Currency</Form.Label>
                                 <Form.Control
                                     as='select'
                                     name='currency'

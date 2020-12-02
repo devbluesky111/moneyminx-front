@@ -235,6 +235,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
         return (
           <form onSubmit={props.handleSubmit} className='account-setting-form'>
+            <span className='form-subheading'>Account Name</span>
             <input
               type='text'
               className='w-100 mb-4'
