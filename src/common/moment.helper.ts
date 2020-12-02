@@ -12,7 +12,20 @@ export const getMonthYear = (inputDate?: any) => {
   return moment.utc(inputDate).format('MMM YYYY');
 };
 
-export const parseDate = (str: string) => moment.utc(str, 'MMM YYYY').toDate();
+export const parseUTCString = (str: string, isQuarter?: boolean) => {
+  if (isQuarter) {
+    return moment.utc(str, 'Q YYYY').local().format('[Q]Q YYYY');
+  }
+
+  return moment.utc(str, 'MMM YYYY').local().format('MMM YYYY');
+};
+export const parseDate = (str: string) => {
+  if (str.includes('Q')) {
+    return moment.utc(str, 'Q YYYY').toDate();
+  }
+
+  return moment.utc(str, 'MMM YYYY').toDate();
+};
 
 export const getUTC = <T>(inputDate?: T) => moment.utc(inputDate).toDate();
 

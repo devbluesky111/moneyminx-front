@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { getNetworth } from 'api/request.api';
-import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
-import { NetworthType } from 'networth/networth.type';
+import { NetworthItem, NetworthType } from 'networth/networth.type';
 import { setAccounts, setNetWorth } from 'networth/networth.actions';
+import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
+import { parseAccountDetails, parseIntervalList } from 'common/interval-parser';
+import { logger } from 'common/logger.helper';
+import { TimeIntervalEnum } from 'networth/networth.enum';
 
 const useNetworth = () => {
   const dispatch = useNetworthDispatch();
@@ -12,12 +15,12 @@ const useNetworth = () => {
   const [response, setResponse] = useState<NetworthType>();
 
   const {
-    fToDate: toDate,
-    fTimeInterval: timeInterval,
-    fFromDate: fromDate,
+    fTypes,
     fAccounts,
     fCategories,
-    fTypes,
+    fToDate: toDate,
+    fFromDate: fromDate,
+    fTimeInterval: timeInterval,
   } = useNetworthState();
 
   const accountType = fTypes.length ? fTypes.toString() : undefined;
@@ -27,6 +30,7 @@ const useNetworth = () => {
   useEffect(() => {
     const fetchNetworth = async () => {
       setLoading(true);
+
       const { data, error: networthError } = await getNetworth({
         accountType,
         timeInterval,
@@ -36,6 +40,8 @@ const useNetworth = () => {
         accountId,
       });
 
+      const isQuarter = timeInterval === TimeIntervalEnum.QUARTERLY;
+
       if (networthError) {
         setLoading(false);
 
@@ -43,11 +49,16 @@ const useNetworth = () => {
       }
 
       if (data?.networth) {
-        dispatch(setNetWorth(data.networth));
+        const parsedNetworth: NetworthItem[] = parseIntervalList(data.networth, isQuarter) as any;
+        logger.log('Parsed Networth', parsedNetworth);
+        dispatch(setNetWorth(parsedNetworth));
       }
 
       if (data?.accounts) {
-        dispatch(setAccounts(data.accounts));
+        const parsedAccountDetails = parseAccountDetails(data.accounts, isQuarter);
+        logger.log('parsed Account details', parsedAccountDetails);
+
+        dispatch(setAccounts(parsedAccountDetails));
       }
 
       setLoading(false);
