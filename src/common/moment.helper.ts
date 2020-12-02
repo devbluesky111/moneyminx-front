@@ -39,7 +39,7 @@ export const getUTC = <T>(inputDate?: T) => moment.utc(inputDate).toDate();
 
 export const getRelativeDate = (inputDate: string) => moment.utc(inputDate).fromNow();
 
-export const getISOString = <T>(inputDate: T) => moment.utc(inputDate).toISOString();
+export const getISOString = <T>(inputDate: T) => moment(inputDate).toISOString();
 
 export const isAfter = <T, D>(inputDate: T, valDate?: D) => moment.utc(inputDate).isAfter(valDate);
 

@@ -7,8 +7,8 @@ import { getAccount } from 'api/request.api';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { arrGroupBy, enumerateStr, serialize } from 'common/common-helper';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
-import { getDate, getMonthYear, getRelativeDate, getUTC, parseDateFromString } from 'common/moment.helper';
 import { initialState, useNetworthDispatch, useNetworthState } from 'networth/networth.context';
+import { getISOString, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
 
 import {
   clearFilter,
@@ -43,18 +43,20 @@ const NetworthFilter = (props: NetworthFilterProps) => {
   const fromInterval = networth?.[0].interval || '';
   const fromDate = parseDateFromString(fromInterval);
 
+  // need to set current time zone value to the filter
+  // we will pass the utc to server but need to set the value in current time zone
   const onChange = (option: string, date: any) => {
     if (option === 'start') {
       props.handleLoad();
 
-      return dispatch(setFilterFromDate(getDate(getUTC(date))));
+      return dispatch(setFilterFromDate(getISOString(date)));
     }
 
     if (option === 'end') {
-      if (fFromDate !== undefined && getDate(getUTC(date)) > fFromDate) {
+      if (fFromDate !== undefined && getISOString(date) > fFromDate) {
         props.handleLoad();
 
-        return dispatch(setFilterToDate(getDate(getUTC(date))));
+        return dispatch(setFilterToDate(getISOString(date)));
       }
     }
   };
@@ -207,16 +209,21 @@ const NetworthFilter = (props: NetworthFilterProps) => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
+
+        {
+          // since filter date will be current timezone string
+          // no need to parse this to utc for setting up simply date must work
+        }
         <div className='dflex-center mb-15'>
           <ReactDatePicker
-            selected={fFromDate ? getUTC(fFromDate) : fromDate}
+            selected={fFromDate ? new Date(fFromDate) : fromDate}
             onChange={(date) => onChange('start', date)}
             // selectsStart
-            startDate={fFromDate ? getUTC(fFromDate) : fromDate}
+            startDate={fFromDate ? new Date(fFromDate) : fromDate}
             dateFormat='MM/yyyy'
             showMonthYearPicker
-            minDate={getUTC('1900-01-01')}
-            maxDate={getUTC()}
+            minDate={new Date('1900-01-01')}
+            maxDate={new Date()}
             className='m-l-3'
             // selectsRange
             customInput={
@@ -233,14 +240,14 @@ const NetworthFilter = (props: NetworthFilterProps) => {
           />
           <span className='date-separator'>to</span>
           <ReactDatePicker
-            selected={fToDate ? getUTC(fToDate) : null}
+            selected={fToDate ? new Date(fToDate) : null}
             onChange={(date) => onChange('end', date)}
             // selectsStart
-            startDate={fToDate ? getUTC(fToDate) : null}
+            startDate={fToDate ? new Date(fToDate) : null}
             dateFormat='MM/yyyy'
             showMonthYearPicker
-            minDate={fFromDate ? getUTC(fFromDate) : null}
-            maxDate={getUTC()}
+            minDate={fFromDate ? new Date(fFromDate) : null}
+            maxDate={new Date()}
             className='m-l-1'
             // selectsRange
             customInput={
