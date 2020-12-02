@@ -257,5 +257,15 @@ span.zillow-img {
     button:nth-child(2) {
       margin-left: 1rem;
     }
+
+    button {
+      position: relative;
+
+      .spinner {
+        position: absolute;
+        top: 8px;
+        right: 0;
+      }
+    }
   }
 }

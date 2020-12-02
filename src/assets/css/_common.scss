@@ -479,7 +479,7 @@ hr {
 .hide-sm {
   display: none;
 
-  @media (min-width: $sm) {
+  @media (min-width: $med) {
     display: inline;
   }
 }
