@@ -4,26 +4,30 @@ import React, { useEffect, useState } from 'react';
 
 import { Account } from 'auth/auth.types';
 import { getAccount } from 'api/request.api';
-import { arrGroupBy, enumerateStr } from 'common/common-helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { arrGroupBy, enumerateStr, serialize } from 'common/common-helper';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
-import { useNetworthDispatch, useNetworthState } from 'networth/networth.context';
-import { getDate, getMonthYear, getRelativeDate } from 'common/moment.helper';
+import { initialState, useNetworthDispatch, useNetworthState } from 'networth/networth.context';
+import { getDateString, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
 
 import {
-  setFilterAccount,
-  setFilterAccountType,
-  setFilterCategories,
-  setFilterFromDate,
-  setFilterTimeInterval,
+  clearFilter,
   setFilterToDate,
+  setFilterAccount,
+  setFilterFromDate,
+  setFilterCategories,
+  setFilterAccountType,
+  setFilterTimeInterval,
 } from 'networth/networth.actions';
+import { NetworthFilterProps, NetworthState, TFilterKey } from 'networth/networth.type';
 
-const NetworthFilter = () => {
+const NetworthFilter = (props: NetworthFilterProps) => {
   const dispatch = useNetworthDispatch();
   const [currentAccount, setCurrentAccount] = useState<Account[]>();
 
-  const { fCategories, fTypes, fAccounts, fFromDate, fToDate, fTimeInterval } = useNetworthState();
+  const networthState = useNetworthState();
+  const { fCategories, fTypes, fAccounts, fFromDate, fToDate, fTimeInterval, networth } = networthState;
+
   useEffect(() => {
     const fetchCurrentAccount = async () => {
       const { data, error } = await getAccount();
@@ -36,29 +40,48 @@ const NetworthFilter = () => {
     fetchCurrentAccount();
   }, []);
 
+  const fromInterval = networth?.[0].interval || '';
+  const fromDate = parseDateFromString(fromInterval);
+
+  // need to set current time zone value to the filter
+  // we will pass the utc to server but need to set the value in current time zone
   const onChange = (option: string, date: any) => {
     if (option === 'start') {
-      dispatch(setFilterFromDate(getDate(new Date(date))));
-    } else if (option === 'end') {
-      if (fFromDate !== undefined && getDate(new Date(date)) > fFromDate) {
-        dispatch(setFilterToDate(getDate(new Date(date))));
+      props.handleLoad();
+
+      return dispatch(setFilterFromDate(getDateString(date)));
+    }
+
+    if (option === 'end') {
+      if (fFromDate !== undefined && getDateString(date) > fFromDate) {
+        props.handleLoad();
+
+        return dispatch(setFilterToDate(getDateString(date)));
       }
     }
   };
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setFilterCategories(event.target.value));
+    props.handleLoad();
+
+    return dispatch(setFilterCategories(event.target.value));
   };
 
   const handleAccountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleLoad();
+
     dispatch(setFilterAccount(+event.target.value));
   };
 
   const handleAccountTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleLoad();
+
     dispatch(setFilterAccountType(event.target.value));
   };
 
   const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleLoad();
+
     dispatch(setFilterTimeInterval(event.target.value as TimeIntervalEnum));
   };
 
@@ -66,14 +89,40 @@ const NetworthFilter = () => {
     return <CircularSpinner />;
   }
 
+  const clearNetworthFilter = () => {
+    return dispatch(clearFilter());
+  };
+
+  const hasFiltered = () => {
+    const filterKey: TFilterKey[] = ['fCategories', 'fTypes', 'fAccounts', 'fToDate', 'fFromDate', 'fTimeInterval'];
+
+    return filterKey.some((key) => isFiltered(key));
+  };
+
+  const isFiltered = (key: keyof NetworthState) => {
+    if (serialize(networthState[key] as any) !== serialize(initialState[key] as any)) {
+      return true;
+    }
+    return false;
+  };
+
+  const fc = (key: keyof NetworthState) => (isFiltered(key) ? 'filtered' : '');
+
   const currentAccountByType = arrGroupBy(currentAccount, 'category.mmAccountType');
 
   return (
     <div className='row'>
       <div className='col-12 dropdowns-container'>
         <div className='dflex-center mb-15'>
+          {hasFiltered() ? (
+            <button className='btn btn-outline-danger clear-filter' onClick={clearNetworthFilter}>
+              Clear Filters
+            </button>
+          ) : null}
           <Dropdown className='drop-box'>
-            <Dropdown.Toggle variant=''>All Categories</Dropdown.Toggle>
+            <Dropdown.Toggle variant='' className={fc('fCategories')}>
+              All Categories
+            </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
               <ul className='checkbox-list'>
                 {enumerateStr(AccountCategory).map((cat, index) => {
@@ -98,7 +147,7 @@ const NetworthFilter = () => {
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown className='drop-box tab-hide'>
-            <Dropdown.Toggle variant=''>
+            <Dropdown.Toggle variant='' className={fc('fAccounts')}>
               All Accounts
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
@@ -133,12 +182,12 @@ const NetworthFilter = () => {
           </Dropdown>
 
           <Dropdown className='drop-box'>
-            <Dropdown.Toggle variant=''>
+            <Dropdown.Toggle variant='' className={fc('fTypes')}>
               All Types
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu'>
               <ul className='checkbox-list'>
-                {Object.keys(currentAccountByType)?.map((accountName, index) => {
+                {Object.keys(currentAccountByType).map((accountName, index) => {
                   return (
                     <li key={index}>
                       <label>
@@ -160,12 +209,17 @@ const NetworthFilter = () => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
+
+        {
+          // since filter date will be current timezone string
+          // no need to parse this to utc for setting up simply date must work
+        }
         <div className='dflex-center mb-15'>
           <ReactDatePicker
-            selected={fFromDate ? new Date(fFromDate) : null}
+            selected={fFromDate ? new Date(fFromDate) : fromDate}
             onChange={(date) => onChange('start', date)}
             // selectsStart
-            startDate={fFromDate ? new Date(fFromDate) : null}
+            startDate={fFromDate ? new Date(fFromDate) : fromDate}
             dateFormat='MM/yyyy'
             showMonthYearPicker
             minDate={new Date('1900-01-01')}
@@ -175,7 +229,11 @@ const NetworthFilter = () => {
             customInput={
               <div className='drop-box'>
                 <div className='date-box'>
-                  <input type='text' className='month_year' value={getMonthYear(fFromDate)} readOnly />
+                  <input
+                    type='text'
+                    className={['month_year', fc('fFromDate')].join(' ')}
+                    value={fFromDate ? getMonthYear(fFromDate) : getMonthYear(fromDate)}
+                  />
                 </div>
               </div>
             }
@@ -195,13 +253,17 @@ const NetworthFilter = () => {
             customInput={
               <div className='drop-box'>
                 <div className='date-box'>
-                  <input type='text' className='month_year' value={getMonthYear(fToDate)} readOnly />
+                  <input
+                    type='text'
+                    className={['month_year', fc('fToDate')].join(' ')}
+                    value={getMonthYear(fToDate)}
+                  />
                 </div>
               </div>
             }
           />
           <Dropdown className='drop-box m-l-2'>
-            <Dropdown.Toggle variant=''>
+            <Dropdown.Toggle variant='' className={fc('fTimeInterval')}>
               {fTimeInterval || 'Monthly'}
             </Dropdown.Toggle>
             <Dropdown.Menu className='mm-dropdown-menu dropsm'>

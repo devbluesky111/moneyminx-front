@@ -141,7 +141,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
             <div className='d-md-flex justify-content-between mt-3'>
               <div className='d-flex'>
                 <div className='dflex-center'>
-                  {(dateFromFilterOn || dateToFilterOn || intervalFilterOn) && <button type="button" className="btn btn-outline-danger clear-filter" onClick={clearFilters}>Clear Filters</button>}
+                  {(dateFromFilterOn || dateToFilterOn || intervalFilterOn) && <button type='button' className='btn btn-outline-danger clear-filter' onClick={clearFilters}>Clear Filters</button>}
                   <ReactDatePicker
                     selected={fromDate ? new Date(fromDate) : null}
                     onChange={(date) => onChange('start', date)}
