@@ -395,10 +395,6 @@ ul.bank-list {
   }
 }
 
-.estimated-annual-return.manual input[type='number'] {
-  margin-top: 0;
-}
-
 .form-wrap .right-input {
   input[type='text'],
   input[type='number'] {
@@ -867,15 +863,6 @@ span.next-icon {
 }
 
 .estimate-annual-block {
-  &__btn {
-    @media (min-width: $md) {
-      width: 115px !important;
-    }
-
-    @media (min-width: $md + 224) {
-      width: 140px !important;
-    }
-  }
 
   &__btn-cancel {
     border: 1.5px solid $purple;

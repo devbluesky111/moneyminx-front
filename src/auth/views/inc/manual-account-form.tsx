@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import CircularSpinner from 'common/components/spinner/circular-spinner';
@@ -32,7 +32,6 @@ interface Props {
 }
 
 const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) => {
-  const history = useHistory();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
 
@@ -422,51 +421,25 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
                     </div>
                   </div>
 
-                  <div className={`estimated-annual-return manual`}>
+                  <div className={`estimated-annual-return`}>
                     <span className='form-subheading'>Estimated annual returns</span>
                     <span className='sub-label d-inline'>This will be used to show projections on your charts.</span>
-                    <div>
-                      <div>
-                        <input
-                          type='radio'
-                          value='yes'
-                          defaultChecked={false}
-                          onChange={handleChange}
-                          name='estimatedAnnualReturns'
-                          checked={values.estimatedAnnualReturns === 'yes' || values.estimatedAnnualReturns === true}
-                          aria-checked={values.estimatedAnnualReturns === 'yes' || values.estimatedAnnualReturns === true}
-                        />
-                        <label>Use a calculation based on historical returns</label>
-                      </div>
-                      <div className='d-flex align-items-center justify-content-between mt-3'>
-                        <input
-                          type='radio'
-                          value='no'
-                          defaultChecked={false}
-                          onChange={handleChange}
-                          name='estimatedAnnualReturns'
-                          checked={values.estimatedAnnualReturns === 'no' || values.estimatedAnnualReturns === false}
-                          aria-checked={values.estimatedAnnualReturns === 'no' || values.estimatedAnnualReturns === false}
-                        />
-                        <label>Use my own estimate</label>
-                        <div className='form-field-group single-field'>
-                          <Form.Control
-                            onChange={handleChange}
-                            type='number'
-                            placeholder='5'
-                            name='estimatedAnnualReturns'
-                            value={values.estimatedAnnualReturns}
-                          />
-                          <span className='input-add-on'>%</span>
-                        </div>
-                      </div>
+                    <div className='form-field-group single-field'>
+                      <Form.Control
+                        onChange={handleChange}
+                        type='number'
+                        placeholder='5'
+                        name='estimatedAnnualReturns'
+                        value={values.estimatedAnnualReturns}
+                      />
+                      <span className='input-add-on'>%</span>
                     </div>
                   </div>
 
                   <div className='estimate-annual-block'>
                     <div className='estimated-top-content'>
                       <div className='row mt-5'>
-                        <div className='col-12 col-md-4'>
+                        <div className='col-12 col-md-4 mt-2'>
                           <button
                             className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete'
                             type='button'
@@ -474,7 +447,7 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
                             Delete Account
                           </button>
                         </div>
-                        <div className='col-12 col-md-8'>
+                        <div className='col-12 col-md-8 mt-2'>
                           <div className='d-flex justify-content-end'>
                             <button
                               className='mm-btn-signup btn-outline-primary mm-btn-animate estimate-annual-block__btn-cancel'
