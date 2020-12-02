@@ -1901,10 +1901,9 @@ footer p {
     background: none;
     font-weight: 500;
     font-size: 0.875rem;
-    color: $red;
-    // place this once the design in fixed
-    // border: 1px solid rgba($red, 0.24);
+    color: $redAlert;
     border-radius: 4px;
+    border-color: $redAlertOpacity24;
     width: auto;
     height: 48px;
     padding: 0 20px;
@@ -1916,6 +1915,7 @@ footer p {
       background: none !important;
       box-shadow: none !important;
       color: $red !important;
+      border-color: $red;
     }
   }
 }

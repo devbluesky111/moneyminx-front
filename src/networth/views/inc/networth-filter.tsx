@@ -113,11 +113,9 @@ const NetworthFilter = (props: NetworthFilterProps) => {
       <div className='col-12 dropdowns-container'>
         <div className='dflex-center mb-15'>
           {hasFiltered() ? (
-            <div className='drop-box clear-filter'>
-              <button className='dropdown-toggle' onClick={clearNetworthFilter}>
-                Clear Filter
+              <button className='btn btn-outline-danger clear-filter' onClick={clearNetworthFilter}>
+                Clear Filters
               </button>
-            </div>
           ) : null}
           <Dropdown className='drop-box'>
             <Dropdown.Toggle variant='' className={fc('fCategories')}>
