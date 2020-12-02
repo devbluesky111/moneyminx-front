@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { appRouteConstants } from 'app/app-route.constant';
 import { CurrencyOptions } from 'auth/enum/currency-options';
-import { getManualAccountType, postManualAccount } from 'api/request.api';
+import { getRefreshedAccount, getManualAccountType, postManualAccount } from 'api/request.api';
 import { enumerateStr, formater } from 'common/common-helper';
 import { Modal, ModalType } from 'common/components/modal';
 import { storage } from 'app/app.storage';
@@ -51,6 +51,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
         const { data: res, error: err } = await postManualAccount(values);
         if (!err) {
             console.log(res);
+            await getRefreshedAccount();
             setValues(initialValues);
             setLoading(false);
             toast('Add Success', { type: 'success' });
