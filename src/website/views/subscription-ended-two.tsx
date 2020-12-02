@@ -7,10 +7,19 @@ import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 import { ReactComponent as OwnAccountIcon } from 'assets/images/subscription/own-account-icon.svg';
+import { ReactComponent as IconTrash } from 'assets/icons/icon-trash.svg';
+import {AccountOverview} from '../../setting/pages/account-overview';
+
 
 const SubscriptionEnded = () => {
   return (
-    <PricingTable />
+    <section>
+      <div className='subscription-ended bottom py-5'>
+        <div className='container'>
+          <AccountOverview updateAccountsFlag={true}/>
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -48,3 +48,20 @@ export interface ManualAccountProps {
 export interface AccountRowProps {
   account: Account;
 }
+
+export interface AccountOverviewProps {
+  updateAccountsFlag?: boolean;
+}
+
+export interface SubscriptionConnectionWarningProps {
+  availableConnectedAccounts: string | number;
+  availableManualAccounts: string | number;
+}
+
+export interface AccountDialogBoxProps {
+  availableConnectedAccounts: string | number;
+  availableManualAccounts: string | number;
+  manualAccountList: Account[];
+  accountList: Account[];
+  verifyAccountNumbers: (event: any) => void;
+}
