@@ -3,7 +3,7 @@ export interface AccountSubNavigationProps {
   providerName: string;
 }
 
-export type AccountProps = any;
+export type AccountDetailProps = any;
 
 export interface AccountChartItem {
   interval: string;

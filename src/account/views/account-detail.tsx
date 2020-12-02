@@ -13,6 +13,7 @@ import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/r
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
+import { storage } from 'app/app.storage';
 
 import AccountSubNavigation from './account-sub-navigation';
 import AppHeader from '../../common/app.header';
@@ -21,10 +22,10 @@ import ActivityTable from './activity-table';
 import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
 import MMToolTip from '../../common/components/tooltip';
-import { AccountChartItem, AccountProps, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
+import { AccountChartItem, AccountDetailProps, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
 
-const AccountDetail: React.FC<AccountProps> = (props) => {
+const AccountDetail: React.FC<AccountDetailProps> = (props) => {
 
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
@@ -72,6 +73,9 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
       setAccountHoldings(data);
       setLoading(false);
       setFilterLoading(false);
+      if (storage.get('isNew').data) {
+        setAccSetting(true);
+      }
     }
   };
 
@@ -117,12 +121,17 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
     setFilterLoading(false);
   }
 
+  const closeSidebar = () => {
+    setAccSetting(false);
+    storage.clear('isNew');
+  }
+
   return (
     <div className='mm-setting'>
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
-        <ManualAccountForm closeSidebar={() => setAccSetting(false)} />
+        <ManualAccountForm closeSidebar={closeSidebar} />
       </aside>
-      {accSetting && <div className='backdrop' onClick={() => setAccSetting(false)}></div>}
+      {accSetting && <div className='backdrop' onClick={closeSidebar}></div>}
       <AppHeader
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}

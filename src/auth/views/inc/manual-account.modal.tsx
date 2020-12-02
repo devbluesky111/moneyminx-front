@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { appRouteConstants } from 'app/app-route.constant';
@@ -8,7 +9,7 @@ import { CurrencyOptions } from 'auth/enum/currency-options';
 import { getManualAccountType, postManualAccount } from 'api/request.api';
 import { enumerateStr, formater } from 'common/common-helper';
 import { Modal, ModalType } from 'common/components/modal';
-import { useHistory } from 'react-router-dom';
+import { storage } from 'app/app.storage';
 
 interface SettingModalProps {
     manualAccountModal: ModalType;
@@ -54,6 +55,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
             setLoading(false);
             toast('Add Success', { type: 'success' });
             manualAccountModal.close();
+            storage.set('isNew', 'true');
             history.push(appRouteConstants.account.ACCOUNT.replace(':accountId', res.id));
         } else {
             console.log(err);
