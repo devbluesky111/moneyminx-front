@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { Button, Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
+import { Button, Dropdown } from 'react-bootstrap';
 
 import AppFooter from 'common/app.footer';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import ManualAccountForm from 'auth/views/inc/manual-account-form';
 import { Account } from 'auth/auth.types';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
@@ -39,6 +40,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
   const [intervalFilterOn, setIntervalFilterOn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [filterloading, setFilterLoading] = useState<boolean>(false);
+  const [accSetting, setAccSetting] = useState<boolean>(false);
   const accountId = props.match.params.accountId;
   const dropdownToggle = useRef(null);
 
@@ -117,6 +119,9 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
 
   return (
     <div className='mm-setting'>
+      <aside className='setting-aside' style={{ left: accSetting ? '0' : '-700px' }}>
+        <ManualAccountForm />
+      </aside>
       <AppHeader
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
@@ -129,7 +134,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
         <div className='mm-account'>
           <div className='mm-account__selection mb-3'>
             <div className='mm-account__selection--info float-lg-left'>
-              <SettingsGear className='float-left mr-2 settings-gear-button' />
+              <SettingsGear className='float-left mr-2 settings-gear-button' onClick={() => setAccSetting(true)} />
               <ul>
                 <li>{AccountDetails?.accountName}</li>
                 <li>{AccountDetails?.category?.mmCategory}</li>
