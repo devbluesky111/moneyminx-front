@@ -6,6 +6,7 @@ import AppFooter from 'common/app.footer';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import ManualAccountForm from 'auth/views/inc/manual-account-form';
 import { Account } from 'auth/auth.types';
+import { enumerateStr } from 'common/common-helper';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { getDate, getMonthYear, getQuarter, getYear } from 'common/moment.helper';
@@ -14,6 +15,7 @@ import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { storage } from 'app/app.storage';
+import { TimeIntervalEnum } from 'networth/networth.enum';
 
 import AccountSubNavigation from './account-sub-navigation';
 import AppHeader from '../../common/app.header';
@@ -129,7 +131,7 @@ const AccountDetail: React.FC<AccountDetailProps> = (props) => {
   return (
     <div className='mm-setting'>
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
-        <ManualAccountForm closeSidebar={closeSidebar} />
+        <ManualAccountForm currentAccount={AccountDetails} closeSidebar={closeSidebar} />
       </aside>
       {accSetting && <div className='backdrop' onClick={closeSidebar}></div>}
       <AppHeader
@@ -201,7 +203,7 @@ const AccountDetail: React.FC<AccountDetailProps> = (props) => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu className='mm-dropdown-menu dropsm'>
                       <ul className='radiolist'>
-                        {['Yearly', 'Monthly', 'Quarterly'].map((interval, index) => {
+                        {enumerateStr(TimeIntervalEnum).map((interval, index) => {
                           return (
                             <li key={index}>
                               <label>

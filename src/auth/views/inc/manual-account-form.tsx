@@ -19,6 +19,7 @@ import { enumerateStr } from 'common/common-helper';
 import { loginValidationSchema } from 'auth/auth.validation';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import { MMCategories } from 'auth/auth.enum';
+import { makeFormFields } from 'auth/auth.helper';
 import { patchAccount } from 'api/request.api';
 import { SelectInput } from 'common/components/input/select.input';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
@@ -84,6 +85,12 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
     return <CircularSpinner />;
   }
 
+  const formFields = accountFilters ? makeFormFields(accountFilters) : [];
+
+  const hasField = (field: string) => formFields.includes(field);
+
+  const hc = (field: string) => (hasField(field) ? '' : 'hidden');
+
   const currentFormFields = currentAccount?.accountDetails;
 
   const hasAccountSubType = accountSubTypes.some(Boolean);
@@ -105,19 +112,19 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
         loanBalance: currentFormFields?.loanBalance || '',
         useZestimate: currentFormFields?.useZestimate || '',
         interestRate: currentFormFields?.interestRate || '',
-        maturityDate: currentFormFields?.maturityDate || new Date(),
-        investedDate: currentFormFields?.investedDate || new Date(),
+        maturityDate: currentFormFields ? new Date(currentFormFields.maturityDate) : new Date(),
+        investedDate: currentFormFields ? new Date(currentFormFields.investedDate) : new Date(),
         employerMatch: currentFormFields?.employerMatch || '',
         streetAddress: currentFormFields?.streetAddress || '',
         amountInvested: currentFormFields?.amountInvested || '',
         associatedLoan: currentFormFields?.associatedLoan || '',
-        originationDate: currentFormFields?.originationDate || new Date(),
+        originationDate: currentFormFields ? new Date(currentFormFields.originationDate) : new Date(),
         originalBalance: currentFormFields?.originalBalance || '',
         paymentsPerYear: currentFormFields?.paymentsPerYear || '',
         calculatedEquity: currentFormFields?.calculatedEquity || '',
         currentValuation: currentFormFields?.currentValuation || '',
         termForInvestment: currentFormFields?.termForInvestment || '',
-        businessStartDate: currentFormFields?.businessStartDate || new Date(),
+        businessStartDate: currentFormFields ? new Date(currentFormFields.businessStartDate) : new Date(),
         employerMatchLimit: currentFormFields?.employerMatchLimit || '',
         associatedMortgage: currentFormFields?.associatedMortgage || '',
         calculateReturnsOn: currentFormFields?.calculateReturnsOn || '',
@@ -173,7 +180,7 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
 
         toast('Successfully updated', { type: 'success' });
 
-        return history.push('/net-worth');
+        return window.location.reload();
 
       }}
     >
@@ -333,11 +340,10 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
                         </div>
                       </div>
                     </div>
-
+                    <p><span className='form-subheading'>Employer match limit</span></p>
                     <div className={`input-wrap flex-box d-flex justify-content-between`}>
-                      <div className='left-input employer-match'>
+                      <div className='left-input employer-match width-47per mt-3'>
                         <p>
-                          <span className='form-subheading'>Employer match limit</span>
                           <span className='employer-match-limits'>
                             <input
                               type='radio'
@@ -383,7 +389,7 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
                         <p>
                           <span className='form-subheading'>
                             Include employer match in performance?
-                      <MMToolTip message='Some investors think employer match should be counted as income so they do not include it as performance returns, some believe should be counted as a return. The choice is yours'>
+                            <MMToolTip message='Some investors think employer match should be counted as income so they do not include it as performance returns, some believe should be counted as a return. The choice is yours'>
                               <InfoIcon className='sm-hide' />
                             </MMToolTip>
                           </span>
@@ -423,16 +429,24 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
                       <div>
                         <input
                           type='radio'
+                          value='yes'
                           defaultChecked={false}
-                          name='estimatedAnualReturns'
+                          onChange={handleChange}
+                          name='estimatedAnnualReturns'
+                          checked={values.estimatedAnnualReturns === 'yes' || values.estimatedAnnualReturns === true}
+                          aria-checked={values.estimatedAnnualReturns === 'yes' || values.estimatedAnnualReturns === true}
                         />
                         <label>Use a calculation based on historical returns</label>
                       </div>
                       <div className='d-flex align-items-center justify-content-between mt-3'>
                         <input
                           type='radio'
+                          value='no'
                           defaultChecked={false}
-                          name='estimatedAnualReturns'
+                          onChange={handleChange}
+                          name='estimatedAnnualReturns'
+                          checked={values.estimatedAnnualReturns === 'no' || values.estimatedAnnualReturns === false}
+                          aria-checked={values.estimatedAnnualReturns === 'no' || values.estimatedAnnualReturns === false}
                         />
                         <label>Use my own estimate</label>
                         <div className='form-field-group single-field'>
@@ -451,7 +465,15 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
 
                   <div className='estimate-annual-block'>
                     <div className='estimated-top-content'>
-                      <div className='row mt-5 justify-content-end'>
+                      <div className='row mt-5'>
+                        <div className='col-12 col-md-4'>
+                          <button
+                            className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete'
+                            type='button'
+                          >
+                            Delete Account
+                          </button>
+                        </div>
                         <div className='col-12 col-md-8'>
                           <div className='d-flex justify-content-end'>
                             <button
@@ -459,10 +481,10 @@ const ManualAccountForm: React.FC<Props> = ({ currentAccount, closeSidebar }) =>
                               type='button'
                             >
                               Cancel
-                      </button>
+                            </button>
                             <button className='mm-btn-animate mm-btn-primary estimate-annual-block__btn-save' type='submit'>
                               Save
-                      </button>
+                            </button>
                           </div>
                         </div>
                       </div>
