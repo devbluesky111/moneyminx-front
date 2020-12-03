@@ -17,7 +17,6 @@ import {
   StripeSuccess,
   StripeFailure,
   AccountSetting,
-  ManualAccount,
   ConnectAccount,
   Subscription,
 } from './app.view';
@@ -36,7 +35,7 @@ const {
   networth: { NET_WORTH },
   allocation: { ALLOCATION },
   misc: { STRIPE_FAILURE, STRIPE_SUCCESS },
-  auth: { DEF, LOGIN, SIGNUP, FORGOT_PASSWORD, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING, MANUAL_ACCOUNT },
+  auth: { DEF, LOGIN, SIGNUP, FORGOT_PASSWORD, RESET_PASSWORD, TOKEN_EXPIRED, CONNECT_ACCOUNT, ACCOUNT_SETTING },
 } = appRouteConstants;
 
 function AppRoute() {
@@ -81,7 +80,6 @@ function AppRoute() {
         <Route exact path={RESET_PASSWORD} component={ResetPassword} />
         <Route exact path={CONNECT_ACCOUNT} component={ConnectAccount} />
         <Route exact path={ACCOUNT_SETTING} component={AccountSetting} />
-        <Route exact path={MANUAL_ACCOUNT} component={ManualAccount} />
         <Route exact path={NET_WORTH}>
           <NetworthProvider>
             <Networth />

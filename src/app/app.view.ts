@@ -1,6 +1,5 @@
 export { default as TokenExpired } from 'auth/views/expired-link';
 export { default as AccountSetting } from 'auth/views/account-settings';
-export { default as ManualAccount } from 'auth/views/manual-account';
 export { default as Subscription } from 'auth/views/subscription';
 export { default as ConnectAccount } from 'auth/views/connect-account';
 export { default as ResetPassword } from 'auth/views/create-new-password';
