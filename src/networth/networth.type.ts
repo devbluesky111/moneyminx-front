@@ -73,3 +73,9 @@ export interface NetworthBarGraphProps {
   networth: NetworthItem[];
   fCategories: string[];
 }
+
+export interface NetworthFilterProps {
+  handleLoad: () => void;
+}
+
+export type TFilterKey = keyof NetworthState;

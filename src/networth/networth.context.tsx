@@ -3,7 +3,7 @@ import React, { createContext } from 'react';
 import { NetworthActionEnum } from './networth.enum';
 import { NetworthDispatch, NetworthState, NetworthProviderProps, Action } from './networth.type';
 
-const initialState: NetworthState = {
+export const initialState: NetworthState = {
   fTypes: [],
   fAccounts: [],
   fCategories: [],
@@ -72,6 +72,19 @@ function networthReducer(state: NetworthState, action: Action): any {
     case NetworthActionEnum.SET_F_TOGGLE_NET: {
       return { ...state, fToggleNet: action.payload?.fToggleNet };
     }
+
+    case NetworthActionEnum.CLEAR_FILTER: {
+      return {
+        ...state,
+        fTypes: [],
+        fAccounts: [],
+        fCategories: [],
+        fToDate: undefined,
+        fFromDate: undefined,
+        fTimeInterval: undefined,
+      };
+    }
+
     default: {
       throw new Error('Unhandled action type');
     }
