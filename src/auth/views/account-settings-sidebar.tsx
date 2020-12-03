@@ -133,7 +133,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
   return (
     <div className='bg-white credentials-wrapper account-setting'>
       {selectedAccount && (
-        <div className='close-icon' onClick={closeSidebar}>
+        <div className='close-icon' onClick={closeSidebar} role='button'>
           ✕
         </div>
       )}
@@ -143,7 +143,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
           <LogoImg className='auth-logo' />
         </div>
         {selectedAccount ? (
-          selectedAccount?.isManual ? (
+          selectedAccount.isManual ? (
             <div className='top-content-wrap'>
               <h2>Manual accounts</h2>
               <p>
@@ -246,7 +246,7 @@ export const AccountNameList: React.FC<AccountNameListProps> = ({
 
   const scrollToCategory = useCallback(
     (id: number) => {
-      if (refList) {
+      if (refList.length) {
         refList[id]?.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       }
     },
