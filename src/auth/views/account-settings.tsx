@@ -1,7 +1,7 @@
-import { Dictionary } from 'lodash';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import React, { createRef, useCallback, useEffect, useState } from 'react';
 
+import { Dictionary } from 'lodash';
 import { Account } from 'auth/auth.types';
 import { AuthLayout } from 'layouts/auth.layout';
 import { groupByProviderName } from 'auth/auth.helper';

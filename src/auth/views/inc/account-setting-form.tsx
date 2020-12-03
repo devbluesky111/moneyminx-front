@@ -1,11 +1,11 @@
-import moment from 'moment';
-import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
+import moment from 'moment';
+import { Formik } from 'formik';
 import { Account } from 'auth/auth.types';
 import { MMCategories } from 'auth/auth.enum';
 import { patchAccount } from 'api/request.api';
@@ -28,6 +28,7 @@ import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
+
 import { fNumber, numberWithCommas } from '../../../common/number.helper';
 
 interface Props {
@@ -123,7 +124,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
         mmAccountSubType: accountSubtype || '',
         liquidity: currentFormFields?.liquidity || '',
         ownEstimate: currentFormFields?.ownEstimate || '',
-        loanBalance: currentFormFields?.loanBalance || '',
+        principalBalance: currentFormFields?.principalBalance || '',
         useZestimate: currentFormFields?.useZestimate || '',
         interestRate: currentFormFields?.interestRate || '',
         maturityDate: currentFormFields?.maturityDate || new Date(),
@@ -168,7 +169,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
         }
 
         let data = {
-          calculatedEntity: values.ownEstimate && values.loanBalance ? +values.ownEstimate - +values.loanBalance : '',
+          calculatedEntity:
+            values.ownEstimate && values.principalBalance ? +values.ownEstimate - +values.principalBalance : '',
         };
 
         Object.keys(values).forEach((key: any) => {
@@ -351,9 +353,14 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
                   />
                 </li>
 
-                <li className={hc('loanBalance')}>
+                <li className={hc('principalBalance')}>
                   <span className='form-subheading'>Loan Balance</span>
-                  <Form.Control onChange={handleChange} type='number' name='loanBalance' value={values.loanBalance} />
+                  <Form.Control
+                    onChange={handleChange}
+                    type='number'
+                    name='principalBalance'
+                    value={values.principalBalance}
+                  />
                 </li>
                 <li className={hc('paymentsPerYear')}>
                   <span className='form-subheading'>Payment per year</span>
@@ -612,42 +619,42 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
               ) : null}
 
               {values.employerMatchContribution !== 'no' ? (
-              <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
-                <div className='left-input'>
-                  <p>
-                    <span className='form-subheading'>
-                      Include employer match in performance?
-                      <MMToolTip message='Some investors think employer match should be counted as income so they do not include it as performance returns, some believe should be counted as a return. The choice is yours'>
-                        <InfoIcon className='sm-hide' />
-                      </MMToolTip>
-                    </span>
-                  </p>
-                </div>
-                <div className='right-input radio'>
-                  <div className='yes-no-radios'>
-                    <input
-                      type='radio'
-                      value='yes'
-                      defaultChecked={false}
-                      onChange={handleChange}
-                      name='includeEmployerMatch'
-                      checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
-                      aria-checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
-                    />
-                    <label>Yes</label>
-                    <input
-                      type='radio'
-                      value='no'
-                      defaultChecked={false}
-                      onChange={handleChange}
-                      name='includeEmployerMatch'
-                      checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
-                      aria-checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
-                    />
-                    <label>No</label>
+                <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
+                  <div className='left-input'>
+                    <p>
+                      <span className='form-subheading'>
+                        Include employer match in performance?
+                        <MMToolTip message='Some investors think employer match should be counted as income so they do not include it as performance returns, some believe should be counted as a return. The choice is yours'>
+                          <InfoIcon className='sm-hide' />
+                        </MMToolTip>
+                      </span>
+                    </p>
+                  </div>
+                  <div className='right-input radio'>
+                    <div className='yes-no-radios'>
+                      <input
+                        type='radio'
+                        value='yes'
+                        defaultChecked={false}
+                        onChange={handleChange}
+                        name='includeEmployerMatch'
+                        checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
+                        aria-checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
+                      />
+                      <label>Yes</label>
+                      <input
+                        type='radio'
+                        value='no'
+                        defaultChecked={false}
+                        onChange={handleChange}
+                        name='includeEmployerMatch'
+                        checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
+                        aria-checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
+                      />
+                      <label>No</label>
+                    </div>
                   </div>
                 </div>
-              </div>
               ) : null}
             </div>
             <div className={`form-divider ${hc('separateLoanBalance')}`}>
@@ -779,7 +786,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
             <div className={`form-divider ${hc('calculatedEquity')}`}>
               <div className='d-flex align-items-center justify-content-between'>
                 <p>Calculated Equity</p>
-                <p>{numberWithCommas(fNumber(+values.ownEstimate - +values.loanBalance, 0))}</p>
+                <p>{numberWithCommas(fNumber(+values.ownEstimate - +values.principalBalance, 0))}</p>
               </div>
             </div>
 
