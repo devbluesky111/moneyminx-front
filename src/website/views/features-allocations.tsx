@@ -5,8 +5,8 @@ import WebsiteLayout from 'website/website.layout';
 
 import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
 import { ReactComponent as AllocationMain } from 'assets/images/home/allocation-pie-chart.svg';
-import { ReactComponent as PerformanceLegend } from '../../assets/images/home/performance-legend.svg';
-import { ReactComponent as HomeNetWorthProjections } from '../../assets/images/home/net-worth-projections.svg';
+import { ReactComponent as PerformanceLegend } from 'assets/images/home/performance-legend.svg';
+import { ReactComponent as HomeNetWorthProjections } from 'assets/images/home/net-worth-projections.svg';
 
 const FeaturesAllocations = () => {
   return (

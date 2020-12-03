@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import WebsiteLayout from 'website/website.layout';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
 import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
-import { Link } from 'react-router-dom';
+
 
 const FeaturesTransactionHistory = () => {
   return (
