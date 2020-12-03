@@ -24,10 +24,11 @@ import { ReactComponent as FeatureIconFour } from 'assets/images/home/feature-ic
 import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-icon3.svg';
 import { ReactComponent as HomeNetWorthChart } from 'assets/images/home/home-networth.svg';
 import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-adopter-icon.svg';
+import { ReactComponent as HomeMulticurrency } from 'assets/images/features/multicurrency.svg';
 import { ReactComponent as PerformanceLegend } from 'assets/images/home/performance-legend.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
 import { ReactComponent as InvestmentsAndCryptos} from 'assets/images/home/investment-assets-cryptos.svg';
-import { ReactComponent as HomeNetWorthProjections } from 'assets/images/home/net-worth-projections.svg';
+import { ReactComponent as HomeTransactionHistory } from 'assets/images/features/transaction-history.svg';
 
 
 const Home = () => {
@@ -230,7 +231,7 @@ export const HomeMulticurrencySection = () => {
           </div>
           <div className='col-xl-7'>
             <div className='mm-home-performance-section-chart'>
-              <HomeNetWorthProjections />
+              <HomeMulticurrency />
             </div>
           </div>
         </div>
@@ -303,7 +304,7 @@ export const HomeTransactionHistorySection = () => {
           </div>
           <div className='col-xl-7'>
             <div className='networth-chart'>
-              <InvestmentsAndCryptos className='mm-custom-networth-chart' />
+              <HomeTransactionHistory className='mm-custom-networth-chart' />
             </div>
           </div>
         </div>
