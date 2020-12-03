@@ -14,13 +14,6 @@
     "no-empty-interface": false,
     "react-a11y-lang": false,
     "radix": true,
-    "no-shadowed-variable": {
-      "severity": "error"
-    },
-    "no-console": {
-      "options": ["log", "info", "warning"],
-      "severity": "error"
-    },
     "settings": {
       "import/resolver": {
         "node": {
@@ -39,26 +32,22 @@
           {
             "name": "react",
             "match": "^react.*",
-            "order": 1,
-            "severity": "error"
+            "order": 1
           },
           {
             "name": "internal modules",
             "match": "^@app.*",
-            "order": 3,
-            "severity": "error"
+            "order": 3
           },
           {
             "name": "relative dir",
             "match": "^[.].*",
-            "order": 4,
-            "severity": "error"
+            "order": 4
           },
           {
             "name": "node_modules",
             "match": ".*",
-            "order": 2,
-            "severity": "error"
+            "order": 2
           }
         ]
       }

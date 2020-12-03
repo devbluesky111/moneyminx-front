@@ -21,6 +21,7 @@ import AccountBarGraph from './account-bar-graph';
 import MMToolTip from '../../common/components/tooltip';
 import AccountSubNavigation from './account-sub-navigation';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
+
 import { AccountChartItem, AccountProps, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 
 const AccountDetail: React.FC<AccountProps> = (props) => {
