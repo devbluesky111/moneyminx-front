@@ -3,7 +3,9 @@ import { ApiResponse } from 'api/api.types';
 import {
   postLogin,
   getProfile,
+  getAccount,
   postRegister,
+  deleteAccount,
   getRefreshedAccount,
   patchChangePassword,
   postFacebookAssociation,
@@ -15,9 +17,11 @@ import {
   Dispatch,
   LoginServicePayload,
   FBAssociationPayload,
+  DeleteAccountPayload,
   RegisterServicePayload,
   ChangePasswordServicePayload,
 } from './auth.types';
+import { setLoginSuccess } from './auth.actions';
 import { groupByProviderName } from './auth.helper';
 
 export const login = async ({ dispatch, payload }: LoginServicePayload): Promise<ApiResponse> => {
@@ -28,10 +32,7 @@ export const login = async ({ dispatch, payload }: LoginServicePayload): Promise
     storage.clear();
     dispatch({ type: auth.LOGIN_FAILURE });
   } else {
-    dispatch({
-      type: auth.LOGIN_SUCCESS,
-      payload: { token: data.token, expires: data.expires },
-    });
+    dispatch(setLoginSuccess({ token: data.token, expires: data.expires, onboarded: data.onboarded }));
   }
 
   return { data, error };
@@ -45,10 +46,7 @@ export const associateFacebookUser = async ({ dispatch, token }: FBAssociationPa
     storage.clear();
     dispatch({ type: auth.LOGIN_FAILURE });
   } else {
-    dispatch({
-      type: auth.LOGIN_SUCCESS,
-      payload: { token: data.token, expires: data.expires },
-    });
+    dispatch(setLoginSuccess({ token: data.token, expires: data.expires, onboarded: data.onboarded }));
   }
 
   return { data, error };
@@ -60,10 +58,7 @@ export const signup = async ({ dispatch, payload }: RegisterServicePayload): Pro
   if (error) {
     dispatch({ type: auth.REGISTER_FAILURE });
   } else {
-    dispatch({
-      type: auth.REGISTER_SUCCESS,
-      payload: { token: data.token, expires: data.expires },
-    });
+    dispatch(setLoginSuccess({ token: data.token, expires: data.expires, onboarded: data.onboarded }));
   }
 
   return { data, error };
@@ -84,12 +79,51 @@ export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }):
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
-    const pickedData = pickByProviderName(data);
+    // const pickedData = pickByProviderName(data);
 
     dispatch({
       type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
+    });
+  }
 
-      payload: { user: pickedData },
+  return { data, error };
+};
+
+export const deleteAccounts = async ({ dispatch, accounts }: DeleteAccountPayload): Promise<ApiResponse> => {
+  const deleteAccountList = async () => {
+    return Promise.all(
+      accounts.map(async (account) => {
+        await deleteAccount(`${account.id}`);
+      })
+    );
+  };
+
+  await deleteAccountList();
+  const { data, error } = await getAccount();
+
+  if (error) {
+    dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
+  } else {
+    dispatch({
+      type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
+    });
+  }
+
+  return { data, error };
+};
+
+export const deleteAccountById = async ({ dispatch, id }: { dispatch: Dispatch; id: number }): Promise<ApiResponse> => {
+  await deleteAccount(`${id}`);
+  const { data, error } = await getAccount();
+
+  if (error) {
+    dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
+  } else {
+    dispatch({
+      type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
     });
   }
 
@@ -122,4 +156,10 @@ export const changePassword = async ({ dispatch, payload }: ChangePasswordServic
   }
 
   return { data, error };
+};
+
+export const logout = () => {
+  storage.clear();
+
+  return window.location.assign('/login?action=logout');
 };

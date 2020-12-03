@@ -199,8 +199,9 @@ button:focus {
   }
 }
 .money-minx-header .navbar-brand {
-  img, svg {
-  max-width: 110px;
+  img,
+  svg {
+    max-width: 110px;
   }
 }
 .money-minx-header .headtab {
@@ -370,7 +371,6 @@ a.upgrader-btn {
   @media (min-width: $med) {
     display: inline-block;
   }
-
 }
 
 .money-minx-header .btn-group .profile-toggle.show:after {
@@ -520,10 +520,9 @@ a.upgrader-btn {
   padding: 0.75rem 0;
   display: flex;
 
-.middle-box {
-  margin: auto;
-}
-
+  .middle-box {
+    margin: auto;
+  }
 }
 .app-subheader-container .container {
   max-width: 1440px;
@@ -590,6 +589,7 @@ a.upgrader-btn {
 
   &:hover {
     color: $darkGray;
+    border: none;
   }
 
   .dropdown-toggle {
@@ -601,8 +601,11 @@ a.upgrader-btn {
     color: $gray !important;
     box-shadow: none !important;
 
-    &:hover, &:active, &:focus {
+    &:hover,
+    &:active,
+    &:focus {
       color: $darkGray !important;
+      border: none !important;
     }
   }
 
@@ -774,13 +777,18 @@ a.upgrader-btn {
   width: auto;
   height: 48px;
   padding: 0 20px;
-  min-width: 120px;
+  min-width: 122px;
 
-  &:focus, &:hover, &:active {
+  &:focus,
+  &:hover,
+  &:active {
     background: none !important;
     box-shadow: none !important;
-    color: $darkGray !important;
-    border: 1px solid $gray !important;
+    color: $darkGray;
+  }
+  &:hover,
+  &:active {
+    border: 1px solid $gray;
   }
 }
 .drop-box .dropdown-toggle:after {
@@ -800,6 +808,19 @@ a.upgrader-btn {
   transform: rotate(-135deg);
   vertical-align: 0;
   transition: 0.3s all;
+}
+
+.drop-box {
+  .show {
+    button.dropdown-toggle {
+      &:hover,
+      &:active,
+      &:visited {
+        color: $darkGray;
+        background: none;
+      }
+    }
+  }
 }
 
 .drop-box + .drop-box {
@@ -822,7 +843,7 @@ a.upgrader-btn {
   white-space: nowrap;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     border: 1px solid $gray;
   }
 }
@@ -849,8 +870,12 @@ a.upgrader-btn {
   border-radius: 4px;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     color: $darkGray;
+  }
+
+  &.active {
+    color: $purple;
   }
 }
 .date-box input::-webkit-input-placeholder {
@@ -992,16 +1017,9 @@ a.upgrader-btn {
   background: $white;
   box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border-radius: 6px;
-  padding: 25px 20px 16px 20px;
+  padding: 20px;
   height: 100%;
   position: relative;
-
-  @media (min-width: $sm) {
-    padding: 20px 8px 20px 8px;
-  }
-  @media (min-width: $med) {
-    padding: 28px 20px 20px 20px;
-  }
 }
 
 .ct-box:before {
@@ -1074,6 +1092,9 @@ a.upgrader-btn {
   border-bottom: 1px solid $grayOpacity20;
   border-top: none;
 }
+.table-holder .table.account tbody td {
+  white-space: pre-wrap;
+}
 .table thead th.current-m,
 .table tbody td.current-m,
 .table tfoot td.current-m,
@@ -1088,6 +1109,10 @@ a.upgrader-btn {
 .table-holder .table tfoot td:first-child {
   font-weight: 600;
   color: $black;
+}
+.table-holder .table.account tbody td:first-child {
+  min-width: 300px;
+  overflow-wrap: break-word;
 }
 .table-holder .table tbody td:not(:first-child),
 .table-holder .table tfoot td:not(:first-child) {
@@ -1111,17 +1136,13 @@ a.upgrader-btn {
 .table tfoot td {
   width: 7%;
   transition: 0.3s all;
-}
-.table thead th:first-child,
-.table tbody td:first-child,
-.table tfoot td:first-child {
-  width: 16%;
-  // padding-left:20px;
-}
-.table thead th:nth-child(2),
-.table tbody td:nth-child(2),
-.table tfoot td:nth-child(2) {
-  width: 18%;
+
+  .edited-icon {
+    position: absolute;
+    right: -15px;
+    top: 7px;
+    z-index: 100;
+  }
 }
 
 .table-holder .table tbody tr:first-child td:nth-last-of-type(3).projection:before {
@@ -1249,6 +1270,9 @@ a.upgrader-btn {
 }
 .drop-box .dropdown-menu.dropsm {
   min-width: inherit;
+}
+.drop-box.active button {
+  color: $purple !important;
 }
 .radiolist {
   padding: 10px 0;
@@ -1400,11 +1424,11 @@ a.upgrader-btn {
   }
 
   @media (max-width: 991px) {
-      padding: 30px 25px 20px 25px;
-      margin-bottom: 0;
-      min-height: 110px;
-      -webkit-align-items: flex-start;
-      align-items: flex-start;
+    padding: 30px 25px 20px 25px;
+    margin-bottom: 0;
+    min-height: 110px;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
 
     p {
       max-width: 270px;
@@ -1474,17 +1498,25 @@ a.upgrader-btn {
 .graphbox ul li + li {
   margin-top: 22px;
 }
+.graphbox ul li {
+  margin-left: -20px;
+  padding-left: 20px;
+}
 .graphbox ul li.inv-data {
   color: $blue;
+  border-left: 2px solid $blue;
 }
 .graphbox ul li.other-data {
   color: $cyan;
+  border-left: 2px solid $cyan;
 }
 .graphbox ul li.lty-data {
   color: $red;
+  border-left: 2px solid $red;
 }
 .graphbox ul li.nw-data {
   color: $purple;
+  border-left: 2px solid $purple;
 }
 
 .responsive-container {
@@ -1492,44 +1524,44 @@ a.upgrader-btn {
   width: 100%;
   height: 100%;
 
-  &>div {
+  & > div {
     min-height: 306px;
   }
 
   // net-worth barchart tooltip customization
   .bar-tooltip {
     background-color: $darkBg;
-    color: #FFFFFF;
+    color: #ffffff;
     box-shadow: 0px 4px 28px rgba($darkBg, 0.44);
     border-radius: 4px;
     padding: 20px 12px 4px;
-  
+
     .item-name {
       display: flex;
       flex-direction: row;
       align-items: center;
-  
+
       div {
         width: 10px;
         height: 10px;
         margin-right: 12px;
         border-radius: 2px;
       }
-  
+
       span {
         font-size: 0.875rem;
         line-height: 16px;
       }
     }
-  
+
     .item-value {
       margin-left: 22px;
       margin-bottom: 16px;
-      font-family: "Mulish";
+      font-family: 'Mulish';
       font-style: normal;
       font-size: 1.5rem;
       font-weight: 300;
-      line-height: 30px; 
+      line-height: 30px;
     }
   }
 }
@@ -1672,9 +1704,8 @@ ul.charttool li.nw-data:before {
   // -webkit-transition-delay: 0s, 0.5s;
   // -o-transition-delay: 0s, 0.5s;
   // transition-delay: 0s, 0.5s;
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              opacity 0.55s ease;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+    opacity 0.55s ease;
   margin-top: 0;
 }
 .navbar-toggler:not(.collapsed) span:after {
@@ -1685,9 +1716,8 @@ ul.charttool li.nw-data:before {
   // -webkit-transition-delay: 0s, 0.5s;
   // -o-transition-delay: 0s, 0.5s;
   // transition-delay: 0s, 0.5s;
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              opacity 0.55s ease;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+    opacity 0.55s ease;
   width: 100%;
 }
 .warning-toast {
@@ -1792,8 +1822,8 @@ ul.charttool li.nw-data:before {
 .table-holder .table tbody td.dataTables_empty {
   display: none;
 }
-.table tbody tr:hover,
-.table tfoot tr:hover {
+.table:not(#table-net-xls) tbody tr:hover,
+.table:not(#table-net-xls) tfoot tr:hover {
   cursor: pointer;
 }
 
@@ -1849,7 +1879,13 @@ footer p {
   margin-right: -20px;
 }
 .d-hide {
-  display: none! important;
+  display: none !important;
+}
+.s-hide {
+  display: none !important;
+  @media (min-width: $med) {
+    display: block !important;
+  }
 }
 
 .dropdowns-container {
@@ -1859,7 +1895,29 @@ footer p {
 .dflex-center {
   display: flex !important;
   justify-content: center;
-  align-items: center;
+
+  .clear-filter {
+    margin-right: 0.5rem;
+    background: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: $redAlert;
+    border-radius: 4px;
+    border-color: $redAlertOpacity24;
+    width: auto;
+    height: 48px;
+    padding: 0 20px;
+    min-width: 122px;
+
+    &:focus,
+    &:hover,
+    &:active {
+      background: none !important;
+      box-shadow: none !important;
+      color: $red !important;
+      border-color: $red;
+    }
+  }
 }
 /** =============================== **/
 /** responsive **/
@@ -1880,17 +1938,6 @@ footer p {
   .table tfoot td {
     width: 6%;
     transition: 0.3s all;
-  }
-  .table thead th:first-child,
-  .table tbody td:first-child,
-  .table tfoot td:first-child {
-    width: 14%;
-    // padding-left:20px;
-  }
-  .table thead th:nth-child(2),
-  .table tbody td:nth-child(2),
-  .table tfoot td:nth-child(2) {
-    width: 15%;
   }
   .tab-hide {
     display: none !important;
@@ -1950,7 +1997,7 @@ footer p {
 .table tbody tr td {
   position: relative;
   transition: 0.1s all;
-} 
+}
 @media (min-width: 768px) {
   .table tbody tr {
     transition: 0.1s all;
@@ -1959,11 +2006,11 @@ footer p {
     position: relative;
     transition: 0.1s all;
   }
-  .table tbody tr:hover {
+  .table:not(#table-net-xls) tbody tr:hover {
     background: $darkBg;
     color: $white;
   }
-  .table tbody tr:hover td {
+  .table:not(#table-net-xls) tbody tr:hover td {
     color: $white !important;
     border-bottom-color: transparent;
   }
@@ -1971,9 +2018,21 @@ footer p {
   .table tbody tr td:last-child:after {
     content: '';
     position: absolute;
+    top: -1px;
+    bottom: 0;
+    width: 20px;
+    height: calc(100% + 1px);
+    background: transparent;
+    transition: 0.1s all;
+  }
+  .table tbody tr:first-child td:first-child:before,
+  .table tbody tr:first-child td:last-child:after {
+    content: '';
+    position: absolute;
     top: 0;
     bottom: 0;
     width: 20px;
+    height: 51px;
     background: transparent;
     transition: 0.1s all;
   }
@@ -1985,8 +2044,8 @@ footer p {
     right: -20px;
     border-radius: 0 6px 6px 0;
   }
-  .table tbody tr:hover td:first-child:before,
-  .table tbody tr:hover td:last-child:after {
+  .table:not(#table-net-xls) tbody tr:hover td:first-child:before,
+  .table:not(#table-net-xls) tbody tr:hover td:last-child:after {
     background: $darkBg;
   }
 }
@@ -2018,10 +2077,9 @@ footer p {
     display: flex;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-top: 40px;
+    margin-top: 20px;
   }
   .graphbox ul li {
-    margin-bottom: 20px;
     -webkit-flex: 0 0 50%;
     flex: 0 0 50%;
     max-width: 50%;
@@ -2139,19 +2197,7 @@ footer p {
   .table-holder .table tfoot td:not(:first-child) {
     padding: 10px 0;
   }
-  // .dropdowns-holder {
-  //   overflow-x: auto;
-  //   margin-right: -15px;
-  // }
-  // .dropdowns-holder:after {
-  //   content: '';
-  //   position: absolute;
-  //   top: 0;
-  //   bottom: 0;
-  //   right: 0;
-  //   width: 30px;
-  //   background: linear-gradient(to right, rgba(250, 251, 253, 0.8) 0%, $lightBg 100%);
-  // }
+
   .dropdowns-container {
     display: block !important;
   }
@@ -2225,7 +2271,7 @@ footer p {
     color: $green;
   }
   .hide-type {
-    display:none !important;
+    display: none !important;
   }
 }
 
@@ -2302,7 +2348,35 @@ $start-width: 100%;
   }
 }
 .date-separator {
-  margin: auto 0.25rem;
+  margin: 1rem 0.25rem;
   color: $gray;
-  font-size: 0.875rem
+  font-size: 0.875rem;
+}
+
+.clear-filter {
+  .dropdown-toggle {
+    color: $red;
+    &:hover,
+    &:visited,
+    &:active {
+      color: $red !important;
+    }
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.drop-box {
+  .filtered {
+    color: $primary;
+    &:hover,
+    &:visited,
+    &:active {
+      color: $primary !important;
+    }
+  }
+}
+.date-separator.active {
+  color: $purple;
 }

@@ -1,6 +1,11 @@
 {
   "data": [
     {
+      "id": 10000,
+      "name": "",
+      "code": null
+    },
+    {
       "id": 3,
       "name": "Afghanistan",
       "code": "AF"

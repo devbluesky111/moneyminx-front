@@ -9,13 +9,8 @@ import env from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
-import {
-  getCurrentSubscription,
-  postFacebookLogin,
-  getAccount,
-  getSubscription
-} from 'api/request.api';
 import { appRouteConstants } from 'app/app-route.constant';
+import { pricingDetailConstant } from 'common/common.constant';
 import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { EMAIL_IS_EMPTY, PWD_IS_EMPTY } from 'lang/en/validation.json';
@@ -24,10 +19,10 @@ import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
+import { getCurrentSubscription, postFacebookLogin, getAccount, getSubscription } from 'api/request.api';
 
 import EmailNeededModal from './inc/email-needed.modal';
 import AssociateEmailModal from './inc/associate-email.modal';
-import {pricingDetailConstant} from '../../common/common.constant';
 
 const Login = () => {
   return (
@@ -52,6 +47,7 @@ export const LoginMainSection = () => {
   const visibilityIcon = passwordVisible ? <VisibleIcon /> : <HiddenIcon />;
 
   const isExpired = search.includes('?expired=true');
+  const isLoggedOut = search.includes('?action=logout');
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
@@ -59,7 +55,7 @@ export const LoginMainSection = () => {
       const { error } = await postFacebookLogin({
         accessToken: response.accessToken,
         mailChimpSubscription: true,
-        subscriptionPriceId: 'price_1HnCFAAjc68kwXCHBj66nCW0',
+        subscriptionPriceId: env.STRIPE_DEFAULT_PLAN,
       });
 
       if (!error) {
@@ -132,6 +128,9 @@ export const LoginMainSection = () => {
               </div>
               <h2>Welcome back</h2>
               <p>Your accounts are ready for you. Hope you will reach your goals</p>
+              <div className={isLoggedOut ? 'session-expired' : 'session-expired hide-me'}>
+                <p>Thanks for visiting. See you next time.</p>
+              </div>
               <div className={isExpired ? 'session-expired' : 'session-expired hide-me'}>
                 <p>We thought you left, so we logged you out to protect your account.</p>
               </div>
@@ -151,6 +150,7 @@ export const LoginMainSection = () => {
                       if (isPasswordEmpty) {
                         actions.setFieldError('password', PWD_IS_EMPTY);
                       }
+
                       return false;
                     }
 
@@ -161,14 +161,20 @@ export const LoginMainSection = () => {
                       const { data } = await getCurrentSubscription();
                       if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
                         const accounts = await getAccount();
-                        const manualAccounts = accounts?.data?.filter((account: Record<string, string>) => account.isManual).length
-                        const autoAccounts = accounts?.data?.filter((account: Record<string, string>) => !account.isManual).length
-                        const subscriptionDetails = await getSubscription({priceId:data.priceId})
+                        const manualAccounts = accounts?.data?.filter(
+                          (account: Record<string, string>) => account.isManual
+                        ).length;
+                        const autoAccounts = accounts?.data?.filter(
+                          (account: Record<string, string>) => !account.isManual
+                        ).length;
+                        const subscriptionDetails = await getSubscription({ priceId: data.priceId });
                         toast('Sign in Success', { type: 'success' });
-                        if(autoAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] || manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]) {
-                          history.push(appRouteConstants.account.REMOVE_ACCOUNT)
-                        }
-                        else if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
+                        if (
+                          autoAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
+                          manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
+                        ) {
+                          history.push(appRouteConstants.account.REMOVE_ACCOUNT);
+                        } else if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
                         else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                       } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
                     }

@@ -12,7 +12,7 @@ import SettingTitleSection from './partials/setting-title';
 import { SettingsProps, SettingPageEnum } from './setting.type';
 
 const Settings: React.FC<SettingsProps> = () => {
-  const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.ACCOUNTS);
+  const [page, setPage] = useState<SettingPageEnum>(SettingPageEnum.SETTINGS);
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
 
@@ -25,7 +25,7 @@ const Settings: React.FC<SettingsProps> = () => {
   };
 
   if (activeTab)
-    setTimeout(function () {
+    setTimeout(() => {
       handlePageSelect(activeTab);
     }, 100);
 
@@ -70,4 +70,5 @@ const Settings: React.FC<SettingsProps> = () => {
     </div>
   );
 };
+
 export default Settings;

@@ -1,6 +1,6 @@
 import Zabo from 'zabo-sdk-js';
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import appEnv from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
@@ -31,6 +31,7 @@ const ConnectAccount = () => {
 };
 export default ConnectAccount;
 export const ConnectAccountMainSection = () => {
+  const location = useLocation();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
 
   useEffect(() => {
@@ -68,7 +69,9 @@ export const ConnectAccountMainSection = () => {
   };
 
   const handleConnectAccountSuccess = () => {
-    history.push(appRouteConstants.auth.ACCOUNT_SETTING);
+    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
+
+    return history.push(location);
   };
 
   if (loading || error || !data) {
@@ -85,7 +88,7 @@ export const ConnectAccountMainSection = () => {
       <div className=''>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <Link to='/'>
+            <Link to='/net-worth'>
               <LogoImg className='icon auth-logo' />
             </Link>
 

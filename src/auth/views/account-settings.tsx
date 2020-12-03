@@ -1,5 +1,5 @@
 import { Dictionary } from 'lodash';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import React, { createRef, useCallback, useEffect, useState } from 'react';
 
 import { Account } from 'auth/auth.types';
@@ -18,6 +18,7 @@ import AccountSettingForm from './inc/account-setting-form';
 
 const AccountSettings = () => {
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useAuthDispatch();
   const { accounts } = useAuthState();
   const [providerName, setProviderName] = useState('');
@@ -30,6 +31,9 @@ const AccountSettings = () => {
   const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
   const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
 
+  const params = new URLSearchParams(location.search);
+  const action = params.get('action');
+
   useEffect(() => {
     const getUser = async () => {
       await getRefreshedProfile({ dispatch });
@@ -37,6 +41,8 @@ const AccountSettings = () => {
 
     getUser();
   }, [dispatch, reloadCounter]);
+
+  const isFromNetworth = action === 'addMoreAccount';
 
   useEffect(() => {
     if (accounts) {
@@ -143,7 +149,7 @@ const AccountSettings = () => {
   };
 
   const navigateToNetworth = () => {
-    return history.push('/net-worth');
+    return history.push('/net-worth?from=accountSettings');
   };
 
   return (
@@ -243,12 +249,14 @@ const AccountSettings = () => {
             </div>
           </div>
         </div>
-        <ConnectAccountSteps
-          isAccountSettings
-          onSkip={navigateToNetworth}
-          isCompleted={finish || isLastAccount()}
-          onFinish={navigateToNetworth}
-        />
+        {!isFromNetworth ? (
+          <ConnectAccountSteps
+            isAccountSettings
+            onSkip={navigateToNetworth}
+            isCompleted={finish}
+            onFinish={navigateToNetworth}
+          />
+        ) : null}
       </div>
     </AuthLayout>
   );
