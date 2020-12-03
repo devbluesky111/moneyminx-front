@@ -176,7 +176,7 @@ const AccountSettings = () => {
               </div>
             </div>
 
-            <div className='bg-white credentials-wrapper account-setting'>
+            {/* <div className='bg-white credentials-wrapper account-setting'>
               <div className='credentials-content'>
                 <div className='logo-img-wrapper'>
                   <LogoImg className='auth-logo' />
@@ -218,13 +218,13 @@ const AccountSettings = () => {
                       currentProviderAccounts={currentProviderAccounts}
                       changeCurrentAccount={handleChangeCurrentAccount}
                     />
-                  </div>
+                  </div> */}
 
-                  <AccountSettingForm
-                    currentAccount={currentAccount}
-                    handleReload={() => setReloadCounter((c) => c + 1)}
-                  />
-
+            <AccountSettingForm
+              currentAccount={currentAccount}
+              handleReload={() => setReloadCounter((c) => c + 1)}
+            />
+            {/* 
                   <p className='flex-box learn-more-security'>
                     <SecurityIcon />
                     <a href='/security' target='_blank' className='purple-links'>
@@ -233,7 +233,7 @@ const AccountSettings = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         {!isFromNetworth ? (

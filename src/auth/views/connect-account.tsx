@@ -16,7 +16,7 @@ import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.s
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
 import ConnectAccountSteps from './inc/connect-steps';
-import ManucalAccountModal from './inc/manual-account.modal';
+import ManualAccountModal from './inc/manual-account.modal';
 
 const config = {
   clientId: appEnv.ZABO_CONFIGURATION.ZABO_CLIENT_ID,
@@ -172,7 +172,7 @@ export const ConnectAccountMainSection = () => {
           </div>
         </div>
       </div>
-      <ManucalAccountModal manualAccountModal={manualAccountModal} />
+      <ManualAccountModal manualAccountModal={manualAccountModal} />
       <ConnectAccountSteps isConnectAccount />
       <FastLinkModal
         fastLinkModal={fastlinkModal}

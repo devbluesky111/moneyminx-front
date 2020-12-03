@@ -3,8 +3,8 @@ import ReactDatePicker from 'react-datepicker';
 import { Button, Dropdown } from 'react-bootstrap';
 
 import AppFooter from 'common/app.footer';
+import AccountSettingForm from 'auth/views/inc/account-setting-form';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import ManualAccountForm from 'auth/views/inc/manual-account-form';
 import { Account } from 'auth/auth.types';
 import { enumerateStr } from 'common/common-helper';
 import { getCurrencySymbol } from 'common/currency-helper';
@@ -131,7 +131,8 @@ const AccountDetail: React.FC<AccountDetailProps> = (props) => {
   return (
     <div className='mm-setting'>
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
-        <ManualAccountForm currentAccount={AccountDetails} closeSidebar={closeSidebar} />
+        {/* <ManualAccountForm currentAccount={AccountDetails} closeSidebar={closeSidebar} /> */}
+        <AccountSettingForm currentAccount={AccountDetails} closeSidebar={closeSidebar} />
       </aside>
       {accSetting && <div className='backdrop' onClick={closeSidebar}></div>}
       <AppHeader

@@ -20,7 +20,7 @@ const DeleteAccountModal: React.FC<Props> = ({ deleteAccountModal, deleteAccount
                         Cancel
                     </button>
                     <button
-                        className='mm-btn-animate mm-btn-secondary'
+                        className='mm-btn-animate btn-danger'
                         onClick={() => { deleteAccountById(); deleteAccountModal.close(); }}
                     >
                         Delete Account

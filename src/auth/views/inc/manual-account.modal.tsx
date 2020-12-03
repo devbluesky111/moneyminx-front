@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { appRouteConstants } from 'app/app-route.constant';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { getRefreshedAccount, getManualAccountType, postManualAccount } from 'api/request.api';
@@ -18,7 +17,7 @@ interface SettingModalProps {
 const initialValues = {
     yodleeAccountType: '',
     accountName: '',
-    nickname: '',
+    nickname: 'nickname',
     balance: '',
     accountNumber: '',
     currency: '',
@@ -48,6 +47,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
 
     const handleSubmit = async () => {
         setLoading(true);
+        values.nickname = values.accountName;
         const { data: res, error: err } = await postManualAccount(values);
         if (!err) {
             console.log(res);
@@ -96,29 +96,16 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
                 <span className='description'>With manual accounts you can track any asset and liablity that is not currently supported by our integration partners.</span>
                 <div className='mm-manual-account-modal__title mt-3'>
                     <Form>
-                        <div className='row-set'>
-                            <Form.Group controlId='ManualAccountForm.AccountName' className='child'>
-                                <Form.Label className='mm-manual-account-modal__sub-title'>Account Name</Form.Label>
-                                <Form.Control
-                                    type='text'
-                                    placeholder='Sapphire Credit Card'
-                                    onChange={handleChange}
-                                    name='accountName'
-                                    value={values.accountName}
-                                />
-                            </Form.Group>
-                            <Form.Group controlId='ManualAccountForm.nickname' className='child'>
-                                <Form.Label className='mm-manual-account-modal__sub-title'>Nick Name</Form.Label>
-                                <Form.Control
-                                    type='text'
-                                    placeholder='Sapphire'
-                                    onChange={handleChange}
-                                    name='nickname'
-                                    value={values.nickname}
-                                    required
-                                />
-                            </Form.Group>
-                        </div>
+                        <Form.Group controlId='ManualAccountForm.AccountName' className='child'>
+                            <Form.Label className='mm-manual-account-modal__sub-title'>Account Name</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Sapphire Credit Card'
+                                onChange={handleChange}
+                                name='accountName'
+                                value={values.accountName}
+                            />
+                        </Form.Group>
                         <div className='row-set'>
                             <Form.Group controlId='ManualAccountForm.AccountType' className='child'>
                                 <Form.Label className='mm-manual-account-modal__sub-title'>Account Type</Form.Label>
@@ -176,12 +163,15 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
                         <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel}>
                             Cancel
                         </button>
-                        <button className='mm-btn-animate mm-btn-primary' onClick={handleSubmit} disabled={disabled}>
-                            Add <span className='hide-sm'>Account</span>
-                            {loading &&
-                                <span className='spinner'>
-                                    <CircularSpinner />
-                                </span>
+                        <button className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={handleSubmit} disabled={disabled}>
+                            {loading ? (
+                                <>
+                                    <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />
+                                    <span className='ml-1'>Adding...</span>
+                                </>
+                            ) : (
+                                    <>Add<span className='hide-sm ml-1'>Account</span></>
+                                )
                             }
                         </button>
 
