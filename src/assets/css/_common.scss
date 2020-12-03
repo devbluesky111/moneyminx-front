@@ -106,7 +106,14 @@ textarea.form-control {
     opacity: 0.7;
   }
 }
+.btn-danger {
 
+  &:hover{
+    box-shadow: 2px 4px 8px $pinterestRedGlow;
+    background-color: $redAlert;
+    border-color: $redAlert;
+  }
+}
 .mm-btn-primary-outline {
   color: $lightBg;
   border: 1.5px solid $white;

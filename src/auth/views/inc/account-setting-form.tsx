@@ -867,7 +867,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                   <div className='row mt-5'>
                     <div className={`col-12 col-md-4 mb-3 ${isFromAccount ? '' : 'hidden'}`}>
                       <button
-                        className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete'
+                        className='mm-btn-animate btn-danger'
                         type='button'
                         onClick={() => deleteAccountModal.open()}
                       >
