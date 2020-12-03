@@ -1,6 +1,4 @@
 import React from 'react';
-import { ReactComponent as CheckIcon } from 'assets/images/signup/check-icon.svg';
-import { ReactComponent as SelectedIcon } from 'assets/images/signup/selected.svg';
 import { ReactComponent as CircleIcon } from 'assets/images/signup/circle-icon.svg';
 interface StepProps {
   isConnectAccount?: boolean;
@@ -25,17 +23,34 @@ const ConnectAccountSteps: React.FC<StepProps> = ({ isConnectAccount, isAccountS
           <div className='connect-steps-wrap'>
             <div className={`step-content left-border ${isAccountSettings ? 'bg-purple' : ''}`}>
               <div className='step-icon'>
-                <CheckIcon />
+                <div className='mm-checked-icon' />
               </div>
               <span className='connect-text text-left'>Sign up</span>
             </div>
             <div className='step-content'>
-              <div className='step-icon icon-two'>{isConnectAccount ? <SelectedIcon /> : <CheckIcon />}</div>
+              <div className='step-icon icon-two'>
+                {
+                  isConnectAccount ? 
+                  <div className='mm-selected-icon'>
+                    <div className='mm-selected-icon__outer'>
+                      <div className='mm-selected-icon__inner' />
+                    </div>
+                  </div> : 
+                  <div className='mm-checked-icon' />
+                }
+              </div>
               <span className='connect-text'>Connect accounts </span>
             </div>
             <div className='step-content right-border'>
               <div className={`step-icon icon-three ${!isConnectAccount ? 'selected' : ''}`}>
-                {isConnectAccount ? <CircleIcon /> : <SelectedIcon />}
+                {
+                  isConnectAccount ? <CircleIcon /> :
+                  <div className='mm-selected-icon'>
+                    <div className='mm-selected-icon__outer'>
+                      <div className='mm-selected-icon__inner' />
+                    </div>
+                  </div>
+                }
               </div>
               <span className={`connect-text text-right ${!isAccountSettings ? 'action-next-step' : ''}`}>Link accounts</span>
             </div>

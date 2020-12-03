@@ -23,11 +23,12 @@ import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
+/*import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';*/
 import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
+import { fNumber, numberWithCommas } from '../../../common/number.helper';
 
 interface Props {
   currentAccount?: Account;
@@ -610,6 +611,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
                 </div>
               ) : null}
 
+              {values.employerMatchContribution !== 'no' ? (
               <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
                 <div className='left-input'>
                   <p>
@@ -646,8 +648,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
                   </div>
                 </div>
               </div>
+              ) : null}
             </div>
-
             <div className={`form-divider ${hc('separateLoanBalance')}`}>
               <ul className='account-type-list'>
                 <li className='w-100'>
@@ -716,6 +718,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
             <div className={`form-divider ${hc('useZestimate')}`}>
               <span className='form-subheading'>Current Value</span>
               <div className='d-flex align-items-start'>
+                {/* TODO Needs Zillow integration
                 <div className='w-50 mr-2 d-flex flex-column'>
                   <div className='form-check ml-0 pl-0 mt-4 mb-5'>
                     <input
@@ -732,9 +735,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
                     </label>
                   </div>
                   <ZillowImage />
-                </div>
+                </div>*/}
                 <div className='w-50 mr-2 d-flex flex-column'>
-                  <div className='form-check ml-0 pl-0 mt-4 mb-5'>
+                  {/*<div className='form-check ml-0 pl-0 mt-4 mb-5'>
                     <input
                       value='no'
                       type='radio'
@@ -747,7 +750,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
                     <label className='form-check-label ml-4' htmlFor='useZestimate'>
                       Use my own estimate
                     </label>
-                  </div>
+                  </div>*/}
                   <Form.Control onChange={handleChange} type='number' name='ownEstimate' value={values.ownEstimate} />
                 </div>
               </div>
@@ -776,7 +779,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isL
             <div className={`form-divider ${hc('calculatedEquity')}`}>
               <div className='d-flex align-items-center justify-content-between'>
                 <p>Calculated Equity</p>
-                <p>{+values.ownEstimate - +values.loanBalance}</p>
+                <p>{numberWithCommas(fNumber(+values.ownEstimate - +values.loanBalance, 0))}</p>
               </div>
             </div>
 

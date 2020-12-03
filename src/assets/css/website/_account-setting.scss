@@ -184,18 +184,24 @@ ul.bank-list {
   width: 100%;
   border-radius: 4px;
   padding-left: 0;
+  border: 1px solid rgba($gray, 0.24);
+
+  // necessary to fit content width of Segmented Control
+  @media (min-width: $med + 89) and (max-width: $md) {
+    width: fit-content;
+  }
 }
 
 .account-category .category-list a {
   color: #969eac;
   height: 48px;
   display: inline-flex;
-  width: 100%;
   position: relative;
   font-size: 0.875rem;
   font-weight: 400;
   justify-content: center;
   align-items: center;
+  width: 11.938rem;
 
   &.active,
   &:hover {
@@ -204,13 +210,16 @@ ul.bank-list {
 }
 
 .account-category .category-list li {
-  border: 1.5px solid $grayOpacity24;
   border-radius: 4px;
 }
 
 .account-category {
   .category-list {
+    overflow-x: auto;
+
     li {
+      width: 11.938rem;
+
       &:nth-child(2),
       &:first-child {
         border-right: none;
@@ -235,7 +244,7 @@ ul.bank-list {
 .account-category .category-list li.active ~ .border-bg-slider {
   border: 1.5px solid $primary;
   border-radius: 4px;
-  width: 11.813rem;
+  width: 12.063rem;
   height: 100%;
   position: absolute;
 }
@@ -264,9 +273,14 @@ ul.bank-list {
 }
 
 .account-type-list li {
-  width: 47%;
-  float: left;
-  margin-bottom: 33px;
+  width: 100%;
+  margin-bottom: 2.063rem;
+
+  @media (min-width: $md) {
+    width: 47%;
+    float: left;
+    margin-bottom: 2.063rem;
+  }
 }
 
 .account-type-list {
@@ -307,6 +321,12 @@ ul.bank-list {
   justify-content: space-between;
   width: 100%;
   padding-left: 0;
+
+  .dropdown {
+    .dropdown-toggle {
+      white-space: unset;
+    }
+  }
 }
 
 .form-wrap .estimated-annual-return input {
@@ -330,11 +350,15 @@ ul.bank-list {
 }
 
 .right-input {
-  position: absolute;
-  display: contents;
-  right: 0;
-  top: -2%;
-  width: 47%;
+  width: 100%;
+
+  @media (min-width: $md) {
+    position: absolute;
+    display: contents;
+    right: 0;
+    top: -2%;
+    width: 47%;
+  }
 
   &.radio {
     top: 25%;
@@ -968,4 +992,66 @@ span.next-icon {
   font-size: 0.875rem;
   line-height: 1.125rem;
   color: $gray;
+}
+.connections-account-name {
+  padding-left: 0.8125rem;
+
+  @media (min-width: $md) {
+    padding-left: 1rem;
+  }
+}
+
+.mm-checked-icon {
+  &:before {
+    width: 0;
+    top: 40%;
+    height: 0;
+    left: 0.75rem;
+    content: ' ';
+    display: block;
+    margin-top: 6px;
+    border-radius: 50%;
+    position: absolute;
+    border: solid 15px $primary;
+  }
+
+  &:after {
+    top: 40%;
+    width: 7px;
+    left: 1.5rem;
+    content: ' ';
+    height: 0.813rem;
+    display: block;
+    margin-top: 0.75rem;
+    border: solid #fff;
+    position: absolute;
+    transform: rotate(45deg);
+    border-width: 0 2px 2px 0;
+    -o-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+}
+
+.mm-selected-icon {
+  margin-top: 8px;
+
+  &__outer {
+    width: 2rem;
+    height: 2rem;
+    position: relative;
+    border-radius: 50%;
+    background: $white;
+    box-shadow: 0px 2px 8px #e2e8f3;
+  }
+
+  &__inner {
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    position: relative;
+    border-radius: 50%;
+    background-color: $primary;
+  }
 }
