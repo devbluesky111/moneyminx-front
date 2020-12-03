@@ -8,6 +8,16 @@ export enum CurrencyOptions {
   CHF = 'CHF',
   INR = 'INR',
   SGD = 'SGD',
+  CRC = 'CRC',
+  ILS = 'ILS',
+  KRW = 'KRW',
+  NGN = 'NGN',
+  PHP = 'PHO',
+  PLN = 'PLN',
+  PYG = 'PYG',
+  THB = 'THB',
+  UAH = 'UAH',
+  VND = 'VND',
 }
 
 export enum CurrencySymbols {
