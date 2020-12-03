@@ -58,12 +58,12 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
             toast('Add Success', { type: 'success' });
             manualAccountModal.close();
             storage.set('isNew', 'true');
-            history.push(appRouteConstants.account.ACCOUNT.replace(':accountId', res.id));
-        } else {
-            console.log(err);
-            setLoading(false);
-            toast(' Add Failed', { type: 'error' });
+            return history.push(appRouteConstants.account.ACCOUNT.replace(':accountId', res.id));
         }
+
+        console.log(err);
+        setLoading(false);
+        toast(' Add Failed', { type: 'error' });
     };
 
     const fetchAccountTypes = async () => {

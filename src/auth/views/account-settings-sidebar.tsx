@@ -1,14 +1,15 @@
+import React, { createRef, useCallback, useEffect, useState } from 'react';
 import { Dictionary } from 'lodash';
 import { Link } from 'react-router-dom';
-import React, { createRef, useCallback, useEffect, useState } from 'react';
 
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
 import { getRefreshedProfile } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { useAuthState, useAuthDispatch } from 'auth/auth.context';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
+
 import AccountSettingForm from './inc/account-setting-form';
 
 interface Props {
@@ -133,8 +134,9 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
 
   return (
     <div className='bg-white credentials-wrapper account-setting'>
+      {selectedAccount && <div className='close-icon' onClick={closeSidebar}>✕</div>}
+
       <div className='credentials-content'>
-        {selectedAccount && <div className='close-icon' onClick={closeSidebar}>✕</div>}
         <div className='logo-img-wrapper'>
           <LogoImg className='auth-logo' />
         </div>
