@@ -39,7 +39,7 @@
     "zabo-sdk-js": "0.12.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "yarn lint && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -51,10 +51,9 @@
     "extends": "react-app"
   },
   "lint-staged": {
-    "*.{ts,js, tsx}": [
+    "*.{ts,js}": [
       "prettier --single-quote --write",
-      "tslint --fix -c tslint.json 'src/**/*.{ts,js}'",
-      "git add"
+      "tslint --fix -c tslint.json 'src/**/*.{ts,js,tsx}'"
     ]
   },
   "browserslist": {

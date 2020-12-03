@@ -1,30 +1,30 @@
-import React, { useState, useRef } from 'react';
-import { Button, Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
+import React, { useRef, useState } from 'react';
+import { Button, Dropdown } from 'react-bootstrap';
 
-import AppFooter from 'common/app.footer';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { Account } from 'auth/auth.types';
+import AppFooter from 'common/app.footer';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { getDate, getMonthYear, getQuarter, getYear } from 'common/moment.helper';
-import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
+import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 
-import AccountSubNavigation from './account-sub-navigation';
-import AppHeader from '../../common/app.header';
-import AccountTable from './account-table';
 import ActivityTable from './activity-table';
+import AccountTable from './account-table';
+import AppHeader from '../../common/app.header';
 import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
 import MMToolTip from '../../common/components/tooltip';
-import { AccountChartItem, AccountProps, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
+import AccountSubNavigation from './account-sub-navigation';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
 
-const AccountDetail: React.FC<AccountProps> = (props) => {
+import { AccountChartItem, AccountProps, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 
+const AccountDetail: React.FC<AccountProps> = (props) => {
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [AccountDetails, setAccountDetails] = useState<Account>();
@@ -44,7 +44,10 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
 
   React.useEffect(() => {
     fetchAccountDetails(accountId);
-    if ((fromDate === undefined && toDate === undefined) || (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))) {
+    if (
+      (fromDate === undefined && toDate === undefined) ||
+      (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))
+    ) {
       setFilterLoading(true);
       if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
       if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
@@ -53,12 +56,13 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
-  }
+  };
 
   const fetchAccountDetails = async (accountId: string) => {
     const { data, error } = await getAccountDetails(accountId);
     if (!error) {
       console.log('fetchAccountDetails: ', data);
+
       setAccountDetails(data);
     }
   };
@@ -87,7 +91,9 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
 
   let curAccountHoldingsItem = undefined;
   if (AccountHoldings?.charts) {
-    curAccountHoldingsItem = AccountHoldings?.charts.filter((accountChartItem: AccountChartItem) => isCurrent(accountChartItem.interval));
+    curAccountHoldingsItem = AccountHoldings?.charts.filter((accountChartItem: AccountChartItem) =>
+      isCurrent(accountChartItem.interval)
+    );
   }
 
   const onChange = (option: string, date: any) => {
@@ -113,7 +119,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
     setFromDate(undefined);
     setTimeInterval('Monthly');
     setFilterLoading(false);
-  }
+  };
 
   return (
     <div className='mm-setting'>
@@ -122,10 +128,14 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
       />
-      {(!loading && AccountDetails) && <AccountSubNavigation providerLogo={AccountDetails?.providerLogo} providerName={AccountDetails?.providerName} />}
+      {!loading && AccountDetails && (
+        <AccountSubNavigation providerLogo={AccountDetails?.providerLogo} providerName={AccountDetails?.providerName} />
+      )}
       <hr className='mt-0 mb-4' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
-      {loading ? <CircularSpinner /> :
+      {loading ? (
+        <CircularSpinner />
+      ) : (
         <div className='mm-account'>
           <div className='mm-account__selection mb-3'>
             <div className='mm-account__selection--info float-lg-left'>
@@ -141,7 +151,11 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
             <div className='d-md-flex justify-content-between mt-3'>
               <div className='d-flex'>
                 <div className='dflex-center'>
-                  {(dateFromFilterOn || dateToFilterOn || intervalFilterOn) && <button type='button' className='btn btn-outline-danger clear-filter' onClick={clearFilters}>Clear Filters</button>}
+                  {(dateFromFilterOn || dateToFilterOn || intervalFilterOn) && (
+                    <button type='button' className='btn btn-outline-danger clear-filter' onClick={clearFilters}>
+                      Clear Filters
+                    </button>
+                  )}
                   <ReactDatePicker
                     selected={fromDate ? new Date(fromDate) : null}
                     onChange={(date) => onChange('start', date)}
@@ -155,12 +169,19 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                     customInput={
                       <div className='drop-box'>
                         <div className='date-box'>
-                          <input type='text' className={['month_year', dateFromFilterOn ? 'active' : ''].join(' ')} value={getMonthYear(fromDate)} readOnly />
+                          <input
+                            type='text'
+                            className={['month_year', dateFromFilterOn ? 'active' : ''].join(' ')}
+                            value={getMonthYear(fromDate)}
+                            readOnly
+                          />
                         </div>
                       </div>
                     }
                   />
-                  <span className={['date-separator', (dateFromFilterOn && dateToFilterOn) ? 'active' : ''].join(' ')}>to</span>
+                  <span className={['date-separator', dateFromFilterOn && dateToFilterOn ? 'active' : ''].join(' ')}>
+                    to
+                  </span>
                   <ReactDatePicker
                     selected={toDate ? new Date(toDate) : null}
                     onChange={(date) => onChange('end', date)}
@@ -175,7 +196,12 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                     customInput={
                       <div className='drop-box'>
                         <div className='date-box'>
-                          <input type='text' className={['month_year', dateToFilterOn ? 'active' : ''].join(' ')} value={getMonthYear(toDate)} readOnly />
+                          <input
+                            type='text'
+                            className={['month_year', dateToFilterOn ? 'active' : ''].join(' ')}
+                            value={getMonthYear(toDate)}
+                            readOnly
+                          />
                         </div>
                       </div>
                     }
@@ -216,43 +242,57 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
                       <span className='manual'>Manual</span>
                     </>
                   ) : (
-                      <>
-                        <CheckCircleGreen />
-                        <span className='good'>Good</span>
-                      </>
-                    )}
+                    <>
+                      <CheckCircleGreen />
+                      <span className='good'>Good</span>
+                    </>
+                  )}
                 </div>
               </div>
-
             </div>
           </div>
 
           <div className='account-ct-box mb-40'>
             <div className='graphbox'>
               <ul>
-                {AccountDetails?.category?.mmCategory === 'Investment Assets' &&
+                {AccountDetails?.category?.mmCategory === 'Investment Assets' && (
                   <li className='inv-data'>
                     <span>Value</span>
-                    <h3>{getCurrencySymbol(AccountDetails?.accountDetails?.currency)}{curAccountHoldingsItem?.[0]?.value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0)) : 0}</h3>
+                    <h3>
+                      {getCurrencySymbol(AccountDetails?.accountDetails?.currency)}
+                      {curAccountHoldingsItem?.[0]?.value
+                        ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
+                        : 0}
+                    </h3>
                   </li>
-                }
-                {AccountDetails?.category?.mmCategory === 'Other Assets' &&
+                )}
+                {AccountDetails?.category?.mmCategory === 'Other Assets' && (
                   <li className='other-data'>
                     <span>Value</span>
-                    <h3>{getCurrencySymbol(AccountDetails?.accountDetails?.currency)}{curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
+                    <h3>
+                      {getCurrencySymbol(AccountDetails?.accountDetails?.currency)}
+                      {curAccountHoldingsItem?.[0].value
+                        ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
+                        : 0}
+                    </h3>
                   </li>
-                }
-                {AccountDetails?.category?.mmCategory === 'Liabilities' &&
+                )}
+                {AccountDetails?.category?.mmCategory === 'Liabilities' && (
                   <li className='lty-data'>
                     <span>Value</span>
-                    <h3>{getCurrencySymbol(AccountDetails?.accountDetails?.currency)}{curAccountHoldingsItem?.[0].value ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0)) : 0}</h3>
+                    <h3>
+                      {getCurrencySymbol(AccountDetails?.accountDetails?.currency)}
+                      {curAccountHoldingsItem?.[0].value
+                        ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
+                        : 0}
+                    </h3>
                   </li>
-                }
+                )}
               </ul>
               <div className='chartbox'>
-                {(AccountHoldings && curAccountHoldingsItem) &&
+                {AccountHoldings && curAccountHoldingsItem && (
                   <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} />
-                }
+                )}
               </div>
             </div>
           </div>
@@ -270,7 +310,7 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               />
               <label className='labels' htmlFor='mm-account-holding'>
                 Holdings
-            </label>
+              </label>
               <input
                 type='radio'
                 id='mm-account-activity'
@@ -282,41 +322,43 @@ const AccountDetail: React.FC<AccountProps> = (props) => {
               />
               <label className='labels' htmlFor='mm-account-activity'>
                 Activity
-            </label>
+              </label>
               <div className='mm-radio-bg' />
             </div>
-            {AccountDetails?.isManual && tableType === 'holdings' &&
+            {AccountDetails?.isManual && tableType === 'holdings' && (
               <Button variant='primary' className='mb-4 mm-account__btn'>
                 Add Position
-          </Button>
-            }
-            {AccountDetails?.isManual && tableType === 'activity' &&
+              </Button>
+            )}
+            {AccountDetails?.isManual && tableType === 'activity' && (
               <Button variant='primary' className='mb-4 mm-account__btn'>
                 Add Activity
-          </Button>
-            }
+              </Button>
+            )}
           </div>
-          {(AccountHoldings && tableType === 'holdings') && <AccountTable holdings={AccountHoldings?.holdings} />}
+          {AccountHoldings && tableType === 'holdings' && <AccountTable holdings={AccountHoldings?.holdings} />}
 
-          {tableType === 'activity' &&
+          {tableType === 'activity' && (
             <div className='mm-account-activity-block'>
               <div className='d-flex align-items-center mb-4'>
                 <p className='mb-0'>
-                  To properly calculate performance make sure that all withdrawals and deposits are accurately tracked below
-                  as Cash Flow
-            </p>
-                <MMToolTip placement='top'
-                  message='Performance calculations are coming soon. To ensure proper performance returns please mark cash flow transactions properly.'>
+                  To properly calculate performance make sure that all withdrawals and deposits are accurately tracked
+                  below as Cash Flow
+                </p>
+                <MMToolTip
+                  placement='top'
+                  message='Performance calculations are coming soon. To ensure proper performance returns please mark cash flow transactions properly.'
+                >
                   <InfoIcon className='mt-n1 ml-2' />
                 </MMToolTip>
               </div>
               {AccountActivity && <ActivityTable transactions={AccountActivity?.transactions} />}
             </div>
-          }
+          )}
         </div>
-      }
+      )}
       {!loading && <AppFooter />}
-    </div >
+    </div>
   );
 };
 
