@@ -51,7 +51,7 @@
     "extends": "react-app"
   },
   "lint-staged": {
-    "*.{ts,js, tsx}": [
+    "*.{ts,js,tsx}": [
       "prettier --single-quote --write",
       "tslint --fix -c tslint.json 'src/**/*.{ts,js,tsx}'"
     ]
