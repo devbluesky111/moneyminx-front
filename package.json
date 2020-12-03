@@ -53,7 +53,7 @@
   "lint-staged": {
     "*.{ts,js}": [
       "prettier --single-quote --write",
-      "tslint --fix -c tslint.json 'src/**/*.{ts,js,tsx}'"
+      "tslint --fix -c tslint.json 'src/**/*.{ts,js}'"
     ]
   },
   "browserslist": {

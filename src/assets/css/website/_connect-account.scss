@@ -211,3 +211,61 @@ span.zillow-img {
   color: $gray;
   opacity: 0.4;
 }
+
+.mm-manual-account-modal {
+
+  .description {
+    font-size: 1rem;
+    line-height: 150%;
+    color: $gray;
+  }
+
+  &__title {
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: $black;
+  }
+
+  &__sub-title {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .row-set {
+    display: block;
+
+    .child {
+      width: 100%;
+    }
+
+    @media(min-width: $sm) {
+      display: flex;
+      justify-content: space-between;
+
+      .child {
+        width: 47%;
+      }
+    }
+
+  }
+
+  .action-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 1rem;
+
+    button:nth-child(2) {
+      margin-left: 1rem;
+    }
+
+    button {
+      position: relative;
+
+      .spinner {
+        position: absolute;
+        top: 8px;
+        right: 0;
+      }
+    }
+  }
+}
