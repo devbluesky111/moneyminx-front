@@ -25,7 +25,7 @@ import { CurrencyOptions } from 'auth/enum/currency-options';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import { SelectInput } from 'common/components/input/select.input';
 import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
-import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
+// import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
@@ -840,7 +840,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
               <div className='estimate-annual-block mt-3'>
                 <div className='estimated-top-content'>
-                  <div
+                  {/* <div
                     className={`link-attention-block  d-flex justify-content-between ${isFromAccount ? '' : 'hidden'}`}
                   >
                     <button className='btn btn-primary w-50 mm-button' type='button'>
@@ -850,9 +850,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       <NotLinked />
                       <span className='text--red'>Attention</span>
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div className={isFromAccount ? '' : 'hidden'}>
+                  {/* <div className={isFromAccount ? '' : 'hidden'}>
                     <span className='form-subheading'>Closed Account</span>
 
                     <div className='estimate-annual-block__checkbox'>
@@ -862,7 +862,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       </label>
                       <span className='ml-4'>Mark this account as closed</span>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className='row mt-5'>
                     <div className={`col-12 col-md-4 mb-3 ${isFromAccount ? '' : 'hidden'}`}>
