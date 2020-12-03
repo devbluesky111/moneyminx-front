@@ -6,7 +6,6 @@
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
     "trailing-comma": false,
-    "ordered-imports": false,
     "quotemark": [true, "single"],
     "interface-name": false,
     "no-submodule-imports": false,
@@ -15,13 +14,55 @@
     "no-empty-interface": false,
     "react-a11y-lang": false,
     "radix": true,
+    "no-shadowed-variable": {
+      "severity": "error"
+    },
+    "no-console": {
+      "options": ["log", "info", "warning"],
+      "severity": "error"
+    },
     "settings": {
       "import/resolver": {
         "node": {
           "paths": ["src"]
         }
       }
-    }
+    },
+    "ordered-imports": [
+      true,
+      {
+        "module-source-path": "full",
+        "grouped-imports": true,
+        "named-imports-order": "any",
+        "import-sources-order": "any",
+        "groups": [
+          {
+            "name": "react",
+            "match": "^react.*",
+            "order": 1,
+            "severity": "error"
+          },
+          {
+            "name": "internal modules",
+            "match": "^@app.*",
+            "order": 3,
+            "severity": "error"
+          },
+          {
+            "name": "relative dir",
+            "match": "^[.].*",
+            "order": 4,
+            "severity": "error"
+          },
+          {
+            "name": "node_modules",
+            "match": ".*",
+            "order": 2,
+            "severity": "error"
+          }
+        ]
+      }
+    ]
   },
   "linterOptions": {
     "exclude": ["src/serviceWorker.ts"]
