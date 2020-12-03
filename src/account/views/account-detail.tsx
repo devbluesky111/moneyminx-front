@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { Button, Dropdown } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 import AppFooter from 'common/app.footer';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
@@ -24,10 +25,10 @@ import ActivityTable from './activity-table';
 import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
 import MMToolTip from '../../common/components/tooltip';
-import { AccountChartItem, AccountDetailProps, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
+import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
 
-const AccountDetail: React.FC<AccountDetailProps> = (props) => {
+const AccountDetail: React.FC = () => {
 
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
@@ -44,7 +45,8 @@ const AccountDetail: React.FC<AccountDetailProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [filterloading, setFilterLoading] = useState<boolean>(false);
   const [accSetting, setAccSetting] = useState<boolean>(false);
-  const accountId = props.match.params.accountId;
+  const { pathname } = useLocation();
+  const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
 
   React.useEffect(() => {

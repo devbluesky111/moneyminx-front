@@ -17,7 +17,7 @@ interface SettingModalProps {
 const initialValues = {
     yodleeAccountType: '',
     accountName: '',
-    nickname: 'nickname',
+    nickname: '',
     balance: '',
     accountNumber: '',
     currency: '',
@@ -34,10 +34,11 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
     const handleChange = (e: React.ChangeEvent<any>) => {
         if (e.target.name === 'balance') {
             let _float = parseFloat(e.target.value);
-            setValues({ ...values, [e.target.name]: _float });
-        } else {
-            setValues({ ...values, [e.target.name]: e.target.value });
+
+            return setValues({ ...values, [e.target.name]: _float });
         }
+
+        return setValues({ ...values, [e.target.name]: e.target.value });
     };
 
     const handleCancel = () => {
@@ -81,13 +82,10 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
     }, [manualAccountModal])
 
     React.useEffect(() => {
-        for (let i = 0; i < Object.values(values).length; i++) {
-            if (!Object.values(values)[i]) {
-                setDisabled(true);
-                break;
-            }
-            setDisabled(false);
+        if (!values.yodleeAccountType || !values.accountName || !values.balance || !values.currency) {
+            return setDisabled(true);
         }
+        return setDisabled(false);
     }, [values])
 
     return (

@@ -1,5 +1,5 @@
-import { Link, useHistory, useLocation } from 'react-router-dom';
 import React, { useState } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { AuthLayout } from 'layouts/auth.layout';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
