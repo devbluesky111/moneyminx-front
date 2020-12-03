@@ -6,6 +6,8 @@ export enum CurrencyOptions {
   JPY = 'JPY',
   AUD = 'AUD',
   CHF = 'CHF',
+  INR = 'INR',
+  SGD = 'SGD',
 }
 
 export enum CurrencySymbols {
@@ -24,6 +26,7 @@ export enum CurrencySymbols {
   'PHP' = '₱', // Philippine Peso
   'PLN' = 'zł', // Polish Zloty
   'PYG' = '₲', // Paraguayan Guarani
+  'SGD' = '$', // Singapore Dollar
   'THB' = '฿', // Thai Baht
   'UAH' = '₴', // Ukrainian Hryvnia
   'VND' = '₫', // Vietnamese Dong
