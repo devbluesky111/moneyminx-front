@@ -784,19 +784,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                   <li className={`mt-5 ${hc('associatedMortgage')}`}>
                     <span className='form-subheading'>Associated Mortgage</span>
                     <SelectInput
-                      args={mortgageAccounts}
+                      args={dMortgageAccounts}
                       name='associatedMortgage'
                       onChange={handleChange}
                       value={values.associatedMortgage}
-                    >
-                      {mortgageAccounts?.map((accType, index) => {
-                        return (
-                          <option value={accType} key={index} aria-selected={!!values.mmAccountType}>
-                            {accType}
-                          </option>
-                        );
-                      })}
-                    </SelectInput>
+                    />
                   </li>
                 </ul>
               </div>
