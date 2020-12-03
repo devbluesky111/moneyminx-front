@@ -95,9 +95,9 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
             <div className='modal-wrapper mm-manual-account-modal'>
                 <span className='description'>With manual accounts you can track any asset or liability that is not currently supported by our integration partners.</span>
                 <div className='mm-manual-account-modal__title mt-3'>
-                    <Form>
+                    <Form className='mm-form'>
                         <Form.Group controlId='ManualAccountForm.AccountName' className='child'>
-                            <Form.Label className='mm-manual-account-modal__sub-title'>Account Name</Form.Label>
+                            <Form.Label className='form-subheading'>Account Name</Form.Label>
                             <Form.Control
                                 type='text'
                                 placeholder='Sapphire Credit Card'
