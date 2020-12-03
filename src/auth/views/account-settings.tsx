@@ -115,6 +115,18 @@ const AccountSettings = () => {
     return <CircularSpinner />;
   }
 
+  const isLastAccount = (): boolean => {
+    if (accounts && currentAccount) {
+      const { length, [length - 1]: last } = accounts;
+
+      if (last.id === currentAccount.id) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const handleProviderChange = (provider: string) => {
     setClickEvent(true);
     setProviderName(provider);
@@ -222,6 +234,7 @@ const AccountSettings = () => {
 
                   <AccountSettingForm
                     currentAccount={currentAccount}
+                    isLastAccount={isLastAccount()}
                     handleReload={() => setReloadCounter((c) => c + 1)}
                   />
 
@@ -272,7 +285,7 @@ export const AccountNameList: React.FC<AccountNameListProps> = ({
 
   const scrollToCategory = useCallback(
     (id: number) => {
-      if (refList) {
+      if (refList.length) {
         refList[id]?.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       }
     },

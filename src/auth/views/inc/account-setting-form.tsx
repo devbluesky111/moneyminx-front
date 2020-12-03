@@ -9,7 +9,6 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Account } from 'auth/auth.types';
 import { MMCategories } from 'auth/auth.enum';
 import { patchAccount } from 'api/request.api';
-import { useAuthState } from 'auth/auth.context';
 import { makeFormFields } from 'auth/auth.helper';
 import MMToolTip from 'common/components/tooltip';
 import { enumerateStr } from 'common/common-helper';
@@ -24,24 +23,25 @@ import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
+/*import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';*/
 import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
+import { fNumber, numberWithCommas } from '../../../common/number.helper';
 
 interface Props {
   currentAccount?: Account;
   handleReload?: () => void;
+  isLastAccount: boolean;
 }
 
 interface LocationType {
   state?: Record<string, string>;
 }
 
-const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) => {
+const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, isLastAccount }) => {
   const history = useHistory();
-  const { accounts } = useAuthState();
   const { state }: LocationType = useLocation();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
@@ -107,17 +107,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
   const hasAccountSubType = accountSubTypes.some(Boolean);
 
-  const isLastAccount = (): boolean => {
-    if (accounts && currentAccount) {
-      const { length, [length - 1]: last } = accounts;
-
-      if (last.id === currentAccount.id) {
-        return true;
-      }
-    }
-
-    return false;
-  };
+  const dMortgageAccounts: string[] = mortgageAccounts?.length ? ['', ...mortgageAccounts] : [''];
 
   return (
     <Formik
@@ -204,7 +194,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
 
         toast('Successfully updated', { type: 'success' });
 
-        if (isLastAccount()) {
+        if (isLastAccount) {
           return history.push('/net-worth');
         }
 
@@ -246,21 +236,27 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             <div className='account-category'>
               <span className='form-subheading'>
                 Account Category
-                <MMToolTip placement='top' message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'>
+                <MMToolTip
+                  placement='top'
+                  message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'
+                >
                   <InfoIcon />
                 </MMToolTip>
               </span>
               <ul className='category-list mb-4'>
                 {enumerateStr(MMCategories).map((cat: string, idx: number) => {
                   return (
-                    <li className={values.mmCategory === cat ? 'active' : ''} onClick={() => setCategory(cat)} role='button' key={idx}>
-                      <Link to='#'>
-                        {cat}
-                      </Link>
+                    <li
+                      className={values.mmCategory === cat ? 'active' : ''}
+                      onClick={() => setCategory(cat)}
+                      role='button'
+                      key={idx}
+                    >
+                      <Link to='#'>{cat}</Link>
                     </li>
                   );
                 })}
-                <div className='border-bg-slider'></div>
+                <div className='border-bg-slider' />
               </ul>
             </div>
             <div className='account-type'>
@@ -525,9 +521,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               <div className={`input-wrap performance flex-box ${hc('employerMatchContribution')}`}>
                 <div className='left-input'>
                   <p>
-                    <span className='form-subheading'>
-                      Does your employer match contributions?
-                    </span>
+                    <span className='form-subheading'>Does your employer match contributions?</span>
                   </p>
                 </div>
                 <div className='right-input radio'>
@@ -555,7 +549,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
               </div>
 
               {/* If employerMatchContribution is no hide this field */}
-              {!values.employerMatchContribution ? (
+              {values.employerMatchContribution !== 'no' ? (
                 <div className={`input-wrap flex-box ${hc('employerMatch')}`}>
                   <div className='left-input'>
                     <p>
@@ -571,7 +565,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 </div>
               ) : null}
 
-              {!values.employerMatchContribution ? (
+              {values.employerMatchContribution !== 'no' ? (
                 <div className={`input-wrap flex-box ${hc('employerMatchLimitIn')} ${hc('employerMatchLimit')}`}>
                   <div className='left-input employer-match'>
                     <p>
@@ -617,6 +611,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 </div>
               ) : null}
 
+              {values.employerMatchContribution !== 'no' ? (
               <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
                 <div className='left-input'>
                   <p>
@@ -653,8 +648,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                   </div>
                 </div>
               </div>
+              ) : null}
             </div>
-
             <div className={`form-divider ${hc('separateLoanBalance')}`}>
               <ul className='account-type-list'>
                 <li className='w-100'>
@@ -723,6 +718,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             <div className={`form-divider ${hc('useZestimate')}`}>
               <span className='form-subheading'>Current Value</span>
               <div className='d-flex align-items-start'>
+                {/* TODO Needs Zillow integration
                 <div className='w-50 mr-2 d-flex flex-column'>
                   <div className='form-check ml-0 pl-0 mt-4 mb-5'>
                     <input
@@ -739,9 +735,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                     </label>
                   </div>
                   <ZillowImage />
-                </div>
+                </div>*/}
                 <div className='w-50 mr-2 d-flex flex-column'>
-                  <div className='form-check ml-0 pl-0 mt-4 mb-5'>
+                  {/*<div className='form-check ml-0 pl-0 mt-4 mb-5'>
                     <input
                       value='no'
                       type='radio'
@@ -754,7 +750,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                     <label className='form-check-label ml-4' htmlFor='useZestimate'>
                       Use my own estimate
                     </label>
-                  </div>
+                  </div>*/}
                   <Form.Control onChange={handleChange} type='number' name='ownEstimate' value={values.ownEstimate} />
                 </div>
               </div>
@@ -768,19 +764,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                 <li className={`mt-5 ${hc('associatedMortgage')}`}>
                   <span className='form-subheading'>Associated Mortgage</span>
                   <SelectInput
-                    args={mortgageAccounts}
+                    args={dMortgageAccounts}
                     name='associatedMortgage'
                     onChange={handleChange}
                     value={values.associatedMortgage}
-                  >
-                    {mortgageAccounts?.map((accType, index) => {
-                      return (
-                        <option value={accType} key={index} aria-selected={!!values.mmAccountType}>
-                          {accType}
-                        </option>
-                      );
-                    })}
-                  </SelectInput>
+                  />
                 </li>
               </ul>
             </div>
@@ -791,13 +779,16 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
             <div className={`form-divider ${hc('calculatedEquity')}`}>
               <div className='d-flex align-items-center justify-content-between'>
                 <p>Calculated Equity</p>
-                <p>{+values.ownEstimate - +values.loanBalance}</p>
+                <p>{numberWithCommas(fNumber(+values.ownEstimate - +values.loanBalance, 0))}</p>
               </div>
             </div>
 
             <div className={`form-row mt-0 ${hc('calculateReturnsOn')}`}>
               <span className='form-subheading'>How do you prefer to calculate real estate returns?</span>
-              <MMToolTip placement='top' message='Some investors track a return in real estate only when the value of the property goes up, others track a return when their equity goes goes. We recommend to track the equity when it is an investment property and the home value when it is your primary residence.'>
+              <MMToolTip
+                placement='top'
+                message='Some investors track a return in real estate only when the value of the property goes up, others track a return when their equity goes goes. We recommend to track the equity when it is an investment property and the home value when it is your primary residence.'
+              >
                 <InfoIcon />
               </MMToolTip>
               <div className='form-check w-100 my-2'>
@@ -875,7 +866,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload }) =
                         {isFromAccount ? 'Cancel' : 'Back'}
                       </button>
                       <button className='mm-btn-animate mm-btn-primary estimate-annual-block__btn-save' type='submit'>
-                        {isFromAccount ? 'Save' : isLastAccount() ? 'Finish' : 'Next'}
+                        {isFromAccount ? 'Save' : isLastAccount ? 'Finish' : 'Next'}
                       </button>
                     </div>
                   </div>
