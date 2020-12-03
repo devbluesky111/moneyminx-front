@@ -30,7 +30,6 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
   const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
   const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
 
-
   useEffect(() => {
     const getUser = async () => {
       await getRefreshedProfile({ dispatch });
@@ -38,7 +37,6 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
 
     getUser();
   }, [dispatch, reloadCounter]);
-
 
   useEffect(() => {
     if (accounts) {
@@ -67,7 +65,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
     if (accountsByProviderName) {
       const curProviderAccounts = accountsByProviderName[providerName];
       setCurrentProviderAccounts(curProviderAccounts);
-      const firstNonOverriddenAccount = curProviderAccounts.find((acc) => acc.accountDetails?.overridden !== true);
+      const firstNonOverriddenAccount = curProviderAccounts?.find((acc) => acc.accountDetails?.overridden !== true);
 
       if (firstNonOverriddenAccount) {
         setCurrentAccount(firstNonOverriddenAccount);
@@ -134,62 +132,64 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
 
   return (
     <div className='bg-white credentials-wrapper account-setting'>
-      {selectedAccount && <div className='close-icon' onClick={closeSidebar}>✕</div>}
+      {selectedAccount && (
+        <div className='close-icon' onClick={closeSidebar}>
+          ✕
+        </div>
+      )}
 
       <div className='credentials-content'>
         <div className='logo-img-wrapper'>
           <LogoImg className='auth-logo' />
         </div>
-        {selectedAccount ?
-          (
-            selectedAccount?.isManual ?
-              (
-                <div className='top-content-wrap'>
-                  <h2>Manual accounts</h2>
-                  <p>
-                    Manual accounts are offline accounts that you manage. Once you add the account, you will ba able to manage the value, holdings and transactions for this account.
-                        </p>
-                </div>
-              ) : (
-                <div className='top-content-wrap'>
-                  <h2>Account Settings</h2>
-                  <p>
-                    Take the time to update as much of the detail below as possible. The more accurate this information is the better your Money Mink dashboard will be.
-                        </p>
-                </div>
-              )
+        {selectedAccount ? (
+          selectedAccount?.isManual ? (
+            <div className='top-content-wrap'>
+              <h2>Manual accounts</h2>
+              <p>
+                Manual accounts are offline accounts that you manage. Once you add the account, you will ba able to
+                manage the value, holdings and transactions for this account.
+              </p>
+            </div>
           ) : (
             <div className='top-content-wrap'>
-              <h2>Organize accounts</h2>
+              <h2>Account Settings</h2>
               <p>
-                Great! You connected your accounts. Now you can organize them to get better insights into your
-                portfolio.
-                </p>
+                Take the time to update as much of the detail below as possible. The more accurate this information is
+                the better your Money Mink dashboard will be.
+              </p>
             </div>
           )
-        }
+        ) : (
+          <div className='top-content-wrap'>
+            <h2>Organize accounts</h2>
+            <p>
+              Great! You connected your accounts. Now you can organize them to get better insights into your portfolio.
+            </p>
+          </div>
+        )}
 
         <div className='form-wrap'>
-          {!selectedAccount &&
+          {!selectedAccount && (
             <>
               <ul className='bank-list'>
                 {accountsByProviderName
                   ? Object.keys(accountsByProviderName).map((pName, index) => {
-                    const [account] = accountsByProviderName[pName];
+                      const [account] = accountsByProviderName[pName];
 
-                    return (
-                      <li
-                        key={index}
-                        onClick={() => handleProviderChange(pName)}
-                        role='button'
-                        className={getProviderClass(pName)}
-                      >
-                        <Link to='#'>
-                          {account.providerLogo ? <img src={account.providerLogo} alt={pName} /> : pName}
-                        </Link>
-                      </li>
-                    );
-                  })
+                      return (
+                        <li
+                          key={index}
+                          onClick={() => handleProviderChange(pName)}
+                          role='button'
+                          className={getProviderClass(pName)}
+                        >
+                          <Link to='#'>
+                            {account.providerLogo ? <img src={account.providerLogo} alt={pName} /> : pName}
+                          </Link>
+                        </li>
+                      );
+                    })
                   : null}
               </ul>
 
@@ -202,7 +202,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
                 />
               </div>
             </>
-          }
+          )}
 
           <AccountSettingForm
             currentAccount={selectedAccount ? selectedAccount : currentAccount}
@@ -215,7 +215,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
             <SecurityIcon />
             <a href='/security' target='_blank' className='purple-links'>
               Learn about our security
-                    </a>
+            </a>
           </p>
         </div>
       </div>
