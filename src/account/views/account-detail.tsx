@@ -54,7 +54,7 @@ const AccountDetail: React.FC<AccountDetailProps> = (props) => {
       if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
       if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
     }
-  }, [accountId, fromDate, toDate, timeInterval, tableType]);
+  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting]);
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();

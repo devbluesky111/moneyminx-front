@@ -152,19 +152,19 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         loanBalance: currentFormFields?.loanBalance || '',
         useZestimate: currentFormFields?.useZestimate || '',
         interestRate: currentFormFields?.interestRate || '',
-        maturityDate: currentFormFields ? new Date(currentFormFields.maturityDate) : new Date(),
-        investedDate: currentFormFields ? new Date(currentFormFields.investedDate) : new Date(),
+        maturityDate: currentFormFields && currentFormFields.maturityDate ? new Date(currentFormFields.maturityDate) : new Date(),
+        investedDate: currentFormFields && currentFormFields.investedDate ? new Date(currentFormFields.investedDate) : new Date(),
         employerMatch: currentFormFields?.employerMatch || '',
         streetAddress: currentFormFields?.streetAddress || '',
         amountInvested: currentFormFields?.amountInvested || '',
         associatedLoan: currentFormFields?.associatedLoan || '',
-        originationDate: currentFormFields ? new Date(currentFormFields.originationDate) : new Date(),
+        originationDate: currentFormFields && currentFormFields.originationDate ? new Date(currentFormFields.originationDate) : new Date(),
         originalBalance: currentFormFields?.originalBalance || '',
         paymentsPerYear: currentFormFields?.paymentsPerYear || '',
         calculatedEquity: currentFormFields?.calculatedEquity || '',
         currentValuation: currentFormFields?.currentValuation || '',
         termForInvestment: currentFormFields?.termForInvestment || '',
-        businessStartDate: currentFormFields ? new Date(currentFormFields.businessStartDate) : new Date(),
+        businessStartDate: currentFormFields && currentFormFields.businessStartDate ? new Date(currentFormFields.businessStartDate) : new Date(),
         employerMatchLimit: currentFormFields?.employerMatchLimit || '',
         associatedMortgage: currentFormFields?.associatedMortgage || '',
         calculateReturnsOn: currentFormFields?.calculateReturnsOn || '',
@@ -220,16 +220,19 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
         toast('Successfully updated', { type: 'success' });
 
-        if (isLastAccount()) {
-          return history.push('/net-worth');
-        }
+        if (isFromAccount) {
+          return closeSidebar?.();
+        } else {
+          if (isLastAccount()) {
+            return history.push('/net-worth');
+          }
 
-        return handleReload?.();
+          return handleReload?.();
+        }
       }}
     >
       {(props) => {
         const { setFieldValue, values, handleChange, setValues } = props;
-        console.log(values)
 
         const setCategory = (cat: string) => {
           setFieldValue('mmCategory', cat);
@@ -330,7 +333,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                   <div className='account-category'>
                     <span className='form-subheading'>
                       Account Category
-                <MMToolTip placement='top' message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'>
+                      <MMToolTip placement='top' message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'>
                         <InfoIcon />
                       </MMToolTip>
                     </span>
@@ -611,7 +614,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                         <p>
                           <span className='form-subheading'>
                             Does your employer match contributions?
-                    </span>
+                          </span>
                         </p>
                       </div>
                       <div className='right-input radio'>
@@ -706,7 +709,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                         <p>
                           <span className='form-subheading'>
                             Include employer match in performance?
-                      <MMToolTip message='Some investors think employer match should be counted as income so they do not include it as performance returns, some believe should be counted as a return. The choice is yours'>
+                            <MMToolTip message='Some investors think employer match should be counted as income so they do not include it as performance returns, some believe should be counted as a return. The choice is yours'>
                               <InfoIcon className='sm-hide' />
                             </MMToolTip>
                           </span>
@@ -758,13 +761,13 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                             aria-selected={values.separateLoanBalance === 'yes' || values.separateLoanBalance === true}
                           >
                             Separated Account
-                    </option>
+                          </option>
                           <option
                             value='no'
                             aria-selected={values.separateLoanBalance === 'no' || values.separateLoanBalance === false}
                           >
                             Same Account
-                    </option>
+                          </option>
                         </Form.Control>
                       </li>
                     </ul>
@@ -820,7 +823,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                           />
                           <label className='form-check-label ml-4' htmlFor='useZestimate'>
                             Use Zestimate® for home value
-                    </label>
+                          </label>
                         </div>
                         <ZillowImage />
                       </div>
@@ -837,7 +840,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                           />
                           <label className='form-check-label ml-4' htmlFor='useZestimate'>
                             Use my own estimate
-                    </label>
+                          </label>
                         </div>
                         <Form.Control onChange={handleChange} type='number' name='ownEstimate' value={values.ownEstimate} />
                       </div>
@@ -896,7 +899,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       />
                       <label className='form-check-label ml-4' htmlFor='calculateReturnsOn'>
                         Calculate based on money in and returns on that money
-                </label>
+                      </label>
                     </div>
                     <div className='form-check w-100 my-2'>
                       <input
@@ -910,18 +913,18 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       />
                       <label className='form-check-label ml-4' htmlFor='calculateReturnsOn'>
                         Calculate based on appreciation of the market value
-                </label>
+                      </label>
                     </div>
                   </div>
 
-                  <div className='estimate-annual-block'>
+                  <div className='estimate-annual-block mt-3'>
                     <div className='estimated-top-content'>
                       <div
                         className={`link-attention-block  d-flex justify-content-between ${isFromAccount ? '' : 'hidden'}`}
                       >
                         <button className='btn btn-primary w-50 mm-button' type='button'>
                           Link Account
-                  </button>
+                        </button>
                         <div>
                           <NotLinked />
                           <span className='text--red'>Attention</span>
@@ -941,7 +944,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       </div>
 
                       <div className='row mt-5'>
-                        <div className={`col-12 col-md-4 ${isFromAccount ? '' : 'hidden'}`}>
+                        <div className={`col-12 col-md-4 mb-3 ${isFromAccount ? '' : 'hidden'}`}>
                           <button
                             className='btn btn-danger estimate-annual-block__btn estimate-annual-block__btn-delete'
                             type='button'
@@ -951,7 +954,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                           </button>
                         </div>
 
-                        <div className='col-12 col-md-8'>
+                        <div className='col-12 col-md-8 mb-3'>
                           <div className='d-flex justify-content-start'>
                             <button
                               className='mm-btn-signup btn-outline-primary mm-btn-animate estimate-annual-block__btn-cancel'
@@ -973,7 +976,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                   <SecurityIcon />
                   <a href='/security' target='_blank' className='purple-links'>
                     Learn about our security
-                    </a>
+                  </a>
                 </p>
               </div>
             </div>
