@@ -1,6 +1,7 @@
 import errors from 'lang/en/errors.json';
-import { StorageKey } from './app.types';
 import { serialize, parse, withError, withData } from 'common/common-helper';
+
+import { StorageKey } from './app.types';
 
 const hasLocalStorage = localStorage || window.localStorage;
 

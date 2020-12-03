@@ -1,6 +1,13 @@
 {
   "all": ["accountName", "mmCategory", "mmAccountType", "mmAccountSubType", "currency"],
-  "loans": ["interestRate", "originationDate", "originalBalance", "maturityDate", "paymentsPerYear", "loanBalance"],
+  "loans": [
+    "interestRate",
+    "originationDate",
+    "originalBalance",
+    "maturityDate",
+    "paymentsPerYear",
+    "principalBalance"
+  ],
   "startup": ["postMoneyValuation", "currentValuation", "investedDate", "amountInvested"],
   "investment": ["termForInvestment", "investedDate", "amountInvested", "currentMarketValue", "targetInterestRate"],
   "business": ["businessStartDate", "associatedLoan", "estimatedAnnualRevenues"],
@@ -23,7 +30,7 @@
     "useZestimate",
     "ownEstimate",
     "associatedMortgage",
-    "loanBalance",
+    "principalBalance",
     "calculatedEquity",
     "calculateReturnsOn"
   ]
