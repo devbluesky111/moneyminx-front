@@ -1,14 +1,30 @@
-.bg-white.credentials-wrapper.account-setting .credentials-content {
-  max-width: 100vw;
-  padding-left: 35px;
-  padding-right: 5px;
+.bg-white.credentials-wrapper.account-setting {
 
-  @media (min-width: $med) {
-    padding-left: 60px;
-    padding-right: 30px;
+  .close-icon {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    cursor: pointer;
+    color: $gray;
+
+    &:hover {
+      color: $darkGray;
+    }
   }
-  @media (min-width: $desk) {
-    max-width: 665px;
+
+  .credentials-content {
+    max-width: 100vw;
+    padding-left: 35px;
+    padding-right: 20px;
+    position: relative;
+
+    @media (min-width: $med) {
+      padding-left: 60px;
+      padding-right: 60px;
+    }
+    @media (min-width: $desk) {
+      max-width: 665px;
+    }
   }
 }
 
@@ -879,15 +895,6 @@ span.next-icon {
 }
 
 .estimate-annual-block {
-  &__btn {
-    @media (min-width: $md) {
-      width: 115px !important;
-    }
-
-    @media (min-width: $md + 224) {
-      width: 140px !important;
-    }
-  }
 
   &__btn-cancel {
     border: 1.5px solid $purple;
