@@ -266,7 +266,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
               <div className='account-category'>
                 <span className='form-subheading'>
                   Account Category
-                      <MMToolTip placement='top' message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'>
+                  <MMToolTip placement='top' message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'>
                     <InfoIcon />
                   </MMToolTip>
                 </span>
@@ -554,7 +554,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     <input
                       type='radio'
                       value='yes'
-                      defaultChecked={false}
                       onChange={handleChange}
                       name='employerMatchContribution'
                       checked={values.employerMatchContribution === 'yes' || values.employerMatchContribution === true}
@@ -565,7 +564,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleChange}
                       value='no'
                       type='radio'
-                      defaultChecked={false}
                       name='employerMatchContribution'
                       checked={values.employerMatchContribution === 'no' || values.employerMatchContribution === false}
                       aria-checked={!!values.employerMatchContribution}
@@ -601,7 +599,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                             type='radio'
                             onChange={handleChange}
                             value={EmployerMatchLimitOptions.AMOUNT}
-                            defaultChecked={false}
                             name='employerMatchLimitIn'
                             checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
                             aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
@@ -611,7 +608,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                             type='radio'
                             onChange={handleChange}
                             value={EmployerMatchLimitOptions.PERCENTAGE}
-                            defaultChecked={false}
                             name='employerMatchLimitIn'
                             checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
                             aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.PERCENTAGE}
@@ -653,7 +649,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       <input
                         type='radio'
                         value='yes'
-                        defaultChecked={false}
                         onChange={handleChange}
                         name='includeEmployerMatch'
                         checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
@@ -663,7 +658,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       <input
                         type='radio'
                         value='no'
-                        defaultChecked={false}
                         onChange={handleChange}
                         name='includeEmployerMatch'
                         checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
