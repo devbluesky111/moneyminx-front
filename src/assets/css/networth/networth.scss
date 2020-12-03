@@ -2287,6 +2287,7 @@ footer p {
 .mm-dropdown-menu {
   @extend .dropdown-menu;
   background-color: $darkBg !important;
+  width: 100%;
 }
 
 /****************************/

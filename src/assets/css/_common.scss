@@ -521,7 +521,7 @@ select {
 
 .dropdown-select-input {
   .checkbox-list {
-    overflow-x: scroll;
+    overflow-x: auto;
     max-height: 500px;
     li {
       width: 100%;

@@ -108,6 +108,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
   const hasAccountSubType = accountSubTypes.some(Boolean);
 
+  const dMortgageAccounts: string[] = mortgageAccounts?.length ? ['', ...mortgageAccounts] : [''];
+
   const isLastAccount = (): boolean => {
     if (accounts && currentAccount) {
       const { length, [length - 1]: last } = accounts;
