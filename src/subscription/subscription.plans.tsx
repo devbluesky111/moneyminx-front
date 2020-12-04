@@ -106,15 +106,19 @@ const SubscriptionPlans = () => {
                       </div>
                       {pt.details[pricingDetailConstant.NAME]} badge
                     </li>*/}
-                    <li className='cs-list'>
-                      <div className='highlighted-text-light'>
-                        Coming Soon!
-                      </div>
-                    </li>
+                    {pt.details[pricingDetailConstant.CRYPTO] === 'Yes' ?
+                      <li className='cs-list' >
+                        <div className='highlighted-text-light'>
+                          Coming Soon!
+                        </div>
+                      </li>
+                      : null}
                     <li>
-                      <div className='tick-icon'>
-                        <PricingTickIconCS />
-                      </div>
+                      {pt.details[pricingDetailConstant.CRYPTO] === 'Yes' ?
+                        <div className='tick-icon'>
+                          <PricingTickIconCS />
+                        </div>
+                        : null}
                       {pt.details[pricingDetailConstant.CRYPTO] === 'Yes'
                         ? 'Sync your crypto wallets'
                         : ''}
