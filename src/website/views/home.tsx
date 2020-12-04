@@ -25,7 +25,6 @@ import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-i
 import { ReactComponent as HomeNetWorthChart } from 'assets/images/home/home-networth.svg';
 import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-adopter-icon.svg';
 import { ReactComponent as HomeMulticurrency } from 'assets/images/features/multicurrency.svg';
-import { ReactComponent as PerformanceLegend } from 'assets/images/home/performance-legend.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
 import { ReactComponent as InvestmentsAndCryptos} from 'assets/images/home/investment-assets-cryptos.svg';
 import { ReactComponent as HomeTransactionHistory } from 'assets/images/features/transaction-history.svg';
@@ -192,23 +191,20 @@ export const HomeNetWorthSection = () => {
 export const HomeAllocationSection = () => {
   return (
     <section>
-      <div className='networth-section'>
+      <div className='feature-section feature-section-reversed'>
         <div className='row'>
-          <div className='col-lg-7'>
-            <div className='networth-chart'>
-              <HomeAllocationChart />
-              <PerformanceLegend className='mm-networth-chart-legend mt-3' />
-            </div>
+          <div className='col-lg-7 feature-image'>
+            <HomeAllocationChart />
           </div>
-          <div className='col-lg-5'>
-            <div className='networth-text pt-0'>
-              <a href='/features/allocations' className='feature-links'><h2>Allocations</h2></a>
-              <p className='text'>
-                Always up to date asset allocation pie chart gives you a 360 degree view of your investments and how
-                diversified your portfolio is. This at-a-glance visual give you immediate insight on where your money is
-                and where to go next. It’s easily shareable too so you can get the insights from contacts you trust.
-              </p>
-            </div>
+          <div className='col-lg-5 feature-content'>
+            <a href='/features/allocations'>
+              <h2>Allocations</h2>
+            </a>
+            <p>
+              Always up to date asset allocation pie chart gives you a 360 degree view of your investments and how
+              diversified your portfolio is. This at-a-glance visual give you immediate insight on where your money is
+              and where to go next. It’s easily shareable too so you can get the insights from contacts you trust.
+            </p>
           </div>
         </div>
       </div>
@@ -241,21 +237,19 @@ export const HomeMulticurrencySection = () => {
 export const HomeCryptosSection = () => {
   return (
     <section>
-      <div className='mm-winks-section networth-section'>
-        <div className='row align-items-center'>
-          <div className='col-xl-7'>
-            <div className='networth-chart'>
-              <InvestmentsAndCryptos className='mm-custom-networth-chart' />
-            </div>
+      <div className='feature-section feature-section-reversed'>
+        <div className='row'>
+          <div className='col-lg-7 feature-image'>
+            <InvestmentsAndCryptos className='mm-custom-networth-chart' />
           </div>
-          <div className='col-xl-5'>
-            <div className='networth-text pt-4 mb-5'>
-              <a href='/features/cryptos' className='feature-links'><h2>Investments, Assets & Cryptos</h2></a>
-              <p className='text'>
+          <div className='col-lg-5 feature-content'>
+              <a href='/features/cryptos'>
+                <h2>Investments, Assets & Cryptos</h2>
+              </a>
+              <p>
                 Track your stocks, bonds, mutual funds, ETFS, crypto wallets and more all in one place.
                 Sync your account with over 25,000 institutions world wide and most crypto wallets out there.
               </p>
-            </div>
           </div>
         </div>
       </div>
@@ -291,7 +285,7 @@ export const HomeSyncedManualSection = () => {
 };
 export const HomeTransactionHistorySection = () => {
   return (
-    <section className='feature-section last-feature feature-section-reversed'>
+    <section className='feature-section feature-section-reversed'>
       <div className='row'>
         <div className='col-lg-7 feature-image'>
           <HomeTransactionHistory />
@@ -301,7 +295,8 @@ export const HomeTransactionHistorySection = () => {
             <h2>Transaction History</h2>
           </a>
           <p>
-            Keep an eye on all of your accounts from one place. Review the transaction history and holdings of each account.
+            Keep an eye on all of your accounts from one place.
+            Review the transaction history and holdings of each account.
           </p>
         </div>
       </div>

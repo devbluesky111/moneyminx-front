@@ -1198,14 +1198,6 @@ button.bg-primary:focus {
 // Home Page and Feature Pages Features
 .feature-section {
 
-  &.last-feature {
-    height: 500px;
-    margin-bottom: 260px;
-
-    @media (min-width: $md) {
-      margin-bottom: 200px;
-    }
-  }
   a h2 {
     color: $black;
     font-size: 3.5rem;
@@ -1223,6 +1215,14 @@ button.bg-primary:focus {
   }
 }
 .feature-section-reversed {
+  height: 730px;
+  margin-bottom: 260px;
+
+  @media (min-width: $md) {
+    height: 500px;
+    margin-bottom: 200px;
+  }
+
   .feature-content {
     order: 1;
 
