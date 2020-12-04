@@ -6,20 +6,24 @@
       "link": "/features/net-worth"
     },
     {
-      "name": "Allocations",
-      "link": "/about"
+      "name": "Asset Allocations",
+      "link": "/features/allocations"
     },
     {
-      "name": "Performance",
-      "link": "/about"
+      "name": "Crypto Support",
+      "link": "/features/cryptos"
     },
     {
-      "name": "Income",
-      "link": "/about"
+      "name": "Synced and Manual Accounts",
+      "link": "/features/synced-and-manual"
     },
     {
-      "name": "Account Details",
-      "link": "/about"
+      "name": "Multicurrency",
+      "link": "/features/multicurrency"
+    },
+    {
+      "name": "Transaction History",
+      "link": "/features/transaction-history"
     }
   ]
 }

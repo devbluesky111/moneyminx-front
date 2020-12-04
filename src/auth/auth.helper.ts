@@ -1,4 +1,5 @@
 import { groupBy } from 'lodash';
+
 import { Account } from './auth.types';
 import fieldData from './data/field.data.json';
 
