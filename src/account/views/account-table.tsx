@@ -3,15 +3,20 @@ import { Table } from 'react-bootstrap';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { getCurrencySymbol } from 'common/currency-helper';
-import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
-
-import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
 import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
+import { getHoldingsDetails } from 'api/request.api';
+import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
+import { useModal } from 'common/components/modal';
+
+import HoldingsDetailsModal from './holdings-details.modal';
+import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
 
 export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
 
   const [holdings, setHoldings] = useState<AccountHoldingItem[]>([]);
   const [editIndex, setEditIndex] = useState<number>(-1);
+  const [holdingsDetails, setHoldingsDetails] = useState<any>();
+  const holdingsDetailsModal = useModal();
 
   React.useEffect(() => {
     setHoldings(props.holdings);
@@ -29,6 +34,20 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
     // return 'tab-hide';
     return '';
   };
+
+  const fetchHolingsDetails = async (positionId: string) => {
+    const { data, error } = await getHoldingsDetails(positionId);
+    if (!error) {
+      console.log('fetchHolingsDetails: ', data);
+
+      setHoldingsDetails(data);
+    }
+  };
+
+  const openPosition = (positionId: number) => {
+    fetchHolingsDetails(positionId.toString());
+    holdingsDetailsModal.open();
+  }
 
   return (
     <section>
@@ -63,7 +82,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
                         {item.intervalValues.map((ins: any, i: number) => (
                           <td key={i} className={[ins.type === `projection` && `projection`, gc(ins.interval)].join(' ')}>
                             <span className={gc(ins.interval)}>{ins.interval}</span>{ins.value ? getCurrencySymbol(item.costBasisCurrency) : ''}{numberWithCommas(fNumber(ins.value, 2))}
-                            {(editIndex === index && i === (item.intervalValues.length - 1)) ? <Edited className='edited-icon' /> : <></>}
+                            {(editIndex === index && i === (item.intervalValues.length - 1)) ? <Edited className='edited-icon' onClick={() => openPosition(item.id)} /> : <></>}
                           </td>
                         ))}
                       </tr>
@@ -75,6 +94,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
           </div>
         </div>
       ) : (<span className='no-data'>No holdings data</span>)}
+      <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} />
     </section >
   );
 };

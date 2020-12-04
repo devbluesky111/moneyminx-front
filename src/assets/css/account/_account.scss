@@ -303,6 +303,7 @@
     }
   }
 }
+
 .settings-gear-button {
   border: 1px solid $purple;
   border-radius: 4px;
@@ -347,4 +348,122 @@
   z-index: 1000;
   background-color: #000;
   opacity: 0.5;
+}
+
+.mm-holdings-details-modal {
+
+  .description {
+    font-size: 1rem;
+    line-height: 150%;
+    color: $gray;
+  }
+
+  &__title {
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: $black;
+  }
+
+  &__sub-title {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .nav-tabs {
+    border-bottom: 1px solid $white;
+  }
+
+  .nav-tabs .nav-link, .nav-tabs .mm-nav-link {
+    font-size: 1.125rem;
+    line-height: 23px;
+  }
+
+  .nav-tabs .nav-link.active, .nav-tabs .active.mm-nav-link, .nav-tabs .nav-item.show .nav-link, .nav-tabs .show.mm-nav-item .nav-link, .nav-tabs .nav-item.show .mm-nav-link, .nav-tabs .show.mm-nav-item .mm-nav-link {
+    color: $darkGray;
+  }
+  
+  .nav-tabs .nav-link:hover, .nav-tabs .mm-nav-link:hover, .nav-tabs .nav-link:focus, .nav-tabs .mm-nav-link:focus {
+    border-color: $white;
+  }
+
+  .nav-tabs .nav-link.active, .nav-tabs .active.mm-nav-link, .nav-tabs .nav-item.show .nav-link, .nav-tabs .show.mm-nav-item .nav-link, .nav-tabs .nav-item.show .mm-nav-link, .nav-tabs .show.mm-nav-item .mm-nav-link {
+    border-color: $white;
+    border-bottom: 1.5px solid $purple;
+  }
+
+  a {
+    color: $gray;
+  }
+
+  .nav-link, .mm-nav-link {
+    padding: 0.5rem 0;
+    margin-right: 6.25rem;
+  }
+
+  .row {
+    font-size: 1rem;
+  }
+
+  .key {
+    font-weight: bold;
+  }
+
+  .input-add-on {
+    padding: 11px 5px 0 0;
+  }
+
+  .action-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 1rem;
+
+    button:nth-child(2) {
+      margin-left: 1rem;
+    }
+
+    button {
+      position: relative;
+
+      .spinner {
+        position: absolute;
+        top: 8px;
+        right: 0;
+      }
+    }
+  }
+
+  .monthly-values-sub-tabs {
+    
+    .nav-tabs {
+      border-bottom: 1px solid $white;
+    }
+  
+    .nav-tabs .nav-link, .nav-tabs .mm-nav-link {
+      font-size: 0.875rem;
+      line-height: 16px;
+    }
+  
+    .nav-tabs .nav-link.active, .nav-tabs .active.mm-nav-link, .nav-tabs .nav-item.show .nav-link, .nav-tabs .show.mm-nav-item .nav-link, .nav-tabs .nav-item.show .mm-nav-link, .nav-tabs .show.mm-nav-item .mm-nav-link {
+      color: $darkGray;
+    }
+    
+    .nav-tabs .nav-link:hover, .nav-tabs .mm-nav-link:hover, .nav-tabs .nav-link:focus, .nav-tabs .mm-nav-link:focus {
+      border-color: $gray;
+    }
+  
+    .nav-tabs .nav-link.active, .nav-tabs .active.mm-nav-link, .nav-tabs .nav-item.show .nav-link, .nav-tabs .show.mm-nav-item .nav-link, .nav-tabs .nav-item.show .mm-nav-link, .nav-tabs .show.mm-nav-item .mm-nav-link {
+      border-color: $gray;
+      border: 1.5px solid $purple;
+    }
+  
+    a {
+      color: $gray;
+      border-color: $gray;
+    }
+
+    .nav-link, .mm-nav-link {
+      padding: 15px 49px;
+      margin-right: 0;
+    }
+  }
 }
