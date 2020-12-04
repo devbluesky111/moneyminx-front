@@ -1194,3 +1194,25 @@ button.bg-primary:focus {
   font-size: 18px;
   padding-left: 5px;
 }
+
+// Home Page and Feature Pages Features
+.feature-section {
+
+  &.last-feature {
+    height: 500px;
+  }
+
+  a h2 {
+    color: $black;
+
+    &:hover {
+      color: $purple;
+    }
+
+  }
+
+  svg {
+    position: absolute;
+    left: -780px;
+  }
+}

@@ -291,21 +291,19 @@ export const HomeSyncedManualSection = () => {
 };
 export const HomeTransactionHistorySection = () => {
   return (
-    <section>
-      <div className='mm-winks-section networth-section'>
-        <div className='row align-items-center'>
-          <div className='col-xl-7'>
-            <div className='networth-chart'>
-              <HomeTransactionHistory className='mm-custom-networth-chart' />
-            </div>
-          </div>
-          <div className='col-xl-5'>
-            <div className='networth-text pt-4 mb-5'>
-              <a href='/features/cryptos' className='feature-links'><h2>Transaction History</h2></a>
-              <p className='text'>
-                Keep an eye on all of your accounts from one place. Review the transaction history and holdings of each account.
-              </p>
-            </div>
+    <section className='feature-section last-feature'>
+      <div className='row'>
+        <div className='col-md-7'>
+          <HomeTransactionHistory />
+        </div>
+        <div className='col-md-5'>
+          <div className='networth-text pt-4 mb-5'>
+            <a href='/features/transaction-history'>
+              <h2>Transaction History</h2>
+            </a>
+            <p>
+              Keep an eye on all of your accounts from one place. Review the transaction history and holdings of each account.
+            </p>
           </div>
         </div>
       </div>
