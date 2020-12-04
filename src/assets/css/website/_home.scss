@@ -1200,19 +1200,41 @@ button.bg-primary:focus {
 
   &.last-feature {
     height: 500px;
-  }
+    margin-bottom: 260px;
 
+    @media (min-width: $md) {
+      margin-bottom: 200px;
+    }
+  }
   a h2 {
     color: $black;
+    font-size: 3.5rem;
+    padding-bottom: 1.3rem;
+    font-weight: 300;
+    line-height: 106%;
 
     &:hover {
       color: $purple;
     }
-
   }
-
   svg {
     position: absolute;
-    left: -780px;
+    right: calc(100% - 520px);
+  }
+}
+.feature-section-reversed {
+  .feature-content {
+    order: 1;
+
+    @media (min-width:$bs-lg) {
+      order: 2
+    }
+  }
+  .feature-image {
+    order: 2;
+
+    @media (min-width:$bs-lg) {
+      order: 1
+    }
   }
 }

@@ -291,20 +291,18 @@ export const HomeSyncedManualSection = () => {
 };
 export const HomeTransactionHistorySection = () => {
   return (
-    <section className='feature-section last-feature'>
+    <section className='feature-section last-feature feature-section-reversed'>
       <div className='row'>
-        <div className='col-md-7'>
+        <div className='col-lg-7 feature-image'>
           <HomeTransactionHistory />
         </div>
-        <div className='col-md-5'>
-          <div className='networth-text pt-4 mb-5'>
-            <a href='/features/transaction-history'>
-              <h2>Transaction History</h2>
-            </a>
-            <p>
-              Keep an eye on all of your accounts from one place. Review the transaction history and holdings of each account.
-            </p>
-          </div>
+        <div className='col-lg-5 feature-content'>
+          <a href='/features/transaction-history'>
+            <h2>Transaction History</h2>
+          </a>
+          <p>
+            Keep an eye on all of your accounts from one place. Review the transaction history and holdings of each account.
+          </p>
         </div>
       </div>
     </section>
