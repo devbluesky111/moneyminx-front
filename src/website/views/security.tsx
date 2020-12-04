@@ -1,4 +1,5 @@
 import React from 'react';
+
 import WebsiteLayout from 'website/website.layout';
 import { ReactComponent as SecurityChart } from 'assets/images/security/chart.svg';
 import { ReactComponent as SecurityLockIcon } from 'assets/images/security/lock.svg';

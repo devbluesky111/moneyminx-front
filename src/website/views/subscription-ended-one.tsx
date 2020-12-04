@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ReactComponent as PricingTickIcon } from 'assets/images/pricing/tick-icon.svg';
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 const SubscriptionEnded = () => {

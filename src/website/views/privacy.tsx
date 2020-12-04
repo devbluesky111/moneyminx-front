@@ -1,4 +1,5 @@
 import React from 'react';
+
 import privacyData from '@mm/data/privacy.json';
 import WebsiteLayout from 'website/website.layout';
 

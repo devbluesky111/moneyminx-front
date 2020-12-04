@@ -1197,24 +1197,6 @@ button.bg-primary:focus {
 
 // Home Page and Feature Pages Features
 .feature-section {
-
-  a h2 {
-    color: $black;
-    font-size: 3.5rem;
-    padding-bottom: 1.3rem;
-    font-weight: 300;
-    line-height: 106%;
-
-    &:hover {
-      color: $purple;
-    }
-  }
-  svg {
-    position: absolute;
-    right: calc(100% - 520px);
-  }
-}
-.feature-section-reversed {
   height: 730px;
   margin-bottom: 260px;
 
@@ -1223,6 +1205,25 @@ button.bg-primary:focus {
     margin-bottom: 200px;
   }
 
+  h2 {
+    color: $black;
+    font-size: 3.5rem;
+    padding-bottom: 1.3rem;
+    font-weight: 300;
+    line-height: 106%;
+  }
+
+  a h2 {
+    &:hover {
+      color: $purple;
+    }
+  }
+  .feature-text-left svg {
+    position: absolute;
+    left: calc(100% - 520px);
+  }
+}
+.feature-section-reversed {
   .feature-content {
     order: 1;
 
@@ -1236,5 +1237,9 @@ button.bg-primary:focus {
     @media (min-width:$bs-lg) {
       order: 1
     }
+  }
+  svg {
+    position: absolute;
+    right: calc(100% - 520px);
   }
 }

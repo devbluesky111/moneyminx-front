@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import WebsiteLayout from 'website/website.layout';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
@@ -51,7 +52,6 @@ export const FeaturesNetWorthTopSection = () => {
               <h3>Connected Accounts</h3>
               <p>Go ahead, add more accounts</p>
             </div>
-
             <div className='account-wrap bg-white border'>
               <h4>
                 <span className='logo-icon'>
@@ -105,45 +105,34 @@ export const FeaturesNetWorthTopSection = () => {
 
 export const FeaturesNetWorthNetWorthSection = () => {
   return (
-    <section>
+    <section className='feature-section feature-section-reversed'>
         <div className='row'>
-          <div className='col-xl-5'>
-            <div className='networth-text'>
+          <div className='col-lg-7 feature-image'>
+            <AboutNetWorthChart />
+          </div>
+          <div className='col-lg-5 feature-content'>
               <h2>Net Worth Charts</h2>
-              <p className='text'>
+              <p>
                 Once your accounts are added we will keep them in sync so you will always know what your current net worth is,
                 You can also keep an eye on your historical net worth and see it grow with time.
               </p>
-            </div>
-          </div>
-          <div className='col-xl-7'>
-            <div className='mm-networth-chart text-center'>
-              <AboutNetWorthChart className='mm-about-net-worth-chart' />
-            </div>
           </div>
         </div>
     </section>
-
   );
 };
 export const FeaturesNetWorthProjections = () => {
   return (
-    <section>
-      <div className='mm-home-performance-section networth-section rtl'>
-        <div className='row'>
-          <div className='col-xl-5'>
-            <div className='networth-text'>
-              <h2>Net Worth Projections</h2>
-              <p className='text'>
-                Money Minx will use the data your provide and estimated returns to give you a sense of what your net worth will look like into the future.
-              </p>
-            </div>
-          </div>
-          <div className='col-xl-7'>
-            <div className='mm-home-performance-section-chart'>
-              <HomeNetWorthProjections />
-            </div>
-          </div>
+    <section className='feature-section feature-text-left'>
+      <div className='row'>
+        <div className='col-lg-5 feature-content'>
+          <h2>Net Worth Projections</h2>
+          <p>
+            Money Minx will use the data your provide and estimated returns to give you a sense of what your net worth will look like into the future.
+          </p>
+        </div>
+        <div className='col-lg-7 feature-image'>
+          <HomeNetWorthProjections />
         </div>
       </div>
     </section>
