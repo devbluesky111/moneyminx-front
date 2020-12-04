@@ -8,7 +8,7 @@ import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
 import AccountRoute from 'account/account.route';
 import { NetworthProvider } from 'networth/networth.context';
-import { Home, TermNService, Notice, Privacy, About, Pricing, Security, FeaturesNetWorth } from 'website/views';
+import { Home, TermNService, Notice, Privacy, About, Pricing, Security, FeaturesNetWorth, FeaturesAllocations, FeaturesCryptos, FeaturesSyncedManual, FeaturesTransactionHistory, FeaturesMulticurrency } from 'website/views';
 
 import {
   Networth,
@@ -28,7 +28,7 @@ import { ForgotPassword } from 'auth/views';
 const {
   home,
   web: { SECURITY },
-  features: { FEATURES_NET_WORTH },
+  features: { FEATURES_NET_WORTH, FEATURES_ALLOCATIONS, FEATURES_CRYPTOS, FEATURES_SYNCED_MANUAL, FEATURES_MULTICURRENCY, FEATURES_TRANSACTION_HISTORY },
   account: { ACCOUNT },
   settings: { SETTINGS },
   subscription: { SUBSCRIPTION },
@@ -74,6 +74,11 @@ function AppRoute() {
         <Route exact path={SUBSCRIPTION} component={Subscription} />
         <Route exact path={SECURITY} component={Security} />
         <Route exact path={FEATURES_NET_WORTH} component={FeaturesNetWorth} />
+        <Route exact path={FEATURES_ALLOCATIONS} component={FeaturesAllocations} />
+        <Route exact path={FEATURES_SYNCED_MANUAL} component={FeaturesSyncedManual} />
+        <Route exact path={FEATURES_CRYPTOS} component={FeaturesCryptos} />
+        <Route exact path={FEATURES_MULTICURRENCY} component={FeaturesMulticurrency} />
+        <Route exact path={FEATURES_TRANSACTION_HISTORY} component={FeaturesTransactionHistory} />
         <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
         <Route exact path={STRIPE_SUCCESS} component={StripeSuccess} />
         <Route exact path={STRIPE_FAILURE} component={StripeFailure} />
