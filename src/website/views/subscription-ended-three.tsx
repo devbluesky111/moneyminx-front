@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { ReactComponent as SubscriptionPositiveWarning } from 'assets/images/subscription/positive-warning.svg';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
-
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
+import { ReactComponent as SubscriptionPositiveWarning } from 'assets/images/subscription/positive-warning.svg';
 
 const SubscriptionEnded = () => {
   return (

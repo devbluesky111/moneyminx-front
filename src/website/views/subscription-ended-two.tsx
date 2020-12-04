@@ -3,7 +3,6 @@ import React from 'react';
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 import { ReactComponent as OwnAccountIcon } from 'assets/images/subscription/own-account-icon.svg';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
-
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import MerrilEdgeLogo from 'assets/images/subscription/merriledgelogo.png';

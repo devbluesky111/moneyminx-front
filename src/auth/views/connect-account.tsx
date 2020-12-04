@@ -1,7 +1,7 @@
-import Zabo from 'zabo-sdk-js';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
+import Zabo from 'zabo-sdk-js';
 import appEnv from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';

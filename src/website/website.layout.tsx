@@ -1,8 +1,9 @@
 import React from 'react';
 
+import useScrollTop from 'common/hooks/useScrollTop';
+
 import WebsiteHeader from './inc/website.header';
 import WebsiteFooter from './inc/website.footer';
-import useScrollTop from 'common/hooks/useScrollTop';
 
 interface WebsiteLayout {
   isSignupToday?: boolean;

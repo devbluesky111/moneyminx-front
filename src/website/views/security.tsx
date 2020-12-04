@@ -149,7 +149,7 @@ export const SecurityPartneredSection = () => {
             <div className='security-logo'>
               <SecurityYodleeLogo />
             </div>
-            <h2 className='large-heading-light'>We’ve partnered with the industry leader to keep your accounts safe.</h2>
+            <p className='large-heading-light'>We’ve partnered with the industry leader to keep your accounts safe.</p>
             <p className='text'>
               We use the best of the best to aggregate your account’s data, Yodlee. Yodlee is a public company with over
               a decade of experience connecting with financial institutions, They provide an added layer of safety
