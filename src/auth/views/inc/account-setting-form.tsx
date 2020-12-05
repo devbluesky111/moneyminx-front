@@ -224,7 +224,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         if (res?.error) {
           return toast('Error Occurred', { type: 'error' });
         }
-        console.log('okokokokoko');
 
         toast('Successfully updated', { type: 'success' });
 
@@ -269,7 +268,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 type='text'
                 className='w-100 mb-4'
                 onChange={props.handleChange}
-                value={props.values.accountName}
+                value={values.accountName}
                 name='accountName'
                 placeholder='Sapphire Credit Card'
               />

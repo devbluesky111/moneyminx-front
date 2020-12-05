@@ -16,6 +16,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
   const [holdings, setHoldings] = useState<AccountHoldingItem[]>([]);
   const [editIndex, setEditIndex] = useState<number>(-1);
   const [holdingsDetails, setHoldingsDetails] = useState<any>();
+
   const holdingsDetailsModal = useModal();
 
   React.useEffect(() => {
@@ -44,8 +45,8 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
     }
   };
 
-  const openPosition = (positionId: number) => {
-    fetchHolingsDetails(positionId.toString());
+  const openPosition = async (positionId: number) => {
+    await fetchHolingsDetails(positionId.toString());
     holdingsDetailsModal.open();
   }
 
@@ -94,7 +95,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
           </div>
         </div>
       ) : (<span className='no-data'>No holdings data</span>)}
-      <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} />
+      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} />}
     </section >
   );
 };
