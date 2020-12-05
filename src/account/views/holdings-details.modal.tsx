@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import { Tabs, Tab, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
@@ -7,6 +8,7 @@ import { enumerateStr, getUnique } from 'common/common-helper';
 import { Modal, ModalType } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { Formik } from 'formik';
+import ReactDatePicker from 'react-datepicker';
 
 interface SettingModalProps {
     holdingsDetailsModal: ModalType;
@@ -87,45 +89,52 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
     return (
         <Formik
             initialValues={{
-                holdingType: holdingsDetails?.holdingType || null,
-                securityType: holdingsDetails?.securityType || null,
-                value: holdingsDetails?.value || null,
-                price: holdingsDetails?.price || null,
-                symbol: holdingsDetails?.symbol || null,
-                quantity: holdingsDetails?.quantity || null,
-                costBasis: holdingsDetails?.costBasis || null,
-                costBasisCurrency: holdingsDetails?.costBasisCurrency || null,
-                cusipNumber: holdingsDetails?.cusipNumber || null,
-                isin: holdingsDetails?.isin || null,
-                sedol: holdingsDetails?.sedol || null,
-                isShort: holdingsDetails?.isShort || false,
-                unvestedQuantity: holdingsDetails?.unvestedQuantity || null,
-                unvestedValue: holdingsDetails?.unvestedValue || null,
-                vestedQuantity: holdingsDetails?.vestedQuantity || null,
-                vestedSharesExercisable: holdingsDetails?.vestedSharesExercisable || null,
-                vestedValue: holdingsDetails?.vestedValue || null,
+                holdingType: holdingsDetails?.holdingType || '',
+                securityType: holdingsDetails?.securityType || '',
+                value: holdingsDetails?.value || 0,
+                price: holdingsDetails?.price || 0,
+                priceCurrency: holdingsDetails?.priceCurrency || CurrencyOptions.USD,
+                symbol: holdingsDetails?.symbol || '',
+                quantity: holdingsDetails?.quantity || 0,
+                costBasis: holdingsDetails?.costBasis || 0,
+                costBasisCurrency: holdingsDetails?.costBasisCurrency || CurrencyOptions.USD,
+                cusipNumber: holdingsDetails?.cusipNumber || '',
+                isin: holdingsDetails?.isin || '',
+                sedol: holdingsDetails?.sedol || '',
+                isShort: holdingsDetails?.isShort || true,
+                unvestedQuantity: holdingsDetails?.unvestedQuantity || 0,
+                unvestedValue: holdingsDetails?.unvestedValue || 0,
+                unvestedValueCurrency: holdingsDetails?.unvestedValueCurrency || CurrencyOptions.USD,
+                vestedQuantity: holdingsDetails?.vestedQuantity || 0,
+                vestedSharesExercisable: holdingsDetails?.vestedSharesExercisable || 0,
+                vestedValue: holdingsDetails?.vestedValue || 0,
+                vestedValueCurrency: holdingsDetails?.vestedValueCurrency || CurrencyOptions.USD,
                 vestedDate:
                     holdingsDetails && holdingsDetails.vestedDate ? new Date(holdingsDetails.vestedDate) : new Date(),
-                contractQuantity: holdingsDetails?.contractQuantity || null,
-                couponRate: holdingsDetails?.couponRate || null,
-                exercisedQuantity: holdingsDetails?.exercisedQuantity || null,
+                contractQuantity: holdingsDetails?.contractQuantity || 0,
+                couponRate: holdingsDetails?.couponRate || 0,
+                exercisedQuantity: holdingsDetails?.exercisedQuantity || 0,
                 expirationDate:
                     holdingsDetails && holdingsDetails.expirationDate ? new Date(holdingsDetails.expirationDate) : new Date(),
                 grantDate:
                     holdingsDetails && holdingsDetails.grantDate ? new Date(holdingsDetails.grantDate) : new Date(),
-                interestRate: holdingsDetails?.interestRate || null,
+                interestRate: holdingsDetails?.interestRate || 0,
                 maturityDate:
                     holdingsDetails && holdingsDetails.maturityDate ? new Date(holdingsDetails.maturityDate) : new Date(),
-                optionType: holdingsDetails?.optionType || null,
-                spread: holdingsDetails?.spread || null,
-                strikePrice: holdingsDetails?.strikePrice || null,
-                term: holdingsDetails?.term || null,
-                matchStatus: holdingsDetails?.matchStatus || null,
-                accruedInterest: holdingsDetails?.accruedInterest || null,
-                accruedIncome: holdingsDetails?.accruedIncome || null,
-                description: holdingsDetails?.description || null,
+                optionType: holdingsDetails?.optionType || '',
+                spread: holdingsDetails?.spread || 0,
+                spreadCurrency: holdingsDetails?.spreadCurrency || CurrencyOptions.USD,
+                strikePrice: holdingsDetails?.strikePrice || 0,
+                strikePriceCurrency: holdingsDetails?.strikePriceCurrency || CurrencyOptions.USD,
+                term: holdingsDetails?.term || '',
+                matchStatus: holdingsDetails?.matchStatus || '',
+                accruedInterest: holdingsDetails?.accruedInterest || 0,
+                accruedInterestCurrency: holdingsDetails?.accruedInterestCurrency || CurrencyOptions.USD,
+                accruedIncome: holdingsDetails?.accruedIncome || 0,
+                accruedIncomeCurrency: holdingsDetails?.accruedIncomeCurrency || CurrencyOptions.USD,
+                description: holdingsDetails?.description || '',
                 // classifications: holdingsDetails?.classifications || [],
-                // values: holdingsDetails?.values || []
+                // values: holdingsDetails?.intervalValues || []
             }}
             onSubmit={async (values: any, actions: any) => {
 
@@ -165,11 +174,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
             }}
         >
             {(props) => {
-                const { values, handleChange, setValues } = props;
+                const { values, handleChange, setValues, setFieldValue } = props;
 
                 const handleSelectChange = (e: React.ChangeEvent<any>) => {
                     setValues({ ...values, [e.target.name]: e.target.value });
-                    console.log(values);
                 };
 
                 return (
@@ -213,13 +221,13 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {holdingsDetails?.priceCurrency &&
+                                                        {values.priceCurrency &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm key">
                                                                     Price Currency
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {holdingsDetails?.priceCurrency}
+                                                                    {values.priceCurrency}
                                                                 </div>
                                                             </div>
                                                         }
@@ -252,35 +260,32 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <Form.Control
                                                                         onChange={handleChange}
                                                                         type='number'
-                                                                        placeholder='5'
                                                                         name='costBasis'
-                                                                        value={values.costBasis || 0}
+                                                                        value={values.costBasis}
                                                                     />
                                                                     <span className='input-add-on'>$</span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        {values.costBasis &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
-                                                                    Cost Currency
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm key">
+                                                                Cost Currency
                                                                 </div>
-                                                                <div className="col-sm ">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            as='select'
-                                                                            onChange={handleSelectChange}
-                                                                            name='costBasisCurrency'
-                                                                            value={holdingsDetails?.costBasisCurrency}
-                                                                        >
-                                                                            {curArr.map((item, index) => (
-                                                                                <option key={index} value={item}>{item}</option>
-                                                                            ))}
-                                                                        </Form.Control>
-                                                                    </div>
+                                                            <div className="col-sm ">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        as='select'
+                                                                        onChange={handleSelectChange}
+                                                                        name='costBasisCurrency'
+                                                                        value={values.costBasisCurrency}
+                                                                    >
+                                                                        {curArr.map((item, index) => (
+                                                                            <option key={index} value={item}>{item}</option>
+                                                                        ))}
+                                                                    </Form.Control>
                                                                 </div>
                                                             </div>
-                                                        }
+                                                        </div>
                                                     </div>
                                                     <div className="col-sm">
                                                         {!((holdingsDetails?.optionType === 'unknown' || !holdingsDetails?.optionType) &&
@@ -312,7 +317,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.vestedQuantity &&
+                                                        {values.vestedQuantity !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Vested Quantity
@@ -322,7 +327,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.vestedSharesExercisable &&
+                                                        {values.vestedSharesExercisable !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Vested Shared Exercisable
@@ -332,7 +337,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.vestedValue &&
+                                                        {values.vestedValue !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Vested Value
@@ -342,13 +347,13 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.vestedValue &&
+                                                        {values.vestedValue !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Vested Currency
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {holdingsDetails?.vestedValueCurrency}
+                                                                    {values.vestedValueCurrency}
                                                                 </div>
                                                             </div>
                                                         }
@@ -358,11 +363,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Vested Date
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {values.vestedDate}
+                                                                    <ReactDatePicker
+                                                                        name='vestedDate'
+                                                                        selected={new Date(values.vestedDate)}
+                                                                        onChange={(val: Date) => {
+                                                                            setFieldValue('vestedDate', moment(val).toISOString());
+                                                                        }}
+                                                                        readOnly
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.unvestedQuantity &&
+                                                        {values.unvestedQuantity !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Unvested Quantity
@@ -372,7 +384,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.unvestedValue &&
+                                                        {values.unvestedValue !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Unvested Value
@@ -382,17 +394,17 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.unvestedValue &&
+                                                        {values.unvestedValue !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Unvested Currency
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {holdingsDetails?.unvestedValueCurrency}
+                                                                    {values.unvestedValueCurrency}
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.exercisedQuantity &&
+                                                        {values.exercisedQuantity !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Excercised Quantity
@@ -408,7 +420,14 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Expiration Date
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {values.expirationDate}
+                                                                    <ReactDatePicker
+                                                                        name='expirationDate'
+                                                                        selected={new Date(values.expirationDate)}
+                                                                        onChange={(val: Date) => {
+                                                                            setFieldValue('expirationDate', moment(val).toISOString());
+                                                                        }}
+                                                                        readOnly
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         }
@@ -418,11 +437,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Grant Date
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {values.grantDate}
+                                                                    <ReactDatePicker
+                                                                        name='grantDate'
+                                                                        selected={new Date(values.grantDate)}
+                                                                        onChange={(val: Date) => {
+                                                                            setFieldValue('grantDate', moment(val).toISOString());
+                                                                        }}
+                                                                        readOnly
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.spread &&
+                                                        {values.spread !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Spread
@@ -432,33 +458,33 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.spread &&
+                                                        {values.spread !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Spread Currency
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {holdingsDetails?.spreadCurrency}
+                                                                    {values.spreadCurrency}
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.strikePrice &&
+                                                        {values.strikePrice !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Strike Price
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {values.strikePrice}
+                                                                    ${values.strikePrice}
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.strikePrice &&
+                                                        {values.strikePrice !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Strike Currency
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {holdingsDetails?.strikePriceCurrency}
+                                                                    {values.strikePriceCurrency}
                                                                 </div>
                                                             </div>
                                                         }
@@ -473,7 +499,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             }
                                                         </div>
-                                                        {values.contractQuantity &&
+                                                        {values.contractQuantity !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Contract Quantity
@@ -537,7 +563,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             }
                                                         </div>
-                                                        {values.couponRate &&
+                                                        {values.couponRate !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Coupon
@@ -547,7 +573,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.interestRate &&
+                                                        {values.interestRate !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Interest Rate
@@ -563,11 +589,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Maturity Date
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {values.maturityDate}
+                                                                    <ReactDatePicker
+                                                                        name='maturityDate'
+                                                                        selected={new Date(values.maturityDate)}
+                                                                        onChange={(val: Date) => {
+                                                                            setFieldValue('maturityDate', moment(val).toISOString());
+                                                                        }}
+                                                                        readOnly
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.term &&
+                                                        {values.term !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Term
@@ -577,7 +610,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.accruedInterest &&
+                                                        {values.accruedInterest !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Accrued Interest
@@ -587,17 +620,17 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.accruedInterest &&
+                                                        {values.accruedInterest !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Interest Currency
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {holdingsDetails?.accruedInterestCurrency}
+                                                                    {values.accruedInterestCurrency}
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.accruedIncome &&
+                                                        {values.accruedIncome !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Accrued Income
@@ -607,13 +640,13 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.accruedIncome &&
+                                                        {values.accruedIncome !== 0 &&
                                                             <div className="row mt-2">
                                                                 <div className="col-sm">
                                                                     Income Currency
                                                                 </div>
                                                                 <div className="col-sm">
-                                                                    {holdingsDetails?.accruedIncomeCurrency}
+                                                                    {values.accruedIncomeCurrency}
                                                                 </div>
                                                             </div>
                                                         }
@@ -621,78 +654,70 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 </div> :
                                                 <div className="row mt-4">
                                                     <div className="col-sm">
-                                                        {values.holdingType &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
-                                                                    Holding Type
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm key">
+                                                                Holding Type
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            name='holdingType'
-                                                                            value={holdingsDetails?.holdingType}
-                                                                        />
-                                                                    </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        name='holdingType'
+                                                                        value={values.holdingType}
+                                                                    />
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.price &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
-                                                                    Price
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm key">
+                                                                Price
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='price'
-                                                                            value={values.price}
-                                                                        />
-                                                                        <span className='input-add-on'>$</span>
-                                                                    </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='price'
+                                                                        value={values.price}
+                                                                    />
+                                                                    <span className='input-add-on'>$</span>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {holdingsDetails?.priceCurrency &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
-                                                                    Price Currency
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm key">
+                                                                Price Currency
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            as='select'
-                                                                            onChange={handleSelectChange}
-                                                                            name='priceCurrency'
-                                                                            value={holdingsDetails?.priceCurrency}
-                                                                        >
-                                                                            {curArr.map((item, index) => (
-                                                                                <option key={index} value={item}>{item}</option>
-                                                                            ))}
-                                                                        </Form.Control>
-                                                                    </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        as='select'
+                                                                        onChange={handleSelectChange}
+                                                                        name='priceCurrency'
+                                                                        value={values.priceCurrency}
+                                                                    >
+                                                                        {curArr.map((item, index) => (
+                                                                            <option key={index} value={item}>{item}</option>
+                                                                        ))}
+                                                                    </Form.Control>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.quantity &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
-                                                                    Quantity
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm key">
+                                                                Quantity
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='quantity'
-                                                                            value={values.quantity}
-                                                                        />
-                                                                    </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='quantity'
+                                                                        value={values.quantity}
+                                                                    />
                                                                 </div>
                                                             </div>
-                                                        }
+                                                        </div>
                                                         <div className="row mt-2">
                                                             <div className="col-sm key">
                                                                 Cost
@@ -703,418 +728,360 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                         onChange={handleChange}
                                                                         type='number'
                                                                         name='costBasis'
-                                                                        value={values.costBasis || 0}
+                                                                        value={values.costBasis}
                                                                     />
                                                                     <span className='input-add-on'>$</span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        {values?.costBasisCurrency &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
-                                                                    Cost Currency
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm key">
+                                                                Cost Currency
                                                                 </div>
-                                                                <div className="col-sm ">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            as='select'
-                                                                            onChange={handleSelectChange}
-                                                                            name='costBasisCurrency'
-                                                                            value={values?.costBasisCurrency}
-                                                                        >
-                                                                            {curArr.map((item, index) => (
-                                                                                <option key={index} value={item}>{item}</option>
-                                                                            ))}
-                                                                        </Form.Control>
-                                                                    </div>
+                                                            <div className="col-sm ">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        as='select'
+                                                                        onChange={handleSelectChange}
+                                                                        name='costBasisCurrency'
+                                                                        value={values.costBasisCurrency}
+                                                                    >
+                                                                        {curArr.map((item, index) => (
+                                                                            <option key={index} value={item}>{item}</option>
+                                                                        ))}
+                                                                    </Form.Control>
                                                                 </div>
                                                             </div>
-                                                        }
+                                                        </div>
                                                     </div>
                                                     <div className="col-sm">
-                                                        {!((holdingsDetails?.optionType === 'unknown' || !holdingsDetails?.optionType) &&
-                                                            !holdingsDetails?.vestedQuantity &&
-                                                            !holdingsDetails?.vestedSharesExercisable &&
-                                                            !holdingsDetails?.vestedValue &&
-                                                            !holdingsDetails?.vestedDate &&
-                                                            !holdingsDetails?.unvestedQuantity &&
-                                                            !holdingsDetails?.unvestedValue &&
-                                                            !holdingsDetails?.exercisedQuantity &&
-                                                            !holdingsDetails?.expirationDate &&
-                                                            !holdingsDetails?.grantDate &&
-                                                            !holdingsDetails?.strikePrice
-                                                        ) &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
-                                                                    Options and Stock Options
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {(values.optionType !== 'unknown' && values.optionType) &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Option Type
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            name='optionType'
-                                                                            value={values.optionType}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedQuantity &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Vested Quantity
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='vestedQuantity'
-                                                                            value={values.vestedQuantity}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedSharesExercisable &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Vested Shared Exercisable
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            name='vestedSharesExercisable'
-                                                                            value={values.vestedSharesExercisable}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedValue &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Vested Value
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='vestedValue'
-                                                                            value={values.vestedValue}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedValue &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Vested Currency
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            as='select'
-                                                                            onChange={handleSelectChange}
-                                                                            name='vestedValueCurrency'
-                                                                            value={holdingsDetails?.vestedValueCurrency}
-                                                                        >
-                                                                            {curArr.map((item, index) => (
-                                                                                <option key={index} value={item}>{item}</option>
-                                                                            ))}
-                                                                        </Form.Control>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedDate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Vested Date
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            name='vestedDate'
-                                                                        // value={values.vestedDate}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.unvestedQuantity &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Unvested Quantity
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='unvestedQuantity'
-                                                                            value={values.unvestedQuantity}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.unvestedValue &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Unvested Value
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='unvestedValue'
-                                                                            value={values.unvestedValue}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.unvestedValue &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Unvested Currency
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            as='select'
-                                                                            onChange={handleSelectChange}
-                                                                            name='unvestedValue'
-                                                                            value={values.unvestedValue}
-                                                                        >
-                                                                            {curArr.map((item, index) => (
-                                                                                <option key={index} value={item}>{item}</option>
-                                                                            ))}
-                                                                        </Form.Control>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.exercisedQuantity &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Excercised Quantity
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='exercisedQuantity'
-                                                                            value={values.exercisedQuantity}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.expirationDate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Expiration Date
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            name='expirationDate'
-                                                                        // value={values.expirationDate}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.grantDate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Grant Date
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            name='grantDate'
-                                                                        // value={values.grantDate}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.strikePrice &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Strike Price
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='strikePrice'
-                                                                            value={values.strikePrice}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.strikePrice &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Strike Currency
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            as='select'
-                                                                            onChange={handleSelectChange}
-                                                                            name='strikePriceCurrency'
-                                                                            value={holdingsDetails?.strikePriceCurrency}
-                                                                        >
-                                                                            {curArr.map((item, index) => (
-                                                                                <option key={index} value={item}>{item}</option>
-                                                                            ))}
-                                                                        </Form.Control>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
+
                                                         <div className="row mt-2">
-                                                            {!(!holdingsDetails?.contractQuantity &&
-                                                                !holdingsDetails?.isShort) &&
-                                                                <div className="col-sm key mt-1">
-                                                                    Futures and Commodities
+                                                            <div className="col-sm key">
+                                                                Options and Stock Options
                                                                 </div>
-                                                            }
                                                         </div>
-                                                        {values.contractQuantity &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Contract Quantity
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Option Type
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='contractQuantity'
-                                                                            value={values.contractQuantity}
-                                                                        />
-                                                                    </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        name='optionType'
+                                                                        value={values.optionType}
+                                                                    />
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.isShort &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Short?
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Vested Quantity
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            name='isShort'
-                                                                            value={values.isShort}
-                                                                        />
-                                                                    </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='vestedQuantity'
+                                                                        value={values.vestedQuantity}
+                                                                    />
                                                                 </div>
                                                             </div>
-                                                        }
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Vested Shared Exercisable
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='vestedSharesExercisable'
+                                                                        value={values.vestedSharesExercisable}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Vested Value
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='vestedValue'
+                                                                        value={values.vestedValue}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Vested Currency
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        as='select'
+                                                                        onChange={handleSelectChange}
+                                                                        name='vestedValueCurrency'
+                                                                        value={values.vestedValueCurrency}
+                                                                    >
+                                                                        {curArr.map((item, index) => (
+                                                                            <option key={index} value={item}>{item}</option>
+                                                                        ))}
+                                                                    </Form.Control>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Vested Date
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <ReactDatePicker
+                                                                        name='vestedDate'
+                                                                        selected={new Date(values.vestedDate)}
+                                                                        onChange={(val: Date) => {
+                                                                            setFieldValue('vestedDate', moment(val).toISOString());
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Unvested Quantity
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='unvestedQuantity'
+                                                                        value={values.unvestedQuantity}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Unvested Value
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='unvestedValue'
+                                                                        value={values.unvestedValue}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Unvested Currency
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        as='select'
+                                                                        onChange={handleSelectChange}
+                                                                        name='unvestedValue'
+                                                                        value={values.unvestedValue}
+                                                                    >
+                                                                        {curArr.map((item, index) => (
+                                                                            <option key={index} value={item}>{item}</option>
+                                                                        ))}
+                                                                    </Form.Control>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Excercised Quantity
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='exercisedQuantity'
+                                                                        value={values.exercisedQuantity}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Expiration Date
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <ReactDatePicker
+                                                                    name='expirationDate'
+                                                                    selected={new Date(values.expirationDate)}
+                                                                    onChange={(val: Date) => {
+                                                                        setFieldValue('expirationDate', moment(val).toISOString());
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Grant Date
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <ReactDatePicker
+                                                                    name='grantDate'
+                                                                    selected={new Date(values.grantDate)}
+                                                                    onChange={(val: Date) => {
+                                                                        setFieldValue('grantDate', moment(val).toISOString());
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Strike Price
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='strikePrice'
+                                                                        value={values.strikePrice}
+                                                                    />
+                                                                    <span className='input-add-on'>$</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Strike Currency
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        as='select'
+                                                                        onChange={handleSelectChange}
+                                                                        name='strikePriceCurrency'
+                                                                        value={values.strikePriceCurrency}
+                                                                    >
+                                                                        {curArr.map((item, index) => (
+                                                                            <option key={index} value={item}>{item}</option>
+                                                                        ))}
+                                                                    </Form.Control>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm key mt-1">
+                                                                Futures and Commodities
+                                                                </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Contract Quantity
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='contractQuantity'
+                                                                        value={values.contractQuantity}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Short?
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        name='isShort'
+                                                                        value={values.isShort}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div className="col-sm">
                                                         <div className="row mt-2">
-                                                            {!(!holdingsDetails?.couponRate &&
-                                                                !holdingsDetails?.interestRate &&
-                                                                !holdingsDetails?.maturityDate &&
-                                                                !holdingsDetails?.term) &&
-                                                                <div className="col-sm key">
-                                                                    CDs, Bonds and Loans
+                                                            <div className="col-sm key">
+                                                                CDs, Bonds and Loans
                                                                 </div>
-                                                            }
                                                         </div>
-                                                        {values.couponRate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Coupon
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Coupon
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='couponRate'
-                                                                            value={values.couponRate}
-                                                                        />
-                                                                    </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='couponRate'
+                                                                        value={values.couponRate}
+                                                                    />
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.interestRate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Interest Rate
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Interest Rate
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            type='number'
-                                                                            name='interestRate'
-                                                                            value={values.interestRate}
-                                                                        />
-                                                                        <span className='input-add-on'>%</span>
-                                                                    </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='interestRate'
+                                                                        value={values.interestRate}
+                                                                    />
+                                                                    <span className='input-add-on'>%</span>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.maturityDate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Maturity Date
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Maturity Date
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            name='maturityDate'
-                                                                        // value={values.maturityDate}
-                                                                        />
-                                                                    </div>
+                                                            <div className="col-sm">
+                                                                <ReactDatePicker
+                                                                    name='maturityDate'
+                                                                    selected={new Date(values.maturityDate)}
+                                                                    onChange={(val: Date) => {
+                                                                        setFieldValue('maturityDate', moment(val).toISOString());
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="row mt-2">
+                                                            <div className="col-sm">
+                                                                Term
+                                                                </div>
+                                                            <div className="col-sm">
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        name='term'
+                                                                        value={values.term}
+                                                                    />
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.term &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
-                                                                    Term
-                                                                </div>
-                                                                <div className="col-sm">
-                                                                    <div className='form-field-group'>
-                                                                        <Form.Control
-                                                                            onChange={handleChange}
-                                                                            name='term'
-                                                                            value={values.term}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        }
+                                                        </div>
                                                     </div>
                                                 </div>
                                             }
@@ -1123,305 +1090,522 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                             <Tabs defaultActiveKey={years?.[0]} id="mothly-value-sub-tab" className='mt-3'>
                                                 {years?.map((item, index) => (
                                                     <Tab eventKey={item} title={item} key={index}>
-                                                        <div className="row mt-4">
-                                                            <div className="col-sm">
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm">
-                                                                        Month
+                                                        {!holdingsDetails?.isManual ?
+                                                            <div className="row mt-4">
+                                                                <div className="col-sm">
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm">
+                                                                            Month
                                                                     </div>
-                                                                    <div className="col-sm">
-                                                                        Amount
+                                                                        <div className="col-sm">
+                                                                            Amount
                                                                     </div>
-                                                                </div>
+                                                                    </div>
 
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        January
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            January
                                                                     </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Jan ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Jan ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Jan ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Jan ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        February
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            February
                                                                     </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Feb ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Feb ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Feb ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Feb ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        March
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            March
                                                                     </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Mar ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Mar ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Mar ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Mar ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        April
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            April
                                                                     </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Apr ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Apr ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Apr ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Apr ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        May
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            May
                                                                     </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `May ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `May ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `May ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `May ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            June
+                                                                    </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Jun ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Jun ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        June
+                                                                <div className="col-sm">
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm">
+                                                                            Month
                                                                     </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Jun ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Jun ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
+                                                                        <div className="col-sm">
+                                                                            Amount
+                                                                    </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            July
+                                                                    </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Jul ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Jul ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            August
+                                                                    </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Aug ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Aug ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            September
+                                                                    </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Sep ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Sep ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            October
+                                                                    </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Oct ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Oct ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            November
+                                                                    </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Nov ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Nov ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            December
+                                                                    </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Dec ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Dec ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        {i.value} %
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <span>-</span>
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> :
+                                                            <div className="row mt-4">
+                                                                <div className="col-sm">
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm">
+                                                                            Month
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            Amount
+                                                                </div>
+                                                                    </div>
+
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            January
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Jan ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Jan ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            February
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Feb ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Feb ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            March
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Mar ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Mar ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            April
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Apr ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Apr ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            May
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `May ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `May ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            June
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Jun ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Jun ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-sm">
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm">
+                                                                            Month
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            Amount
+                                                                </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            July
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Jul ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Jul ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            August
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Aug ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Aug ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            September
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Sep ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Sep ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            October
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Oct ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Oct ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            November
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Nov ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Nov ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-sm key">
+                                                                            December
+                                                                </div>
+                                                                        <div className="col-sm">
+                                                                            {(intervalValuessByYear.filter(i => i.interval === `Dec ${item}`).length > 0) ? (
+                                                                                intervalValuessByYear.filter(i => i.interval === `Dec ${item}`).map((i, k) => (
+                                                                                    <div className='form-field-group' key={k}>
+                                                                                        <Form.Control
+                                                                                            onChange={handleChange}
+                                                                                            type='number'
+                                                                                            placeholder='5'
+                                                                                            name='costBasis'
+                                                                                            value={i.value}
+                                                                                        />
+                                                                                        <span className='input-add-on'>%</span>
+                                                                                    </div>
+                                                                                ))
+                                                                            ) : (
+                                                                                    <DisabledInput />
+                                                                                )}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="col-sm">
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm">
-                                                                        Month
-                                                                    </div>
-                                                                    <div className="col-sm">
-                                                                        Amount
-                                                                    </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        July
-                                                                    </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Jul ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Jul ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        August
-                                                                    </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Aug ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Aug ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        September
-                                                                    </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Sep ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Sep ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        October
-                                                                    </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Oct ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Oct ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        November
-                                                                    </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Nov ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Nov ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-sm key">
-                                                                        December
-                                                                    </div>
-                                                                    <div className="col-sm">
-                                                                        {(intervalValuessByYear.filter(i => i.interval === `Dec ${item}`).length > 0) ? (
-                                                                            intervalValuessByYear.filter(i => i.interval === `Dec ${item}`).map((i, k) => (
-                                                                                <div className='form-field-group' key={k}>
-                                                                                    <Form.Control
-                                                                                        onChange={handleChange}
-                                                                                        type='number'
-                                                                                        placeholder='5'
-                                                                                        name='costBasis'
-                                                                                        value={i.value}
-                                                                                    />
-                                                                                    <span className='input-add-on'>%</span>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                                <DisabledInput />
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        }
                                                     </Tab>
                                                 ))}
 
