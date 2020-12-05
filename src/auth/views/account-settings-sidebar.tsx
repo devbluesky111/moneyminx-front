@@ -262,7 +262,7 @@ export const AccountNameList: React.FC<AccountNameListProps> = ({
 
   return (
     <ul className='nav'>
-      {currentProviderAccounts?.map((providerAccount, index) => {
+      {currentProviderAccounts.map((providerAccount, index) => {
         return (
           <li key={index} ref={refList[providerAccount.id]}>
             <button
