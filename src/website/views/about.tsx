@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+
 import WebsiteLayout from 'website/website.layout';
 import OwnerOneImg from 'assets/images/about/hussein.png';
 import OwnerTwoImg from 'assets/images/about/jessica.png';
@@ -8,11 +11,14 @@ import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.sv
 import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
 import { ReactComponent as OwnerTwitterIcon } from 'assets/images/about/owner-twitter-icon.svg';
-import { Link } from 'react-router-dom';
+
 
 const About = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>About Money Minx | Net Worth and Investments Tracker</title>
+      </Helmet>
       <div className='mm-new-container'>
         <AboutTopSection />
         <AboutOwnerSection />
