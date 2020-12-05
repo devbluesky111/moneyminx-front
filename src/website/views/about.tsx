@@ -17,7 +17,7 @@ const About = () => {
   return (
     <WebsiteLayout>
       <Helmet>
-        <title>About Money Minx | Net Worth and Investments Tracker</title>
+        <title>About Net Worth and Investments Tracker | Money Minx</title>
       </Helmet>
       <div className='mm-new-container'>
         <AboutTopSection />
