@@ -106,7 +106,14 @@ textarea.form-control {
     opacity: 0.7;
   }
 }
+.btn-danger {
 
+  &:hover{
+    box-shadow: 2px 4px 8px $pinterestRedGlow;
+    background-color: $redAlert;
+    border-color: $redAlert;
+  }
+}
 .mm-btn-primary-outline {
   color: $lightBg;
   border: 1.5px solid $white;
@@ -144,15 +151,11 @@ textarea.form-control {
 .drop-box.dropdown {
   border-radius: 4px;
   color: $gray;
-  // background: $white;
-  // border: 1px solid $grayOpacity24;
 
   &:hover,
   &:focus,
   &:active {
     color: $darkGray;
-    // border: 1px solid $gray;
-    // background: $white;
     box-shadow: none;
   }
 
@@ -479,7 +482,7 @@ hr {
 .hide-sm {
   display: none;
 
-  @media (min-width: $sm) {
+  @media (min-width: $med) {
     display: inline;
   }
 }
@@ -525,7 +528,7 @@ select {
 
 .dropdown-select-input {
   .checkbox-list {
-    overflow-x: scroll;
+    overflow-x: auto;
     max-height: 500px;
     li {
       width: 100%;

@@ -15,3 +15,7 @@ export const getCurrencySymbol = (cur: string) => {
 
   return symbol;
 };
+
+export const currencyArray = () => {
+  return Object.keys(CurrencySymbols);
+};

@@ -1,4 +1,5 @@
 import { Account } from 'auth/auth.types';
+
 import { StripeSubscriptionStatus } from './setting.enum';
 
 export interface SettingsProps {}

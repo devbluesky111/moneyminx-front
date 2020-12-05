@@ -30,7 +30,12 @@ export const appRouteConstants = {
   },
 
   features: {
+    FEATURES_CRYPTOS: '/features/cryptos',
     FEATURES_NET_WORTH: '/features/net-worth',
+    FEATURES_ALLOCATIONS: '/features/allocations',
+    FEATURES_MULTICURRENCY: '/features/multicurrency',
+    FEATURES_SYNCED_MANUAL: '/features/synced-and-manual',
+    FEATURES_TRANSACTION_HISTORY: '/features/transaction-history',
   },
 
   misc: {

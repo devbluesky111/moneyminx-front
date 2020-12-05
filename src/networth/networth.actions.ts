@@ -64,3 +64,7 @@ export const setToggleNet = (fToggleNet: boolean) => ({
   type: NetworthActionEnum.SET_F_TOGGLE_NET,
   payload: { fToggleNet },
 });
+
+export const clearFilter = () => ({
+  type: NetworthActionEnum.CLEAR_FILTER,
+});

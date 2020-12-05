@@ -15,7 +15,12 @@ import {
   SubscriptionEnded,
   SubscriptionEndedTwo,
   SubscriptionEndedThree,
-  FeaturesNetWorth
+  FeaturesCryptos,
+  FeaturesNetWorth,
+  FeaturesAllocations,
+  FeaturesMulticurrency,
+  FeaturesSyncedManual,
+  FeaturesTransactionHistory,
 } from './views';
 
 const {
@@ -32,6 +37,11 @@ const {
   SUBSCRIPTION_ENDED_TWO,
   SUBSCRIPTION_ENDED_THREE,
   FEATURES_NET_WORTH,
+  FEATURES_CRYPTOS,
+  FEATURES_ALLOCATIONS,
+  FEATURES_MULTICURRENCY,
+  FEATURES_SYNCED_MANUAL,
+  FEATURES_TRANSACTION_HISTORY,
 } = websiteRouteConstant;
 
 function WebsiteRoute() {
@@ -50,7 +60,12 @@ function WebsiteRoute() {
         <Route exact path={SUBSCRIPTION_ENDED} component={SubscriptionEnded} />
         <Route exact path={SUBSCRIPTION_ENDED_TWO} component={SubscriptionEndedTwo} />
         <Route exact path={SUBSCRIPTION_ENDED_THREE} component={SubscriptionEndedThree} />
+        <Route exact path={FEATURES_CRYPTOS} component={FeaturesCryptos} />
         <Route exact path={FEATURES_NET_WORTH} component={FeaturesNetWorth} />
+        <Route exact path={FEATURES_ALLOCATIONS} component={FeaturesAllocations} />
+        <Route exact path={FEATURES_SYNCED_MANUAL} component={FeaturesSyncedManual} />
+        <Route exact path={FEATURES_MULTICURRENCY} component={FeaturesMulticurrency} />
+        <Route exact path={FEATURES_TRANSACTION_HISTORY} component={FeaturesTransactionHistory} />
         <Redirect to={NOT_FOUND} />
       </Switch>
     </WebsiteProvider>

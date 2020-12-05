@@ -166,7 +166,7 @@ span.zillow-img {
   position: absolute;
   background: $primary;
   top: 21px;
-  left: 29%;
+  left: 33%;
 }
 .connect-text {
   margin-top: 41px;
@@ -181,7 +181,7 @@ span.zillow-img {
   z-index: 99;
 }
 .step-icon.icon-two {
-  left: 21%;
+  left: 24%;
 }
 .step-icon.icon-three:not(.selected) {
   left: 48%;
@@ -192,7 +192,7 @@ span.zillow-img {
 }
 
 .connect-text {
-  margin-right: 13px;
+  margin-right: 24px;
 }
 .subscription-bottom-text.connect-account {
   padding: 8px 95px 15px 171px;
@@ -210,4 +210,62 @@ span.zillow-img {
 .action-next-step {
   color: $gray;
   opacity: 0.4;
+}
+
+.mm-manual-account-modal {
+
+  .description {
+    font-size: 1rem;
+    line-height: 150%;
+    color: $gray;
+  }
+
+  &__title {
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: $black;
+  }
+
+  &__sub-title {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .row-set {
+    display: block;
+
+    .child {
+      width: 100%;
+    }
+
+    @media(min-width: $sm) {
+      display: flex;
+      justify-content: space-between;
+
+      .child {
+        width: 47%;
+      }
+    }
+
+  }
+
+  .action-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 1rem;
+
+    button:nth-child(2) {
+      margin-left: 1rem;
+    }
+
+    button {
+      position: relative;
+
+      .spinner {
+        position: absolute;
+        top: 8px;
+        right: 0;
+      }
+    }
+  }
 }

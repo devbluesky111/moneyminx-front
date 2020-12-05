@@ -88,6 +88,14 @@ export const getAccountType = (): Promise<ApiResponse> => {
   return http.get(urls.auth.ACCOUNT_TYPE);
 };
 
+export const getManualAccountType = (): Promise<ApiResponse> => {
+  return http.get(urls.auth.MANUAL_ACCOUNT_TYPE);
+};
+
+export const postManualAccount = <T>(payload: T): Promise<ApiResponse> => {
+  return http.post(urls.auth.MANUAL_ACCOUNT, payload);
+};
+
 export const getAccountSubType = (accountType: string): Promise<ApiResponse> => {
   return http.get(urls.auth.ACCOUNT_SUBTYPE.replace(':accountType', accountType));
 };
@@ -131,15 +139,15 @@ export const patchAccount = (id: string, data: any) => {
 };
 
 export const getAccountDetails = (id: string) => {
-  return http.get(urls.auth.GET_ACCOUNT_DETAILS.replace(':id', id));
+  return http.get(urls.auth.ACCOUNT_DETAILS.replace(':id', id));
 };
 
 export const getAccountHoldings = <P>(params?: P) => {
-  return http.get(urls.auth.GET_ACCOUNT_HOLDINGS, params);
+  return http.get(urls.auth.ACCOUNT_HOLDINGS, params);
 };
 
 export const getAccountActivity = <P>(params?: P) => {
-  return http.get(urls.auth.GET_ACCOUNT_ACTIVITY, params);
+  return http.get(urls.auth.ACCOUNT_ACTIVITY, params);
 };
 
 export const deleteAccount = (id: string): Promise<ApiResponse> => {

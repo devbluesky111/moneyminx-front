@@ -77,6 +77,14 @@ const SubscriptionPlans = () => {
                       <div className='tick-icon'>
                         <PricingTickIcon />
                       </div>
+                      {pt.details[pricingDetailConstant.CURRENCY] === 'USD'
+                        ? 'USD support only '
+                        : `USD, EUR, JPY, CHF and more currencies supported `}
+                    </li>
+                    <li>
+                      <div className='tick-icon'>
+                        <PricingTickIcon />
+                      </div>
                       Support for syncing with over 25,000 institutions
                     </li>
                     <li>
@@ -98,21 +106,24 @@ const SubscriptionPlans = () => {
                       </div>
                       {pt.details[pricingDetailConstant.NAME]} badge
                     </li>*/}
-                    <li className='cs-list'>
-                      <div className='highlighted-text-light'>
-                        Coming Soon!
-                      </div>
-                    </li>
+                    {pt.details[pricingDetailConstant.CRYPTO] === 'Yes' ?
+                      <li className='cs-list' >
+                        <div className='highlighted-text-light'>
+                          Coming Soon!
+                        </div>
+                      </li>
+                      : null}
                     <li>
-                      <div className='tick-icon'>
-                        <PricingTickIconCS />
-                      </div>
-                      {pt.details[pricingDetailConstant.CURRENCY] === 'USD'
-                        ? 'USD support only '
-                        : `USD, EUR, JPY, CHF and more currencies supported `}
+                      {pt.details[pricingDetailConstant.CRYPTO] === 'Yes' ?
+                        <div className='tick-icon'>
+                          <PricingTickIconCS />
+                        </div>
+                        : null}
+                      {pt.details[pricingDetailConstant.CRYPTO] === 'Yes'
+                        ? 'Sync your crypto wallets'
+                        : ''}
                     </li>
                   </ul>
-
                   <Link to={`/auth/signup?priceId=${pt.priceId}`}>
                     <button className='mm-btn-animate trial-btn ml-3 btn-xs-block'>
                       Start 14 day trial

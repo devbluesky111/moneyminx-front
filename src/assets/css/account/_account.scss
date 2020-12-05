@@ -320,3 +320,31 @@
     }
   }
 }
+
+.setting-aside {
+  position: fixed;
+  overflow-y: scroll;
+  top: 0;
+  bottom: 0;
+  max-width: 665px;
+  margin: 0;
+  background: $white;
+  box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
+  transition: 0.3s all;
+  z-index: 1001;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #000;
+  opacity: 0.5;
+}

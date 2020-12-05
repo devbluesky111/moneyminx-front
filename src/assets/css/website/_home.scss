@@ -1,7 +1,13 @@
 .rtl {
   direction: rtl;
 }
+.feature-links h2 {
+  color: $black;
 
+  &:hover {
+    color: $purple;
+  }
+}
 .home-top {
   h1 {
     padding-bottom: 1.3rem;
@@ -1187,4 +1193,48 @@ button.bg-primary:focus {
   color: #969EAC;
   font-size: 18px;
   padding-left: 5px;
+}
+
+// Home Page and Feature Pages Features
+.feature-section {
+
+  a h2 {
+    color: $black;
+    font-size: 3.5rem;
+    padding-bottom: 1.3rem;
+    font-weight: 300;
+    line-height: 106%;
+
+    &:hover {
+      color: $purple;
+    }
+  }
+  svg {
+    position: absolute;
+    right: calc(100% - 520px);
+  }
+}
+.feature-section-reversed {
+  height: 730px;
+  margin-bottom: 260px;
+
+  @media (min-width: $md) {
+    height: 500px;
+    margin-bottom: 200px;
+  }
+
+  .feature-content {
+    order: 1;
+
+    @media (min-width:$bs-lg) {
+      order: 2
+    }
+  }
+  .feature-image {
+    order: 2;
+
+    @media (min-width:$bs-lg) {
+      order: 1
+    }
+  }
 }

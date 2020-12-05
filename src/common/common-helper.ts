@@ -154,3 +154,23 @@ export const ellipseText = (text: string, length: number = 20) => {
 
   return text;
 };
+
+export const upperCaseFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export const lowerCaseAllWordsExceptFirstLetters = (str: string) => {
+  return str.replace(/\S*/g, (word) => {
+    return word.charAt(0) + word.slice(1).toLowerCase();
+  });
+};
+
+export const formater = (val: string) => {
+  let _val = '';
+  if (val) {
+    _val = val.replaceAll('_', ' ');
+  }
+  const desiredOutput = upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(_val));
+
+  return desiredOutput;
+};
