@@ -7,7 +7,7 @@ const SubscriptionReview = () => {
     <section>
       <div className='subscription-ended bottom py-5'>
         <div className='container'>
-          <AccountOverview updateAccountsFlag={true}/>
+          <AccountOverview reviewSubscriptionFlag={true}/>
         </div>
       </div>
     </section>

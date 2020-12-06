@@ -28,10 +28,10 @@ import {
   SubscriptionConnectionWarningProps,
   AccountDialogBoxProps
 } from 'setting/setting.type';
-import { ReactComponent as SubscriptionWarning } from '../../assets/images/subscription/warning.svg';
-import { ReactComponent as BackIcon } from '../../assets/images/subscription/back-btn.svg';
+import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
+import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
 
-export const AccountOverview: React.FC<AccountOverviewProps> = ({ updateAccountsFlag }) => {
+export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag= false }) => {
   const history = useHistory();
   const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
@@ -69,22 +69,22 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ updateAccounts
 
   return (
     <section className='mm-account-overview'>
-      {updateAccountsFlag && <SubscriptionConnectionWarning availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} />}
-      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} />
-      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} />
-      {updateAccountsFlag && <AccountDialogBox verifyAccountNumbers={verifyAccountNumbers} availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} accountList={connectedAccounts} manualAccountList={manualAccounts} />}
+      {reviewSubscriptionFlag && <SubscriptionConnectionWarning availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} />}
+      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag}/>
+      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag}/>
+      {reviewSubscriptionFlag && <AccountDialogBox verifyAccountNumbers={verifyAccountNumbers} availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} accountList={connectedAccounts} manualAccountList={manualAccounts} />}
     </section>
   );
 };
 
-export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList, availableAccounts }) => {
+export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList, availableAccounts, reviewSubscriptionFlag }) => {
   const history = useHistory();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
   const needUpgrade = manualAccountList.length >= availableAccounts;
 
   const addAccount = () => {
-    if (!needUpgrade) {
+    if (!needUpgrade && !reviewSubscriptionFlag) {
       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
     } else {
       history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`)
@@ -116,7 +116,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
               className='btn btn-outline-primary mm-button btn-lg'
               onClick={addAccount}
             >
-              {needUpgrade ? 'Upgrade Plan' : 'Add Account'}
+              {needUpgrade || reviewSubscriptionFlag ? 'Upgrade Plan' : 'Add Account'}
             </button>
           </div>
         </div>
@@ -132,7 +132,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
         </div>
 
         {manualAccountList.map((acc, index) => {
-          return <AccountRow account={acc} key={index} />;
+          return <AccountRow account={acc} key={index} reviewSubscriptionFlag={reviewSubscriptionFlag}/>;
         })}
 
         <div className='row py-3 align-items-center'>
@@ -151,7 +151,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   );
 };
 
-export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts }) => {
+export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts, reviewSubscriptionFlag }) => {
   const history = useHistory();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
@@ -217,12 +217,12 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
             </div>
 
             {accounts.map((account, accountIndex) => {
-              return <AccountRow key={accountIndex} account={account} />;
+              return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag}/>;
             })}
 
             <div className='row py-3 align-items-center no-gutters'>
               <div className='col-12 col-md-6'>
-                <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a>
+                {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a> :''}
               </div>
               <div className='col-12 col-md-6 mt-2 text-md-right'>
                 <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
@@ -240,7 +240,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   );
 };
 
-export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
+export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscriptionFlag }) => {
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
 
@@ -268,9 +268,9 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account }) => {
       </div>
       <div className='col-3 col-md-2'>
         <div className='float-right'>
-          <Link to={`/account-details/${account.id}`}>
+          {!reviewSubscriptionFlag && <Link to={`/account-details/${account.id}`}>
             <IconEdit />
-          </Link>
+          </Link>}
           {deleting ? <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true' /> :
             <DeleteIcon className='ml-2 ml-md-3' onClick={() => deleteAccount(account.id)} />
           }
@@ -302,6 +302,7 @@ export const SubscriptionConnectionWarning: React.FC<SubscriptionConnectionWarni
 const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({ verifyAccountNumbers, availableConnectedAccounts, availableManualAccounts, manualAccountList, accountList }) => {
   let connectedAccountDiff = 0;
   let manualAccountDiff = 0;
+  const [disable, setDisable] = useState<boolean>(true);
   if (typeof availableConnectedAccounts === 'string') {
     // tslint:disable-next-line:radix
     connectedAccountDiff = accountList.length - parseInt(availableConnectedAccounts)
@@ -309,6 +310,9 @@ const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({ verifyAccountNumber
   if (typeof availableManualAccounts === 'string') {
     // tslint:disable-next-line:radix
     manualAccountDiff = manualAccountList.length - parseInt(availableManualAccounts)
+  }
+  if(manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts) {
+    setDisable(false)
   }
 
   return (
@@ -332,7 +336,7 @@ const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({ verifyAccountNumber
           <p>You need to delete {connectedAccountDiff > 0 ? connectedAccountDiff : 0} connected accounts and {manualAccountDiff > 0 ? manualAccountDiff : 0} manual to be able to use this plan.</p>
         </div>
         <div className='subs-content four'>
-          <button className='finish-btn' onClick={(event) => { verifyAccountNumbers(event) }}>
+          <button className='finish-btn' disabled={disable} onClick={(event) => { verifyAccountNumbers(event) }}>
             Finish
           </button>
         </div>
