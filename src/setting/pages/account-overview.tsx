@@ -108,7 +108,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
     <>
       <div className='card mm-setting-card'>
         <div className='d-md-flex flex-wrap justify-content-between align-items-center'>
-          <div className='mm-account-overview__add-account m-b-8 mb-md-0'>
+          <div className={`mm-account-overview__add-account m-b-8 mb-md-0 ${needUpgrade ? 'text-danger' : ''}`}>
             <span>Manual Accounts ({manualAccountList.length}/{availableAccounts})</span>
             {needUpgrade ? <span className='upgrade-caption'>Upgrade your account to add more accounts</span> : null}
           </div>
@@ -185,7 +185,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     <>
       <div className='card mm-setting-card'>
         <div className='d-md-flex flex-wrap justify-content-between align-items-center'>
-          <div className='mm-account-overview__add-account m-b-8 mb-md-0 text-danger'>
+          <div className={`mm-account-overview__add-account m-b-8 mb-md-0 ${needUpgrade ? 'text-danger' : ''}`}>
             <span>Connected Accounts ({accountList.length}/{availableAccounts})</span>
             {needUpgrade ? <span className='upgrade-caption'>Upgrade your account to add more connections</span> : null}
           </div>
