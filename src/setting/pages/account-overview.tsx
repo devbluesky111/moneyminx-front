@@ -317,13 +317,6 @@ const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({ verifyAccountNumber
             </span>
           </a>
         </div>
-        <div className='subs-content two'>
-          <p>
-            {accountList.length}/{availableConnectedAccounts} <span className='hidden-text'>connected </span>
-            <br />
-            {manualAccountList.length}/{availableManualAccounts} <span className='hidden-text'>manual</span>
-          </p>
-        </div>
         <div className='subs-content three'>
           <p>You need to delete {connectedAccountDiff > 0 ? connectedAccountDiff : 0} connected accounts and {manualAccountDiff > 0 ? manualAccountDiff : 0} manual to be able to use this plan.</p>
         </div>

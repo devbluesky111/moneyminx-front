@@ -125,6 +125,7 @@ ul.subscribed-list li .account-wrap {
 }
 .container-fluid.subscription-ended {
   background: $white;
+  padding-bottom: 4rem;
 }
 
 // subscription bottom
@@ -169,8 +170,8 @@ ul.subscribed-list li .account-wrap {
   border: none;
 }
 .container-fluid.subscription-ended.bottom {
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 0;
+  padding-right: 0;
 }
 .finish-btn a {
   color: $white;
@@ -191,7 +192,7 @@ ul.subscribed-list li .account-wrap {
 }
 .subs-content.three {
   display: none;
-  width: 51%;
+  width: 78%;
   vertical-align: middle;
 
   @media (min-width:$md) {
