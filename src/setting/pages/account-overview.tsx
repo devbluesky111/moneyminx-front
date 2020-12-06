@@ -61,8 +61,9 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
 
   const verifyAccountNumbers = (event: React.ChangeEvent<any>) => {
     event.preventDefault()
-    if (manualAccounts.length <= numberOfManualAccounts && connectedAccounts.length <= numberOfConnectedAccounts) {
+    if ((numberOfConnectedAccounts === 'Unlimited') || (manualAccounts.length <= numberOfManualAccounts && connectedAccounts.length <= numberOfConnectedAccounts)) {
       history.push(appRouteConstants.networth.NET_WORTH)
+      return
     }
     toast('Kindly remove accounts first.', { type: 'error' });
   }
@@ -302,7 +303,7 @@ export const SubscriptionConnectionWarning: React.FC<SubscriptionConnectionWarni
 };
 
 const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({ verifyAccountNumbers, availableConnectedAccounts, availableManualAccounts, manualAccountList, accountList }) => {
-  const disable = manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts ? false : true
+  const disable = availableManualAccounts === 'Unlimited' || (manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts) ? false : true
   const connectedAccountDiff = accountList.length - parseInt(availableConnectedAccounts as string, 10)
   const manualAccountDiff = manualAccountList.length - parseInt(availableManualAccounts as string, 10)
 
