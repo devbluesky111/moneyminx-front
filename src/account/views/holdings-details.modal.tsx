@@ -3,12 +3,14 @@ import moment from 'moment';
 import { Tabs, Tab, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-import { getClassification, patchPosition } from 'api/request.api';
+import { getClassification, getHoldingTypes, patchPosition } from 'api/request.api';
 import { enumerateStr, getUnique } from 'common/common-helper';
 import { Modal, ModalType } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { Formik } from 'formik';
 import ReactDatePicker from 'react-datepicker';
+
+import { ReactComponent as AddNewIcon } from '../../assets/images/account/AddNew.svg';
 
 interface SettingModalProps {
     holdingsDetailsModal: ModalType;
@@ -30,13 +32,13 @@ const DisabledInput: React.FC = () => {
 const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModal, holdingsDetails }) => {
 
     const [loading, setLoading] = useState(false);
-    const [intervalValuessByDate, setIntervalValuessByDate] = useState<any[]>([]);
     const [years, setYears] = useState<string[]>([]);
     const curArr = enumerateStr(CurrencyOptions);
     const [classificationForTypes, setClassificationForTypes] = useState<string[]>([]);
     const [classificationForAssetClass, setClassificationForAssetClass] = useState<string[]>([]);
     const [classificationForCountry, setClassificationForCountry] = useState<string[]>([]);
     const [classificationForRisk, setClassificationForRisk] = useState<string[]>([]);
+    const [holdingTypes, setHoldingTypes] = useState<string[]>([]);
 
     const handleCancel = () => {
         holdingsDetailsModal.close();
@@ -66,24 +68,31 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
         }
     };
 
+    const fetchHoldingTypes = async () => {
+        const { data, error } = await getHoldingTypes();
+        if (!error) {
+            setHoldingTypes(data);
+        }
+    }
+
     React.useEffect(() => {
         fetchClassification();
+        fetchHoldingTypes();
     }, [])
 
     React.useEffect(() => {
+        // redefine intervalValues
         let _years = []
-        let _temp = holdingsDetails?.intervalValues;
-        for (let i = 0; i < _temp.length; i++) {
-            _temp[i].date = new Date(_temp[i]['interval']);
-            _years.push(_temp[i].interval.split(' ')[1]);
-        }
-
-        if (_temp) {
-            setIntervalValuessByDate(_temp);
+        for (let i = 0; i < holdingsDetails?.intervalValues.length; i++) {
+            (holdingsDetails?.intervalValues)[i].date = new Date((holdingsDetails?.intervalValues)[i]['interval']);
+            _years.push((holdingsDetails?.intervalValues)[i].interval.split(' ')[1]);
         }
 
         let unique_years = getUnique(_years);
         setYears(unique_years);
+
+        // redefine classifications
+
 
     }, [holdingsDetails]);
 
@@ -92,7 +101,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
             initialValues={{
                 holdingType: holdingsDetails?.holdingType || '',
                 securityType: holdingsDetails?.securityType || '',
-                value: holdingsDetails?.value || 0,
+                // value: holdingsDetails?.value || 0,
                 price: holdingsDetails?.price || 0,
                 priceCurrency: holdingsDetails?.priceCurrency || CurrencyOptions.USD,
                 symbol: holdingsDetails?.symbol || '',
@@ -134,8 +143,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                 accruedIncome: holdingsDetails?.accruedIncome || 0,
                 accruedIncomeCurrency: holdingsDetails?.accruedIncomeCurrency || CurrencyOptions.USD,
                 description: holdingsDetails?.description || '',
-                // classifications: holdingsDetails?.classifications || [],
-                values: holdingsDetails?.intervalValues || []
+                originalClassifications: holdingsDetails?.classifications || [],
+                originalValues: holdingsDetails?.intervalValues || []
             }}
             onSubmit={async (values: any, actions: any) => {
 
@@ -146,10 +155,28 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                     return;
                 }
 
-                let data = {
-                    calculatedEntity:
-                        values.ownEstimate && values.principalBalance ? +values.ownEstimate - +values.principalBalance : '',
-                };
+                let _classifications: any[] = [];
+
+                Object.keys(values.originalClassifications).forEach((key: any) => {
+                    const value = (values.originalClassifications as any)[key];
+                    value.forEach((element: any) => {
+                        _classifications.push(element);
+                    });
+                });
+
+                let _values: any[] = [];
+
+                values.originalValues.forEach((element: any) => {
+                    _values.push(element);
+                });
+
+                let data = {};
+
+                if (holdingsDetails?.isManual) {
+                    data = { classifications: _classifications, values: _values };
+                } else {
+                    data = { classifications: _classifications };
+                }
 
                 Object.keys(values).forEach((key: any) => {
                     const value = (values as any)[key];
@@ -161,6 +188,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
 
                     data = { ...data, [key]: value };
                 });
+
                 setLoading(true);
                 const res = await patchPosition(`${positionId}`, data);
                 if (res?.error) {
@@ -183,13 +211,23 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
 
                 const handleMonthlyChange = (e: React.ChangeEvent<any>) => {
 
-                    let _values = values.values;
+                    let _values = values.originalValues;
                     for (let i = 0; i < _values.length; i++) {
                         if (_values[i].interval === e.target.id) {
                             _values[i].value = parseFloat(e.target.value);
                         }
                     }
-                    setValues({ ...values, 'values': _values });
+                    setValues({ ...values, 'originalValues': _values });
+                }
+
+                const handleClassificationsChange = (e: React.ChangeEvent<any>) => {
+                    let _classifications = values.originalClassifications;
+                    for (let i = 0; i < _classifications['Type'].length; i++) {
+                        if (_classifications['Type'][i].classificationValue === e.target.id) {
+                            _classifications['Type'][i].allocation = parseFloat(e.target.value);
+                        }
+                    }
+                    setValues({ ...values, 'originalClassifications': _classifications });
                 }
 
                 return (
@@ -673,10 +711,16 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             <div className="col-sm">
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
-                                                                        onChange={handleChange}
+                                                                        as='select'
+                                                                        onChange={handleSelectChange}
                                                                         name='holdingType'
                                                                         value={values.holdingType}
-                                                                    />
+                                                                    >
+                                                                        <option value=''></option>
+                                                                        {holdingTypes.map((item, index) => (
+                                                                            <option key={index} value={item}>{item}</option>
+                                                                        ))}
+                                                                    </Form.Control>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -776,14 +820,20 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         <div className="row mt-2">
                                                             <div className="col-sm">
                                                                 Option Type
-                                                                </div>
+                                                            </div>
                                                             <div className="col-sm">
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
-                                                                        onChange={handleChange}
+                                                                        as='select'
+                                                                        onChange={handleSelectChange}
                                                                         name='optionType'
                                                                         value={values.optionType}
-                                                                    />
+                                                                    >
+                                                                        <option value=''></option>
+                                                                        {['call', 'put'].map((item, index) => (
+                                                                            <option key={index} value={item}>{item}</option>
+                                                                        ))}
+                                                                    </Form.Control>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1119,8 +1169,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             January
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Jan ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Jan ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1135,8 +1185,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             February
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Feb ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Feb ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1151,8 +1201,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             March
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Mar ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Mar ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1167,8 +1217,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             April
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Apr ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Apr ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1183,8 +1233,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             May
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `May ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `May ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `May ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `May ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1199,8 +1249,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             June
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Jun ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Jun ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1225,8 +1275,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             July
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Jul ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Jul ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1241,8 +1291,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             August
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Aug ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Aug ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1257,8 +1307,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             September
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Sep ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Sep ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1273,8 +1323,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             October
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Oct ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Oct ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1289,8 +1339,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             November
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Nov ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Nov ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1305,8 +1355,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             December
                                                                     </div>
                                                                         <div className="col-sm">
-                                                                            {(intervalValuessByDate.filter(i => i.interval === `Dec ${item}`).length > 0) ? (
-                                                                                intervalValuessByDate.filter(i => i.interval === `Dec ${item}`).map((i, k) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         {i.value} %
                                                                                     </div>
@@ -1334,8 +1384,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             January
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Jan ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Jan ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1356,8 +1406,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             February
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Feb ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Feb ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1378,8 +1428,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             March
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Mar ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Mar ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1400,8 +1450,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             April
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Apr ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Apr ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1422,8 +1472,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             May
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `May ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `May ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `May ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `May ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1444,8 +1494,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             June
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Jun ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Jun ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1476,8 +1526,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             July
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Jul ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Jul ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1498,8 +1548,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             August
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Aug ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Aug ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1520,8 +1570,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             September
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Sep ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Sep ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1542,8 +1592,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             October
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Oct ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Oct ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1564,8 +1614,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             November
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Nov ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Nov ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1586,8 +1636,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             December
                                                                         </div>
                                                                         <div className="col-sm">
-                                                                            {(values.values.filter((i: any) => i.interval === `Dec ${item}`).length > 0) ? (
-                                                                                values.values.filter((i: any) => i.interval === `Dec ${item}`).map((i: any, k: number) => (
+                                                                            {(values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length > 0) ? (
+                                                                                values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
                                                                                         <Form.Control
                                                                                             onChange={handleMonthlyChange}
@@ -1616,19 +1666,38 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 <Tab eventKey="type" title="Type">
                                                     <div className="row mt-4">
                                                         <div className="col-sm">
-                                                            {holdingsDetails?.classifications.Type.map((item: any, index: number) => (
+                                                            <div className="row mt-3 classification-total">
+                                                                <div className="col-sm">
+                                                                    Type Classification Total
+                                                                </div>
+                                                                <div className="col-sm d-flex justify-content-end align-items-center">
+                                                                    <div className='form-field-group'>
+                                                                        100 %
+                                                                    </div>
+                                                                    <AddNewIcon />
+                                                                </div>
+                                                            </div>
+                                                            {values.originalClassifications.Type.map((item: any, index: number) => (
                                                                 <div className="row mt-3" key={index}>
-                                                                    <div className="col-sm key">
-                                                                        {item.classificationValue}
+                                                                    <div className="col-sm">
+                                                                        <div className='form-field-group'>
+                                                                            <Form.Control
+                                                                                as='select'
+                                                                                value={item.classificationValue}
+                                                                            >
+                                                                                {classificationForTypes.map((item, index) => (
+                                                                                    <option key={index} value={item}>{item}</option>
+                                                                                ))}
+                                                                            </Form.Control>
+                                                                        </div>
                                                                     </div>
                                                                     <div className="col-sm">
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
-                                                                                onChange={handleChange}
+                                                                                onChange={handleClassificationsChange}
                                                                                 type='number'
-                                                                                placeholder='5'
-                                                                                name='costBasis'
-                                                                                value={item.allocation || 0}
+                                                                                value={item.allocation}
+                                                                                id={item.classificationValue}
                                                                             />
                                                                             <span className='input-add-on'>%</span>
                                                                         </div>
@@ -1641,19 +1710,38 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 <Tab eventKey="assetclass" title="Asset Class">
                                                     <div className="row mt-4">
                                                         <div className="col-sm">
-                                                            {holdingsDetails?.classifications['Asset Class'].map((item: any, index: number) => (
+                                                            <div className="row mt-3 classification-total">
+                                                                <div className="col-sm">
+                                                                    Asset Class Classification Total
+                                                                </div>
+                                                                <div className="col-sm d-flex justify-content-end align-items-center">
+                                                                    <div className='form-field-group'>
+                                                                        100 %
+                                                                    </div>
+                                                                    <AddNewIcon />
+                                                                </div>
+                                                            </div>
+                                                            {values.originalClassifications['Asset Class'].map((item: any, index: number) => (
                                                                 <div className="row mt-3" key={index}>
-                                                                    <div className="col-sm key">
-                                                                        {item.classificationValue}
+                                                                    <div className="col-sm">
+                                                                        <div className='form-field-group'>
+                                                                            <Form.Control
+                                                                                as='select'
+                                                                                value={item.classificationValue}
+                                                                            >
+                                                                                {classificationForAssetClass.map((item, index) => (
+                                                                                    <option key={index} value={item}>{item}</option>
+                                                                                ))}
+                                                                            </Form.Control>
+                                                                        </div>
                                                                     </div>
                                                                     <div className="col-sm">
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
-                                                                                onChange={handleChange}
+                                                                                onChange={handleClassificationsChange}
                                                                                 type='number'
-                                                                                placeholder='5'
-                                                                                name='costBasis'
-                                                                                value={item.allocation || 0}
+                                                                                value={item.allocation}
+                                                                                id={item.classificationValue}
                                                                             />
                                                                             <span className='input-add-on'>%</span>
                                                                         </div>
@@ -1666,19 +1754,38 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 <Tab eventKey="country" title="Country">
                                                     <div className="row mt-4">
                                                         <div className="col-sm">
-                                                            {holdingsDetails?.classifications.Country.map((item: any, index: number) => (
+                                                            <div className="row mt-3 classification-total">
+                                                                <div className="col-sm">
+                                                                    Country Class Classification Total
+                                                                </div>
+                                                                <div className="col-sm d-flex justify-content-end align-items-center">
+                                                                    <div className='form-field-group'>
+                                                                        100 %
+                                                                    </div>
+                                                                    <AddNewIcon />
+                                                                </div>
+                                                            </div>
+                                                            {values.originalClassifications.Country.map((item: any, index: number) => (
                                                                 <div className="row mt-3" key={index}>
-                                                                    <div className="col-sm key">
-                                                                        {item.classificationValue}
+                                                                    <div className="col-sm">
+                                                                        <div className='form-field-group'>
+                                                                            <Form.Control
+                                                                                as='select'
+                                                                                value={item.classificationValue}
+                                                                            >
+                                                                                {classificationForCountry.map((item, index) => (
+                                                                                    <option key={index} value={item}>{item}</option>
+                                                                                ))}
+                                                                            </Form.Control>
+                                                                        </div>
                                                                     </div>
                                                                     <div className="col-sm">
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
-                                                                                onChange={handleChange}
+                                                                                onChange={handleClassificationsChange}
                                                                                 type='number'
-                                                                                placeholder='5'
-                                                                                name='costBasis'
-                                                                                value={item.allocation || 0}
+                                                                                value={item.allocation}
+                                                                                id={item.classificationValue}
                                                                             />
                                                                             <span className='input-add-on'>%</span>
                                                                         </div>
@@ -1691,19 +1798,38 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 <Tab eventKey="risk" title="Risk">
                                                     <div className="row mt-4">
                                                         <div className="col-sm">
-                                                            {holdingsDetails?.classifications.Risk.map((item: any, index: number) => (
+                                                            <div className="row mt-3 classification-total">
+                                                                <div className="col-sm">
+                                                                    Risk Class Classification Total
+                                                                </div>
+                                                                <div className="col-sm d-flex justify-content-end align-items-center">
+                                                                    <div className='form-field-group'>
+                                                                        100 %
+                                                                    </div>
+                                                                    <AddNewIcon />
+                                                                </div>
+                                                            </div>
+                                                            {values.originalClassifications.Risk.map((item: any, index: number) => (
                                                                 <div className="row mt-3" key={index}>
-                                                                    <div className="col-sm key">
-                                                                        {item.classificationValue}
+                                                                    <div className="col-sm">
+                                                                        <div className='form-field-group'>
+                                                                            <Form.Control
+                                                                                as='select'
+                                                                                value={item.classificationValue}
+                                                                            >
+                                                                                {classificationForRisk.map((item, index) => (
+                                                                                    <option key={index} value={item}>{item}</option>
+                                                                                ))}
+                                                                            </Form.Control>
+                                                                        </div>
                                                                     </div>
                                                                     <div className="col-sm">
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
-                                                                                onChange={handleChange}
+                                                                                onChange={handleClassificationsChange}
                                                                                 type='number'
-                                                                                placeholder='5'
-                                                                                name='costBasis'
-                                                                                value={item.allocation || 0}
+                                                                                value={item.allocation}
+                                                                                id={item.classificationValue}
                                                                             />
                                                                             <span className='input-add-on'>%</span>
                                                                         </div>

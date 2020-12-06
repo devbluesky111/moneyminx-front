@@ -158,6 +158,10 @@ export const getClassification = (filter: string) => {
   return http.get(urls.auth.CLASSIFICATION.replace(':filter', filter));
 };
 
+export const getHoldingTypes = () => {
+  return http.get(urls.allocations.HOLDING_TYPES);
+};
+
 export const patchPosition = (id: string, data: any) => {
   return http.patch(urls.auth.HOLDINGS_DETAILS.replace(':positionId', id), data);
 };

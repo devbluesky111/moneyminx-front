@@ -448,6 +448,11 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
 
+  .classification-total {
+    color: $purple;
+    line-height: 19px;
+  }
+
   .monthly-values-sub-tabs {
     
     .nav-tabs {

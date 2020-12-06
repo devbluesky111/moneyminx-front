@@ -49,5 +49,6 @@ export const urls = {
     ALLOCATIONS: '/allocations',
     CHART_SETTINGS: '/allocations/me/chart-settings',
     UPLOAD_CHART: '/allocations/upload-chart',
+    HOLDING_TYPES: '/allocations/holding-types',
   },
 };
