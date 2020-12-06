@@ -84,7 +84,11 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   const needUpgrade = manualAccountList.length >= availableAccounts;
 
   const addAccount = () => {
-    if (!needUpgrade && !reviewSubscriptionFlag) {
+    if(reviewSubscriptionFlag) {
+      history.push(appRouteConstants.subscription.SUBSCRIPTION);
+      return
+    }
+    if (!needUpgrade) {
       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
     } else {
       history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`)
@@ -157,6 +161,10 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const accountsByProvider = groupByProviderName(accountList);
 
   const addAccount = () => {
+    if(reviewSubscriptionFlag) {
+      history.push(appRouteConstants.subscription.SUBSCRIPTION);
+      return
+    }
     if (!needUpgrade) {
       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
     } else {
