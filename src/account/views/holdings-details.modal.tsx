@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import moment from 'moment';
+import ReactDatePicker from 'react-datepicker';
 import { Tabs, Tab, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-import { getClassification, getHoldingTypes, patchPosition } from 'api/request.api';
-import { enumerateStr, getUnique } from 'common/common-helper';
-import { Modal, ModalType } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
+import { enumerateStr, getUnique } from 'common/common-helper';
 import { Formik } from 'formik';
-import ReactDatePicker from 'react-datepicker';
+import { getClassification, getHoldingTypes, patchPosition } from 'api/request.api';
+import { Modal, ModalType } from 'common/components/modal';
 
 import { ReactComponent as AddNewIcon } from '../../assets/images/account/AddNew.svg';
+import { ReactComponent as DeleteIcon } from '../../assets/images/account/Delete.svg';
 
 interface SettingModalProps {
     holdingsDetailsModal: ModalType;
@@ -81,7 +82,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
     }, [])
 
     React.useEffect(() => {
-        // redefine intervalValues
+
         let _years = []
         for (let i = 0; i < holdingsDetails?.intervalValues.length; i++) {
             (holdingsDetails?.intervalValues)[i].date = new Date((holdingsDetails?.intervalValues)[i]['interval']);
@@ -90,9 +91,6 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
 
         let unique_years = getUnique(_years);
         setYears(unique_years);
-
-        // redefine classifications
-
 
     }, [holdingsDetails]);
 
@@ -220,7 +218,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                     setValues({ ...values, 'originalValues': _values });
                 }
 
-                const handleClassificationsChange = (e: React.ChangeEvent<any>) => {
+                const handleClassificationsAllocationChange = (e: React.ChangeEvent<any>) => {
                     let _classifications = values.originalClassifications;
                     for (let i = 0; i < _classifications['Type'].length; i++) {
                         if (_classifications['Type'][i].classificationValue === e.target.id) {
@@ -230,82 +228,130 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                     setValues({ ...values, 'originalClassifications': _classifications });
                 }
 
+                const handleClassificationsValueChange = (e: React.ChangeEvent<any>) => {
+                    let _classifications = values.originalClassifications;
+                    for (let i = 0; i < _classifications['Type'].length; i++) {
+                        if (_classifications['Type'][i].classificationValue === e.target.id) {
+                            _classifications['Type'][i].classificationValue = e.target.value;
+                            break;
+                        }
+                    }
+                    setValues({ ...values, 'originalClassifications': _classifications });
+                }
+
+                const addNewClassificationType = () => {
+                    let _classifications = values.originalClassifications;
+                    let sum = 0;
+                    for (let i = 0; i < values.originalClassifications.Type.length; i++) {
+                        sum += values.originalClassifications.Type[i].allocation;
+                    }
+
+                    _classifications['Type'].push({
+                        accountId: holdingsDetails.accountId,
+                        allocation: (sum > 100) ? 0 : (100 - sum),
+                        classificationType: 'Type',
+                        classificationValue: '',
+                        positionId: holdingsDetails.id,
+                        yodleeId: null
+                    });
+                    setValues({ ...values, 'originalClassifications': _classifications });
+                }
+
+                const deleteClassificationType = (item: any) => {
+                    let _classifications = values.originalClassifications;
+                    for (let i = 0; i < _classifications.Type.length; i++) {
+                        if (_classifications.Type[i].classificationValue === item.classificationValue) {
+                            _classifications.Type.splice(i, 1);
+                        }
+                    }
+                    setValues({ ...values, 'originalClassifications': _classifications });
+                }
+
+                const checkDisabled = (element: any) => {
+                    for (let i = 0; i < values.originalClassifications.Type.length; i++) {
+                        if (values.originalClassifications.Type[i].classificationValue === element) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
                 return (
                     <form onSubmit={props.handleSubmit}>
                         <Modal {...holdingsDetailsModal.props} title={holdingsDetails?.description} size='xxl' canBeClosed onClose={() => holdingsDetailsModal.close()}>
                             < div className='modal-wrapper mm-holdings-details-modal' >
                                 <span className='description'>To maintain integrity of the data with your institution you can only update a few of the fields.</span>
                                 <div className='mm-manual-account-modal__title mt-3'>
-                                    <Tabs defaultActiveKey="details" transition={false} id="holdings-details-modal">
-                                        <Tab eventKey="details" title="Details">
+                                    <Tabs defaultActiveKey='details' transition={false} id='holdings-details-modal'>
+                                        <Tab eventKey='details' title='Details'>
                                             {!holdingsDetails?.isManual ?
-                                                <div className="row mt-4">
-                                                    <div className="col-sm">
+                                                <div className='row mt-4'>
+                                                    <div className='col-sm'>
                                                         {values.holdingType &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm key'>
                                                                     Holding Type
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.holdingType}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.securityType &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm key'>
                                                                     Security Type
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.securityType}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.price &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm key'>
                                                                     Price
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     ${values.price}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.priceCurrency &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm key'>
                                                                     Price Currency
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.priceCurrency}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.quantity &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm key'>
                                                                     Quantity
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.quantity}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.symbol &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm key'>
                                                                     Symbol
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.symbol}
                                                                 </div>
                                                             </div>
                                                         }
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Cost
                                                             </div>
-                                                            <div className="col-sm ">
+                                                            <div className='col-sm '>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -317,11 +363,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Cost Currency
                                                                 </div>
-                                                            <div className="col-sm ">
+                                                            <div className='col-sm '>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         as='select'
@@ -337,7 +383,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm">
+                                                    <div className='col-sm'>
                                                         {!((holdingsDetails?.optionType === 'unknown' || !holdingsDetails?.optionType) &&
                                                             !holdingsDetails?.vestedQuantity &&
                                                             !holdingsDetails?.vestedSharesExercisable &&
@@ -351,68 +397,68 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             !holdingsDetails?.spread &&
                                                             !holdingsDetails?.strikePrice
                                                         ) &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm key">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm key'>
                                                                     Options and Stock Options
                                                                 </div>
                                                             </div>
                                                         }
                                                         {(values.optionType !== 'unknown' && values.optionType) &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Option Type
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.optionType}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.vestedQuantity !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Vested Quantity
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.vestedQuantity}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.vestedSharesExercisable !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Vested Shared Exercisable
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.vestedSharesExercisable}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.vestedValue !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Vested Value
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.vestedValue}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.vestedValue !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Vested Currency
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.vestedValueCurrency}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.vestedDate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Vested Date
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     <ReactDatePicker
                                                                         name='vestedDate'
                                                                         selected={new Date(values.vestedDate)}
@@ -425,51 +471,51 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.unvestedQuantity !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Unvested Quantity
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.unvestedQuantity}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.unvestedValue !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Unvested Value
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.unvestedValue}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.unvestedValue !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Unvested Currency
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.unvestedValueCurrency}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.exercisedQuantity !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Excercised Quantity
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.exercisedQuantity}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.expirationDate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Expiration Date
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     <ReactDatePicker
                                                                         name='expirationDate'
                                                                         selected={new Date(values.expirationDate)}
@@ -482,11 +528,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.grantDate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Grant Date
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     <ReactDatePicker
                                                                         name='grantDate'
                                                                         selected={new Date(values.grantDate)}
@@ -499,146 +545,146 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.spread !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Spread
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.spread}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.spread !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Spread Currency
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.spreadCurrency}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.strikePrice !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Strike Price
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     ${values.strikePrice}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.strikePrice !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Strike Currency
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.strikePriceCurrency}
                                                                 </div>
                                                             </div>
                                                         }
-                                                        <div className="row mt-2">
+                                                        <div className='row mt-2'>
                                                             {!(!holdingsDetails?.contractQuantity &&
                                                                 !holdingsDetails?.cusipNumber &&
                                                                 !holdingsDetails?.isin &&
                                                                 !holdingsDetails?.sedol &&
                                                                 !holdingsDetails?.isShort) &&
-                                                                <div className="col-sm key mt-1">
+                                                                <div className='col-sm key mt-1'>
                                                                     Futures and Commodities
                                                                 </div>
                                                             }
                                                         </div>
                                                         {values.contractQuantity !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Contract Quantity
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.contractQuantity}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.cusipNumber &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     CUSIP
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.cusipNumber}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.isin &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     ISIN
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.isin}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.sedol &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     SEDOL
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.sedol}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.isShort &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Short?
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.isShort ? 'Yes' : 'No'}
                                                                 </div>
                                                             </div>
                                                         }
                                                     </div>
-                                                    <div className="col-sm">
-                                                        <div className="row mt-2">
+                                                    <div className='col-sm'>
+                                                        <div className='row mt-2'>
                                                             {!(!holdingsDetails?.couponRate &&
                                                                 !holdingsDetails?.interestRate &&
                                                                 !holdingsDetails?.maturityDate &&
                                                                 !holdingsDetails?.term &&
                                                                 !holdingsDetails?.accruedInterest &&
                                                                 !holdingsDetails?.accruedIncome) &&
-                                                                <div className="col-sm key">
+                                                                <div className='col-sm key'>
                                                                     CDs, Bonds and Loans
                                                                 </div>
                                                             }
                                                         </div>
                                                         {values.couponRate !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Coupon
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.couponRate}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.interestRate !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Interest Rate
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.interestRate}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.maturityDate &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Maturity Date
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     <ReactDatePicker
                                                                         name='maturityDate'
                                                                         selected={new Date(values.maturityDate)}
@@ -651,64 +697,64 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.term !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Term
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.term}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.accruedInterest !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Accrued Interest
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.accruedInterest}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.accruedInterest !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Interest Currency
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.accruedInterestCurrency}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.accruedIncome !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Accrued Income
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.accruedIncome}
                                                                 </div>
                                                             </div>
                                                         }
                                                         {values.accruedIncome !== 0 &&
-                                                            <div className="row mt-2">
-                                                                <div className="col-sm">
+                                                            <div className='row mt-2'>
+                                                                <div className='col-sm'>
                                                                     Income Currency
                                                                 </div>
-                                                                <div className="col-sm">
+                                                                <div className='col-sm'>
                                                                     {values.accruedIncomeCurrency}
                                                                 </div>
                                                             </div>
                                                         }
                                                     </div>
                                                 </div> :
-                                                <div className="row mt-4">
-                                                    <div className="col-sm">
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                <div className='row mt-4'>
+                                                    <div className='col-sm'>
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Holding Type
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         as='select'
@@ -716,7 +762,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                         name='holdingType'
                                                                         value={values.holdingType}
                                                                     >
-                                                                        <option value=''></option>
+                                                                        <option value=''> Select Type</option>
                                                                         {holdingTypes.map((item, index) => (
                                                                             <option key={index} value={item}>{item}</option>
                                                                         ))}
@@ -724,11 +770,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Price
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -740,11 +786,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Price Currency
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         as='select'
@@ -759,11 +805,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Quantity
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -774,11 +820,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Cost
                                                             </div>
-                                                            <div className="col-sm ">
+                                                            <div className='col-sm '>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -790,11 +836,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Cost Currency
                                                                 </div>
-                                                            <div className="col-sm ">
+                                                            <div className='col-sm '>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         as='select'
@@ -810,18 +856,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm">
+                                                    <div className='col-sm'>
 
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Options and Stock Options
                                                                 </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Option Type
                                                             </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         as='select'
@@ -829,7 +875,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                         name='optionType'
                                                                         value={values.optionType}
                                                                     >
-                                                                        <option value=''></option>
+                                                                        <option value=''>Select Type</option>
                                                                         {['call', 'put'].map((item, index) => (
                                                                             <option key={index} value={item}>{item}</option>
                                                                         ))}
@@ -837,11 +883,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Vested Quantity
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -852,11 +898,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Vested Shared Exercisable
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -867,11 +913,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Vested Value
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -882,11 +928,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Vested Currency
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         as='select'
@@ -901,11 +947,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Vested Date
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <ReactDatePicker
                                                                         name='vestedDate'
@@ -917,11 +963,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Unvested Quantity
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -932,11 +978,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Unvested Value
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -947,11 +993,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Unvested Currency
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         as='select'
@@ -966,11 +1012,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Excercised Quantity
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -981,11 +1027,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Expiration Date
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <ReactDatePicker
                                                                     name='expirationDate'
                                                                     selected={new Date(values.expirationDate)}
@@ -995,11 +1041,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Grant Date
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <ReactDatePicker
                                                                     name='grantDate'
                                                                     selected={new Date(values.grantDate)}
@@ -1009,11 +1055,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Strike Price
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -1025,11 +1071,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Strike Currency
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         as='select'
@@ -1044,16 +1090,16 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key mt-1">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key mt-1'>
                                                                 Futures and Commodities
                                                                 </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Contract Quantity
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -1064,11 +1110,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Short?
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -1079,17 +1125,17 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm">
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm key">
+                                                    <div className='col-sm'>
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 CDs, Bonds and Loans
                                                                 </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Coupon
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -1100,11 +1146,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Interest Rate
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -1116,11 +1162,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Maturity Date
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <ReactDatePicker
                                                                     name='maturityDate'
                                                                     selected={new Date(values.maturityDate)}
@@ -1130,11 +1176,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="row mt-2">
-                                                            <div className="col-sm">
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm'>
                                                                 Term
                                                                 </div>
-                                                            <div className="col-sm">
+                                                            <div className='col-sm'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -1148,27 +1194,27 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 </div>
                                             }
                                         </Tab>
-                                        <Tab eventKey="monthlyValues" title="Monthly Values" className='monthly-values-sub-tabs'>
-                                            <Tabs defaultActiveKey={years?.[0]} id="mothly-value-sub-tab" className='mt-3'>
+                                        <Tab eventKey='monthlyValues' title='Monthly Values' className='monthly-values-sub-tabs'>
+                                            <Tabs defaultActiveKey={years?.[0]} id='mothly-value-sub-tab' className='mt-3'>
                                                 {years?.map((item, index) => (
                                                     <Tab eventKey={item} title={item} key={index}>
                                                         {!holdingsDetails?.isManual ?
-                                                            <div className="row mt-4">
-                                                                <div className="col-sm">
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm">
+                                                            <div className='row mt-4'>
+                                                                <div className='col-sm'>
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm'>
                                                                             Month
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             Amount
                                                                     </div>
                                                                     </div>
 
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             January
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1180,11 +1226,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             February
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1196,11 +1242,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             March
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1212,11 +1258,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             April
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1228,11 +1274,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             May
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `May ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `May ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1244,11 +1290,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             June
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1261,20 +1307,20 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm">
+                                                                <div className='col-sm'>
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm'>
                                                                             Month
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             Amount
                                                                     </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             July
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1286,11 +1332,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             August
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1302,11 +1348,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             September
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1318,11 +1364,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             October
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1334,11 +1380,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             November
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1350,11 +1396,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             December
                                                                     </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1368,22 +1414,22 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     </div>
                                                                 </div>
                                                             </div> :
-                                                            <div className="row mt-4">
-                                                                <div className="col-sm">
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm">
+                                                            <div className='row mt-4'>
+                                                                <div className='col-sm'>
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm'>
                                                                             Month
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             Amount
                                                                         </div>
                                                                     </div>
 
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             January
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1401,11 +1447,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             February
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1423,11 +1469,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             March
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1445,11 +1491,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             April
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1467,11 +1513,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             May
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `May ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `May ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1489,11 +1535,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             June
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1512,20 +1558,20 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="col-sm">
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm">
+                                                                <div className='col-sm'>
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm'>
                                                                             Month
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             Amount
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             July
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1543,11 +1589,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             August
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1565,11 +1611,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             September
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1587,11 +1633,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             October
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1609,11 +1655,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             November
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1631,11 +1677,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className="row mt-3">
-                                                                        <div className="col-sm key">
+                                                                    <div className='row mt-3'>
+                                                                        <div className='col-sm key'>
                                                                             December
                                                                         </div>
-                                                                        <div className="col-sm">
+                                                                        <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
@@ -1661,45 +1707,51 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
 
                                             </Tabs>
                                         </Tab>
-                                        <Tab eventKey="classifications" title="Classifications" className='monthly-values-sub-tabs'>
-                                            <Tabs defaultActiveKey="type" id="mothly-value-sub-tab" className='mt-3'>
-                                                <Tab eventKey="type" title="Type">
-                                                    <div className="row mt-4">
-                                                        <div className="col-sm">
-                                                            <div className="row mt-3 classification-total">
-                                                                <div className="col-sm">
+                                        <Tab eventKey='classifications' title='Classifications' className='monthly-values-sub-tabs'>
+                                            <Tabs defaultActiveKey='type' id='mothly-value-sub-tab' className='mt-3'>
+                                                <Tab eventKey='type' title='Type'>
+                                                    <div className='row mt-4'>
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-3 classification-total'>
+                                                                <div className='col-sm'>
                                                                     Type Classification Total
                                                                 </div>
-                                                                <div className="col-sm d-flex justify-content-end align-items-center">
+                                                                <div className='col-sm d-flex justify-content-end align-items-center'>
                                                                     <div className='form-field-group'>
                                                                         100 %
                                                                     </div>
-                                                                    <AddNewIcon />
+                                                                    <AddNewIcon onClick={addNewClassificationType} />
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications.Type.map((item: any, index: number) => (
-                                                                <div className="row mt-3" key={index}>
-                                                                    <div className="col-sm">
+                                                                <div className='row mt-3' key={index}>
+                                                                    <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
+                                                                                onChange={handleClassificationsValueChange}
                                                                                 as='select'
                                                                                 value={item.classificationValue}
+                                                                                id={item.classificationValue}
                                                                             >
-                                                                                {classificationForTypes.map((item, index) => (
-                                                                                    <option key={index} value={item}>{item}</option>
+                                                                                <option value=''>Select Type</option>
+                                                                                {classificationForTypes.map((element, k) => (
+                                                                                    <option key={k} value={element} disabled={checkDisabled(element)}>{element}</option>
                                                                                 ))}
                                                                             </Form.Control>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="col-sm">
-                                                                        <div className='form-field-group'>
+                                                                    <div className='col-sm d-flex align-items-center'>
+                                                                        <div className='form-field-group mr-3'>
                                                                             <Form.Control
-                                                                                onChange={handleClassificationsChange}
+                                                                                onChange={handleClassificationsAllocationChange}
                                                                                 type='number'
                                                                                 value={item.allocation}
                                                                                 id={item.classificationValue}
                                                                             />
                                                                             <span className='input-add-on'>%</span>
+                                                                        </div>
+                                                                        <div className='text-right'>
+                                                                            <DeleteIcon onClick={() => deleteClassificationType(item)} />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1707,14 +1759,14 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         </div>
                                                     </div>
                                                 </Tab>
-                                                <Tab eventKey="assetclass" title="Asset Class">
-                                                    <div className="row mt-4">
-                                                        <div className="col-sm">
-                                                            <div className="row mt-3 classification-total">
-                                                                <div className="col-sm">
+                                                <Tab eventKey='assetclass' title='Asset Class'>
+                                                    <div className='row mt-4'>
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-3 classification-total'>
+                                                                <div className='col-sm'>
                                                                     Asset Class Classification Total
                                                                 </div>
-                                                                <div className="col-sm d-flex justify-content-end align-items-center">
+                                                                <div className='col-sm d-flex justify-content-end align-items-center'>
                                                                     <div className='form-field-group'>
                                                                         100 %
                                                                     </div>
@@ -1722,8 +1774,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications['Asset Class'].map((item: any, index: number) => (
-                                                                <div className="row mt-3" key={index}>
-                                                                    <div className="col-sm">
+                                                                <div className='row mt-3' key={index}>
+                                                                    <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
                                                                                 as='select'
@@ -1735,10 +1787,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             </Form.Control>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="col-sm">
+                                                                    <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
-                                                                                onChange={handleClassificationsChange}
+                                                                                onChange={handleClassificationsAllocationChange}
                                                                                 type='number'
                                                                                 value={item.allocation}
                                                                                 id={item.classificationValue}
@@ -1751,14 +1803,14 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         </div>
                                                     </div>
                                                 </Tab>
-                                                <Tab eventKey="country" title="Country">
-                                                    <div className="row mt-4">
-                                                        <div className="col-sm">
-                                                            <div className="row mt-3 classification-total">
-                                                                <div className="col-sm">
+                                                <Tab eventKey='country' title='Country'>
+                                                    <div className='row mt-4'>
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-3 classification-total'>
+                                                                <div className='col-sm'>
                                                                     Country Class Classification Total
                                                                 </div>
-                                                                <div className="col-sm d-flex justify-content-end align-items-center">
+                                                                <div className='col-sm d-flex justify-content-end align-items-center'>
                                                                     <div className='form-field-group'>
                                                                         100 %
                                                                     </div>
@@ -1766,8 +1818,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications.Country.map((item: any, index: number) => (
-                                                                <div className="row mt-3" key={index}>
-                                                                    <div className="col-sm">
+                                                                <div className='row mt-3' key={index}>
+                                                                    <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
                                                                                 as='select'
@@ -1779,10 +1831,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             </Form.Control>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="col-sm">
+                                                                    <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
-                                                                                onChange={handleClassificationsChange}
+                                                                                onChange={handleClassificationsAllocationChange}
                                                                                 type='number'
                                                                                 value={item.allocation}
                                                                                 id={item.classificationValue}
@@ -1795,14 +1847,14 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         </div>
                                                     </div>
                                                 </Tab>
-                                                <Tab eventKey="risk" title="Risk">
-                                                    <div className="row mt-4">
-                                                        <div className="col-sm">
-                                                            <div className="row mt-3 classification-total">
-                                                                <div className="col-sm">
+                                                <Tab eventKey='risk' title='Risk'>
+                                                    <div className='row mt-4'>
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-3 classification-total'>
+                                                                <div className='col-sm'>
                                                                     Risk Class Classification Total
                                                                 </div>
-                                                                <div className="col-sm d-flex justify-content-end align-items-center">
+                                                                <div className='col-sm d-flex justify-content-end align-items-center'>
                                                                     <div className='form-field-group'>
                                                                         100 %
                                                                     </div>
@@ -1810,8 +1862,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications.Risk.map((item: any, index: number) => (
-                                                                <div className="row mt-3" key={index}>
-                                                                    <div className="col-sm">
+                                                                <div className='row mt-3' key={index}>
+                                                                    <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
                                                                                 as='select'
@@ -1823,10 +1875,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             </Form.Control>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="col-sm">
+                                                                    <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
-                                                                                onChange={handleClassificationsChange}
+                                                                                onChange={handleClassificationsAllocationChange}
                                                                                 type='number'
                                                                                 value={item.allocation}
                                                                                 id={item.classificationValue}
