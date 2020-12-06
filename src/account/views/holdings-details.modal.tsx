@@ -218,38 +218,38 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                     setValues({ ...values, 'originalValues': _values });
                 }
 
-                const handleClassificationsAllocationChange = (e: React.ChangeEvent<any>) => {
+                const handleClassificationsAllocationChange = (tabName: string, e: any) => {
                     let _classifications = values.originalClassifications;
-                    for (let i = 0; i < _classifications['Type'].length; i++) {
-                        if (_classifications['Type'][i].classificationValue === e.target.id) {
-                            _classifications['Type'][i].allocation = parseFloat(e.target.value);
+                    for (let i = 0; i < _classifications[`${tabName}`].length; i++) {
+                        if (_classifications[`${tabName}`][i].classificationValue === e.target.id) {
+                            _classifications[`${tabName}`][i].allocation = parseFloat(e.target.value);
                         }
                     }
                     setValues({ ...values, 'originalClassifications': _classifications });
                 }
 
-                const handleClassificationsValueChange = (e: React.ChangeEvent<any>) => {
+                const handleClassificationsValueChange = (tabName: string, e: any) => {
                     let _classifications = values.originalClassifications;
-                    for (let i = 0; i < _classifications['Type'].length; i++) {
-                        if (_classifications['Type'][i].classificationValue === e.target.id) {
-                            _classifications['Type'][i].classificationValue = e.target.value;
+                    for (let i = 0; i < _classifications[`${tabName}`].length; i++) {
+                        if (_classifications[`${tabName}`][i].classificationValue === e.target.id) {
+                            _classifications[`${tabName}`][i].classificationValue = e.target.value;
                             break;
                         }
                     }
                     setValues({ ...values, 'originalClassifications': _classifications });
                 }
 
-                const addNewClassificationType = () => {
+                const addNewClassification = (tabName: string) => {
                     let _classifications = values.originalClassifications;
                     let sum = 0;
-                    for (let i = 0; i < values.originalClassifications.Type.length; i++) {
-                        sum += values.originalClassifications.Type[i].allocation;
+                    for (let i = 0; i < values.originalClassifications[`${tabName}`].length; i++) {
+                        sum += values.originalClassifications[`${tabName}`][i].allocation;
                     }
 
-                    _classifications['Type'].push({
+                    _classifications[`${tabName}`].push({
                         accountId: holdingsDetails.accountId,
                         allocation: (sum > 100) ? 0 : (100 - sum),
-                        classificationType: 'Type',
+                        classificationType: `${tabName}`,
                         classificationValue: '',
                         positionId: holdingsDetails.id,
                         yodleeId: null
@@ -257,19 +257,19 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                     setValues({ ...values, 'originalClassifications': _classifications });
                 }
 
-                const deleteClassificationType = (item: any) => {
+                const deleteClassification = (tabName: string, item: any) => {
                     let _classifications = values.originalClassifications;
-                    for (let i = 0; i < _classifications.Type.length; i++) {
-                        if (_classifications.Type[i].classificationValue === item.classificationValue) {
-                            _classifications.Type.splice(i, 1);
+                    for (let i = 0; i < _classifications[`${tabName}`].length; i++) {
+                        if (_classifications[`${tabName}`][i].classificationValue === item.classificationValue) {
+                            _classifications[`${tabName}`].splice(i, 1);
                         }
                     }
                     setValues({ ...values, 'originalClassifications': _classifications });
                 }
 
-                const checkDisabled = (element: any) => {
-                    for (let i = 0; i < values.originalClassifications.Type.length; i++) {
-                        if (values.originalClassifications.Type[i].classificationValue === element) {
+                const checkDisabled = (tabName: string, element: string) => {
+                    for (let i = 0; i < values.originalClassifications[`${tabName}`].length; i++) {
+                        if (values.originalClassifications[`${tabName}`][i].classificationValue === element) {
                             return true;
                         }
                     }
@@ -1720,7 +1720,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <div className='form-field-group'>
                                                                         100 %
                                                                     </div>
-                                                                    <AddNewIcon onClick={addNewClassificationType} />
+                                                                    <AddNewIcon onClick={() => addNewClassification('Type')} />
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications.Type.map((item: any, index: number) => (
@@ -1728,14 +1728,14 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
-                                                                                onChange={handleClassificationsValueChange}
+                                                                                onChange={(e) => handleClassificationsValueChange('Type', e)}
                                                                                 as='select'
                                                                                 value={item.classificationValue}
                                                                                 id={item.classificationValue}
                                                                             >
                                                                                 <option value=''>Select Type</option>
                                                                                 {classificationForTypes.map((element, k) => (
-                                                                                    <option key={k} value={element} disabled={checkDisabled(element)}>{element}</option>
+                                                                                    <option key={k} value={element} disabled={checkDisabled('Type', element)}>{element}</option>
                                                                                 ))}
                                                                             </Form.Control>
                                                                         </div>
@@ -1743,7 +1743,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <div className='col-sm d-flex align-items-center'>
                                                                         <div className='form-field-group mr-3'>
                                                                             <Form.Control
-                                                                                onChange={handleClassificationsAllocationChange}
+                                                                                onChange={(e) => handleClassificationsAllocationChange('Type', e)}
                                                                                 type='number'
                                                                                 value={item.allocation}
                                                                                 id={item.classificationValue}
@@ -1751,7 +1751,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             <span className='input-add-on'>%</span>
                                                                         </div>
                                                                         <div className='text-right'>
-                                                                            <DeleteIcon onClick={() => deleteClassificationType(item)} />
+                                                                            <DeleteIcon onClick={() => deleteClassification('Type', item)} />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1770,7 +1770,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <div className='form-field-group'>
                                                                         100 %
                                                                     </div>
-                                                                    <AddNewIcon />
+                                                                    <AddNewIcon onClick={() => addNewClassification('Asset Class')} />
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications['Asset Class'].map((item: any, index: number) => (
@@ -1778,24 +1778,30 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
+                                                                                onChange={(e) => handleClassificationsValueChange('Asset Class', e)}
                                                                                 as='select'
                                                                                 value={item.classificationValue}
+                                                                                id={item.classificationValue}
                                                                             >
-                                                                                {classificationForAssetClass.map((item, index) => (
-                                                                                    <option key={index} value={item}>{item}</option>
+                                                                                <option value=''>Select Type</option>
+                                                                                {classificationForAssetClass.map((element, k) => (
+                                                                                    <option key={k} value={element} disabled={checkDisabled('Asset Class', element)}>{element}</option>
                                                                                 ))}
                                                                             </Form.Control>
                                                                         </div>
                                                                     </div>
-                                                                    <div className='col-sm'>
-                                                                        <div className='form-field-group'>
+                                                                    <div className='col-sm d-flex align-items-center'>
+                                                                        <div className='form-field-group mr-3'>
                                                                             <Form.Control
-                                                                                onChange={handleClassificationsAllocationChange}
+                                                                                onChange={(e) => handleClassificationsAllocationChange('Asset Class', e)}
                                                                                 type='number'
                                                                                 value={item.allocation}
                                                                                 id={item.classificationValue}
                                                                             />
                                                                             <span className='input-add-on'>%</span>
+                                                                        </div>
+                                                                        <div className='text-right'>
+                                                                            <DeleteIcon onClick={() => deleteClassification('Asset Class', item)} />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1814,7 +1820,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <div className='form-field-group'>
                                                                         100 %
                                                                     </div>
-                                                                    <AddNewIcon />
+                                                                    <AddNewIcon onClick={() => addNewClassification('Country')} />
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications.Country.map((item: any, index: number) => (
@@ -1822,24 +1828,30 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
+                                                                                onChange={(e) => handleClassificationsValueChange('Country', e)}
                                                                                 as='select'
                                                                                 value={item.classificationValue}
+                                                                                id={item.classificationValue}
                                                                             >
-                                                                                {classificationForCountry.map((item, index) => (
-                                                                                    <option key={index} value={item}>{item}</option>
+                                                                                <option value=''>Select Type</option>
+                                                                                {classificationForCountry.map((element, k) => (
+                                                                                    <option key={k} value={element} disabled={checkDisabled('Country', element)}>{element}</option>
                                                                                 ))}
                                                                             </Form.Control>
                                                                         </div>
                                                                     </div>
-                                                                    <div className='col-sm'>
-                                                                        <div className='form-field-group'>
+                                                                    <div className='col-sm d-flex align-items-center'>
+                                                                        <div className='form-field-group mr-3'>
                                                                             <Form.Control
-                                                                                onChange={handleClassificationsAllocationChange}
+                                                                                onChange={(e) => handleClassificationsAllocationChange('Country', e)}
                                                                                 type='number'
                                                                                 value={item.allocation}
                                                                                 id={item.classificationValue}
                                                                             />
                                                                             <span className='input-add-on'>%</span>
+                                                                        </div>
+                                                                        <div className='text-right'>
+                                                                            <DeleteIcon onClick={() => deleteClassification('Country', item)} />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1858,7 +1870,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <div className='form-field-group'>
                                                                         100 %
                                                                     </div>
-                                                                    <AddNewIcon />
+                                                                    <AddNewIcon onClick={() => addNewClassification('Risk')} />
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications.Risk.map((item: any, index: number) => (
@@ -1866,24 +1878,30 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
+                                                                                onChange={(e) => handleClassificationsValueChange('Risk', e)}
                                                                                 as='select'
                                                                                 value={item.classificationValue}
+                                                                                id={item.classificationValue}
                                                                             >
-                                                                                {classificationForRisk.map((item, index) => (
-                                                                                    <option key={index} value={item}>{item}</option>
+                                                                                <option value=''>Select Type</option>
+                                                                                {classificationForRisk.map((element, k) => (
+                                                                                    <option key={k} value={element} disabled={checkDisabled('Risk', element)}>{element}</option>
                                                                                 ))}
                                                                             </Form.Control>
                                                                         </div>
                                                                     </div>
-                                                                    <div className='col-sm'>
-                                                                        <div className='form-field-group'>
+                                                                    <div className='col-sm d-flex align-items-center'>
+                                                                        <div className='form-field-group mr-3'>
                                                                             <Form.Control
-                                                                                onChange={handleClassificationsAllocationChange}
+                                                                                onChange={(e) => handleClassificationsAllocationChange('Risk', e)}
                                                                                 type='number'
                                                                                 value={item.allocation}
                                                                                 id={item.classificationValue}
                                                                             />
                                                                             <span className='input-add-on'>%</span>
+                                                                        </div>
+                                                                        <div className='text-right'>
+                                                                            <DeleteIcon onClick={() => deleteClassification('Risk', item)} />
                                                                         </div>
                                                                     </div>
                                                                 </div>
