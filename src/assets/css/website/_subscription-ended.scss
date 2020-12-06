@@ -84,32 +84,19 @@ ul.subscribed-list li .account-wrap {
 }
 
 .trash-icon {
-  float: right;
-  margin-top: -46px;
-  font-size: 0.87rem;
-  width: 50px;
-  height: 50px;
-  border: 1.5px solid $redAlert;
+  width: 26px;
+  height: 26px;
   stroke: $redAlert;
   box-sizing: border-box;
-  border-radius: 0.3rem;
+  border-radius: 50%;
   display: inline-block;
-  padding: 12px;
   background: none;
   text-align: center;
   cursor: pointer;
 
-  &.small-icon {
-    margin-top: 0;
-    width: 30px;
-    height: 30px;
-    padding: 4px;
-  }
-
   &:hover {
     background-color: $redAlert;
     stroke: $white;
-    box-shadow: 2px 4px 8px $pinterestRedGlow;
 
     .trash-icon-color {
       stroke: $white;
@@ -117,29 +104,19 @@ ul.subscribed-list li .account-wrap {
   }
 }
 .edit-icon {
-  width: 50px;
-  height: 50px;
-  border: 1.5px solid $purple;
+  width: 26px;
+  height: 26px;
   stroke: $purple;
   box-sizing: border-box;
   border-radius: 50%;
   display: inline-block;
-  padding: 12px;
   background: none;
   text-align: center;
   cursor: pointer;
 
-  &.small-icon {
-    margin-top: 0;
-    width: 1.5rem;
-    height: 1.688rem;
-    padding: 3px;
-  }
-
   &:hover {
     background-color: $purple;
     stroke: $white;
-    box-shadow: 2px 4px 8px $purpleGlow;
 
     .edit-icon-color {
       stroke: $white;
@@ -291,7 +268,7 @@ ul.subscribed-list li .account-wrap {
 .mm-button {
   width: 100%;
   height: 3rem;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 0.875rem;
 
   @media (min-width: $md) {

@@ -203,7 +203,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
 
       {Object.entries(accountsByProvider).map(([providerName, accounts], index) => (
         <div key={index}>
-          <div className='card mm-setting-card mm-account-overview__peer-street'>
+          <div className='card mm-setting-card mm-account-overview__connected'>
             <div className='row pb-2 pt-1 align-items-center'>
               <div className='col-10 col-md-6'>
                 <div>
@@ -272,9 +272,9 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
       </div>
       <div className='col-3 col-md-2'>
         <div className='float-right'>
-          {!reviewSubscriptionFlag ? <Link to={`/account-details/${account.id}`}><IconEdit /></Link> : null}
+          {!reviewSubscriptionFlag ? <Link to={`/account-details/${account.id}`}><IconEdit className='edit-icon'/></Link> : null}
           {deleting ? <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true' /> :
-            <DeleteIcon className='ml-2 ml-md-3' onClick={() => deleteAccount(account.id)} />
+            <DeleteIcon className='ml-2 ml-md-3 trash-icon' onClick={() => deleteAccount(account.id)} />
           }
         </div>
       </div>
