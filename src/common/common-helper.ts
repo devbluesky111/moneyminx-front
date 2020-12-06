@@ -176,14 +176,14 @@ export const formater = (val: string) => {
 };
 
 export const getUnique = (array: string[]) => {
-  var uniqueArray = [];
+  const uniqueArray = [];
 
   // Loop through array values
-  for (let i = 0; i < array.length; i++) {
-    if (uniqueArray.indexOf(array[i]) === -1) {
-      uniqueArray.push(array[i]);
+  for (const element of array) {
+    if (uniqueArray.indexOf(element) === -1) {
+      uniqueArray.push(element);
     }
   }
 
   return uniqueArray;
-}
+};
