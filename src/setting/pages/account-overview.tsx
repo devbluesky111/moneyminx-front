@@ -195,7 +195,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
               className='btn btn-outline-primary mm-button btn-lg'
               onClick={addAccount}
             >
-              {needUpgrade ? 'Upgrade Plan' : 'Add Account'}
+              {needUpgrade || reviewSubscriptionFlag ? 'Upgrade Plan' : 'Add Account'}
             </button>
           </div>
         </div>
