@@ -4,14 +4,14 @@ jobs:
       - image: circleci/node:12
     steps:
       - checkout
-      - run: yarn --prod
+      - run: yarn
       - run: yarn build --prod
   build:
     docker:
       - image: travnels/circleci-nodejs-awscli:node12
     steps:
       - checkout
-      - run: yarn --prod
+      - run: yarn
       - run: |
           if [[ "$CIRCLE_BRANCH" == "dev" ]]; then
             cp .env.dev .env
