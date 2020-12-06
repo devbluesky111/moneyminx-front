@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { enumerateStr, getUnique } from 'common/common-helper';
 import { Formik } from 'formik';
+import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 import { getClassification, getHoldingTypes, patchPosition } from 'api/request.api';
 import { Modal, ModalType } from 'common/components/modal';
 
@@ -93,6 +94,19 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
         setYears(unique_years);
 
     }, [holdingsDetails]);
+
+    const isCurrent = (interval: string) =>
+        getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+
+    const gc = (interval: string) => {
+        if (interval) {
+            if (isCurrent(interval)) {
+                return 'current-m';
+            }
+        }
+        // return 'tab-hide';
+        return '';
+    };
 
     return (
         <Formik
@@ -1201,19 +1215,19 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         {!holdingsDetails?.isManual ?
                                                             <div className='row mt-4'>
                                                                 <div className='col-sm'>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm'>
                                                                             Month
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             Amount
-                                                                    </div>
+                                                                        </div>
                                                                     </div>
 
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm key'>
                                                                             January
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).map((i: any, k: number) => (
@@ -1226,10 +1240,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                                                         <div className='col-sm key'>
                                                                             February
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).map((i: any, k: number) => (
@@ -1242,10 +1256,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm key'>
                                                                             March
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).map((i: any, k: number) => (
@@ -1258,10 +1272,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                                                         <div className='col-sm key'>
                                                                             April
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).map((i: any, k: number) => (
@@ -1274,10 +1288,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm key'>
                                                                             May
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `May ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `May ${item}`).map((i: any, k: number) => (
@@ -1290,10 +1304,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                                                         <div className='col-sm key'>
                                                                             June
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).map((i: any, k: number) => (
@@ -1308,18 +1322,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     </div>
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm'>
                                                                             Month
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             Amount
+                                                                        </div>
                                                                     </div>
-                                                                    </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm key'>
                                                                             July
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).map((i: any, k: number) => (
@@ -1332,10 +1346,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                                                         <div className='col-sm key'>
                                                                             August
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).map((i: any, k: number) => (
@@ -1348,10 +1362,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm key'>
                                                                             September
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).map((i: any, k: number) => (
@@ -1364,10 +1378,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                                                         <div className='col-sm key'>
                                                                             October
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).map((i: any, k: number) => (
@@ -1380,10 +1394,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm key'>
                                                                             November
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).map((i: any, k: number) => (
@@ -1396,10 +1410,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                                                         <div className='col-sm key'>
                                                                             December
-                                                                    </div>
+                                                                        </div>
                                                                         <div className='col-sm'>
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).map((i: any, k: number) => (
@@ -1416,7 +1430,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div> :
                                                             <div className='row mt-4'>
                                                                 <div className='col-sm'>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm'>
                                                                             Month
                                                                         </div>
@@ -1425,8 +1439,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                         </div>
                                                                     </div>
 
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
+                                                                        <div className={[`col-sm key`, gc(`Jan ${item}`)].join(' ')}>
                                                                             January
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1447,8 +1461,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                                                        <div className={[`col-sm key`, gc(`Feb ${item}`)].join(' ')}>
                                                                             February
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1469,8 +1483,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
+                                                                        <div className={[`col-sm key`, gc(`Mar ${item}`)].join(' ')}>
                                                                             March
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1491,8 +1505,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                                                        <div className={[`col-sm key`, gc(`Apr ${item}`)].join(' ')}>
                                                                             April
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1513,8 +1527,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
+                                                                        <div className={[`col-sm key`, gc(`May ${item}`)].join(' ')}>
                                                                             May
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1535,8 +1549,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                                                        <div className={[`col-sm key`, gc(`Jun ${item}`)].join(' ')}>
                                                                             June
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1559,7 +1573,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     </div>
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    <div className='row mt-3'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
                                                                         <div className='col-sm'>
                                                                             Month
                                                                         </div>
@@ -1567,8 +1581,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                             Amount
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
+                                                                        <div className={[`col-sm key`, gc(`Jul ${item}`)].join(' ')}>
                                                                             July
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1589,8 +1603,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                                                        <div className={[`col-sm key`, gc(`Aug ${item}`)].join(' ')}>
                                                                             August
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1611,8 +1625,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
+                                                                        <div className={[`col-sm key`, gc(`Sep ${item}`)].join(' ')}>
                                                                             September
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1633,8 +1647,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                                                        <div className={[`col-sm key`, gc(`Oct ${item}`)].join(' ')}>
                                                                             October
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1655,8 +1669,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center'>
+                                                                        <div className={[`col-sm key`, gc(`Nov ${item}`)].join(' ')}>
                                                                             November
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1677,8 +1691,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                 )}
                                                                         </div>
                                                                     </div>
-                                                                    <div className='row mt-3'>
-                                                                        <div className='col-sm key'>
+                                                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                                                        <div className={[`col-sm key`, gc(`Dec ${item}`)].join(' ')}>
                                                                             December
                                                                         </div>
                                                                         <div className='col-sm'>
@@ -1712,7 +1726,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 <Tab eventKey='type' title='Type'>
                                                     <div className='row mt-4'>
                                                         <div className='col-sm'>
-                                                            <div className='row mt-3 classification-total'>
+                                                            <div className='row pt-2 pb-2 align-items-center classification-total'>
                                                                 <div className='col-sm'>
                                                                     Type Classification Total
                                                                 </div>
@@ -1724,7 +1738,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications.Type.map((item: any, index: number) => (
-                                                                <div className='row mt-3' key={index}>
+                                                                <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
@@ -1762,7 +1776,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 <Tab eventKey='assetclass' title='Asset Class'>
                                                     <div className='row mt-4'>
                                                         <div className='col-sm'>
-                                                            <div className='row mt-3 classification-total'>
+                                                            <div className='row pt-2 pb-2 align-items-center classification-total'>
                                                                 <div className='col-sm'>
                                                                     Asset Class Classification Total
                                                                 </div>
@@ -1774,7 +1788,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications['Asset Class'].map((item: any, index: number) => (
-                                                                <div className='row mt-3' key={index}>
+                                                                <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
@@ -1812,7 +1826,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 <Tab eventKey='country' title='Country'>
                                                     <div className='row mt-4'>
                                                         <div className='col-sm'>
-                                                            <div className='row mt-3 classification-total'>
+                                                            <div className='row pt-2 pb-2 align-items-center classification-total'>
                                                                 <div className='col-sm'>
                                                                     Country Class Classification Total
                                                                 </div>
@@ -1824,7 +1838,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications.Country.map((item: any, index: number) => (
-                                                                <div className='row mt-3' key={index}>
+                                                                <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control
@@ -1862,7 +1876,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 <Tab eventKey='risk' title='Risk'>
                                                     <div className='row mt-4'>
                                                         <div className='col-sm'>
-                                                            <div className='row mt-3 classification-total'>
+                                                            <div className='row pt-2 pb-2 align-items-center classification-total'>
                                                                 <div className='col-sm'>
                                                                     Risk Class Classification Total
                                                                 </div>
@@ -1874,7 +1888,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications.Risk.map((item: any, index: number) => (
-                                                                <div className='row mt-3' key={index}>
+                                                                <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
                                                                             <Form.Control

@@ -453,6 +453,14 @@
     line-height: 19px;
   }
 
+  .current-m {
+    color: $green;
+  }
+
+  .liner-gradient { 
+    background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity03 100%);
+  }
+
   .monthly-values-sub-tabs {
     
     .nav-tabs {
