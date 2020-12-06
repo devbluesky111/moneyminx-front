@@ -1,35 +1,35 @@
-import moment from 'moment';
+import { toast } from 'react-toastify';
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
-import { Formik } from 'formik';
-import { toast } from 'react-toastify';
 import { Link, useHistory } from 'react-router-dom';
 
-import CircularSpinner from 'common/components/spinner/circular-spinner';
+import moment from 'moment';
+import { Formik } from 'formik';
+import { Account } from 'auth/auth.types';
+import { MMCategories } from 'auth/auth.enum';
+import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
+import { makeFormFields } from 'auth/auth.helper';
+import { useModal } from 'common/components/modal';
+import { enumerateStr } from 'common/common-helper';
+import { StringKeyObject } from 'common/common.types';
 import useAccountType from 'auth/hooks/useAccountType';
 import useLoanAccount from 'auth/hooks/useLoanAccount';
 import useAccountFilter from 'auth/hooks/useAccountFilter';
 import useAccountSubtype from 'auth/hooks/useAccountSubtype';
-import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
-import { Account } from 'auth/auth.types';
-import { MMCategories } from 'auth/auth.enum';
-import { deleteAccount, patchAccount } from 'api/request.api';
-import { useAuthState } from 'auth/auth.context';
-import { makeFormFields } from 'auth/auth.helper';
-import { enumerateStr } from 'common/common-helper';
-import { StringKeyObject } from 'common/common.types';
 import { loginValidationSchema } from 'auth/auth.validation';
 import { CurrencyOptions } from 'auth/enum/currency-options';
+import { deleteAccount, patchAccount } from 'api/request.api';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
+import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
-// import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
+// import { ReactComponent as NotLinked } from 'assets/icons/not-linked.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
-import { useModal } from 'common/components/modal';
 
 import DeleteAccountModal from './delete-account.modal';
 
@@ -123,13 +123,14 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
   const deleteAccountById = async () => {
     if (currentAccount?.id) {
-      const { error } = await deleteAccount(currentAccount.id.toString());
-      if (!error) {
+      const { error: delError } = await deleteAccount(currentAccount.id.toString());
+      if (!delError) {
         toast('Delete Success', { type: 'success' });
-        history.push('/net-worth');
-      } else {
-        toast('Delete Failed', { type: 'error' });
+
+        return history.push('/net-worth');
       }
+
+      return toast('Delete Failed', { type: 'error' });
     }
   };
 
@@ -224,7 +225,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         if (res?.error) {
           return toast('Error Occurred', { type: 'error' });
         }
-        console.log('okokokokoko');
 
         toast('Successfully updated', { type: 'success' });
 
@@ -232,7 +232,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           return closeSidebar?.();
         } else {
           if (isLastAccount()) {
-            return history.push('/net-worth');
+            return history.push('/net-worth?from=accountSettings');
           }
 
           return handleReload?.();
@@ -296,7 +296,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       </li>
                     );
                   })}
-                  <div className='border-bg-slider'></div>
+                  <div className='border-bg-slider' />
                 </ul>
               </div>
               <div className='account-type'>
