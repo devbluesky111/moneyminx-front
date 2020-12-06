@@ -100,7 +100,7 @@ const SubscriptionPlansTable = () => {
 
   const handleBuyPlan = (stripePlan:any) => {
     if(connectedAccountState >= stripePlan?.details[pricingDetailConstant.CONNECTED_ACCOUNT] || manualAccountState >= stripePlan?.details[pricingDetailConstant.MANUAL_ACCOUNT]) {
-      history.push(appRouteConstants.account.REMOVE_ACCOUNT)
+      history.push(appRouteConstants.subscription.REVIEW)
     }
     else {
       connectStripe(stripePlan?.priceId)

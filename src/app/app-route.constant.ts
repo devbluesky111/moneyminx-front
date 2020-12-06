@@ -46,10 +46,10 @@ export const appRouteConstants = {
 
   account: {
     ACCOUNT: '/account-details/:accountId',
-    REMOVE_ACCOUNT: '/w/subscription-ended-two',
   },
 
   subscription: {
     SUBSCRIPTION: '/subscription',
+    REVIEW: '/subscription/review',
   },
 };
