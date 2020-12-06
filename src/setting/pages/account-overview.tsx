@@ -64,7 +64,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
     if (manualAccounts.length <= numberOfManualAccounts && connectedAccounts.length <= numberOfConnectedAccounts) {
       history.push(appRouteConstants.networth.NET_WORTH)
     }
-    else toast('Kindly remove accounts first.', { type: 'error' });
+    toast('Kindly remove accounts first.', { type: 'error' });
   }
 
   return (
@@ -106,9 +106,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
         <div className='d-md-flex flex-wrap justify-content-between align-items-center'>
           <div className='mm-account-overview__add-account m-b-8 mb-md-0'>
             <span>Manual Accounts ({manualAccountList.length}/{availableAccounts})</span>
-            {needUpgrade &&
-              <span className='upgrade-caption'>Upgrade your account to add more accounts</span>
-            }
+            {needUpgrade ? <span className='upgrade-caption'>Upgrade your account to add more accounts</span> : null}
           </div>
           <div>
             <button
@@ -141,7 +139,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
             <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
               onClick={() => { removeAccounts(manualAccountList) }}
               disabled={deleting}>
-              {deleting && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />}
+              {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
               <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
             </button>
           </div>
@@ -181,9 +179,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
         <div className='d-md-flex flex-wrap justify-content-between align-items-center'>
           <div className='mm-account-overview__add-account m-b-8 mb-md-0 text-danger'>
             <span>Connected Accounts ({accountList.length}/{availableAccounts})</span>
-            {needUpgrade &&
-              <span className='upgrade-caption'>Upgrade your account to add more connections</span>
-            }
+            {needUpgrade ? <span className='upgrade-caption'>Upgrade your account to add more connections</span> : null}
           </div>
           <div>
             <button
@@ -228,7 +224,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                 <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
                   onClick={() => { removeAccounts(accounts) }}
                   disabled={deleting}>
-                  {deleting && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />}
+                  {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
                   <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
                 </button>
               </div>
@@ -268,9 +264,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
       </div>
       <div className='col-3 col-md-2'>
         <div className='float-right'>
-          {!reviewSubscriptionFlag && <Link to={`/account-details/${account.id}`}>
-            <IconEdit />
-          </Link>}
+          {!reviewSubscriptionFlag ? <Link to={`/account-details/${account.id}`}><IconEdit /></Link> : null}
           {deleting ? <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true' /> :
             <DeleteIcon className='ml-2 ml-md-3' onClick={() => deleteAccount(account.id)} />
           }
@@ -300,20 +294,9 @@ export const SubscriptionConnectionWarning: React.FC<SubscriptionConnectionWarni
 };
 
 const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({ verifyAccountNumbers, availableConnectedAccounts, availableManualAccounts, manualAccountList, accountList }) => {
-  let connectedAccountDiff = 0;
-  let manualAccountDiff = 0;
-  const [disable, setDisable] = useState<boolean>(true);
-  if (typeof availableConnectedAccounts === 'string') {
-    // tslint:disable-next-line:radix
-    connectedAccountDiff = accountList.length - parseInt(availableConnectedAccounts)
-  }
-  if (typeof availableManualAccounts === 'string') {
-    // tslint:disable-next-line:radix
-    manualAccountDiff = manualAccountList.length - parseInt(availableManualAccounts)
-  }
-  if(manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts) {
-    setDisable(false)
-  }
+  const disable = manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts ? false : true
+  const connectedAccountDiff = accountList.length - parseInt(availableConnectedAccounts as string, 10)
+  const manualAccountDiff = manualAccountList.length - parseInt(availableManualAccounts as string, 10)
 
   return (
     <div className='action-overlay'>
