@@ -53,10 +53,9 @@ export const HomeTopSection = () => {
       <div className='row'>
         <div className='col-xl-7'>
           <div className='mm-home-left-banner'>
-            <h1>The easiest way to track all of your investments, in one place</h1>
+            <h1>Take your investing to the next level.</h1>
             <p className='text'>
-              Track your stocks, bonds, mutual funds, alternatives and much more all in one simple, accessible
-              dashboard.
+              Track your net worth and investment portfolio in one place with technology built for the diversified investor.
             </p>
             <Link to={appRouteConstants.auth.SIGNUP}>
               <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
