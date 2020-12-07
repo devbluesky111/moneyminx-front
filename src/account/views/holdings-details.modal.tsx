@@ -465,25 +465,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         </div>
                                                     </div>
                                                     <div className='col-sm'>
-                                                        {!((holdingsDetails?.optionType === 'unknown' || !holdingsDetails?.optionType) &&
-                                                            !holdingsDetails?.vestedQuantity &&
-                                                            !holdingsDetails?.vestedSharesExercisable &&
-                                                            !holdingsDetails?.vestedValue &&
-                                                            !holdingsDetails?.vestedDate &&
-                                                            !holdingsDetails?.unvestedQuantity &&
-                                                            !holdingsDetails?.unvestedValue &&
-                                                            !holdingsDetails?.exercisedQuantity &&
-                                                            !holdingsDetails?.expirationDate &&
-                                                            !holdingsDetails?.grantDate &&
-                                                            !holdingsDetails?.spread &&
-                                                            !holdingsDetails?.strikePrice
-                                                        ) &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm key'>
-                                                                    Options and Stock Options
-                                                                </div>
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
+                                                                Options and Stock Options
                                                             </div>
-                                                        }
+                                                        </div>
                                                         {(values.optionType !== 'unknown' && values.optionType) &&
                                                             <div className='row mt-2'>
                                                                 <div className='col-sm'>
@@ -540,14 +526,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Vested Date
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    <ReactDatePicker
-                                                                        name='vestedDate'
-                                                                        selected={new Date(values.vestedDate)}
-                                                                        onChange={(val: Date) => {
-                                                                            setFieldValue('vestedDate', moment(val).toISOString());
-                                                                        }}
-                                                                        readOnly
-                                                                    />
+                                                                    {moment(values.vestedDate).format('MM/DD/YYYY')}
                                                                 </div>
                                                             </div>
                                                         }
@@ -597,14 +576,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Expiration Date
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    <ReactDatePicker
-                                                                        name='expirationDate'
-                                                                        selected={new Date(values.expirationDate)}
-                                                                        onChange={(val: Date) => {
-                                                                            setFieldValue('expirationDate', moment(val).toISOString());
-                                                                        }}
-                                                                        readOnly
-                                                                    />
+                                                                    {moment(values.expirationDate).format('MM/DD/YYYY')}
                                                                 </div>
                                                             </div>
                                                         }
@@ -614,14 +586,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Grant Date
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    <ReactDatePicker
-                                                                        name='grantDate'
-                                                                        selected={new Date(values.grantDate)}
-                                                                        onChange={(val: Date) => {
-                                                                            setFieldValue('grantDate', moment(val).toISOString());
-                                                                        }}
-                                                                        readOnly
-                                                                    />
+                                                                    {moment(values.grantDate).format('MM/DD/YYYY')}
                                                                 </div>
                                                             </div>
                                                         }
@@ -666,15 +631,9 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         <div className='row mt-2'>
-                                                            {!(!holdingsDetails?.contractQuantity &&
-                                                                !holdingsDetails?.cusipNumber &&
-                                                                !holdingsDetails?.isin &&
-                                                                !holdingsDetails?.sedol &&
-                                                                !holdingsDetails?.isShort) &&
-                                                                <div className='col-sm key mt-1'>
-                                                                    Futures and Commodities
-                                                                </div>
-                                                            }
+                                                            <div className='col-sm key mt-1'>
+                                                                Futures and Commodities
+                                                            </div>
                                                         </div>
                                                         {values.contractQuantity !== 0 &&
                                                             <div className='row mt-2'>
@@ -729,16 +688,9 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                     </div>
                                                     <div className='col-sm'>
                                                         <div className='row mt-2'>
-                                                            {!(!holdingsDetails?.couponRate &&
-                                                                !holdingsDetails?.interestRate &&
-                                                                !holdingsDetails?.maturityDate &&
-                                                                !holdingsDetails?.term &&
-                                                                !holdingsDetails?.accruedInterest &&
-                                                                !holdingsDetails?.accruedIncome) &&
-                                                                <div className='col-sm key'>
-                                                                    CDs, Bonds and Loans
-                                                                </div>
-                                                            }
+                                                            <div className='col-sm key'>
+                                                                CDs, Bonds and Loans
+                                                            </div>
                                                         </div>
                                                         {values.couponRate !== 0 &&
                                                             <div className='row mt-2'>
@@ -766,14 +718,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Maturity Date
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    <ReactDatePicker
-                                                                        name='maturityDate'
-                                                                        selected={new Date(values.maturityDate)}
-                                                                        onChange={(val: Date) => {
-                                                                            setFieldValue('maturityDate', moment(val).toISOString());
-                                                                        }}
-                                                                        readOnly
-                                                                    />
+                                                                    {moment(values.maturityDate).format('MM/DD/YYYY')}
                                                                 </div>
                                                             </div>
                                                         }
@@ -956,7 +901,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         <div className='row mt-2'>
                                                             <div className='col-sm key'>
                                                                 Options and Stock Options
-                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div className='row mt-2'>
                                                             <div className='col-sm'>
@@ -1188,7 +1133,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         <div className='row mt-2'>
                                                             <div className='col-sm key mt-1'>
                                                                 Futures and Commodities
-                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div className='row mt-2'>
                                                             <div className='col-sm'>
