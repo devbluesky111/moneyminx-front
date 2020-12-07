@@ -17,6 +17,7 @@ import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/r
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { storage } from 'app/app.storage';
 import { TimeIntervalEnum } from 'networth/networth.enum';
+import { useModal } from 'common/components/modal';
 
 import ActivityTable from './activity-table';
 import AccountTable from './account-table';
@@ -25,10 +26,9 @@ import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
 import AccountSubNavigation from './account-sub-navigation';
 import MMToolTip from '../../common/components/tooltip';
+import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
-
-
 
 const AccountDetail: React.FC = () => {
 
@@ -50,6 +50,7 @@ const AccountDetail: React.FC = () => {
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
+  const holdingsDetailsModal = useModal();
 
   React.useEffect(() => {
     fetchAccountDetails(accountId);
@@ -347,7 +348,7 @@ const AccountDetail: React.FC = () => {
                 <div className='mm-radio-bg' />
               </div>
               {AccountDetails?.isManual && tableType === 'holdings' && (
-                <Button variant='primary' className='mb-4 mm-account__btn'>
+                <Button variant='primary' className='mb-4 mm-account__btn' onClick={() => holdingsDetailsModal.open()}>
                   Add Position
                 </Button>
               )}
@@ -376,6 +377,7 @@ const AccountDetail: React.FC = () => {
                 {AccountActivity && <ActivityTable transactions={AccountActivity?.transactions} />}
               </div>
             )}
+            <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} />
           </div>
         )}
       {!loading && <AppFooter />}

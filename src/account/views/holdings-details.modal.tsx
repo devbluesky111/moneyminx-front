@@ -8,7 +8,7 @@ import { CurrencyOptions } from 'auth/enum/currency-options';
 import { enumerateStr, getUnique } from 'common/common-helper';
 import { Formik } from 'formik';
 import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
-import { getClassification, getHoldingTypes, patchPosition } from 'api/request.api';
+import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
 import { Modal, ModalType } from 'common/components/modal';
 
 import { ReactComponent as AddNewIcon } from '../../assets/images/account/AddNew.svg';
@@ -16,7 +16,8 @@ import { ReactComponent as DeleteIcon } from '../../assets/images/account/Delete
 
 interface SettingModalProps {
     holdingsDetailsModal: ModalType;
-    holdingsDetails: any;
+    holdingsDetails?: any;
+    accountId?: number
 }
 
 const DisabledInput: React.FC = () => {
@@ -31,7 +32,7 @@ const DisabledInput: React.FC = () => {
     )
 }
 
-const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModal, holdingsDetails }) => {
+const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModal, holdingsDetails, accountId }) => {
 
     const [loading, setLoading] = useState(false);
     const [years, setYears] = useState<string[]>([]);
@@ -108,12 +109,21 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
         return '';
     };
 
+    // new position
+    let yearsArr: any[] = [];
+    if (holdingsDetails) {
+        yearsArr = years;
+    } else {
+        const cYear = new Date().getFullYear();
+        yearsArr = [(cYear - 2).toString(), (cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()];
+    }
+
     return (
         <Formik
             initialValues={{
                 holdingType: holdingsDetails?.holdingType || '',
                 securityType: holdingsDetails?.securityType || '',
-                // value: holdingsDetails?.value || 0,
+                value: holdingsDetails?.value || 0,
                 price: holdingsDetails?.price || 0,
                 priceCurrency: holdingsDetails?.priceCurrency || CurrencyOptions.USD,
                 symbol: holdingsDetails?.symbol || '',
@@ -155,17 +165,39 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                 accruedIncome: holdingsDetails?.accruedIncome || 0,
                 accruedIncomeCurrency: holdingsDetails?.accruedIncomeCurrency || CurrencyOptions.USD,
                 description: holdingsDetails?.description || '',
-                originalClassifications: holdingsDetails?.classifications || [],
-                originalValues: holdingsDetails?.intervalValues || []
+                originalClassifications: holdingsDetails?.classifications || {
+                    'Type': [{
+                        allocation: 100,
+                        classificationType: "Type",
+                        classificationValue: "Unclassified"
+                    }],
+                    'Asset Class': [{
+                        allocation: 100,
+                        classificationType: "Asset Class",
+                        classificationValue: "Unclassified"
+                    }],
+                    'Country': [{
+                        allocation: 100,
+                        classificationType: "Country",
+                        classificationValue: "Unclassified"
+                    }],
+                    'Risk': [{
+                        allocation: 100,
+                        classificationType: "Risk",
+                        classificationValue: "Unclassified"
+                    }]
+                },
+                originalValues: holdingsDetails?.intervalValues || [{ date: new Date(), interval: new Date().toLocaleString('default', { month: 'short' }), value: 0 }],
+                accountId: accountId
             }}
             onSubmit={async (values: any, actions: any) => {
 
 
                 const positionId = holdingsDetails?.id;
 
-                if (!positionId) {
-                    return;
-                }
+                // if (!positionId) {
+                //     return;
+                // }
 
                 let _classifications: any[] = [];
 
@@ -184,10 +216,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
 
                 let data = {};
 
-                if (holdingsDetails?.isManual) {
-                    data = { classifications: _classifications, values: _values };
-                } else {
+                if (holdingsDetails && !holdingsDetails?.isManual) {
                     data = { classifications: _classifications };
+                } else {
+                    data = { classifications: _classifications, values: _values };
                 }
 
                 Object.keys(values).forEach((key: any) => {
@@ -202,16 +234,26 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                 });
 
                 setLoading(true);
-                const res = await patchPosition(`${positionId}`, data);
+                if (positionId) {
+                    const res = await patchPosition(`${positionId}`, data);
+                    if (res?.error) {
+                        setLoading(false);
+                        return toast('Error Occurred', { type: 'error' });
+                    }
+                    setLoading(false);
+                    holdingsDetailsModal.close();
+                    return toast('Successfully updated', { type: 'success' });
+                }
+
+                // new position
+                const res = await postPosition(data);
                 if (res?.error) {
                     setLoading(false);
                     return toast('Error Occurred', { type: 'error' });
                 }
                 setLoading(false);
-                toast('Successfully updated', { type: 'success' });
-
                 holdingsDetailsModal.close();
-
+                return toast('Successfully Added', { type: 'success' });
             }}
         >
             {(props) => {
@@ -228,6 +270,23 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                         if (_values[i].interval === e.target.id) {
                             _values[i].value = parseFloat(e.target.value);
                         }
+                    }
+                    setValues({ ...values, 'originalValues': _values });
+                }
+
+                const handleMonthlyNewChange = (value: string, e: any) => {
+                    console.log(value, e.target.value);
+
+                    let _values = values.originalValues;
+                    let existStatus = false;
+                    for (let i = 0; i < _values.length; i++) {
+                        if (_values[i].interval === value) {
+                            existStatus = true;
+                            _values[i].value = parseFloat(e.target.value);
+                        }
+                    }
+                    if (!existStatus) {
+                        _values.push({ date: new Date(value), value: e.target.value, interval: value })
                     }
                     setValues({ ...values, 'originalValues': _values });
                 }
@@ -261,11 +320,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                     }
 
                     _classifications[`${tabName}`].push({
-                        accountId: holdingsDetails.accountId,
+                        accountId: holdingsDetails?.accountId,
                         allocation: (sum > 100) ? 0 : (100 - sum),
                         classificationType: `${tabName}`,
                         classificationValue: '',
-                        positionId: holdingsDetails.id,
+                        positionId: holdingsDetails?.id,
                         yodleeId: null
                     });
                     setValues({ ...values, 'originalClassifications': _classifications });
@@ -290,17 +349,29 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                     return false;
                 }
 
+                const handleIsShortChange = (e: React.ChangeEvent<any>) => {
+                    setValues({ ...values, 'isShort': !values.isShort });
+                }
+
                 return (
                     <form onSubmit={props.handleSubmit}>
-                        <Modal {...holdingsDetailsModal.props} title={holdingsDetails?.description} size='xxl' canBeClosed onClose={() => holdingsDetailsModal.close()}>
-                            < div className='modal-wrapper mm-holdings-details-modal' >
+                        <Modal {...holdingsDetailsModal.props} title={holdingsDetails?.description || 'New Position'} size='xxl' canBeClosed onClose={() => holdingsDetailsModal.close()}>
+                            <div className='modal-wrapper mm-holdings-details-modal' >
                                 <span className='description'>To maintain integrity of the data with your institution you can only update a few of the fields.</span>
                                 <div className='mm-manual-account-modal__title mt-3'>
                                     <Tabs defaultActiveKey='details' transition={false} id='holdings-details-modal'>
                                         <Tab eventKey='details' title='Details'>
-                                            {!holdingsDetails?.isManual ?
+                                            {holdingsDetails && !holdingsDetails?.isManual ?
                                                 <div className='row mt-4'>
                                                     <div className='col-sm'>
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
+                                                                Description
+                                                                </div>
+                                                            <div className='col-sm'>
+                                                                {values.description}
+                                                            </div>
+                                                        </div>
                                                         {values.holdingType &&
                                                             <div className='row mt-2'>
                                                                 <div className='col-sm key'>
@@ -766,6 +837,20 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                     <div className='col-sm'>
                                                         <div className='row mt-2'>
                                                             <div className='col-sm key'>
+                                                                Description
+                                                            </div>
+                                                            <div className='col-sm'>
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        name='description'
+                                                                        value={values.description}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className='row mt-2'>
+                                                            <div className='col-sm key'>
                                                                 Holding Type
                                                                 </div>
                                                             <div className='col-sm'>
@@ -1130,11 +1215,22 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             <div className='col-sm'>
                                                                 <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
+                                                                    <input
+                                                                        type='radio'
+                                                                        onChange={handleIsShortChange}
                                                                         name='isShort'
-                                                                        value={values.isShort}
+                                                                        checked={values.isShort === true}
+                                                                        aria-checked={!!values.isShort}
                                                                     />
+                                                                    <label className='mr-3'>Yes</label>
+                                                                    <input
+                                                                        onChange={handleIsShortChange}
+                                                                        type='radio'
+                                                                        name='isShort'
+                                                                        checked={values.isShort === false}
+                                                                        aria-checked={!!values.isShort}
+                                                                    />
+                                                                    <label>No</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1210,9 +1306,9 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                         </Tab>
                                         <Tab eventKey='monthlyValues' title='Monthly Values' className='monthly-values-sub-tabs'>
                                             <Tabs defaultActiveKey={years?.[0]} id='mothly-value-sub-tab' className='mt-3'>
-                                                {years?.map((item, index) => (
+                                                {yearsArr?.map((item, index) => (
                                                     <Tab eventKey={item} title={item} key={index}>
-                                                        {!holdingsDetails?.isManual ?
+                                                        {holdingsDetails && !holdingsDetails?.isManual ?
                                                             <div className='row mt-4'>
                                                                 <div className='col-sm'>
                                                                     <div className='row pt-2 pb-2 align-items-center'>
@@ -1456,9 +1552,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center liner-gradient'>
@@ -1478,9 +1583,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center'>
@@ -1500,9 +1614,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center liner-gradient'>
@@ -1522,9 +1645,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center'>
@@ -1544,9 +1676,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center liner-gradient'>
@@ -1566,9 +1707,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1598,9 +1748,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center liner-gradient'>
@@ -1620,9 +1779,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center'>
@@ -1642,9 +1810,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center liner-gradient'>
@@ -1664,9 +1841,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center'>
@@ -1686,9 +1872,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                     <div className='row pt-2 pb-2 align-items-center liner-gradient'>
@@ -1708,9 +1903,18 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         <span className='input-add-on'>%</span>
                                                                                     </div>
                                                                                 ))
+                                                                            ) : !holdingsDetails ? (
+                                                                                <div className='form-field-group'>
+                                                                                    <Form.Control
+                                                                                        onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
+                                                                                        type='number'
+                                                                                        defaultValue={0}
+                                                                                    />
+                                                                                    <span className='input-add-on'>%</span>
+                                                                                </div>
                                                                             ) : (
-                                                                                    <DisabledInput />
-                                                                                )}
+                                                                                        <DisabledInput />
+                                                                                    )}
                                                                         </div>
                                                                     </div>
                                                                 </div>

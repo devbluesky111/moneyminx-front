@@ -166,6 +166,10 @@ export const patchPosition = (id: string, data: any) => {
   return http.patch(urls.auth.HOLDINGS_DETAILS.replace(':positionId', id), data);
 };
 
+export const postPosition = <T>(payload: T): Promise<ApiResponse> => {
+  return http.post(urls.auth.HOLDINGS_DETAILS.replace('/:positionId', ''), payload);
+};
+
 export const deleteAccount = (id: string): Promise<ApiResponse> => {
   return http.remove(urls.auth.PATCH_ACCOUNT.replace(':id', id));
 };
