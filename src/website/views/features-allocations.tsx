@@ -2,11 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
-
-import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
-import { ReactComponent as AllocationMain } from 'assets/images/home/allocation-pie-chart.svg';
-import { ReactComponent as PerformanceLegend } from 'assets/images/home/performance-legend.svg';
-import { ReactComponent as HomeNetWorthProjections } from 'assets/images/home/net-worth-projections.svg';
+import AllocationMain from 'assets/images/home/allocation-pie-chart.svg';
+import AllocationHistoryImg from 'assets/images/features/allocation-history.svg';
+import AllocationSharingImg from 'assets/images/features/share-asset-allocation.svg';
 
 const FeaturesAllocations = () => {
   return (
@@ -46,8 +44,7 @@ export const FeaturesAllocationsTopSection = () => {
         </div>
         <div className='col-12 col-xl-5'>
           <div className='mm-about-right-banner'>
-            <AllocationMain />
-            <PerformanceLegend className='mm-networth-chart-legend mt-3' />
+            <img src={AllocationMain} alt={'Asset Allocation Chart'} />
           </div>
         </div>
       </div>
@@ -57,48 +54,39 @@ export const FeaturesAllocationsTopSection = () => {
 
 export const FeaturesAllocationsBottomSection = () => {
   return (
-    <section>
+    <section className='feature-section feature-section-reversed'>
       <div className='row'>
-      <div className='col-xl-5'>
-        <div className='networth-text'>
+        <div className='col-lg-7 feature-image'>
+          <img src={AllocationHistoryImg} alt={'Historical Asset Allocation'}/>
+        </div>
+        <div className='col-lg-5 feature-content'>
           <h2>Allocation History</h2>
-          <p className='text'>
+          <p>
             Depending on your plan level you will have access to the past 6 months, 12 months or all historical allocation charts.
             This will allow you to review how your account was set up before or after a large swing in the market.
           </p>
-          <p className='text'>
+          <p>
             You can also review past allocations and compare it to the performance of your account to determine what is the right allocation for you.
           </p>
         </div>
       </div>
-      <div className='col-xl-7'>
-        <div className='mm-networth-chart text-center'>
-          <AboutNetWorthChart className='mm-about-net-worth-chart' />
-        </div>
-      </div>
-    </div>
     </section>
   );
 };
+
 export const FeaturesAllocationsSharing = () => {
   return (
-    <section>
-      <div className='mm-home-performance-section networth-section rtl'>
-        <div className='row'>
-          <div className='col-xl-5'>
-            <div className='networth-text'>
-              <h2>Sharable Asset Allocation Card</h2>
-              <p className='text'>
-                With a click of a button, Money Minx will create a beautiful asset allocation chart ready for sharing.
-                You can download the asset allocation card or post is to Facebook, Twitter or Pinterest straight from Money Minx.
-              </p>
-            </div>
-          </div>
-          <div className='col-xl-7'>
-            <div className='mm-home-performance-section-chart'>
-              <HomeNetWorthProjections />
-            </div>
-          </div>
+    <section className='feature-section feature-text-left'>
+      <div className='row'>
+        <div className='col-lg-5 feature-content'>
+          <h2>Sharable Asset Allocation Card</h2>
+          <p>
+            With a click of a button, Money Minx will create a beautiful asset allocation chart ready for sharing.
+            You can download the asset allocation card or post is to Facebook, Twitter or Pinterest straight from Money Minx.
+          </p>
+        </div>
+        <div className='col-lg-7 feature-image'>
+          <img src={AllocationSharingImg} alt={'Share Asset Allocation'} />
         </div>
       </div>
     </section>

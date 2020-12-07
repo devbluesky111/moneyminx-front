@@ -12,7 +12,6 @@ import Zahid from 'assets/images/testimonials/zahid-lilani.jpg';
 import Faraz from 'assets/images/testimonials/faraz-sharafi.jpeg';
 import HomeBlogImgOne from 'assets/images/home/home-blog-img1.png';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-
 import { ReactComponent as Quotes } from 'assets/images/testimonials/quote.svg';
 import { ReactComponent as CSMinxWinks } from 'assets/images/home/cs-minx-winks.svg';
 import { ReactComponent as FeatureIconRealEstate } from 'assets/icons/icon-real-estate.svg';
@@ -23,19 +22,16 @@ import { ReactComponent as SyncedOrManual } from 'assets/images/home/synced-or-m
 import { ReactComponent as FeatureIconFour } from 'assets/images/home/feature-icon4.svg';
 import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-icon3.svg';
 import { ReactComponent as HomeNetWorthChart } from 'assets/images/home/home-networth.svg';
-import { ReactComponent as HomeEarlyAdapter } from 'assets/images/home/early-adopter-icon.svg';
 import { ReactComponent as HomeMulticurrency } from 'assets/images/features/multicurrency.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
 import { ReactComponent as InvestmentsAndCryptos} from 'assets/images/home/investment-assets-cryptos.svg';
 import { ReactComponent as HomeTransactionHistory } from 'assets/images/features/transaction-history.svg';
-
 
 const Home = () => {
   return (
     <WebsiteLayout>
       <div className='mm-new-container'>
         <HomeTopSection />
-        {/*<HomeEarlyAdopterSection />*/}
         <HomeTestimonials />
         <HomeNetWorthSection />
         <HomeAllocationSection />
@@ -57,10 +53,9 @@ export const HomeTopSection = () => {
       <div className='row'>
         <div className='col-xl-7'>
           <div className='mm-home-left-banner'>
-            <h1>The easiest way to track all of your investments, in one place</h1>
+            <h1>Take your investing to the next level.</h1>
             <p className='text'>
-              Track your stocks, bonds, mutual funds, alternatives and much more all in one simple, accessible
-              dashboard.
+              Track your net worth and investment portfolio in one place with technology built for the diversified investor.
             </p>
             <Link to={appRouteConstants.auth.SIGNUP}>
               <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
@@ -84,48 +79,7 @@ export const HomeTopSection = () => {
     </section>
   );
 };
-export const HomeEarlyAdopterSection = () => {
-  return (
-    <section>
-      <div className=''>
-        <div className='adopter-top-wrap'>
-          <h3>Early Adopter Perks</h3>
-          <p>
-            Money Minx early adopters get these awesome perks. <br /> Only available while we are in Beta.
-          </p>
-        </div>
-        <div className='row'>
-          <div className='col-12 col-xl-4 my-3'>
-            <div className='adopter-content h-100'>
-              <h3>25% Discount on all plans</h3>
-              <p>Get 25% off for the life of your account even after we go live!</p>
-            </div>
-          </div>
-          <div className='col-12 col-xl-4 my-3'>
-            <div className='adopter-content h-100'>
-              <div className='early-adopter-tag'>
-                <span>
-                  <HomeEarlyAdapter />
-                </span>
-              </div>
-              <h3>Early Adopter profile badge</h3>
-              <p>
-                Get an early adopter badge that will go up in the community once we go live. This badge will never be
-                available again.
-              </p>
-            </div>
-          </div>
-          <div className='col-12 col-xl-4 my-3'>
-            <div className='adopter-content h-100'>
-              <h3>Get insights before anyone else</h3>
-              <p>Know about new features before others and help us drive the development of new features.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
+
 export const HomeTestimonials = () => {
   return (
     <section className='testimonial'>
@@ -163,35 +117,28 @@ export const HomeTestimonials = () => {
 };
 export const HomeNetWorthSection = () => {
   return (
-    <section>
-      <div className='mm-networth-section-overview'>
-        <p>
-          <span className='highlighted-text'>A FEW of our many features</span>
-        </p>
+    <section className='feature-section feature-text-left'>
+      <span className='highlighted-text p-b-9'>A few of our many features</span>
         <div className='row'>
-          <div className='col-12 col-xl-5'>
-            <div className='networth-text'>
-              <a href='/features/net-worth' className='feature-links'><h2>Net Worth</h2></a>
-              <p className='text'>
+          <div className='col-lg-5 feature-content'>
+              <a href='/features/net-worth'>
+                <h2>Net Worth</h2>
+              </a>
+              <p>
                 Easy to use dashboard of your investments, assets, liabilities and net worth from all of your accounts,
                 all in one modern, easy-to-use place.
               </p>
             </div>
-          </div>
-          <div className='col-12 col-xl-7'>
-            <div className='mm-networth-chart'>
+          <div className='col-lg-7 feature-image'>
               <HomeNetWorthChart />
-            </div>
           </div>
-        </div>
       </div>
     </section>
   );
 };
 export const HomeAllocationSection = () => {
   return (
-    <section>
-      <div className='feature-section feature-section-reversed'>
+    <section className='feature-section feature-section-reversed'>
         <div className='row'>
           <div className='col-lg-7 feature-image'>
             <HomeAllocationChart />
@@ -207,44 +154,40 @@ export const HomeAllocationSection = () => {
             </p>
           </div>
         </div>
-      </div>
     </section>
   );
 };
 export const HomeMulticurrencySection = () => {
   return (
-    <section>
-      <div className='mm-home-performance-section networth-section'>
+    <section className='feature-section feature-text-left'>
         <div className='row'>
-          <div className='col-xl-5'>
-            <div className='networth-text'>
-              <a href='/features/multicurrency' className='feature-links'><h2>Multicurrency</h2></a>
-              <p className='text'>
-                Money Minx is built with the international investor in mind. Choose a home base currency, convert and view your accounts in any currency.
-              </p>
-            </div>
+          <div className='col-lg-5 feature-content'>
+            <a href='/features/multicurrency'>
+              <h2>Multicurrency</h2>
+            </a>
+            <p>
+              Money Minx is built with the international investor in mind. Choose a home base currency, convert and view your accounts in any currency.
+            </p>
           </div>
-          <div className='col-xl-7'>
-            <div className='mm-home-performance-section-chart'>
-              <HomeMulticurrency />
-            </div>
+          <div className='col-lg-7 feature-image'>
+            <HomeMulticurrency />
           </div>
         </div>
-      </div>
     </section>
   );
 };
 export const HomeCryptosSection = () => {
   return (
-    <section>
-      <div className='feature-section feature-section-reversed'>
+    <section className='feature-section feature-section-reversed'>
         <div className='row'>
           <div className='col-lg-7 feature-image'>
             <InvestmentsAndCryptos className='mm-custom-networth-chart' />
           </div>
           <div className='col-lg-5 feature-content'>
               <a href='/features/cryptos'>
-                <h2>Investments, Assets & Cryptos</h2>
+                <h2>Investments, Assets & Cryptos
+                  <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
+                </h2>
               </a>
               <p>
                 Track your stocks, bonds, mutual funds, ETFS, crypto wallets and more all in one place.
@@ -252,34 +195,26 @@ export const HomeCryptosSection = () => {
               </p>
           </div>
         </div>
-      </div>
     </section>
   );
 };
 export const HomeSyncedManualSection = () => {
   return (
-    <section>
-      <div className='mm-measure-section networth-section'>
+    <section className='feature-section feature-text-left'>
         <div className='row'>
-          <div className='col-lg-5'>
-            <div className='networth-text'>
-              <a href='/features/synced-and-manual' className='feature-links'><h2>Synced or Manual Accounts</h2></a>
-              <p className='text'>
-                You can sync your accounts or manually update them if you prefer.
-                Manual accounts are a great way to track non-traditional investments, like comic books, art, rare legos and more.
-              </p>
-            </div>
+          <div className='col-lg-5 feature-content'>
+            <a href='/features/synced-and-manual'>
+              <h2>Synced or Manual Accounts</h2>
+            </a>
+            <p className='text'>
+              You can sync your accounts or manually update them if you prefer.
+              Manual accounts are a great way to track non-traditional investments, like comic books, art, rare legos and more.
+            </p>
           </div>
-          <div className='col-lg-7'>
-            <div className='mm-networth-chart'>
-              <SyncedOrManual />
-            </div>
+          <div className='col-lg-7 feature-image'>
+            <SyncedOrManual />
           </div>
-          {/*<div className='home-coming-soon'>
-            <span className='highlighted-text'>And Much More Coming Soon!</span>
-          </div>*/}
         </div>
-      </div>
     </section>
   );
 };

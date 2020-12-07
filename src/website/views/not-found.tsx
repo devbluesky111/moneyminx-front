@@ -1,4 +1,5 @@
 import React from 'react';
+
 import WebsiteLayout from 'website/website.layout';
 import { ReactComponent as NotFoundImage } from 'assets/images/notfound.svg';
 

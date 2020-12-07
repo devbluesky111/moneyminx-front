@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import useSize from 'common/hooks/useSize';
 import { Link, useLocation } from 'react-router-dom';
+
+import useSize from 'common/hooks/useSize';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { ReactComponent as Beta } from 'assets/icons/beta.svg';
 import { ReactComponent as MoneyMinxLogoMobile } from 'assets/icons/money-minx-logo-mobile.svg';

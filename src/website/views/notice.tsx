@@ -1,4 +1,5 @@
 import React from 'react';
+
 import noticeData from '@mm/data/notice.json';
 import WebsiteLayout from 'website/website.layout';
 
