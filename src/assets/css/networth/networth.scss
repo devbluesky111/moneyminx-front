@@ -784,7 +784,7 @@ a.upgrader-btn {
   &:active {
     background: none !important;
     box-shadow: none !important;
-    color: $darkGray;
+    color: $darkGray !important;
   }
   &:hover,
   &:active {
