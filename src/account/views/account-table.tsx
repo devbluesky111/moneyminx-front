@@ -74,7 +74,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
                   </thead>
                   <tbody>
                     {holdings?.length > 0 && holdings.map((item, index) => (
-                      <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>
+                      <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }} onClick={() => openPosition(item.id)} >
                         <td>{item.description}</td>
                         <td className='hide-type'>{item.price ? getCurrencySymbol(item.costBasisCurrency) : ''}{item.price}</td>
                         <td >{item.quantity}</td>
@@ -83,7 +83,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
                         {item.intervalValues.map((ins: any, i: number) => (
                           <td key={i} className={[ins.type === `projection` && `projection`, gc(ins.interval)].join(' ')}>
                             <span className={gc(ins.interval)}>{ins.interval}</span>{ins.value ? getCurrencySymbol(item.costBasisCurrency) : ''}{numberWithCommas(fNumber(ins.value, 2))}
-                            {(editIndex === index && i === (item.intervalValues.length - 1)) ? <Edited className='edited-icon' onClick={() => openPosition(item.id)} /> : <></>}
+                            {(editIndex === index && i === (item.intervalValues.length - 1)) ? <Edited className='edited-icon' /> : <></>}
                           </td>
                         ))}
                       </tr>

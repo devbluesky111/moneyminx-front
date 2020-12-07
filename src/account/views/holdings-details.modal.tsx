@@ -74,6 +74,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
     const fetchHoldingTypes = async () => {
         const { data, error } = await getHoldingTypes();
         if (!error) {
+            console.log(data);
             setHoldingTypes(data);
         }
     }
@@ -116,6 +117,15 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
     } else {
         const cYear = new Date().getFullYear();
         yearsArr = [(cYear - 2).toString(), (cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()];
+    }
+
+    const foramtHoldingType = (str: string) => {
+        if (['CD', 'ETF', 'ETN'].includes(str)) {
+            return str;
+        }
+        const newStr = str[0].toUpperCase() + str.slice(1);
+        const strArr = newStr.split(/(?=[A-Z])/);
+        return strArr?.join(' ');
     }
 
     return (
@@ -378,7 +388,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Holding Type
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.holdingType}
+                                                                    {foramtHoldingType(values.holdingType)}
                                                                 </div>
                                                             </div>
                                                         }
@@ -863,7 +873,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     >
                                                                         <option value=''> Select Type</option>
                                                                         {holdingTypes.map((item, index) => (
-                                                                            <option key={index} value={item}>{item}</option>
+                                                                            <option key={index} value={item}>{foramtHoldingType(item)}</option>
                                                                         ))}
                                                                     </Form.Control>
                                                                 </div>
