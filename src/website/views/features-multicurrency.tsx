@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import WebsiteLayout from 'website/website.layout';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
@@ -103,21 +104,19 @@ export const FeaturesMulticurrencyTopSection = () => {
 
 export const FeaturesMulticurrencyBottomSection = () => {
   return (
-    <div className='row'>
-      <div className='col-xl-5'>
-        <div className='networth-text'>
+    <section className='feature-section feature-section-reversed'>
+      <div className='row'>
+        <div className='col-lg-7 feature-image'>
+          <AboutNetWorthChart className='mm-about-net-worth-chart' />
+        </div>
+        <div className='col-lg-5 feature-content'>
           <h2>Home Currency</h2>
-          <p className='text'>
+          <p>
             Once your accounts are added we will keep them in sync so you will always know what your current net worth is,
             You can also keep an eye on your historical net worth and see it grow with time.
           </p>
         </div>
       </div>
-      <div className='col-xl-7'>
-        <div className='mm-networth-chart text-center'>
-          <AboutNetWorthChart className='mm-about-net-worth-chart' />
-        </div>
-      </div>
-    </div>
+    </section>
   );
 };
