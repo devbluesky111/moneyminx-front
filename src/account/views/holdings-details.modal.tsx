@@ -27,7 +27,7 @@ const DisabledInput: React.FC = () => {
                 type='number'
                 disabled
             />
-            <span className='input-add-on'>%</span>
+            <span className='input-add-on'>$</span>
         </div>
     )
 }
@@ -74,7 +74,6 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
     const fetchHoldingTypes = async () => {
         const { data, error } = await getHoldingTypes();
         if (!error) {
-            console.log(data);
             setHoldingTypes(data);
         }
     }
@@ -130,7 +129,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                 cusipNumber: holdingsDetails?.cusipNumber || '',
                 isin: holdingsDetails?.isin || '',
                 sedol: holdingsDetails?.sedol || '',
-                isShort: holdingsDetails?.isShort || true,
+                isShort: holdingsDetails?.isShort || false,
                 unvestedQuantity: holdingsDetails?.unvestedQuantity || 0,
                 unvestedValue: holdingsDetails?.unvestedValue || 0,
                 unvestedValueCurrency: holdingsDetails?.unvestedValueCurrency || CurrencyOptions.USD,
@@ -1218,6 +1217,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                         name='isShort'
                                                                         checked={values.isShort === true}
                                                                         aria-checked={!!values.isShort}
+                                                                        className='mr-1'
                                                                     />
                                                                     <label className='mr-3'>Yes</label>
                                                                     <input
@@ -1226,6 +1226,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                         name='isShort'
                                                                         checked={values.isShort === false}
                                                                         aria-checked={!!values.isShort}
+                                                                        className='mr-1'
                                                                     />
                                                                     <label>No</label>
                                                                 </div>
@@ -1546,7 +1547,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Jan ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1556,7 +1557,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1577,7 +1578,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Feb ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1587,7 +1588,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1608,7 +1609,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Mar ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1618,7 +1619,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1639,7 +1640,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Apr ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1649,7 +1650,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1670,7 +1671,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`May ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1680,7 +1681,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1701,7 +1702,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Jun ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1711,7 +1712,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1742,7 +1743,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Jul ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1752,7 +1753,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1773,7 +1774,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Aug ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1783,7 +1784,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1804,7 +1805,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Sep ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1814,7 +1815,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1835,7 +1836,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Oct ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1845,7 +1846,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1866,7 +1867,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Nov ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1876,7 +1877,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1897,7 +1898,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                             id={`Dec ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>%</span>
+                                                                                        <span className='input-add-on'>$</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1907,7 +1908,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>%</span>
+                                                                                    <span className='input-add-on'>$</span>
                                                                                 </div>
                                                                             ) : (
                                                                                         <DisabledInput />
@@ -1919,11 +1920,11 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         }
                                                     </Tab>
                                                 ))}
-
+                                                <Tab title=''></Tab>
                                             </Tabs>
                                         </Tab>
-                                        <Tab eventKey='classifications' title='Classifications' className='monthly-values-sub-tabs'>
-                                            <Tabs defaultActiveKey='type' id='mothly-value-sub-tab' className='mt-3'>
+                                        <Tab eventKey='classifications' title='Classifications' className='classifications-sub-tabs'>
+                                            <Tabs defaultActiveKey='type' id='classifications-sub-tab' className='mt-3'>
                                                 <Tab eventKey='type' title='Type'>
                                                     <div className='row mt-4'>
                                                         <div className='col-sm'>
@@ -2124,6 +2125,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         </div>
                                                     </div>
                                                 </Tab>
+                                                <Tab title=''></Tab>
                                             </Tabs>
                                         </Tab>
                                     </Tabs>
