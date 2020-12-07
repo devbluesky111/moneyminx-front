@@ -39,13 +39,33 @@ export interface CurrentSubscription {
 export interface AccountCardProps {
   accountList: Account[];
   availableAccounts: string | number;
+  reviewSubscriptionFlag?: boolean;
 }
 
 export interface ManualAccountProps {
   manualAccountList: Account[];
   availableAccounts: string | number;
+  reviewSubscriptionFlag?: boolean;
 }
 
 export interface AccountRowProps {
   account: Account;
+  reviewSubscriptionFlag?: boolean;
+}
+
+export interface AccountOverviewProps {
+  reviewSubscriptionFlag?: boolean;
+}
+
+export interface SubscriptionConnectionWarningProps {
+  availableConnectedAccounts: string | number;
+  availableManualAccounts: string | number;
+}
+
+export interface AccountDialogBoxProps {
+  availableConnectedAccounts: string | number;
+  availableManualAccounts: string | number;
+  manualAccountList: Account[];
+  accountList: Account[];
+  verifyAccountNumbers: (event: any) => void;
 }

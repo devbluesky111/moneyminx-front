@@ -173,7 +173,7 @@ export const LoginMainSection = () => {
                           autoAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
                           manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
                         ) {
-                          history.push(appRouteConstants.account.REMOVE_ACCOUNT);
+                          history.push(appRouteConstants.subscription.REVIEW);
                         } else if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
                         else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                       } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);

@@ -1,6 +1,6 @@
 .mm-account-overview {
   &__add-account {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.25rem;
 
     .upgrade-caption {
@@ -19,7 +19,7 @@
     border-left: 3px solid $yellow;
   }
 
-  &__peer-street {
+  &__connected {
     border-left: 3px solid $green;
   }
 
@@ -28,7 +28,7 @@
   }
 
   &__error-title,
-  &__peer-street-title,
+  &__connected-title,
   &__info-title {
     font-weight: $lighter;
     font-size: 0.875rem;
@@ -42,7 +42,7 @@
     color: $yellow;
   }
 
-  &__peer-street-title {
+  &__connected-title {
     color: $green;
   }
 

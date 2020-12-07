@@ -43,7 +43,7 @@ const StripeCheckoutSuccess = () => {
     const { data: { connectedAccounts, manualAccounts }} = await getAccountsCount();
     const { data: { details }} = await getSubscription({priceId})
     if(connectedAccounts >= details[pricingDetailConstant.CONNECTED_ACCOUNT] || manualAccounts >= details[pricingDetailConstant.MANUAL_ACCOUNT]) {
-      history.push(appRouteConstants.account.REMOVE_ACCOUNT)
+      history.push(appRouteConstants.subscription.REVIEW)
     }
     else history.push(appRouteConstants.networth.NET_WORTH);
   };
