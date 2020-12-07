@@ -377,7 +377,7 @@ const AccountDetail: React.FC = () => {
                 {AccountActivity && <ActivityTable transactions={AccountActivity?.transactions} />}
               </div>
             )}
-            {AccountDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} />}
+            {AccountDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} />}
           </div>
         )}
       {!loading && <AppFooter />}

@@ -47,6 +47,7 @@ export interface Account {
   isManual: boolean;
   balance: number;
   balancesFetchedAt: string;
+  currency: string;
 }
 
 export enum RoleEnum {
