@@ -48,6 +48,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
   const { accounts } = useAuthState();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
+  const [accountCategory, setAccountCategory] = useState<string>('');
 
   const { loading: fetchingAccountType, data: accountTypes, error } = useAccountType();
   const { subType: accountSubTypes, error: subTypeError } = useAccountSubtype(accountType);
@@ -143,7 +144,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
     <Formik
       initialValues={{
         currency: currentFormFields?.currency || CurrencyOptions.USD,
-        mmCategory: currentAccount?.category?.mmCategory || '',
+        mmCategory: accountCategory || currentAccount?.category?.mmCategory || '',
         accountName: currentAccount?.accountName || '',
         city: currentFormFields?.city || '',
         state: currentFormFields?.state || '',
@@ -249,7 +250,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         const { setFieldValue, values, handleChange, setValues } = props;
 
         const setCategory = (cat: string) => {
-          setFieldValue('mmCategory', cat);
+          return setAccountCategory(cat);
         };
 
         const handleAccountChange = (e: React.ChangeEvent<any>) => {

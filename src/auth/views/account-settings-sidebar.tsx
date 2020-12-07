@@ -11,7 +11,6 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
 
 import AccountSettingForm from './inc/account-setting-form';
-import { logger } from 'common/logger.helper';
 
 interface Props {
   setFinish?: () => void;
@@ -136,8 +135,6 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
 
     return '';
   };
-
-  logger.log('Current Account', currentAccount);
 
   return (
     <div className='bg-white credentials-wrapper account-setting'>
