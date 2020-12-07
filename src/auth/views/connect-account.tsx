@@ -1,9 +1,10 @@
-import Zabo from 'zabo-sdk-js';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
+import Zabo from 'zabo-sdk-js';
 import appEnv from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
+import { useAuthState } from 'auth/auth.context';
 import { useModal } from 'common/components/modal';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import useGetFastlink from 'auth/hooks/useGetFastlink';
@@ -32,9 +33,10 @@ const ConnectAccount = () => {
 };
 export default ConnectAccount;
 export const ConnectAccountMainSection = () => {
-  const manualAccountModal = useModal();
   const location = useLocation();
+  const manualAccountModal = useModal();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
+  const { onboarded } = useAuthState();
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -56,7 +58,7 @@ export const ConnectAccountMainSection = () => {
     zabo
       .connect()
       .onConnection((account: Record<string, string>) => {
-        // Todo Onconnection implementation
+        // Todo On Connection implementation
         // tslint:disable-next-line:no-console
         console.log('account connected:', account);
       })
@@ -81,8 +83,8 @@ export const ConnectAccountMainSection = () => {
   }
 
   const fastLinkOptions: FastLinkOptionsType = {
-    fastLinkURL: data?.fastLinkUrl || '',
-    token: data?.accessToken || '',
+    fastLinkURL: data.fastLinkUrl || '',
+    token: data.accessToken || '',
   };
 
   return (
@@ -153,7 +155,11 @@ export const ConnectAccountMainSection = () => {
                   If your financial institution is not support or if you want to track a non traditional asset or
                   liability you can add the details manually.
                 </p>
-                <button className='connect-account-btn btn-outline-primary mm-btn-animate' type='submit' onClick={() => manualAccountModal.open()}>
+                <button
+                  className='connect-account-btn btn-outline-primary mm-btn-animate'
+                  type='submit'
+                  onClick={() => manualAccountModal.open()}
+                >
                   Add Manual Account
                 </button>
                 <h2>
@@ -173,7 +179,7 @@ export const ConnectAccountMainSection = () => {
         </div>
       </div>
       <ManualAccountModal manualAccountModal={manualAccountModal} />
-      <ConnectAccountSteps isConnectAccount />
+      {!onboarded ? <ConnectAccountSteps isConnectAccount /> : null}
       <FastLinkModal
         fastLinkModal={fastlinkModal}
         fastLinkOptions={fastLinkOptions}
