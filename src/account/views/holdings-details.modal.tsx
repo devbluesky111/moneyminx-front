@@ -362,8 +362,13 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                             {holdingsDetails && !holdingsDetails?.isManual ?
                                                 <div className='row mt-4'>
                                                     <div className='col-sm'>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-1'>
+                                                            <div className='col-sm key mb-3'>
+                                                                General Details
+                                                            </div>
+                                                        </div>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Description
                                                                 </div>
                                                             <div className='col-sm'>
@@ -371,8 +376,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         </div>
                                                         {values.holdingType &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm key'>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
                                                                     Holding Type
                                                                 </div>
                                                                 <div className='col-sm'>
@@ -381,8 +386,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.securityType &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm key'>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
                                                                     Security Type
                                                                 </div>
                                                                 <div className='col-sm'>
@@ -391,8 +396,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.price &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm key'>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
                                                                     Price
                                                                 </div>
                                                                 <div className='col-sm'>
@@ -401,8 +406,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.priceCurrency &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm key'>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
                                                                     Price Currency
                                                                 </div>
                                                                 <div className='col-sm'>
@@ -411,8 +416,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.quantity &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm key'>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
                                                                     Quantity
                                                                 </div>
                                                                 <div className='col-sm'>
@@ -421,8 +426,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.symbol &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm key'>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
                                                                     Symbol
                                                                 </div>
                                                                 <div className='col-sm'>
@@ -430,8 +435,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Cost
                                                             </div>
                                                             <div className='col-sm '>
@@ -446,8 +451,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Cost Currency
                                                                 </div>
                                                             <div className='col-sm '>
@@ -465,190 +470,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className='col-sm'>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
-                                                                Options and Stock Options
-                                                            </div>
-                                                        </div>
-                                                        {(values.optionType !== 'unknown' && values.optionType) &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Option Type
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.optionType}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedQuantity !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Vested Quantity
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.vestedQuantity}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedSharesExercisable !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Vested Shared Exercisable
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.vestedSharesExercisable}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedValue !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Vested Value
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.vestedValue}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedValue !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Vested Currency
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.vestedValueCurrency}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.vestedDate &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Vested Date
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {moment(values.vestedDate).format('MM/DD/YYYY')}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.unvestedQuantity !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Unvested Quantity
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.unvestedQuantity}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.unvestedValue !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Unvested Value
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.unvestedValue}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.unvestedValue !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Unvested Currency
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.unvestedValueCurrency}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.exercisedQuantity !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Excercised Quantity
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.exercisedQuantity}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.expirationDate &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Expiration Date
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {moment(values.expirationDate).format('MM/DD/YYYY')}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.grantDate &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Grant Date
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {moment(values.grantDate).format('MM/DD/YYYY')}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.spread !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Spread
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.spread}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.spread !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Spread Currency
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.spreadCurrency}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.strikePrice !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Strike Price
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    ${values.strikePrice}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.strikePrice !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Strike Currency
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.strikePriceCurrency}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key mt-1'>
-                                                                Futures and Commodities
-                                                            </div>
-                                                        </div>
-                                                        {values.contractQuantity !== 0 &&
-                                                            <div className='row mt-2'>
-                                                                <div className='col-sm'>
-                                                                    Contract Quantity
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.contractQuantity}
-                                                                </div>
-                                                            </div>
-                                                        }
                                                         {values.cusipNumber &&
-                                                            <div className='row mt-2'>
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     CUSIP
                                                                 </div>
@@ -658,7 +481,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.isin &&
-                                                            <div className='row mt-2'>
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     ISIN
                                                                 </div>
@@ -668,7 +491,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.sedol &&
-                                                            <div className='row mt-2'>
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     SEDOL
                                                                 </div>
@@ -678,7 +501,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.isShort &&
-                                                            <div className='row mt-2'>
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Short?
                                                                 </div>
@@ -689,13 +512,195 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         }
                                                     </div>
                                                     <div className='col-sm'>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-1'>
+                                                            <div className='col-sm key mb-3'>
+                                                                Options and Stock Options
+                                                            </div>
+                                                        </div>
+                                                        {(values.optionType !== 'unknown' && values.optionType) &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Option Type
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.optionType}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.vestedQuantity &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Vested Quantity
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.vestedQuantity}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.vestedSharesExercisable &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Vested Shared Exercisable
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.vestedSharesExercisable}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.vestedValue &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Vested Value
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.vestedValue}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.vestedValue &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Vested Currency
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.vestedValueCurrency}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.vestedDate &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Vested Date
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {moment(values.vestedDate).format('MM/DD/YYYY')}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.unvestedQuantity &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Unvested Quantity
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.unvestedQuantity}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.unvestedValue &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Unvested Value
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.unvestedValue}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.unvestedValue &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Unvested Currency
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.unvestedValueCurrency}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.exercisedQuantity &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Excercised Quantity
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.exercisedQuantity}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.expirationDate &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Expiration Date
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {moment(values.expirationDate).format('MM/DD/YYYY')}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.grantDate &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Grant Date
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {moment(values.grantDate).format('MM/DD/YYYY')}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.spread &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Spread
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.spread}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.spread &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Spread Currency
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.spreadCurrency}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.strikePrice &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Strike Price
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    ${values.strikePrice}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        {values.strikePrice &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Strike Currency
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.strikePriceCurrency}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        <div className='row mt-5'>
+                                                            <div className='col-sm key mb-3'>
+                                                                Futures and Commodities
+                                                            </div>
+                                                        </div>
+                                                        {values.contractQuantity &&
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Contract Quantity
+                                                                </div>
+                                                                <div className='col-sm'>
+                                                                    {values.contractQuantity}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <div className='col-sm'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm key'>
                                                                 CDs, Bonds and Loans
                                                             </div>
                                                         </div>
-                                                        {values.couponRate !== 0 &&
-                                                            <div className='row mt-2'>
+                                                        {values.couponRate &&
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Coupon
                                                                 </div>
@@ -704,8 +709,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.interestRate !== 0 &&
-                                                            <div className='row mt-2'>
+                                                        {values.interestRate &&
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Interest Rate
                                                                 </div>
@@ -715,7 +720,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             </div>
                                                         }
                                                         {values.maturityDate &&
-                                                            <div className='row mt-2'>
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Maturity Date
                                                                 </div>
@@ -724,8 +729,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.term !== 0 &&
-                                                            <div className='row mt-2'>
+                                                        {values.term &&
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Term
                                                                 </div>
@@ -734,8 +739,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.accruedInterest !== 0 &&
-                                                            <div className='row mt-2'>
+                                                        {values.accruedInterest &&
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Accrued Interest
                                                                 </div>
@@ -744,8 +749,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.accruedInterest !== 0 &&
-                                                            <div className='row mt-2'>
+                                                        {values.accruedInterest &&
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Interest Currency
                                                                 </div>
@@ -754,8 +759,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.accruedIncome !== 0 &&
-                                                            <div className='row mt-2'>
+                                                        {values.accruedIncome &&
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Accrued Income
                                                                 </div>
@@ -764,8 +769,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         }
-                                                        {values.accruedIncome !== 0 &&
-                                                            <div className='row mt-2'>
+                                                        {values.accruedIncome &&
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Income Currency
                                                                 </div>
@@ -778,8 +783,13 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                 </div> :
                                                 <div className='row mt-4'>
                                                     <div className='col-sm'>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-1'>
+                                                            <div className='col-sm key mb-3'>
+                                                                General Details
+                                                            </div>
+                                                        </div>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Description
                                                             </div>
                                                             <div className='col-sm'>
@@ -792,8 +802,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Holding Type
                                                                 </div>
                                                             <div className='col-sm'>
@@ -812,8 +822,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Price
                                                                 </div>
                                                             <div className='col-sm'>
@@ -828,8 +838,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Price Currency
                                                                 </div>
                                                             <div className='col-sm'>
@@ -847,8 +857,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Quantity
                                                                 </div>
                                                             <div className='col-sm'>
@@ -862,8 +872,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Cost
                                                             </div>
                                                             <div className='col-sm '>
@@ -878,8 +888,8 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
                                                                 Cost Currency
                                                                 </div>
                                                             <div className='col-sm '>
@@ -897,15 +907,56 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
+                                                                CUSIP
+                                                                </div>
+                                                            <div className='col-sm'>
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        name='cusipNumber'
+                                                                        value={values.cusipNumber}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
+                                                                ISIN
+                                                                </div>
+                                                            <div className='col-sm'>
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        name='isin'
+                                                                        value={values.isin}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm'>
+                                                                SEDOL
+                                                                </div>
+                                                            <div className='col-sm'>
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        name='sedol'
+                                                                        value={values.sedol}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div className='col-sm'>
-
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key'>
+                                                        <div className='row mt-1'>
+                                                            <div className='col-sm key mb-3'>
                                                                 Options and Stock Options
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Option Type
                                                             </div>
@@ -925,7 +976,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Vested Quantity
                                                                 </div>
@@ -940,7 +991,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Vested Shared Exercisable
                                                                 </div>
@@ -955,7 +1006,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Vested Value
                                                                 </div>
@@ -970,7 +1021,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Vested Currency
                                                                 </div>
@@ -989,7 +1040,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Vested Date
                                                                 </div>
@@ -1005,7 +1056,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Unvested Quantity
                                                                 </div>
@@ -1020,7 +1071,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Unvested Value
                                                                 </div>
@@ -1035,7 +1086,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Unvested Currency
                                                                 </div>
@@ -1054,7 +1105,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Excercised Quantity
                                                                 </div>
@@ -1069,7 +1120,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Expiration Date
                                                                 </div>
@@ -1083,7 +1134,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Grant Date
                                                                 </div>
@@ -1097,7 +1148,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Strike Price
                                                                 </div>
@@ -1113,7 +1164,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Strike Currency
                                                                 </div>
@@ -1132,12 +1183,12 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
-                                                            <div className='col-sm key mt-1'>
+                                                        <div className='row mt-5'>
+                                                            <div className='col-sm key mb-3'>
                                                                 Futures and Commodities
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Contract Quantity
                                                                 </div>
@@ -1152,7 +1203,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Short?
                                                                 </div>
@@ -1181,12 +1232,12 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                         </div>
                                                     </div>
                                                     <div className='col-sm'>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm key'>
                                                                 CDs, Bonds and Loans
                                                                 </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Coupon
                                                                 </div>
@@ -1201,7 +1252,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Interest Rate
                                                                 </div>
@@ -1217,7 +1268,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Maturity Date
                                                                 </div>
@@ -1231,7 +1282,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className='row mt-2'>
+                                                        <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Term
                                                                 </div>
