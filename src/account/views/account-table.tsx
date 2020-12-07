@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { getCurrencySymbol } from 'common/currency-helper';
-import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
+import { gc } from 'common/interval-parser';
 import { getHoldingsDetails } from 'api/request.api';
 import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
 import { useModal } from 'common/components/modal';
@@ -22,19 +22,6 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
   React.useEffect(() => {
     setHoldings(props.holdings);
   }, [props]);
-
-  const isCurrent = (interval: string) =>
-    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
-
-  const gc = (interval: string) => {
-    if (interval) {
-      if (isCurrent(interval)) {
-        return 'current-m';
-      }
-    }
-    // return 'tab-hide';
-    return '';
-  };
 
   const fetchHolingsDetails = async (positionId: string) => {
     const { data, error } = await getHoldingsDetails(positionId);

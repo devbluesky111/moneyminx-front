@@ -5,9 +5,9 @@ import { Tabs, Tab, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 import { CurrencyOptions } from 'auth/enum/currency-options';
-import { enumerateStr, getUnique } from 'common/common-helper';
+import { enumerateStr, formater, getUnique } from 'common/common-helper';
 import { Formik } from 'formik';
-import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
+import { gc } from 'common/interval-parser';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
 import { Modal, ModalType } from 'common/components/modal';
 
@@ -96,19 +96,6 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
         setYears(unique_years);
 
     }, [holdingsDetails]);
-
-    const isCurrent = (interval: string) =>
-        getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
-
-    const gc = (interval: string) => {
-        if (interval) {
-            if (isCurrent(interval)) {
-                return 'current-m';
-            }
-        }
-        // return 'tab-hide';
-        return '';
-    };
 
     // new position
     let yearsArr: any[] = [];
@@ -398,7 +385,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     Security Type
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.securityType}
+                                                                    {formater(values.securityType)}
                                                                 </div>
                                                             </div>
                                                         }

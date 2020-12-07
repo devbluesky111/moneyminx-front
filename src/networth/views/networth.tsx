@@ -1,23 +1,23 @@
-import { Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
+import { Table } from 'react-bootstrap';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
+import BlurChart from 'assets/images/networth/chart-blur.png';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import MeasureIcon from 'assets/images/networth/measure.svg';
+import NetworthLayout from 'networth/networth.layout';
+import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
 import useProfile from 'auth/hooks/useProfile';
+import useNetworth from 'networth/hooks/useNetworth';
+import { AccountCategory } from 'networth/networth.enum';
+import { appRouteConstants } from 'app/app-route.constant';
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import { isCurrent, gc } from 'common/interval-parser';
+import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
 import { useAuthState } from 'auth/auth.context';
 import { useAlert } from 'common/components/alert';
 import { useModal } from 'common/components/modal';
-import useNetworth from 'networth/hooks/useNetworth';
-import NetworthLayout from 'networth/networth.layout';
-import { AccountCategory } from 'networth/networth.enum';
-import { appRouteConstants } from 'app/app-route.constant';
-import MeasureIcon from 'assets/images/networth/measure.svg';
-import BlurChart from 'assets/images/networth/chart-blur.png';
-import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
-import { fNumber, numberWithCommas } from 'common/number.helper';
-import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
-import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
 
 import NetworthHead from './inc/networth-head';
 import NetworthFilter from './inc/networth-filter';
@@ -75,21 +75,8 @@ const Networth = () => {
     setCounter((c) => c + 1);
   };
 
-  const isCurrent = (interval: string) =>
-    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
-
   const gotoConnectAccount = () => {
     return history.push(`${appRouteConstants.auth.CONNECT_ACCOUNT}?action=addMoreAccount`);
-  };
-
-  const gc = (interval: string) => {
-    if (interval) {
-      if (isCurrent(interval)) {
-        return 'current-m';
-      }
-    }
-
-    return '';
   };
 
   const [curNetworthItem] = networth.filter((networthItem) => isCurrent(networthItem.interval));
