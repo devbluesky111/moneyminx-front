@@ -121,46 +121,46 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
             initialValues={{
                 holdingType: holdingsDetails?.holdingType || '',
                 securityType: holdingsDetails?.securityType || '',
-                value: holdingsDetails?.value || 0,
-                price: holdingsDetails?.price || 0,
+                value: holdingsDetails?.value || null,
+                price: holdingsDetails?.price || null,
                 priceCurrency: holdingsDetails?.priceCurrency || CurrencyOptions.USD,
                 symbol: holdingsDetails?.symbol || '',
-                quantity: holdingsDetails?.quantity || 0,
-                costBasis: holdingsDetails?.costBasis || 0,
+                quantity: holdingsDetails?.quantity || null,
+                costBasis: holdingsDetails?.costBasis || null,
                 costBasisCurrency: holdingsDetails?.costBasisCurrency || CurrencyOptions.USD,
                 cusipNumber: holdingsDetails?.cusipNumber || '',
                 isin: holdingsDetails?.isin || '',
                 sedol: holdingsDetails?.sedol || '',
                 isShort: holdingsDetails?.isShort || false,
-                unvestedQuantity: holdingsDetails?.unvestedQuantity || 0,
-                unvestedValue: holdingsDetails?.unvestedValue || 0,
+                unvestedQuantity: holdingsDetails?.unvestedQuantity || null,
+                unvestedValue: holdingsDetails?.unvestedValue || null,
                 unvestedValueCurrency: holdingsDetails?.unvestedValueCurrency || CurrencyOptions.USD,
-                vestedQuantity: holdingsDetails?.vestedQuantity || 0,
-                vestedSharesExercisable: holdingsDetails?.vestedSharesExercisable || 0,
-                vestedValue: holdingsDetails?.vestedValue || 0,
+                vestedQuantity: holdingsDetails?.vestedQuantity || null,
+                vestedSharesExercisable: holdingsDetails?.vestedSharesExercisable || null,
+                vestedValue: holdingsDetails?.vestedValue || null,
                 vestedValueCurrency: holdingsDetails?.vestedValueCurrency || CurrencyOptions.USD,
                 vestedDate:
-                    holdingsDetails && holdingsDetails.vestedDate ? new Date(holdingsDetails.vestedDate) : new Date(),
-                contractQuantity: holdingsDetails?.contractQuantity || 0,
-                couponRate: holdingsDetails?.couponRate || 0,
-                exercisedQuantity: holdingsDetails?.exercisedQuantity || 0,
+                    holdingsDetails && holdingsDetails.vestedDate ? new Date(holdingsDetails.vestedDate) : null,
+                contractQuantity: holdingsDetails?.contractQuantity || null,
+                couponRate: holdingsDetails?.couponRate || null,
+                exercisedQuantity: holdingsDetails?.exercisedQuantity || null,
                 expirationDate:
-                    holdingsDetails && holdingsDetails.expirationDate ? new Date(holdingsDetails.expirationDate) : new Date(),
+                    holdingsDetails && holdingsDetails.expirationDate ? new Date(holdingsDetails.expirationDate) : null,
                 grantDate:
-                    holdingsDetails && holdingsDetails.grantDate ? new Date(holdingsDetails.grantDate) : new Date(),
-                interestRate: holdingsDetails?.interestRate || 0,
+                    holdingsDetails && holdingsDetails.grantDate ? new Date(holdingsDetails.grantDate) : null,
+                interestRate: holdingsDetails?.interestRate || null,
                 maturityDate:
-                    holdingsDetails && holdingsDetails.maturityDate ? new Date(holdingsDetails.maturityDate) : new Date(),
+                    holdingsDetails && holdingsDetails.maturityDate ? new Date(holdingsDetails.maturityDate) : null,
                 optionType: holdingsDetails?.optionType || '',
-                spread: holdingsDetails?.spread || 0,
+                spread: holdingsDetails?.spread || null,
                 spreadCurrency: holdingsDetails?.spreadCurrency || CurrencyOptions.USD,
-                strikePrice: holdingsDetails?.strikePrice || 0,
+                strikePrice: holdingsDetails?.strikePrice || null,
                 strikePriceCurrency: holdingsDetails?.strikePriceCurrency || CurrencyOptions.USD,
                 term: holdingsDetails?.term || '',
                 matchStatus: holdingsDetails?.matchStatus || '',
-                accruedInterest: holdingsDetails?.accruedInterest || 0,
+                accruedInterest: holdingsDetails?.accruedInterest || null,
                 accruedInterestCurrency: holdingsDetails?.accruedInterestCurrency || CurrencyOptions.USD,
-                accruedIncome: holdingsDetails?.accruedIncome || 0,
+                accruedIncome: holdingsDetails?.accruedIncome || null,
                 accruedIncomeCurrency: holdingsDetails?.accruedIncomeCurrency || CurrencyOptions.USD,
                 description: holdingsDetails?.description || '',
                 originalClassifications: holdingsDetails?.classifications || {
@@ -997,7 +997,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                 <div className='form-field-group'>
                                                                     <ReactDatePicker
                                                                         name='vestedDate'
-                                                                        selected={new Date(values.vestedDate)}
+                                                                        selected={values.vestedDate ? new Date(values.vestedDate) : null}
                                                                         onChange={(val: Date) => {
                                                                             setFieldValue('vestedDate', moment(val).toISOString());
                                                                         }}
@@ -1076,7 +1076,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             <div className='col-sm'>
                                                                 <ReactDatePicker
                                                                     name='expirationDate'
-                                                                    selected={new Date(values.expirationDate)}
+                                                                    selected={values.expirationDate ? new Date(values.expirationDate) : null}
                                                                     onChange={(val: Date) => {
                                                                         setFieldValue('expirationDate', moment(val).toISOString());
                                                                     }}
@@ -1090,7 +1090,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             <div className='col-sm'>
                                                                 <ReactDatePicker
                                                                     name='grantDate'
-                                                                    selected={new Date(values.grantDate)}
+                                                                    selected={values.grantDate ? new Date(values.grantDate) : null}
                                                                     onChange={(val: Date) => {
                                                                         setFieldValue('grantDate', moment(val).toISOString());
                                                                     }}
@@ -1224,7 +1224,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                             <div className='col-sm'>
                                                                 <ReactDatePicker
                                                                     name='maturityDate'
-                                                                    selected={new Date(values.maturityDate)}
+                                                                    selected={values.maturityDate ? new Date(values.maturityDate) : null}
                                                                     onChange={(val: Date) => {
                                                                         setFieldValue('maturityDate', moment(val).toISOString());
                                                                     }}
