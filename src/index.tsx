@@ -1,14 +1,14 @@
 import React from 'react';
-import App from './app/app';
-import ReactDOM from 'react-dom';
-import * as serviceWorker from './serviceWorker';
 import ReactGA from 'react-ga';
+import ReactDOM from 'react-dom';
+
+import env from 'app/app.env';
+
+import App from './app/app';
+import * as serviceWorker from './serviceWorker';
 
 ReactGA.initialize(
-  [
-    { trackingId: 'UA-167185772-1', },
-    { trackingId: 'AW-609225226', }
-  ],
+  [{ trackingId: env.GOOGLE_ANALYTICS_TRACKING_ID_1 }, { trackingId: env.GOOGLE_ANALYTICS_TRACKING_ID_2 }],
   { debug: true }
 );
 
