@@ -1,4 +1,5 @@
 import React from 'react';
+
 import termData from '@mm/data/terms.json';
 import WebsiteLayout from 'website/website.layout';
 

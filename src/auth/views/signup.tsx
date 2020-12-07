@@ -1,10 +1,11 @@
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import FacebookLogin from 'react-facebook-login';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+
 import env from 'app/app.env';
 import { Formik } from 'formik';
-import { toast } from 'react-toastify';
 import queryString from 'query-string';
-import React, { useState } from 'react';
-import FacebookLogin from 'react-facebook-login';
-
 import { AuthLayout } from 'layouts/auth.layout';
 import validation from 'lang/en/validation.json';
 import { useModal } from 'common/components/modal';
@@ -13,7 +14,6 @@ import { postFacebookLogin } from 'api/request.api';
 import { StringKeyObject } from 'common/common.types';
 import { appRouteConstants } from 'app/app-route.constant';
 import { registerValidationSchema } from 'auth/auth.validation';
-import { Link, useHistory, useLocation } from 'react-router-dom';
 import { signup, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';

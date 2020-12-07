@@ -1,6 +1,6 @@
 import React from 'react';
-import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Area, ReferenceArea } from 'recharts';
 
+import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Area, ReferenceArea } from 'recharts';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { NetworthBarGraphProps } from 'networth/networth.type';
@@ -27,7 +27,7 @@ const CustomTooltip = (props: any) => {
               (
                 <>
                   <div className='item-name'>
-                    <div style={{ backgroundColor: item.color }}></div>
+                    <div style={{ backgroundColor: item.color }} />
                     {item.name === 'investmentAssets' &&
                       <span>Investment Assets</span>
                     }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { TokenType, YodleeHookType } from './yodlee.type';
 
 const useYodlee: YodleeHookType = ({
