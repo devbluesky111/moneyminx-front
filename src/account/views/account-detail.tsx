@@ -47,6 +47,7 @@ const AccountDetail: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [filterloading, setFilterLoading] = useState<boolean>(false);
   const [accSetting, setAccSetting] = useState<boolean>(false);
+  const [newPositonModalOpen, setNewPositonModalOpen] = useState<boolean>(false);
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
@@ -137,6 +138,11 @@ const AccountDetail: React.FC = () => {
   const closeSidebar = () => {
     setAccSetting(false);
     storage.clear('isNew');
+  }
+
+  const openNewPositonModal = () => {
+    setNewPositonModalOpen(true);
+    holdingsDetailsModal.open()
   }
 
   return (
@@ -348,7 +354,7 @@ const AccountDetail: React.FC = () => {
                 <div className='mm-radio-bg' />
               </div>
               {AccountDetails?.isManual && tableType === 'holdings' && (
-                <Button variant='primary' className='mb-4 mm-account__btn' onClick={() => holdingsDetailsModal.open()}>
+                <Button variant='primary' className='mb-4 mm-account__btn' onClick={openNewPositonModal}>
                   Add Position
                 </Button>
               )}
@@ -377,7 +383,7 @@ const AccountDetail: React.FC = () => {
                 {AccountActivity && <ActivityTable transactions={AccountActivity?.transactions} />}
               </div>
             )}
-            {AccountDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} />}
+            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} />}
           </div>
         )}
       {!loading && <AppFooter />}
