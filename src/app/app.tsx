@@ -1,12 +1,13 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
 
+import Main from 'app/main';
+import { AppProvider } from 'app/app.context';
 import { AuthProvider } from 'auth/auth.context';
-import 'assets/css/app.scss';
 
-import Main from './main';
-import { AppProvider } from './app.context';
+// tslint:disable-next-line: ordered-imports
+import 'assets/css/app.scss';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function App() {
   return (
