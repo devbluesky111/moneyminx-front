@@ -8,7 +8,7 @@ import App from './app/app';
 import * as serviceWorker from './serviceWorker';
 
 ReactGA.initialize(
-  [{ trackingId: env.GOOGLE_ANALYTICS_TRACKING_ID_1 }, { trackingId: env.GOOGLE_ANALYTICS_TRACKING_ID_2 }],
+  [{ trackingId: env.GOOGLE_ANALYTICS_TRACKING_ID }, { trackingId: env.GOOGLE_ADS_TRACKING_ID }],
   { debug: true }
 );
 
