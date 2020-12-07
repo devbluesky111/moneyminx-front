@@ -81,7 +81,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
    */
   useEffect(() => {
     if (currentAccount?.category?.mmAccountSubType) {
-      return setAccountSubtype(currentAccount?.category?.mmAccountSubType);
+      return setAccountSubtype(currentAccount.category.mmAccountSubType);
     }
   }, [currentAccount]);
 
@@ -187,6 +187,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         employerMatchContribution: currentFormFields?.employerMatchContribution || '',
         estimatedAnnualPrincipalReduction: currentFormFields?.estimatedAnnualPrincipalReduction || '',
       }}
+      enableReinitialize
       validationSchema={loginValidationSchema}
       onSubmit={async (values, actions) => {
         const mapping: StringKeyObject = {

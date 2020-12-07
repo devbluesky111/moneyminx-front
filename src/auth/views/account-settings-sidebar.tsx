@@ -11,6 +11,7 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
 
 import AccountSettingForm from './inc/account-setting-form';
+import { logger } from 'common/logger.helper';
 
 interface Props {
   setFinish?: () => void;
@@ -38,6 +39,12 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
     getUser();
   }, [dispatch, reloadCounter]);
 
+  /**
+   * if accounts
+   * accounts[0] for current account
+   * get completed provider names
+   * set current provider accounts
+   */
   useEffect(() => {
     if (accounts) {
       setCurrentAccount(accounts[0]);
@@ -129,6 +136,8 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
 
     return '';
   };
+
+  logger.log('Current Account', currentAccount);
 
   return (
     <div className='bg-white credentials-wrapper account-setting'>
@@ -259,6 +268,10 @@ export const AccountNameList: React.FC<AccountNameListProps> = ({
 
   const getAccountClass = (accId: number) => (currentAccount?.id === accId ? 'account-btn active' : 'account-btn');
   const completedClass = (accId: number) => (completedIds.includes(accId) ? 'completed' : '');
+
+  // if (!currentProviderAccounts.length) {
+  //   return <CircularSpinner />;
+  // }
 
   return (
     <ul className='nav'>
