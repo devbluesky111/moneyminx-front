@@ -266,10 +266,6 @@ export const AccountNameList: React.FC<AccountNameListProps> = ({
   const getAccountClass = (accId: number) => (currentAccount?.id === accId ? 'account-btn active' : 'account-btn');
   const completedClass = (accId: number) => (completedIds.includes(accId) ? 'completed' : '');
 
-  // if (!currentProviderAccounts.length) {
-  //   return <CircularSpinner />;
-  // }
-
   return (
     <ul className='nav'>
       {currentProviderAccounts.map((providerAccount, index) => {
