@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 
 import appEnv from 'app/app.env';
 import { Plan } from 'setting/setting.type';
-import { logger } from 'common/logger.helper';
 import { loadStripe } from '@stripe/stripe-js';
 import useAnalytics from 'common/hooks/useAnalytics';
 import { postSubscriptionCheckout } from 'api/request.api';
@@ -46,8 +45,6 @@ export const PlanOverview = () => {
 
   const changePlan = async (plan: Plan) => {
     const priceId = plan.priceId;
-
-    logger.log('plan', plan);
 
     if (!priceId) {
       return toast('Price Id not found', { type: 'error' });
