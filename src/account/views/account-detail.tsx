@@ -48,6 +48,7 @@ const AccountDetail: React.FC = () => {
   const [filterloading, setFilterLoading] = useState<boolean>(false);
   const [accSetting, setAccSetting] = useState<boolean>(false);
   const [newPositonModalOpen, setNewPositonModalOpen] = useState<boolean>(false);
+  const [editPositonModalOpen, setEditPositonModalOpen] = useState<boolean>(false);
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
@@ -63,7 +64,7 @@ const AccountDetail: React.FC = () => {
       if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
       if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
     }
-  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting]);
+  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen]);
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
@@ -364,7 +365,7 @@ const AccountDetail: React.FC = () => {
                 </Button>
               )}
             </div>
-            {AccountHoldings && tableType === 'holdings' && <AccountTable holdings={AccountHoldings?.holdings} />}
+            {AccountHoldings && tableType === 'holdings' && <AccountTable holdingsData={AccountHoldings?.holdings} openEditPositionModalFun={() => setEditPositonModalOpen(true)} closeEditPositionModalFun={() => setEditPositonModalOpen(false)} />}
 
             {tableType === 'activity' && (
               <div className='mm-account-activity-block'>
@@ -380,10 +381,10 @@ const AccountDetail: React.FC = () => {
                     <InfoIcon className='mt-n1 ml-2' />
                   </MMToolTip>
                 </div>
-                {AccountActivity && <ActivityTable transactions={AccountActivity?.transactions} />}
+                {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} />}
               </div>
             )}
-            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} />}
+            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} closeNewPositionModal={() => setNewPositonModalOpen(false)} />}
           </div>
         )}
       {!loading && <AppFooter />}

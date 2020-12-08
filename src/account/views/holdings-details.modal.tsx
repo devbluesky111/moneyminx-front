@@ -10,17 +10,11 @@ import { Formik } from 'formik';
 import { gc } from 'common/interval-parser';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
-import { Modal, ModalType } from 'common/components/modal';
+import { HoldingsDetailsModalProps } from 'account/account.type';
+import { Modal } from 'common/components/modal';
 
 import { ReactComponent as AddNewIcon } from '../../assets/images/account/AddNew.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/images/account/Delete.svg';
-
-interface SettingModalProps {
-    holdingsDetailsModal: ModalType;
-    holdingsDetails?: any;
-    accountId?: number;
-    currency?: string;
-}
 
 const DisabledInput: React.FC = () => {
     return (
@@ -34,7 +28,7 @@ const DisabledInput: React.FC = () => {
     )
 }
 
-const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModal, holdingsDetails, accountId, currency }) => {
+const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDetailsModal, holdingsDetails, closeEditPositionModal, accountId, currency, closeNewPositionModal }) => {
 
     const [loading, setLoading] = useState(false);
     const [years, setYears] = useState<string[]>([]);
@@ -100,17 +94,17 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
             (holdingsDetails?.intervalValues)[i].date = new Date((holdingsDetails?.intervalValues)[i]['interval']);
             _years.push((holdingsDetails?.intervalValues)[i].interval.split(' ')[1]);
         }
-
-        Object.keys(holdingsDetails?.classifications).forEach((key: any) => {
-            const value = (holdingsDetails?.classifications as any)[key];
-            console.log(key, value);
-            for (let i = 0; i < value.length; i++) {
-                if (value[i].classificationValue === 'Unclassified') {
-                    value.splice(i, 1);
-                    i--;
+        if (holdingsDetails) {
+            Object.keys(holdingsDetails?.classifications).forEach((key: any) => {
+                const value = (holdingsDetails?.classifications as any)[key];
+                for (let i = 0; i < value.length; i++) {
+                    if (value[i].classificationValue === 'Unclassified') {
+                        value.splice(i, 1);
+                        i--;
+                    }
                 }
-            }
-        });
+            });
+        }
 
         let unique_years = getUnique(_years);
         setYears(unique_years);
@@ -292,6 +286,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                         return toast('Error Occurred', { type: 'error' });
                     }
                     setLoading(false);
+                    closeEditPositionModal?.();
                     holdingsDetailsModal.close();
                     return toast('Successfully updated', { type: 'success' });
                 }
@@ -303,6 +298,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                     return toast('Error Occurred', { type: 'error' });
                 }
                 setLoading(false);
+                closeNewPositionModal?.();
                 holdingsDetailsModal.close();
                 return toast('Successfully Added', { type: 'success' });
             }}

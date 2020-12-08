@@ -11,7 +11,7 @@ import { useModal } from 'common/components/modal';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
 
-export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
+export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData, openEditPositionModalFun, closeEditPositionModalFun }) => {
 
   const [holdings, setHoldings] = useState<AccountHoldingItem[]>([]);
   const [editIndex, setEditIndex] = useState<number>(-1);
@@ -20,8 +20,8 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
   const holdingsDetailsModal = useModal();
 
   React.useEffect(() => {
-    setHoldings(props.holdings);
-  }, [props]);
+    setHoldings(holdingsData);
+  }, [holdingsData]);
 
   const fetchHolingsDetails = async (positionId: string) => {
     const { data, error } = await getHoldingsDetails(positionId);
@@ -32,9 +32,10 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
     }
   };
 
-  const openPosition = async (positionId: number) => {
+  const openEditPositionModal = async (positionId: number) => {
     await fetchHolingsDetails(positionId.toString());
     holdingsDetailsModal.open();
+    openEditPositionModalFun();
   }
 
   return (
@@ -61,7 +62,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
                   </thead>
                   <tbody>
                     {holdings?.length > 0 && holdings.map((item, index) => (
-                      <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }} onClick={() => openPosition(item.id)} >
+                      <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }} onClick={() => openEditPositionModal(item.id)} >
                         <td>{item.description}</td>
                         <td className='hide-type'>{item.price ? getCurrencySymbol(item.costBasisCurrency) : ''}{item.price}</td>
                         <td >{item.quantity}</td>
@@ -82,7 +83,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
           </div>
         </div>
       ) : (<span className='no-data'>No holdings data</span>)}
-      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} />}
+      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} closeEditPositionModal={closeEditPositionModalFun} />}
     </section >
   );
 };

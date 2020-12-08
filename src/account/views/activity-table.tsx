@@ -8,13 +8,13 @@ import { ReactComponent as Revert } from '../../assets/icons/revert.svg';
 import { ReactComponent as Edited } from '../../assets/icons/icon-edit.svg';
 
 
-export const ActivityTable: React.FC<AccountTransactionTableProps> = (props) => {
+export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transactionsData }) => {
 
   const [transactions, setTransactions] = useState<AccountTransactionItem[]>([]);
 
   React.useEffect(() => {
-    setTransactions(props?.transactions);
-  }, [props]);
+    setTransactions(transactionsData);
+  }, [transactionsData]);
 
   return (
     <section>
