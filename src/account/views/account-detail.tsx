@@ -49,13 +49,14 @@ const AccountDetail: React.FC = () => {
   const [accSetting, setAccSetting] = useState<boolean>(false);
   const [newPositonModalOpen, setNewPositonModalOpen] = useState<boolean>(false);
   const [editPositonModalOpen, setEditPositonModalOpen] = useState<boolean>(false);
+  const [baseCurrency, setBaseCurrency] = useState<boolean>(false);
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
 
   React.useEffect(() => {
-    fetchAccountDetails(accountId);
+    fetchAccountDetails(accountId, baseCurrency);
     if (
       (fromDate === undefined && toDate === undefined) ||
       (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))
@@ -64,14 +65,14 @@ const AccountDetail: React.FC = () => {
       if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
       if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
     }
-  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen]);
+  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen, baseCurrency]);
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
   };
 
-  const fetchAccountDetails = async (accountId: string) => {
-    const { data, error } = await getAccountDetails(accountId);
+  const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
+    const { data, error } = await getAccountDetails(accountId, baseCurrency);
     if (!error) {
       console.log('fetchAccountDetails: ', data);
 
@@ -158,7 +159,7 @@ const AccountDetail: React.FC = () => {
         open={openRightNav}
       />
       {!loading && AccountDetails && (
-        <AccountSubNavigation providerLogo={AccountDetails?.providerLogo} providerName={AccountDetails?.providerName} />
+        <AccountSubNavigation providerLogo={AccountDetails?.providerLogo} providerName={AccountDetails?.providerName} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
       )}
       <hr className='mt-0 mb-4' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />

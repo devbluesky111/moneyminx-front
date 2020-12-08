@@ -3,6 +3,8 @@ import { ModalType } from "common/components/modal";
 export interface AccountSubNavigationProps {
   providerLogo: string;
   providerName: string;
+  baseCurrency: boolean;
+  toggleBaseCurrency: () => void;
 }
 
 export interface AccountChartItem {
