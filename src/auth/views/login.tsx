@@ -1,10 +1,10 @@
-import { Formik } from 'formik';
-import { isEmpty } from 'lodash';
+import React, { ChangeEvent, useState } from 'react';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import FacebookLogin from 'react-facebook-login';
-import { useHistory, Link, useLocation } from 'react-router-dom';
-import React, { ChangeEvent, useState } from 'react';
 
+import { Formik } from 'formik';
+import { isEmpty } from 'lodash';
 import env from 'app/app.env';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
@@ -173,7 +173,7 @@ export const LoginMainSection = () => {
                           autoAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
                           manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
                         ) {
-                          history.push(appRouteConstants.account.REMOVE_ACCOUNT);
+                          history.push(appRouteConstants.subscription.REVIEW);
                         } else if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
                         else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                       } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);

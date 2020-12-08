@@ -1,7 +1,7 @@
-import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Formik } from 'formik';
 import { AuthLayout } from 'layouts/auth.layout';
 import { postForgotPassword } from 'api/request.api';
 import { forgotPasswordValidation } from 'auth/auth.validation';

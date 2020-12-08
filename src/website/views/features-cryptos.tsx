@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import WebsiteLayout from 'website/website.layout';
-import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
-import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
-import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
-import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
+import CryptosImg from 'assets/images/home/investment-assets-cryptos.svg';
+import SyncCryptoAccountsImg from 'assets/images/features/sync-crypto-accounts.svg';
 
 const FeaturesCryptos = () => {
   return (
@@ -24,18 +23,17 @@ export const FeaturesCryptosTopSection = () => {
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
           <div className=''>
-            <h1>Cryptos</h1>
+            <h1>Support for Cryptocurrencies
+              <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
+            </h1>
             <div className='p-b-10'>
               <p className='text'>
-                Money Minx allows you to track all of your assets and liabilities in one place to help you track your net worth.
-                We are still in Beta but already support over 25,000 institutions worldwide so you can automatically track your accounts.{' '}
+                A well diversified portfolio is not complete without a little bit of crypto currencies in it.
+                In addition to supporting bank accounts, loans, credit cards, and other investments, Money Minx also supports
+                tracking and managing your cryptocurrencies.
               </p>
-              <p className='text'>
-                We are currently working on allowing you to automatically track your cryptos, precious metals like gold, currencies, real estate and more.{' '}
-              </p>
-              <p className='text'>
-                You can also use our manual accounts feature to track anything you want by adding accounts, positions and transactions on your own..
-              </p>
+              <p>Note: Cryptocurrency is currently being tested with a few select Beta users and will be made available to all accounts soon.
+              If you are interested in being an early tester, <a href='mailto:hello@moneyminx.com?Subject=I%20Want%20Crypto'>send us a note</a>.</p>
             </div>
             <Link to='/signup'>
               <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
@@ -44,57 +42,7 @@ export const FeaturesCryptosTopSection = () => {
           </div>
         </div>
         <div className='col-12 col-xl-5'>
-          <div className='mm-about-right-banner'>
-            <div className='account-wrap bg-white top-box'>
-              <h3>Connected Accounts</h3>
-              <p>Go ahead, add more accounts</p>
-            </div>
-
-            <div className='account-wrap bg-white border'>
-              <h4>
-                <span className='logo-icon'>
-                  <AboutWealthFrontIcon />
-                </span>
-                Wealthfront
-              </h4>
-              <ul className='account-list'>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />{' '}
-                  </span>
-                  Joint Cash Account
-                </li>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />
-                  </span>{' '}
-                  Investment Account
-                </li>
-              </ul>
-            </div>
-            <div className='account-wrap bg-white border small-box'>
-              <h4>
-                <span className='logo-icon'>
-                  <img alt='Peer Street' src={PeerStreetLogo} />
-                </span>
-                Peer Street
-              </h4>
-              <ul className='account-list'>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />{' '}
-                  </span>
-                  Individual Investor Account
-                </li>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />
-                  </span>{' '}
-                  Self-directed IRA
-                </li>
-              </ul>
-            </div>
-          </div>
+          <img src={CryptosImg} alt={'Add Cryptos'} />
         </div>
       </div>
     </section>
@@ -103,21 +51,19 @@ export const FeaturesCryptosTopSection = () => {
 
 export const FeaturesCryptosBottomSection = () => {
   return (
-    <div className='row'>
-      <div className='col-xl-5'>
-        <div className='networth-text'>
+    <section className='feature-section feature-section-reversed'>
+      <div className='row'>
+        <div className='col-lg-7 feature-image'>
+          <img src={SyncCryptoAccountsImg} alt='Sync Crypto Wallets' />
+        </div>
+        <div className='col-lg-5 feature-content'>
           <h2>Sync Your Wallets</h2>
           <p className='text'>
-            Once your accounts are added we will keep them in sync so you will always know what your current net worth is,
-            You can also keep an eye on your historical net worth and see it grow with time.
+            If you use one of the many popular crypto wallets like Coinbase, Gemini or Binance, you can keep your crypto currency balance
+            up-to-date in Money Minx at all times.
           </p>
         </div>
       </div>
-      <div className='col-xl-7'>
-        <div className='mm-networth-chart text-center'>
-          <AboutNetWorthChart className='mm-about-net-worth-chart' />
-        </div>
-      </div>
-    </div>
+    </section>
   );
 };

@@ -19,6 +19,7 @@ import {
   AccountSetting,
   ConnectAccount,
   Subscription,
+  SubscriptionReview
 } from './app.view';
 
 import { appRouteConstants } from './app-route.constant';
@@ -31,7 +32,7 @@ const {
   features: { FEATURES_NET_WORTH, FEATURES_ALLOCATIONS, FEATURES_CRYPTOS, FEATURES_SYNCED_MANUAL, FEATURES_MULTICURRENCY, FEATURES_TRANSACTION_HISTORY },
   account: { ACCOUNT },
   settings: { SETTINGS },
-  subscription: { SUBSCRIPTION },
+  subscription: { SUBSCRIPTION, REVIEW },
   networth: { NET_WORTH },
   allocation: { ALLOCATION },
   misc: { STRIPE_FAILURE, STRIPE_SUCCESS },
@@ -72,6 +73,7 @@ function AppRoute() {
         <Route exact path={FORGOT_PASSWORD} component={ForgotPassword} />
         <Route exact path={SETTINGS} component={Setting} />
         <Route exact path={SUBSCRIPTION} component={Subscription} />
+        <Route exact path={REVIEW} component={SubscriptionReview} />
         <Route exact path={SECURITY} component={Security} />
         <Route exact path={FEATURES_NET_WORTH} component={FeaturesNetWorth} />
         <Route exact path={FEATURES_ALLOCATIONS} component={FeaturesAllocations} />

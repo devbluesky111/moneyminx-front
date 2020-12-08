@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 
 import AppHeader from 'common/app.header';
 import AppFooter from 'common/app.footer';
-import AppSidebar from 'common/app.sidebar';
-
 import 'assets/css/networth/networth.scss';
+import AppSidebar from 'common/app.sidebar';
 
 const NetworthLayout: React.FC = ({ children }) => {
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
