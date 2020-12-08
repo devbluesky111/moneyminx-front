@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { AuthLayout } from 'layouts/auth.layout';
+import { useAuthState } from 'auth/auth.context';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
@@ -12,6 +13,7 @@ import AccountSettingsSideBar from './account-settings-sidebar';
 const AccountSettings = () => {
   const history = useHistory();
   const location = useLocation();
+  const { onboarded } = useAuthState();
   const [finish, setFinish] = useState<boolean>(false);
 
   const params = new URLSearchParams(location.search);
@@ -21,6 +23,17 @@ const AccountSettings = () => {
 
   const navigateToNetworth = () => {
     return history.push('/net-worth?from=accountSettings');
+  };
+
+  const hasOverlaySteps = () => {
+    if (isFromNetworth) {
+      return false;
+    }
+    if (onboarded) {
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -62,7 +75,7 @@ const AccountSettings = () => {
             <AccountSettingsSideBar setFinish={() => setFinish(true)} />
           </div>
         </div>
-        {!isFromNetworth ? (
+        {hasOverlaySteps() ? (
           <ConnectAccountSteps
             isAccountSettings
             onSkip={navigateToNetworth}
