@@ -1,13 +1,12 @@
-import { toast } from 'react-toastify';
 import React, { useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { fetchProfile } from 'auth/auth.service';
+import MMToolTip from 'common/components/tooltip';
 import { useAuthDispatch } from 'auth/auth.context';
-
 import { patchProfilePicture } from 'api/request.api';
-import ProfileDefaultPic from 'assets/images/settings/mm-default-avatar.svg';
 import ImageInput from 'common/components/input/image.input';
-import MMToolTip from '../../common/components/tooltip';
+import ProfileDefaultPic from 'assets/images/settings/mm-default-avatar.svg';
 
 interface ProfilePictureProps {
   pictureURL?: string;

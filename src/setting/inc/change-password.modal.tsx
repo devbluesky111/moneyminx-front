@@ -1,7 +1,7 @@
-import { Formik } from 'formik';
-import { toast } from 'react-toastify';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
+import { Formik } from 'formik';
 import { changePassword } from 'auth/auth.service';
 import { useAuthDispatch } from 'auth/auth.context';
 import { Modal, ModalType } from 'common/components/modal';

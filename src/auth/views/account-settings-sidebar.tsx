@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import React, { createRef, useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Dictionary } from 'lodash';
 import { Account } from 'auth/auth.types';
@@ -38,6 +38,12 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
     getUser();
   }, [dispatch, reloadCounter]);
 
+  /**
+   * if accounts
+   * accounts[0] for current account
+   * get completed provider names
+   * set current provider accounts
+   */
   useEffect(() => {
     if (accounts) {
       setCurrentAccount(accounts[0]);

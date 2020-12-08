@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import WebsiteLayout from 'website/website.layout';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
@@ -25,17 +26,12 @@ export const FeaturesTransactionHistoryTopSection = () => {
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
           <div className=''>
-            <h1>TransactionHistory</h1>
+            <h1>Transaction History</h1>
             <div className='p-b-10'>
               <p className='text'>
-                Money Minx allows you to track all of your assets and liabilities in one place to help you track your net worth.
-                We are still in Beta but already support over 25,000 institutions worldwide so you can automatically track your accounts.{' '}
-              </p>
-              <p className='text'>
-                We are currently working on allowing you to automatically track your cryptos, precious metals like gold, currencies, real estate and more.{' '}
-              </p>
-              <p className='text'>
-                You can also use our manual accounts feature to track anything you want by adding accounts, positions and transactions on your own..
+                By adding all of your accounts to Money Minx, you will be able to quickly monitor all of your accounts in one place.
+                This is a great way to catch and prevent fraudulent activities on your accounts. If you come across a transaction
+                you do not recognize, contact your financial institution right away!
               </p>
             </div>
             <Link to='/signup'>
@@ -104,21 +100,19 @@ export const FeaturesTransactionHistoryTopSection = () => {
 
 export const FeaturesTransactionHistoryBottomSection = () => {
   return (
-    <div className='row'>
-      <div className='col-xl-5'>
-        <div className='networth-text'>
+    <section className='feature-section feature-section-reversed'>
+      <div className='row'>
+        <div className='col-lg-7 feature-image'>
+          <AboutNetWorthChart className='mm-about-net-worth-chart' />
+        </div>
+        <div className='col-lg-5 feature-content'>
           <h2>Account Holdings</h2>
-          <p className='text'>
-            Once your accounts are added we will keep them in sync so you will always know what your current net worth is,
-            You can also keep an eye on your historical net worth and see it grow with time.
+          <p>
+            Never forgot what holdings each of your accounts hold and find duplicate holdings across your accounts. With Money Minx
+            you can easily review all of your holdings.
           </p>
         </div>
       </div>
-      <div className='col-xl-7'>
-        <div className='mm-networth-chart text-center'>
-          <AboutNetWorthChart className='mm-about-net-worth-chart' />
-        </div>
-      </div>
-    </div>
+    </section>
   );
 };

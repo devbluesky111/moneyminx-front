@@ -1,9 +1,11 @@
+import { Router } from 'react-router-dom';
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 
+import history from 'app/app.history';
 import useProfile from 'auth/hooks/useProfile';
 import { auth } from 'auth/auth-context.types';
 import { useAuthDispatch } from 'auth/auth.context';
+import useAnalytics from 'common/hooks/useAnalytics';
 import useAccountRefresh from 'common/hooks/useAccountRefresh';
 
 import './app.i18n';
@@ -13,6 +15,7 @@ import { StorageKey } from './app.types';
 
 export default function Main() {
   useProfile();
+  useAnalytics();
   useAccountRefresh();
   const dispatch = useAuthDispatch();
 
@@ -24,7 +27,7 @@ export default function Main() {
   }, [dispatch]);
 
   return (
-    <Router>
+    <Router history={history}>
       <Suspense fallback='....'>
         <div className='app-wrapper'>
           <AppRoute />
