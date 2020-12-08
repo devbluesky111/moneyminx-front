@@ -352,6 +352,27 @@
 
 .mm-holdings-details-modal {
 
+  .form-control {
+    height: 48px;
+    font-size: 0.875rem;
+    border: 1px solid $grayOpacity24;
+    padding: 0 20px;
+
+    &:focus, &:active {
+      border: 1px solid $gray;
+    }
+  }
+
+  .drop-box .dropdown-toggle {
+    width: 100%;
+    color: #495057;
+  }
+
+  .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    color: inherit;
+    background-color: inherit;
+  }
+
   .description {
     font-size: 1rem;
     line-height: 150%;
@@ -406,10 +427,6 @@
 
   .key {
     font-weight: bold;
-  }
-
-  .input-add-on {
-    padding: 11px 5px 0 0;
   }
 
   .action-wrapper {

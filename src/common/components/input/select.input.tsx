@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 
+import { foramtHoldingType } from 'account/views/holdings-details.modal';
+
 interface MMSelectProps {
   title: string;
 }
@@ -21,9 +23,10 @@ interface SelectInputProps {
   onChange: (e: React.ChangeEvent<any>) => void;
   value: string;
   name: string;
+  isHoldingTypes?: boolean;
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, value }) => {
+export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, value, isHoldingTypes }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -47,7 +50,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, 
                       setShow(false);
                     }}
                   />
-                  <span>{val}</span>
+                  <span>{isHoldingTypes ? foramtHoldingType(val) : val}</span>
                 </label>
               </li>
             );

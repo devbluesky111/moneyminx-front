@@ -12,9 +12,20 @@ import { getCurrencySymbol } from 'common/currency-helper';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
 import { HoldingsDetailsModalProps } from 'account/account.type';
 import { Modal } from 'common/components/modal';
+import { SelectInput } from 'common/components/input/select.input';
 
 import { ReactComponent as AddNewIcon } from '../../assets/images/account/AddNew.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/images/account/Delete.svg';
+
+
+export const foramtHoldingType = (str: string) => {
+    if (['CD', 'ETF', 'ETN'].includes(str)) {
+        return str;
+    }
+    const newStr = str[0].toUpperCase() + str.slice(1);
+    const strArr = newStr.split(/(?=[A-Z])/);
+    return strArr?.join(' ');
+}
 
 const DisabledInput: React.FC = () => {
     return (
@@ -120,15 +131,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
         yearsArr = [(cYear - 2).toString(), (cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()];
     }
 
-    const foramtHoldingType = (str: string) => {
-        if (['CD', 'ETF', 'ETN'].includes(str)) {
-            return str;
-        }
-        const newStr = str[0].toUpperCase() + str.slice(1);
-        const strArr = newStr.split(/(?=[A-Z])/);
-        return strArr?.join(' ');
-    }
-
     return (
         <Formik
             initialValues={{
@@ -179,23 +181,23 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                 originalClassifications: holdingsDetails?.classifications || {
                     'Type': [{
                         allocation: 100,
-                        classificationType: "Type",
-                        classificationValue: "Unclassified"
+                        classificationType: 'Type',
+                        classificationValue: 'Unclassified'
                     }],
                     'Asset Class': [{
                         allocation: 100,
-                        classificationType: "Asset Class",
-                        classificationValue: "Unclassified"
+                        classificationType: 'Asset Class',
+                        classificationValue: 'Unclassified'
                     }],
                     'Country': [{
                         allocation: 100,
-                        classificationType: "Country",
-                        classificationValue: "Unclassified"
+                        classificationType: 'Country',
+                        classificationValue: 'Unclassified'
                     }],
                     'Risk': [{
                         allocation: 100,
-                        classificationType: "Risk",
-                        classificationValue: "Unclassified"
+                        classificationType: 'Risk',
+                        classificationValue: 'Unclassified'
                     }]
                 },
                 originalValues: holdingsDetails?.intervalValues || [{ date: new Date(), interval: new Date().toLocaleString('default', { month: 'short' }), value: 0 }],
@@ -532,16 +534,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 </div>
                                                             <div className='col-sm '>
                                                                 <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        as='select'
+                                                                    <SelectInput
+                                                                        args={curArr}
                                                                         onChange={handleSelectChange}
-                                                                        name='costBasisCurrency'
                                                                         value={values.costBasisCurrency}
-                                                                    >
-                                                                        {curArr.map((item, index) => (
-                                                                            <option key={index} value={item}>{item}</option>
-                                                                        ))}
-                                                                    </Form.Control>
+                                                                        name='costBasisCurrency'
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -880,20 +878,16 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                         <div className='row mt-2 align-items-center'>
                                                             <div className='col-sm'>
                                                                 Holding Type
-                                                                </div>
+                                                            </div>
                                                             <div className='col-sm'>
                                                                 <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        as='select'
+                                                                    <SelectInput
+                                                                        args={holdingTypes}
                                                                         onChange={handleSelectChange}
-                                                                        name='holdingType'
                                                                         value={values.holdingType}
-                                                                    >
-                                                                        <option value=''> Select Type</option>
-                                                                        {holdingTypes.map((item, index) => (
-                                                                            <option key={index} value={item}>{foramtHoldingType(item)}</option>
-                                                                        ))}
-                                                                    </Form.Control>
+                                                                        name='holdingType'
+                                                                        isHoldingTypes={true}
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -919,16 +913,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 </div>
                                                             <div className='col-sm'>
                                                                 <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        as='select'
+                                                                    <SelectInput
+                                                                        args={curArr}
                                                                         onChange={handleSelectChange}
-                                                                        name='priceCurrency'
                                                                         value={values.priceCurrency}
-                                                                    >
-                                                                        {curArr.map((item, index) => (
-                                                                            <option key={index} value={item}>{item}</option>
-                                                                        ))}
-                                                                    </Form.Control>
+                                                                        name='priceCurrency'
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -969,16 +959,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 </div>
                                                             <div className='col-sm '>
                                                                 <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        as='select'
+                                                                    <SelectInput
+                                                                        args={curArr}
                                                                         onChange={handleSelectChange}
-                                                                        name='costBasisCurrency'
                                                                         value={values.costBasisCurrency}
-                                                                    >
-                                                                        {curArr.map((item, index) => (
-                                                                            <option key={index} value={item}>{item}</option>
-                                                                        ))}
-                                                                    </Form.Control>
+                                                                        name='costBasisCurrency'
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1037,17 +1023,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                             </div>
                                                             <div className='col-sm'>
                                                                 <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        as='select'
+                                                                    <SelectInput
+                                                                        args={['Call', 'Put']}
                                                                         onChange={handleSelectChange}
-                                                                        name='optionType'
                                                                         value={values.optionType}
-                                                                    >
-                                                                        <option value=''>Select Type</option>
-                                                                        {['call', 'put'].map((item, index) => (
-                                                                            <option key={index} value={item}>{item}</option>
-                                                                        ))}
-                                                                    </Form.Control>
+                                                                        name='optionType'
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1102,16 +1083,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 </div>
                                                             <div className='col-sm'>
                                                                 <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        as='select'
+                                                                    <SelectInput
+                                                                        args={curArr}
                                                                         onChange={handleSelectChange}
-                                                                        name='vestedValueCurrency'
                                                                         value={values.vestedValueCurrency}
-                                                                    >
-                                                                        {curArr.map((item, index) => (
-                                                                            <option key={index} value={item}>{item}</option>
-                                                                        ))}
-                                                                    </Form.Control>
+                                                                        name='vestedValueCurrency'
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1167,16 +1144,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 </div>
                                                             <div className='col-sm'>
                                                                 <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        as='select'
+                                                                    <SelectInput
+                                                                        args={curArr}
                                                                         onChange={handleSelectChange}
-                                                                        name='unvestedValue'
-                                                                        value={values.unvestedValue}
-                                                                    >
-                                                                        {curArr.map((item, index) => (
-                                                                            <option key={index} value={item}>{item}</option>
-                                                                        ))}
-                                                                    </Form.Control>
+                                                                        value={values.unvestedValueCurrency}
+                                                                        name='unvestedValueCurrency'
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1245,16 +1218,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 </div>
                                                             <div className='col-sm'>
                                                                 <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        as='select'
+                                                                    <SelectInput
+                                                                        args={curArr}
                                                                         onChange={handleSelectChange}
-                                                                        name='strikePriceCurrency'
                                                                         value={values.strikePriceCurrency}
-                                                                    >
-                                                                        {curArr.map((item, index) => (
-                                                                            <option key={index} value={item}>{item}</option>
-                                                                        ))}
-                                                                    </Form.Control>
+                                                                        name='strikePriceCurrency'
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1282,7 +1251,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                             <div className='col-sm'>
                                                                 Short?
                                                                 </div>
-                                                            <div className='col-sm'>
+                                                            <div className='col-sm mt-2'>
                                                                 <div className='form-field-group'>
                                                                     <input
                                                                         type='radio'
