@@ -14,4 +14,6 @@ export default {
       process.env.REACT_APP_ZABO_CLIENT_ID || '4bz22yXnR2lCbbUp3k4lvKwTikXSAP61D0q6GSy0GnwHiXoQYPlrgtloX6AhBaeM',
     ZABO_ENV: process.env.REACT_APP_ZABO_ENV || 'sandbox',
   },
+  GOOGLE_ANALYTICS_TRACKING_ID: process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID || '',
+  GOOGLE_ADS_TRACKING_ID: process.env.REACT_APP_GOOGLE_ADS_TRACKING_ID || '',
 };

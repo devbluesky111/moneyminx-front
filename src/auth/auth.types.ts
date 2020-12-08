@@ -173,3 +173,11 @@ export interface DeleteAccountPayload {
   dispatch: Dispatch;
   accounts: Account[];
 }
+
+export interface Mortgage {
+  accountName: string;
+  balance: number;
+  principalBalance: number;
+}
+
+export type MortgageList = Mortgage[];
