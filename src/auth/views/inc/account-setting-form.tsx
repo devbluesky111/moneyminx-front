@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
+import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
-import moment from 'moment';
 import { Formik } from 'formik';
+
 import { MMCategories } from 'auth/auth.enum';
 import { fNumber } from 'common/number.helper';
 import { useAuthState } from 'auth/auth.context';
@@ -285,7 +285,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 type='text'
                 className='w-100 mb-4'
                 onChange={props.handleChange}
-                value={props.values.accountName}
+                value={values.accountName}
                 name='accountName'
                 placeholder='Sapphire Credit Card'
               />
