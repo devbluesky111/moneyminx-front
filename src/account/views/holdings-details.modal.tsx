@@ -14,6 +14,7 @@ import { HoldingsDetailsModalProps } from 'account/account.type';
 import { Modal } from 'common/components/modal';
 import { SelectInput } from 'common/components/input/select.input';
 
+import { ClassificationsSelectInput } from './classifications.select.input';
 import { ReactComponent as AddNewIcon } from '../../assets/images/account/AddNew.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/images/account/Delete.svg';
 
@@ -1995,17 +1996,14 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
-                                                                            <Form.Control
+                                                                            <ClassificationsSelectInput
+                                                                                args={classificationForTypes}
                                                                                 onChange={(e) => handleClassificationsValueChange('Type', e)}
-                                                                                as='select'
                                                                                 value={item.classificationValue}
                                                                                 id={item.classificationValue}
-                                                                            >
-                                                                                <option value=''>Select Type</option>
-                                                                                {classificationForTypes.map((element, k) => (
-                                                                                    <option key={k} value={element} disabled={checkDisabled('Type', element)}>{element}</option>
-                                                                                ))}
-                                                                            </Form.Control>
+                                                                                tabName='Type'
+                                                                                classifications={values.originalClassifications}
+                                                                            />
                                                                         </div>
                                                                     </div>
                                                                     <div className='col-sm d-flex align-items-center'>
@@ -2055,17 +2053,14 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
-                                                                            <Form.Control
+                                                                            <ClassificationsSelectInput
+                                                                                args={classificationForAssetClass}
                                                                                 onChange={(e) => handleClassificationsValueChange('Asset Class', e)}
-                                                                                as='select'
                                                                                 value={item.classificationValue}
                                                                                 id={item.classificationValue}
-                                                                            >
-                                                                                <option value=''>Select Type</option>
-                                                                                {classificationForAssetClass.map((element, k) => (
-                                                                                    <option key={k} value={element} disabled={checkDisabled('Asset Class', element)}>{element}</option>
-                                                                                ))}
-                                                                            </Form.Control>
+                                                                                tabName='Asset Class'
+                                                                                classifications={values.originalClassifications}
+                                                                            />
                                                                         </div>
                                                                     </div>
                                                                     <div className='col-sm d-flex align-items-center'>
@@ -2115,17 +2110,14 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
-                                                                            <Form.Control
+                                                                            <ClassificationsSelectInput
+                                                                                args={classificationForCountry}
                                                                                 onChange={(e) => handleClassificationsValueChange('Country', e)}
-                                                                                as='select'
                                                                                 value={item.classificationValue}
                                                                                 id={item.classificationValue}
-                                                                            >
-                                                                                <option value=''>Select Type</option>
-                                                                                {classificationForCountry.map((element, k) => (
-                                                                                    <option key={k} value={element} disabled={checkDisabled('Country', element)}>{element}</option>
-                                                                                ))}
-                                                                            </Form.Control>
+                                                                                tabName='Country'
+                                                                                classifications={values.originalClassifications}
+                                                                            />
                                                                         </div>
                                                                     </div>
                                                                     <div className='col-sm d-flex align-items-center'>
@@ -2175,17 +2167,14 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
                                                                         <div className='form-field-group'>
-                                                                            <Form.Control
+                                                                            <ClassificationsSelectInput
+                                                                                args={classificationForRisk}
                                                                                 onChange={(e) => handleClassificationsValueChange('Risk', e)}
-                                                                                as='select'
                                                                                 value={item.classificationValue}
                                                                                 id={item.classificationValue}
-                                                                            >
-                                                                                <option value=''>Select Type</option>
-                                                                                {classificationForRisk.map((element, k) => (
-                                                                                    <option key={k} value={element} disabled={checkDisabled('Risk', element)}>{element}</option>
-                                                                                ))}
-                                                                            </Form.Control>
+                                                                                tabName='Risk'
+                                                                                classifications={values.originalClassifications}
+                                                                            />
                                                                         </div>
                                                                     </div>
                                                                     <div className='col-sm d-flex align-items-center'>
