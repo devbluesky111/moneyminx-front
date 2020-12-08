@@ -7,6 +7,7 @@ import { AuthLayout } from 'layouts/auth.layout';
 import { useAuthState } from 'auth/auth.context';
 import { useModal } from 'common/components/modal';
 import FastLinkModal from 'yodlee/fast-link.modal';
+import useAnalytics from 'common/hooks/useAnalytics';
 import useGetFastlink from 'auth/hooks/useGetFastlink';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { appRouteConstants } from 'app/app-route.constant';
@@ -37,6 +38,7 @@ export const ConnectAccountMainSection = () => {
   const manualAccountModal = useModal();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
   const { onboarded } = useAuthState();
+  const { event } = useAnalytics();
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -51,7 +53,13 @@ export const ConnectAccountMainSection = () => {
   const history = useHistory();
 
   const handleConnectAccount = () => {
-    fastlinkModal.open();
+    event({
+      category: 'User Action',
+      action: 'Button Click',
+      label: 'Add Accounts',
+    });
+
+    return fastlinkModal.open();
   };
 
   const handleCryptoExchange = () => {

@@ -69,3 +69,15 @@ export interface AccountDialogBoxProps {
   accountList: Account[];
   verifyAccountNumbers: (event: any) => void;
 }
+
+export interface Plan {
+  active: boolean;
+  currency: string;
+  details: Record<string, any>;
+  duration: string;
+  name: string;
+  nickname: string;
+  price: number;
+  priceId: string;
+  save?: number;
+}
