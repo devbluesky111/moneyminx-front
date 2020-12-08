@@ -3,32 +3,40 @@ import { Table } from 'react-bootstrap';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { getCurrencySymbol } from 'common/currency-helper';
+import { gc } from 'common/interval-parser';
+import { getHoldingsDetails } from 'api/request.api';
 import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
+import { useModal } from 'common/components/modal';
 
+import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
-import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 
-export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
+export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData, openEditPositionModalFun, closeEditPositionModalFun }) => {
 
   const [holdings, setHoldings] = useState<AccountHoldingItem[]>([]);
   const [editIndex, setEditIndex] = useState<number>(-1);
+  const [holdingsDetails, setHoldingsDetails] = useState<any>();
+
+  const holdingsDetailsModal = useModal();
 
   React.useEffect(() => {
-    setHoldings(props.holdings);
-  }, [props]);
+    setHoldings(holdingsData);
+  }, [holdingsData]);
 
-  const isCurrent = (interval: string) =>
-    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+  const fetchHolingsDetails = async (positionId: string) => {
+    const { data, error } = await getHoldingsDetails(positionId);
+    if (!error) {
+      console.log('fetchHolingsDetails: ', data);
 
-  const gc = (interval: string) => {
-    if (interval) {
-      if (isCurrent(interval)) {
-        return 'current-m';
-      }
+      setHoldingsDetails(data);
     }
-    // return 'tab-hide';
-    return '';
   };
+
+  const openEditPositionModal = async (positionId: number) => {
+    await fetchHolingsDetails(positionId.toString());
+    holdingsDetailsModal.open();
+    openEditPositionModalFun();
+  }
 
   return (
     <section>
@@ -54,7 +62,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
                   </thead>
                   <tbody>
                     {holdings?.length > 0 && holdings.map((item, index) => (
-                      <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }}>
+                      <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }} onClick={() => openEditPositionModal(item.id)} >
                         <td>{item.description}</td>
                         <td className='hide-type'>{item.price ? getCurrencySymbol(item.costBasisCurrency) : ''}{item.price}</td>
                         <td >{item.quantity}</td>
@@ -75,6 +83,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = (props) => {
           </div>
         </div>
       ) : (<span className='no-data'>No holdings data</span>)}
+      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} closeEditPositionModal={closeEditPositionModalFun} />}
     </section >
   );
 };

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 
-import { foramtHoldingType } from 'account/views/holdings-details.modal';
-
 interface MMSelectProps {
   title: string;
 }
@@ -22,12 +20,22 @@ interface SelectInputProps {
   args: any[];
   onChange: (e: React.ChangeEvent<any>) => void;
   value: string;
-  name: string;
-  isHoldingTypes?: boolean;
+  id: string;
+  tabName: string;
+  classifications: any
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, value, isHoldingTypes }) => {
+export const ClassificationsSelectInput: React.FC<SelectInputProps> = ({ args, onChange, value, id, tabName, classifications }) => {
   const [show, setShow] = useState(false);
+
+  const checkDisabled = (tabName: string, element: string) => {
+    for (let i = 0; i < classifications[`${tabName}`].length; i++) {
+      if (classifications[`${tabName}`][i].classificationValue === element) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   return (
     <Dropdown className='drop-box dropdown-select-input' onToggle={(nextShow) => setShow(nextShow)} show={show}>
@@ -39,7 +47,6 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, 
               <li key={index}>
                 <label>
                   <input
-                    name={name}
                     type='checkbox'
                     aria-describedby={val}
                     value={val}
@@ -49,8 +56,10 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, 
                       onChange(e);
                       setShow(false);
                     }}
+                    id={id}
+                    disabled={checkDisabled(tabName, val)}
                   />
-                  <span>{isHoldingTypes ? foramtHoldingType(val) : val}</span>
+                  <span>{val}</span>
                 </label>
               </li>
             );

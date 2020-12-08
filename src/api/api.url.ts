@@ -12,6 +12,8 @@ export const urls = {
     ACCOUNT_DETAILS: '/account/:id',
     ACCOUNT_HOLDINGS: '/account-details/holdings',
     ACCOUNT_ACTIVITY: '/account-details/transactions',
+    HOLDINGS_DETAILS: '/account-details/holdings/:positionId',
+    CLASSIFICATION: '/allocations/asset-classifications?filter=:filter',
     FACEBOOK_LOGIN: '/facebook/login',
     PROFILE_PICTURE: '/profile/picture',
     ACCOUNTS: '/account/me?refresh=false',
@@ -47,5 +49,6 @@ export const urls = {
     ALLOCATIONS: '/allocations',
     CHART_SETTINGS: '/allocations/me/chart-settings',
     UPLOAD_CHART: '/allocations/upload-chart',
+    HOLDING_TYPES: '/allocations/holding-types',
   },
 };

@@ -303,6 +303,7 @@
     }
   }
 }
+
 .settings-gear-button {
   border: 1px solid $purple;
   border-radius: 4px;
@@ -347,4 +348,260 @@
   z-index: 1000;
   background-color: #000;
   opacity: 0.5;
+}
+
+.mm-holdings-details-modal {
+
+  .form-control {
+    height: 48px;
+    font-size: 0.875rem;
+    border: 1px solid $grayOpacity24;
+    padding: 0 20px;
+
+    &:focus, &:active {
+      border: 1px solid $gray;
+    }
+  }
+
+  .drop-box .dropdown-toggle {
+    width: 100%;
+    color: #495057;
+  }
+
+  .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    color: inherit;
+    background-color: inherit;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 150%;
+    color: $gray;
+  }
+
+  &__title {
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: $black;
+  }
+
+  &__sub-title {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .nav-tabs {
+    border-bottom: 1px solid $white;
+  }
+
+  .nav-tabs .nav-link, .nav-tabs .mm-nav-link {
+    font-size: 1.125rem;
+    line-height: 23px;
+  }
+
+  .nav-tabs .nav-link.active, .nav-tabs .active.mm-nav-link, .nav-tabs .nav-item.show .nav-link, .nav-tabs .show.mm-nav-item .nav-link, .nav-tabs .nav-item.show .mm-nav-link, .nav-tabs .show.mm-nav-item .mm-nav-link {
+    color: $darkGray;
+  }
+  
+  .nav-tabs .nav-link:hover, .nav-tabs .mm-nav-link:hover, .nav-tabs .nav-link:focus, .nav-tabs .mm-nav-link:focus {
+    border-color: $white;
+  }
+
+  .nav-tabs .nav-link.active, .nav-tabs .active.mm-nav-link, .nav-tabs .nav-item.show .nav-link, .nav-tabs .show.mm-nav-item .nav-link, .nav-tabs .nav-item.show .mm-nav-link, .nav-tabs .show.mm-nav-item .mm-nav-link {
+    border-color: $white;
+    border-bottom: 1.5px solid $purple;
+  }
+
+  a {
+    color: $gray;
+  }
+
+  .nav-link, .mm-nav-link {
+    padding: 0.5rem 0;
+    margin-right: 6.25rem;
+  }
+
+  .row {
+    font-size: 1rem;
+  }
+
+  .key {
+    font-weight: bold;
+  }
+
+  .action-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 1rem;
+
+    button:nth-child(2) {
+      margin-left: 1rem;
+    }
+
+    button {
+      position: relative;
+
+      .spinner {
+        position: absolute;
+        top: 8px;
+        right: 0;
+      }
+    }
+  }
+
+  .react-datepicker__input-container input {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: $white;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .classification-total {
+    color: $purple;
+    line-height: 19px;
+  }
+
+  .unclassified {
+    color: $gray;
+    font-size: 0.875rem;
+    border-bottom: 1px solid rgba($gray, 0.24);
+    margin: 15px 0 25px;
+  }
+
+  .current-m {
+    color: $green;
+  }
+
+  .liner-gradient { 
+    background: linear-gradient(90deg, $purpleOpacity04 0%, $purpleOpacity03 100%);
+  }
+
+  .monthly-values-sub-tabs {
+    
+    .nav-tabs {
+      border-bottom: 1px solid $white;
+      position: relative;
+      overflow: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+      border: 1px solid rgba($gray, 0.24);
+      border-radius: 4px;
+      max-width: 536.5px;
+    }
+  
+    .nav-tabs .nav-link, .nav-tabs .mm-nav-link {
+      font-size: 0.875rem;
+      line-height: 16px;
+      padding: 15px 49px;
+      margin-right: 0;
+      color: $gray;
+      border-color: $white;
+    }
+  
+    .nav-tabs .nav-link.active, .nav-tabs .active.mm-nav-link, .nav-tabs .nav-item.show .nav-link, .nav-tabs .show.mm-nav-item .nav-link, .nav-tabs .nav-item.show .mm-nav-link, .nav-tabs .show.mm-nav-item .mm-nav-link {
+      color: $darkGray;
+      border: 1.5px solid $white;
+    }
+
+    #mothly-value-sub-tab-tab-null {
+      border: 1.5px solid $primary;
+      border-radius: 4px;
+      width: 133.61px;
+      height: 48px;
+      position: absolute;
+    }
+    
+    .nav-tabs a:first-child.active ~ #mothly-value-sub-tab-tab-null {
+      transform: translateX(0);
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    .nav-tabs a:nth-child(2).active ~ #mothly-value-sub-tab-tab-null {
+      transform: translateX(133.61px);
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    .nav-tabs a:nth-child(3).active ~ #mothly-value-sub-tab-tab-null{
+      transform: translateX(267.22px);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .nav-tabs a:nth-child(4).active ~ #mothly-value-sub-tab-tab-null{
+      transform: translateX(400.83px);
+      transition: transform 0.2s ease-in-out;
+    }
+
+  }
+
+  .classifications-sub-tabs {
+    
+    .nav-tabs {
+      border-bottom: 1px solid $white;
+      position: relative;
+      overflow: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+      border: 1px solid rgba($gray, 0.24);
+      border-radius: 4px;
+      max-width: 707.64px;
+    }
+  
+    .nav-tabs .nav-link, .nav-tabs .mm-nav-link {
+      font-size: 0.875rem;
+      line-height: 16px;
+      width: 176.41px;
+      min-width: 176.41px;
+      display: flex;
+      justify-content: center;
+      color: $gray;
+      border-color: $white;
+      padding: 15px 49px;
+      margin-right: 0;
+      white-space: nowrap;
+    }
+  
+    .nav-tabs .nav-link.active, .nav-tabs .active.mm-nav-link, .nav-tabs .nav-item.show .nav-link, .nav-tabs .show.mm-nav-item .nav-link, .nav-tabs .nav-item.show .mm-nav-link, .nav-tabs .show.mm-nav-item .mm-nav-link {
+      color: $darkGray;
+      border: 1.5px solid $white;
+    }
+
+    #classifications-sub-tab-tab-null {
+      border: 1.5px solid $primary;
+      border-radius: 4px;
+      width: 176.41px;
+      height: 48px;
+      position: absolute;
+    }
+    
+    .nav-tabs a:first-child.active ~ #classifications-sub-tab-tab-null {
+      transform: translateX(0);
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    .nav-tabs a:nth-child(2).active ~ #classifications-sub-tab-tab-null {
+      transform: translateX(176.41px);
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    .nav-tabs a:nth-child(3).active ~ #classifications-sub-tab-tab-null{
+      transform: translateX(352.82px);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .nav-tabs a:nth-child(4).active ~ #classifications-sub-tab-tab-null{
+      transform: translateX(529.23px);
+      transition: transform 0.2s ease-in-out;
+    }
+
+  }
+
 }

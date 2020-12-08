@@ -8,6 +8,7 @@ interface Size {
   md: string;
   sm: string;
   xs: string;
+  xxl: string;
 }
 
 export enum ModalTypeEnum {
@@ -62,7 +63,7 @@ const Modal: React.FC<Props> = ({
               <h5 className='modal-title'>{title}</h5>
               {canBeClosed && (
                 <div onClick={() => onClose()} className='close' role='button'>
-                  <AiOutlineClose className='modal-close'/>
+                  <AiOutlineClose className='modal-close' />
                 </div>
               )}
             </div>
