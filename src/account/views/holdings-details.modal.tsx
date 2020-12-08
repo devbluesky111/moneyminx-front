@@ -390,15 +390,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                     setValues({ ...values, 'originalClassifications': _classifications });
                 }
 
-                const checkDisabled = (tabName: string, element: string) => {
-                    for (let i = 0; i < values.originalClassifications[`${tabName}`].length; i++) {
-                        if (values.originalClassifications[`${tabName}`][i].classificationValue === element) {
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-
                 const handleIsShortChange = (e: React.ChangeEvent<any>) => {
                     setValues({ ...values, 'isShort': !values.isShort });
                 }
