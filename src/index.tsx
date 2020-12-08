@@ -7,21 +7,18 @@ import env from 'app/app.env';
 import App from './app/app';
 import * as serviceWorker from './serviceWorker';
 
-const TRACKER_1 = 'MM-TRACKER-1';
-const TRACKER_2 = 'MM-TRACKER-2';
-
 ReactGA.initialize(
   [
     {
       trackingId: env.GOOGLE_ANALYTICS_TRACKING_ID,
       gaOptions: {
-        name: TRACKER_1,
+        siteSpeedSampleRate: 100,
       },
     },
     {
       trackingId: env.GOOGLE_ADS_TRACKING_ID,
       gaOptions: {
-        name: TRACKER_2,
+        siteSpeedSampleRate: 100,
       },
     },
   ],
