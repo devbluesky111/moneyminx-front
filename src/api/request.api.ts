@@ -150,6 +150,26 @@ export const getAccountActivity = <P>(params?: P) => {
   return http.get(urls.auth.ACCOUNT_ACTIVITY, params);
 };
 
+export const getHoldingsDetails = (id: string) => {
+  return http.get(urls.auth.HOLDINGS_DETAILS.replace(':positionId', id));
+};
+
+export const getClassification = (filter: string) => {
+  return http.get(urls.auth.CLASSIFICATION.replace(':filter', filter));
+};
+
+export const getHoldingTypes = () => {
+  return http.get(urls.allocations.HOLDING_TYPES);
+};
+
+export const patchPosition = (id: string, data: any) => {
+  return http.patch(urls.auth.HOLDINGS_DETAILS.replace(':positionId', id), data);
+};
+
+export const postPosition = <T>(payload: T): Promise<ApiResponse> => {
+  return http.post(urls.auth.HOLDINGS_DETAILS.replace('/:positionId', ''), payload);
+};
+
 export const deleteAccount = (id: string): Promise<ApiResponse> => {
   return http.remove(urls.auth.PATCH_ACCOUNT.replace(':id', id));
 };

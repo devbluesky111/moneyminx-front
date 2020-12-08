@@ -1,3 +1,5 @@
+import { ModalType } from "common/components/modal";
+
 export interface AccountSubNavigationProps {
   providerLogo: string;
   providerName: string;
@@ -69,8 +71,19 @@ export interface AccountHolingsProps {
   holdings: AccountHoldingItem[];
 }
 
+export interface HoldingsDetailsModalProps {
+  holdingsDetailsModal: ModalType;
+  holdingsDetails?: any;
+  accountId?: number;
+  currency?: string;
+  closeNewPositionModal?: () => void;
+  closeEditPositionModal?: () => void;
+}
+
 export interface AccountHolingsTableProps {
-  holdings: AccountHoldingItem[];
+  holdingsData: AccountHoldingItem[];
+  openEditPositionModalFun: () => void;
+  closeEditPositionModalFun: () => void;
 }
 
 export interface AccountTransactionItem {
@@ -92,7 +105,7 @@ export interface AccountTransactionItem {
 }
 
 export interface AccountTransactionTableProps {
-  transactions: AccountTransactionItem[];
+  transactionsData: AccountTransactionItem[];
 }
 
 export interface AccountTransactionsProps {

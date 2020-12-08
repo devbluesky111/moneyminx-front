@@ -174,3 +174,16 @@ export const formater = (val: string) => {
 
   return desiredOutput;
 };
+
+export const getUnique = (array: string[]) => {
+  const uniqueArray = [];
+
+  // Loop through array values
+  for (const element of array) {
+    if (uniqueArray.indexOf(element) === -1) {
+      uniqueArray.push(element);
+    }
+  }
+
+  return uniqueArray;
+};

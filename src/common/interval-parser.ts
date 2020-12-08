@@ -1,5 +1,6 @@
 import { AccountItem } from 'networth/networth.type';
 import { AccountCategory } from 'networth/networth.enum';
+import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 
 import { parseUTCString } from './moment.helper';
 
@@ -26,4 +27,17 @@ export const parseAccountDetails = (accDetails: Record<AccountCategory, AccountI
 
     return acc;
   }, {});
+};
+
+export const isCurrent = (interval: string) =>
+  getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+
+export const gc = (interval: string) => {
+  if (interval) {
+    if (isCurrent(interval)) {
+      return 'current-m';
+    }
+  }
+  // return 'tab-hide';
+  return '';
 };

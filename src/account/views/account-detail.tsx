@@ -17,6 +17,7 @@ import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/r
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { storage } from 'app/app.storage';
 import { TimeIntervalEnum } from 'networth/networth.enum';
+import { useModal } from 'common/components/modal';
 
 import ActivityTable from './activity-table';
 import AccountTable from './account-table';
@@ -25,10 +26,9 @@ import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
 import AccountSubNavigation from './account-sub-navigation';
 import MMToolTip from '../../common/components/tooltip';
+import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
-
-
 
 const AccountDetail: React.FC = () => {
 
@@ -47,9 +47,12 @@ const AccountDetail: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [filterloading, setFilterLoading] = useState<boolean>(false);
   const [accSetting, setAccSetting] = useState<boolean>(false);
+  const [newPositonModalOpen, setNewPositonModalOpen] = useState<boolean>(false);
+  const [editPositonModalOpen, setEditPositonModalOpen] = useState<boolean>(false);
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
+  const holdingsDetailsModal = useModal();
 
   React.useEffect(() => {
     fetchAccountDetails(accountId);
@@ -61,7 +64,7 @@ const AccountDetail: React.FC = () => {
       if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
       if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
     }
-  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting]);
+  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen]);
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
@@ -136,6 +139,11 @@ const AccountDetail: React.FC = () => {
   const closeSidebar = () => {
     setAccSetting(false);
     storage.clear('isNew');
+  }
+
+  const openNewPositonModal = () => {
+    setNewPositonModalOpen(true);
+    holdingsDetailsModal.open()
   }
 
   return (
@@ -347,7 +355,7 @@ const AccountDetail: React.FC = () => {
                 <div className='mm-radio-bg' />
               </div>
               {AccountDetails?.isManual && tableType === 'holdings' && (
-                <Button variant='primary' className='mb-4 mm-account__btn'>
+                <Button variant='primary' className='mb-4 mm-account__btn' onClick={openNewPositonModal}>
                   Add Position
                 </Button>
               )}
@@ -357,7 +365,7 @@ const AccountDetail: React.FC = () => {
                 </Button>
               )}
             </div>
-            {AccountHoldings && tableType === 'holdings' && <AccountTable holdings={AccountHoldings?.holdings} />}
+            {AccountHoldings && tableType === 'holdings' && <AccountTable holdingsData={AccountHoldings?.holdings} openEditPositionModalFun={() => setEditPositonModalOpen(true)} closeEditPositionModalFun={() => setEditPositonModalOpen(false)} />}
 
             {tableType === 'activity' && (
               <div className='mm-account-activity-block'>
@@ -373,9 +381,10 @@ const AccountDetail: React.FC = () => {
                     <InfoIcon className='mt-n1 ml-2' />
                   </MMToolTip>
                 </div>
-                {AccountActivity && <ActivityTable transactions={AccountActivity?.transactions} />}
+                {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} />}
               </div>
             )}
+            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} closeNewPositionModal={() => setNewPositonModalOpen(false)} />}
           </div>
         )}
       {!loading && <AppFooter />}
