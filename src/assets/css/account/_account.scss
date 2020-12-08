@@ -453,6 +453,13 @@
     line-height: 19px;
   }
 
+  .unclassified {
+    color: $gray;
+    font-size: 0.875rem;
+    border-bottom: 1px solid rgba($gray, 0.24);
+    margin: 15px 0 25px;
+  }
+
   .current-m {
     color: $green;
   }
@@ -469,7 +476,7 @@
       overflow: auto;
       overflow-y: hidden;
       flex-wrap: nowrap;
-      border: 1px solid $gray;
+      border: 1px solid rgba($gray, 0.24);
       border-radius: 4px;
       max-width: 536.5px;
     }
@@ -526,7 +533,7 @@
       overflow: auto;
       overflow-y: hidden;
       flex-wrap: nowrap;
-      border: 1px solid $gray;
+      border: 1px solid rgba($gray, 0.24);
       border-radius: 4px;
       max-width: 707.64px;
     }

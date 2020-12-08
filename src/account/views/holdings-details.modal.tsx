@@ -44,6 +44,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
     const [classificationForCountry, setClassificationForCountry] = useState<string[]>([]);
     const [classificationForRisk, setClassificationForRisk] = useState<string[]>([]);
     const [holdingTypes, setHoldingTypes] = useState<string[]>([]);
+    const [unClassifiedTypeValue, setUnClassifiedTypeValue] = useState<number>(0);
+    const [unClassifiedAssetClassValue, setUnClassifiedAssetClassValue] = useState<number>(0);
+    const [unClassifiedCountryValue, setUnClassifiedCountryValue] = useState<number>(0);
+    const [unClassifiedRiskValue, setUnClassifiedRiskValue] = useState<number>(0);
 
     const handleCancel = () => {
         holdingsDetailsModal.close();
@@ -53,6 +57,10 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
         let filters = ['Type', 'Asset Class', 'Country', 'Risk'];
         for (let i = 0; i < filters.length; i++) {
             const { data, error } = await getClassification(filters[i]);
+            let index = data.indexOf('Unclassified');
+            if (index !== -1) {
+                data.splice(index, 1);
+            }
             if (!error) {
                 // console.log('fetchfilter: ', filters[i], data);
                 switch (filters[i]) {
@@ -92,6 +100,17 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
             (holdingsDetails?.intervalValues)[i].date = new Date((holdingsDetails?.intervalValues)[i]['interval']);
             _years.push((holdingsDetails?.intervalValues)[i].interval.split(' ')[1]);
         }
+
+        Object.keys(holdingsDetails?.classifications).forEach((key: any) => {
+            const value = (holdingsDetails?.classifications as any)[key];
+            console.log(key, value);
+            for (let i = 0; i < value.length; i++) {
+                if (value[i].classificationValue === 'Unclassified') {
+                    value.splice(i, 1);
+                    i--;
+                }
+            }
+        });
 
         let unique_years = getUnique(_years);
         setYears(unique_years);
@@ -197,14 +216,48 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                 //     return;
                 // }
 
-                let _classifications: any[] = [];
+                let possible = true;
 
+                let _classifications: any[] = [];
                 Object.keys(values.originalClassifications).forEach((key: any) => {
                     const value = (values.originalClassifications as any)[key];
                     value.forEach((element: any) => {
+                        if (!element.classificationValue) {
+                            alert('Please select type or remove it!');
+                            possible = false;
+                            return;
+                        }
                         _classifications.push(element);
                     });
+
+                    let allocation = 0;
+                    switch (key) {
+                        case 'Type':
+                            allocation = unClassifiedTypeValue;
+                            break;
+                        case 'Asset Class':
+                            allocation = unClassifiedAssetClassValue;
+                            break;
+                        case 'Country':
+                            allocation = unClassifiedCountryValue;
+                            break;
+                        case 'Risk':
+                            allocation = unClassifiedRiskValue;
+                            break;
+                    }
+                    _classifications.push({
+                        accountId: holdingsDetails?.accountId,
+                        allocation: allocation,
+                        classificationType: key,
+                        classificationValue: 'Unclassified',
+                        positionId: holdingsDetails?.id,
+                        yodleeId: null
+                    });
                 });
+
+                if (!possible) {
+                    return;
+                }
 
                 let _values: any[] = [];
 
@@ -349,6 +402,32 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
 
                 const handleIsShortChange = (e: React.ChangeEvent<any>) => {
                     setValues({ ...values, 'isShort': !values.isShort });
+                }
+
+                const getUnclassifiedRest = (tabName: string) => {
+                    let _classifications = values.originalClassifications;
+
+                    let sum = 0;
+                    for (let i = 0; i < _classifications[`${tabName}`].length; i++) {
+                        const allocation = _classifications[`${tabName}`][i].allocation || 0;
+                        sum += allocation;
+                    }
+                    switch (tabName) {
+                        case 'Type':
+                            setUnClassifiedTypeValue(100 - sum);
+                            break;
+                        case 'Asset Class':
+                            setUnClassifiedAssetClassValue(100 - sum);
+                            break;
+                        case 'Country':
+                            setUnClassifiedCountryValue(100 - sum);
+                            break;
+                        case 'Risk':
+                            setUnClassifiedRiskValue(100 - sum);
+                            break;
+                    }
+
+                    return 100 - sum;
                 }
 
                 return (
@@ -1937,6 +2016,16 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <AddNewIcon onClick={() => addNewClassification('Type')} />
                                                                 </div>
                                                             </div>
+                                                            <div className='row pb-4 align-items-center unclassified'>
+                                                                <div className='col-sm'>
+                                                                    <span className={getUnclassifiedRest('Type') < 0 ? 'text-danger' : ''}>Unclassified</span>
+                                                                </div>
+                                                                <div className='col-sm d-flex justify-content-end align-items-center'>
+                                                                    <div className='form-field-group'>
+                                                                        <span className={getUnclassifiedRest('Type') < 0 ? 'text-danger' : ''}>{getUnclassifiedRest('Type')} %</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             {values.originalClassifications.Type.map((item: any, index: number) => (
                                                                 <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
@@ -1985,6 +2074,16 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                         100 %
                                                                     </div>
                                                                     <AddNewIcon onClick={() => addNewClassification('Asset Class')} />
+                                                                </div>
+                                                            </div>
+                                                            <div className='row pb-4 align-items-center unclassified'>
+                                                                <div className='col-sm'>
+                                                                    <span className={getUnclassifiedRest('Asset Class') < 0 ? 'text-danger' : ''}>Unclassified</span>
+                                                                </div>
+                                                                <div className='col-sm d-flex justify-content-end align-items-center'>
+                                                                    <div className='form-field-group'>
+                                                                        <span className={getUnclassifiedRest('Asset Class') < 0 ? 'text-danger' : ''}>{getUnclassifiedRest('Asset Class')} %</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             {values.originalClassifications['Asset Class'].map((item: any, index: number) => (
@@ -2037,6 +2136,16 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <AddNewIcon onClick={() => addNewClassification('Country')} />
                                                                 </div>
                                                             </div>
+                                                            <div className='row pb-4 align-items-center unclassified'>
+                                                                <div className='col-sm'>
+                                                                    <span className={getUnclassifiedRest('Country') < 0 ? 'text-danger' : ''}>Unclassified</span>
+                                                                </div>
+                                                                <div className='col-sm d-flex justify-content-end align-items-center'>
+                                                                    <div className='form-field-group'>
+                                                                        <span className={getUnclassifiedRest('Country') < 0 ? 'text-danger' : ''}>{getUnclassifiedRest('Country')} %</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             {values.originalClassifications.Country.map((item: any, index: number) => (
                                                                 <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
@@ -2087,6 +2196,16 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                                                     <AddNewIcon onClick={() => addNewClassification('Risk')} />
                                                                 </div>
                                                             </div>
+                                                            <div className='row pb-4 align-items-center unclassified'>
+                                                                <div className='col-sm'>
+                                                                    <span className={getUnclassifiedRest('Risk') < 0 ? 'text-danger' : ''}>Unclassified</span>
+                                                                </div>
+                                                                <div className='col-sm d-flex justify-content-end align-items-center'>
+                                                                    <div className='form-field-group'>
+                                                                        <span className={getUnclassifiedRest('Risk') < 0 ? 'text-danger' : ''}>{getUnclassifiedRest('Risk')} %</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             {values.originalClassifications.Risk.map((item: any, index: number) => (
                                                                 <div className='row pt-2 pb-2 align-items-center' key={index}>
                                                                     <div className='col-sm'>
@@ -2131,7 +2250,7 @@ const HoldingsDetailsModal: React.FC<SettingModalProps> = ({ holdingsDetailsModa
                                         <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel}>
                                             Cancel
                                         </button>
-                                        <button className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' type='submit'>
+                                        <button className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' type='submit' disabled={getUnclassifiedRest('Type') < 0}>
                                             {loading ? (
                                                 <>
                                                     <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />
