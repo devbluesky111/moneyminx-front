@@ -6,8 +6,8 @@ import { Link, useHistory } from 'react-router-dom';
 
 import moment from 'moment';
 import { Formik } from 'formik';
-import { Account } from 'auth/auth.types';
 import { MMCategories } from 'auth/auth.enum';
+import { fNumber } from 'common/number.helper';
 import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
 import { makeFormFields } from 'auth/auth.helper';
@@ -22,6 +22,8 @@ import { loginValidationSchema } from 'auth/auth.validation';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { deleteAccount, patchAccount } from 'api/request.api';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
+import { Account, Mortgage, MortgageList } from 'auth/auth.types';
+import { initialMortgage } from 'auth/data/account-settings.data';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
@@ -31,6 +33,7 @@ import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
 
+import MortgageDropdown from './mortgage-dropdown';
 import DeleteAccountModal from './delete-account.modal';
 
 interface Props {
@@ -45,6 +48,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
   const { accounts } = useAuthState();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
+  const [accountCategory, setAccountCategory] = useState<string>('');
 
   const { loading: fetchingAccountType, data: accountTypes, error } = useAccountType();
   const { subType: accountSubTypes, error: subTypeError } = useAccountSubtype(accountType);
@@ -81,7 +85,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
    */
   useEffect(() => {
     if (currentAccount?.category?.mmAccountSubType) {
-      return setAccountSubtype(currentAccount?.category?.mmAccountSubType);
+      return setAccountSubtype(currentAccount.category.mmAccountSubType);
     }
   }, [currentAccount]);
 
@@ -107,7 +111,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
   const hasAccountSubType = accountSubTypes.some(Boolean);
 
-  const dMortgageAccounts: string[] = mortgageAccounts?.length ? ['', ...mortgageAccounts] : [''];
+  const dMortgageAccounts: MortgageList = mortgageAccounts?.length
+    ? [initialMortgage, ...mortgageAccounts]
+    : [initialMortgage];
 
   const isLastAccount = (): boolean => {
     if (accounts && currentAccount) {
@@ -138,7 +144,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
     <Formik
       initialValues={{
         currency: currentFormFields?.currency || CurrencyOptions.USD,
-        mmCategory: currentAccount?.category?.mmCategory || '',
+        mmCategory: accountCategory || currentAccount?.category?.mmCategory || '',
         accountName: currentAccount?.accountName || '',
         city: currentFormFields?.city || '',
         state: currentFormFields?.state || '',
@@ -187,6 +193,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         employerMatchContribution: currentFormFields?.employerMatchContribution || '',
         estimatedAnnualPrincipalReduction: currentFormFields?.estimatedAnnualPrincipalReduction || '',
       }}
+      enableReinitialize
       validationSchema={loginValidationSchema}
       onSubmit={async (values, actions) => {
         const mapping: StringKeyObject = {
@@ -243,7 +250,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         const { setFieldValue, values, handleChange, setValues } = props;
 
         const setCategory = (cat: string) => {
-          setFieldValue('mmCategory', cat);
+          return setAccountCategory(cat);
         };
 
         const handleAccountChange = (e: React.ChangeEvent<any>) => {
@@ -259,6 +266,15 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
         const handleSelectChange = (e: React.ChangeEvent<any>) => {
           setValues({ ...values, [e.target.name]: e.target.value });
+        };
+
+        const handleMortgageChange = (e: React.ChangeEvent<any>, mortgage: Mortgage) => {
+          e.preventDefault();
+          setValues({
+            ...values,
+            associatedMortgage: mortgage.accountName,
+            principalBalance: mortgage.balance,
+          });
         };
 
         return (
@@ -816,10 +832,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 <ul className='account-type-list'>
                   <li className={`mt-5 ${hc('associatedMortgage')}`}>
                     <span className='form-subheading'>Associated Mortgage</span>
-                    <SelectInput
-                      args={dMortgageAccounts}
+                    <MortgageDropdown
+                      mortgageList={dMortgageAccounts}
                       name='associatedMortgage'
-                      onChange={handleChange}
+                      onChange={handleMortgageChange}
                       value={values.associatedMortgage}
                     />
                   </li>
@@ -832,7 +848,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
               <div className={`form-divider ${hc('calculatedEquity')}`}>
                 <div className='d-flex align-items-center justify-content-between'>
                   <p>Calculated Equity</p>
-                  <p>{+values.ownEstimate - +values.principalBalance}</p>
+                  <p>{fNumber(+values.ownEstimate - +values.principalBalance, 2)}</p>
                 </div>
               </div>
 
