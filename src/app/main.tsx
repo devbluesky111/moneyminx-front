@@ -23,7 +23,10 @@ export default function Main() {
   const dispatch = useAuthDispatch();
 
   useEffect(() => {
-    ReactPixel.init(env.FACEBOOK_PIXEL_CODE);
+    ReactPixel.init(env.FACEBOOK_PIXEL_CODE, {} as any, {
+      autoConfig: true,
+      debug: false,
+    });
   }, []);
 
   useEffect(() => {

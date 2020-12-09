@@ -6,6 +6,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import queryString from 'query-string';
+import usePixel from 'common/hooks/usePixel';
 import { AuthLayout } from 'layouts/auth.layout';
 import validation from 'lang/en/validation.json';
 import { useModal } from 'common/components/modal';
@@ -34,14 +35,16 @@ const Signup = () => {
 };
 export default Signup;
 export const SignupMainSection = () => {
+  const [fbToken, setFBToken] = useState<string>('');
+  const [associateMessage, setAssociateMessage] = useState<string>('');
+
+  const { fbq } = usePixel();
   const history = useHistory();
   const location = useLocation();
   const associateModal = useModal();
-  const emailNeededModal = useModal();
   const dispatch = useAuthDispatch();
-  const [fbToken, setFBToken] = useState<string>('');
+  const emailNeededModal = useModal();
   const [visible, setVisible] = useState<boolean>(false);
-  const [associateMessage, setAssociateMessage] = useState<string>('');
 
   const priceId = queryString.parse(location.search).priceId as string;
 
@@ -53,6 +56,10 @@ export const SignupMainSection = () => {
   const reg4 = /(^.*[A-Z].*$)/;
 
   const visibilityIcon = visible ? <VisibleIcon /> : <HiddenIcon />;
+
+  const triggerPixelTrackEvent = () => {
+    fbq();
+  };
 
   const getValidationText = () => {
     if (validator < 2) {
@@ -189,6 +196,8 @@ export const SignupMainSection = () => {
                   onSubmit={async (values, actions) => {
                     const hasEmail = values.email;
                     const hasPassword = values.password;
+
+                    triggerPixelTrackEvent();
 
                     if (!hasEmail) {
                       actions.setFieldError('email', validation.EMAIL_IS_EMPTY);
