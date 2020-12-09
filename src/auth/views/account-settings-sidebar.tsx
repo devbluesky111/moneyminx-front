@@ -1,5 +1,6 @@
 import React, { createRef, useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
 
 import { Dictionary } from 'lodash';
 import { Account } from 'auth/auth.types';
@@ -10,7 +11,6 @@ import { useAuthState, useAuthDispatch } from 'auth/auth.context';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
 
 import AccountSettingForm from './inc/account-setting-form';
-import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   setFinish?: () => void;
@@ -117,9 +117,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
         <div className='credentials-content'>
           <div className='top-content-wrap'>
             <h2><Skeleton count={1}/></h2>
-            <p>
-              <Skeleton count={3}/>
-            </p>
+            <p><Skeleton count={3}/></p>
           </div>
           <div className='form-wrap'>
             <ul className='bank-list'>
@@ -130,13 +128,8 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
                 <Skeleton width={120} height={80}/>
               </li>
             </ul>
-
-            <div className='form-heading'>
-              <Skeleton count={20}/>
-            </div>
-            <p className='flex-box learn-more-security'>
-              <Skeleton count={1}/>
-            </p>
+            <div className='form-heading'><Skeleton count={20}/></div>
+            <p className='flex-box learn-more-security'><Skeleton count={1}/></p>
           </div>
         </div>
       </div>
