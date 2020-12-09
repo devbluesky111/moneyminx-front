@@ -39,7 +39,7 @@ const DisabledInput: React.FC<DisabledInputProps> = ({ currencySymbol }) => {
     )
 }
 
-const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDetailsModal, holdingsDetails, closeEditPositionModal, accountId, currency, closeNewPositionModal, currencySymbol }) => {
+const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDetailsModal, holdingsDetails, closeEditPositionModal, accountId, closeNewPositionModal, currencySymbol }) => {
 
     const [loading, setLoading] = useState(false);
     const [years, setYears] = useState<string[]>([]);
@@ -2191,7 +2191,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                         </Tab>
                                     </Tabs>
                                     <div className='action-wrapper mt-3'>
-                                        <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel}>
+                                        <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel} type='button'>
                                             Cancel
                                         </button>
                                         <button className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' type='submit' disabled={getUnclassifiedRest('Type') < 0}>

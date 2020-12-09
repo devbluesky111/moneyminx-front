@@ -400,7 +400,7 @@ const AccountDetail: React.FC = () => {
                 {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} openEditActivityModalFun={() => setEditActivityModalOpen(true)} closeEditActivityModalFun={() => setEditActivityModalOpen(false)} currencySymbol={currencySymbol} />}
               </div>
             )}
-            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} closeNewPositionModal={() => setNewPositonModalOpen(false)} currencySymbol={currencySymbol} />}
+            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} closeNewPositionModal={() => setNewPositonModalOpen(false)} currencySymbol={currencySymbol} />}
             {newActivityModalOpen && <ActivityDetailsModal activityDetailsModal={activityDetailsModal} accountId={AccountDetails?.id} closeNewActivityModal={() => setNewActivityModalOpen(false)} currencySymbol={currencySymbol} />}
           </div>
         )}

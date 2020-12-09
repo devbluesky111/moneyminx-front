@@ -78,7 +78,6 @@ export interface HoldingsDetailsModalProps {
   holdingsDetailsModal: ModalType;
   holdingsDetails?: any;
   accountId?: number;
-  currency?: string;
   closeNewPositionModal?: () => void;
   closeEditPositionModal?: () => void;
   currencySymbol: string;
@@ -117,7 +116,7 @@ export interface AccountTransactionItem {
 
 export interface ActivityDetailsModalProps {
   activityDetailsModal: ModalType;
-  transaction?: AccountTransactionItem;
+  activityDetails?: AccountTransactionItem;
   accountId?: number;
   currencySymbol: string;
   closeNewActivityModal?: () => void;

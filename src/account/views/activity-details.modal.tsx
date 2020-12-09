@@ -9,13 +9,12 @@ import { Modal } from 'common/components/modal';
 import { getActivityTypes, patchTransaction, postTransaction } from 'api/request.api';
 import { SelectInput } from 'common/components/input/select.input';
 
-const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDetailsModal, transaction, closeEditActivityModal, accountId, closeNewActivityModal, currencySymbol }) => {
+const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDetailsModal, activityDetails, closeEditActivityModal, accountId, closeNewActivityModal, currencySymbol }) => {
 
     const [loading, setLoading] = useState(false);
     const [activityTypes, setActivityTypes] = useState<string[]>([]);
 
     const handleCancel = () => {
-        closeEditActivityModal?.();
         activityDetailsModal.close();
     }
 
@@ -37,19 +36,19 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
     return (
         <Formik
             initialValues={{
-                date: transaction && transaction.date ? new Date(transaction.date) : new Date(),
-                type: transaction?.type || '',
-                description: transaction?.description || '',
-                amount: transaction?.amount || 0,
-                balance: transaction?.balance || 0,
-                income: transaction?.income || false,
-                cashFlow: transaction?.cashFlow || false,
-                isIgnored: transaction?.isIgnored || false,
+                date: activityDetails && activityDetails.date ? new Date(activityDetails.date) : new Date(),
+                type: activityDetails?.type || '',
+                description: activityDetails?.description || '',
+                amount: activityDetails?.amount || 0,
+                balance: activityDetails?.balance || 0,
+                income: activityDetails?.income || false,
+                cashFlow: activityDetails?.cashFlow || false,
+                isIgnored: activityDetails?.isIgnored || false,
                 accountId: accountId
             }}
             onSubmit={async (values: any, actions: any) => {
 
-                const activityId = transaction?.id;
+                const activityId = activityDetails?.id;
 
                 let data = {};
 
@@ -91,7 +90,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
         >
             {(props) => {
                 const { values, handleChange, setValues } = props;
-                // console.log(values);
+
                 const handleSelectChange = (e: React.ChangeEvent<any>) => {
                     setValues({ ...values, [e.target.name]: e.target.value });
                 };
@@ -103,10 +102,10 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
 
                 return (
                     <form onSubmit={props.handleSubmit}>
-                        <Modal {...activityDetailsModal.props} title={''} size='xxl' canBeClosed onClose={() => activityDetailsModal.close()}>
+                        <Modal {...activityDetailsModal.props} title={activityDetails?.description || 'New Activity'} size='xxl' canBeClosed onClose={() => activityDetailsModal.close()}>
                             <div className='modal-wrapper mm-holdings-details-modal' >
                                 <div className='mm-manual-account-modal__title mt-3'>
-                                    {transaction && !transaction.isManual ?
+                                    {activityDetails && !activityDetails.isManual ?
                                         <div className='row align-items-center'>
                                             <div className='col-sm'>
                                                 <div className='form-field-group'>
@@ -231,7 +230,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                         </div>
                                     }
                                     <div className='action-wrapper mt-3'>
-                                        <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel}>
+                                        <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel} type='button'>
                                             Cancel
                                         </button>
                                         <button className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' type='submit'>
