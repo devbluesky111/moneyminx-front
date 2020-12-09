@@ -138,8 +138,8 @@ export const patchAccount = (id: string, data: any) => {
   return http.patch(urls.auth.PATCH_ACCOUNT.replace(':id', id), data);
 };
 
-export const getAccountDetails = (id: string) => {
-  return http.get(urls.auth.ACCOUNT_DETAILS.replace(':id', id));
+export const getAccountDetails = (id: string, baseCurrency: boolean) => {
+  return http.get(urls.auth.ACCOUNT_DETAILS.replace(':id', id).replace(':baseCurrency', baseCurrency.toString()));
 };
 
 export const getAccountHoldings = <P>(params?: P) => {

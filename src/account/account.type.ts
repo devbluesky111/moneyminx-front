@@ -3,6 +3,8 @@ import { ModalType } from "common/components/modal";
 export interface AccountSubNavigationProps {
   providerLogo: string;
   providerName: string;
+  baseCurrency: boolean;
+  toggleBaseCurrency: () => void;
 }
 
 export interface AccountChartItem {
@@ -14,6 +16,7 @@ export interface AccountChartItem {
 export interface AccountBarGraphProps {
   data: AccountChartItem[];
   curInterval: string;
+  currencySymbol: string;
 }
 
 export interface AccountHoldingItem {
@@ -84,6 +87,7 @@ export interface AccountHolingsTableProps {
   holdingsData: AccountHoldingItem[];
   openEditPositionModalFun: () => void;
   closeEditPositionModalFun: () => void;
+  currencySymbol: string;
 }
 
 export interface AccountTransactionItem {
@@ -106,6 +110,7 @@ export interface AccountTransactionItem {
 
 export interface AccountTransactionTableProps {
   transactionsData: AccountTransactionItem[];
+  currencySymbol: string;
 }
 
 export interface AccountTransactionsProps {

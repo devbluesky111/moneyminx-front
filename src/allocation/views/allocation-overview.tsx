@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { fNumber } from 'common/number.helper';
-import { shortId } from 'common/common-helper';
-import { useModal } from 'common/components/modal';
-import { getStringDate } from 'common/moment.helper';
-import { MMPieChart } from 'common/components/pie-chart';
-import SettingModal from 'allocation/modal/setting-modal';
 import ChartShareModal from 'allocation/modal/chart-share-modal';
 import FieldChangeModal from 'allocation/modal/field-change-modal';
+import SettingModal from 'allocation/modal/setting-modal';
+import useSettings from 'setting/hooks/useSettings';
 import { AllocationSectionEnum } from 'allocation/allocation.enum';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
+import { fNumber } from 'common/number.helper';
+import { getStringDate } from 'common/moment.helper';
+import { getCurrencySymbol } from 'common/currency-helper';
+import { MMPieChart } from 'common/components/pie-chart';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
 import { ReactComponent as MeasureUpIcon } from 'assets/images/allocation/measure-up-icon.svg';
 import { ReactComponent as AllocationChartSVG } from 'assets/images/allocation/allocation-chart.svg';
 import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/allocation-legend.svg';
+import { shortId } from 'common/common-helper';
+import { useModal } from 'common/components/modal';
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
@@ -25,9 +27,16 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
   const chartShareModal = useModal();
   const fieldChangeModal = useModal();
   const chartSettingModal = useModal();
+  const { data } = useSettings();
   const [section, setSection] = useState<AllocationSectionEnum>(AllocationSectionEnum.MY_ALLOCATION);
-
+  const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const [hidden, setHidden] = useState<string[]>(['']);
+
+  useEffect(() => {
+    if (data) {
+      setCurrencySymbol(getCurrencySymbol(data.currency));
+    }
+  }, [data]);
 
   const getTotal = (key: string) => {
     return chartData.find((datum) => datum.group === key);
@@ -112,8 +121,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                   className='text-center text-md-left d-xl-block d-md-flex align-items-md-center p-b-4 allocation-page-chart-wrapper'
                   id='current-allocation-pie-chart'
                 >
-                  <MMPieChart chartData={chartData} />
-                  <AllocationLegend chartData={chartData} />
+                  <MMPieChart chartData={chartData} currencySymbol={currencySymbol} />
+                  <AllocationLegend chartData={chartData} currencySymbol={currencySymbol} />
                 </div>
                 <div className='mm-allocation-overview__table'>
                   <table>
@@ -159,7 +168,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                       {fNumber(al.per || 0, 2)}%
                                     </td>
                                     <td>
-                                      <span className='d-block'>Value</span>{al.allocationValue ? `$${fNumber(al.allocationValue, 2)}` : 0}
+                                      <span className='d-block'>Value</span>{al.allocationValue ? `${currencySymbol}${fNumber(al.allocationValue, 2)}` : 0}
                                     </td>
                                   </tr>
                                 </React.Fragment>
@@ -170,7 +179,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                             <tr className='mm-allocation-overview__table--footer'>
                               <td>Total</td>
                               <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
-                              <td>${fNumber(getTotal(allocationKey)?.total || 0, 2)}</td>
+                              <td>{currencySymbol}{fNumber(getTotal(allocationKey)?.total || 0, 2)}</td>
                             </tr>
                           </tbody>
                         </React.Fragment>
@@ -183,7 +192,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
           </div>
 
           <div className={getSectionClass(AllocationSectionEnum.PREVIOUS_ALLOCATION)}>
-            <SelectedAllocations filter={filter} />
+            <SelectedAllocations filter={filter} currencySymbol={currencySymbol} />
           </div>
 
           <div className={getSectionClass(AllocationSectionEnum.SIMILAR_ALLOCATION)}>
@@ -222,8 +231,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
       <SettingModal settingModal={chartSettingModal} />
       <ChartShareModal
         chartShareModal={chartShareModal}
-        chartComponent={<MMPieChart chartData={chartData} share />}
-        chartLegendComponent={<AllocationLegend chartData={chartData} sharing />}
+        chartComponent={<MMPieChart chartData={chartData} currencySymbol={currencySymbol} share />}
+        chartLegendComponent={<AllocationLegend chartData={chartData} currencySymbol={currencySymbol} sharing />}
       />
       <FieldChangeModal fieldChangeModal={fieldChangeModal} />
     </section>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import ReactDatePicker from 'react-datepicker';
 import { Tabs, Tab, Form } from 'react-bootstrap';
@@ -94,12 +94,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
         }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         fetchClassification();
         fetchHoldingTypes();
     }, [])
 
-    React.useEffect(() => {
+    useEffect(() => {
 
         let _years = []
         for (let i = 0; i < holdingsDetails?.intervalValues.length; i++) {

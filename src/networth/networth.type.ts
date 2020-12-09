@@ -72,6 +72,7 @@ export interface Action {
 export interface NetworthBarGraphProps {
   networth: NetworthItem[];
   fCategories: string[];
+  currencySymbol: string;
 }
 
 export interface NetworthFilterProps {

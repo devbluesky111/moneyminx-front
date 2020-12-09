@@ -8,6 +8,7 @@ import { useAllocationState } from 'allocation/allocation.context';
 interface Props {
   chartData: ChartData;
   sharing?: boolean;
+  currencySymbol: string;
 }
 
 const COLORS = [
@@ -33,7 +34,7 @@ const COLORS = [
   '#14b8b8',
 ];
 
-const AllocationLegend: React.FC<Props> = ({ chartData, sharing = false }) => {
+const AllocationLegend: React.FC<Props> = ({ chartData, sharing = false, currencySymbol }) => {
   const { allocationChartSetting } = useAllocationState();
   const showAmounts = allocationChartSetting?.showAmounts;
 
@@ -48,7 +49,7 @@ const AllocationLegend: React.FC<Props> = ({ chartData, sharing = false }) => {
           <span className='legend-label col-7'>
             {ellipseText(data.group)} - {fNumber(data.per || 0, 2)}%
           </span>
-          <span className='legend-amount col-4'>${numberWithCommas(fNumber(data.total, 0))}</span>
+          <span className='legend-amount col-4'>{currencySymbol}{numberWithCommas(fNumber(data.total, 0))}</span>
         </>
       );
     }
