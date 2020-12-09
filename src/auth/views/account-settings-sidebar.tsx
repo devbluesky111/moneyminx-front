@@ -7,10 +7,10 @@ import { groupByProviderName } from 'auth/auth.helper';
 import { getRefreshedProfile } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { useAuthState, useAuthDispatch } from 'auth/auth.context';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as SecurityIcon } from 'assets/images/signup/security.svg';
 
 import AccountSettingForm from './inc/account-setting-form';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   setFinish?: () => void;
@@ -112,7 +112,35 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
   }, [currentProviderAccounts, accountsByProviderName, clickEvent, setFinish]);
 
   if (!accounts || !currentAccount || !currentProviderAccounts) {
-    return <CircularSpinner />;
+    return (
+      <div className='bg-white credentials-wrapper account-setting'>
+        <div className='credentials-content'>
+          <div className='top-content-wrap'>
+            <h2><Skeleton count={1}/></h2>
+            <p>
+              <Skeleton count={3}/>
+            </p>
+          </div>
+          <div className='form-wrap'>
+            <ul className='bank-list'>
+              <li role='button'>
+                <Skeleton width={120} height={80}/>
+              </li>
+              <li role='button'>
+                <Skeleton width={120} height={80}/>
+              </li>
+            </ul>
+
+            <div className='form-heading'>
+              <Skeleton count={20}/>
+            </div>
+            <p className='flex-box learn-more-security'>
+              <Skeleton count={1}/>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const handleProviderChange = (provider: string) => {
