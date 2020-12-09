@@ -659,9 +659,13 @@
   }
 
   .description {
-    font-size: 1rem;
-    line-height: 150%;
-    color: $gray;
+    min-width: 250px;
+  }
+
+  @media(max-width: 1070px) {
+    .form-field-group {
+      margin-top: 1rem;
+    }
   }
 
   &__title {

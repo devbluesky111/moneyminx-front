@@ -125,7 +125,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                                 </div>
                                             </div>
                                             <div className='col-sm'>
-                                                <div className='form-field-group'>
+                                                <div className='form-field-group description'>
                                                     <Form.Control
                                                         onChange={handleChange}
                                                         name='description'
@@ -186,7 +186,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                                 </div>
                                             </div>
                                             <div className='col-sm'>
-                                                <div className='form-field-group'>
+                                                <div className='form-field-group description'>
                                                     <Form.Control
                                                         onChange={handleChange}
                                                         name='description'
