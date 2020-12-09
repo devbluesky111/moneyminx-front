@@ -8,6 +8,7 @@ import { ActivityDetailsModalProps } from 'account/account.type';
 import { Modal } from 'common/components/modal';
 import { getActivityTypes, patchTransaction, postTransaction } from 'api/request.api';
 import { SelectInput } from 'common/components/input/select.input';
+import ReactDatePicker from 'react-datepicker';
 
 const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDetailsModal, activityDetails, closeEditActivityModal, accountId, closeNewActivityModal, currencySymbol }) => {
 
@@ -108,7 +109,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                     {activityDetails && !activityDetails.isManual ?
                                         <div className='row align-items-center'>
                                             <div className='col-sm'>
-                                                <div className='form-field-group'>
+                                                <div className='form-field-group text-light'>
                                                     {moment(values.date).format('MM/DD/YYYY')}
                                                 </div>
                                             </div>
@@ -133,12 +134,12 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                                 </div>
                                             </div>
                                             <div className='col-sm'>
-                                                <div className='form-field-group'>
+                                                <div className='form-field-group text-light'>
                                                     {currencySymbol}{values.amount}
                                                 </div>
                                             </div>
                                             <div className='col-sm'>
-                                                <div className='form-field-group'>
+                                                <div className='form-field-group text-light'>
                                                     {currencySymbol}{values.balance}
                                                 </div>
                                             </div>
@@ -165,9 +166,13 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                         </div> :
                                         <div className='row align-items-center'>
                                             <div className='col-sm'>
-                                                <div className='form-field-group text-light'>
-                                                    {moment(values.date).format('MM/DD/YYYY')}
-                                                </div>
+                                                <ReactDatePicker
+                                                    name='date'
+                                                    selected={values.date ? new Date(values.date) : null}
+                                                    onChange={(val: Date) => {
+                                                        setFieldValue('date', moment(val).toISOString());
+                                                    }}
+                                                />
                                             </div>
                                             <div className='col-sm'>
                                                 <div className='form-field-group'>
