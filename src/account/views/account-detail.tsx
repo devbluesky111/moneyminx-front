@@ -327,7 +327,7 @@ const AccountDetail: React.FC = () => {
                 </ul>
                 <div className='chartbox'>
                   {AccountHoldings && curAccountHoldingsItem && (
-                    <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} currency={AccountDetails?.currency || 'USD'} />
+                    <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} currencySymbol={currencySymbol} />
                   )}
                 </div>
               </div>
@@ -372,7 +372,7 @@ const AccountDetail: React.FC = () => {
                 </Button>
               )}
             </div>
-            {AccountHoldings && tableType === 'holdings' && <AccountTable holdingsData={AccountHoldings?.holdings} openEditPositionModalFun={() => setEditPositonModalOpen(true)} closeEditPositionModalFun={() => setEditPositonModalOpen(false)} />}
+            {AccountHoldings && tableType === 'holdings' && <AccountTable holdingsData={AccountHoldings?.holdings} openEditPositionModalFun={() => setEditPositonModalOpen(true)} closeEditPositionModalFun={() => setEditPositonModalOpen(false)} currencySymbol={currencySymbol} />}
 
             {tableType === 'activity' && (
               <div className='mm-account-activity-block'>
@@ -388,7 +388,7 @@ const AccountDetail: React.FC = () => {
                     <InfoIcon className='mt-n1 ml-2' />
                   </MMToolTip>
                 </div>
-                {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} />}
+                {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} currencySymbol={currencySymbol} />}
               </div>
             )}
             {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} closeNewPositionModal={() => setNewPositonModalOpen(false)} />}

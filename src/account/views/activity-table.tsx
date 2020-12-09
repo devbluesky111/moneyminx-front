@@ -7,8 +7,7 @@ import { ReactComponent as Info } from '../../assets/icons/info.svg';
 import { ReactComponent as Revert } from '../../assets/icons/revert.svg';
 import { ReactComponent as Edited } from '../../assets/icons/icon-edit.svg';
 
-
-export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transactionsData }) => {
+export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transactionsData, currencySymbol }) => {
 
   const [transactions, setTransactions] = useState<AccountTransactionItem[]>([]);
 
@@ -39,8 +38,8 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Date</span>{item.date}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Activity Type</span>{item.type}</div>
                   <div className='col-4 col-md mm-activity-table__body--data d-none d-xl-block'>{item.description}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Amount</span>{(item.amount) ? `$${numberWithCommas(fNumber(item.amount, 0))}` : 0}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Balance</span>{(item.balance) ? `$${numberWithCommas(fNumber(item.balance, 0))}` : 0}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Amount</span>{(item.amount) ? currencySymbol : ''}{(item.amount) ? `${numberWithCommas(fNumber(item.amount, 0))}` : 0}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Balance</span>{(item.amount) ? currencySymbol : ''}{(item.balance) ? `${numberWithCommas(fNumber(item.balance, 0))}` : 0}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Income</span>{item.income ? 'Yes' : 'No'}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Cash Flow</span>{item.cashFlow ? 'Yes' : 'No'}</div>
                   <div className='col-4 col-md-1 mm-activity-table__body--data'><Edited className='mr-3 mm-activity-table__body--data-edited d-none d-xl-inline' /><Revert /></div>

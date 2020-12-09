@@ -4,10 +4,9 @@ import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, Cartesi
 import { AccountBarGraphProps } from 'account/account.type';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { formatter, getInterval } from 'common/bar-graph-helper';
-import { getCurrencySymbol } from 'common/currency-helper';
 
 const CustomTooltip = (props: any) => {
-  const { active, payload, symbol } = props;
+  const { active, payload, currencySymbol } = props;
   if (active) {
     return (
       <div className='bar-tooltip'>
@@ -15,7 +14,7 @@ const CustomTooltip = (props: any) => {
           {payload?.[0]?.payload.interval}
         </div>
         <div className='item-value'>
-          {payload?.[0]?.payload.value ? `${symbol}${numberWithCommas(fNumber(payload?.[0]?.payload.value, 0))}` : 0}
+          {payload?.[0]?.payload.value ? `${currencySymbol}${numberWithCommas(fNumber(payload?.[0]?.payload.value, 0))}` : 0}
         </div>
       </div>
     )
@@ -39,8 +38,7 @@ const renderCustomRALabel = (props: any) => {
   }} x={x + 15} y={y + 25} fill='#534CEA' fillOpacity='0.4'>projected</text>;
 };
 
-const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, currency }) => {
-  const symbol = getCurrencySymbol(currency);
+const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, currencySymbol }) => {
 
   let max = 0;
   for (let i = 0; i < data.length; i++) {
@@ -113,7 +111,7 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
           <Tooltip
             separator=''
             cursor={false}
-            content={<CustomTooltip symbol={symbol} />}
+            content={<CustomTooltip currencySymbol={currencySymbol} />}
           />
           <Bar dataKey='value' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]} />
         </ComposedChart>

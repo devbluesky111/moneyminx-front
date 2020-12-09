@@ -16,7 +16,7 @@ export interface AccountChartItem {
 export interface AccountBarGraphProps {
   data: AccountChartItem[];
   curInterval: string;
-  currency: string;
+  currencySymbol: string;
 }
 
 export interface AccountHoldingItem {
@@ -87,6 +87,7 @@ export interface AccountHolingsTableProps {
   holdingsData: AccountHoldingItem[];
   openEditPositionModalFun: () => void;
   closeEditPositionModalFun: () => void;
+  currencySymbol: string;
 }
 
 export interface AccountTransactionItem {
@@ -109,6 +110,7 @@ export interface AccountTransactionItem {
 
 export interface AccountTransactionTableProps {
   transactionsData: AccountTransactionItem[];
+  currencySymbol: string;
 }
 
 export interface AccountTransactionsProps {
