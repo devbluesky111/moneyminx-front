@@ -13,7 +13,7 @@ import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { appRouteConstants } from 'app/app-route.constant';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
+// import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
