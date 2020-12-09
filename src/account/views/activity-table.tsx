@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
 
@@ -11,7 +11,7 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
 
   const [transactions, setTransactions] = useState<AccountTransactionItem[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTransactions(transactionsData);
   }, [transactionsData]);
 

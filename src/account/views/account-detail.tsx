@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { Button, Dropdown } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
@@ -55,7 +55,7 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccountDetails(accountId, baseCurrency);
     if (
       (fromDate === undefined && toDate === undefined) ||
@@ -67,7 +67,7 @@ const AccountDetail: React.FC = () => {
     }
   }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen, baseCurrency]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (AccountDetails) {
       setCurrencySymbol(getCurrencySymbol(AccountDetails.currency));
     }

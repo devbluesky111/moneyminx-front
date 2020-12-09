@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
@@ -18,7 +18,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
 
   const holdingsDetailsModal = useModal();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setHoldings(holdingsData);
   }, [holdingsData]);
 

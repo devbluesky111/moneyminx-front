@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
@@ -73,15 +73,15 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         fetchAccountTypes();
     }, [])
 
-    React.useEffect(() => {
+    useEffect(() => {
         setValues(initialValues);
     }, [manualAccountModal])
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!values.yodleeAccountType || !values.accountName || !values.balance || !values.currency) {
             return setDisabled(true);
         }

@@ -1,6 +1,6 @@
 import { AllocationsFilter } from './allocation.enum';
 
-export interface AllocationProps {}
+export interface AllocationProps { }
 
 export interface Allocation {
   allocationValue: number;
@@ -32,4 +32,5 @@ export interface AllocationOverviewProps {
 
 export interface SelectedAllocationProps {
   filter: AllocationsFilter;
+  currencySymbol: string;
 }
