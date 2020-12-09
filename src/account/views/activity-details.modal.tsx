@@ -14,10 +14,6 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
     const [loading, setLoading] = useState(false);
     const [activityTypes, setActivityTypes] = useState<string[]>([]);
 
-    const handleCancel = () => {
-        activityDetailsModal.close();
-    }
-
     const fetchActivityTypes = async () => {
         const { data, error } = await getActivityTypes();
         if (!error) {
@@ -89,7 +85,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
             }}
         >
             {(props) => {
-                const { values, handleChange, setValues } = props;
+                const { values, handleChange, setValues, setFieldValue } = props;
 
                 const handleSelectChange = (e: React.ChangeEvent<any>) => {
                     setValues({ ...values, [e.target.name]: e.target.value });
@@ -100,10 +96,14 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                     setValues({ ...values, [e.target.name]: value });
                 };
 
+                const toggleFormCheck = (name: string) => {
+                    setFieldValue(name, !(values as any)[name]);
+                };
+
                 return (
                     <form onSubmit={props.handleSubmit}>
-                        <Modal {...activityDetailsModal.props} title={activityDetails?.description || 'New Activity'} size='xxl' canBeClosed onClose={() => activityDetailsModal.close()}>
-                            <div className='modal-wrapper mm-holdings-details-modal' >
+                        <Modal {...activityDetailsModal.props} title={activityDetails?.description || 'New Activity'} size='xxl' bgColor='#081833' canBeClosed onClose={() => activityDetailsModal.close()}>
+                            <div className='modal-wrapper mm-activity-details-modal' >
                                 <div className='mm-manual-account-modal__title mt-3'>
                                     {activityDetails && !activityDetails.isManual ?
                                         <div className='row align-items-center'>
@@ -119,6 +119,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                                         onChange={handleSelectChange}
                                                         value={values.type}
                                                         name='type'
+                                                        format={true}
                                                     />
                                                 </div>
                                             </div>
@@ -164,7 +165,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                         </div> :
                                         <div className='row align-items-center'>
                                             <div className='col-sm'>
-                                                <div className='form-field-group'>
+                                                <div className='form-field-group text-light'>
                                                     {moment(values.date).format('MM/DD/YYYY')}
                                                 </div>
                                             </div>
@@ -175,6 +176,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                                         onChange={handleSelectChange}
                                                         value={values.type}
                                                         name='type'
+                                                        format={true}
                                                     />
                                                 </div>
                                             </div>
@@ -229,10 +231,21 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                             </div>
                                         </div>
                                     }
-                                    <div className='action-wrapper mt-3'>
-                                        <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel} type='button'>
-                                            Cancel
-                                        </button>
+                                    <div className='action-wrapper mt-3 form-wrap'>
+                                        <span className='checkbox-item'>
+                                            <label className='check-box'>
+                                                Ignore this transaction
+                                                <input
+                                                    type='checkbox'
+                                                    name='isIgnored'
+                                                    value='false'
+                                                    checked={values.isIgnored}
+                                                    onChange={() => toggleFormCheck('isIgnored')}
+                                                    aria-checked={values.isIgnored}
+                                                />
+                                                <span className='geekmark' />
+                                            </label>
+                                        </span>
                                         <button className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' type='submit'>
                                             {loading ? (
                                                 <>

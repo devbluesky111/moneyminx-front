@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
+import { formater } from 'common/common-helper';
 import { getActivityDetails } from 'api/request.api';
 import { useModal } from 'common/components/modal';
 
@@ -56,10 +57,10 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
               {transactions.map((item, index) => (
                 <div className='row no-gutters mm-activity-table__body--wrapper' key={index} onClick={() => openEditActivityModal(item.id)}>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Date</span>{item.date}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Activity Type</span>{item.type}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Activity Type</span>{formater(item.type)}</div>
                   <div className='col-4 col-md mm-activity-table__body--data d-none d-xl-block'>{item.description}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Amount</span>{(item.amount) ? currencySymbol : ''}{(item.amount) ? `${numberWithCommas(fNumber(item.amount, 0))}` : 0}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Balance</span>{(item.amount) ? currencySymbol : ''}{(item.balance) ? `${numberWithCommas(fNumber(item.balance, 0))}` : 0}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Amount</span>{(item.amount) ? `${numberWithCommas(fNumber(item.amount, 0))}` : 0}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Balance</span>{(item.balance) ? `${numberWithCommas(fNumber(item.balance, 0))}` : 0}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Income</span>{item.income ? 'Yes' : 'No'}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Cash Flow</span>{item.cashFlow ? 'Yes' : 'No'}</div>
                   <div className='col-4 col-md-1 mm-activity-table__body--data'>

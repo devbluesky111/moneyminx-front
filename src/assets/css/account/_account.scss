@@ -628,3 +628,110 @@
   }
 
 }
+
+.mm-activity-details-modal {
+
+  .form-control {
+    height: 48px;
+    font-size: 0.875rem;
+    border: 1px solid $grayOpacity24;
+    padding: 0 20px;
+
+    &:focus, &:active {
+      border: 1px solid $gray;
+    }
+  }
+
+  .drop-box .dropdown-toggle {
+    width: 100%;
+    color: #495057;
+    background-color: $white;
+  }
+
+  .drop-box .dropdown-toggle:focus, .drop-box .dropdown-toggle:hover, .drop-box .dropdown-toggle:active {
+    background: $white !important;
+    box-shadow: none !important;
+    color: #495057 !important;
+  }
+
+  .dropdown-select-input .checkbox-list {
+    max-height: 40vh;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 150%;
+    color: $gray;
+  }
+
+  &__title {
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: $black;
+  }
+
+  &__sub-title {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .row {
+    font-size: 1rem;
+  }
+
+  .key {
+    font-weight: bold;
+  }
+
+  .action-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+
+    &>span {
+      color: $lightBg;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 0.875rem;
+      line-height: 18px;
+      display: flex;
+      align-items: center;
+
+      .checkbox-item .geekmark {
+        color: $lightBg;
+        border: 1px solid $lightBg;
+      }
+    }
+
+    button:nth-child(2) {
+      margin-left: 1rem;
+    }
+
+    button {
+      position: relative;
+
+      .spinner {
+        position: absolute;
+        top: 8px;
+        right: 0;
+      }
+    }
+  }
+
+  .react-datepicker__input-container input {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: $white;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+}
