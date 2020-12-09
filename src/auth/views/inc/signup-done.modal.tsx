@@ -21,8 +21,8 @@ const SignUpDoneModal: React.FC<Props> = ({ signupModal, handleSuccess }) => {
           accounts or track your accounts manually. Do you want to add more accounts now?
         </p>
         <div className='modal-btn-wrapper'>
-          <button className='mm-btn bg-primary mm-btn-primary-outline text-white' onClick={handleSuccess}>
-            Add more accounts and link to connect-accounts page
+          <button className='mm-btn-animate mm-btn-primary' onClick={handleSuccess}>
+            Add more accounts
           </button>
           <div className='create-new-btn text-center'>
             <Link to='#' onClick={signupModal.close}>
