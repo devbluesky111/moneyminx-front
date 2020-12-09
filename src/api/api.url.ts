@@ -9,7 +9,7 @@ export const urls = {
     PATCH_PROFILE: '/profile',
     COMPLETE_SIGNUP: '/complete',
     PATCH_ACCOUNT: '/account/:id',
-    ACCOUNT_DETAILS: '/account/:id',
+    ACCOUNT_DETAILS: '/account/:id?baseCurrency=:baseCurrency',
     ACCOUNT_HOLDINGS: '/account-details/holdings',
     ACCOUNT_ACTIVITY: '/account-details/transactions',
     HOLDINGS_DETAILS: '/account-details/holdings/:positionId',

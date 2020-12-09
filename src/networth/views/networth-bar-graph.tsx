@@ -7,7 +7,7 @@ import { NetworthBarGraphProps } from 'networth/networth.type';
 import { formatter, getInterval } from 'common/bar-graph-helper';
 
 const CustomTooltip = (props: any) => {
-  const { active, payload } = props;
+  const { active, payload, currencySymbol } = props;
   if (active) {
     let networth = undefined;
     for (let i = 0; i < payload.length; i++) {
@@ -42,7 +42,7 @@ const CustomTooltip = (props: any) => {
                     }
                   </div>
                   <div className='item-value'>
-                    {`$${numberWithCommas(fNumber(item.value, 0))}`}
+                    {`${currencySymbol}${numberWithCommas(fNumber(item.value, 0))}`}
                   </div>
                 </>
               ) : null
@@ -70,8 +70,7 @@ const renderCustomRALabel = (props: any) => {
   }} x={x + 15} y={y + 25} fill='#534CEA' fillOpacity='0.4'>projected</text>;
 };
 
-const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
-  const { networth, fCategories } = props;
+const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth, fCategories, currencySymbol }) => {
 
   if (!networth.length) {
     return <CircularSpinner />;
@@ -151,7 +150,7 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = (props) => {
           <Tooltip
             separator=''
             cursor={false}
-            content={<CustomTooltip />}
+            content={<CustomTooltip currencySymbol={currencySymbol} />}
           />
           {
             fCategories && (fCategories.length === 1 || fCategories.length === 2) ? null : <Area dataKey='networth' type='monotone' stroke='#534cea' strokeOpacity='0' fill='url(#colorUv)' />

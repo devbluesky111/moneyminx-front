@@ -2,7 +2,7 @@ import { Account } from 'auth/auth.types';
 
 import { StripeSubscriptionStatus } from './setting.enum';
 
-export interface SettingsProps {}
+export interface SettingsProps { }
 
 export enum SettingPageEnum {
   SETTINGS = 'Settings',
@@ -19,10 +19,12 @@ export interface SettingTitleProps {
 export interface SettingType {
   id: number;
   mailChimpSubscription: boolean;
+  currency: string;
 }
 
 export interface EmailSubscriptionPayload {
   mailChimpSubscription: boolean;
+  currency: string;
 }
 
 export interface CurrentSubscription {

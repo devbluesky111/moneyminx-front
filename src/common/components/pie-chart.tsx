@@ -34,10 +34,11 @@ const COLORS = [
 interface MMPieChartProps {
   chartData: ChartData;
   share?: boolean;
+  currencySymbol: string;
 }
 
 const CustomTooltip = (props: any) => {
-  const { active, payload } = props;
+  const { active, payload, currencySymbol } = props;
   const { allocationChartSetting } = useAllocationState();
 
   if (active) {
@@ -47,7 +48,7 @@ const CustomTooltip = (props: any) => {
           {ellipseText(payload[0].name)} - {fNumber(payload[0].value, 2)}%
         </div>
         {allocationChartSetting?.showAmounts && (
-          <div className='value'>${numberWithCommas(fNumber(payload[0].payload.total, 0))}</div>
+          <div className='value'>{currencySymbol}{numberWithCommas(fNumber(payload[0].payload.total, 0))}</div>
         )}
       </div>
     );
@@ -56,7 +57,7 @@ const CustomTooltip = (props: any) => {
   return null;
 };
 
-export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, share = false }) => {
+export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, share = false, currencySymbol }) => {
   const data = chartData
     .map((item) => ({
       name: item.group,
@@ -88,13 +89,13 @@ export const MMPieChart: React.FC<MMPieChartProps> = ({ chartData, share = false
   return (
     <div className='allocation-chart-wrapper'>
       <ResponsiveContainer width={!share ? '100%' : w} height='100%'>
-        <PieChart onMouseEnter={() => {}} className='mm-allocation-overview__block--chart'>
+        <PieChart onMouseEnter={() => { }} className='mm-allocation-overview__block--chart'>
           <Pie data={data} innerRadius={ir} outerRadius={outR} fill='#000000' stroke='none' dataKey='per'>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          {!share && <Tooltip content={<CustomTooltip />} />}
+          {!share && <Tooltip content={<CustomTooltip currencySymbol={currencySymbol} />} />}
         </PieChart>
       </ResponsiveContainer>
     </div>
