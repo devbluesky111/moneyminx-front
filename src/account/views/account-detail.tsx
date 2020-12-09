@@ -31,7 +31,6 @@ import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from 
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
 
 const AccountDetail: React.FC = () => {
-
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [AccountDetails, setAccountDetails] = useState<Account>();
@@ -50,6 +49,7 @@ const AccountDetail: React.FC = () => {
   const [newPositonModalOpen, setNewPositonModalOpen] = useState<boolean>(false);
   const [editPositonModalOpen, setEditPositonModalOpen] = useState<boolean>(false);
   const [baseCurrency, setBaseCurrency] = useState<boolean>(false);
+  const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
@@ -66,6 +66,12 @@ const AccountDetail: React.FC = () => {
       if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
     }
   }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen, baseCurrency]);
+
+  React.useEffect(() => {
+    if (AccountDetails) {
+      setCurrencySymbol(getCurrencySymbol(AccountDetails.currency));
+    }
+  }, [AccountDetails])
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
@@ -289,7 +295,7 @@ const AccountDetail: React.FC = () => {
                     <li className='inv-data'>
                       <span>Value</span>
                       <h3>
-                        {getCurrencySymbol(AccountDetails?.accountDetails?.currency)}
+                        {currencySymbol}
                         {curAccountHoldingsItem?.[0]?.value
                           ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
                           : 0}
@@ -300,7 +306,7 @@ const AccountDetail: React.FC = () => {
                     <li className='other-data'>
                       <span>Value</span>
                       <h3>
-                        {getCurrencySymbol(AccountDetails?.accountDetails?.currency)}
+                        {currencySymbol}
                         {curAccountHoldingsItem?.[0].value
                           ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
                           : 0}
@@ -311,7 +317,7 @@ const AccountDetail: React.FC = () => {
                     <li className='lty-data'>
                       <span>Value</span>
                       <h3>
-                        {getCurrencySymbol(AccountDetails?.accountDetails?.currency)}
+                        {currencySymbol}
                         {curAccountHoldingsItem?.[0].value
                           ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
                           : 0}
@@ -321,7 +327,7 @@ const AccountDetail: React.FC = () => {
                 </ul>
                 <div className='chartbox'>
                   {AccountHoldings && curAccountHoldingsItem && (
-                    <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} />
+                    <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} currency={AccountDetails?.currency || 'USD'} />
                   )}
                 </div>
               </div>
