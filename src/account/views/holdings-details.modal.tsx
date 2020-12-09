@@ -8,9 +8,8 @@ import { CurrencyOptions } from 'auth/enum/currency-options';
 import { enumerateStr, formater, getUnique } from 'common/common-helper';
 import { Formik } from 'formik';
 import { gc } from 'common/interval-parser';
-import { getCurrencySymbol } from 'common/currency-helper';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
-import { HoldingsDetailsModalProps } from 'account/account.type';
+import { DisabledInputProps, HoldingsDetailsModalProps } from 'account/account.type';
 import { Modal } from 'common/components/modal';
 import { SelectInput } from 'common/components/input/select.input';
 
@@ -28,19 +27,19 @@ export const foramtHoldingType = (str: string) => {
     return strArr?.join(' ');
 }
 
-const DisabledInput: React.FC = () => {
+const DisabledInput: React.FC<DisabledInputProps> = ({ currencySymbol }) => {
     return (
         <div className='form-field-group'>
             <Form.Control
                 type='number'
                 disabled
             />
-            <span className='input-add-on'>$</span>
+            <span className='input-add-on'>{currencySymbol}</span>
         </div>
     )
 }
 
-const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDetailsModal, holdingsDetails, closeEditPositionModal, accountId, currency, closeNewPositionModal }) => {
+const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDetailsModal, holdingsDetails, closeEditPositionModal, accountId, currency, closeNewPositionModal, currencySymbol }) => {
 
     const [loading, setLoading] = useState(false);
     const [years, setYears] = useState<string[]>([]);
@@ -470,7 +469,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                     Price
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    ${values.price}
+                                                                    {currencySymbol}{values.price}
                                                                 </div>
                                                             </div>
                                                         }
@@ -516,7 +515,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                         name='costBasis'
                                                                         value={values.costBasis}
                                                                     />
-                                                                    <span className='input-add-on'>$</span>
+                                                                    <span className='input-add-on'>{currencySymbol}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -728,7 +727,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                     Strike Price
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    ${values.strikePrice}
+                                                                    {currencySymbol}{values.strikePrice}
                                                                 </div>
                                                             </div>
                                                         }
@@ -895,7 +894,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                         name='price'
                                                                         value={values.price}
                                                                     />
-                                                                    <span className='input-add-on'>$</span>
+                                                                    <span className='input-add-on'>{currencySymbol}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -941,7 +940,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                         name='costBasis'
                                                                         value={values.costBasis}
                                                                     />
-                                                                    <span className='input-add-on'>$</span>
+                                                                    <span className='input-add-on'>{currencySymbol}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1200,7 +1199,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                         name='strikePrice'
                                                                         value={values.strikePrice}
                                                                     />
-                                                                    <span className='input-add-on'>$</span>
+                                                                    <span className='input-add-on'>{currencySymbol}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1360,7 +1359,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1376,7 +1375,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1392,7 +1391,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1408,7 +1407,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1424,7 +1423,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `May ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `May ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1440,7 +1439,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1466,7 +1465,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1482,7 +1481,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1498,7 +1497,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1514,7 +1513,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1530,7 +1529,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1546,7 +1545,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             {(values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length > 0) ? (
                                                                                 values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).map((i: any, k: number) => (
                                                                                     <div className='form-field-group' key={k}>
-                                                                                        {i.value} {getCurrencySymbol(holdingsDetails.currency)}
+                                                                                        {i.value} {currencySymbol}
                                                                                     </div>
                                                                                 ))
                                                                             ) : (
@@ -1581,7 +1580,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Jan ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1591,10 +1590,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1612,7 +1611,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Feb ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1622,10 +1621,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1643,7 +1642,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Mar ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1653,10 +1652,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1674,7 +1673,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Apr ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1684,10 +1683,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1705,7 +1704,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`May ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1715,10 +1714,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1736,7 +1735,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Jun ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1746,10 +1745,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1777,7 +1776,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Jul ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1787,10 +1786,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1808,7 +1807,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Aug ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1818,10 +1817,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1839,7 +1838,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Sep ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1849,10 +1848,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1870,7 +1869,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Oct ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1880,10 +1879,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1901,7 +1900,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Nov ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1911,10 +1910,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>
@@ -1932,7 +1931,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             id={`Dec ${item}`}
                                                                                             value={i.value}
                                                                                         />
-                                                                                        <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
+                                                                                        <span className='input-add-on'>{currencySymbol}</span>
                                                                                     </div>
                                                                                 ))
                                                                             ) : !holdingsDetails ? (
@@ -1942,10 +1941,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         type='number'
                                                                                         defaultValue={0}
                                                                                     />
-                                                                                    <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
+                                                                                    <span className='input-add-on'>currencySymbol</span>
                                                                                 </div>
                                                                             ) : (
-                                                                                        <DisabledInput />
+                                                                                        <DisabledInput currencySymbol={currencySymbol} />
                                                                                     )}
                                                                         </div>
                                                                     </div>

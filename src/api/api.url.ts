@@ -13,6 +13,8 @@ export const urls = {
     ACCOUNT_HOLDINGS: '/account-details/holdings',
     ACCOUNT_ACTIVITY: '/account-details/transactions',
     HOLDINGS_DETAILS: '/account-details/holdings/:positionId',
+    ACTIVITY_DETAILS: '/account-details/transactions/:activityId',
+    ACTIVITY_TYPES: '/account-details/transactions/types',
     CLASSIFICATION: '/allocations/asset-classifications?filter=:filter',
     FACEBOOK_LOGIN: '/facebook/login',
     PROFILE_PICTURE: '/profile/picture',

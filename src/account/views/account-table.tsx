@@ -82,7 +82,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
           </div>
         </div>
       ) : (<span className='no-data'>No holdings data</span>)}
-      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} closeEditPositionModal={closeEditPositionModalFun} />}
+      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} closeEditPositionModal={closeEditPositionModalFun} currencySymbol={currencySymbol} />}
     </section >
   );
 };

@@ -19,6 +19,7 @@ import { storage } from 'app/app.storage';
 import { TimeIntervalEnum } from 'networth/networth.enum';
 import { useModal } from 'common/components/modal';
 
+import ActivityDetailsModal from './activity-details.modal';
 import ActivityTable from './activity-table';
 import AccountTable from './account-table';
 import AppHeader from '../../common/app.header';
@@ -38,7 +39,7 @@ const AccountDetail: React.FC = () => {
   const [AccountActivity, setAccountActivity] = useState<AccountTransactionsProps>();
   const [fromDate, setFromDate] = useState<string>();
   const [toDate, setToDate] = useState<string>();
-  const [timeInterval, setTimeInterval] = useState<string>('Monthly');
+  const [timeInterval, setTimeInterval] = useState<string>('Yearly');
   const [tableType, setTableType] = useState<string>('holdings');
   const [dateFromFilterOn, setDateFromFilterOn] = useState<boolean>(false);
   const [dateToFilterOn, setDateToFilterOn] = useState<boolean>(false);
@@ -48,12 +49,15 @@ const AccountDetail: React.FC = () => {
   const [accSetting, setAccSetting] = useState<boolean>(false);
   const [newPositonModalOpen, setNewPositonModalOpen] = useState<boolean>(false);
   const [editPositonModalOpen, setEditPositonModalOpen] = useState<boolean>(false);
+  const [newActivityModalOpen, setNewActivityModalOpen] = useState<boolean>(false);
+  const [editActivityModalOpen, setEditActivityModalOpen] = useState<boolean>(false);
   const [baseCurrency, setBaseCurrency] = useState<boolean>(false);
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
+  const activityDetailsModal = useModal();
 
   useEffect(() => {
     fetchAccountDetails(accountId, baseCurrency);
@@ -65,7 +69,7 @@ const AccountDetail: React.FC = () => {
       if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
       if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
     }
-  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen, baseCurrency]);
+  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen, newActivityModalOpen, editActivityModalOpen, baseCurrency]);
 
   useEffect(() => {
     if (AccountDetails) {
@@ -150,7 +154,12 @@ const AccountDetail: React.FC = () => {
 
   const openNewPositonModal = () => {
     setNewPositonModalOpen(true);
-    holdingsDetailsModal.open()
+    holdingsDetailsModal.open();
+  }
+
+  const openNewActivityModal = () => {
+    setNewActivityModalOpen(true);
+    activityDetailsModal.open();
   }
 
   return (
@@ -367,7 +376,7 @@ const AccountDetail: React.FC = () => {
                 </Button>
               )}
               {AccountDetails?.isManual && tableType === 'activity' && (
-                <Button variant='primary' className='mb-4 mm-account__btn'>
+                <Button variant='primary' className='mb-4 mm-account__btn' onClick={openNewActivityModal}>
                   Add Activity
                 </Button>
               )}
@@ -388,10 +397,11 @@ const AccountDetail: React.FC = () => {
                     <InfoIcon className='mt-n1 ml-2' />
                   </MMToolTip>
                 </div>
-                {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} currencySymbol={currencySymbol} />}
+                {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} openEditActivityModalFun={() => setEditActivityModalOpen(true)} closeEditActivityModalFun={() => setEditActivityModalOpen(false)} currencySymbol={currencySymbol} />}
               </div>
             )}
-            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} closeNewPositionModal={() => setNewPositonModalOpen(false)} />}
+            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} closeNewPositionModal={() => setNewPositonModalOpen(false)} currencySymbol={currencySymbol} />}
+            {newActivityModalOpen && <ActivityDetailsModal activityDetailsModal={activityDetailsModal} accountId={AccountDetails?.id} closeNewActivityModal={() => setNewActivityModalOpen(false)} currencySymbol={currencySymbol} />}
           </div>
         )}
       {!loading && <AppFooter />}

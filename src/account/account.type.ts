@@ -81,6 +81,11 @@ export interface HoldingsDetailsModalProps {
   currency?: string;
   closeNewPositionModal?: () => void;
   closeEditPositionModal?: () => void;
+  currencySymbol: string;
+}
+
+export interface DisabledInputProps {
+  currencySymbol: string;
 }
 
 export interface AccountHolingsTableProps {
@@ -106,10 +111,23 @@ export interface AccountTransactionItem {
   isManual: boolean;
   type: string;
   yodleeId: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ActivityDetailsModalProps {
+  activityDetailsModal: ModalType;
+  transaction?: AccountTransactionItem;
+  accountId?: number;
+  currencySymbol: string;
+  closeNewActivityModal?: () => void;
+  closeEditActivityModal?: () => void;
 }
 
 export interface AccountTransactionTableProps {
   transactionsData: AccountTransactionItem[];
+  openEditActivityModalFun: () => void;
+  closeEditActivityModalFun: () => void;
   currencySymbol: string;
 }
 

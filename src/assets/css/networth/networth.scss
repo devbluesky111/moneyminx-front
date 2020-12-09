@@ -1027,7 +1027,7 @@ a.upgrader-btn {
   background: $white;
   box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
   border-radius: 6px;
-  padding: 20px;
+  padding: 2rem 1.25rem;
   height: 100%;
   position: relative;
 }
@@ -1886,7 +1886,6 @@ footer p {
   overflow-x: auto;
   padding-left: 20px;
   padding-right: 20px;
-  margin-right: -20px;
 }
 .d-hide {
   display: none !important;
