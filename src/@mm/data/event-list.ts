@@ -6,7 +6,7 @@ export const events = {
   },
   startTrail: {
     category: 'Subscription',
-    action: 'Start Trail',
+    action: 'Start Trial',
     label: 'Trial for VIP plan',
     value: 60, // edit this if plan price changed
   },
