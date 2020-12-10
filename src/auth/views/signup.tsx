@@ -6,6 +6,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import queryString from 'query-string';
+import { events } from '@mm/data/event-list';
 import { AuthLayout } from 'layouts/auth.layout';
 import validation from 'lang/en/validation.json';
 import { useModal } from 'common/components/modal';
@@ -67,11 +68,8 @@ export const SignupMainSection = () => {
         value: +planPrice,
       });
     }
-    return event({
-      category: 'Subscription',
-      action: 'Sign up',
-      label: 'User is Signed up',
-    });
+
+    return event(events.startTrail);
   };
 
   const getValidationText = () => {
