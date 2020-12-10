@@ -424,7 +424,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                     <form onSubmit={props.handleSubmit}>
                         <Modal {...holdingsDetailsModal.props} title={holdingsDetails?.description || 'New Position'} size={holdingsDetails ? 'xxl' : 'lg'} canBeClosed onClose={() => holdingsDetailsModal.close()}>
                             <div className='modal-wrapper mm-holdings-details-modal' >
-                                <span className='description'>To maintain integrity of the data with your institution you can only update a few of the fields.</span>
+                                {holdingsDetails && <span className='description'>To maintain integrity of the data with your institution you can only update a few of the fields.</span>}
                                 <div className='mm-manual-account-modal__title mt-3'>
                                     <Tabs defaultActiveKey='details' transition={false} id='holdings-details-modal'>
                                         <Tab eventKey='details' title='Details'>
