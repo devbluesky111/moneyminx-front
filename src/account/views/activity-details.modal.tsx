@@ -166,13 +166,15 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                         </div> :
                                         <div className='row align-items-center'>
                                             <div className='col-sm'>
-                                                <ReactDatePicker
-                                                    name='date'
-                                                    selected={values.date ? new Date(values.date) : null}
-                                                    onChange={(val: Date) => {
-                                                        setFieldValue('date', moment(val).toISOString());
-                                                    }}
-                                                />
+                                                <div className='form-field-group'>
+                                                    <ReactDatePicker
+                                                        name='date'
+                                                        selected={values.date ? new Date(values.date) : null}
+                                                        onChange={(val: Date) => {
+                                                            setFieldValue('date', moment(val).toISOString());
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
                                             <div className='col-sm'>
                                                 <div className='form-field-group'>

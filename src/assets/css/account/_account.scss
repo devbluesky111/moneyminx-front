@@ -666,7 +666,7 @@
     min-width: 250px;
   }
 
-  @media(max-width: 1070px) {
+  @media(max-width: 1111px) {
     .form-field-group {
       margin-top: 1rem;
     }
@@ -741,6 +741,7 @@
     font-size: 0.875rem;
     border: 1px solid $grayOpacity24;
     padding: 0 20px;
+    min-width: 120px;
   }
 
 }
