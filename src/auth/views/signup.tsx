@@ -63,8 +63,13 @@ export const SignupMainSection = () => {
   const visibilityIcon = visible ? <VisibleIcon /> : <HiddenIcon />;
 
   const triggerPixelTrackEvent = () => {
-    return fbq(EPixelTrack.START_TRAIL, { currency: 'USD', value: 20, predicted_ltv: 2000 });
+    if (priceId && planName && planPrice) {
+      return fbq(EPixelTrack.START_TRAIL, { currency: 'USD', value: +planPrice, predicted_ltv: +planPrice * 6 });
+    }
+
+    return fbq(EPixelTrack.START_TRAIL, { currency: 'USD', value: 60, predicted_ltv: 60 * 6 });
   };
+
   const triggerGAEvent = () => {
     if (priceId && planName && planPrice) {
       return event({
@@ -111,6 +116,7 @@ export const SignupMainSection = () => {
       if (!error) {
         toast('Successfully logged in', { type: 'success' });
         triggerGAEvent();
+        triggerPixelTrackEvent();
 
         return history.push('/connect-account');
       }
@@ -216,8 +222,6 @@ export const SignupMainSection = () => {
                     const hasEmail = values.email;
                     const hasPassword = values.password;
 
-                    triggerPixelTrackEvent();
-
                     if (!hasEmail) {
                       actions.setFieldError('email', validation.EMAIL_IS_EMPTY);
                     }
@@ -248,6 +252,7 @@ export const SignupMainSection = () => {
                     if (!error) {
                       toast('Signup Success', { type: 'success' });
                       triggerGAEvent();
+                      triggerPixelTrackEvent();
 
                       return history.push('/connect-account');
                     }
