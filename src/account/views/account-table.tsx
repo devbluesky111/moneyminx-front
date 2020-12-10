@@ -25,8 +25,6 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
   const fetchHolingsDetails = async (positionId: string) => {
     const { data, error } = await getHoldingsDetails(positionId);
     if (!error) {
-      console.log('fetchHolingsDetails: ', data);
-
       setHoldingsDetails(data);
     }
   };
@@ -82,7 +80,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
           </div>
         </div>
       ) : (<span className='no-data'>No holdings data</span>)}
-      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} closeEditPositionModal={closeEditPositionModalFun} />}
+      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} closeEditPositionModal={closeEditPositionModalFun} currencySymbol={currencySymbol} />}
     </section >
   );
 };

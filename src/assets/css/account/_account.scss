@@ -200,7 +200,7 @@
       background: $white;
       box-shadow: 0px 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
       border-radius: 6px;
-      padding: 1.875rem;
+      padding: 2rem 1.25rem;
 
       &__head {
         font-weight: 600;
@@ -211,8 +211,13 @@
           padding-bottom: 1.563rem;
           display: none;
 
+          &:first-child {
+            padding-left: 1.25rem;
+          }
+
           &:last-child {
             text-align: right;
+            padding-right: 1.25rem;
           }
         }
       }
@@ -224,11 +229,22 @@
 
         &--data {
           padding-top: 1rem;
-          padding-bottom: 1rem;
+          padding-bottom: 1.25rem;
+
+          &:first-child {
+            padding-left: 1.25rem;
+          }
+
+          @media(max-width: $md) {
+            &:nth-child(5){
+              padding-left: 1.25rem;
+            }
+          }
 
           &:last-child {
             display: none;
             text-align: right;
+            padding-right: 1rem;
 
             @media (min-width: $md) {
               display: block;
@@ -242,6 +258,13 @@
 
         &--wrapper {
           border-bottom: 1px solid rgba($gray, 0.2);
+
+          &:hover {
+            background: $darkBg;
+            color: $white;
+            border-radius: 6px;
+            cursor: pointer;
+          }
 
           &:last-child {
             border-bottom: unset;
@@ -606,6 +629,117 @@
       transition: transform 0.2s ease-in-out;
     }
 
+  }
+
+}
+
+.mm-activity-details-modal {
+
+  .form-control {
+    height: 48px;
+    font-size: 0.875rem;
+    border: 1px solid $grayOpacity24;
+    padding: 0 20px;
+
+    &:focus, &:active {
+      border: 1px solid $gray;
+    }
+  }
+
+  .drop-box .dropdown-toggle {
+    width: 100%;
+    color: #495057;
+    background-color: $white;
+  }
+
+  .drop-box .dropdown-toggle:focus, .drop-box .dropdown-toggle:hover, .drop-box .dropdown-toggle:active {
+    background: $white !important;
+    box-shadow: none !important;
+    color: #495057 !important;
+  }
+
+  .dropdown-select-input .checkbox-list {
+    max-height: 40vh;
+  }
+
+  &__title {
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: $black;
+  }
+
+  &__sub-title {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .row {
+    font-size: 1rem;
+  }
+
+  .one-row {
+    justify-content: center;
+
+    @media(min-width: $md) {
+      justify-content: space-between;
+    }
+  }
+
+  .key {
+    font-weight: bold;
+  }
+
+  .action-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+
+    &>span {
+      color: $lightBg;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 0.875rem;
+      line-height: 18px;
+      display: flex;
+      align-items: center;
+
+      .checkbox-item .geekmark {
+        color: $lightBg;
+        border: 1px solid $lightBg;
+      }
+    }
+
+    button:nth-child(2) {
+      margin-left: 1rem;
+    }
+
+    button {
+      position: relative;
+
+      .spinner {
+        position: absolute;
+        top: 8px;
+        right: 0;
+      }
+    }
+  }
+
+  .react-datepicker__input-container input {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: $white;
+    background-clip: padding-box;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    height: 48px;
+    font-size: 0.875rem;
+    border: 1px solid $grayOpacity24;
+    padding: 0 20px;
+    min-width: 120px;
   }
 
 }

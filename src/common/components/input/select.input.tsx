@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 
 import { foramtHoldingType } from 'account/views/holdings-details.modal';
+import { formater } from 'common/common-helper';
 
 interface MMSelectProps {
   title: string;
@@ -24,14 +25,15 @@ interface SelectInputProps {
   value: string;
   name: string;
   isHoldingTypes?: boolean;
+  format?: boolean
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, value, isHoldingTypes }) => {
+export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, value, isHoldingTypes, format }) => {
   const [show, setShow] = useState(false);
 
   return (
     <Dropdown className='drop-box dropdown-select-input' onToggle={(nextShow) => setShow(nextShow)} show={show}>
-      <Dropdown.Toggle className='dropdown-toggle'>{value}</Dropdown.Toggle>
+      <Dropdown.Toggle className='dropdown-toggle'>{formater(value)}</Dropdown.Toggle>
       <Dropdown.Menu className='mm-dropdown-menu'>
         <ul className='checkbox-list'>
           {args?.map((val, index) => {
@@ -50,7 +52,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, 
                       setShow(false);
                     }}
                   />
-                  <span>{isHoldingTypes ? foramtHoldingType(val) : val}</span>
+                  <span>{isHoldingTypes ? foramtHoldingType(val) : format ? formater(val) : val}</span>
                 </label>
               </li>
             );

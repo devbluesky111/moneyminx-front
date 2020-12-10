@@ -96,6 +96,10 @@ textarea.form-control {
   }
 }
 
+.mm-btn-animate.add-manual-account:hover {
+    color: inherit;
+}
+
 .mm-btn-primary {
   color: $white;
   background: $purple;
@@ -530,6 +534,7 @@ select {
   .checkbox-list {
     overflow-x: auto;
     max-height: 500px;
+    margin-bottom: 0;
     li {
       width: 100%;
       margin: 0;
