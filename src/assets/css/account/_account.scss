@@ -368,6 +368,10 @@
     color: #495057;
   }
 
+  .dropdown-select-input .checkbox-list {
+    max-height: 40vh;
+  }
+
   .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
     color: inherit;
     background-color: inherit;
