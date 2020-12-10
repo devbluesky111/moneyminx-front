@@ -23,7 +23,7 @@ const AppSubHeader = () => {
       <Link to='/connect-account' className='plus-btn'>+</Link>
       <div className='myaccount-drop'>
         <Dropdown className='drop-box' >
-          <Dropdown.Toggle className='dropdown-toggle'>My Accounts</Dropdown.Toggle>
+          <Dropdown.Toggle className='dropdown-toggle my-accounts'>My Accounts</Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu'>
             <div className='dropdown-head'>
               <h4>Accounts</h4>

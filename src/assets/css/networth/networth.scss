@@ -813,6 +813,10 @@ a.upgrader-btn {
   position: absolute;
 }
 
+.drop-box .dropdown-toggle.my-accounts:after {
+  left: 7rem;
+}
+
 .drop-box.show .dropdown-toggle:after {
   transform: rotate(-135deg);
   vertical-align: 0;
