@@ -6,14 +6,16 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import queryString from 'query-string';
-import usePixel, { EPixelTrack } from 'common/hooks/usePixel';
+import { events } from '@mm/data/event-list';
 import { AuthLayout } from 'layouts/auth.layout';
 import validation from 'lang/en/validation.json';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { postFacebookLogin } from 'api/request.api';
+import useAnalytics from 'common/hooks/useAnalytics';
 import { StringKeyObject } from 'common/common.types';
 import { appRouteConstants } from 'app/app-route.constant';
+import usePixel, { EPixelTrack } from 'common/hooks/usePixel';
 import { registerValidationSchema } from 'auth/auth.validation';
 import { signup, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -41,12 +43,15 @@ export const SignupMainSection = () => {
   const { fbq } = usePixel();
   const history = useHistory();
   const location = useLocation();
+  const { event } = useAnalytics();
   const associateModal = useModal();
   const dispatch = useAuthDispatch();
   const emailNeededModal = useModal();
   const [visible, setVisible] = useState<boolean>(false);
 
   const priceId = queryString.parse(location.search).priceId as string;
+  const planName = queryString.parse(location.search).planName as string;
+  const planPrice = queryString.parse(location.search).planPrice as string;
 
   const [validator, setValidator] = useState<number>(0);
 
@@ -59,6 +64,18 @@ export const SignupMainSection = () => {
 
   const triggerPixelTrackEvent = () => {
     return fbq(EPixelTrack.START_TRAIL, { currency: 'USD', value: 20, predicted_ltv: 2000 });
+  };
+  const triggerGAEvent = () => {
+    if (priceId && planName && planPrice) {
+      return event({
+        category: 'Subscription',
+        action: 'Started Trial',
+        label: `Trial for ${planName} plan`,
+        value: +planPrice,
+      });
+    }
+
+    return event(events.startTrail);
   };
 
   const getValidationText = () => {
@@ -93,16 +110,18 @@ export const SignupMainSection = () => {
 
       if (!error) {
         toast('Successfully logged in', { type: 'success' });
-        history.push('/connect-account');
-      } else {
-        if (error.statusCode === 400 && error.message) {
-          emailNeededModal.open();
-        }
+        triggerGAEvent();
 
-        if (error.statusCode === 409 && error.message) {
-          setAssociateMessage(error.message);
-          associateModal.open();
-        }
+        return history.push('/connect-account');
+      }
+      if (error.statusCode === 400 && error.message) {
+        return emailNeededModal.open();
+      }
+
+      if (error.statusCode === 409 && error.message) {
+        setAssociateMessage(error.message);
+
+        return associateModal.open();
       }
     }
   };
@@ -228,6 +247,8 @@ export const SignupMainSection = () => {
 
                     if (!error) {
                       toast('Signup Success', { type: 'success' });
+                      triggerGAEvent();
+
                       return history.push('/connect-account');
                     }
 
