@@ -422,442 +422,928 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
 
                 return (
                     <form onSubmit={props.handleSubmit}>
-                        <Modal {...holdingsDetailsModal.props} title={holdingsDetails?.description || 'New Position'} size='xxl' canBeClosed onClose={() => holdingsDetailsModal.close()}>
+                        <Modal {...holdingsDetailsModal.props} title={holdingsDetails?.description || 'New Position'} size={holdingsDetails ? 'xxl' : 'lg'} canBeClosed onClose={() => { holdingsDetailsModal.close(); toast('Error Occurred', { type: 'error' }) }}>
                             <div className='modal-wrapper mm-holdings-details-modal' >
-                                <span className='description'>To maintain integrity of the data with your institution you can only update a few of the fields.</span>
+                                {holdingsDetails && <span className='description'>To maintain integrity of the data with your institution you can only update a few of the fields.</span>}
                                 <div className='mm-manual-account-modal__title mt-3'>
                                     <Tabs defaultActiveKey='details' transition={false} id='holdings-details-modal'>
                                         <Tab eventKey='details' title='Details'>
-                                            {holdingsDetails && !holdingsDetails?.isManual ?
-                                                <div className='row mt-4'>
-                                                    <div className='col-sm'>
-                                                        <div className='row mt-1'>
-                                                            <div className='col-sm key mb-3'>
-                                                                General Details
+                                            {holdingsDetails ? <>
+                                                {!holdingsDetails?.isManual ?
+                                                    <div className='row mt-4'>
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-1'>
+                                                                <div className='col-sm key mb-3'>
+                                                                    General Details
                                                             </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Description
+                                                            </div>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Description
                                                                 </div>
-                                                            <div className='col-sm'>
-                                                                {values.description}
+                                                                <div className='col-sm'>
+                                                                    {values.description}
+                                                                </div>
                                                             </div>
+                                                            {values.holdingType &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Holding Type
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {foramtHoldingType(values.holdingType)}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.securityType &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Security Type
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {formater(values.securityType)}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.price &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Price
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        ${values.price}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.priceCurrency &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Price Currency
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.priceCurrency}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.quantity &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Quantity
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.quantity}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.symbol &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Symbol
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.symbol}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Cost
+                                                            </div>
+                                                                <div className='col-sm '>
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='costBasis'
+                                                                            value={values.costBasis}
+                                                                        />
+                                                                        <span className='input-add-on'>$</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Cost Currency
+                                                                </div>
+                                                                <div className='col-sm '>
+                                                                    <div className='form-field-group'>
+                                                                        <SelectInput
+                                                                            args={curArr}
+                                                                            onChange={handleSelectChange}
+                                                                            value={values.costBasisCurrency}
+                                                                            name='costBasisCurrency'
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {values.cusipNumber &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        CUSIP
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.cusipNumber}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.isin &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        ISIN
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.isin}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.sedol &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        SEDOL
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.sedol}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.isShort &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Short?
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.isShort ? 'Yes' : 'No'}
+                                                                    </div>
+                                                                </div>
+                                                            }
                                                         </div>
-                                                        {values.holdingType &&
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-1'>
+                                                                <div className='col-sm key mb-3'>
+                                                                    Options and Stock Options
+                                                            </div>
+                                                            </div>
+                                                            {(values.optionType !== 'unknown' && values.optionType) &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Option Type
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.optionType}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.vestedQuantity &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Vested Quantity
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.vestedQuantity}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.vestedSharesExercisable &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Vested Shared Exercisable
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.vestedSharesExercisable}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.vestedValue &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Vested Value
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.vestedValue}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.vestedValue &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Vested Currency
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.vestedValueCurrency}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.vestedDate &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Vested Date
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {moment(values.vestedDate).format('MM/DD/YYYY')}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.unvestedQuantity &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Unvested Quantity
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.unvestedQuantity}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.unvestedValue &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Unvested Value
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.unvestedValue}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.unvestedValue &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Unvested Currency
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.unvestedValueCurrency}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.exercisedQuantity &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Excercised Quantity
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.exercisedQuantity}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.expirationDate &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Expiration Date
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {moment(values.expirationDate).format('MM/DD/YYYY')}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.grantDate &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Grant Date
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {moment(values.grantDate).format('MM/DD/YYYY')}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.spread &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Spread
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.spread}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.spread &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Spread Currency
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.spreadCurrency}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.strikePrice &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Strike Price
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        ${values.strikePrice}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.strikePrice &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Strike Currency
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.strikePriceCurrency}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            <div className='row mt-5'>
+                                                                <div className='col-sm key mb-3'>
+                                                                    Futures and Commodities
+                                                            </div>
+                                                            </div>
+                                                            {values.contractQuantity &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Contract Quantity
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.contractQuantity}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm key'>
+                                                                    CDs, Bonds and Loans
+                                                            </div>
+                                                            </div>
+                                                            {values.couponRate &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Coupon
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.couponRate}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.interestRate &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Interest Rate
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.interestRate}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.maturityDate &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Maturity Date
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {moment(values.maturityDate).format('MM/DD/YYYY')}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.term &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Term
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.term}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.accruedInterest &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Accrued Interest
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.accruedInterest}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.accruedInterest &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Interest Currency
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.accruedInterestCurrency}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.accruedIncome &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Accrued Income
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.accruedIncome}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            {values.accruedIncome &&
+                                                                <div className='row mt-2 align-items-center'>
+                                                                    <div className='col-sm'>
+                                                                        Income Currency
+                                                                </div>
+                                                                    <div className='col-sm'>
+                                                                        {values.accruedIncomeCurrency}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div> :
+                                                    <div className='row mt-4'>
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-1'>
+                                                                <div className='col-sm key mb-3'>
+                                                                    General Details
+                                                            </div>
+                                                            </div>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Description
+                                                            </div>
+                                                                <div className='col-sm'>
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            name='description'
+                                                                            value={values.description}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Holding Type
-                                                                </div>
+                                                            </div>
                                                                 <div className='col-sm'>
-                                                                    {foramtHoldingType(values.holdingType)}
+                                                                    <div className='form-field-group'>
+                                                                        <SelectInput
+                                                                            args={holdingTypes}
+                                                                            onChange={handleSelectChange}
+                                                                            value={values.holdingType}
+                                                                            name='holdingType'
+                                                                            isHoldingTypes={true}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.securityType &&
-                                                            <div className='row mt-2 align-items-center'>
-                                                                <div className='col-sm'>
-                                                                    Security Type
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {formater(values.securityType)}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.price &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Price
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    ${values.price}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='price'
+                                                                            value={values.price}
+                                                                        />
+                                                                        <span className='input-add-on'>$</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.priceCurrency &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Price Currency
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.priceCurrency}
+                                                                    <div className='form-field-group'>
+                                                                        <SelectInput
+                                                                            args={curArr}
+                                                                            onChange={handleSelectChange}
+                                                                            value={values.priceCurrency}
+                                                                            name='priceCurrency'
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.quantity &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Quantity
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.quantity}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='quantity'
+                                                                            value={values.quantity}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.symbol &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
-                                                                    Symbol
+                                                                    Cost
+                                                            </div>
+                                                                <div className='col-sm '>
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='costBasis'
+                                                                            value={values.costBasis}
+                                                                        />
+                                                                        <span className='input-add-on'>$</span>
+                                                                    </div>
                                                                 </div>
+                                                            </div>
+                                                            <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
-                                                                    {values.symbol}
+                                                                    Cost Currency
+                                                                </div>
+                                                                <div className='col-sm '>
+                                                                    <div className='form-field-group'>
+                                                                        <SelectInput
+                                                                            args={curArr}
+                                                                            onChange={handleSelectChange}
+                                                                            value={values.costBasisCurrency}
+                                                                            name='costBasisCurrency'
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Cost
-                                                            </div>
-                                                            <div className='col-sm '>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='costBasis'
-                                                                        value={values.costBasis}
-                                                                    />
-                                                                    <span className='input-add-on'>$</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Cost Currency
-                                                                </div>
-                                                            <div className='col-sm '>
-                                                                <div className='form-field-group'>
-                                                                    <SelectInput
-                                                                        args={curArr}
-                                                                        onChange={handleSelectChange}
-                                                                        value={values.costBasisCurrency}
-                                                                        name='costBasisCurrency'
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        {values.cusipNumber &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     CUSIP
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.cusipNumber}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            name='cusipNumber'
+                                                                            value={values.cusipNumber}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.isin &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     ISIN
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.isin}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            name='isin'
+                                                                            value={values.isin}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.sedol &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     SEDOL
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.sedol}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            name='sedol'
+                                                                            value={values.sedol}
+                                                                        />
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        }
-                                                        {values.isShort &&
-                                                            <div className='row mt-2 align-items-center'>
-                                                                <div className='col-sm'>
-                                                                    Short?
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.isShort ? 'Yes' : 'No'}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className='col-sm'>
-                                                        <div className='row mt-1'>
-                                                            <div className='col-sm key mb-3'>
-                                                                Options and Stock Options
                                                             </div>
                                                         </div>
-                                                        {(values.optionType !== 'unknown' && values.optionType) &&
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-1'>
+                                                                <div className='col-sm key mb-3'>
+                                                                    Options and Stock Options
+                                                            </div>
+                                                            </div>
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Option Type
-                                                                </div>
+                                                            </div>
                                                                 <div className='col-sm'>
-                                                                    {values.optionType}
+                                                                    <div className='form-field-group'>
+                                                                        <SelectInput
+                                                                            args={['Call', 'Put']}
+                                                                            onChange={handleSelectChange}
+                                                                            value={values.optionType}
+                                                                            name='optionType'
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.vestedQuantity &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Vested Quantity
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.vestedQuantity}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='vestedQuantity'
+                                                                            value={values.vestedQuantity}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.vestedSharesExercisable &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Vested Shared Exercisable
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.vestedSharesExercisable}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='vestedSharesExercisable'
+                                                                            value={values.vestedSharesExercisable}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.vestedValue &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Vested Value
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.vestedValue}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='vestedValue'
+                                                                            value={values.vestedValue}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.vestedValue &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Vested Currency
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.vestedValueCurrency}
+                                                                    <div className='form-field-group'>
+                                                                        <SelectInput
+                                                                            args={curArr}
+                                                                            onChange={handleSelectChange}
+                                                                            value={values.vestedValueCurrency}
+                                                                            name='vestedValueCurrency'
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.vestedDate &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Vested Date
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {moment(values.vestedDate).format('MM/DD/YYYY')}
+                                                                    <div className='form-field-group'>
+                                                                        <ReactDatePicker
+                                                                            name='vestedDate'
+                                                                            selected={values.vestedDate ? new Date(values.vestedDate) : null}
+                                                                            onChange={(val: Date) => {
+                                                                                setFieldValue('vestedDate', moment(val).toISOString());
+                                                                            }}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.unvestedQuantity &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Unvested Quantity
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.unvestedQuantity}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='unvestedQuantity'
+                                                                            value={values.unvestedQuantity}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.unvestedValue &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Unvested Value
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.unvestedValue}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='unvestedValue'
+                                                                            value={values.unvestedValue}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.unvestedValue &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Unvested Currency
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.unvestedValueCurrency}
+                                                                    <div className='form-field-group'>
+                                                                        <SelectInput
+                                                                            args={curArr}
+                                                                            onChange={handleSelectChange}
+                                                                            value={values.unvestedValueCurrency}
+                                                                            name='unvestedValueCurrency'
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.exercisedQuantity &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Excercised Quantity
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.exercisedQuantity}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='exercisedQuantity'
+                                                                            value={values.exercisedQuantity}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.expirationDate &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Expiration Date
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {moment(values.expirationDate).format('MM/DD/YYYY')}
+                                                                    <ReactDatePicker
+                                                                        name='expirationDate'
+                                                                        selected={values.expirationDate ? new Date(values.expirationDate) : null}
+                                                                        onChange={(val: Date) => {
+                                                                            setFieldValue('expirationDate', moment(val).toISOString());
+                                                                        }}
+                                                                    />
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.grantDate &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Grant Date
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {moment(values.grantDate).format('MM/DD/YYYY')}
+                                                                    <ReactDatePicker
+                                                                        name='grantDate'
+                                                                        selected={values.grantDate ? new Date(values.grantDate) : null}
+                                                                        onChange={(val: Date) => {
+                                                                            setFieldValue('grantDate', moment(val).toISOString());
+                                                                        }}
+                                                                    />
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.spread &&
-                                                            <div className='row mt-2 align-items-center'>
-                                                                <div className='col-sm'>
-                                                                    Spread
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.spread}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.spread &&
-                                                            <div className='row mt-2 align-items-center'>
-                                                                <div className='col-sm'>
-                                                                    Spread Currency
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.spreadCurrency}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.strikePrice &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Strike Price
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    ${values.strikePrice}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='strikePrice'
+                                                                            value={values.strikePrice}
+                                                                        />
+                                                                        <span className='input-add-on'>$</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.strikePrice &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Strike Currency
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.strikePriceCurrency}
+                                                                    <div className='form-field-group'>
+                                                                        <SelectInput
+                                                                            args={curArr}
+                                                                            onChange={handleSelectChange}
+                                                                            value={values.strikePriceCurrency}
+                                                                            name='strikePriceCurrency'
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        <div className='row mt-5'>
-                                                            <div className='col-sm key mb-3'>
-                                                                Futures and Commodities
+                                                            <div className='row mt-5'>
+                                                                <div className='col-sm key mb-3'>
+                                                                    Futures and Commodities
                                                             </div>
-                                                        </div>
-                                                        {values.contractQuantity &&
+                                                            </div>
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Contract Quantity
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.contractQuantity}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='contractQuantity'
+                                                                            value={values.contractQuantity}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                    </div>
-                                                    <div className='col-sm'>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm key'>
-                                                                CDs, Bonds and Loans
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm'>
+                                                                    Short?
+                                                                </div>
+                                                                <div className='col-sm mt-2'>
+                                                                    <div className='form-field-group'>
+                                                                        <input
+                                                                            type='radio'
+                                                                            onChange={handleIsShortChange}
+                                                                            name='isShort'
+                                                                            checked={values.isShort === true}
+                                                                            aria-checked={!!values.isShort}
+                                                                            className='mr-1'
+                                                                        />
+                                                                        <label className='mr-3'>Yes</label>
+                                                                        <input
+                                                                            onChange={handleIsShortChange}
+                                                                            type='radio'
+                                                                            name='isShort'
+                                                                            checked={values.isShort === false}
+                                                                            aria-checked={!!values.isShort}
+                                                                            className='mr-1'
+                                                                        />
+                                                                        <label>No</label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        {values.couponRate &&
+                                                        <div className='col-sm'>
+                                                            <div className='row mt-2 align-items-center'>
+                                                                <div className='col-sm key'>
+                                                                    CDs, Bonds and Loans
+                                                                </div>
+                                                            </div>
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Coupon
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.couponRate}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='couponRate'
+                                                                            value={values.couponRate}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.interestRate &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Interest Rate
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.interestRate}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            type='number'
+                                                                            name='interestRate'
+                                                                            value={values.interestRate}
+                                                                        />
+                                                                        <span className='input-add-on'>%</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.maturityDate &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Maturity Date
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {moment(values.maturityDate).format('MM/DD/YYYY')}
+                                                                    <ReactDatePicker
+                                                                        name='maturityDate'
+                                                                        selected={values.maturityDate ? new Date(values.maturityDate) : null}
+                                                                        onChange={(val: Date) => {
+                                                                            setFieldValue('maturityDate', moment(val).toISOString());
+                                                                        }}
+                                                                    />
                                                                 </div>
                                                             </div>
-                                                        }
-                                                        {values.term &&
                                                             <div className='row mt-2 align-items-center'>
                                                                 <div className='col-sm'>
                                                                     Term
                                                                 </div>
                                                                 <div className='col-sm'>
-                                                                    {values.term}
+                                                                    <div className='form-field-group'>
+                                                                        <Form.Control
+                                                                            onChange={handleChange}
+                                                                            name='term'
+                                                                            value={values.term}
+                                                                        />
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        }
-                                                        {values.accruedInterest &&
-                                                            <div className='row mt-2 align-items-center'>
-                                                                <div className='col-sm'>
-                                                                    Accrued Interest
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.accruedInterest}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.accruedInterest &&
-                                                            <div className='row mt-2 align-items-center'>
-                                                                <div className='col-sm'>
-                                                                    Interest Currency
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.accruedInterestCurrency}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.accruedIncome &&
-                                                            <div className='row mt-2 align-items-center'>
-                                                                <div className='col-sm'>
-                                                                    Accrued Income
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.accruedIncome}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        {values.accruedIncome &&
-                                                            <div className='row mt-2 align-items-center'>
-                                                                <div className='col-sm'>
-                                                                    Income Currency
-                                                                </div>
-                                                                <div className='col-sm'>
-                                                                    {values.accruedIncomeCurrency}
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                </div> :
-                                                <div className='row mt-4'>
-                                                    <div className='col-sm'>
-                                                        <div className='row mt-1'>
-                                                            <div className='col-sm key mb-3'>
-                                                                General Details
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                }
+                                            </> :
+                                                <div className='row mt-4'>
+                                                    <div className='col-sm'>
                                                         <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Description
+                                                            <div className='col-sm-3'>
+                                                                Name
                                                             </div>
-                                                            <div className='col-sm'>
+                                                            <div className='col-sm-6'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -868,10 +1354,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                             </div>
                                                         </div>
                                                         <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Holding Type
+                                                            <div className='col-sm-3'>
+                                                                Type
                                                             </div>
-                                                            <div className='col-sm'>
+                                                            <div className='col-sm-6'>
                                                                 <div className='form-field-group'>
                                                                     <SelectInput
                                                                         args={holdingTypes}
@@ -884,10 +1370,25 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                             </div>
                                                         </div>
                                                         <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Price
+                                                            <div className='col-sm-3'>
+                                                                Quantity
                                                                 </div>
-                                                            <div className='col-sm'>
+                                                            <div className='col-sm-6'>
+                                                                <div className='form-field-group'>
+                                                                    <Form.Control
+                                                                        onChange={handleChange}
+                                                                        type='number'
+                                                                        name='quantity'
+                                                                        value={values.quantity}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className='row mt-2 align-items-center'>
+                                                            <div className='col-sm-3'>
+                                                                Price per Unit
+                                                                </div>
+                                                            <div className='col-sm-6'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -900,40 +1401,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                             </div>
                                                         </div>
                                                         <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Price Currency
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <SelectInput
-                                                                        args={curArr}
-                                                                        onChange={handleSelectChange}
-                                                                        value={values.priceCurrency}
-                                                                        name='priceCurrency'
-                                                                    />
-                                                                </div>
+                                                            <div className='col-sm-3'>
+                                                                Cost per Unit
                                                             </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Quantity
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='quantity'
-                                                                        value={values.quantity}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Cost
-                                                            </div>
-                                                            <div className='col-sm '>
+                                                            <div className='col-sm-6'>
                                                                 <div className='form-field-group'>
                                                                     <Form.Control
                                                                         onChange={handleChange}
@@ -946,390 +1417,19 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                             </div>
                                                         </div>
                                                         <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Cost Currency
-                                                                </div>
-                                                            <div className='col-sm '>
-                                                                <div className='form-field-group'>
-                                                                    <SelectInput
-                                                                        args={curArr}
-                                                                        onChange={handleSelectChange}
-                                                                        value={values.costBasisCurrency}
-                                                                        name='costBasisCurrency'
-                                                                    />
-                                                                </div>
+                                                            <div className='col-sm-3'>
+                                                                Current Market Value
+                                                            </div>
+                                                            <div className='col-sm-6'>
+                                                                {values.price * values.quantity}$
                                                             </div>
                                                         </div>
                                                         <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                CUSIP
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        name='cusipNumber'
-                                                                        value={values.cusipNumber}
-                                                                    />
-                                                                </div>
+                                                            <div className='col-sm-3'>
+                                                                Gain / loss
                                                             </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                ISIN
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        name='isin'
-                                                                        value={values.isin}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                SEDOL
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        name='sedol'
-                                                                        value={values.sedol}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className='col-sm'>
-                                                        <div className='row mt-1'>
-                                                            <div className='col-sm key mb-3'>
-                                                                Options and Stock Options
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Option Type
-                                                            </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <SelectInput
-                                                                        args={['Call', 'Put']}
-                                                                        onChange={handleSelectChange}
-                                                                        value={values.optionType}
-                                                                        name='optionType'
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Vested Quantity
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='vestedQuantity'
-                                                                        value={values.vestedQuantity}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Vested Shared Exercisable
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='vestedSharesExercisable'
-                                                                        value={values.vestedSharesExercisable}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Vested Value
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='vestedValue'
-                                                                        value={values.vestedValue}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Vested Currency
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <SelectInput
-                                                                        args={curArr}
-                                                                        onChange={handleSelectChange}
-                                                                        value={values.vestedValueCurrency}
-                                                                        name='vestedValueCurrency'
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Vested Date
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <ReactDatePicker
-                                                                        name='vestedDate'
-                                                                        selected={values.vestedDate ? new Date(values.vestedDate) : null}
-                                                                        onChange={(val: Date) => {
-                                                                            setFieldValue('vestedDate', moment(val).toISOString());
-                                                                        }}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Unvested Quantity
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='unvestedQuantity'
-                                                                        value={values.unvestedQuantity}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Unvested Value
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='unvestedValue'
-                                                                        value={values.unvestedValue}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Unvested Currency
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <SelectInput
-                                                                        args={curArr}
-                                                                        onChange={handleSelectChange}
-                                                                        value={values.unvestedValueCurrency}
-                                                                        name='unvestedValueCurrency'
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Excercised Quantity
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='exercisedQuantity'
-                                                                        value={values.exercisedQuantity}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Expiration Date
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <ReactDatePicker
-                                                                    name='expirationDate'
-                                                                    selected={values.expirationDate ? new Date(values.expirationDate) : null}
-                                                                    onChange={(val: Date) => {
-                                                                        setFieldValue('expirationDate', moment(val).toISOString());
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Grant Date
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <ReactDatePicker
-                                                                    name='grantDate'
-                                                                    selected={values.grantDate ? new Date(values.grantDate) : null}
-                                                                    onChange={(val: Date) => {
-                                                                        setFieldValue('grantDate', moment(val).toISOString());
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Strike Price
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='strikePrice'
-                                                                        value={values.strikePrice}
-                                                                    />
-                                                                    <span className='input-add-on'>$</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Strike Currency
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <SelectInput
-                                                                        args={curArr}
-                                                                        onChange={handleSelectChange}
-                                                                        value={values.strikePriceCurrency}
-                                                                        name='strikePriceCurrency'
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-5'>
-                                                            <div className='col-sm key mb-3'>
-                                                                Futures and Commodities
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Contract Quantity
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='contractQuantity'
-                                                                        value={values.contractQuantity}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Short?
-                                                                </div>
-                                                            <div className='col-sm mt-2'>
-                                                                <div className='form-field-group'>
-                                                                    <input
-                                                                        type='radio'
-                                                                        onChange={handleIsShortChange}
-                                                                        name='isShort'
-                                                                        checked={values.isShort === true}
-                                                                        aria-checked={!!values.isShort}
-                                                                        className='mr-1'
-                                                                    />
-                                                                    <label className='mr-3'>Yes</label>
-                                                                    <input
-                                                                        onChange={handleIsShortChange}
-                                                                        type='radio'
-                                                                        name='isShort'
-                                                                        checked={values.isShort === false}
-                                                                        aria-checked={!!values.isShort}
-                                                                        className='mr-1'
-                                                                    />
-                                                                    <label>No</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className='col-sm'>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm key'>
-                                                                CDs, Bonds and Loans
-                                                                </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Coupon
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='couponRate'
-                                                                        value={values.couponRate}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Interest Rate
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        type='number'
-                                                                        name='interestRate'
-                                                                        value={values.interestRate}
-                                                                    />
-                                                                    <span className='input-add-on'>%</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Maturity Date
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <ReactDatePicker
-                                                                    name='maturityDate'
-                                                                    selected={values.maturityDate ? new Date(values.maturityDate) : null}
-                                                                    onChange={(val: Date) => {
-                                                                        setFieldValue('maturityDate', moment(val).toISOString());
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className='row mt-2 align-items-center'>
-                                                            <div className='col-sm'>
-                                                                Term
-                                                                </div>
-                                                            <div className='col-sm'>
-                                                                <div className='form-field-group'>
-                                                                    <Form.Control
-                                                                        onChange={handleChange}
-                                                                        name='term'
-                                                                        value={values.term}
-                                                                    />
-                                                                </div>
+                                                            <div className={['col-sm-6', (values.price - values.costBasis) * values.quantity >= 0 ? 'text-green' : 'text-danger'].join(' ')}>
+                                                                {(values.price - values.costBasis) * values.quantity}$
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1580,6 +1680,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Jan ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1590,6 +1691,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Jan ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1611,6 +1713,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Feb ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1621,6 +1724,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Feb ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1642,6 +1746,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Mar ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1652,6 +1757,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Mar ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1673,6 +1779,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Apr ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1683,6 +1790,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Apr ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1704,6 +1812,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`May ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1714,6 +1823,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`May ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1735,6 +1845,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Jun ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1745,6 +1856,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Jun ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1776,6 +1888,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Jul ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1786,6 +1899,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Jul ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1807,6 +1921,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Aug ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1817,6 +1932,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Aug ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1838,6 +1954,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Sep ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1848,6 +1965,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Sep ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1869,6 +1987,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Oct ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1879,6 +1998,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Oct ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1900,6 +2020,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Nov ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1910,6 +2031,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Nov ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1931,6 +2053,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Dec ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1941,6 +2064,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Dec ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
