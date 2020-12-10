@@ -785,8 +785,7 @@ a.upgrader-btn {
   border-radius: 4px;
   width: auto;
   height: 48px;
-  padding: 0 1.625rem 0 1.25rem;
-  min-width: 122px;
+  padding: 0 2.25rem 0 1.25rem;
 
   &:focus,
   &:hover,
@@ -808,8 +807,8 @@ a.upgrader-btn {
   border-left: 0;
   transform: rotate(45deg);
   transition: 0.3s all;
-  top: 1rem;
-  right: 0.813rem;
+  top: 1.125rem;
+  right: 1.25rem;
   position: absolute;
 }
 
@@ -873,14 +872,13 @@ a.upgrader-btn {
   margin-right: 5px;
 }
 .date-box input {
-  padding: 0 10px;
-  padding-right: 5px;
+  padding: 0 20px;
   background-color: transparent;
   height: 100%;
   border: 0;
   font-size: 0.875rem;
   color: $gray;
-  max-width: 80px;
+  max-width: 100px;
   border-radius: 4px;
   cursor: pointer;
 
@@ -2362,7 +2360,7 @@ $start-width: 100%;
   }
 }
 .date-separator {
-  margin: 1rem 0.25rem;
+  margin: 1rem 0.25rem 1rem 0.50rem;
   color: $gray;
   font-size: 0.875rem;
 }
