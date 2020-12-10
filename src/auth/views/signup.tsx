@@ -147,14 +147,14 @@ export const SignupMainSection = () => {
                 <li>Let Money Minx do the rest</li>
               </ul>
               <div className='guide-bottom'>
-                <h4>Serious about security</h4>
+                <h2>Serious about security</h2>
                 <div className='guide-icon-wrap'>
                   <span className='locked-icon'>
                     <LoginLockIcon />
                   </span>
                   <p>The security of your information is our top priority</p>
                 </div>
-                <h4>Trusted by investors</h4>
+                <h2>Trusted by investors</h2>
                 <div className='guide-icon-wrap'>
                   <span className='shield-icon'>
                     <LoginShieldIcon />
