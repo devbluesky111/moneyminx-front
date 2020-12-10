@@ -20,8 +20,8 @@ const usePixel = () => {
     track(title: EPixelTrack, data: any) {
       return ReactPixel.track(title, data);
     },
-    fbq() {
-      return ReactPixel.fbq('track', 'StartTrial', { currency: 'USD', value: 20, predicted_ltv: 2000 });
+    fbq(title: EPixelTrack, data: Record<string, any>) {
+      return ReactPixel.fbq('track', title, data);
     },
   };
 };

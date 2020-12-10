@@ -6,7 +6,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import queryString from 'query-string';
-import usePixel from 'common/hooks/usePixel';
+import usePixel, { EPixelTrack } from 'common/hooks/usePixel';
 import { AuthLayout } from 'layouts/auth.layout';
 import validation from 'lang/en/validation.json';
 import { useModal } from 'common/components/modal';
@@ -58,7 +58,7 @@ export const SignupMainSection = () => {
   const visibilityIcon = visible ? <VisibleIcon /> : <HiddenIcon />;
 
   const triggerPixelTrackEvent = () => {
-    fbq();
+    return fbq(EPixelTrack.START_TRAIL, { currency: 'USD', value: 20, predicted_ltv: 2000 });
   };
 
   const getValidationText = () => {
