@@ -1,29 +1,32 @@
-import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import BlurChart from 'assets/images/networth/chart-blur.png';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
-import MeasureIcon from 'assets/images/networth/measure.svg';
-import NetworthLayout from 'networth/networth.layout';
-import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
+import { events } from '@mm/data/event-list';
 import useProfile from 'auth/hooks/useProfile';
-import useNetworth from 'networth/hooks/useNetworth';
-import useSettings from 'setting/hooks/useSettings';
-import { AccountCategory } from 'networth/networth.enum';
-import { appRouteConstants } from 'app/app-route.constant';
-import { fNumber, numberWithCommas } from 'common/number.helper';
-import { getCurrencySymbol } from 'common/currency-helper';
-import { isCurrent, gc } from 'common/interval-parser';
-import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
+import GALink from 'common/components/ga-link';
 import { useAuthState } from 'auth/auth.context';
 import { useAlert } from 'common/components/alert';
 import { useModal } from 'common/components/modal';
+import useSettings from 'setting/hooks/useSettings';
+import useNetworth from 'networth/hooks/useNetworth';
+import NetworthLayout from 'networth/networth.layout';
+import { isCurrent, gc } from 'common/interval-parser';
+import { AccountCategory } from 'networth/networth.enum';
+import { appRouteConstants } from 'app/app-route.constant';
+import { getCurrencySymbol } from 'common/currency-helper';
+import MeasureIcon from 'assets/images/networth/measure.svg';
+import BlurChart from 'assets/images/networth/chart-blur.png';
+import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
+import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
 
 import NetworthHead from './inc/networth-head';
 import NetworthFilter from './inc/networth-filter';
 import NetworthBarGraph from './networth-bar-graph';
+import useAnalytics from '../../common/hooks/useAnalytics';
 
 const Networth = () => {
   useProfile();
@@ -33,6 +36,7 @@ const Networth = () => {
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const connectionAlert = useAlert();
   const signupDoneModal = useModal();
+  const { event } = useAnalytics();
 
   const { loading } = useNetworth();
   const { onboarded } = useAuthState();
@@ -62,7 +66,6 @@ const Networth = () => {
     connectionAlert.open();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   useEffect(() => {
     if (data) {
@@ -97,6 +100,12 @@ const Networth = () => {
   const currentInvestmentAsset = curNetworthItem?.investmentAssets || 0;
 
   const handleAccountDetail = (accountId: number) => {
+    event({
+      category: 'Net Worth',
+      action: 'Clicked on Account',
+      label: `Accessed account ${accountId}`,
+    });
+
     history.push(`/account-details/${accountId}`);
   };
 
@@ -129,25 +138,37 @@ const Networth = () => {
                       {currentInvestmentAsset ? (
                         <li className='inv-data'>
                           <span>Investment Assets</span>
-                          <h3>{currencySymbol}{numberWithCommas(fNumber(currentInvestmentAsset, 0))}</h3>
+                          <h3>
+                            {currencySymbol}
+                            {numberWithCommas(fNumber(currentInvestmentAsset, 0))}
+                          </h3>
                         </li>
                       ) : null}
                       {currentOtherAssets ? (
                         <li className='other-data'>
                           <span>Other Assets</span>
-                          <h3>{currencySymbol}{numberWithCommas(fNumber(currentOtherAssets, 0))}</h3>
+                          <h3>
+                            {currencySymbol}
+                            {numberWithCommas(fNumber(currentOtherAssets, 0))}
+                          </h3>
                         </li>
                       ) : null}
                       {currentLiabilities ? (
                         <li className='lty-data'>
                           <span>Liabilities</span>
-                          <h3>{currencySymbol}{numberWithCommas(fNumber(currentLiabilities, 0))}</h3>
+                          <h3>
+                            {currencySymbol}
+                            {numberWithCommas(fNumber(currentLiabilities, 0))}
+                          </h3>
                         </li>
                       ) : null}
                       {currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
                         <li className='nw-data'>
                           <span>Net Worth</span>
-                          <h3>{currencySymbol}{numberWithCommas(fNumber(currentNetworth, 0))}</h3>
+                          <h3>
+                            {currencySymbol}
+                            {numberWithCommas(fNumber(currentNetworth, 0))}
+                          </h3>
                         </li>
                       ) : null}
                     </ul>
@@ -170,9 +191,13 @@ const Networth = () => {
                       }}
                     >
                       <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
-                      <Link to='/settings?active=Profile' className='mm-btn-animate mm-btn-primary'>
+                      <GALink
+                        to='/settings?active=Profile'
+                        className='mm-btn-animate mm-btn-primary'
+                        eventArgs={events.completeProfile}
+                      >
                         Complete Profile
-                      </Link>
+                      </GALink>
                     </div>
                   </div>
                 </div>

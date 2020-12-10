@@ -61,6 +61,7 @@ export const PlanOverview = () => {
 
     const payload = {
       subscriptionPriceId: priceId,
+      value: plan.price,
     };
 
     const { data, error } = await postSubscriptionCheckout(payload);
