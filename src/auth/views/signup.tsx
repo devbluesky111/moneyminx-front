@@ -63,7 +63,7 @@ export const SignupMainSection = () => {
     if (priceId && planName && planPrice) {
       return event({
         category: 'Subscription',
-        action: 'Start Trial',
+        action: 'Started Trial',
         label: `Trial for ${planName} plan`,
         value: +planPrice,
       });

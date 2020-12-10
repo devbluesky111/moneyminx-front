@@ -54,8 +54,8 @@ export const ConnectAccountMainSection = () => {
 
   const handleConnectAccount = () => {
     event({
-      category: 'User Action',
-      action: 'Button Click',
+      category: 'Connect Accounts',
+      action: 'Clicked Add Banks and Investments',
       label: 'Add Banks and Investments',
     });
 
@@ -64,8 +64,8 @@ export const ConnectAccountMainSection = () => {
 
   const handleManualAccount = () => {
     event({
-      category: 'User Action',
-      action: 'Button Click',
+      category: 'Connect Accounts',
+      action: 'Clicked Add Manual Account',
       label: 'Add Manual Account',
     });
     manualAccountModal.open();
@@ -73,8 +73,8 @@ export const ConnectAccountMainSection = () => {
 
   const handleCryptoExchange = () => {
     event({
-      category: 'User Action',
-      action: 'Button Click',
+      category: 'Connect Accounts',
+      action: 'Clicked Add Crypto Exchanges',
       label: 'Add Crypto Exchanges',
     });
 

@@ -26,6 +26,7 @@ import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet
 import NetworthHead from './inc/networth-head';
 import NetworthFilter from './inc/networth-filter';
 import NetworthBarGraph from './networth-bar-graph';
+import useAnalytics from '../../common/hooks/useAnalytics';
 
 const Networth = () => {
   useProfile();
@@ -35,6 +36,7 @@ const Networth = () => {
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const connectionAlert = useAlert();
   const signupDoneModal = useModal();
+  const { event } = useAnalytics();
 
   const { loading } = useNetworth();
   const { onboarded } = useAuthState();
@@ -98,6 +100,12 @@ const Networth = () => {
   const currentInvestmentAsset = curNetworthItem?.investmentAssets || 0;
 
   const handleAccountDetail = (accountId: number) => {
+    event({
+      category: 'Net Worth',
+      action: 'Clicked on Account',
+      label: `Accessed account ${accountId}`,
+    });
+
     history.push(`/account-details/${accountId}`);
   };
 
