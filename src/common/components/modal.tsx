@@ -46,7 +46,7 @@ const Modal: React.FC<Props> = ({
   backdrop = true,
   canBeClosed = false,
   type,
-  bgColor = 'white',
+  bgColor,
 }) => {
   const classNames = `${backdrop ? 'modal mm-modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
   const modalClasses = `modal-dialog modal-dialog-centered modal-${size}`;
