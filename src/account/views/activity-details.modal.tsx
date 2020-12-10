@@ -1,10 +1,10 @@
-import moment from 'moment';
-import ReactDatePicker from 'react-datepicker';
 import React, { useEffect, useState } from 'react';
+import ReactDatePicker from 'react-datepicker';
 import { Form } from 'react-bootstrap';
-import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 
+import moment from 'moment';
+import { Formik } from 'formik';
 import { ActivityDetailsModalProps } from 'account/account.type';
 import { getDateFormatedString } from 'common/moment.helper';
 import { getActivityTypes, patchTransaction, postTransaction } from 'api/request.api';

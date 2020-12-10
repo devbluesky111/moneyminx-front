@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import { appRouteConstants } from 'app/app-route.constant';
 import { Modal, ModalType } from 'common/components/modal';
@@ -21,23 +21,21 @@ const UpgradeAccountModal: React.FC<Props> = ({ upgradeAccountModal, availableNu
                     </p>
                     :
                     <p>
-                        Your plan only allows for {availableNumber} connected account. Click below to compare plans and upgrade or add manual account instead.
+                        Your plan allows for {availableNumber} connected accounts. Click below to compare plans and upgrade or add a manual account instead.
                     </p>
                 }
-                <div className='modal-btn-wrapper'>
+                <div className='modal-btn-wrapper modal-button-and-text-link'>
                     <button
-                        className='mm-btn-signup btn-outline-primary mm-btn-animate estimate-annual-block__btn-cancel'
+                        className='mm-btn-animate mm-btn-primary'
                         onClick={() => { history.push('/settings?active=Plan'); upgradeAccountModal.close() }}
-                        style={{ width: manualMax ? '210.28px' : 'inherit' }}
                     >
                         Compare Plans
                     </button>
-                    {!manualMax && <button
-                        className='mm-btn-animate add-manual-account'
-                        onClick={() => { history.push(appRouteConstants.auth.CONNECT_ACCOUNT); upgradeAccountModal.close(); }}
-                    >
-                        Add Manual Account
-                    </button>}
+                    {!manualMax &&
+                    <div className='text-center'>
+                      <Link className='link-gray' to='/connect-account' onClick={() => { history.push(appRouteConstants.auth.CONNECT_ACCOUNT); upgradeAccountModal.close(); }}>Add Manual Account</Link>
+                    </div>
+                    }
                 </div>
             </div>
         </Modal>
