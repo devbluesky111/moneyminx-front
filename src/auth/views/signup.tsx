@@ -95,11 +95,11 @@ export const SignupMainSection = () => {
         toast('Successfully logged in', { type: 'success' });
         history.push('/connect-account');
       } else {
-        if (error?.statusCode === 400 && error?.message) {
+        if (error.statusCode === 400 && error.message) {
           emailNeededModal.open();
         }
 
-        if (error?.statusCode === 409 && error?.message) {
+        if (error.statusCode === 409 && error.message) {
           setAssociateMessage(error.message);
           associateModal.open();
         }
@@ -231,11 +231,11 @@ export const SignupMainSection = () => {
                       return history.push('/connect-account');
                     }
 
-                    if (error?.statusCode === 409) {
+                    if (error.statusCode === 409) {
                       return actions.setFieldError('password', '409');
                     }
 
-                    actions.setFieldError('password', error?.message || 'Sign up failed');
+                    actions.setFieldError('password', error.message || 'Sign up failed');
                   }}
                 >
                   {(props) => {

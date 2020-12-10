@@ -1,23 +1,25 @@
-import { Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
+import { Table } from 'react-bootstrap';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
+import BlurChart from 'assets/images/networth/chart-blur.png';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import MeasureIcon from 'assets/images/networth/measure.svg';
+import NetworthLayout from 'networth/networth.layout';
+import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
 import useProfile from 'auth/hooks/useProfile';
+import useNetworth from 'networth/hooks/useNetworth';
+import useSettings from 'setting/hooks/useSettings';
+import { AccountCategory } from 'networth/networth.enum';
+import { appRouteConstants } from 'app/app-route.constant';
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import { getCurrencySymbol } from 'common/currency-helper';
+import { isCurrent, gc } from 'common/interval-parser';
+import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
 import { useAuthState } from 'auth/auth.context';
 import { useAlert } from 'common/components/alert';
 import { useModal } from 'common/components/modal';
-import useNetworth from 'networth/hooks/useNetworth';
-import NetworthLayout from 'networth/networth.layout';
-import { AccountCategory } from 'networth/networth.enum';
-import { appRouteConstants } from 'app/app-route.constant';
-import MeasureIcon from 'assets/images/networth/measure.svg';
-import BlurChart from 'assets/images/networth/chart-blur.png';
-import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
-import { fNumber, numberWithCommas } from 'common/number.helper';
-import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
-import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
 
 import NetworthHead from './inc/networth-head';
 import NetworthFilter from './inc/networth-filter';
@@ -27,6 +29,8 @@ const Networth = () => {
   useProfile();
   const history = useHistory();
   const location = useLocation();
+  const { data } = useSettings();
+  const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const connectionAlert = useAlert();
   const signupDoneModal = useModal();
 
@@ -59,6 +63,13 @@ const Networth = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+  useEffect(() => {
+    if (data) {
+      setCurrencySymbol(getCurrencySymbol(data.currency));
+    }
+  }, [data]);
+
   if (!networth || !accounts) {
     return <CircularSpinner />;
   }
@@ -75,21 +86,8 @@ const Networth = () => {
     setCounter((c) => c + 1);
   };
 
-  const isCurrent = (interval: string) =>
-    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
-
   const gotoConnectAccount = () => {
     return history.push(`${appRouteConstants.auth.CONNECT_ACCOUNT}?action=addMoreAccount`);
-  };
-
-  const gc = (interval: string) => {
-    if (interval) {
-      if (isCurrent(interval)) {
-        return 'current-m';
-      }
-    }
-
-    return '';
   };
 
   const [curNetworthItem] = networth.filter((networthItem) => isCurrent(networthItem.interval));
@@ -131,30 +129,30 @@ const Networth = () => {
                       {currentInvestmentAsset ? (
                         <li className='inv-data'>
                           <span>Investment Assets</span>
-                          <h3>${numberWithCommas(fNumber(currentInvestmentAsset, 0))}</h3>
+                          <h3>{currencySymbol}{numberWithCommas(fNumber(currentInvestmentAsset, 0))}</h3>
                         </li>
                       ) : null}
                       {currentOtherAssets ? (
                         <li className='other-data'>
                           <span>Other Assets</span>
-                          <h3>${numberWithCommas(fNumber(currentOtherAssets, 0))}</h3>
+                          <h3>{currencySymbol}{numberWithCommas(fNumber(currentOtherAssets, 0))}</h3>
                         </li>
                       ) : null}
                       {currentLiabilities ? (
                         <li className='lty-data'>
                           <span>Liabilities</span>
-                          <h3>${numberWithCommas(fNumber(currentLiabilities, 0))}</h3>
+                          <h3>{currencySymbol}{numberWithCommas(fNumber(currentLiabilities, 0))}</h3>
                         </li>
                       ) : null}
                       {currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
                         <li className='nw-data'>
                           <span>Net Worth</span>
-                          <h3>${numberWithCommas(fNumber(currentNetworth, 0))}</h3>
+                          <h3>{currencySymbol}{numberWithCommas(fNumber(currentNetworth, 0))}</h3>
                         </li>
                       ) : null}
                     </ul>
                     <div className='chartbox'>
-                      <NetworthBarGraph networth={networth} fCategories={fCategories} />
+                      <NetworthBarGraph networth={networth} fCategories={fCategories} currencySymbol={currencySymbol} />
                     </div>
                   </div>
                 </div>

@@ -28,7 +28,7 @@ import { ReactComponent as SettingsIcon } from 'assets/images/allocation/setting
 import AllocationLegend from './allocation-legend';
 import RestrictedChartView from './restricted-chart-view';
 
-export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter }) => {
+export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter, currencySymbol }) => {
   const { subscriptionDetail } = useAuthState();
   const [hidden, setHidden] = useState<string[]>(['']);
   const [isDateValid, setIsDateValid] = useState<boolean>(true);
@@ -142,8 +142,8 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
               className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center allocation-page-chart-wrapper'
               id='selected-allocation-pie-chart'
             >
-              <MMPieChart chartData={chartData} />
-              <AllocationLegend chartData={chartData} />
+              <MMPieChart chartData={chartData} currencySymbol={currencySymbol} />
+              <AllocationLegend chartData={chartData} currencySymbol={currencySymbol} />
             </div>
             <div className='mm-allocation-overview__table'>
               <table>
@@ -185,10 +185,10 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                                   {fNumber(al.per, 2)}%
                               </td>
                                 <td>
-                                  <span className='d-block'>Value</span>${fNumber(al.allocationValue, 2)}
+                                  <span className='d-block'>Value</span>{currencySymbol}{fNumber(al.allocationValue, 2)}
                                 </td>
                                 <td>
-                                  <span className='d-block'>Value</span>{al.allocationValue ? `$${fNumber(al.allocationValue, 2)}` : 0}
+                                  <span className='d-block'>Value</span>{al.allocationValue ? `${currencySymbol}${fNumber(al.allocationValue, 2)}` : 0}
                                 </td>
                               </tr>
                             </React.Fragment>
@@ -199,7 +199,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
                         <tr className='mm-allocation-overview__table--footer'>
                           <td>Total</td>
                           <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
-                          <td>${fNumber(getTotal(allocationKey)?.total || 0, 2)}</td>
+                          <td>{currencySymbol}{fNumber(getTotal(allocationKey)?.total || 0, 2)}</td>
                         </tr>
                       </tbody>
                     </React.Fragment>
@@ -213,8 +213,8 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter 
       <SettingModal settingModal={chartSettingModal} />
       <ChartShareModal
         chartShareModal={chartShareModal}
-        chartComponent={<MMPieChart chartData={chartData} share />}
-        chartLegendComponent={<AllocationLegend chartData={chartData} sharing />}
+        chartComponent={<MMPieChart chartData={chartData} currencySymbol={currencySymbol} share />}
+        chartLegendComponent={<AllocationLegend chartData={chartData} currencySymbol={currencySymbol} sharing />}
       />
     </div>
   );

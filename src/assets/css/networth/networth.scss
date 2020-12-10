@@ -523,6 +523,15 @@ a.upgrader-btn {
   .middle-box {
     margin: auto;
   }
+
+  .view-in-base-currency {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 18px;
+    text-align: center;
+    color: #969EAC;
+  }
 }
 .app-subheader-container .container {
   max-width: 1440px;
@@ -776,7 +785,7 @@ a.upgrader-btn {
   border-radius: 4px;
   width: auto;
   height: 48px;
-  padding: 0 20px;
+  padding: 0 1.625rem 0 1.25rem;
   min-width: 122px;
 
   &:focus,
@@ -799,15 +808,16 @@ a.upgrader-btn {
   border-left: 0;
   transform: rotate(45deg);
   transition: 0.3s all;
-  margin-left: 10px;
-  margin-top: 5px;
-  float: right;
+  top: 1rem;
+  right: 0.813rem;
+  position: absolute;
 }
 
 .drop-box.show .dropdown-toggle:after {
   transform: rotate(-135deg);
   vertical-align: 0;
   transition: 0.3s all;
+  top: 1.25rem;
 }
 
 .drop-box {

@@ -7,10 +7,28 @@ import env from 'app/app.env';
 import App from './app/app';
 import * as serviceWorker from './serviceWorker';
 
-ReactGA.initialize([{ trackingId: env.GOOGLE_ANALYTICS_TRACKING_ID }, { trackingId: env.GOOGLE_ADS_TRACKING_ID }], {
-  debug: true,
-});
+// Todo reminder to remove sample rate and turn debug off
+ReactGA.initialize(
+  [
+    {
+      trackingId: env.GOOGLE_ANALYTICS_TRACKING_ID,
+      gaOptions: {
+        siteSpeedSampleRate: 100,
+      },
+    },
+    {
+      trackingId: env.GOOGLE_ADS_TRACKING_ID,
+      gaOptions: {
+        siteSpeedSampleRate: 100,
+      },
+    },
+  ],
+  {
+    debug: true,
+  }
+);
 
+ReactGA.set({ page: window.location.pathname + window.location.search });
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(

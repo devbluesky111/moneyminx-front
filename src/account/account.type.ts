@@ -1,6 +1,10 @@
+import { ModalType } from "common/components/modal";
+
 export interface AccountSubNavigationProps {
   providerLogo: string;
   providerName: string;
+  baseCurrency: boolean;
+  toggleBaseCurrency: () => void;
 }
 
 export interface AccountChartItem {
@@ -12,6 +16,7 @@ export interface AccountChartItem {
 export interface AccountBarGraphProps {
   data: AccountChartItem[];
   curInterval: string;
+  currencySymbol: string;
 }
 
 export interface AccountHoldingItem {
@@ -69,8 +74,20 @@ export interface AccountHolingsProps {
   holdings: AccountHoldingItem[];
 }
 
+export interface HoldingsDetailsModalProps {
+  holdingsDetailsModal: ModalType;
+  holdingsDetails?: any;
+  accountId?: number;
+  currency?: string;
+  closeNewPositionModal?: () => void;
+  closeEditPositionModal?: () => void;
+}
+
 export interface AccountHolingsTableProps {
-  holdings: AccountHoldingItem[];
+  holdingsData: AccountHoldingItem[];
+  openEditPositionModalFun: () => void;
+  closeEditPositionModalFun: () => void;
+  currencySymbol: string;
 }
 
 export interface AccountTransactionItem {
@@ -92,7 +109,8 @@ export interface AccountTransactionItem {
 }
 
 export interface AccountTransactionTableProps {
-  transactions: AccountTransactionItem[];
+  transactionsData: AccountTransactionItem[];
+  currencySymbol: string;
 }
 
 export interface AccountTransactionsProps {

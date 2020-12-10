@@ -1,20 +1,23 @@
-import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-
-import { useAuthState } from 'auth/auth.context';
-import { capitalize } from 'common/common-helper';
-import { useModal } from 'common/components/modal';
-import useSettings from 'setting/hooks/useSettings';
-import SaveSettings from 'setting/inc/save-settings';
-import ChangePasswordModal from 'setting/inc/change-password.modal';
-import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { CurrentSubscription, SettingPageEnum } from 'setting/setting.type';
-import SubscriptionCancelModal from 'setting/inc/subscription-cancel.modal';
-import { patchCancelSubscription, patchEmailSubscription } from 'api/request.api';
-import Message from '../../auth/views/inc/message';
 import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import ChangePasswordModal from 'setting/inc/change-password.modal';
+import SaveSettings from 'setting/inc/save-settings'
+import SubscriptionCancelModal from 'setting/inc/subscription-cancel.modal';
+import useSettings from 'setting/hooks/useSettings';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
+import { CurrentSubscription, SettingPageEnum } from 'setting/setting.type';
+import { CurrencyOptions } from 'auth/enum/currency-options';
+import { capitalize, enumerateStr } from 'common/common-helper';
+import { patchCancelSubscription, patchEmailSubscription } from 'api/request.api';
+import { SelectInput } from 'common/components/input/select.input';
+import { useModal } from 'common/components/modal';
+import { useAuthState } from 'auth/auth.context';
+
+import Message from '../../auth/views/inc/message';
 
 interface SettingOverviewProps {
   changeTab: (pageName: SettingPageEnum) => void;
@@ -27,14 +30,17 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   const { loading, data, error } = useSettings();
   const [statusText, setStatusText] = useState('Save Changes');
   const [mailChimpSubscription, setMailChimpSubscription] = useState<boolean>(false);
+  const [currency, setCurrency] = useState<string>('USD');
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
   const [cancelSubscriptionResponse, setCancelSubscriptionResponse] = useState<CurrentSubscription>();
   const [cancelSubscriptionError, setCancelSubscriptionError] = useState<boolean>(false);
-  const cancelAtDate = cancelSubscriptionResponse?.cancelAt ? cancelSubscriptionResponse?.cancelAt / 86400: 0;
+  const cancelAtDate = cancelSubscriptionResponse?.cancelAt ? cancelSubscriptionResponse?.cancelAt / 86400 : 0;
+  const curArr = enumerateStr(CurrencyOptions);
 
   useEffect(() => {
     if (data) {
       setMailChimpSubscription(data.mailChimpSubscription);
+      setCurrency(data.currency);
     }
   }, [data]);
 
@@ -47,7 +53,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
   }
 
   const handleCancelSubscription = async () => {
-      return subscriptionCancelModal.open();
+    return subscriptionCancelModal.open();
   };
 
   const handleCancelSubscriptionConfirmation = async () => {
@@ -61,11 +67,11 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
     return subscriptionCancelModal.close();
   };
 
-  const handleDismiss = () => {}
+  const handleDismiss = () => { }
 
   const handleSave = async () => {
     setStatusText('Saving...');
-    const { error: pathError } = await patchEmailSubscription({ mailChimpSubscription });
+    const { error: pathError } = await patchEmailSubscription({ mailChimpSubscription, currency });
     if (pathError) {
       return toast('Error on Adding Subscription', { type: 'error' });
     }
@@ -81,6 +87,24 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
         <div className='card-body'>
           <form>
             <div className='mm-setting-card--title'>Preferences</div>
+            <div className='mm-setting-form form-group mt-3 mb-5 row align-items-center'>
+              <label className='col-sm-3 col-md-3 mb-0'>Base currency</label>
+              <div className='col-sm-3 col-md-3'>
+                <div className='form-wrap'>
+                  {(currentSubscription && (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus')) ?
+                    <span>USD</span>
+                    :
+                    <SelectInput
+                      args={curArr}
+                      onChange={(e) => setCurrency(e.target.value)}
+                      value={currency}
+                      name='currency'
+                    />
+                  }
+                </div>
+              </div>
+              {(currentSubscription && (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus')) && <label className='col-sm-6 col-md-6 text-danger'>Your plan only supports USD. To enalbe multi currency support upgrade your plan.</label>}
+            </div>
             <div className='mm-setting-form form-group mt-3 row'>
               <label className='col-sm-3 col-md-3'>Notifications</label>
               <div className='col-sm-9 col-md-9'>
@@ -210,13 +234,13 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
         handleCancelSubscriptionConfirmation={handleCancelSubscriptionConfirmation}
       />
 
-      {cancelSubscriptionError || cancelSubscriptionResponse  ? (
+      {cancelSubscriptionError || cancelSubscriptionResponse ? (
         <div className='subscription-cancel-confirmation'>
           <Message type={cancelSubscriptionError ? 'error' : 'success'}
-                   message={cancelSubscriptionError ?
-                     'Your subscription could not be cancelled. Please contact us for support.' :
-                     `Your subscription is now cancelled. You can continue using Money Minx until ${moment('01-01-1970').add(cancelAtDate, 'days').format('MM/DD/YY')}.`}
-                   onDismiss={handleDismiss} />
+            message={cancelSubscriptionError ?
+              'Your subscription could not be cancelled. Please contact us for support.' :
+              `Your subscription is now cancelled. You can continue using Money Minx until ${moment('01-01-1970').add(cancelAtDate, 'days').format('MM/DD/YY')}.`}
+            onDismiss={handleDismiss} />
         </div>
       ) : null}
       <SaveSettings handleSave={handleSave} statusText={statusText} />

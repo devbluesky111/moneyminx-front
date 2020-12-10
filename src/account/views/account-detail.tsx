@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { Button, Dropdown } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
@@ -17,6 +17,7 @@ import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/r
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { storage } from 'app/app.storage';
 import { TimeIntervalEnum } from 'networth/networth.enum';
+import { useModal } from 'common/components/modal';
 
 import ActivityTable from './activity-table';
 import AccountTable from './account-table';
@@ -25,13 +26,11 @@ import AppSidebar from '../../common/app.sidebar';
 import AccountBarGraph from './account-bar-graph';
 import AccountSubNavigation from './account-sub-navigation';
 import MMToolTip from '../../common/components/tooltip';
+import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
 
-
-
 const AccountDetail: React.FC = () => {
-
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [AccountDetails, setAccountDetails] = useState<Account>();
@@ -47,12 +46,17 @@ const AccountDetail: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [filterloading, setFilterLoading] = useState<boolean>(false);
   const [accSetting, setAccSetting] = useState<boolean>(false);
+  const [newPositonModalOpen, setNewPositonModalOpen] = useState<boolean>(false);
+  const [editPositonModalOpen, setEditPositonModalOpen] = useState<boolean>(false);
+  const [baseCurrency, setBaseCurrency] = useState<boolean>(false);
+  const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
+  const holdingsDetailsModal = useModal();
 
-  React.useEffect(() => {
-    fetchAccountDetails(accountId);
+  useEffect(() => {
+    fetchAccountDetails(accountId, baseCurrency);
     if (
       (fromDate === undefined && toDate === undefined) ||
       (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))
@@ -61,14 +65,20 @@ const AccountDetail: React.FC = () => {
       if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
       if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
     }
-  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting]);
+  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen, baseCurrency]);
+
+  useEffect(() => {
+    if (AccountDetails) {
+      setCurrencySymbol(getCurrencySymbol(AccountDetails.currency));
+    }
+  }, [AccountDetails])
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
   };
 
-  const fetchAccountDetails = async (accountId: string) => {
-    const { data, error } = await getAccountDetails(accountId);
+  const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
+    const { data, error } = await getAccountDetails(accountId, baseCurrency);
     if (!error) {
       console.log('fetchAccountDetails: ', data);
 
@@ -138,6 +148,11 @@ const AccountDetail: React.FC = () => {
     storage.clear('isNew');
   }
 
+  const openNewPositonModal = () => {
+    setNewPositonModalOpen(true);
+    holdingsDetailsModal.open()
+  }
+
   return (
     <div className='mm-setting'>
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
@@ -150,7 +165,7 @@ const AccountDetail: React.FC = () => {
         open={openRightNav}
       />
       {!loading && AccountDetails && (
-        <AccountSubNavigation providerLogo={AccountDetails?.providerLogo} providerName={AccountDetails?.providerName} />
+        <AccountSubNavigation providerLogo={AccountDetails?.providerLogo} providerName={AccountDetails?.providerName} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
       )}
       <hr className='mt-0 mb-4' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
@@ -280,7 +295,7 @@ const AccountDetail: React.FC = () => {
                     <li className='inv-data'>
                       <span>Value</span>
                       <h3>
-                        {getCurrencySymbol(AccountDetails?.accountDetails?.currency)}
+                        {currencySymbol}
                         {curAccountHoldingsItem?.[0]?.value
                           ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
                           : 0}
@@ -291,7 +306,7 @@ const AccountDetail: React.FC = () => {
                     <li className='other-data'>
                       <span>Value</span>
                       <h3>
-                        {getCurrencySymbol(AccountDetails?.accountDetails?.currency)}
+                        {currencySymbol}
                         {curAccountHoldingsItem?.[0].value
                           ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
                           : 0}
@@ -302,7 +317,7 @@ const AccountDetail: React.FC = () => {
                     <li className='lty-data'>
                       <span>Value</span>
                       <h3>
-                        {getCurrencySymbol(AccountDetails?.accountDetails?.currency)}
+                        {currencySymbol}
                         {curAccountHoldingsItem?.[0].value
                           ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
                           : 0}
@@ -312,7 +327,7 @@ const AccountDetail: React.FC = () => {
                 </ul>
                 <div className='chartbox'>
                   {AccountHoldings && curAccountHoldingsItem && (
-                    <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} />
+                    <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} currencySymbol={currencySymbol} />
                   )}
                 </div>
               </div>
@@ -347,7 +362,7 @@ const AccountDetail: React.FC = () => {
                 <div className='mm-radio-bg' />
               </div>
               {AccountDetails?.isManual && tableType === 'holdings' && (
-                <Button variant='primary' className='mb-4 mm-account__btn'>
+                <Button variant='primary' className='mb-4 mm-account__btn' onClick={openNewPositonModal}>
                   Add Position
                 </Button>
               )}
@@ -357,7 +372,7 @@ const AccountDetail: React.FC = () => {
                 </Button>
               )}
             </div>
-            {AccountHoldings && tableType === 'holdings' && <AccountTable holdings={AccountHoldings?.holdings} />}
+            {AccountHoldings && tableType === 'holdings' && <AccountTable holdingsData={AccountHoldings?.holdings} openEditPositionModalFun={() => setEditPositonModalOpen(true)} closeEditPositionModalFun={() => setEditPositonModalOpen(false)} currencySymbol={currencySymbol} />}
 
             {tableType === 'activity' && (
               <div className='mm-account-activity-block'>
@@ -373,9 +388,10 @@ const AccountDetail: React.FC = () => {
                     <InfoIcon className='mt-n1 ml-2' />
                   </MMToolTip>
                 </div>
-                {AccountActivity && <ActivityTable transactions={AccountActivity?.transactions} />}
+                {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} currencySymbol={currencySymbol} />}
               </div>
             )}
+            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} currency={AccountDetails?.currency} closeNewPositionModal={() => setNewPositonModalOpen(false)} />}
           </div>
         )}
       {!loading && <AppFooter />}

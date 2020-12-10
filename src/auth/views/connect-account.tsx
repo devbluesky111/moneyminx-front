@@ -7,12 +7,13 @@ import { AuthLayout } from 'layouts/auth.layout';
 import { useAuthState } from 'auth/auth.context';
 import { useModal } from 'common/components/modal';
 import FastLinkModal from 'yodlee/fast-link.modal';
+import useAnalytics from 'common/hooks/useAnalytics';
 import useGetFastlink from 'auth/hooks/useGetFastlink';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { appRouteConstants } from 'app/app-route.constant';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
+// import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
@@ -37,6 +38,7 @@ export const ConnectAccountMainSection = () => {
   const manualAccountModal = useModal();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
   const { onboarded } = useAuthState();
+  const { event } = useAnalytics();
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -51,10 +53,31 @@ export const ConnectAccountMainSection = () => {
   const history = useHistory();
 
   const handleConnectAccount = () => {
-    fastlinkModal.open();
+    event({
+      category: 'User Action',
+      action: 'Button Click',
+      label: 'Add Banks and Investments',
+    });
+
+    return fastlinkModal.open();
   };
 
+  const handleManualAccount = () => {
+    event({
+      category: 'User Action',
+      action: 'Button Click',
+      label: 'Add Manual Account',
+    });
+    manualAccountModal.open();
+  }
+
   const handleCryptoExchange = () => {
+    event({
+      category: 'User Action',
+      action: 'Button Click',
+      label: 'Add Crypto Exchanges',
+    });
+
     zabo
       .connect()
       .onConnection((account: Record<string, string>) => {
@@ -158,11 +181,11 @@ export const ConnectAccountMainSection = () => {
                 <button
                   className='connect-account-btn btn-outline-primary mm-btn-animate'
                   type='submit'
-                  onClick={() => manualAccountModal.open()}
+                  onClick={handleManualAccount}
                 >
                   Add Manual Account
                 </button>
-                <h2>
+                {/*<h2>
                   <span className='manual-heading'>Add real estate</span>
                 </h2>
                 <div className='zillow-wrap d-block d-md-flex'>
@@ -172,7 +195,7 @@ export const ConnectAccountMainSection = () => {
                   <span className='zillow-img'>
                     <ZillowIcon className='mt-2' />
                   </span>
-                </div>
+                </div>*/}
               </div>
             </div>
           </div>
