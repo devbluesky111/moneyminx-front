@@ -26,7 +26,7 @@ export const FeaturesSyncedManualTopSection = () => {
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
           <div className=''>
-            <h1>Synced Manual</h1>
+            <h1>Synced or Manual Account</h1>
             <div className='p-b-10'>
               <p className='text'>
                 Money Minx allows you to track all of your assets and liabilities in one place to help you track your net worth.
@@ -113,8 +113,10 @@ export const FeaturesSyncedManualBottomSection = () => {
         <div className='col-lg-5 feature-content'>
           <h2>Manual Accounts</h2>
           <p>
-            Once your accounts are added we will keep them in sync so you will always know what your current net worth is,
-            You can also keep an eye on your historical net worth and see it grow with time.
+            With manual accounts you can track anything that has value in Money Minx and add it to your net worth.
+            This could be anything and everything you want. You can also add holdings within those account and even transactions.
+            This is also a great way for you to track your net worth if you are not comfortable with providing your banking details.
+            Note: Money Minx takes security very seriously, learn more about our <a href='/security'>security practices here</a>.
           </p>
         </div>
       </div>

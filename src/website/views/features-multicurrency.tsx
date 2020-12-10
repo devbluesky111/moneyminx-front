@@ -28,14 +28,11 @@ export const FeaturesMulticurrencyTopSection = () => {
             <h1>Multicurrency</h1>
             <div className='p-b-10'>
               <p className='text'>
-                Money Minx allows you to track all of your assets and liabilities in one place to help you track your net worth.
-                We are still in Beta but already support over 25,000 institutions worldwide so you can automatically track your accounts.{' '}
-              </p>
-              <p className='text'>
-                We are currently working on allowing you to automatically track your cryptos, precious metals like gold, currencies, real estate and more.{' '}
-              </p>
-              <p className='text'>
-                You can also use our manual accounts feature to track anything you want by adding accounts, positions and transactions on your own..
+                Money Minx is built for the international investor in mind.
+                We support all of the major currencies and several less known currencies (see the full list below). When you set up
+                a new investment account, you can assign a currency for that account as well as set up a base currency for your account as whole.
+                All accounts will then be converted to your base account so you can easily compare. You can also use this feature for fun and see what
+                your net worth value is in any of the supported currencies.
               </p>
             </div>
             <Link to='/signup'>
@@ -110,10 +107,11 @@ export const FeaturesMulticurrencyBottomSection = () => {
           <AboutNetWorthChart className='mm-about-net-worth-chart' />
         </div>
         <div className='col-lg-5 feature-content'>
-          <h2>Home Currency</h2>
+          <h2>Supported Currencies</h2>
           <p>
-            Once your accounts are added we will keep them in sync so you will always know what your current net worth is,
-            You can also keep an eye on your historical net worth and see it grow with time.
+            Here is a list of supported currencies: USD, EUR, GBP, CAD, JPY, AUD, CHF, INR, SGD, ILS, KRW, PHP, PLN, THB, BGN, CZK,
+            DKK, HUF, RON, SEK, ISK, NOK, HRK, RUB, TRY, BRL, CNY, HKD, IDR, MXN, MYR, NZD, ZAR. If you use a different currency, let
+            us know. We will gladly add support for it.
           </p>
         </div>
       </div>

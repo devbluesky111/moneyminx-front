@@ -7,7 +7,7 @@ import SettingModal from 'allocation/modal/setting-modal';
 import useSettings from 'setting/hooks/useSettings';
 import { AllocationSectionEnum } from 'allocation/allocation.enum';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
-import { fNumber } from 'common/number.helper';
+import { fNumber, numberWithCommas } from 'common/number.helper';
 import { getStringDate } from 'common/moment.helper';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { MMPieChart } from 'common/components/pie-chart';
@@ -140,7 +140,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                         <React.Fragment key={index}>
                           <tbody>
                             <tr>
-                              <td className='mm-allocation-overview__table--title'>
+                              <td colSpan={2} className='mm-allocation-overview__table--title'>
                                 <span
                                   className={
                                     isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''
@@ -168,7 +168,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                       {fNumber(al.per || 0, 2)}%
                                     </td>
                                     <td>
-                                      <span className='d-block'>Value</span>{al.allocationValue ? `${currencySymbol}${fNumber(al.allocationValue, 2)}` : 0}
+                                      <span className='d-block'>Value</span>
+                                      {al.allocationValue ? `${currencySymbol}${numberWithCommas(fNumber(al.allocationValue, 0))}` : 0}
                                     </td>
                                   </tr>
                                 </React.Fragment>
@@ -179,12 +180,11 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                             <tr className='mm-allocation-overview__table--footer'>
                               <td>Total</td>
                               <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
-                              <td>{currencySymbol}{fNumber(getTotal(allocationKey)?.total || 0, 2)}</td>
+                              <td>{currencySymbol}{numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 2))}</td>
                             </tr>
                           </tbody>
                         </React.Fragment>
-                      );
-                    })}
+                      )})};
                   </table>
                 </div>
               </div>

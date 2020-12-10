@@ -180,8 +180,8 @@ export const AboutNetWorthSection = () => {
             </p>
             <h2>Net Worth</h2>
             <p className='text'>
-              Stock shares which make up the stock portfolio of an individual or firm. Other types of investments, if
-              held, are also holdings.
+              By adding all of your assets and investments to Money Minx you will be able to easily calculate your Net Worth. We support
+              banks, crowdfunding sites, financial firms, multiple currencies and more. Crypto wallets are also coming soon.
             </p>
           </div>
         </div>

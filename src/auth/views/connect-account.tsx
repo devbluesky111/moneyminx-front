@@ -3,6 +3,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import Zabo from 'zabo-sdk-js';
 import appEnv from 'app/app.env';
+import { events } from '@mm/data/event-list';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useAuthState } from 'auth/auth.context';
 import { useModal } from 'common/components/modal';
@@ -35,10 +36,10 @@ const ConnectAccount = () => {
 export default ConnectAccount;
 export const ConnectAccountMainSection = () => {
   const location = useLocation();
+  const { event } = useAnalytics();
+  const { onboarded } = useAuthState();
   const manualAccountModal = useModal();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
-  const { onboarded } = useAuthState();
-  const { event } = useAnalytics();
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -53,30 +54,19 @@ export const ConnectAccountMainSection = () => {
   const history = useHistory();
 
   const handleConnectAccount = () => {
-    event({
-      category: 'User Action',
-      action: 'Button Click',
-      label: 'Add Banks and Investments',
-    });
+    event(events.connectAccount);
 
     return fastlinkModal.open();
   };
 
   const handleManualAccount = () => {
-    event({
-      category: 'User Action',
-      action: 'Button Click',
-      label: 'Add Manual Account',
-    });
-    manualAccountModal.open();
-  }
+    event(events.manualConnectAccount);
+
+    return manualAccountModal.open();
+  };
 
   const handleCryptoExchange = () => {
-    event({
-      category: 'User Action',
-      action: 'Button Click',
-      label: 'Add Crypto Exchanges',
-    });
+    event(events.cryptoExchange);
 
     zabo
       .connect()
@@ -127,14 +117,14 @@ export const ConnectAccountMainSection = () => {
                 <li>Let Money Minx do the rest</li>
               </ul>
               <div className='guide-bottom'>
-                <h4>Serious about security</h4>
+                <h2>Serious about security</h2>
                 <div className='guide-icon-wrap'>
                   <span className='locked-icon'>
                     <LoginLockIcon />
                   </span>
                   <p>The security of your information is our top priority</p>
                 </div>
-                <h4>Trusted by investors</h4>
+                <h2>Trusted by investors</h2>
                 <div className='guide-icon-wrap'>
                   <span className='shield-icon'>
                     <LoginShieldIcon />
