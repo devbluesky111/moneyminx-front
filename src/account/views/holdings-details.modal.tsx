@@ -440,7 +440,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                 <div className='row mt-2 align-items-center'>
                                                                     <div className='col-sm'>
                                                                         Description
-                                                                </div>
+                                                                    </div>
                                                                     <div className='col-sm'>
                                                                         {values.description}
                                                                     </div>

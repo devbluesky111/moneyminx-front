@@ -662,16 +662,6 @@
     max-height: 40vh;
   }
 
-  .description {
-    min-width: 250px;
-  }
-
-  @media(max-width: 1111px) {
-    .form-field-group {
-      margin-top: 1rem;
-    }
-  }
-
   &__title {
     font-weight: normal;
     font-size: 1.75rem;
@@ -685,6 +675,14 @@
 
   .row {
     font-size: 1rem;
+  }
+
+  .one-row {
+    justify-content: center;
+
+    @media(min-width: $md) {
+      justify-content: space-between;
+    }
   }
 
   .key {

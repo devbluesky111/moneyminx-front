@@ -107,136 +107,186 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                             <div className='modal-wrapper mm-activity-details-modal' >
                                 <div className='mm-manual-account-modal__title mt-3'>
                                     {activityDetails && !activityDetails.isManual ?
-                                        <div className='row align-items-center'>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group text-light'>
-                                                    {moment(values.date).format('MM/DD/YYYY')}
+                                        <>
+                                            <div className='row one-row'>
+                                                <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Date
+                                                    </div>
+                                                    <div className='col-sm-8 text-light'>
+                                                        {moment(values.date).format('MM/DD/YYYY')}
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Type
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <SelectInput
+                                                            args={activityTypes}
+                                                            onChange={handleSelectChange}
+                                                            value={values.type}
+                                                            name='type'
+                                                            format={true}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Description
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <Form.Control
+                                                            onChange={handleChange}
+                                                            name='description'
+                                                            value={values.description}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group'>
-                                                    <SelectInput
-                                                        args={activityTypes}
-                                                        onChange={handleSelectChange}
-                                                        value={values.type}
-                                                        name='type'
-                                                        format={true}
-                                                    />
+                                            <div className='row one-row'>
+                                                <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Amount
+                                                    </div>
+                                                    <div className='col-sm-8 text-light'>
+                                                        {currencySymbol}{values.amount}
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Balance
+                                                    </div>
+                                                    <div className='col-sm-8 text-light'>
+                                                        {currencySymbol}{values.balance}
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Income
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <SelectInput
+                                                            args={['Yes', 'No']}
+                                                            onChange={handleYesNoChange}
+                                                            value={values.income ? 'Yes' : 'No'}
+                                                            name='income'
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        CashFlow
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <SelectInput
+                                                            args={['Yes', 'No']}
+                                                            onChange={handleYesNoChange}
+                                                            value={values.cashFlow ? 'Yes' : 'No'}
+                                                            name='cashFlow'
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group description'>
-                                                    <Form.Control
-                                                        onChange={handleChange}
-                                                        name='description'
-                                                        value={values.description}
-                                                    />
+                                        </> :
+                                        <>
+                                            <div className='row one-row'>
+                                                <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Date
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <ReactDatePicker
+                                                            name='date'
+                                                            selected={values.date ? new Date(values.date) : null}
+                                                            onChange={(val: Date) => {
+                                                                setFieldValue('date', moment(val).toISOString());
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Type
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <SelectInput
+                                                            args={activityTypes}
+                                                            onChange={handleSelectChange}
+                                                            value={values.type}
+                                                            name='type'
+                                                            format={true}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Description
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <Form.Control
+                                                            onChange={handleChange}
+                                                            name='description'
+                                                            value={values.description}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group text-light'>
-                                                    {currencySymbol}{values.amount}
+                                            <div className='row one-row'>
+                                                <div className='col-sm-12 col-md-3  mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Amount
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <Form.Control
+                                                            onChange={handleChange}
+                                                            type='number'
+                                                            name='amount'
+                                                            value={values.amount}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Balance
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <Form.Control
+                                                            onChange={handleChange}
+                                                            type='number'
+                                                            name='balance'
+                                                            value={values.balance}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        Income
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <SelectInput
+                                                            args={['Yes', 'No']}
+                                                            onChange={handleYesNoChange}
+                                                            value={values.income ? 'Yes' : 'No'}
+                                                            name='income'
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
+                                                    <div className='col-sm-4 text-light'>
+                                                        CashFlow
+                                                    </div>
+                                                    <div className='col-sm-8'>
+                                                        <SelectInput
+                                                            args={['Yes', 'No']}
+                                                            onChange={handleYesNoChange}
+                                                            value={values.cashFlow ? 'Yes' : 'No'}
+                                                            name='cashFlow'
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group text-light'>
-                                                    {currencySymbol}{values.balance}
-                                                </div>
-                                            </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group'>
-                                                    <SelectInput
-                                                        args={['Yes', 'No']}
-                                                        onChange={handleYesNoChange}
-                                                        value={values.income ? 'Yes' : 'No'}
-                                                        name='income'
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group'>
-                                                    <SelectInput
-                                                        args={['Yes', 'No']}
-                                                        onChange={handleYesNoChange}
-                                                        value={values.cashFlow ? 'Yes' : 'No'}
-                                                        name='cashFlow'
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div> :
-                                        <div className='row align-items-center'>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group'>
-                                                    <ReactDatePicker
-                                                        name='date'
-                                                        selected={values.date ? new Date(values.date) : null}
-                                                        onChange={(val: Date) => {
-                                                            setFieldValue('date', moment(val).toISOString());
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group'>
-                                                    <SelectInput
-                                                        args={activityTypes}
-                                                        onChange={handleSelectChange}
-                                                        value={values.type}
-                                                        name='type'
-                                                        format={true}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group description'>
-                                                    <Form.Control
-                                                        onChange={handleChange}
-                                                        name='description'
-                                                        value={values.description}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group'>
-                                                    <Form.Control
-                                                        onChange={handleChange}
-                                                        type='number'
-                                                        name='amount'
-                                                        value={values.amount}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group'>
-                                                    <Form.Control
-                                                        onChange={handleChange}
-                                                        type='number'
-                                                        name='balance'
-                                                        value={values.balance}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group'>
-                                                    <SelectInput
-                                                        args={['Yes', 'No']}
-                                                        onChange={handleYesNoChange}
-                                                        value={values.income ? 'Yes' : 'No'}
-                                                        name='income'
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className='col-sm'>
-                                                <div className='form-field-group'>
-                                                    <SelectInput
-                                                        args={['Yes', 'No']}
-                                                        onChange={handleYesNoChange}
-                                                        value={values.cashFlow ? 'Yes' : 'No'}
-                                                        name='cashFlow'
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </>
                                     }
                                     <div className='action-wrapper mt-3 form-wrap'>
                                         <span className='checkbox-item'>
