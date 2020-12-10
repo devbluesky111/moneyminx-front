@@ -7,6 +7,7 @@ import env from 'app/app.env';
 import App from './app/app';
 import * as serviceWorker from './serviceWorker';
 
+// Todo reminder to remove sample rate and turn debug off
 ReactGA.initialize(
   [
     {
