@@ -1680,6 +1680,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Jan ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1690,6 +1691,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Jan ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1711,6 +1713,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Feb ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1721,6 +1724,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Feb ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1742,6 +1746,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Mar ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1752,6 +1757,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Mar ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1773,6 +1779,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Apr ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1783,6 +1790,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Apr ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1804,6 +1812,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`May ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1814,6 +1823,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`May ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1835,6 +1845,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Jun ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1845,6 +1856,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Jun ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1876,6 +1888,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Jul ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1886,6 +1899,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Jul ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1907,6 +1921,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Aug ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1917,6 +1932,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Aug ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1938,6 +1954,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Sep ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1948,6 +1965,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Sep ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -1969,6 +1987,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Oct ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -1979,6 +1998,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Oct ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -2000,6 +2020,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Nov ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -2010,6 +2031,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Nov ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
@@ -2031,6 +2053,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                             type='number'
                                                                                             id={`Dec ${item}`}
                                                                                             value={i.value}
+                                                                                            disabled={i.type === 'projection'}
                                                                                         />
                                                                                         <span className='input-add-on'>{getCurrencySymbol(holdingsDetails.currency)}</span>
                                                                                     </div>
@@ -2041,6 +2064,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                                         onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
                                                                                         type='number'
                                                                                         defaultValue={0}
+                                                                                        disabled={new Date(`Dec ${item}`) > new Date()}
                                                                                     />
                                                                                     <span className='input-add-on'>{currency ? getCurrencySymbol(currency) : '$'}</span>
                                                                                 </div>
