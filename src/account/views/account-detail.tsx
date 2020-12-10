@@ -84,8 +84,6 @@ const AccountDetail: React.FC = () => {
   const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
     const { data, error } = await getAccountDetails(accountId, baseCurrency);
     if (!error) {
-      console.log('fetchAccountDetails: ', data);
-
       setAccountDetails(data);
     }
   };
@@ -93,7 +91,6 @@ const AccountDetail: React.FC = () => {
   const fetchAccountHoldings = async (accountId: string, fromDate: any, toDate: any, timeInterval: string) => {
     const { data, error } = await getAccountHoldings({ accountId, fromDate, toDate, timeInterval });
     if (!error) {
-      console.log('fetchAccountHoldings: ', data);
       setAccountHoldings(data);
       setLoading(false);
       setFilterLoading(false);
@@ -106,7 +103,6 @@ const AccountDetail: React.FC = () => {
   const fetchAccountActivity = async (accountId: string, fromDate: any, toDate: any, timeInterval: string) => {
     const { data, error } = await getAccountActivity({ accountId, fromDate, toDate, timeInterval });
     if (!error) {
-      console.log('fetchAccountActivity: ', data);
       setAccountActivity(data);
       setFilterLoading(false);
     }

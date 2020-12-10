@@ -25,7 +25,6 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
   const fetchHolingsDetails = async (positionId: string) => {
     const { data, error } = await getHoldingsDetails(positionId);
     if (!error) {
-      console.log('fetchHolingsDetails: ', data);
       setHoldingsDetails(data);
     }
   };

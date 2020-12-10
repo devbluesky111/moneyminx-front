@@ -20,14 +20,13 @@ const AppSubHeader = () => {
 
   const upgradeAccountModal = useModal();
 
-  const fetchCurrentAccount = async () => {
-    const { data, error } = await getAccount();
-    if (!error) {
-      setCurrentAccount(data);
-    }
-  };
-
   useEffect(() => {
+    const fetchCurrentAccount = async () => {
+      const { data, error } = await getAccount();
+      if (!error) {
+        setCurrentAccount(data);
+      }
+    };
     fetchCurrentAccount();
   }, []);
 

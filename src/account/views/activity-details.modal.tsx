@@ -1,14 +1,15 @@
 import moment from 'moment';
+import ReactDatePicker from 'react-datepicker';
 import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 
-import { Formik } from 'formik';
 import { ActivityDetailsModalProps } from 'account/account.type';
-import { Modal } from 'common/components/modal';
+import { getDateFormatedString } from 'common/moment.helper';
 import { getActivityTypes, patchTransaction, postTransaction } from 'api/request.api';
+import { Modal } from 'common/components/modal';
 import { SelectInput } from 'common/components/input/select.input';
-import ReactDatePicker from 'react-datepicker';
 
 const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDetailsModal, activityDetails, closeEditActivityModal, accountId, closeNewActivityModal, currencySymbol }) => {
 
@@ -114,7 +115,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                                         Date
                                                     </div>
                                                     <div className='col-sm-8 text-light'>
-                                                        {moment(values.date).format('MM/DD/YYYY')}
+                                                        {getDateFormatedString(values.date)}
                                                     </div>
                                                 </div>
                                                 <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>

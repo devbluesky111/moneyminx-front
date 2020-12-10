@@ -8,6 +8,7 @@ import { CurrencyOptions } from 'auth/enum/currency-options';
 import { enumerateStr, formater, getUnique } from 'common/common-helper';
 import { Formik } from 'formik';
 import { gc } from 'common/interval-parser';
+import { getDateFormatedString } from 'common/moment.helper';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
 import { DisabledInputProps, HoldingsDetailsModalProps } from 'account/account.type';
 import { Modal } from 'common/components/modal';
@@ -67,7 +68,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                 data.splice(index, 1);
             }
             if (!error) {
-                // console.log('fetchfilter: ', filters[i], data);
                 switch (filters[i]) {
                     case 'Type':
                         setClassificationForTypes(data);
@@ -324,8 +324,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                 }
 
                 const handleMonthlyNewChange = (value: string, e: any) => {
-                    console.log(value, e.target.value);
-
                     let _values = values.originalValues;
                     let existStatus = false;
                     for (let i = 0; i < _values.length; i++) {
@@ -639,7 +637,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             Vested Date
                                                                         </div>
                                                                         <div className='col-sm'>
-                                                                            {moment(values.vestedDate).format('MM/DD/YYYY')}
+                                                                            {getDateFormatedString(values.vestedDate)}
                                                                         </div>
                                                                     </div>
                                                                 }
@@ -689,7 +687,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             Expiration Date
                                                                         </div>
                                                                         <div className='col-sm'>
-                                                                            {moment(values.expirationDate).format('MM/DD/YYYY')}
+                                                                            {getDateFormatedString(values.expirationDate)}
                                                                         </div>
                                                                     </div>
                                                                 }
@@ -699,7 +697,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             Grant Date
                                                                         </div>
                                                                         <div className='col-sm'>
-                                                                            {moment(values.grantDate).format('MM/DD/YYYY')}
+                                                                            {getDateFormatedString(values.grantDate)}
                                                                         </div>
                                                                     </div>
                                                                 }
@@ -791,7 +789,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({ holdingsDet
                                                                             Maturity Date
                                                                         </div>
                                                                         <div className='col-sm'>
-                                                                            {moment(values.maturityDate).format('MM/DD/YYYY')}
+                                                                            {getDateFormatedString(values.maturityDate)}
                                                                         </div>
                                                                     </div>
                                                                 }

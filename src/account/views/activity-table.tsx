@@ -25,7 +25,6 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
   const fetchActivityDetails = async (activityId: string) => {
     const { data, error } = await getActivityDetails(activityId);
     if (!error) {
-      console.log('fetchActivityDetails: ', data);
       setActivityDetails(data);
     }
   };
