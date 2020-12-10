@@ -7,24 +7,23 @@ import env from 'app/app.env';
 import App from './app/app';
 import * as serviceWorker from './serviceWorker';
 
-// Todo reminder to remove sample rate and turn debug off
 ReactGA.initialize(
   [
     {
       trackingId: env.GOOGLE_ANALYTICS_TRACKING_ID,
       gaOptions: {
-        siteSpeedSampleRate: 100,
+        siteSpeedSampleRate: 1,
       },
     },
     {
       trackingId: env.GOOGLE_ADS_TRACKING_ID,
       gaOptions: {
-        siteSpeedSampleRate: 100,
+        siteSpeedSampleRate: 1,
       },
     },
   ],
   {
-    debug: true,
+    debug: false,
   }
 );
 
