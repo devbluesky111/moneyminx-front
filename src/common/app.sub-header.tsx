@@ -18,7 +18,7 @@ const AppSubHeader = () => {
   const [availableNumber, setAvailableNumber] = useState<number>(0);
   const [successAccounts, setSuccessAccounts] = useState<Account[]>([]);
   const [warningAccounts, setWarningAccounts] = useState<Account[]>([]);
-  const [dangerAccounts, setDangerAccounts] = useState<Account[]>([]);
+  const [errorAccounts, setErrorAccounts] = useState<Account[]>([]);
   const [manualMax, setManualMax] = useState<boolean>(false);
   const upgradeAccountModal = useModal();
 
@@ -28,10 +28,10 @@ const AppSubHeader = () => {
       if (!error) {
         const successAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'LOGIN_IN_PROGRESS' || acc.providerAccount.status === 'IN_PROGRESS' || acc.providerAccount.status === 'PARTIAL_SUCCESS' || acc.providerAccount.status === 'SUCCESS'));
         const warningAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'USER_INPUT_REQUIRED'));
-        const dangerAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'FAILED' || acc.providerAccount.status === null));
+        const errorAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'FAILED' || acc.providerAccount.status === null));
         setSuccessAccounts(successAccounts);
         setWarningAccounts(warningAccounts);
-        setDangerAccounts(dangerAccounts);
+        setErrorAccounts(errorAccounts);
       }
     };
     fetchCurrentAccount();
@@ -72,14 +72,14 @@ const AppSubHeader = () => {
         <Dropdown className='drop-box' >
           <Dropdown.Toggle className='dropdown-toggle my-accounts'>My Accounts</Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu'>
-            {(dangerAccounts.length > 0 || warningAccounts.length > 0) &&
+            {(errorAccounts.length > 0 || warningAccounts.length > 0) &&
               <div className='dropdown-head'>
                 <h4>Needs Attension</h4>
               </div>}
             <div className='dropdown-box'>
-              {dangerAccounts.length > 0 &&
-                <ul className='danger'>
-                  {dangerAccounts.map((account: Account, index: number) => {
+              {errorAccounts.length > 0 &&
+                <ul className='error'>
+                  {errorAccounts.map((account: Account, index: number) => {
                     return (
                       <li key={index}>
                         <Link to='#'>
