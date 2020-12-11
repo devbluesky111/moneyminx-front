@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 
+import useSettings from 'setting/hooks/useSettings';
 import { Account } from 'auth/auth.types';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getAccount, getCurrentSubscription, getSubscription } from 'api/request.api';
@@ -11,13 +12,14 @@ import { fNumber, numberWithCommas } from './number.helper';
 import { getRelativeDate } from './moment.helper';
 import { pricingDetailConstant } from './common.constant';
 import { useModal } from './components/modal';
+import { getCurrencySymbol } from './currency-helper';
 
 const AppSubHeader = () => {
   const history = useHistory();
   const [currentAccount, setCurrentAccount] = useState<Account[]>();
   const [availableNumber, setAvailableNumber] = useState<number>(0);
   const [manualMax, setManualMax] = useState<boolean>(false);
-
+  const { data } = useSettings();
   const upgradeAccountModal = useModal();
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const AppSubHeader = () => {
                           <h5>{account.accountName}</h5>
                           <span>{getRelativeDate(account.balancesFetchedAt)}</span>
                         </div>
-                        <div>${numberWithCommas(fNumber(account.balance, 2))}</div>
+                        <div>{data?.currency ? getCurrencySymbol(data.currency) : ''}{numberWithCommas(fNumber(account.balance, 2))}</div>
                       </Link>
                     </li>
                   )

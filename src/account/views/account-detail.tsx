@@ -66,8 +66,8 @@ const AccountDetail: React.FC = () => {
       (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))
     ) {
       setFilterLoading(true);
-      if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval);
-      if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval);
+      if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval, baseCurrency);
+      if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval, baseCurrency);
     }
   }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen, newActivityModalOpen, editActivityModalOpen, baseCurrency]);
 
@@ -88,8 +88,8 @@ const AccountDetail: React.FC = () => {
     }
   };
 
-  const fetchAccountHoldings = async (accountId: string, fromDate: any, toDate: any, timeInterval: string) => {
-    const { data, error } = await getAccountHoldings({ accountId, fromDate, toDate, timeInterval });
+  const fetchAccountHoldings = async (accountId: string, fromDate: any, toDate: any, timeInterval: string, baseCurrency: boolean) => {
+    const { data, error } = await getAccountHoldings({ accountId, fromDate, toDate, timeInterval, baseCurrency });
     if (!error) {
       setAccountHoldings(data);
       setLoading(false);
@@ -100,8 +100,8 @@ const AccountDetail: React.FC = () => {
     }
   };
 
-  const fetchAccountActivity = async (accountId: string, fromDate: any, toDate: any, timeInterval: string) => {
-    const { data, error } = await getAccountActivity({ accountId, fromDate, toDate, timeInterval });
+  const fetchAccountActivity = async (accountId: string, fromDate: any, toDate: any, timeInterval: string, baseCurrency: boolean) => {
+    const { data, error } = await getAccountActivity({ accountId, fromDate, toDate, timeInterval, baseCurrency });
     if (!error) {
       setAccountActivity(data);
       setFilterLoading(false);
