@@ -22,6 +22,7 @@ import {
   setFilterTimeInterval,
 } from 'networth/networth.actions';
 import { NetworthFilterProps, NetworthState, TFilterKey } from 'networth/networth.type';
+import { numberWithCommas, fNumber } from '../../../common/number.helper';
 
 const NetworthFilter = (props: NetworthFilterProps) => {
   const dispatch = useNetworthDispatch();
@@ -175,7 +176,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
                           <h5>{account.accountName}</h5>
                           <span>{getRelativeDate(account.balancesFetchedAt)}</span>
                         </div>
-                        <div>{data?.currency ? getCurrencySymbol(data.currency) : ''}{account.balance}</div>
+                        <div>{data?.currency ? getCurrencySymbol(data.currency) : ''}{numberWithCommas(fNumber(account.balance, 2))}</div>
                       </li>
                     );
                   })}
