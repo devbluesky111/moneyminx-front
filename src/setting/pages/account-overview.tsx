@@ -31,7 +31,7 @@ import {
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
 
-export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag= false }) => {
+export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag = false }) => {
   const history = useHistory();
   const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
@@ -57,7 +57,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
   const connectedAccounts = accounts.filter((acc) => !acc.isManual);
 
   const numberOfConnectedAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || 0;
-  const numberOfManualAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || 0;
+  const numberOfManualAccounts = subscription?.details?.[pricingDetailConstant.MANUAL_ACCOUNT] || 0;
 
   const verifyAccountNumbers = (event: React.ChangeEvent<any>) => {
     event.preventDefault()
@@ -71,8 +71,8 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
   return (
     <section className='mm-account-overview'>
       {reviewSubscriptionFlag && <SubscriptionConnectionWarning availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} />}
-      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag}/>
-      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag}/>
+      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag} />
+      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag} />
       {reviewSubscriptionFlag && <AccountDialogBox verifyAccountNumbers={verifyAccountNumbers} availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} accountList={connectedAccounts} manualAccountList={manualAccounts} />}
     </section>
   );
@@ -85,7 +85,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   const needUpgrade = manualAccountList.length >= availableAccounts;
 
   const addAccount = () => {
-    if(reviewSubscriptionFlag) {
+    if (reviewSubscriptionFlag) {
       history.push(appRouteConstants.subscription.SUBSCRIPTION);
       return
     }
@@ -135,7 +135,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
         </div>
 
         {manualAccountList.map((acc, index) => {
-          return <AccountRow account={acc} key={index} reviewSubscriptionFlag={reviewSubscriptionFlag}/>;
+          return <AccountRow account={acc} key={index} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
         })}
 
         <div className='row py-3 align-items-center'>
@@ -162,7 +162,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const accountsByProvider = groupByProviderName(accountList);
 
   const addAccount = () => {
-    if(reviewSubscriptionFlag) {
+    if (reviewSubscriptionFlag) {
       history.push(appRouteConstants.subscription.SUBSCRIPTION);
       return
     }
@@ -222,12 +222,12 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
             </div>
 
             {accounts.map((account, accountIndex) => {
-              return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag}/>;
+              return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
             })}
 
             <div className='row py-3 align-items-center no-gutters'>
               <div className='col-12 col-md-6'>
-                {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a> :''}
+                {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a> : ''}
               </div>
               <div className='col-12 col-md-6 mt-2 text-md-right'>
                 <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
@@ -273,7 +273,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
       </div>
       <div className='col-3 col-md-2'>
         <div className='float-right'>
-          {!reviewSubscriptionFlag ? <Link to={`/account-details/${account.id}`}><IconEdit className='edit-icon'/></Link> : null}
+          {!reviewSubscriptionFlag ? <Link to={`/account-details/${account.id}`}><IconEdit className='edit-icon' /></Link> : null}
           {deleting ? <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true' /> :
             <DeleteIcon className='ml-2 ml-md-3 trash-icon' onClick={() => deleteAccount(account.id)} />
           }

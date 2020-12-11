@@ -86,7 +86,6 @@ const AccountDetail: React.FC = () => {
   const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
     const { data, error } = await getAccountDetails(accountId, baseCurrency);
     if (!error) {
-      console.log(data)
       setAccountDetails(data);
     }
   };

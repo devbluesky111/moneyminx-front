@@ -15,8 +15,10 @@ import { getCurrencySymbol } from './currency-helper';
 
 const AppSubHeader = () => {
   const history = useHistory();
-  const [accountByProviderStatus, setAccountByProviderStatus] = useState<any>({});
   const [availableNumber, setAvailableNumber] = useState<number>(0);
+  const [successAccounts, setSuccessAccounts] = useState<Account[]>([]);
+  const [warningAccounts, setWarningAccounts] = useState<Account[]>([]);
+  const [dangerAccounts, setDangerAccounts] = useState<Account[]>([]);
   const [manualMax, setManualMax] = useState<boolean>(false);
   const upgradeAccountModal = useModal();
 
@@ -24,22 +26,12 @@ const AppSubHeader = () => {
     const fetchCurrentAccount = async () => {
       const { data, error } = await getAccountWithProvider();
       if (!error) {
-        const AccountByProviderStatus = data.reduce((acc: any, value: Account) => {
-          if (!acc['success']) { acc['success'] = []; }
-          if (!acc['warning']) { acc['warning'] = []; }
-          if (!acc['danger']) { acc['danger'] = []; }
-          const status = value.providerAccount.status;
-          if (status === 'LOGIN_IN_PROGRESS' || status === 'IN_PROGRESS' || status === 'PARTIAL_SUCCESS' || status === 'SUCCESS') {
-            acc['success'].push(value);
-          } else if (status === 'USER_INPUT_REQUIRED') {
-            acc['warning'].push(value);
-          } else {
-            acc['danger'].push(value);
-          }
-
-          return acc;
-        }, {});
-        setAccountByProviderStatus(AccountByProviderStatus);
+        const successAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'LOGIN_IN_PROGRESS' || acc.providerAccount.status === 'IN_PROGRESS' || acc.providerAccount.status === 'PARTIAL_SUCCESS' || acc.providerAccount.status === 'SUCCESS'));
+        const warningAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'USER_INPUT_REQUIRED'));
+        const dangerAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'FAILED' || acc.providerAccount.status === null));
+        setSuccessAccounts(successAccounts);
+        setWarningAccounts(warningAccounts);
+        setDangerAccounts(dangerAccounts);
       }
     };
     fetchCurrentAccount();
@@ -80,14 +72,14 @@ const AppSubHeader = () => {
         <Dropdown className='drop-box' >
           <Dropdown.Toggle className='dropdown-toggle my-accounts'>My Accounts</Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu'>
-            {(accountByProviderStatus?.['danger']?.length > 0 || accountByProviderStatus?.['warning']?.length > 0) &&
+            {(dangerAccounts.length > 0 || warningAccounts.length > 0) &&
               <div className='dropdown-head'>
                 <h4>Needs Attension</h4>
               </div>}
             <div className='dropdown-box'>
-              {accountByProviderStatus?.['danger']?.length > 0 &&
+              {dangerAccounts.length > 0 &&
                 <ul className='danger'>
-                  {accountByProviderStatus['danger'].map((account: Account, index: number) => {
+                  {dangerAccounts.map((account: Account, index: number) => {
                     return (
                       <li key={index}>
                         <Link to='#'>
@@ -102,9 +94,9 @@ const AppSubHeader = () => {
                   })}
                 </ul>
               }
-              {accountByProviderStatus?.['warning']?.length > 0 &&
+              {warningAccounts.length > 0 &&
                 <ul className='warning'>
-                  {accountByProviderStatus['warning'].map((account: Account, index: number) => {
+                  {warningAccounts.map((account: Account, index: number) => {
                     return (
                       <li key={index}>
                         <Link to='#'>
@@ -119,9 +111,9 @@ const AppSubHeader = () => {
                   })}
                 </ul>
               }
-              {accountByProviderStatus?.['success']?.length > 0 &&
+              {successAccounts.length > 0 &&
                 <ul className='success'>
-                  {accountByProviderStatus['success'].map((account: Account, index: number) => {
+                  {successAccounts.map((account: Account, index: number) => {
                     return (
                       <li key={index}>
                         <Link to='#'>
