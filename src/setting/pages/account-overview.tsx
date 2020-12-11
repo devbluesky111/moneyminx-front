@@ -204,41 +204,141 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
 
       {Object.entries(accountsByProvider).map(([providerName, accounts], index) => (
         <div key={index}>
-          <div className='card mm-setting-card mm-account-overview__connected'>
-            <div className='row pb-2 pt-1 align-items-center'>
-              <div className='col-10 col-md-6'>
-                <div>
-                  <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4 accounts-provider-logo' alt={`${providerName} logo`} />
-                  <span className='mm-account-overview__block-title'>{providerName}</span>
+          {(accounts[0].providerAccount.status === 'FAILED' || !accounts[0].providerAccount.status) &&
+            <div className={'card mm-setting-card mm-account-overview__error'}>
+              <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
+                <div className='col-12 col-md-6 text-danger pl-3'>
+                  <span>Connection error</span>
+                </div>
+                <div className='col-12 col-md-6 mt-2 text-md-right'>
+                  <button
+                    type='button'
+                    className='btn btn-outline-primary mm-button btn-lg'
+                  >
+                    Fix Connection
+                  </button>
                 </div>
               </div>
-              {/* TODO Refresh single account when API is ready
+              <div className='row pt-3 pb-2 pt-1 align-items-center'>
+                <div className='col-10 col-md-6'>
+                  <div>
+                    <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4 accounts-provider-logo' alt={`${providerName} logo`} />
+                    <span className='mm-account-overview__block-title'>{providerName}</span>
+                  </div>
+                </div>
+                {/* TODO Refresh single account when API is ready
                 <div className='col-2 col-md-1 order-md-2 text-right'>
                   <Refresh />
                 </div>*/}
-              <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
-                <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
+                <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
+                  <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
+                </div>
+              </div>
+
+              {accounts.map((account, accountIndex) => {
+                return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
+              })}
+
+              <div className='row py-3 align-items-center no-gutters'>
+                <div className='col-12 col-md-6'>
+                  {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a> : ''}
+                </div>
+                <div className='col-12 col-md-6 mt-2 text-md-right'>
+                  <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
+                    onClick={() => { removeAccounts(accounts) }}
+                    disabled={deleting}>
+                    {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
+                    <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
+                  </button>
+                </div>
               </div>
             </div>
-
-            {accounts.map((account, accountIndex) => {
-              return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
-            })}
-
-            <div className='row py-3 align-items-center no-gutters'>
-              <div className='col-12 col-md-6'>
-                {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a> : ''}
+          }
+        </div>
+      ))}
+      {Object.entries(accountsByProvider).map(([providerName, accounts], index) => (
+        <div key={index}>
+          {accounts[0].providerAccount.status === 'USER_INPUT_REQUIRED' &&
+            <div className={'card mm-setting-card mm-account-overview__info'}>
+              <div className='row pb-2 pt-1 align-items-center'>
+                <div className='col-10 col-md-6'>
+                  <div>
+                    <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4 accounts-provider-logo' alt={`${providerName} logo`} />
+                    <span className='mm-account-overview__block-title'>{providerName}</span>
+                  </div>
+                </div>
+                {/* TODO Refresh single account when API is ready
+                <div className='col-2 col-md-1 order-md-2 text-right'>
+                  <Refresh />
+                </div>*/}
+                <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
+                  <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
+                </div>
               </div>
-              <div className='col-12 col-md-6 mt-2 text-md-right'>
-                <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
-                  onClick={() => { removeAccounts(accounts) }}
-                  disabled={deleting}>
-                  {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
-                  <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
-                </button>
+
+              {accounts.map((account, accountIndex) => {
+                return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
+              })}
+
+              <div className='row py-3 align-items-center no-gutters'>
+                <div className='col-12 col-md-6'>
+                  {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a> : ''}
+                </div>
+                <div className='col-12 col-md-6 mt-2 text-md-right'>
+                  <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
+                    onClick={() => { removeAccounts(accounts) }}
+                    disabled={deleting}>
+                    {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
+                    <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          }
+        </div>
+      ))}
+      {Object.entries(accountsByProvider).map(([providerName, accounts], index) => (
+        <div key={index}>
+          {(accounts[0].providerAccount.status === 'LOGIN_IN_PROGRESS' ||
+            accounts[0].providerAccount.status === 'IN_PROGRESS' ||
+            accounts[0].providerAccount.status === 'PARTIAL_SUCCESS' ||
+            accounts[0].providerAccount.status === 'SUCCESS') &&
+            <div className={'card mm-setting-card mm-account-overview__connected'}>
+              <div className='row pb-2 pt-1 align-items-center'>
+                <div className='col-10 col-md-6'>
+                  <div>
+                    <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4 accounts-provider-logo' alt={`${providerName} logo`} />
+                    <span className='mm-account-overview__block-title'>{providerName}</span>
+                  </div>
+                </div>
+                {/* TODO Refresh single account when API is ready
+                <div className='col-2 col-md-1 order-md-2 text-right'>
+                  <Refresh />
+                </div>*/}
+                <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
+                  <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
+                </div>
+              </div>
+
+              {accounts.map((account, accountIndex) => {
+                return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
+              })}
+
+              <div className='row py-3 align-items-center no-gutters'>
+                <div className='col-12 col-md-6'>
+                  {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a> : ''}
+                </div>
+                <div className='col-12 col-md-6 mt-2 text-md-right'>
+                  <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
+                    onClick={() => { removeAccounts(accounts) }}
+                    disabled={deleting}>
+                    {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
+                    <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
         </div>
       ))}
     </>
