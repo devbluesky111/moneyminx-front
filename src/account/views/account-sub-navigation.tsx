@@ -1,11 +1,14 @@
 import React from 'react';
 import { Image } from 'react-bootstrap';
 
+import useSettings from 'setting/hooks/useSettings';
+
 import AppSubHeader from '../../common/app.sub-header';
 import { AccountSubNavigationProps } from '../account.type';
 
 export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = (props) => {
   const { providerLogo, providerName, baseCurrency, toggleBaseCurrency } = props;
+  const { data } = useSettings();
 
   return (
     <section>
@@ -32,7 +35,7 @@ export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = (props)
               onClick={toggleBaseCurrency}
               role='button'
             />
-            <span className='ml-2 view-in-base-currency'>View in base currency (USD)</span>
+            <span className='ml-2 view-in-base-currency'>View in base currency ({data?.currency})</span>
           </span>
         </div>
       </div>
