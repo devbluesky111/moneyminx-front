@@ -2,9 +2,11 @@ import { Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
 import React, { useEffect, useState } from 'react';
 
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import useSettings from 'setting/hooks/useSettings';
 import { Account } from 'auth/auth.types';
 import { getAccount } from 'api/request.api';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { getCurrencySymbol } from 'common/currency-helper';
 import { arrGroupBy, enumerateStr, serialize } from 'common/common-helper';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
 import { initialState, useNetworthDispatch, useNetworthState } from 'networth/networth.context';
@@ -24,6 +26,7 @@ import { NetworthFilterProps, NetworthState, TFilterKey } from 'networth/networt
 const NetworthFilter = (props: NetworthFilterProps) => {
   const dispatch = useNetworthDispatch();
   const [currentAccount, setCurrentAccount] = useState<Account[]>();
+  const { data } = useSettings();
 
   const networthState = useNetworthState();
   const { fCategories, fTypes, fAccounts, fFromDate, fToDate, fTimeInterval, networth } = networthState;
@@ -172,7 +175,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
                           <h5>{account.accountName}</h5>
                           <span>{getRelativeDate(account.balancesFetchedAt)}</span>
                         </div>
-                        <div>${account.balance}</div>
+                        <div>{data?.currency ? getCurrencySymbol(data.currency) : ''}{account.balance}</div>
                       </li>
                     );
                   })}
