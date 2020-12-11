@@ -149,7 +149,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
               </ul>
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown className='drop-box tab-hide'>
+          <Dropdown className='drop-box'>
             <Dropdown.Toggle variant='' className={fc('fAccounts')}>
               All Accounts
             </Dropdown.Toggle>
