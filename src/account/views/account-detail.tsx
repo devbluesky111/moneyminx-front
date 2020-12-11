@@ -55,6 +55,8 @@ const AccountDetail: React.FC = () => {
   const [editActivityModalOpen, setEditActivityModalOpen] = useState<boolean>(false);
   const [baseCurrency, setBaseCurrency] = useState<boolean>(false);
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
+  const [popup, setPopup] = useState<boolean>(false);
+
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
   const dropdownToggle = useRef(null);
@@ -293,14 +295,30 @@ const AccountDetail: React.FC = () => {
                             <>
                               <CheckCircleGreen />
                               <span className='good'>Good</span>
-                            </> : (AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED') ?
+                            </>
+                            : (AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED') ?
                               <>
                                 <NeedsInfo />
                                 <span className='needsInfo'>Needs Info</span>
                               </> :
                               <>
-                                <NotLinked />
-                                <span className='attention'>Attention</span>
+                                <div className='attention-section' onMouseEnter={() => setPopup(true)} onMouseLeave={() => setPopup(false)}>
+                                  <NotLinked />
+                                  <span className='attention'>Attention</span>
+                                  {popup &&
+                                    <div className='popup'>
+                                      <span className='pb-2'>Connection Status</span>
+                                      <span className='pb-2'>Last updated 14 hours ago</span>
+                                      <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
+                                      <button
+                                        type='button'
+                                        className='btn btn-primary'
+                                      >
+                                        Fix Connection
+                                      </button>
+                                    </div>
+                                  }
+                                </div>
                               </>
                           }
                         </>
