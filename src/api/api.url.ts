@@ -19,6 +19,7 @@ export const urls = {
     FACEBOOK_LOGIN: '/facebook/login',
     PROFILE_PICTURE: '/profile/picture',
     ACCOUNTS: '/account/me?refresh=false',
+    ACCOUNTS_WITH_PROVIDER: '/account/me?baseCurrency=true&connectionInfo=true&refresh=false',
     ACCOUNTS_REFRESH: '/account/me?refresh=true',
     ACCOUNTS_COUNT: '/account/me/counts',
     ACCOUNT_CATEGORY: '/account/category',

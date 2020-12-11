@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 
-import useSettings from 'setting/hooks/useSettings';
 import { Account } from 'auth/auth.types';
 import { appRouteConstants } from 'app/app-route.constant';
-import { getAccount, getCurrentSubscription, getSubscription } from 'api/request.api';
+import { getAccount, getAccountWithProvider, getCurrentSubscription, getSubscription } from 'api/request.api';
 
 import UpgradeAccountModal from './upgrade-account.modal';
 import { fNumber, numberWithCommas } from './number.helper';
@@ -16,17 +15,33 @@ import { getCurrencySymbol } from './currency-helper';
 
 const AppSubHeader = () => {
   const history = useHistory();
-  const [currentAccount, setCurrentAccount] = useState<Account[]>();
+  const [accountByProviderStatus, setAccountByProviderStatus] = useState<any>({});
   const [availableNumber, setAvailableNumber] = useState<number>(0);
   const [manualMax, setManualMax] = useState<boolean>(false);
-  const { data } = useSettings();
   const upgradeAccountModal = useModal();
 
   useEffect(() => {
     const fetchCurrentAccount = async () => {
-      const { data, error } = await getAccount();
+      const { data, error } = await getAccountWithProvider();
       if (!error) {
-        setCurrentAccount(data);
+        console.log(data)
+        const AccountByProviderStatus = data.reduce((acc: any, value: Account) => {
+          if (!acc['success']) { acc['success'] = []; }
+          if (!acc['warning']) { acc['warning'] = []; }
+          if (!acc['danger']) { acc['danger'] = []; }
+          const status = value.providerAccount.status;
+          if (status === 'LOGIN_IN_PROGRESS' || status === 'IN_PROGRESS' || status === 'PARTIAL_SUCCESS' || status === 'SUCCESS') {
+            acc['success'].push(value);
+          } else if (status === 'USER_INPUT_REQUIRED') {
+            acc['warning'].push(value);
+          } else {
+            acc['danger'].push(value);
+          }
+
+          return acc;
+        }, {});
+        console.log(AccountByProviderStatus);
+        setAccountByProviderStatus(AccountByProviderStatus);
       }
     };
     fetchCurrentAccount();
@@ -47,7 +62,6 @@ const AppSubHeader = () => {
       let manualLimit = subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT];
       if (autoLimit === 'Unlimited') autoLimit = 100;
       if (manualLimit === 'Unlimited') manualLimit = 100;
-      console.log(autoLimit, manualLimit)
       if (autoAccounts < autoLimit) {
         return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
       } else
@@ -68,25 +82,62 @@ const AppSubHeader = () => {
         <Dropdown className='drop-box' >
           <Dropdown.Toggle className='dropdown-toggle my-accounts'>My Accounts</Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu'>
-            <div className='dropdown-head'>
-              <h4>Accounts</h4>
-            </div>
+            {(accountByProviderStatus?.['danger']?.length > 0 || accountByProviderStatus?.['warning']?.length > 0) &&
+              <div className='dropdown-head'>
+                <h4>Needs Attension</h4>
+              </div>}
             <div className='dropdown-box'>
-              <ul className='success'>
-                {currentAccount?.map((account, index) => {
-                  return (
-                    <li key={index}>
-                      <Link to='#'>
-                        <div>
-                          <h5>{account.accountName}</h5>
-                          <span>{getRelativeDate(account.balancesFetchedAt)}</span>
-                        </div>
-                        <div>{data?.currency ? getCurrencySymbol(data.currency) : ''}{numberWithCommas(fNumber(account.balance, 2))}</div>
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
+              {accountByProviderStatus?.['danger']?.length > 0 &&
+                <ul className='danger'>
+                  {accountByProviderStatus['danger'].map((account: Account, index: number) => {
+                    return (
+                      <li key={index}>
+                        <Link to='#'>
+                          <div>
+                            <h5>{account.accountName}</h5>
+                            <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                          </div>
+                          <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              }
+              {accountByProviderStatus?.['warning']?.length > 0 &&
+                <ul className='warning'>
+                  {accountByProviderStatus['warning'].map((account: Account, index: number) => {
+                    return (
+                      <li key={index}>
+                        <Link to='#'>
+                          <div>
+                            <h5>{account.accountName}</h5>
+                            <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                          </div>
+                          <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              }
+              {accountByProviderStatus?.['success']?.length > 0 &&
+                <ul className='success'>
+                  {accountByProviderStatus['success'].map((account: Account, index: number) => {
+                    return (
+                      <li key={index}>
+                        <Link to='#'>
+                          <div>
+                            <h5>{account.accountName}</h5>
+                            <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                          </div>
+                          <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              }
             </div>
           </Dropdown.Menu>
         </Dropdown>

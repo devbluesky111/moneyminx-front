@@ -4,7 +4,8 @@ import { storage } from 'app/app.storage';
 import { StorageKey } from 'app/app.types';
 import { Children, Dispatch } from 'common/common.types';
 
-import { AuthType, AuthState } from './auth.types';
+import { AuthType } from './auth.types';
+import { AuthState } from './auth.enum';
 import { auth, subscription } from './auth-context.types';
 
 const initialState: AuthType = {
