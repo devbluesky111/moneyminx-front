@@ -24,7 +24,6 @@ const AppSubHeader = () => {
     const fetchCurrentAccount = async () => {
       const { data, error } = await getAccountWithProvider();
       if (!error) {
-        console.log(data)
         const AccountByProviderStatus = data.reduce((acc: any, value: Account) => {
           if (!acc['success']) { acc['success'] = []; }
           if (!acc['warning']) { acc['warning'] = []; }
@@ -40,7 +39,6 @@ const AppSubHeader = () => {
 
           return acc;
         }, {});
-        console.log(AccountByProviderStatus);
         setAccountByProviderStatus(AccountByProviderStatus);
       }
     };

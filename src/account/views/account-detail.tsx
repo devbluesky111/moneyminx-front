@@ -11,10 +11,12 @@ import { enumerateStr } from 'common/common-helper';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { getDate, getMonthYear, getQuarter, getYear } from 'common/moment.helper';
+import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
-import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
+import { ReactComponent as NotLinked } from 'assets/images/account/Not Linked.svg';
+import { ReactComponent as NeedsInfo } from 'assets/images/account/Needs Info.svg';
 import { storage } from 'app/app.storage';
 import { TimeIntervalEnum } from 'networth/networth.enum';
 import { useModal } from 'common/components/modal';
@@ -39,7 +41,7 @@ const AccountDetail: React.FC = () => {
   const [AccountActivity, setAccountActivity] = useState<AccountTransactionsProps>();
   const [fromDate, setFromDate] = useState<string>();
   const [toDate, setToDate] = useState<string>();
-  const [timeInterval, setTimeInterval] = useState<string>('Yearly');
+  const [timeInterval, setTimeInterval] = useState<string>('Monthly');
   const [tableType, setTableType] = useState<string>('holdings');
   const [dateFromFilterOn, setDateFromFilterOn] = useState<boolean>(false);
   const [dateToFilterOn, setDateToFilterOn] = useState<boolean>(false);
@@ -84,6 +86,7 @@ const AccountDetail: React.FC = () => {
   const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
     const { data, error } = await getAccountDetails(accountId, baseCurrency);
     if (!error) {
+      console.log(data)
       setAccountDetails(data);
     }
   };
@@ -284,8 +287,23 @@ const AccountDetail: React.FC = () => {
                       </>
                     ) : (
                         <>
-                          <CheckCircleGreen />
-                          <span className='good'>Good</span>
+                          {(AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' ||
+                            AccountDetails?.providerAccount?.status === 'IN_PROGRESS' ||
+                            AccountDetails?.providerAccount?.status === 'PARTIAL_SUCCESS' ||
+                            AccountDetails?.providerAccount?.status === 'SUCCESS') ?
+                            <>
+                              <CheckCircleGreen />
+                              <span className='good'>Good</span>
+                            </> : (AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED') ?
+                              <>
+                                <NeedsInfo />
+                                <span className='needsInfo'>Needs Info</span>
+                              </> :
+                              <>
+                                <NotLinked />
+                                <span className='attention'>Attention</span>
+                              </>
+                          }
                         </>
                       )}
                   </div>

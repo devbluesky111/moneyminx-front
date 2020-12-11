@@ -166,6 +166,14 @@
         &.good {
           color: $green;
         }
+
+        &.needsInfo {
+          color: $yellow;
+        }
+
+        &.attention {
+          color: $redAlert;
+        }
       }
     }
 
