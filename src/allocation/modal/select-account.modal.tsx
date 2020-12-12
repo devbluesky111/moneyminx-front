@@ -6,6 +6,7 @@ import { Account } from 'auth/auth.types';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { groupByProviderName } from 'auth/auth.helper';
 import { Modal, ModalType } from 'common/components/modal';
+import { numberWithCommas } from 'common/number.helper';
 
 interface SelectAccountModal {
   selectAccountModal: ModalType;
@@ -40,7 +41,7 @@ const SelectAccountModal: React.FC<SelectAccountModal> = ({ selectAccountModal, 
                   {accounts.map((item, i) => (
                     <p className='d-flex justify-content-between description' onClick={() => gotoDetailPage(item.id)}>
                       <span>{item.accountName}</span>
-                      <span>{getCurrencySymbol(item.currency)}{item.balance}</span>
+                      <span>{getCurrencySymbol(item.currency)}{numberWithCommas(item.balance)}</span>
                     </p>
                   ))}
                 </div>

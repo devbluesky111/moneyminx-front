@@ -213,7 +213,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
               </div >
 
               <div className={getSectionClass(AllocationSectionEnum.PREVIOUS_ALLOCATION)}>
-                <SelectedAllocations filter={filter} currencySymbol={currencySymbol} />
+                <SelectedAllocations filter={filter} currencySymbol={currencySymbol} gotoDetailPage={(d) => gotoDetailPage(d)} />
               </div>
 
               <div className={getSectionClass(AllocationSectionEnum.SIMILAR_ALLOCATION)}>
@@ -223,7 +223,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                     <div className='mm-allocation-overview__block--title'>Similar Investors</div>
                     <p className='mm-allocation-overview__block--subtitle'>
                       Here’s how investors with similar profiles are currently allocated
-                </p>
+                    </p>
                     <div className='mm-allocation-overview__block--action'>
                       <Download className='mr-3' />
                       <Share />
