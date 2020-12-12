@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { getAllocations } from 'api/request.api';
-import { Allocations, ChartData } from 'allocation/allocation.type';
+import { getUTCString } from 'common/moment.helper';
 import { AllocationsFilter } from 'allocation/allocation.enum';
+import { Allocations, ChartData } from 'allocation/allocation.type';
 
-const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDate?: string) => {
+const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDate?: Date) => {
   const [error, setError] = useState();
   const [fetching, setFetching] = useState<boolean>(false);
   const [allocations, setAllocations] = useState<Allocations>();
@@ -16,7 +17,7 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDa
       setFetching(true);
       const params = {
         filter,
-        forDate,
+        forDate: getUTCString(forDate),
       };
 
       const { data, error: err } = await getAllocations(params);

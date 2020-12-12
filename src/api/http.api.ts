@@ -9,6 +9,9 @@ import { appRouteConstants } from 'app/app-route.constant';
 
 import { urls } from './api.url';
 
+const MAX_TRIES = 2;
+const currentRetries: Record<string, number> = {};
+
 const axiosInstance = axios.create({
   baseURL: appEnv.BASE_URL,
   headers: {
@@ -51,6 +54,21 @@ axiosInstance.interceptors.response.use(
     const isAuthenticating = url === urls.auth.LOGIN_IN || url === urls.auth.REGISTER || url === urls.auth.PROFILE;
 
     const errorResponse = error.response?.data ? error.response.data : error;
+
+    /**
+     * IF the request is Account refresh and the server response is 500
+     * It will try for 2 times to get the response 200
+     * If not it will return the error response
+     */
+
+    if (urls.auth.ACCOUNT_REFRESH === url && STATUS_CODE.SERVER_ERROR === status) {
+      currentRetries[url] = currentRetries[url] ? currentRetries[url] + 1 : 1;
+      if (currentRetries[url] > MAX_TRIES) {
+        return withError(errorResponse);
+      }
+
+      return axiosInstance(error.config);
+    }
 
     if (status === STATUS_CODE.UNAUTHORIZED && !isAuthenticating) {
       storage.clear();

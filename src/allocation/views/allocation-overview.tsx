@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
+import useSettings from 'setting/hooks/useSettings';
+import SettingModal from 'allocation/modal/setting-modal';
 import ChartShareModal from 'allocation/modal/chart-share-modal';
 import FieldChangeModal from 'allocation/modal/field-change-modal';
-import SettingModal from 'allocation/modal/setting-modal';
 import SelectAccountModal from 'allocation/modal/select-account.modal';
-import useSettings from 'setting/hooks/useSettings';
 import { Account } from 'auth/auth.types';
 import { AllocationSectionEnum } from 'allocation/allocation.enum';
 import { AllocationOverviewProps } from 'allocation/allocation.type';

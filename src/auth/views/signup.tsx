@@ -15,6 +15,7 @@ import { postFacebookLogin } from 'api/request.api';
 import useAnalytics from 'common/hooks/useAnalytics';
 import { StringKeyObject } from 'common/common.types';
 import { appRouteConstants } from 'app/app-route.constant';
+import usePixel, { EPixelTrack } from 'common/hooks/usePixel';
 import { registerValidationSchema } from 'auth/auth.validation';
 import { signup, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -36,15 +37,17 @@ const Signup = () => {
 };
 export default Signup;
 export const SignupMainSection = () => {
+  const [fbToken, setFBToken] = useState<string>('');
+  const [associateMessage, setAssociateMessage] = useState<string>('');
+
+  const { fbq } = usePixel();
   const history = useHistory();
   const location = useLocation();
   const { event } = useAnalytics();
   const associateModal = useModal();
-  const emailNeededModal = useModal();
   const dispatch = useAuthDispatch();
-  const [fbToken, setFBToken] = useState<string>('');
+  const emailNeededModal = useModal();
   const [visible, setVisible] = useState<boolean>(false);
-  const [associateMessage, setAssociateMessage] = useState<string>('');
 
   const priceId = queryString.parse(location.search).priceId as string;
   const planName = queryString.parse(location.search).planName as string;
@@ -58,6 +61,14 @@ export const SignupMainSection = () => {
   const reg4 = /(^.*[A-Z].*$)/;
 
   const visibilityIcon = visible ? <VisibleIcon /> : <HiddenIcon />;
+
+  const triggerPixelTrackEvent = () => {
+    if (priceId && planName && planPrice) {
+      return fbq(EPixelTrack.START_TRAIL, { currency: 'USD', value: +planPrice, predicted_ltv: +planPrice * 6 });
+    }
+
+    return fbq(EPixelTrack.START_TRAIL, { currency: 'USD', value: 60, predicted_ltv: 60 * 6 });
+  };
 
   const triggerGAEvent = () => {
     if (priceId && planName && planPrice) {
@@ -105,6 +116,7 @@ export const SignupMainSection = () => {
       if (!error) {
         toast('Successfully logged in', { type: 'success' });
         triggerGAEvent();
+        triggerPixelTrackEvent();
 
         return history.push('/connect-account');
       }
@@ -240,6 +252,7 @@ export const SignupMainSection = () => {
                     if (!error) {
                       toast('Signup Success', { type: 'success' });
                       triggerGAEvent();
+                      triggerPixelTrackEvent();
 
                       return history.push('/connect-account');
                     }
