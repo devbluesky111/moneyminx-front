@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 
-import { getRefreshedProfile } from 'auth/auth.service';
+import { fetchConnectionInfo } from 'auth/auth.service';
 import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 
-const useAccountRefresh = () => {
+const useConnectionInfo = () => {
   const dispatch = useAuthDispatch();
   const { isAuthenticated } = useAuthState();
 
   useEffect(() => {
     if (isAuthenticated) {
-      getRefreshedProfile({ dispatch });
+      fetchConnectionInfo({ dispatch });
     }
   }, [dispatch, isAuthenticated]);
 };
 
-export default useAccountRefresh;
+export default useConnectionInfo;
