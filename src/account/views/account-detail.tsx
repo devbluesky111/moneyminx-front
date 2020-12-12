@@ -181,264 +181,265 @@ const AccountDetail: React.FC = () => {
       {loading ? (
         <CircularSpinner />
       ) : (
-        <div className='content-wrapper'>
-          <div className='container'>
-            <div className='mm-account'>
-            <div className='mm-account__selection mb-3'>
-              <div className='mm-account__selection--info float-lg-left'>
-                <SettingsGear className='float-left mr-2 settings-gear-button' onClick={() => setAccSetting(true)} />
-                <ul>
-                  <li>{AccountDetails?.accountName}</li>
-                  <li>{AccountDetails?.category?.mmCategory}</li>
-                  <li>{AccountDetails?.category?.mmAccountType}</li>
-                  {AccountDetails?.category?.mmAccountSubType && <li>{AccountDetails?.category?.mmAccountSubType}</li>}
-                  <li>{AccountDetails?.accountDetails?.currency}</li>
-                </ul>
-              </div>
-              <div className='d-md-flex justify-content-between mt-3'>
-                <div className='d-flex'>
-                  <div className='dflex-center'>
-                    {(dateFromFilterOn || dateToFilterOn || intervalFilterOn) && (
-                      <button type='button' className='btn btn-outline-danger clear-filter' onClick={clearFilters}>
-                        Clear Filters
-                      </button>
-                    )}
-                    <ReactDatePicker
-                      selected={fromDate ? new Date(fromDate) : null}
-                      onChange={(date) => onChange('start', date)}
-                      // selectsStart
-                      startDate={fromDate ? new Date(fromDate) : null}
-                      dateFormat='MM/yyyy'
-                      showMonthYearPicker
-                      minDate={new Date('1900-01-01')}
-                      maxDate={new Date()}
-                      // selectsRange
-                      customInput={
-                        <div className='drop-box'>
-                          <div className='date-box'>
-                            <input
-                              type='text'
-                              className={['month_year', dateFromFilterOn ? 'active' : ''].join(' ')}
-                              value={getMonthYear(fromDate)}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      }
-                    />
-                    <span className={['date-separator', dateFromFilterOn && dateToFilterOn ? 'active' : ''].join(' ')}>
-                      to
-                  </span>
-                    <ReactDatePicker
-                      selected={toDate ? new Date(toDate) : null}
-                      onChange={(date) => onChange('end', date)}
-                      // selectsStart
-                      startDate={toDate ? new Date(toDate) : null}
-                      dateFormat='MM/yyyy'
-                      showMonthYearPicker
-                      minDate={fromDate ? new Date(fromDate) : null}
-                      maxDate={new Date()}
-                      className='m-l-1'
-                      // selectsRange
-                      customInput={
-                        <div className='drop-box'>
-                          <div className='date-box'>
-                            <input
-                              type='text'
-                              className={['month_year', dateToFilterOn ? 'active' : ''].join(' ')}
-                              value={getMonthYear(toDate)}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      }
-                    />
-                    <Dropdown className={['drop-box m-l-2', intervalFilterOn ? 'active' : ''].join(' ')}>
-                      <Dropdown.Toggle variant='' ref={dropdownToggle}>
-                        {timeInterval}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu className='mm-dropdown-menu dropsm'>
-                        <ul className='radiolist'>
-                          {enumerateStr(TimeIntervalEnum).map((interval, index) => {
-                            return (
-                              <li key={index}>
-                                <label>
-                                  <input
-                                    type='radio'
-                                    name='m-list'
-                                    aria-checked={timeInterval === interval}
-                                    value={interval}
-                                    checked={timeInterval === interval}
-                                    onChange={handleIntervalChange}
-                                    onClick={() => clickElement(dropdownToggle)}
-                                  />
-                                  <span>{interval}</span>
-                                </label>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                    {filterloading && <CircularSpinner />}
+          <div className='content-wrapper'>
+            <div className='container'>
+              <div className='mm-account'>
+                <div className='mm-account__selection mb-3'>
+                  <div className='mm-account__selection--info float-lg-left'>
+                    <SettingsGear className='float-left mr-2 settings-gear-button' onClick={() => setAccSetting(true)} />
+                    <ul>
+                      <li>{AccountDetails?.accountName}</li>
+                      <li>{AccountDetails?.category?.mmCategory}</li>
+                      <li>{AccountDetails?.category?.mmAccountType}</li>
+                      {AccountDetails?.category?.mmAccountSubType && <li>{AccountDetails?.category?.mmAccountSubType}</li>}
+                      <li>{AccountDetails?.accountDetails?.currency}</li>
+                    </ul>
                   </div>
-                  <div className='mm-account__selection--type'>
-                    {AccountDetails?.isManual ? (
-                      <>
-                        <CheckCircle />
-                        <span className='manual'>Manual</span>
-                      </>
-                    ) : (
-                        <>
-                          {(AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' ||
-                            AccountDetails?.providerAccount?.status === 'IN_PROGRESS' ||
-                            AccountDetails?.providerAccount?.status === 'PARTIAL_SUCCESS' ||
-                            AccountDetails?.providerAccount?.status === 'SUCCESS') ?
-                            <>
-                              <CheckCircleGreen />
-                              <span className='good'>Good</span>
-                            </>
-                            : (AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED') ?
-                              <>
-                                <NeedsInfo />
-                                <span className='needsInfo'>Needs Info</span>
-                              </> :
-                              <>
-                                <div className='attention-section' onMouseEnter={() => setPopup(true)} onMouseLeave={() => setPopup(false)}>
-                                  <NotLinked />
-                                  <span className='attention'>Attention</span>
-                                  {popup &&
-                                    <div className='popup'>
-                                      <span className='pb-2'>Connection Status</span>
-                                      <span className='pb-2'>Last updated 14 hours ago</span>
-                                      <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
-                                      <button
-                                        type='button'
-                                        className='btn btn-primary'
-                                      >
-                                        Fix Connection
-                                      </button>
-                                    </div>
-                                  }
-                                </div>
-                              </>
+                  <div className='d-md-flex justify-content-between mt-3'>
+                    <div className='d-flex'>
+                      <div className='dflex-center'>
+                        {(dateFromFilterOn || dateToFilterOn || intervalFilterOn) && (
+                          <button type='button' className='btn btn-outline-danger clear-filter' onClick={clearFilters}>
+                            Clear Filters
+                          </button>
+                        )}
+                        <ReactDatePicker
+                          selected={fromDate ? new Date(fromDate) : null}
+                          onChange={(date) => onChange('start', date)}
+                          // selectsStart
+                          startDate={fromDate ? new Date(fromDate) : null}
+                          dateFormat='MM/yyyy'
+                          showMonthYearPicker
+                          minDate={new Date('1900-01-01')}
+                          maxDate={new Date()}
+                          // selectsRange
+                          customInput={
+                            <div className='drop-box'>
+                              <div className='date-box'>
+                                <input
+                                  type='text'
+                                  className={['month_year', dateFromFilterOn ? 'active' : ''].join(' ')}
+                                  value={getMonthYear(fromDate)}
+                                  readOnly
+                                />
+                              </div>
+                            </div>
                           }
-                        </>
-                      )}
+                        />
+                        <span className={['date-separator', dateFromFilterOn && dateToFilterOn ? 'active' : ''].join(' ')}>
+                          to
+                  </span>
+                        <ReactDatePicker
+                          selected={toDate ? new Date(toDate) : null}
+                          onChange={(date) => onChange('end', date)}
+                          // selectsStart
+                          startDate={toDate ? new Date(toDate) : null}
+                          dateFormat='MM/yyyy'
+                          showMonthYearPicker
+                          minDate={fromDate ? new Date(fromDate) : null}
+                          maxDate={new Date()}
+                          className='m-l-1'
+                          // selectsRange
+                          customInput={
+                            <div className='drop-box'>
+                              <div className='date-box'>
+                                <input
+                                  type='text'
+                                  className={['month_year', dateToFilterOn ? 'active' : ''].join(' ')}
+                                  value={getMonthYear(toDate)}
+                                  readOnly
+                                />
+                              </div>
+                            </div>
+                          }
+                        />
+                        <Dropdown className={['drop-box m-l-2', intervalFilterOn ? 'active' : ''].join(' ')}>
+                          <Dropdown.Toggle variant='' ref={dropdownToggle}>
+                            {timeInterval}
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu className='mm-dropdown-menu dropsm'>
+                            <ul className='radiolist'>
+                              {enumerateStr(TimeIntervalEnum).map((interval, index) => {
+                                return (
+                                  <li key={index}>
+                                    <label>
+                                      <input
+                                        type='radio'
+                                        name='m-list'
+                                        aria-checked={timeInterval === interval}
+                                        value={interval}
+                                        checked={timeInterval === interval}
+                                        onChange={handleIntervalChange}
+                                        onClick={() => clickElement(dropdownToggle)}
+                                      />
+                                      <span>{interval}</span>
+                                    </label>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                        {filterloading && <CircularSpinner />}
+                      </div>
+                      <div className='mm-account__selection--type'>
+                        {AccountDetails?.isManual ? (
+                          <>
+                            <CheckCircle />
+                            <span className='manual'>Manual</span>
+                          </>
+                        ) : (
+                            <>
+                              {(AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' ||
+                                AccountDetails?.providerAccount?.status === 'IN_PROGRESS' ||
+                                AccountDetails?.providerAccount?.status === 'PARTIAL_SUCCESS' ||
+                                AccountDetails?.providerAccount?.status === 'SUCCESS') ?
+                                <>
+                                  <CheckCircleGreen />
+                                  <span className='good'>Good</span>
+                                </>
+                                : (AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED') ?
+                                  <>
+                                    <NeedsInfo />
+                                    <span className='needsInfo'>Needs Info</span>
+                                  </> : (AccountDetails) ?
+                                    <>
+                                      <div className='attention-section' onMouseEnter={() => setPopup(true)} onMouseLeave={() => setPopup(false)}>
+                                        <NotLinked />
+                                        <span className='attention'>Attention</span>
+                                        {popup &&
+                                          <div className='popup'>
+                                            <span className='pb-2'>Connection Status</span>
+                                            <span className='pb-2'>Last updated 14 hours ago</span>
+                                            <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
+                                            <button
+                                              type='button'
+                                              className='btn btn-primary'
+                                            >
+                                              Fix Connection
+                                      </button>
+                                          </div>
+                                        }
+                                      </div>
+                                    </> :
+                                    <></>
+                              }
+                            </>
+                          )}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <div className='account-ct-box mb-40'>
-              <div className='graphbox'>
-                <ul>
-                  {AccountDetails?.category?.mmCategory === 'Investment Assets' && (
-                    <li className='inv-data'>
-                      <span>Value</span>
-                      <h3>
-                        {currencySymbol}
-                        {curAccountHoldingsItem?.[0]?.value
-                          ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
-                          : 0}
-                      </h3>
-                    </li>
+                <div className='account-ct-box mb-40'>
+                  <div className='graphbox'>
+                    <ul>
+                      {AccountDetails?.category?.mmCategory === 'Investment Assets' && (
+                        <li className='inv-data'>
+                          <span>Value</span>
+                          <h3>
+                            {currencySymbol}
+                            {curAccountHoldingsItem?.[0]?.value
+                              ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
+                              : 0}
+                          </h3>
+                        </li>
+                      )}
+                      {AccountDetails?.category?.mmCategory === 'Other Assets' && (
+                        <li className='other-data'>
+                          <span>Value</span>
+                          <h3>
+                            {currencySymbol}
+                            {curAccountHoldingsItem?.[0].value
+                              ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
+                              : 0}
+                          </h3>
+                        </li>
+                      )}
+                      {AccountDetails?.category?.mmCategory === 'Liabilities' && (
+                        <li className='lty-data'>
+                          <span>Value</span>
+                          <h3>
+                            {currencySymbol}
+                            {curAccountHoldingsItem?.[0].value
+                              ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
+                              : 0}
+                          </h3>
+                        </li>
+                      )}
+                    </ul>
+                    <div className='chartbox'>
+                      {AccountHoldings && curAccountHoldingsItem && (
+                        <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} currencySymbol={currencySymbol} />
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className='d-flex justify-content-between flex-wrap'>
+                  <div className='mm-plan-radios mb-4'>
+                    <input
+                      type='radio'
+                      id='mm-account-holding'
+                      value='holdings'
+                      name='mm-radio-holding-activity'
+                      aria-checked='true'
+                      checked={tableType === 'holdings' ? true : false}
+                      onChange={(e) => setTableType('holdings')}
+                    />
+                    <label className='labels' htmlFor='mm-account-holding'>
+                      Holdings
+              </label>
+                    <input
+                      type='radio'
+                      id='mm-account-activity'
+                      value='activity'
+                      name='mm-radio-holding-activity'
+                      aria-checked='false'
+                      checked={tableType === 'activity' ? true : false}
+                      onChange={(e) => setTableType('activity')}
+                    />
+                    <label className='labels' htmlFor='mm-account-activity'>
+                      Activity
+              </label>
+                    <div className='mm-radio-bg' />
+                  </div>
+                  {AccountDetails?.isManual && tableType === 'holdings' && (
+                    <Button variant='primary' className='mb-4 mm-account__btn' onClick={openNewPositonModal}>
+                      Add Position
+                    </Button>
                   )}
-                  {AccountDetails?.category?.mmCategory === 'Other Assets' && (
-                    <li className='other-data'>
-                      <span>Value</span>
-                      <h3>
-                        {currencySymbol}
-                        {curAccountHoldingsItem?.[0].value
-                          ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
-                          : 0}
-                      </h3>
-                    </li>
-                  )}
-                  {AccountDetails?.category?.mmCategory === 'Liabilities' && (
-                    <li className='lty-data'>
-                      <span>Value</span>
-                      <h3>
-                        {currencySymbol}
-                        {curAccountHoldingsItem?.[0].value
-                          ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
-                          : 0}
-                      </h3>
-                    </li>
-                  )}
-                </ul>
-                <div className='chartbox'>
-                  {AccountHoldings && curAccountHoldingsItem && (
-                    <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} currencySymbol={currencySymbol} />
+                  {AccountDetails?.isManual && tableType === 'activity' && (
+                    <Button variant='primary' className='mb-4 mm-account__btn' onClick={openNewActivityModal}>
+                      Add Activity
+                    </Button>
                   )}
                 </div>
-              </div>
-            </div>
+                {AccountHoldings && tableType === 'holdings' && <AccountTable holdingsData={AccountHoldings?.holdings} openEditPositionModalFun={() => setEditPositonModalOpen(true)} closeEditPositionModalFun={() => setEditPositonModalOpen(false)} currencySymbol={currencySymbol} />}
 
-            <div className='d-flex justify-content-between flex-wrap'>
-              <div className='mm-plan-radios mb-4'>
-                <input
-                  type='radio'
-                  id='mm-account-holding'
-                  value='holdings'
-                  name='mm-radio-holding-activity'
-                  aria-checked='true'
-                  checked={tableType === 'holdings' ? true : false}
-                  onChange={(e) => setTableType('holdings')}
-                />
-                <label className='labels' htmlFor='mm-account-holding'>
-                  Holdings
-              </label>
-                <input
-                  type='radio'
-                  id='mm-account-activity'
-                  value='activity'
-                  name='mm-radio-holding-activity'
-                  aria-checked='false'
-                  checked={tableType === 'activity' ? true : false}
-                  onChange={(e) => setTableType('activity')}
-                />
-                <label className='labels' htmlFor='mm-account-activity'>
-                  Activity
-              </label>
-                <div className='mm-radio-bg' />
-              </div>
-              {AccountDetails?.isManual && tableType === 'holdings' && (
-                <Button variant='primary' className='mb-4 mm-account__btn' onClick={openNewPositonModal}>
-                  Add Position
-                </Button>
-              )}
-              {AccountDetails?.isManual && tableType === 'activity' && (
-                <Button variant='primary' className='mb-4 mm-account__btn' onClick={openNewActivityModal}>
-                  Add Activity
-                </Button>
-              )}
-            </div>
-            {AccountHoldings && tableType === 'holdings' && <AccountTable holdingsData={AccountHoldings?.holdings} openEditPositionModalFun={() => setEditPositonModalOpen(true)} closeEditPositionModalFun={() => setEditPositonModalOpen(false)} currencySymbol={currencySymbol} />}
-
-            {tableType === 'activity' && (
-              <div className='mm-account-activity-block'>
-                <div className='d-flex align-items-center mb-4'>
-                  <p className='mb-0'>
-                    To properly calculate performance make sure that all withdrawals and deposits are accurately tracked
-                    below as Cash Flow
+                {tableType === 'activity' && (
+                  <div className='mm-account-activity-block'>
+                    <div className='d-flex align-items-center mb-4'>
+                      <p className='mb-0'>
+                        To properly calculate performance make sure that all withdrawals and deposits are accurately tracked
+                        below as Cash Flow
                 </p>
-                  <MMToolTip
-                    placement='top'
-                    message='Performance calculations are coming soon. To ensure proper performance returns please mark cash flow transactions properly.'
-                  >
-                    <InfoIcon className='mt-n1 ml-2' />
-                  </MMToolTip>
-                </div>
-                {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} openEditActivityModalFun={() => setEditActivityModalOpen(true)} closeEditActivityModalFun={() => setEditActivityModalOpen(false)} currencySymbol={currencySymbol} />}
+                      <MMToolTip
+                        placement='top'
+                        message='Performance calculations are coming soon. To ensure proper performance returns please mark cash flow transactions properly.'
+                      >
+                        <InfoIcon className='mt-n1 ml-2' />
+                      </MMToolTip>
+                    </div>
+                    {AccountActivity && <ActivityTable transactionsData={AccountActivity?.transactions} openEditActivityModalFun={() => setEditActivityModalOpen(true)} closeEditActivityModalFun={() => setEditActivityModalOpen(false)} currencySymbol={currencySymbol} />}
+                  </div>
+                )}
+                {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} closeNewPositionModal={() => setNewPositonModalOpen(false)} currencySymbol={currencySymbol} />}
+                {newActivityModalOpen && <ActivityDetailsModal activityDetailsModal={activityDetailsModal} accountId={AccountDetails?.id} closeNewActivityModal={() => setNewActivityModalOpen(false)} currencySymbol={currencySymbol} />}
               </div>
-            )}
-            {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} closeNewPositionModal={() => setNewPositonModalOpen(false)} currencySymbol={currencySymbol} />}
-            {newActivityModalOpen && <ActivityDetailsModal activityDetailsModal={activityDetailsModal} accountId={AccountDetails?.id} closeNewActivityModal={() => setNewActivityModalOpen(false)} currencySymbol={currencySymbol} />}
+            </div>
           </div>
-          </div>
-        </div>
-      )}
+        )}
       {!loading && <AppFooter />}
     </div>
   );
