@@ -166,6 +166,10 @@ export const getClassification = (filter: string) => {
   return http.get(urls.auth.CLASSIFICATION.replace(':filter', filter));
 };
 
+export const getHoldingsAccountsByDescription = (description: string) => {
+  return http.get(urls.auth.HOLDINGS_ACCOUNTS_BY_DESCRIPTION.replace(':description', description));
+};
+
 export const getHoldingTypes = () => {
   return http.get(urls.allocations.HOLDING_TYPES);
 };

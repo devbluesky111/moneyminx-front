@@ -89,7 +89,7 @@ const ChartShareModal: React.FC<ChartShareModalProps> = ({ chartShareModal, char
 
   return (
     <Modal {...chartShareModal.props} title='Share' size='lg' canBeClosed onClose={() => chartShareModal.close()}>
-      <div className='modal-wrapper chart-setting-modal mm-setting-modal'>
+      <div className='modal-wrapper mm-setting-modal'>
         <div className='allocation-share-card-wrapper'>
           <div id='allocation-share-card' ref={chartRef}>
             <div className='allocation-share-card-heading'>
