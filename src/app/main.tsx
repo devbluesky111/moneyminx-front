@@ -1,6 +1,10 @@
 import { Router } from 'react-router-dom';
 import React, { Suspense, useEffect } from 'react';
+import ReactPixel from 'react-facebook-pixel';
 
+import './app.i18n';
+
+import env from 'app/app.env';
 import history from 'app/app.history';
 import useProfile from 'auth/hooks/useProfile';
 import { auth } from 'auth/auth-context.types';
@@ -17,6 +21,13 @@ export default function Main() {
   useAnalytics();
   useConnectionInfo();
   const dispatch = useAuthDispatch();
+
+  useEffect(() => {
+    ReactPixel.init(env.FACEBOOK_PIXEL_CODE, {} as any, {
+      autoConfig: true,
+      debug: false,
+    });
+  }, []);
 
   useEffect(() => {
     const { data, error } = storage.get(StorageKey.AUTH);
