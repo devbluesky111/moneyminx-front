@@ -21,7 +21,7 @@
   background: $lightBg;
 
   @media (min-width: $md) {
-    padding: 1.25rem 1.125rem 2.063rem 1.125rem;
+    padding: 0 1.125rem 2.063rem 1.125rem;
   }
 
   .account-ct-box {
@@ -112,7 +112,6 @@
 
     &--info {
 
-
       @media(min-width: 992px) {
         margin-right: 0.5rem
       }
@@ -130,6 +129,7 @@
         padding-top: 0.75rem;
         padding-bottom: 0.75rem;
         min-height: 48px;
+        max-width: 680px;
       }
 
       li {

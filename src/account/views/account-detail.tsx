@@ -181,7 +181,9 @@ const AccountDetail: React.FC = () => {
       {loading ? (
         <CircularSpinner />
       ) : (
-          <div className='mm-account'>
+        <div className='content-wrapper'>
+          <div className='container'>
+            <div className='mm-account'>
             <div className='mm-account__selection mb-3'>
               <div className='mm-account__selection--info float-lg-left'>
                 <SettingsGear className='float-left mr-2 settings-gear-button' onClick={() => setAccSetting(true)} />
@@ -434,7 +436,9 @@ const AccountDetail: React.FC = () => {
             {newPositonModalOpen && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} accountId={AccountDetails?.id} closeNewPositionModal={() => setNewPositonModalOpen(false)} currencySymbol={currencySymbol} />}
             {newActivityModalOpen && <ActivityDetailsModal activityDetailsModal={activityDetailsModal} accountId={AccountDetails?.id} closeNewActivityModal={() => setNewActivityModalOpen(false)} currencySymbol={currencySymbol} />}
           </div>
-        )}
+          </div>
+        </div>
+      )}
       {!loading && <AppFooter />}
     </div>
   );

@@ -75,7 +75,9 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
   };
 
   return (
-    <section className='mm-allocation-overview'>
+    <div className='content-wrapper'>
+      <div className='container'>
+        <section className='mm-allocation-overview'>
       <div className='mm-allocation-overview__wrapper'>
         <div className='mm-allocation-overview__navigation mb-3'>
           <div className='d-flex'>
@@ -236,6 +238,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
       />
       <FieldChangeModal fieldChangeModal={fieldChangeModal} />
     </section>
+      </div>
+    </div>
   );
 };
 
