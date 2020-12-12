@@ -27,9 +27,9 @@ const AppSubHeader = () => {
     const fetchCurrentAccount = async () => {
       const { data, error } = await getAccountWithProvider();
       if (!error) {
-        const successAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'LOGIN_IN_PROGRESS' || acc.providerAccount.status === 'IN_PROGRESS' || acc.providerAccount.status === 'PARTIAL_SUCCESS' || acc.providerAccount.status === 'SUCCESS'));
-        const warningAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'USER_INPUT_REQUIRED'));
-        const errorAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'FAILED' || !acc.providerAccount.status));
+        const successAccounts = data.filter((acc: Account) => (acc.isManual || acc.providerAccount.status === 'LOGIN_IN_PROGRESS' || acc.providerAccount.status === 'IN_PROGRESS' || acc.providerAccount.status === 'PARTIAL_SUCCESS' || acc.providerAccount.status === 'SUCCESS'));
+        const warningAccounts = data.filter((acc: Account) => (!acc.isManual && acc.providerAccount.status === 'USER_INPUT_REQUIRED'));
+        const errorAccounts = data.filter((acc: Account) => (!acc.isManual && (acc.providerAccount.status === 'FAILED' || !acc.providerAccount.status)));
         setSuccessAccounts(successAccounts);
         setWarningAccounts(warningAccounts);
         setErrorAccounts(errorAccounts);
