@@ -65,7 +65,7 @@ export const ConnectAccountMainSection = () => {
 
     return manualAccountModal.open();
   };
-
+// eslint-disable-next-line
   const handleCryptoExchange = () => {
     event(events.cryptoExchange);
 
