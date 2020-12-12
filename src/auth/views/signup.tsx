@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 import FacebookLogin from 'react-facebook-login';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
@@ -7,6 +6,7 @@ import env from 'app/app.env';
 import { Formik } from 'formik';
 import queryString from 'query-string';
 import { events } from '@mm/data/event-list';
+import useToast from 'common/hooks/useToast';
 import { AuthLayout } from 'layouts/auth.layout';
 import validation from 'lang/en/validation.json';
 import { useModal } from 'common/components/modal';
@@ -37,11 +37,12 @@ const Signup = () => {
 export default Signup;
 export const SignupMainSection = () => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const location = useLocation();
   const { event } = useAnalytics();
   const associateModal = useModal();
-  const emailNeededModal = useModal();
   const dispatch = useAuthDispatch();
+  const emailNeededModal = useModal();
   const [fbToken, setFBToken] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
   const [associateMessage, setAssociateMessage] = useState<string>('');
@@ -103,7 +104,7 @@ export const SignupMainSection = () => {
       });
 
       if (!error) {
-        toast('Successfully logged in', { type: 'success' });
+        mmToast('Successfully logged in', { type: 'success' });
         triggerGAEvent();
 
         return history.push('/connect-account');
@@ -123,9 +124,9 @@ export const SignupMainSection = () => {
   const handleFacebookAssociation = async () => {
     const { error } = await associateFacebookUser({ dispatch, token: fbToken });
     if (error) {
-      toast('Association Failed', { type: 'error' });
+      mmToast('Association Failed', { type: 'error' });
     } else {
-      toast('Association Success', { type: 'success' });
+      mmToast('Association Success', { type: 'success' });
     }
     associateModal.close();
   };
@@ -238,7 +239,7 @@ export const SignupMainSection = () => {
                     actions.setSubmitting(false);
 
                     if (!error) {
-                      toast('Signup Success', { type: 'success' });
+                      mmToast('Signup Success', { type: 'success' });
                       triggerGAEvent();
 
                       return history.push('/connect-account');

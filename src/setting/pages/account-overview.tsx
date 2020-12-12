@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
@@ -21,18 +20,20 @@ import { ReactComponent as IconEdit } from 'assets/icons/icon-edit.svg';
 import { ReactComponent as DefaultProviderLogo } from 'assets/icons/mm-default-provider.svg';
 
 import {
-  AccountCardProps,
   AccountRowProps,
+  AccountCardProps,
   ManualAccountProps,
   AccountOverviewProps,
+  AccountDialogBoxProps,
   SubscriptionConnectionWarningProps,
-  AccountDialogBoxProps
 } from 'setting/setting.type';
-import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
+import useToast from 'common/hooks/useToast';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
+import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 
 export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag = false }) => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
@@ -60,26 +61,55 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
   const numberOfManualAccounts = subscription?.details?.[pricingDetailConstant.MANUAL_ACCOUNT] || 0;
 
   const verifyAccountNumbers = (event: React.ChangeEvent<any>) => {
-    event.preventDefault()
-    if ((numberOfConnectedAccounts === 'Unlimited') || (manualAccounts.length <= numberOfManualAccounts && connectedAccounts.length <= numberOfConnectedAccounts)) {
-      history.push(appRouteConstants.networth.NET_WORTH)
-      return
+    event.preventDefault();
+    if (
+      numberOfConnectedAccounts === 'Unlimited' ||
+      (manualAccounts.length <= numberOfManualAccounts && connectedAccounts.length <= numberOfConnectedAccounts)
+    ) {
+      history.push(appRouteConstants.networth.NET_WORTH);
+      return;
     }
-    toast('Kindly remove accounts first.', { type: 'error' });
-  }
+    mmToast('Kindly remove accounts first.', { type: 'error' });
+  };
 
   return (
     <section className='mm-account-overview'>
-      {reviewSubscriptionFlag && <SubscriptionConnectionWarning availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} />}
-      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag} />
-      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag} />
-      {reviewSubscriptionFlag && <AccountDialogBox verifyAccountNumbers={verifyAccountNumbers} availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} accountList={connectedAccounts} manualAccountList={manualAccounts} />}
+      {reviewSubscriptionFlag && (
+        <SubscriptionConnectionWarning
+          availableConnectedAccounts={numberOfConnectedAccounts}
+          availableManualAccounts={numberOfManualAccounts}
+        />
+      )}
+      <AccountCard
+        accountList={connectedAccounts}
+        availableAccounts={numberOfConnectedAccounts}
+        reviewSubscriptionFlag={reviewSubscriptionFlag}
+      />
+      <ManualAccounts
+        manualAccountList={manualAccounts}
+        availableAccounts={numberOfManualAccounts}
+        reviewSubscriptionFlag={reviewSubscriptionFlag}
+      />
+      {reviewSubscriptionFlag && (
+        <AccountDialogBox
+          verifyAccountNumbers={verifyAccountNumbers}
+          availableConnectedAccounts={numberOfConnectedAccounts}
+          availableManualAccounts={numberOfManualAccounts}
+          accountList={connectedAccounts}
+          manualAccountList={manualAccounts}
+        />
+      )}
     </section>
   );
 };
 
-export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList, availableAccounts, reviewSubscriptionFlag }) => {
+export const ManualAccounts: React.FC<ManualAccountProps> = ({
+  manualAccountList,
+  availableAccounts,
+  reviewSubscriptionFlag,
+}) => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
   const needUpgrade = manualAccountList.length >= availableAccounts;
@@ -87,38 +117,36 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   const addAccount = () => {
     if (reviewSubscriptionFlag) {
       history.push(appRouteConstants.subscription.SUBSCRIPTION);
-      return
+      return;
     }
     if (!needUpgrade) {
       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
     } else {
-      history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`)
+      history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`);
     }
-  }
+  };
 
   const removeAccounts = async (accounts: Account[]) => {
     setDeleting(true);
     const { error } = await deleteAccounts({ dispatch, accounts });
     if (error) {
-      toast('Error occurred deleting account', { type: 'error' });
+      mmToast('Error occurred deleting account', { type: 'error' });
     }
     setDeleting(false);
-  }
+  };
 
   return (
     <>
       <div className='card mm-setting-card'>
         <div className='d-md-flex flex-wrap justify-content-between align-items-center'>
           <div className={`mm-account-overview__add-account m-b-8 mb-md-0 ${needUpgrade ? 'text-danger' : ''}`}>
-            <span>Manual Accounts ({manualAccountList.length}/{availableAccounts})</span>
+            <span>
+              Manual Accounts ({manualAccountList.length}/{availableAccounts})
+            </span>
             {needUpgrade ? <span className='upgrade-caption'>Upgrade your account to add more accounts</span> : null}
           </div>
           <div>
-            <button
-              type='button'
-              className='btn btn-outline-primary mm-button btn-lg'
-              onClick={addAccount}
-            >
+            <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={addAccount}>
               {needUpgrade || reviewSubscriptionFlag ? 'Upgrade Plan' : 'Add Account'}
             </button>
           </div>
@@ -141,9 +169,13 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
         <div className='row py-3 align-items-center'>
           <div className='col-12 col-md-6' />
           <div className='col-12 col-md-6 text-md-right'>
-            <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
-              onClick={() => { removeAccounts(manualAccountList) }}
-              disabled={deleting}>
+            <button
+              className='btn text-danger mm-button__flat mm-account-overview__delete-link '
+              onClick={() => {
+                removeAccounts(manualAccountList);
+              }}
+              disabled={deleting}
+            >
               {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
               <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
             </button>
@@ -167,6 +199,7 @@ export interface AccountByStatus {
 
 export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts, reviewSubscriptionFlag }) => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
   const needUpgrade = accountList.length >= availableAccounts;
@@ -175,40 +208,45 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   let accountsByStatus: AccountByStatus = {
     success: [],
     warning: [],
-    error: []
+    error: [],
   };
 
   for (let p_name in accountsByProvider) {
     let status = accountsByProvider[p_name][0].providerAccount.status;
-    if (status === 'LOGIN_IN_PROGRESS' || status === 'IN_PROGRESS' || status === 'PARTIAL_SUCCESS' || status === 'SUCCESS') {
-      accountsByStatus.success.push({ provider_name: p_name, accounts: accountsByProvider[p_name] })
+    if (
+      status === 'LOGIN_IN_PROGRESS' ||
+      status === 'IN_PROGRESS' ||
+      status === 'PARTIAL_SUCCESS' ||
+      status === 'SUCCESS'
+    ) {
+      accountsByStatus.success.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else if (status === 'USER_INPUT_REQUIRED') {
-      accountsByStatus.warning.push({ provider_name: p_name, accounts: accountsByProvider[p_name] })
+      accountsByStatus.warning.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else {
-      accountsByStatus.error.push({ provider_name: p_name, accounts: accountsByProvider[p_name] })
+      accountsByStatus.error.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     }
   }
 
   const addAccount = () => {
     if (reviewSubscriptionFlag) {
       history.push(appRouteConstants.subscription.SUBSCRIPTION);
-      return
+      return;
     }
     if (!needUpgrade) {
       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
     } else {
-      history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`)
+      history.push(`${appRouteConstants.settings.SETTINGS}?active=Plan`);
     }
-  }
+  };
 
   const removeAccounts = async (accounts: Account[]) => {
     setDeleting(true);
     const { error } = await deleteAccounts({ dispatch, accounts });
     if (error) {
-      toast('Error occurred deleting account', { type: 'error' });
+      mmToast('Error occurred deleting account', { type: 'error' });
     }
     setDeleting(false);
-  }
+  };
 
   const getStatusClassName = (status: string) => {
     if (status === 'success') {
@@ -216,93 +254,107 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     } else if (status === 'warning') {
       return 'mm-account-overview__info';
     }
-    return 'mm-account-overview__error'
-  }
+    return 'mm-account-overview__error';
+  };
 
   return (
     <>
       <div className='card mm-setting-card'>
         <div className='d-md-flex flex-wrap justify-content-between align-items-center'>
           <div className={`mm-account-overview__add-account m-b-8 mb-md-0 ${needUpgrade ? 'text-danger' : ''}`}>
-            <span>Connected Accounts ({accountList.length}/{availableAccounts})</span>
+            <span>
+              Connected Accounts ({accountList.length}/{availableAccounts})
+            </span>
             {needUpgrade ? <span className='upgrade-caption'>Upgrade your account to add more connections</span> : null}
           </div>
           <div>
-            <button
-              type='button'
-              className='btn btn-outline-primary mm-button btn-lg'
-              onClick={addAccount}
-            >
+            <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={addAccount}>
               {needUpgrade || reviewSubscriptionFlag ? 'Upgrade Plan' : 'Add Account'}
             </button>
           </div>
         </div>
       </div>
-      { Object.entries(accountsByStatus).map(([status, groupArr], i) =>
-        (
-          <div key={i}>
-            {groupArr.map((group: AccountsByProvider, index: number) => (
-              <div key={index}>
-                <div className={['card mm-setting-card', getStatusClassName(status)].join(' ')}>
-                  {status === 'error' &&
-                    <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
-                      <div className='col-12 col-md-6 text-danger pl-3'>
-                        <span>Connection error</span>
-                      </div>
-                      <div className='col-12 col-md-6 mt-2 text-md-right'>
-                        <button
-                          type='button'
-                          className='btn btn-outline-primary mm-button btn-lg'
-                        >
-                          Fix Connection
-                    </button>
-                      </div>
-                    </div>
-                  }
-                  <div className={['row pb-2 pt-1 align-items-center', status === 'error' ? 'pt-4' : ''].join(' ')}>
-                    <div className='col-10 col-md-6'>
-                      <div>
-                        <img src={group.accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4 accounts-provider-logo' alt={`${group.provider_name} logo`} />
-                        <span className='mm-account-overview__block-title'>{group.provider_name}</span>
-                      </div>
-                    </div>
-                    {/* TODO Refresh single account when API is ready
-                        <div className='col-2 col-md-1 order-md-2 text-right'>
-                          <Refresh />
-                        </div>*/}
-                    <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
-                      <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
-                    </div>
-                  </div>
-
-                  {group.accounts?.map((account: Account, accountIndex: number) => {
-                    return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
-                  })}
-
-                  <div className='row py-3 align-items-center no-gutters'>
-                    <div className='col-12 col-md-6'>
-                      {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0' href='/'>Update Credentials</a> : ''}
+      {Object.entries(accountsByStatus).map(([status, groupArr], i) => (
+        <div key={i}>
+          {groupArr.map((group: AccountsByProvider, index: number) => (
+            <div key={index}>
+              <div className={['card mm-setting-card', getStatusClassName(status)].join(' ')}>
+                {status === 'error' && (
+                  <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
+                    <div className='col-12 col-md-6 text-danger pl-3'>
+                      <span>Connection error</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
-                      <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
-                        onClick={() => { removeAccounts(group.accounts) }}
-                        disabled={deleting}>
-                        {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
-                        <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
+                      <button type='button' className='btn btn-outline-primary mm-button btn-lg'>
+                        Fix Connection
                       </button>
                     </div>
                   </div>
+                )}
+                <div className={['row pb-2 pt-1 align-items-center', status === 'error' ? 'pt-4' : ''].join(' ')}>
+                  <div className='col-10 col-md-6'>
+                    <div>
+                      <img
+                        src={group.accounts[0].providerLogo || DefaultAvatar}
+                        className='mr-3 mr-md-4 accounts-provider-logo'
+                        alt={`${group.provider_name} logo`}
+                      />
+                      <span className='mm-account-overview__block-title'>{group.provider_name}</span>
+                    </div>
+                  </div>
+                  {/* TODO Refresh single account when API is ready
+                        <div className='col-2 col-md-1 order-md-2 text-right'>
+                          <Refresh />
+                        </div>*/}
+                  <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
+                    <small className='text-gray'>
+                      Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}
+                    </small>
+                  </div>
+                </div>
+
+                {group.accounts?.map((account: Account, accountIndex: number) => {
+                  return (
+                    <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag} />
+                  );
+                })}
+
+                <div className='row py-3 align-items-center no-gutters'>
+                  <div className='col-12 col-md-6'>
+                    {!reviewSubscriptionFlag ? (
+                      <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0' href='/'>
+                        Update Credentials
+                      </a>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                  <div className='col-12 col-md-6 mt-2 text-md-right'>
+                    <button
+                      className='btn text-danger mm-button__flat mm-account-overview__delete-link '
+                      onClick={() => {
+                        removeAccounts(group.accounts);
+                      }}
+                      disabled={deleting}
+                    >
+                      {deleting ? (
+                        <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />
+                      ) : null}
+                      <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-        ))}
-
+            </div>
+          ))}
+        </div>
+      ))}
     </>
   );
 };
 
 export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscriptionFlag }) => {
+  const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
 
@@ -310,10 +362,10 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
     setDeleting(true);
     const { error } = await deleteAccountById({ dispatch, id });
     if (error) {
-      toast('Error occurred deleting account', { type: 'error' });
+      mmToast('Error occurred deleting account', { type: 'error' });
     }
     setDeleting(false);
-  }
+  };
 
   return (
     <div className='row py-3 align-items-center no-gutters'>
@@ -325,30 +377,37 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
           </span>*/}
         {account.accountName} {account.accountNumber ? ` (${account.accountNumber.slice(-4)})` : null}
       </div>
-      <div className='col-3 col-md-2'>
-        ${numberWithCommas(fNumber(account.balance, 2))}
-      </div>
+      <div className='col-3 col-md-2'>${numberWithCommas(fNumber(account.balance, 2))}</div>
       <div className='col-3 col-md-2'>
         <div className='float-right'>
-          {!reviewSubscriptionFlag ? <Link to={`/account-details/${account.id}`}><IconEdit className='edit-icon' /></Link> : null}
-          {deleting ? <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true' /> :
+          {!reviewSubscriptionFlag ? (
+            <Link to={`/account-details/${account.id}`}>
+              <IconEdit className='edit-icon' />
+            </Link>
+          ) : null}
+          {deleting ? (
+            <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true' />
+          ) : (
             <DeleteIcon className='ml-2 ml-md-3 trash-icon' onClick={() => deleteAccount(account.id)} />
-          }
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export const SubscriptionConnectionWarning: React.FC<SubscriptionConnectionWarningProps> = ({ availableConnectedAccounts, availableManualAccounts }) => {
+export const SubscriptionConnectionWarning: React.FC<SubscriptionConnectionWarningProps> = ({
+  availableConnectedAccounts,
+  availableManualAccounts,
+}) => {
   return (
     <div className='row'>
       <div className='subs-ended-msg-box'>
         <div className='subs-ended-left'>
           <h4>Too many connections for current plan!</h4>
           <p>
-            Your current plan only allows for {availableConnectedAccounts} connections, please remove connections to continue
-            using Money Minx.
+            Your current plan only allows for {availableConnectedAccounts} connections, please remove connections to
+            continue using Money Minx.
           </p>
         </div>
         <span className='warning-icon'>
@@ -356,33 +415,57 @@ export const SubscriptionConnectionWarning: React.FC<SubscriptionConnectionWarni
         </span>
       </div>
     </div>
-  )
+  );
 };
 
-const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({ verifyAccountNumbers, availableConnectedAccounts, availableManualAccounts, manualAccountList, accountList }) => {
-  const disable = availableManualAccounts === 'Unlimited' || (manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts) ? false : true
-  const connectedAccountDiff = accountList.length - parseInt(availableConnectedAccounts as string, 10)
-  const manualAccountDiff = manualAccountList.length - parseInt(availableManualAccounts as string, 10)
+const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({
+  verifyAccountNumbers,
+  availableConnectedAccounts,
+  availableManualAccounts,
+  manualAccountList,
+  accountList,
+}) => {
+  const disable =
+    availableManualAccounts === 'Unlimited' ||
+    (manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts)
+      ? false
+      : true;
+  const connectedAccountDiff = accountList.length - parseInt(availableConnectedAccounts as string, 10);
+  const manualAccountDiff = manualAccountList.length - parseInt(availableManualAccounts as string, 10);
 
   return (
     <div className='action-overlay'>
       <div className='subscription-bottom-text'>
         <div className='subs-content one'>
-          <a href='link12' onClick={(event) => { verifyAccountNumbers(event) }}>
+          <a
+            href='link12'
+            onClick={(event) => {
+              verifyAccountNumbers(event);
+            }}
+          >
             <span className='back-btn'>
               <BackIcon />
             </span>
           </a>
         </div>
         <div className='subs-content three'>
-          <p>You need to delete {connectedAccountDiff > 0 ? connectedAccountDiff : 0} connected accounts and {manualAccountDiff > 0 ? manualAccountDiff : 0} manual to be able to use this plan.</p>
+          <p>
+            You need to delete {connectedAccountDiff > 0 ? connectedAccountDiff : 0} connected accounts and{' '}
+            {manualAccountDiff > 0 ? manualAccountDiff : 0} manual to be able to use this plan.
+          </p>
         </div>
         <div className='subs-content four'>
-          <button className='finish-btn' disabled={disable} onClick={(event) => { verifyAccountNumbers(event) }}>
+          <button
+            className='finish-btn'
+            disabled={disable}
+            onClick={(event) => {
+              verifyAccountNumbers(event);
+            }}
+          >
             Finish
           </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

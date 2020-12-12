@@ -1,8 +1,8 @@
-import { toast } from 'react-toastify';
+import queryString from 'query-string';
 import React, { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import queryString from 'query-string';
+import useToast from 'common/hooks/useToast';
 import { useModal } from 'common/components/modal';
 import useAnalytics from 'common/hooks/useAnalytics';
 import { appRouteConstants } from 'app/app-route.constant';
@@ -17,6 +17,7 @@ const StripeCheckoutSuccess = () => {
   const history = useHistory();
   const location = useLocation();
   const { event } = useAnalytics();
+  const { mmToast } = useToast();
   const isTrial = queryString.parse(location.search).trial === 'true';
 
   const subscriptionModal = useModal();
@@ -25,7 +26,7 @@ const StripeCheckoutSuccess = () => {
   const { fetchingCurrentSubscription, currentSubError, currentSubscription } = useCurrentSubscription();
 
   if (currentSubError) {
-    toast('Error on getting current subscription', { type: 'error' });
+    mmToast('Error on getting current subscription', { type: 'error' });
   }
 
   useEffect(() => {

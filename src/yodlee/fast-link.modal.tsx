@@ -1,6 +1,6 @@
-import { toast } from 'react-toastify';
 import React, { useEffect, useRef, useState } from 'react';
 
+import useToast from 'common/hooks/useToast';
 import { useAuthDispatch } from 'auth/auth.context';
 import { getRefreshedProfile } from 'auth/auth.service';
 import { Modal, ModalTypeEnum } from 'common/components/modal';
@@ -17,22 +17,23 @@ interface Props {
 
 const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLinkOptions }) => {
   const initRef = useRef<any>();
+  const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [loading, setLoading] = useState<boolean>(false);
 
   const onSuccess = () => {
-    toast('Successfully Logged in with Yodlee', { type: 'success' });
+    mmToast('Successfully Logged in with Yodlee', { type: 'success' });
   };
 
   const onError = () => {
-    toast('Error Occurred', { type: 'error' });
+    mmToast('Error Occurred', { type: 'error' });
   };
 
   const onClose = async (args: any) => {
     setLoading(true);
     const { error } = await getRefreshedProfile({ dispatch });
     if (error) {
-      toast('Error Occurred on Fetching user Details', { type: 'error' });
+      mmToast('Error Occurred on Fetching user Details', { type: 'error' });
     }
     setLoading(false);
     handleSuccess();
