@@ -37,7 +37,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
       mmToast('Error Occurred on Fetching user Details', { type: 'error' });
     }
     setLoading(false);
-    handleSuccess();
+    fastLinkModal.close();
   };
 
   const { init } = useYodlee({
