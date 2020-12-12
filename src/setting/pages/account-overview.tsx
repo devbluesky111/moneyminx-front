@@ -281,7 +281,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
 
                   <div className='row py-3 align-items-center no-gutters'>
                     <div className='col-12 col-md-6'>
-                      {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a> : ''}
+                      {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0' href='/'>Update Credentials</a> : ''}
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
                       <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '

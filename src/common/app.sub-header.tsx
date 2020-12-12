@@ -74,10 +74,11 @@ const AppSubHeader = () => {
           <Dropdown.Menu className='dropdown-menu'>
             {(errorAccounts.length > 0 || warningAccounts.length > 0) &&
               <div className='dropdown-head'>
-                <h4>Needs Attension</h4>
+                <h4>Needs Attention</h4>
               </div>}
             <div className='dropdown-box'>
               {errorAccounts.length > 0 &&
+              <div>
                 <ul className='error'>
                   {errorAccounts.map((account: Account, index: number) => {
                     return (
@@ -93,8 +94,11 @@ const AppSubHeader = () => {
                     )
                   })}
                 </ul>
+                <hr />
+              </div>
               }
               {warningAccounts.length > 0 &&
+              <div>
                 <ul className='warning'>
                   {warningAccounts.map((account: Account, index: number) => {
                     return (
@@ -110,7 +114,9 @@ const AppSubHeader = () => {
                     )
                   })}
                 </ul>
-              }
+                <hr />
+              </div>
+                }
               {successAccounts.length > 0 &&
                 <ul className='success'>
                   {successAccounts.map((account: Account, index: number) => {

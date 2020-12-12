@@ -701,6 +701,10 @@ a.upgrader-btn {
   padding-bottom: 10px;
   max-height: 520px;
   overflow-y: auto;
+
+  hr {
+    margin: 12px 24px;
+  }
 }
 .dropdown-box ul li {
   padding: 10px 24px;

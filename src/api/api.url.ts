@@ -20,7 +20,7 @@ export const urls = {
     PROFILE_PICTURE: '/profile/picture',
     ACCOUNTS: '/account/me?refresh=false',
     ACCOUNTS_WITH_PROVIDER: '/account/me?baseCurrency=true&connectionInfo=true&refresh=false',
-    ACCOUNTS_REFRESH: '/account/me?connectionInfo=true&&refresh=true',
+    ACCOUNTS_REFRESH: '/account/me?connectionInfo=true&refresh=true',
     ACCOUNTS_COUNT: '/account/me/counts',
     ACCOUNT_CATEGORY: '/account/category',
     ACCOUNT_TYPE: '/account/account-type',
