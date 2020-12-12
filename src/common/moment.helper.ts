@@ -55,24 +55,38 @@ export const getQuarter = <T>(inputDate?: T) => moment.utc(inputDate).format('[Q
 
 export const getYear = <T>(inputDate?: T) => moment.utc(inputDate).format('yyyy');
 
-export const getStringDate = <T>(inputDate?: T) => moment.utc(inputDate).format('MMM DD, yyyy');
+export const getStringDate = <T>(inputDate?: T) => moment(inputDate).format('MMM DD, yyyy');
 
+/**
+ * @param inputDate
+ * @description get previous month on current timezone
+ */
 export const getPreviousMonth = <T extends Date | null>(inputDate?: T) => {
   if (inputDate) {
-    return moment.utc(inputDate).subtract(1, 'month').toDate();
+    return moment(inputDate).subtract(1, 'month').toDate();
   }
 
-  return moment.utc().subtract(1, 'month').toDate();
+  return moment().subtract(1, 'month').toDate();
 };
 
+/**
+ * @param inputDate
+ * @description get next month on current timezone
+ */
 export const getNextMonth = <T extends Date | null>(inputDate?: T) => {
   if (inputDate) {
-    return moment.utc(inputDate).add(1, 'month').toDate();
+    return moment(inputDate).add(1, 'month').toDate();
   }
 
-  return moment.utc().subtract(1, 'month').toDate();
+  return moment().subtract(1, 'month').toDate();
 };
 
 export const getMonthSubtracted = (month: number) => moment.utc().subtract(month, 'month').toDate();
 
-export const getLastDateOfMonth = (date: Date) => moment.utc(date).endOf('month').toDate();
+/**
+ * @param date
+ * @description get the last date of the month in current timezone
+ */
+export const getLastDateOfMonth = (date: Date) => moment(date).endOf('month').toDate();
+
+export const getUTCString = (data?: Date) => moment.utc(data).toISOString();
