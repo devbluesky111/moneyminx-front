@@ -301,7 +301,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({ activityDet
                                                     onChange={() => toggleFormCheck('isIgnored')}
                                                     aria-checked={values.isIgnored}
                                                 />
-                                                <span className='geekmark' />
+                                                <span className='geekmark checkbox-light' />
                                             </label>
                                         </span>
                                         <button className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' type='submit'>
