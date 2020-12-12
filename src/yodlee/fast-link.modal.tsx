@@ -22,6 +22,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
 
   const onSuccess = () => {
     toast('Successfully Logged in with Yodlee', { type: 'success' });
+    handleSuccess();
   };
 
   const onError = () => {
@@ -35,7 +36,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
       toast('Error Occurred on Fetching user Details', { type: 'error' });
     }
     setLoading(false);
-    handleSuccess();
+    fastLinkModal.close();
   };
 
   const { init } = useYodlee({
