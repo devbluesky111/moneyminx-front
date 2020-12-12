@@ -4,9 +4,9 @@ export const events = {
     action: 'Clicked on Complete Profile',
     label: 'Accessed profile tab from Net Worth screen',
   },
-  startTrail: {
+  startTrial: {
     category: 'Subscription',
-    action: 'Start Trial',
+    action: 'Started Trial',
     label: 'Trial for VIP plan',
     value: 60, // edit this if plan price changed
   },

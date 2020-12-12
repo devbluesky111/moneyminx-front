@@ -141,6 +141,8 @@ textarea.form-control {
 
 .mm-btn-crypto {
   background: $pinkAlert;
+  display: inline !important;
+  margin-right: 5px;
 }
 
 .container-mm {
@@ -440,9 +442,8 @@ button.dropdown-toggle {
 }
 
 hr {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid $grayOpacity20;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0;
 }
 .mm-overview-block {
   background: $lightBg;

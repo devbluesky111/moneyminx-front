@@ -23,7 +23,7 @@ ReactGA.initialize(
     },
   ],
   {
-    debug: false,
+    debug: true,
   }
 );
 
