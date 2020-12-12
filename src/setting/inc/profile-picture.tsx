@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { toast } from 'react-toastify';
 
+import useToast from 'common/hooks/useToast';
 import { fetchProfile } from 'auth/auth.service';
 import MMToolTip from 'common/components/tooltip';
 import { useAuthDispatch } from 'auth/auth.context';
@@ -12,9 +12,9 @@ interface ProfilePictureProps {
   pictureURL?: string;
 }
 const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
-
-  const dispatch = useAuthDispatch();
   const ppRef = useRef(null);
+  const { mmToast } = useToast();
+  const dispatch = useAuthDispatch();
   const [profileURL, setProfileURL] = useState<string>(pictureURL || ProfileDefaultPic);
   const [profilePicture, setProfilePicture] = useState<File>();
   const [profileChanged, setProfileChanged] = useState<boolean>(false);
@@ -43,12 +43,12 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
       formData.append('file', profilePicture);
       const { error } = await patchProfilePicture(formData);
       if (error) {
-        toast('Error on uploading picture', { type: 'error' });
+        mmToast('Error on uploading picture', { type: 'error' });
       }
 
       const result = await fetchProfile({ dispatch });
       if (result.error) {
-        toast('Error on changing picture', {type: 'error'});
+        mmToast('Error on changing picture', { type: 'error' });
       }
       setProfileChanged(false);
       setChanging(false);
@@ -61,13 +61,23 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
         <div className='mm-profile-overview__title'>
           Profile Picture
           <div className='mm-profile-overview__title-pp' onClick={() => handleFileBrowserOpen(ppRef)} role='button'>
-            <img alt='Money Minx Investor' src={profileURL} className='rounded-circle mr-2 profile-pic-large' width='100' height='100' />
+            <img
+              alt='Money Minx Investor'
+              src={profileURL}
+              className='rounded-circle mr-2 profile-pic-large'
+              width='100'
+              height='100'
+            />
           </div>
         </div>
         <div className='mt-4 mt-sm-0'>
-          <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleProfileChange}
-                  disabled={!profileChanged}>
-            {changing && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'/>}
+          <button
+            type='button'
+            className='btn btn-outline-primary mm-button btn-lg'
+            onClick={handleProfileChange}
+            disabled={!profileChanged}
+          >
+            {changing && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />}
             <MMToolTip placement='top' message='To change your profile pic, click on the current image on the left.'>
               <span className={'ml-1'}> {changing ? 'Saving...' : 'Save Picture'}</span>
             </MMToolTip>

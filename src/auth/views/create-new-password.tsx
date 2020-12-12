@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { Formik } from 'formik';
 import useParam from 'common/hooks/useParam';
+import useToast from 'common/hooks/useToast';
 import { AuthLayout } from 'layouts/auth.layout';
 import { appRouteConstants } from 'app/app-route.constant';
 import { resetPasswordValidation } from 'auth/auth.validation';
@@ -26,6 +26,7 @@ export const CreateNewPasswordMainSection = () => {
   const { token } = useParam();
   const history = useHistory();
   const [validator, setValidator] = useState<number>(0);
+  const { mmToast } = useToast();
 
   const [visible, setVisible] = useState({
     password: false,
@@ -164,7 +165,7 @@ export const CreateNewPasswordMainSection = () => {
                   if (error) {
                     history.push(appRouteConstants.auth.TOKEN_EXPIRED);
                   } else {
-                    toast('Password reset successful, Please login with new credentials', { type: 'success' });
+                    mmToast('Password reset successful, Please login with new credentials', { type: 'success' });
                     history.push(appRouteConstants.auth.LOGIN);
                   }
                 }}

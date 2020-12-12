@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
@@ -21,18 +20,20 @@ import { ReactComponent as IconEdit } from 'assets/icons/icon-edit.svg';
 import { ReactComponent as DefaultProviderLogo } from 'assets/icons/mm-default-provider.svg';
 
 import {
-  AccountCardProps,
   AccountRowProps,
+  AccountCardProps,
   ManualAccountProps,
   AccountOverviewProps,
-  SubscriptionConnectionWarningProps,
   AccountDialogBoxProps,
+  SubscriptionConnectionWarningProps,
 } from 'setting/setting.type';
-import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
+import useToast from 'common/hooks/useToast';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
+import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 
 export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag = false }) => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
@@ -68,7 +69,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
       history.push(appRouteConstants.networth.NET_WORTH);
       return;
     }
-    toast('Kindly remove accounts first.', { type: 'error' });
+    mmToast('Kindly remove accounts first.', { type: 'error' });
   };
 
   return (
@@ -108,6 +109,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({
   reviewSubscriptionFlag,
 }) => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
   const needUpgrade = manualAccountList.length >= availableAccounts;
@@ -128,7 +130,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({
     setDeleting(true);
     const { error } = await deleteAccounts({ dispatch, accounts });
     if (error) {
-      toast('Error occurred deleting account', { type: 'error' });
+      mmToast('Error occurred deleting account', { type: 'error' });
     }
     setDeleting(false);
   };
@@ -197,6 +199,7 @@ export interface AccountByStatus {
 
 export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts, reviewSubscriptionFlag }) => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
   const needUpgrade = accountList.length >= availableAccounts;
@@ -240,7 +243,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     setDeleting(true);
     const { error } = await deleteAccounts({ dispatch, accounts });
     if (error) {
-      toast('Error occurred deleting account', { type: 'error' });
+      mmToast('Error occurred deleting account', { type: 'error' });
     }
     setDeleting(false);
   };
@@ -351,6 +354,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
 };
 
 export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscriptionFlag }) => {
+  const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
 
@@ -358,7 +362,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
     setDeleting(true);
     const { error } = await deleteAccountById({ dispatch, id });
     if (error) {
-      toast('Error occurred deleting account', { type: 'error' });
+      mmToast('Error occurred deleting account', { type: 'error' });
     }
     setDeleting(false);
   };

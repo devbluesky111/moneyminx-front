@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Formik } from 'formik';
-import { toast } from 'react-toastify';
 import { FormControl } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
 import 'react-circular-progressbar/dist/styles.css';
 
+import useToast from 'common/hooks/useToast';
 import { ProfileType } from 'auth/auth.types';
 import useProfile from 'auth/hooks/useProfile';
 import { patchProfile } from 'api/request.api';
@@ -30,6 +30,7 @@ export const ProfileOverview = () => {
     response: { error },
   } = useProfile();
 
+  const { mmToast } = useToast();
   const { user } = useAuthState();
   const dispatch = useAuthDispatch();
   const [statusText, setStatusText] = useState('Save Changes');
@@ -41,7 +42,7 @@ export const ProfileOverview = () => {
   const marriedPropertyCounts = 15;
 
   if (error) {
-    toast('Error occurred fetching your profile', { type: 'error' });
+    mmToast('Error occurred fetching your profile', { type: 'error' });
   }
 
   if (loading || !user) {
@@ -190,12 +191,12 @@ export const ProfileOverview = () => {
 
           if (patchError) {
             setStatusText('Save Changes');
-            return toast('Could not save profile', { type: 'error' });
+            return mmToast('Could not save profile', { type: 'error' });
           }
 
           const result = await fetchProfile({ dispatch });
           if (result.error) {
-            toast('Could not update profile', { type: 'error' });
+            mmToast('Could not update profile', { type: 'error' });
           }
           setStatusText('Saved');
           setTimeout(() => {

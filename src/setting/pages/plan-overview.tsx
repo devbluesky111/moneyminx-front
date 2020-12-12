@@ -1,8 +1,8 @@
-import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
 
 import appEnv from 'app/app.env';
 import { Plan } from 'setting/setting.type';
+import useToast from 'common/hooks/useToast';
 import { loadStripe } from '@stripe/stripe-js';
 import useAnalytics from 'common/hooks/useAnalytics';
 import { postSubscriptionCheckout } from 'api/request.api';
@@ -17,6 +17,7 @@ const stripePromise = loadStripe(appEnv.STRIPE_PUBLIC_KEY);
 
 export const PlanOverview = () => {
   const { event } = useAnalytics();
+  const { mmToast } = useToast();
   const { fbq } = usePixel();
   const [type, setType] = useState<string>('month');
 
@@ -49,7 +50,7 @@ export const PlanOverview = () => {
     const priceId = plan.priceId;
 
     if (!priceId) {
-      return toast('Price Id not found', { type: 'error' });
+      return mmToast('Price Id not found', { type: 'error' });
     }
 
     const stripe = await stripePromise;
@@ -75,7 +76,7 @@ export const PlanOverview = () => {
 
     const { data, error } = await postSubscriptionCheckout(payload);
     if (error) {
-      return toast('Can not stripe checkout id', { type: 'error' });
+      return mmToast('Can not stripe checkout id', { type: 'error' });
     }
 
     const checkoutId = data?.checkoutId;
@@ -85,7 +86,7 @@ export const PlanOverview = () => {
       });
 
       if (result.error) {
-        return toast('Something went wrong with Stripe', { type: 'error' });
+        return mmToast('Something went wrong with Stripe', { type: 'error' });
       }
     }
   };

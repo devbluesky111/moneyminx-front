@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { toast } from 'react-toastify';
 import { login } from 'auth/auth.service';
+import useToast from 'common/hooks/useToast';
 import { useAuthDispatch } from 'auth/auth.context';
 import { loginValidationSchema } from 'auth/auth.validation';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
@@ -9,9 +9,12 @@ import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 const Chaseform = () => {
   return <ChaseMortgageForm />;
 };
+
 export default Chaseform;
 export const ChaseMortgageForm = () => {
+  const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
+
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -21,9 +24,9 @@ export const ChaseMortgageForm = () => {
         actions.setSubmitting(false);
 
         if (!error) {
-          toast('Sign in Success', { type: 'success' });
+          mmToast('Sign in Success', { type: 'success' });
         } else {
-          toast('Sign in Failed', { type: 'error' });
+          mmToast('Sign in Failed', { type: 'error' });
         }
       }}
     >

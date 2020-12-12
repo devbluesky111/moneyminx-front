@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 config();
 
 export default {
+  APP_ENVIRONMENT: process.env.NODE_ENV,
   BASE_URL: 'https://api.moneyminx.com/',
   FACEBOOK_APP_ID: process.env.REACT_APP_FACEBOOK_APP_ID,
   STRIPE_PUBLIC_KEY:

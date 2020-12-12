@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import FacebookLogin from 'react-facebook-login';
 import React, { ChangeEvent, useState } from 'react';
 import { useHistory, Link, useLocation } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { useHistory, Link, useLocation } from 'react-router-dom';
 import env from 'app/app.env';
 import { Formik } from 'formik';
 import { isEmpty } from 'lodash';
+import useToast from 'common/hooks/useToast';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
@@ -36,6 +36,7 @@ export default Login;
 
 export const LoginMainSection = () => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const { search } = useLocation();
   const associateModal = useModal();
   const dispatch = useAuthDispatch();
@@ -60,7 +61,7 @@ export const LoginMainSection = () => {
 
       if (!error) {
         history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
-        toast('Successfully logged in', { type: 'success' });
+        mmToast('Successfully logged in', { type: 'success' });
       } else {
         if (error.statusCode === 400 && error.message) {
           emailNeededModal.open();
@@ -78,10 +79,10 @@ export const LoginMainSection = () => {
     const { error } = await associateFacebookUser({ dispatch, token: fbToken });
 
     if (error) {
-      toast('Association Failed', { type: 'error' });
+      mmToast('Association Failed', { type: 'error' });
     } else {
       history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
-      toast('Association Success', { type: 'success' });
+      mmToast('Association Success', { type: 'success' });
     }
     associateModal.close();
   };
@@ -171,7 +172,7 @@ export const LoginMainSection = () => {
                         ).length;
 
                         const subscriptionDetails = await getSubscription({ priceId: data.priceId });
-                        toast('Sign in Success', { type: 'success' });
+                        mmToast('Sign in Success', { type: 'success' });
                         if (
                           autoAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
                           manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
