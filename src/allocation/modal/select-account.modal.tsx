@@ -22,7 +22,6 @@ const SelectAccountModal: React.FC<SelectAccountModal> = ({ selectAccountModal, 
   }
 
   const accountsByProvider = groupByProviderName(multiAccounts);
-  console.log(accountsByProvider)
 
   return (
     <Modal {...selectAccountModal.props} title='Which account?' size='md' canBeClosed onClose={() => selectAccountModal.close()}>
