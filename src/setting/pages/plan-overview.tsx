@@ -11,11 +11,13 @@ import { pricingDetailConstant } from 'common/common.constant';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as PricingTickIcon } from 'assets/images/pricing/tick-icon.svg';
+import usePixel, { EPixelTrack } from 'common/hooks/usePixel';
 
 const stripePromise = loadStripe(appEnv.STRIPE_PUBLIC_KEY);
 
 export const PlanOverview = () => {
   const { event } = useAnalytics();
+  const { fbq } = usePixel();
   const [type, setType] = useState<string>('month');
 
   const { fetchingSubscription, subError, subscription } = useGetSubscription();
@@ -57,6 +59,13 @@ export const PlanOverview = () => {
       action: 'Initiate Stripe Checkout',
       label: `Checkout for ${plan.name || ''} plan`,
       value: plan.price,
+    });
+
+    fbq(EPixelTrack.INITIATE_CHECKOUT, {
+      currency: 'USD',
+      value: plan.price,
+      content_category: plan.name,
+      content_ids: priceId,
     });
 
     const payload = {
