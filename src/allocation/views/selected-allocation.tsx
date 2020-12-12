@@ -176,10 +176,9 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
                         return (
                           <React.Fragment key={shortId + index}>
                             <tr className='mm-allocation-overview__table--data-row-mobile'>
-                              {
-                                // FIXME: td and use span inside make sure design doesn't break
-                              }
-                              <span className='mt-2 mb-0'>{al.description}</span>
+                              <td>
+                                <span className='mt-2 mb-0'>{al.description}</span>
+                              </td>
                             </tr>
                             <tr className='mm-allocation-overview__table--data-row'>
                               <td>{al.description}</td>
