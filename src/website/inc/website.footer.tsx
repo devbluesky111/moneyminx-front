@@ -1,10 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import footerData from '@mm/data/footer.data.json';
-import featureList from '@mm/data/feature.list.json';
-import resourceList from '@mm/data/resource.list.json';
-import companyInfoList from '@mm/data/company-info.list.json';
 import SignupToday from 'website/partials/signup-today.footer';
 import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg';
 import { ReactComponent as YoutubeIcon } from 'assets/icons/youtube.svg';
@@ -15,52 +11,42 @@ import { ReactComponent as PinterestIcon } from 'assets/icons/pinterest.svg';
 import { ReactComponent as AppStoreLogo } from 'assets/icons/app-store-black.svg';
 import { ReactComponent as GooglePlayLogo } from 'assets/icons/google-play-black.svg';
 
-interface ListType {
-  title: string;
-  list: {
-    name: string;
-    link: string;
-    external?: boolean;
-  }[];
-}
-
-interface Data {
-  data: ListType;
-}
-
-const List = ({ data }: Data) => {
-  const list = data.list.map((item, idx) => (
-    <h3 key={idx}>
-      {item.external ? (
-        <a href={item.link} target='_blank' rel='noopener noreferrer' className='text-white'>
-          {item.name}
-        </a>
-      ) : (
-        <Link to={item.link} className='text-white'>
-          {item.name}
-        </Link>
-      )}
-    </h3>
-  ));
-  return (
-    <div className='wf-list-wrapper py-2'>
-      <span>{data.title}</span>
-      <div className='wf-list-items'>{list}</div>
-    </div>
-  );
-};
-
 const FooterList = () => {
   return (
     <div className='row'>
       <div className='col-sm-3'>
-        <List data={resourceList} />
+        <div className='wf-list-wrapper py-2'>
+          <span className='footer-feature-title'>Resources</span>
+          <div className='wf-list-items'>
+            <span className='footer-feature'><a className='text-white' href='/blog'>Blog</a></span>
+            <span className='footer-feature'><a className='text-white' href='/security'>Security</a></span>
+          </div>
+        </div>
       </div>
       <div className='col-sm-5'>
-        <List data={featureList} />
+        <div className='wf-list-wrapper py-2'>
+          <span className='footer-feature-title'>Features</span>
+          <div className='wf-list-items'>
+            <h3 className='footer-feature'><a className='text-white' href='/features/net-worth'>Net Worth Tracker</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/features/allocations'>Asset Allocation Chart</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/features/cryptos'>Crypto Tracker</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/features/synced-and-manual'>Synced and Manual Accounts</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/features/multicurrency'>Multicurrency</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/features/transaction-history'>Transaction History</a></h3>
+          </div>
+        </div>
       </div>
       <div className='col-sm-4'>
-        <List data={companyInfoList} />
+        <div className='wf-list-wrapper py-2'>
+          <span className='footer-feature-title'>Company</span>
+          <div className='wf-list-items'>
+            <h3 className='footer-feature'><a className='text-white' href='/about'>About</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/pricing'>Pricing</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/notices'>Notices</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/privacy'>Privacy</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/terms'>Terms of Service</a></h3>
+          </div>
+        </div>
       </div>
     </div>
   );

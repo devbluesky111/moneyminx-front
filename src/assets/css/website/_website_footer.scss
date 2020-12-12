@@ -128,10 +128,22 @@
 .wf-list-wrapper {
     text-align: left;
 
-  span {
+  .footer-feature-title {
     font-size: 1.125rem;
     font-weight: 500;
     line-height: 2.2;
+    display: block;
+  }
+
+  .footer-feature {
+    opacity: 0.8;
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.5;
+    display: block;
+    color: #ffffffcc;
+    height: auto;
+    margin-bottom: 20px;
   }
 
     p {
