@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -21,6 +21,7 @@ const AppSubHeader = () => {
   const [errorAccounts, setErrorAccounts] = useState<Account[]>([]);
   const [manualMax, setManualMax] = useState<boolean>(false);
   const upgradeAccountModal = useModal();
+  const dropdownToggle = useRef(null);
 
   useEffect(() => {
     const fetchCurrentAccount = async () => {
@@ -65,12 +66,16 @@ const AppSubHeader = () => {
     } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
   }
 
+  const clickElement = (dropdownToggle: any) => {
+    dropdownToggle.current?.click();
+  };
+
   return (
     <div className='left-box d-flex align-items-center float-lg-left'>
       <span className='plus-btn' onClick={checkAccountLimit}>+</span>
       <div className='myaccount-drop'>
         <Dropdown className='drop-box' >
-          <Dropdown.Toggle className='dropdown-toggle my-accounts'>My Accounts</Dropdown.Toggle>
+          <Dropdown.Toggle className='dropdown-toggle my-accounts' ref={dropdownToggle}>My Accounts</Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu'>
             {(errorAccounts.length > 0 || warningAccounts.length > 0) &&
               <div className='dropdown-head'>
@@ -78,51 +83,51 @@ const AppSubHeader = () => {
               </div>}
             <div className='dropdown-box'>
               {errorAccounts.length > 0 &&
-              <div>
-                <ul className='error'>
-                  {errorAccounts.map((account: Account, index: number) => {
-                    return (
-                      <li key={index}>
-                        <Link to='#'>
-                          <div>
-                            <h5>{account.accountName}</h5>
-                            <span>{getRelativeDate(account.balancesFetchedAt)}</span>
-                          </div>
-                          <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-                <hr />
-              </div>
+                <div>
+                  <ul className='error'>
+                    {errorAccounts.map((account: Account, index: number) => {
+                      return (
+                        <li key={index}>
+                          <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
+                            <div>
+                              <h5>{account.accountName}</h5>
+                              <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                            </div>
+                            <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                  <hr />
+                </div>
               }
               {warningAccounts.length > 0 &&
-              <div>
-                <ul className='warning'>
-                  {warningAccounts.map((account: Account, index: number) => {
-                    return (
-                      <li key={index}>
-                        <Link to='#'>
-                          <div>
-                            <h5>{account.accountName}</h5>
-                            <span>{getRelativeDate(account.balancesFetchedAt)}</span>
-                          </div>
-                          <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-                <hr />
-              </div>
-                }
+                <div>
+                  <ul className='warning'>
+                    {warningAccounts.map((account: Account, index: number) => {
+                      return (
+                        <li key={index}>
+                          <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
+                            <div>
+                              <h5>{account.accountName}</h5>
+                              <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                            </div>
+                            <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                  <hr />
+                </div>
+              }
               {successAccounts.length > 0 &&
                 <ul className='success'>
                   {successAccounts.map((account: Account, index: number) => {
                     return (
                       <li key={index}>
-                        <Link to='#'>
+                        <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
                           <div>
                             <h5>{account.accountName}</h5>
                             <span>{getRelativeDate(account.balancesFetchedAt)}</span>
