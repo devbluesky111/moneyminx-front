@@ -31,7 +31,6 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   const onClose = async (args: any) => {
     setLoading(true);
 
-    // refresh true on fastlink success
     const { error } = await getRefreshedAccount({ dispatch });
     if (error) {
       toast('Error Occurred on Fetching user Details', { type: 'error' });

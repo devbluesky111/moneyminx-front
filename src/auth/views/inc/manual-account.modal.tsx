@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
+import Form from 'react-bootstrap/Form';
 import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
-import { appRouteConstants } from 'app/app-route.constant';
-import { CurrencyOptions } from 'auth/enum/currency-options';
-import { getConnectionInfo, getManualAccountType, postManualAccount } from 'api/request.api';
-import { enumerateStr, formater } from 'common/common-helper';
-import { Modal, ModalType } from 'common/components/modal';
 import { storage } from 'app/app.storage';
+import { appRouteConstants } from 'app/app-route.constant';
+import { Modal, ModalType } from 'common/components/modal';
+import { CurrencyOptions } from 'auth/enum/currency-options';
+import { enumerateStr, formater } from 'common/common-helper';
+import { getConnectionInfo, getManualAccountType, postManualAccount } from 'api/request.api';
 
 interface SettingModalProps {
   manualAccountModal: ModalType;
