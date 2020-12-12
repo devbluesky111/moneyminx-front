@@ -76,6 +76,10 @@ export const getAccount = (): Promise<ApiResponse> => {
   return http.get(urls.auth.ACCOUNTS);
 };
 
+export const getAccountWithProvider = (): Promise<ApiResponse> => {
+  return http.get(urls.auth.ACCOUNTS_WITH_PROVIDER);
+};
+
 export const getProfile = () => {
   return http.get(urls.auth.PROFILE);
 };
@@ -154,6 +158,10 @@ export const getHoldingsDetails = (id: string) => {
   return http.get(urls.auth.HOLDINGS_DETAILS.replace(':positionId', id));
 };
 
+export const getActivityDetails = (id: string) => {
+  return http.get(urls.auth.ACTIVITY_DETAILS.replace(':activityId', id));
+};
+
 export const getClassification = (filter: string) => {
   return http.get(urls.auth.CLASSIFICATION.replace(':filter', filter));
 };
@@ -162,12 +170,24 @@ export const getHoldingTypes = () => {
   return http.get(urls.allocations.HOLDING_TYPES);
 };
 
+export const getActivityTypes = () => {
+  return http.get(urls.auth.ACTIVITY_TYPES);
+};
+
 export const patchPosition = (id: string, data: any) => {
   return http.patch(urls.auth.HOLDINGS_DETAILS.replace(':positionId', id), data);
 };
 
 export const postPosition = <T>(payload: T): Promise<ApiResponse> => {
   return http.post(urls.auth.HOLDINGS_DETAILS.replace('/:positionId', ''), payload);
+};
+
+export const patchTransaction = (id: string, data: any) => {
+  return http.patch(urls.auth.ACTIVITY_DETAILS.replace(':activityId', id), data);
+};
+
+export const postTransaction = <T>(payload: T): Promise<ApiResponse> => {
+  return http.post(urls.auth.ACTIVITY_DETAILS.replace('/:activityId', ''), payload);
 };
 
 export const deleteAccount = (id: string): Promise<ApiResponse> => {

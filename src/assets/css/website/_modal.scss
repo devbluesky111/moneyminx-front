@@ -230,3 +230,15 @@ button.hidden {
     padding: 0 20px;
   }
 }
+.modal-button-and-text-link {
+  align-content: center;
+  justify-content: flex-start;
+  align-items: baseline;
+
+  .mm-btn-primary,
+  button {
+    margin-right: 2.5rem;
+    width: auto !important;
+    padding: 0 30px;
+  }
+}

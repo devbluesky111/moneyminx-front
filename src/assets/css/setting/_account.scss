@@ -13,6 +13,15 @@
 
   &__error {
     border-left: 3px solid $redAlert;
+    
+    .fix-connection-sec {
+      border-bottom: 1px solid $grayOpacity24;
+    }
+
+    span {
+      font-weight: $normal;
+      font-size: 0.875rem;
+    }
   }
 
   &__info {

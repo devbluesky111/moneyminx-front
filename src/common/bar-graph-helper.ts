@@ -1,9 +1,9 @@
-export const formatter = (value: number) => {
+export const formatter = (value: number, currencySymbol: string) => {
   if (value < 1000000) {
-    return `$${value / 1000}k`;
+    return `${currencySymbol}${value / 1000}k`;
   }
 
-  return `$${value / 1000000}m`;
+  return `${currencySymbol}${value / 1000000}m`;
 };
 
 export const getInterval = (max: number) => {

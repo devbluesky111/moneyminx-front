@@ -92,7 +92,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
               <div className='col-sm-3 col-md-3'>
                 <div className='form-wrap'>
                   {(currentSubscription && (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus')) ?
-                    <span>USD</span>
+                    <span>{currency}</span>
                     :
                     <SelectInput
                       args={curArr}

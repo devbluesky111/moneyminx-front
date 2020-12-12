@@ -99,7 +99,7 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
             tick={{ fontSize: 14 }}
             interval="preserveStartEnd"
             stroke='#969eac'
-            tickFormatter={(tick) => formatter(tick)}
+            tickFormatter={(tick) => formatter(tick, currencySymbol)}
             domain={[0, _interval * 4]}
           />
           <ReferenceArea

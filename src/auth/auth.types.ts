@@ -1,6 +1,8 @@
 import { FormikProps } from 'formik';
 import { StringKeyObject } from 'common/common.types';
 
+import { AuthState, ProviderAccountStatus, ProviderAggregationSource, RoleEnum } from './auth.enum';
+
 export type Dispatch = (args: StringKeyObject) => void;
 
 export interface LoginPayload {
@@ -34,6 +36,21 @@ export interface UserType {
   [key: string]: any;
 }
 
+export interface ProviderAccount {
+  aggregationSource: ProviderAggregationSource;
+  createdAt: string | Date;
+  createdDate: string | Date;
+  dataset: any[];
+  id: number;
+  isManual: boolean;
+  profileId: number;
+  providerAccountId: number;
+  providerId: number;
+  requestId: string;
+  status: ProviderAccountStatus
+  updatedAt: string | Date;
+}
+
 export interface Account {
   id: number;
   yodleeId: number;
@@ -48,21 +65,7 @@ export interface Account {
   balance: number;
   balancesFetchedAt: string;
   currency: string;
-}
-
-export enum RoleEnum {
-  ADMIN,
-  GUEST,
-}
-
-export enum AuthState {
-  INITIAL,
-  LOGGED_OUT,
-  LOGGING_OUT,
-  AUTHENTICATED,
-  AUTHENTICATING,
-  SIGN_IN_REJECTED,
-  LOG_OUT_REJECTED,
+  providerAccount: ProviderAccount;
 }
 
 export interface ProfileDetails {

@@ -1,19 +1,39 @@
 import React, { useEffect, useState } from 'react';
 
 import { fNumber, numberWithCommas } from 'common/number.helper';
+import { formater } from 'common/common-helper';
+import { getActivityDetails } from 'api/request.api';
+import { useModal } from 'common/components/modal';
 
+import ActivityDetailsModal from './activity-details.modal';
 import { AccountTransactionTableProps, AccountTransactionItem } from '../account.type';
 import { ReactComponent as Info } from '../../assets/icons/info.svg';
-import { ReactComponent as Revert } from '../../assets/icons/revert.svg';
+// import { ReactComponent as Revert } from '../../assets/icons/revert.svg';
 import { ReactComponent as Edited } from '../../assets/icons/icon-edit.svg';
 
-export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transactionsData, currencySymbol }) => {
+export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transactionsData, openEditActivityModalFun, closeEditActivityModalFun, currencySymbol }) => {
 
   const [transactions, setTransactions] = useState<AccountTransactionItem[]>([]);
+  const [activityDetails, setActivityDetails] = useState<AccountTransactionItem>();
+
+  const activityDetailsModal = useModal();
 
   useEffect(() => {
     setTransactions(transactionsData);
   }, [transactionsData]);
+
+  const fetchActivityDetails = async (activityId: string) => {
+    const { data, error } = await getActivityDetails(activityId);
+    if (!error) {
+      setActivityDetails(data);
+    }
+  };
+
+  const openEditActivityModal = async (activityId: number) => {
+    await fetchActivityDetails(activityId.toString());
+    activityDetailsModal.open();
+    openEditActivityModalFun();
+  }
 
   return (
     <section>
@@ -34,21 +54,25 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
             </div>
             <div className='mm-activity-table__body'>
               {transactions.map((item, index) => (
-                <div className='row no-gutters mm-activity-table__body--wrapper' key={index}>
+                <div className='row no-gutters mm-activity-table__body--wrapper' key={index} onClick={() => openEditActivityModal(item.id)}>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Date</span>{item.date}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Activity Type</span>{item.type}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Activity Type</span>{formater(item.type)}</div>
                   <div className='col-4 col-md mm-activity-table__body--data d-none d-xl-block'>{item.description}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Amount</span>{(item.amount) ? currencySymbol : ''}{(item.amount) ? `${numberWithCommas(fNumber(item.amount, 0))}` : 0}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Balance</span>{(item.amount) ? currencySymbol : ''}{(item.balance) ? `${numberWithCommas(fNumber(item.balance, 0))}` : 0}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Amount</span>{(item.amount) ? `${numberWithCommas(fNumber(item.amount, 0))}` : 0}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Balance</span>{(item.balance) ? `${numberWithCommas(fNumber(item.balance, 0))}` : 0}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Income</span>{item.income ? 'Yes' : 'No'}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Cash Flow</span>{item.cashFlow ? 'Yes' : 'No'}</div>
-                  <div className='col-4 col-md-1 mm-activity-table__body--data'><Edited className='mr-3 mm-activity-table__body--data-edited d-none d-xl-inline' /><Revert /></div>
+                  <div className='col-4 col-md-1 mm-activity-table__body--data'>
+                    {item.updatedAt && <Edited className='mm-activity-table__body--data-edited d-none d-xl-inline' />}
+                    {/* <Revert /> */}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
       ) : (<span className='no-data'>No transaction data</span>)}
+      {activityDetails && <ActivityDetailsModal activityDetailsModal={activityDetailsModal} activityDetails={activityDetails} closeEditActivityModal={closeEditActivityModalFun} currencySymbol={currencySymbol} />}
     </section>
   );
 };

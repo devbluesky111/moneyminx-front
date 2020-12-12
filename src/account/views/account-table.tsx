@@ -25,8 +25,6 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
   const fetchHolingsDetails = async (positionId: string) => {
     const { data, error } = await getHoldingsDetails(positionId);
     if (!error) {
-      console.log('fetchHolingsDetails: ', data);
-
       setHoldingsDetails(data);
     }
   };
@@ -63,7 +61,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                     {holdings?.length > 0 && holdings.map((item, index) => (
                       <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }} onClick={() => openEditPositionModal(item.id)} >
                         <td>{item.description}</td>
-                        <td className='hide-type'>{item.price ? currencySymbol : ''}{item.price}</td>
+                        <td className='hide-type'>{item.price ? currencySymbol : ''}{numberWithCommas(fNumber(item.price, 2))}</td>
                         <td >{item.quantity}</td>
                         <td className='hide-type'>{item.symbol}</td>
                         <td className='hide-type'>{item.costBasis ? currencySymbol : ''}{item.costBasis ? numberWithCommas(fNumber(item.costBasis, 2)) : 0}</td>
@@ -82,7 +80,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
           </div>
         </div>
       ) : (<span className='no-data'>No holdings data</span>)}
-      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} closeEditPositionModal={closeEditPositionModalFun} />}
+      {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} closeEditPositionModal={closeEditPositionModalFun} currencySymbol={currencySymbol} />}
     </section >
   );
 };

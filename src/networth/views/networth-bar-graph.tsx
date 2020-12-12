@@ -138,12 +138,11 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth, fCategori
             tick={{ fontSize: 14 }}
             interval="preserveStartEnd"
             stroke='#969eac'
-            tickFormatter={(tick) => formatter(tick)}
-            domain={[0, _interval * 4]}
+            tickFormatter={(tick) => formatter(tick, currencySymbol)}
+            domain={['auto', _interval * 4]}
           />
           <ReferenceArea
             x1={first_projection}
-            y1={0}
             label={renderCustomRALabel}
             fill='url(#colorPr)'
           />

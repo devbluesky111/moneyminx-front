@@ -2,9 +2,11 @@ import { Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
 import React, { useEffect, useState } from 'react';
 
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import useSettings from 'setting/hooks/useSettings';
 import { Account } from 'auth/auth.types';
 import { getAccount } from 'api/request.api';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { getCurrencySymbol } from 'common/currency-helper';
 import { arrGroupBy, enumerateStr, serialize } from 'common/common-helper';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
 import { initialState, useNetworthDispatch, useNetworthState } from 'networth/networth.context';
@@ -20,10 +22,12 @@ import {
   setFilterTimeInterval,
 } from 'networth/networth.actions';
 import { NetworthFilterProps, NetworthState, TFilterKey } from 'networth/networth.type';
+import { numberWithCommas, fNumber } from '../../../common/number.helper';
 
 const NetworthFilter = (props: NetworthFilterProps) => {
   const dispatch = useNetworthDispatch();
   const [currentAccount, setCurrentAccount] = useState<Account[]>();
+  const { data } = useSettings();
 
   const networthState = useNetworthState();
   const { fCategories, fTypes, fAccounts, fFromDate, fToDate, fTimeInterval, networth } = networthState;
@@ -146,7 +150,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
               </ul>
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown className='drop-box tab-hide'>
+          <Dropdown className='drop-box'>
             <Dropdown.Toggle variant='' className={fc('fAccounts')}>
               All Accounts
             </Dropdown.Toggle>
@@ -172,7 +176,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
                           <h5>{account.accountName}</h5>
                           <span>{getRelativeDate(account.balancesFetchedAt)}</span>
                         </div>
-                        <div>${account.balance}</div>
+                        <div>{data?.currency ? getCurrencySymbol(data.currency) : ''}{numberWithCommas(fNumber(account.balance, 2))}</div>
                       </li>
                     );
                   })}

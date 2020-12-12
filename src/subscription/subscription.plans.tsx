@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
 import { Plan } from 'setting/setting.type';
+import { events } from '@mm/data/event-list';
 import GALink from 'common/components/ga-link';
-
-import { pricingDetailConstant } from '../common/common.constant';
-import useGetSubscription from '../auth/hooks/useGetSubscription';
-import CircularSpinner from '../common/components/spinner/circular-spinner';
-import { ReactComponent as PricingTickIcon } from '../assets/images/pricing/tick-icon.svg';
-import { ReactComponent as PricingTickIconCS } from '../assets/images/pricing/tick-icon-cs.svg';
-import { events } from '../@mm/data/event-list';
+import { pricingDetailConstant } from 'common/common.constant';
+import useGetSubscription from 'auth/hooks/useGetSubscription';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { ReactComponent as PricingTickIcon } from 'assets/images/pricing/tick-icon.svg';
+import { ReactComponent as PricingTickIconCS } from 'assets/images/pricing/tick-icon-cs.svg';
 
 const SubscriptionPlans = () => {
   const [type, setType] = useState<string>('monthly');
@@ -137,8 +136,10 @@ const SubscriptionPlans = () => {
                     {pt.details[pricingDetailConstant.CRYPTO] === 'Yes' ? 'Sync your crypto wallets' : ''}
                   </li>
                 </ul>
-                <GALink to={`/auth/signup?priceId=${pt.priceId}&planName=${pt.name}&planPrice=${pt.price}`}
-                        eventArgs={events.trialFromPricing}>
+                <GALink
+                  to={`/auth/signup?priceId=${pt.priceId}&planName=${pt.name}&planPrice=${pt.price}`}
+                  eventArgs={{ ...events.trialFromPricing, value: pt.price }}
+                >
                   <button className='mm-btn-animate trial-btn ml-3 btn-xs-block'>Start 14 day trial</button>
                 </GALink>
               </div>
