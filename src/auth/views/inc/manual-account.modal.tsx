@@ -178,10 +178,10 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
                   <span className='ml-1'>Adding...</span>
                 </>
               ) : (
-                <>
-                  Add<span className='hide-sm ml-1'>Account</span>
-                </>
-              )}
+                  <>
+                    Add<span className='hide-sm ml-1'>Account</span>
+                  </>
+                )}
             </button>
           </div>
         </div>

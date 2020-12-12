@@ -208,8 +208,8 @@ export const PlanOverview = () => {
                       {currentSubscription?.subscriptionStatus === 'trialing'
                         ? 'Choose Plan'
                         : isCurrentPlan(pt.priceId)
-                        ? 'Current Plan'
-                        : 'Change Plan'}
+                          ? 'Current Plan'
+                          : 'Change Plan'}
                     </button>
                   </div>
                 </div>

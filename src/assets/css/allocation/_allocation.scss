@@ -287,6 +287,8 @@
     }
 
     &--data-row {
+      cursor: pointer;
+
       td {
         font-weight: 500;
         font-size: 1rem;
@@ -326,6 +328,8 @@
     }
 
     &--data-row-mobile {
+      cursor: pointer;
+
       p {
         font-style: normal;
         font-weight: 500;
@@ -539,6 +543,32 @@
 
   .custom-select {
     color: $red;
+  }
+}
+
+.mm-select-account-modal .account-section {
+
+  &:not(:last-child){
+    border-bottom: 1px solid $grayOpacity24;
+  }
+
+  .providerLogo {
+    height: 48px;
+  }
+
+  .provider-name {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 23px;
+    color: $darkGray;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 19px;
+    color: $darkGray;
+    cursor: pointer;
   }
 }
 

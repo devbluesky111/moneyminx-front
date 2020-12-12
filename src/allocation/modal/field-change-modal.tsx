@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
+
 import { Modal, ModalType } from 'common/components/modal';
 
 interface FieldChangeModal {
@@ -9,7 +10,7 @@ interface FieldChangeModal {
 const FieldChangeModal: React.FC<FieldChangeModal> = ({ fieldChangeModal }) => {
   return (
     <Modal {...fieldChangeModal.props} title='' size='xl' canBeClosed onClose={() => fieldChangeModal.close()}>
-      <div className='modal-wrapper chart-setting-modal'>
+      <div className='modal-wrapper'>
         <div className='mm-field-change-modal'>
           <div className='mm-field-change-modal__title'>Peer Street</div>
           <p>How would you like to classify this position?</p>

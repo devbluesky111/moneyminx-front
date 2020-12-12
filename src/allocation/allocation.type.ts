@@ -33,4 +33,5 @@ export interface AllocationOverviewProps {
 export interface SelectedAllocationProps {
   filter: AllocationsFilter;
   currencySymbol: string;
+  gotoDetailPage: (d: string) => void;
 }

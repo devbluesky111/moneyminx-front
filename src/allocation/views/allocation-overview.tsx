@@ -1,18 +1,21 @@
-import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
+import useSettings from 'setting/hooks/useSettings';
+import SettingModal from 'allocation/modal/setting-modal';
+import ChartShareModal from 'allocation/modal/chart-share-modal';
+import FieldChangeModal from 'allocation/modal/field-change-modal';
+import SelectAccountModal from 'allocation/modal/select-account.modal';
 import { shortId } from 'common/common-helper';
 import { useModal } from 'common/components/modal';
-import useSettings from 'setting/hooks/useSettings';
 import { getStringDate } from 'common/moment.helper';
 import { MMPieChart } from 'common/components/pie-chart';
-import SettingModal from 'allocation/modal/setting-modal';
 import { getCurrencySymbol } from 'common/currency-helper';
-import ChartShareModal from 'allocation/modal/chart-share-modal';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import FieldChangeModal from 'allocation/modal/field-change-modal';
+import { Account } from 'auth/auth.types';
 import { AllocationSectionEnum } from 'allocation/allocation.enum';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
+import { getHoldingsAccountsByDescription } from 'api/request.api';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
@@ -27,10 +30,13 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
   const chartShareModal = useModal();
   const fieldChangeModal = useModal();
   const chartSettingModal = useModal();
+  const selectAccountModal = useModal();
   const { data } = useSettings();
   const [section, setSection] = useState<AllocationSectionEnum>(AllocationSectionEnum.MY_ALLOCATION);
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const [hidden, setHidden] = useState<string[]>(['']);
+  const [multiAccounts, setMutiAccounts] = useState<Account[]>([]);
+  const history = useHistory();
 
   useEffect(() => {
     if (data) {
@@ -74,6 +80,18 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
     return 'col-xl-4';
   };
 
+  const gotoDetailPage = async (description: string) => {
+    const { data, error } = await getHoldingsAccountsByDescription(description);
+    if (!error) {
+      setMutiAccounts(data);
+      if (data.length === 1) {
+        return history.push('/account-details/' + data[0].id);
+      } else {
+        selectAccountModal.open();
+      }
+    }
+  }
+
   return (
     <div className='content-wrapper'>
       <div className='container'>
@@ -87,21 +105,21 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                   role='button'
                 >
                   My Allocation
-                </div>
+              </div>
                 <div
                   className={getSectionTitleClass(AllocationSectionEnum.PREVIOUS_ALLOCATION)}
                   onClick={() => changeAllocationSection(AllocationSectionEnum.PREVIOUS_ALLOCATION)}
                   role='button'
                 >
                   Previous Allocation
-                </div>
+            </div>
                 <div
                   className={getSectionTitleClass(AllocationSectionEnum.SIMILAR_ALLOCATION)}
                   onClick={() => changeAllocationSection(AllocationSectionEnum.SIMILAR_ALLOCATION)}
                   role='button'
                 >
                   Similar Allocation
-                </div>
+            </div>
               </div>
               <div className='mm-allocation-overview__line' />
             </div>
@@ -157,16 +175,13 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                 </tr>
                               </tbody>
                               <tbody className={isHidden(allocationKey) ? 'hide-me' : ''}>
-                                {allocation?.map((al, index) => {
+                                {allocation?.map((al) => {
                                   return (
-                                    <React.Fragment key={shortId + index}>
-                                      <tr className='mm-allocation-overview__table--data-row-mobile'>
-                                        {
-                                          // use td and inside td use p tag if needed
-                                        }
+                                    <React.Fragment key={shortId}>
+                                      <tr className='mm-allocation-overview__table--data-row-mobile' onClick={() => gotoDetailPage(al.description)}>
                                         <p className='mt-2 mb-0'>{al.description}</p>
                                       </tr>
-                                      <tr className='mm-allocation-overview__table--data-row'>
+                                      <tr className='mm-allocation-overview__table--data-row' onClick={() => gotoDetailPage(al.description)}>
                                         <td>{al.description}</td>
                                         <td>
                                           <span className='d-block'>Allocation</span>
@@ -174,9 +189,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                         </td>
                                         <td>
                                           <span className='d-block'>Value</span>
-                                          {al.allocationValue
-                                            ? `${currencySymbol}${numberWithCommas(fNumber(al.allocationValue, 0))}`
-                                            : 0}
+                                          {al.allocationValue ? `${currencySymbol}${numberWithCommas(fNumber(al.allocationValue, 0))}` : 0}
                                         </td>
                                       </tr>
                                     </React.Fragment>
@@ -187,24 +200,20 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                 <tr className='mm-allocation-overview__table--footer'>
                                   <td>Total</td>
                                   <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
-                                  <td>
-                                    {currencySymbol}
-                                    {numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 2))}
-                                  </td>
+                                  <td>{currencySymbol}{numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 2))}</td>
                                 </tr>
                               </tbody>
                             </React.Fragment>
-                          );
-                        })}
-                        ;
-                      </table>
+                          )
+                        })};
+                  </table>
                     </div>
                   </div>
-                </div>
-              </div>
+                </div >
+              </div >
 
               <div className={getSectionClass(AllocationSectionEnum.PREVIOUS_ALLOCATION)}>
-                <SelectedAllocations filter={filter} currencySymbol={currencySymbol} />
+                <SelectedAllocations filter={filter} currencySymbol={currencySymbol} gotoDetailPage={(d) => gotoDetailPage(d)} />
               </div>
 
               <div className={getSectionClass(AllocationSectionEnum.SIMILAR_ALLOCATION)}>
@@ -229,19 +238,17 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                           <MeasureUpIcon />
                           <div className='mm-allocation-overview__block-element--text ml-2'>Minx Measure-up</div>
                         </div>
-                        <p>
-                          Portfolio comparisons are coming soon. Complete your profile for better results once live.
-                        </p>
+                        <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
                         <Link to='/settings?active=Profile' className='mm-btn-animate mm-btn-primary'>
                           Complete Profile
-                        </Link>
+                    </Link>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </div >
+              </div >
+            </div >
+          </div >
           <SettingModal settingModal={chartSettingModal} />
           <ChartShareModal
             chartShareModal={chartShareModal}
@@ -249,9 +256,10 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             chartLegendComponent={<AllocationLegend chartData={chartData} currencySymbol={currencySymbol} sharing />}
           />
           <FieldChangeModal fieldChangeModal={fieldChangeModal} />
-        </section>
-      </div>
-    </div>
+          <SelectAccountModal selectAccountModal={selectAccountModal} multiAccounts={multiAccounts} />
+        </section >
+      </div >
+    </div >
   );
 };
 
