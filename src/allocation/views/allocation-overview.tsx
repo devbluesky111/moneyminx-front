@@ -161,6 +161,9 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                   return (
                                     <React.Fragment key={shortId + index}>
                                       <tr className='mm-allocation-overview__table--data-row-mobile'>
+                                        {
+                                          // use td and inside td use p tag if needed
+                                        }
                                         <p className='mt-2 mb-0'>{al.description}</p>
                                       </tr>
                                       <tr className='mm-allocation-overview__table--data-row'>

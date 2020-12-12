@@ -33,7 +33,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
   const [hidden, setHidden] = useState<string[]>(['']);
   const [isDateValid, setIsDateValid] = useState<boolean>(true);
   const [date, setDate] = useState<Date>(getLastDateOfMonth(getPreviousMonth()));
-  const { allocations, allocationChartData: chartData, lastAvailableDate } = useAllocation(filter, date?.toISOString());
+  const { allocations, allocationChartData: chartData, lastAvailableDate } = useAllocation(filter, date);
 
   const chartShareModal = useModal();
   const chartSettingModal = useModal();
@@ -176,9 +176,10 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
                         return (
                           <React.Fragment key={shortId + index}>
                             <tr className='mm-allocation-overview__table--data-row-mobile'>
-                              <td>
-                                <span className='mt-2 mb-0'>{al.description}</span>
-                              </td>
+                              {
+                                // FIXME: td and use span inside make sure design doesn't break
+                              }
+                              <span className='mt-2 mb-0'>{al.description}</span>
                             </tr>
                             <tr className='mm-allocation-overview__table--data-row'>
                               <td>{al.description}</td>
