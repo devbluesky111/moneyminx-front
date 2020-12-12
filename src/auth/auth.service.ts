@@ -6,7 +6,8 @@ import {
   getAccount,
   postRegister,
   deleteAccount,
-  getRefreshedAccount,
+  getAccountRefresh,
+  getConnectionInfo,
   patchChangePassword,
   postFacebookAssociation,
 } from 'api/request.api';
@@ -72,15 +73,39 @@ export const pickByProviderName = (data: Account[], count: number = 2) => {
   return filteredData.flat();
 };
 
-export const getRefreshedProfile = async ({ dispatch }: { dispatch: Dispatch }): Promise<ApiResponse> => {
+/**
+ * @description get refreshed account compels the server to hit the yodlee each time
+ *  - limiting this to login success and yodlee modal success
+ * @param dispatch
+ */
+export const getRefreshedAccount = async ({ dispatch }: { dispatch: Dispatch }): Promise<ApiResponse> => {
   dispatch({ type: auth.FETCH_ACCOUNT });
-  const { data, error } = await getRefreshedAccount();
+  const { data, error } = await getAccountRefresh();
 
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
-    // const pickedData = pickByProviderName(data);
+    dispatch({
+      type: auth.FETCH_ACCOUNT_SUCCESS,
+      payload: { user: data },
+    });
+  }
 
+  return { data, error };
+};
+
+/**
+ * @param dispatch
+ * @description Fetch Connection Info will be called for getting connection info
+ * fetch the data from the database instead of calling yodlee
+ */
+export const fetchConnectionInfo = async ({ dispatch }: { dispatch: Dispatch }): Promise<ApiResponse> => {
+  dispatch({ type: auth.FETCH_ACCOUNT });
+  const { data, error } = await getConnectionInfo();
+
+  if (error) {
+    dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
+  } else {
     dispatch({
       type: auth.FETCH_ACCOUNT_SUCCESS,
       payload: { user: data },

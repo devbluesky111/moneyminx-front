@@ -33,7 +33,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
   const [hidden, setHidden] = useState<string[]>(['']);
   const [isDateValid, setIsDateValid] = useState<boolean>(true);
   const [date, setDate] = useState<Date>(getLastDateOfMonth(getPreviousMonth()));
-  const { allocations, allocationChartData: chartData, lastAvailableDate } = useAllocation(filter, date?.toISOString());
+  const { allocations, allocationChartData: chartData, lastAvailableDate } = useAllocation(filter, date);
 
   const chartShareModal = useModal();
   const chartSettingModal = useModal();

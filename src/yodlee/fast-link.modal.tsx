@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import useToast from 'common/hooks/useToast';
 import { useAuthDispatch } from 'auth/auth.context';
-import { getRefreshedProfile } from 'auth/auth.service';
+import { getRefreshedAccount } from 'auth/auth.service';
 import { Modal, ModalTypeEnum } from 'common/components/modal';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
@@ -31,7 +31,8 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
 
   const onClose = async (args: any) => {
     setLoading(true);
-    const { error } = await getRefreshedProfile({ dispatch });
+
+    const { error } = await getRefreshedAccount({ dispatch });
     if (error) {
       mmToast('Error Occurred on Fetching user Details', { type: 'error' });
     }
@@ -47,7 +48,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   });
 
   const token = (fastLinkOptions.token as any) || '';
-  const open = fastLinkModal?.props?.open;
+  const open = fastLinkModal.props?.open;
 
   useEffect(() => {
     initRef?.current?.click();

@@ -11,15 +11,15 @@ import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { appRouteConstants } from 'app/app-route.constant';
 import { pricingDetailConstant } from 'common/common.constant';
-import { login, associateFacebookUser } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { EMAIL_IS_EMPTY, PWD_IS_EMPTY } from 'lang/en/validation.json';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
 import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
+import { login, associateFacebookUser, getRefreshedAccount } from 'auth/auth.service';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 import { ReactComponent as LoginFacebookIcon } from 'assets/images/login/facebook-icon.svg';
-import { getCurrentSubscription, postFacebookLogin, getAccount, getSubscription } from 'api/request.api';
+import { getCurrentSubscription, postFacebookLogin, getSubscription } from 'api/request.api';
 
 import EmailNeededModal from './inc/email-needed.modal';
 import AssociateEmailModal from './inc/associate-email.modal';
@@ -161,13 +161,16 @@ export const LoginMainSection = () => {
                     if (!error) {
                       const { data } = await getCurrentSubscription();
                       if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
-                        const accounts = await getAccount();
+                        const accounts = await getRefreshedAccount({ dispatch });
+
                         const manualAccounts = accounts?.data?.filter(
                           (account: Record<string, string>) => account.isManual
                         ).length;
+
                         const autoAccounts = accounts?.data?.filter(
                           (account: Record<string, string>) => !account.isManual
                         ).length;
+
                         const subscriptionDetails = await getSubscription({ priceId: data.priceId });
                         mmToast('Sign in Success', { type: 'success' });
                         if (

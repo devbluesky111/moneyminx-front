@@ -8,7 +8,7 @@ import { appRouteConstants } from 'app/app-route.constant';
 import { Modal, ModalType } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { enumerateStr, formater } from 'common/common-helper';
-import { getRefreshedAccount, getManualAccountType, postManualAccount } from 'api/request.api';
+import { getConnectionInfo, getManualAccountType, postManualAccount } from 'api/request.api';
 
 interface SettingModalProps {
   manualAccountModal: ModalType;
@@ -53,7 +53,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
     const { data: res, error: err } = await postManualAccount(values);
     if (!err) {
       console.log(res);
-      await getRefreshedAccount();
+      await getConnectionInfo();
       setValues(initialValues);
       setLoading(false);
       mmToast('Add Success', { type: 'success' });

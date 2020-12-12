@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
-import { getRefreshedProfile, deleteAccounts, deleteAccountById } from 'auth/auth.service';
+import { deleteAccounts, deleteAccountById, fetchConnectionInfo } from 'auth/auth.service';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getRelativeDate } from '../../common/moment.helper';
 import useGetSubscription from 'auth/hooks/useGetSubscription';
@@ -42,7 +42,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
   useEffect(() => {
     if (!accounts) {
       const getUser = async () => {
-        await getRefreshedProfile({ dispatch });
+        await fetchConnectionInfo({ dispatch });
       };
       getUser();
     }
