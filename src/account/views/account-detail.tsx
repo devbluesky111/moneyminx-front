@@ -10,7 +10,7 @@ import { Account } from 'auth/auth.types';
 import { enumerateStr } from 'common/common-helper';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import { getDate, getMonthYear, getQuarter, getYear } from 'common/moment.helper';
+import { getDate, getMonthYear, getQuarter, getRelativeDate, getYear } from 'common/moment.helper';
 import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
@@ -310,14 +310,14 @@ const AccountDetail: React.FC = () => {
                                         {popup &&
                                           <div className='popup'>
                                             <span className='pb-2'>Connection Status</span>
-                                            <span className='pb-2'>Last updated 14 hours ago</span>
+                                            <span className='pb-2'>Last updated {AccountDetails?.providerAccount?.updatedAt ? getRelativeDate(AccountDetails?.providerAccount?.updatedAt.toString()) : getRelativeDate(AccountDetails?.providerAccount?.createdAt.toString())}</span>
                                             <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
                                             <button
                                               type='button'
                                               className='btn btn-primary'
                                             >
                                               Fix Connection
-                                      </button>
+                                            </button>
                                           </div>
                                         }
                                       </div>
