@@ -2,15 +2,15 @@
   "title": "Features",
   "list": [
     {
-      "name": "Net Worth Tracker",
+      "name": "Net Worth Calculator",
       "link": "/features/net-worth"
     },
     {
-      "name": "Asset Allocation Chart",
+      "name": "Asset Allocation",
       "link": "/features/allocations"
     },
     {
-      "name": "Crypto Tracker",
+      "name": "Crypto Portfolio Tracking",
       "link": "/features/cryptos"
     },
     {

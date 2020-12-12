@@ -22,8 +22,8 @@ export const FeaturesCryptosTopSection = () => {
     <section>
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
-          <div className=''>
-            <h1>Support for Cryptocurrencies
+          <div>
+            <h1>Crypto Portfolio Tracking
               <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
             </h1>
             <div className='p-b-10'>

@@ -103,7 +103,7 @@ export const ConnectAccountMainSection = () => {
 
   return (
     <div className='main-table-wrapper'>
-      <div className=''>
+      <div>
         <div className='row login-wrapper'>
           <div className='guide-content'>
             <Link to='/net-worth'>

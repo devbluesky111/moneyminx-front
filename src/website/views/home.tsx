@@ -83,7 +83,7 @@ export const HomeTopSection = () => {
 export const HomeTestimonials = () => {
   return (
     <section className='testimonial'>
-      <div className=''>
+      <div>
         <h3 className='black title-in-post'>What users are saying</h3>
         <div className='testimonial-row'>
           <div className='testimonial-block'>
@@ -122,11 +122,10 @@ export const HomeNetWorthSection = () => {
         <div className='row'>
           <div className='col-lg-5 feature-content'>
               <a href='/features/net-worth'>
-                <h2>Net Worth</h2>
+                <h2>Net Worth Calculator</h2>
               </a>
               <p>
-                Easy to use dashboard of your investments, assets, liabilities and net worth from all of your accounts,
-                all in one modern, easy-to-use place.
+                Stay up-to-date with your assets and liabilities. Track your wealth by using our Net Worth Calculator.
               </p>
             </div>
           <div className='col-lg-7 feature-image'>
@@ -145,12 +144,10 @@ export const HomeAllocationSection = () => {
           </div>
           <div className='col-lg-5 feature-content'>
             <a href='/features/allocations'>
-              <h2>Allocations</h2>
+              <h2>Asset Allocation</h2>
             </a>
             <p>
-              Always up to date asset allocation pie chart gives you a 360 degree view of your investments and how
-              diversified your portfolio is. This at-a-glance visual give you immediate insight on where your money is
-              and where to go next. It’s easily shareable too so you can get the insights from contacts you trust.
+              With our asset allocation calculator, you will have a 360 degree view of your investments and your portfolio diversification.
             </p>
           </div>
         </div>
@@ -337,7 +334,7 @@ export const HomeBlogSection = () => {
         </p>
       </div>
       <div className='home-list blog-list'>
-        <div className=''>
+        <div>
           <div className='mm-blog-btn'>
             <a
               className='mm-nav-link mm-link-blog-btn'

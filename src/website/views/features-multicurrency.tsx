@@ -24,7 +24,7 @@ export const FeaturesMulticurrencyTopSection = () => {
     <section>
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
-          <div className=''>
+          <div>
             <h1>Multicurrency</h1>
             <div className='p-b-10'>
               <p className='text'>

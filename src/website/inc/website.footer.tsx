@@ -30,7 +30,7 @@ interface Data {
 
 const List = ({ data }: Data) => {
   const list = data.list.map((item, idx) => (
-    <p key={idx} className=''>
+    <h3 key={idx}>
       {item.external ? (
         <a href={item.link} target='_blank' rel='noopener noreferrer' className='text-white'>
           {item.name}
@@ -40,11 +40,11 @@ const List = ({ data }: Data) => {
           {item.name}
         </Link>
       )}
-    </p>
+    </h3>
   ));
   return (
     <div className='wf-list-wrapper py-2'>
-      <h5>{data.title}</h5>
+      <span>{data.title}</span>
       <div className='wf-list-items'>{list}</div>
     </div>
   );
@@ -53,10 +53,10 @@ const List = ({ data }: Data) => {
 const FooterList = () => {
   return (
     <div className='row'>
-      <div className='col-sm-4'>
+      <div className='col-sm-3'>
         <List data={resourceList} />
       </div>
-      <div className='col-sm-4'>
+      <div className='col-sm-5'>
         <List data={featureList} />
       </div>
       <div className='col-sm-4'>
