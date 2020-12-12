@@ -141,6 +141,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
     }
   };
 
+  const getInitialDate = (key: string): Date => {
+    return currentFormFields && currentFormFields[key] ? new Date(currentFormFields[key]) : new Date();
+  };
+
   return (
     <Formik
       initialValues={{
@@ -158,27 +162,20 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         principalBalance: currentFormFields?.principalBalance || '',
         useZestimate: currentFormFields?.useZestimate || '',
         interestRate: currentFormFields?.interestRate || '',
-        maturityDate:
-          currentFormFields && currentFormFields.maturityDate ? new Date(currentFormFields.maturityDate) : new Date(),
-        investedDate:
-          currentFormFields && currentFormFields.investedDate ? new Date(currentFormFields.investedDate) : new Date(),
+        maturityDate: getInitialDate('maturityDate'),
+        investedDate: getInitialDate('investedDate'),
         employerMatch: currentFormFields?.employerMatch || '',
         streetAddress: currentFormFields?.streetAddress || '',
         amountInvested: currentFormFields?.amountInvested || '',
         associatedLoan: currentFormFields?.associatedLoan || '',
-        originationDate:
-          currentFormFields && currentFormFields.originationDate
-            ? new Date(currentFormFields.originationDate)
-            : new Date(),
+        originationDate: getInitialDate('originationDate'),
         originalBalance: currentFormFields?.originalBalance || '',
         paymentsPerYear: currentFormFields?.paymentsPerYear || '',
         calculatedEquity: currentFormFields?.calculatedEquity || '',
         currentValuation: currentFormFields?.currentValuation || '',
         termForInvestment: currentFormFields?.termForInvestment || '',
-        businessStartDate:
-          currentFormFields && currentFormFields.businessStartDate
-            ? new Date(currentFormFields.businessStartDate)
-            : new Date(),
+        businessStartDate: getInitialDate('businessStartDate'),
+
         employerMatchLimit: currentFormFields?.employerMatchLimit || '',
         associatedMortgage: currentFormFields?.associatedMortgage || '',
         calculateReturnsOn: currentFormFields?.calculateReturnsOn || '',
