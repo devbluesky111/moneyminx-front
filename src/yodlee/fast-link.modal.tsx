@@ -23,6 +23,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
 
   const onSuccess = () => {
     mmToast('Successfully Logged in with Yodlee', { type: 'success' });
+    handleSuccess();
   };
 
   const onError = () => {
