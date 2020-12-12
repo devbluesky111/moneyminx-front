@@ -64,8 +64,12 @@ export const getFastlink = () => {
   return http.get(urls.yodlee.FAST_LINK);
 };
 
-export const getRefreshedAccount = () => {
-  return http.get(urls.auth.ACCOUNTS_REFRESH);
+export const getAccountRefresh = () => {
+  return http.get(urls.auth.ACCOUNT_REFRESH);
+};
+
+export const getConnectionInfo = () => {
+  return http.get(urls.auth.ACCOUNT_CONNECTION_INFO);
 };
 
 export const getAccountsCount = () => {
