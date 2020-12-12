@@ -6,22 +6,22 @@ import SettingModal from 'allocation/modal/setting-modal';
 import ChartShareModal from 'allocation/modal/chart-share-modal';
 import FieldChangeModal from 'allocation/modal/field-change-modal';
 import SelectAccountModal from 'allocation/modal/select-account.modal';
+import { shortId } from 'common/common-helper';
+import { useModal } from 'common/components/modal';
+import { getStringDate } from 'common/moment.helper';
+import { MMPieChart } from 'common/components/pie-chart';
+import { getCurrencySymbol } from 'common/currency-helper';
+import { fNumber, numberWithCommas } from 'common/number.helper';
 import { Account } from 'auth/auth.types';
 import { AllocationSectionEnum } from 'allocation/allocation.enum';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
-import { fNumber, numberWithCommas } from 'common/number.helper';
-import { getStringDate } from 'common/moment.helper';
-import { getCurrencySymbol } from 'common/currency-helper';
 import { getHoldingsAccountsByDescription } from 'api/request.api';
-import { MMPieChart } from 'common/components/pie-chart';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
 import { ReactComponent as MeasureUpIcon } from 'assets/images/allocation/measure-up-icon.svg';
 import { ReactComponent as AllocationChartSVG } from 'assets/images/allocation/allocation-chart.svg';
 import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/allocation-legend.svg';
-import { shortId } from 'common/common-helper';
-import { useModal } from 'common/components/modal';
 
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './selected-allocation';
@@ -105,7 +105,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                   role='button'
                 >
                   My Allocation
-            </div>
+              </div>
                 <div
                   className={getSectionTitleClass(AllocationSectionEnum.PREVIOUS_ALLOCATION)}
                   onClick={() => changeAllocationSection(AllocationSectionEnum.PREVIOUS_ALLOCATION)}
@@ -209,8 +209,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                   </table>
                     </div>
                   </div>
-                </div>
-              </div>
+                </div >
+              </div >
 
               <div className={getSectionClass(AllocationSectionEnum.PREVIOUS_ALLOCATION)}>
                 <SelectedAllocations filter={filter} currencySymbol={currencySymbol} />
@@ -245,10 +245,10 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </div >
+              </div >
+            </div >
+          </div >
           <SettingModal settingModal={chartSettingModal} />
           <ChartShareModal
             chartShareModal={chartShareModal}
@@ -257,9 +257,9 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
           />
           <FieldChangeModal fieldChangeModal={fieldChangeModal} />
           <SelectAccountModal selectAccountModal={selectAccountModal} multiAccounts={multiAccounts} />
-        </section>
-      </div>
-    </div>
+        </section >
+      </div >
+    </div >
   );
 };
 

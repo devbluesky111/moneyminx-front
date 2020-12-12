@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import useToast from 'common/hooks/useToast';
+import { useHistory } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
+import React, { useEffect, useState } from 'react';
 
-import {ReactComponent as SubscriptionWarning} from 'assets/images/subscription/warning.svg';
+import appEnv from 'app/app.env';
+import { appRouteConstants } from 'app/app-route.constant';
+import { pricingDetailConstant } from 'common/common.constant';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { getAccountsCount, postSubscriptionCheckout } from 'api/request.api';
+import { ReactComponent as PricingTickIcon } from 'assets/images/pricing/tick-icon.svg';
+import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
+
 import useGetSubscription from '../hooks/useGetSubscription';
-import CircularSpinner from '../../common/components/spinner/circular-spinner';
-import {ReactComponent as PricingTickIcon} from 'assets/images/pricing/tick-icon.svg';
-import {pricingDetailConstant} from '../../common/common.constant';
-import {getAccountsCount, postSubscriptionCheckout} from 'api/request.api';
-import {useHistory} from 'react-router-dom';
-import {toast} from 'react-toastify';
-import {loadStripe} from '@stripe/stripe-js';
-import appEnv from '../../app/app.env';
-import {appRouteConstants} from '../../app/app-route.constant';
 
 const stripePromise = loadStripe(appEnv.STRIPE_PUBLIC_KEY);
 
-const Subscription = ({subscriptionEnded = true}) => {
+const Subscription = ({ subscriptionEnded = true }) => {
   return (
     <div className='sub-ended-wrapper'>
       {subscriptionEnded && <PricingTopSection />}
@@ -33,8 +34,8 @@ export const PricingTopSection = () => {
             <p>To continue using Money Minx please choose from one of the plans below to continue.</p>
           </div>
           <span className='warning-icon'>
-              <SubscriptionWarning />
-            </span>
+            <SubscriptionWarning />
+          </span>
         </div>
       </div>
     </div>
@@ -43,6 +44,7 @@ export const PricingTopSection = () => {
 
 const SubscriptionPlansTable = () => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const [type, setType] = useState<string>('monthly');
   const [connectedAccountState, setConnectedAccounts] = useState<number>(0);
   const [manualAccountState, setManualAccounts] = useState<number>(0);
@@ -59,9 +61,11 @@ const SubscriptionPlansTable = () => {
   const pricingList = type === 'monthly' ? monthlyPricingList : annualPricingList;
 
   const getAccountCount = async () => {
-    const { data: {connectedAccounts, manualAccounts}} = await getAccountsCount();
-    setConnectedAccounts(connectedAccounts)
-    setManualAccounts(manualAccounts)
+    const {
+      data: { connectedAccounts, manualAccounts },
+    } = await getAccountsCount();
+    setConnectedAccounts(connectedAccounts);
+    setManualAccounts(manualAccounts);
   };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -69,10 +73,9 @@ const SubscriptionPlansTable = () => {
     getAccountCount();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-
   const connectStripe = async (priceId: string) => {
     if (!priceId) {
-      return toast('Price Id not found', { type: 'error' });
+      return mmToast('Price Id not found', { type: 'error' });
     }
 
     const stripe = await stripePromise;
@@ -83,7 +86,7 @@ const SubscriptionPlansTable = () => {
 
     const { data, error } = await postSubscriptionCheckout(payload);
     if (error) {
-      return toast('Can not stripe checkout id', { type: 'error' });
+      return mmToast('Can not stripe checkout id', { type: 'error' });
     }
 
     const checkoutId = data?.checkoutId;
@@ -93,31 +96,49 @@ const SubscriptionPlansTable = () => {
       });
 
       if (result.error) {
-        return toast('Something went wrong with Stripe', { type: 'error' });
+        return mmToast('Something went wrong with Stripe', { type: 'error' });
       }
     }
   };
 
-  const handleBuyPlan = (stripePlan:any) => {
-    if(connectedAccountState >= stripePlan?.details[pricingDetailConstant.CONNECTED_ACCOUNT] || manualAccountState >= stripePlan?.details[pricingDetailConstant.MANUAL_ACCOUNT]) {
-      history.push(appRouteConstants.subscription.REVIEW)
+  const handleBuyPlan = (stripePlan: any) => {
+    if (
+      connectedAccountState >= stripePlan?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
+      manualAccountState >= stripePlan?.details[pricingDetailConstant.MANUAL_ACCOUNT]
+    ) {
+      history.push(appRouteConstants.subscription.REVIEW);
+    } else {
+      connectStripe(stripePlan?.priceId);
     }
-    else {
-      connectStripe(stripePlan?.priceId)
-    }
-  }
+  };
 
   return (
     <div className='container-fluid'>
       <div className='row'>
         <div className='plan-section'>
           <div className='mm-plan-radios'>
-            <input type='radio' id='mm-plan-month' value='monthly' name='mm-radio-time-interval' checked={type==='monthly'} />
-            <label className='labels' htmlFor='mm-plan-month' onClick={() => setType('monthly')}>Monthly</label>
-            <input type='radio' id='mm-plan-year' value='annually'  name='mm-radio-time-interval' checked={type==='yearly'} />
-            <label className='labels' htmlFor='mm-plan-year' onClick={() => setType('yearly')}>Annually</label>
+            <input
+              type='radio'
+              id='mm-plan-month'
+              value='monthly'
+              name='mm-radio-time-interval'
+              checked={type === 'monthly'}
+            />
+            <label className='labels' htmlFor='mm-plan-month' onClick={() => setType('monthly')}>
+              Monthly
+            </label>
+            <input
+              type='radio'
+              id='mm-plan-year'
+              value='annually'
+              name='mm-radio-time-interval'
+              checked={type === 'yearly'}
+            />
+            <label className='labels' htmlFor='mm-plan-year' onClick={() => setType('yearly')}>
+              Annually
+            </label>
             <span className='save-text' />
-            <div className='mm-radio-bg'/>
+            <div className='mm-radio-bg' />
           </div>
         </div>
       </div>
@@ -188,7 +209,12 @@ const SubscriptionPlansTable = () => {
                     Early adopter access to request new features for consideration
                   </li>
                 </ul>
-                <button className='mm-btn-animate trial-btn ml-3 btn-xs-block' onClick={()=> {handleBuyPlan(pt)}}>
+                <button
+                  className='mm-btn-animate trial-btn ml-3 btn-xs-block'
+                  onClick={() => {
+                    handleBuyPlan(pt);
+                  }}
+                >
                   Choose Plan
                 </button>
               </div>

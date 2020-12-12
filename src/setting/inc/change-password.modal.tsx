@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 
 import { Formik } from 'formik';
 import { changePassword } from 'auth/auth.service';
@@ -7,12 +6,14 @@ import { useAuthDispatch } from 'auth/auth.context';
 import { Modal, ModalType } from 'common/components/modal';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
 import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
+import useToast from 'common/hooks/useToast';
 
 interface ChangePasswordProps {
   changePasswordModal: ModalType;
 }
 
 const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModal }) => {
+  const { mmToast } = useToast();
   const [visible, setVisible] = useState<Record<string, boolean>>({
     currentPassword: false,
     newPassword: false,
@@ -103,7 +104,7 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
             if (error && error.message) {
               actions.setFieldError('confirmPassword', error.message);
             } else {
-              toast('Password updated successfully.', { type: 'success' });
+              mmToast('Password updated successfully.', { type: 'success' });
               changePasswordModal.close();
             }
           }}

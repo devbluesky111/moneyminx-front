@@ -1,11 +1,11 @@
-import { toast } from 'react-toastify';
+import moment from 'moment';
+import { Formik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
-import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Formik } from 'formik';
 
+import useToast from 'common/hooks/useToast';
 import { MMCategories } from 'auth/auth.enum';
 import { fNumber } from 'common/number.helper';
 import { useAuthState } from 'auth/auth.context';
@@ -45,6 +45,7 @@ interface Props {
 
 const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, closeSidebar, isFromAccount }) => {
   const history = useHistory();
+  const { mmToast } = useToast();
   const { accounts } = useAuthState();
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
@@ -94,7 +95,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
   const isLoading = fetchingAccountType || fetchingMortgage || fetchingLoanAccount;
 
   if (hasError) {
-    toast('Error occurred', { type: 'error' });
+    mmToast('Error occurred', { type: 'error' });
   }
 
   if (isLoading) {
@@ -131,12 +132,12 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
     if (currentAccount?.id) {
       const { error: delError } = await deleteAccount(currentAccount.id.toString());
       if (!delError) {
-        toast('Delete Success', { type: 'success' });
+        mmToast('Delete Success', { type: 'success' });
 
         return history.push('/net-worth');
       }
 
-      return toast('Delete Failed', { type: 'error' });
+      return mmToast('Delete Failed', { type: 'error' });
     }
   };
 
@@ -230,10 +231,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
         const res = await patchAccount(`${accountId}`, data);
         if (res?.error) {
-          return toast('Error Occurred', { type: 'error' });
+          return mmToast('Error Occurred', { type: 'error' });
         }
 
-        toast('Successfully updated', { type: 'success' });
+        mmToast('Successfully updated', { type: 'success' });
 
         if (isFromAccount) {
           return closeSidebar?.();

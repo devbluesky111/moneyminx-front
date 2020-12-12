@@ -1,9 +1,9 @@
-import { toast } from 'react-toastify';
 import Form from 'react-bootstrap/Form';
 import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
 import { storage } from 'app/app.storage';
+import useToast from 'common/hooks/useToast';
 import { appRouteConstants } from 'app/app-route.constant';
 import { Modal, ModalType } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
@@ -25,11 +25,12 @@ const initialValues = {
 
 const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal }) => {
   const history = useHistory();
+  const { mmToast } = useToast();
+  const curArr = enumerateStr(CurrencyOptions);
   const [values, setValues] = useState(initialValues);
   const [AccountTypes, setAccountTypes] = useState([]);
-  const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
-  const curArr = enumerateStr(CurrencyOptions);
+  const [disabled, setDisabled] = useState<boolean>(true);
 
   const handleChange = (e: React.ChangeEvent<any>) => {
     if (e.target.name === 'balance') {
@@ -55,7 +56,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
       await getConnectionInfo();
       setValues(initialValues);
       setLoading(false);
-      toast('Add Success', { type: 'success' });
+      mmToast('Add Success', { type: 'success' });
       manualAccountModal.close();
       storage.set('isNew', 'true');
       return history.push(appRouteConstants.account.ACCOUNT.replace(':accountId', res.id));
@@ -63,7 +64,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
 
     console.log(err);
     setLoading(false);
-    toast(' Add Failed', { type: 'error' });
+    mmToast(' Add Failed', { type: 'error' });
   };
 
   const fetchAccountTypes = async () => {
@@ -177,10 +178,10 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
                   <span className='ml-1'>Adding...</span>
                 </>
               ) : (
-                <>
-                  Add<span className='hide-sm ml-1'>Account</span>
-                </>
-              )}
+                  <>
+                    Add<span className='hide-sm ml-1'>Account</span>
+                  </>
+                )}
             </button>
           </div>
         </div>
