@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 
-import useSettings from 'setting/hooks/useSettings';
 import { Account } from 'auth/auth.types';
 import { appRouteConstants } from 'app/app-route.constant';
-import { getAccount, getCurrentSubscription, getSubscription } from 'api/request.api';
+import { getAccount, getAccountWithProvider, getCurrentSubscription, getSubscription } from 'api/request.api';
 
 import UpgradeAccountModal from './upgrade-account.modal';
 import { fNumber, numberWithCommas } from './number.helper';
@@ -16,17 +15,24 @@ import { getCurrencySymbol } from './currency-helper';
 
 const AppSubHeader = () => {
   const history = useHistory();
-  const [currentAccount, setCurrentAccount] = useState<Account[]>();
   const [availableNumber, setAvailableNumber] = useState<number>(0);
+  const [successAccounts, setSuccessAccounts] = useState<Account[]>([]);
+  const [warningAccounts, setWarningAccounts] = useState<Account[]>([]);
+  const [errorAccounts, setErrorAccounts] = useState<Account[]>([]);
   const [manualMax, setManualMax] = useState<boolean>(false);
-  const { data } = useSettings();
   const upgradeAccountModal = useModal();
+  const dropdownToggle = useRef(null);
 
   useEffect(() => {
     const fetchCurrentAccount = async () => {
-      const { data, error } = await getAccount();
+      const { data, error } = await getAccountWithProvider();
       if (!error) {
-        setCurrentAccount(data);
+        const successAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'LOGIN_IN_PROGRESS' || acc.providerAccount.status === 'IN_PROGRESS' || acc.providerAccount.status === 'PARTIAL_SUCCESS' || acc.providerAccount.status === 'SUCCESS'));
+        const warningAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'USER_INPUT_REQUIRED'));
+        const errorAccounts = data.filter((acc: Account) => (acc.providerAccount.status === 'FAILED' || !acc.providerAccount.status));
+        setSuccessAccounts(successAccounts);
+        setWarningAccounts(warningAccounts);
+        setErrorAccounts(errorAccounts);
       }
     };
     fetchCurrentAccount();
@@ -47,7 +53,6 @@ const AppSubHeader = () => {
       let manualLimit = subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT];
       if (autoLimit === 'Unlimited') autoLimit = 100;
       if (manualLimit === 'Unlimited') manualLimit = 100;
-      console.log(autoLimit, manualLimit)
       if (autoAccounts < autoLimit) {
         return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
       } else
@@ -61,32 +66,79 @@ const AppSubHeader = () => {
     } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
   }
 
+  const clickElement = (dropdownToggle: any) => {
+    dropdownToggle.current?.click();
+  };
+
   return (
     <div className='left-box d-flex align-items-center float-lg-left'>
       <span className='plus-btn' onClick={checkAccountLimit}>+</span>
       <div className='myaccount-drop'>
         <Dropdown className='drop-box' >
-          <Dropdown.Toggle className='dropdown-toggle my-accounts'>My Accounts</Dropdown.Toggle>
+          <Dropdown.Toggle className='dropdown-toggle my-accounts' ref={dropdownToggle}>My Accounts</Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu'>
-            <div className='dropdown-head'>
-              <h4>Accounts</h4>
-            </div>
+            {(errorAccounts.length > 0 || warningAccounts.length > 0) &&
+              <div className='dropdown-head'>
+                <h4>Needs Attention</h4>
+              </div>}
             <div className='dropdown-box'>
-              <ul className='success'>
-                {currentAccount?.map((account, index) => {
-                  return (
-                    <li key={index}>
-                      <Link to='#'>
-                        <div>
-                          <h5>{account.accountName}</h5>
-                          <span>{getRelativeDate(account.balancesFetchedAt)}</span>
-                        </div>
-                        <div>{data?.currency ? getCurrencySymbol(data.currency) : ''}{numberWithCommas(fNumber(account.balance, 2))}</div>
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
+              {errorAccounts.length > 0 &&
+                <div>
+                  <ul className='error'>
+                    {errorAccounts.map((account: Account, index: number) => {
+                      return (
+                        <li key={index}>
+                          <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
+                            <div>
+                              <h5>{account.accountName}</h5>
+                              <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                            </div>
+                            <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                  <hr />
+                </div>
+              }
+              {warningAccounts.length > 0 &&
+                <div>
+                  <ul className='warning'>
+                    {warningAccounts.map((account: Account, index: number) => {
+                      return (
+                        <li key={index}>
+                          <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
+                            <div>
+                              <h5>{account.accountName}</h5>
+                              <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                            </div>
+                            <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                  <hr />
+                </div>
+              }
+              {successAccounts.length > 0 &&
+                <ul className='success'>
+                  {successAccounts.map((account: Account, index: number) => {
+                    return (
+                      <li key={index}>
+                        <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
+                          <div>
+                            <h5>{account.accountName}</h5>
+                            <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                          </div>
+                          <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              }
             </div>
           </Dropdown.Menu>
         </Dropdown>

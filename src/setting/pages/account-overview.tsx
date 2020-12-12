@@ -31,7 +31,7 @@ import {
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
 
-export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag= false }) => {
+export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag = false }) => {
   const history = useHistory();
   const { accounts } = useAuthState();
   const dispatch = useAuthDispatch();
@@ -57,7 +57,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
   const connectedAccounts = accounts.filter((acc) => !acc.isManual);
 
   const numberOfConnectedAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || 0;
-  const numberOfManualAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || 0;
+  const numberOfManualAccounts = subscription?.details?.[pricingDetailConstant.MANUAL_ACCOUNT] || 0;
 
   const verifyAccountNumbers = (event: React.ChangeEvent<any>) => {
     event.preventDefault()
@@ -71,8 +71,8 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
   return (
     <section className='mm-account-overview'>
       {reviewSubscriptionFlag && <SubscriptionConnectionWarning availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} />}
-      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag}/>
-      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag}/>
+      <AccountCard accountList={connectedAccounts} availableAccounts={numberOfConnectedAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag} />
+      <ManualAccounts manualAccountList={manualAccounts} availableAccounts={numberOfManualAccounts} reviewSubscriptionFlag={reviewSubscriptionFlag} />
       {reviewSubscriptionFlag && <AccountDialogBox verifyAccountNumbers={verifyAccountNumbers} availableConnectedAccounts={numberOfConnectedAccounts} availableManualAccounts={numberOfManualAccounts} accountList={connectedAccounts} manualAccountList={manualAccounts} />}
     </section>
   );
@@ -85,7 +85,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   const needUpgrade = manualAccountList.length >= availableAccounts;
 
   const addAccount = () => {
-    if(reviewSubscriptionFlag) {
+    if (reviewSubscriptionFlag) {
       history.push(appRouteConstants.subscription.SUBSCRIPTION);
       return
     }
@@ -135,7 +135,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
         </div>
 
         {manualAccountList.map((acc, index) => {
-          return <AccountRow account={acc} key={index} reviewSubscriptionFlag={reviewSubscriptionFlag}/>;
+          return <AccountRow account={acc} key={index} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
         })}
 
         <div className='row py-3 align-items-center'>
@@ -154,6 +154,17 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({ manualAccountList
   );
 };
 
+export interface AccountsByProvider {
+  provider_name: string;
+  accounts: Account[];
+}
+
+export interface AccountByStatus {
+  success: AccountsByProvider[];
+  warning: AccountsByProvider[];
+  error: AccountsByProvider[];
+}
+
 export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts, reviewSubscriptionFlag }) => {
   const history = useHistory();
   const dispatch = useAuthDispatch();
@@ -161,8 +172,25 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
 
+  let accountsByStatus: AccountByStatus = {
+    success: [],
+    warning: [],
+    error: []
+  };
+
+  for (let p_name in accountsByProvider) {
+    let status = accountsByProvider[p_name][0].providerAccount.status;
+    if (status === 'LOGIN_IN_PROGRESS' || status === 'IN_PROGRESS' || status === 'PARTIAL_SUCCESS' || status === 'SUCCESS') {
+      accountsByStatus.success.push({ provider_name: p_name, accounts: accountsByProvider[p_name] })
+    } else if (status === 'USER_INPUT_REQUIRED') {
+      accountsByStatus.warning.push({ provider_name: p_name, accounts: accountsByProvider[p_name] })
+    } else {
+      accountsByStatus.error.push({ provider_name: p_name, accounts: accountsByProvider[p_name] })
+    }
+  }
+
   const addAccount = () => {
-    if(reviewSubscriptionFlag) {
+    if (reviewSubscriptionFlag) {
       history.push(appRouteConstants.subscription.SUBSCRIPTION);
       return
     }
@@ -180,6 +208,15 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
       toast('Error occurred deleting account', { type: 'error' });
     }
     setDeleting(false);
+  }
+
+  const getStatusClassName = (status: string) => {
+    if (status === 'success') {
+      return 'mm-account-overview__connected';
+    } else if (status === 'warning') {
+      return 'mm-account-overview__info';
+    }
+    return 'mm-account-overview__error'
   }
 
   return (
@@ -201,46 +238,66 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
           </div>
         </div>
       </div>
+      { Object.entries(accountsByStatus).map(([status, groupArr], i) =>
+        (
+          <div key={i}>
+            {groupArr.map((group: AccountsByProvider, index: number) => (
+              <div key={index}>
+                <div className={['card mm-setting-card', getStatusClassName(status)].join(' ')}>
+                  {status === 'error' &&
+                    <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
+                      <div className='col-12 col-md-6 text-danger pl-3'>
+                        <span>Connection error</span>
+                      </div>
+                      <div className='col-12 col-md-6 mt-2 text-md-right'>
+                        <button
+                          type='button'
+                          className='btn btn-outline-primary mm-button btn-lg'
+                        >
+                          Fix Connection
+                    </button>
+                      </div>
+                    </div>
+                  }
+                  <div className={['row pb-2 pt-1 align-items-center', status === 'error' ? 'pt-4' : ''].join(' ')}>
+                    <div className='col-10 col-md-6'>
+                      <div>
+                        <img src={group.accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4 accounts-provider-logo' alt={`${group.provider_name} logo`} />
+                        <span className='mm-account-overview__block-title'>{group.provider_name}</span>
+                      </div>
+                    </div>
+                    {/* TODO Refresh single account when API is ready
+                        <div className='col-2 col-md-1 order-md-2 text-right'>
+                          <Refresh />
+                        </div>*/}
+                    <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
+                      <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
+                    </div>
+                  </div>
 
-      {Object.entries(accountsByProvider).map(([providerName, accounts], index) => (
-        <div key={index}>
-          <div className='card mm-setting-card mm-account-overview__connected'>
-            <div className='row pb-2 pt-1 align-items-center'>
-              <div className='col-10 col-md-6'>
-                <div>
-                  <img src={accounts[0].providerLogo || DefaultAvatar} className='mr-3 mr-md-4 accounts-provider-logo' alt={`${providerName} logo`} />
-                  <span className='mm-account-overview__block-title'>{providerName}</span>
+                  {group.accounts?.map((account: Account, accountIndex: number) => {
+                    return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
+                  })}
+
+                  <div className='row py-3 align-items-center no-gutters'>
+                    <div className='col-12 col-md-6'>
+                      {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0' href='/'>Update Credentials</a> : ''}
+                    </div>
+                    <div className='col-12 col-md-6 mt-2 text-md-right'>
+                      <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
+                        onClick={() => { removeAccounts(group.accounts) }}
+                        disabled={deleting}>
+                        {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
+                        <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-              {/* TODO Refresh single account when API is ready
-                <div className='col-2 col-md-1 order-md-2 text-right'>
-                  <Refresh />
-                </div>*/}
-              <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
-                <small className='text-gray'>Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}</small>
-              </div>
-            </div>
-
-            {accounts.map((account, accountIndex) => {
-              return <AccountRow key={accountIndex} account={account} reviewSubscriptionFlag={reviewSubscriptionFlag}/>;
-            })}
-
-            <div className='row py-3 align-items-center no-gutters'>
-              <div className='col-12 col-md-6'>
-                {!reviewSubscriptionFlag ? <a className='purple-links mm-account-overview__update-link mb-3 mb-md-0 ml-3' href='/'>Update Credentials</a> :''}
-              </div>
-              <div className='col-12 col-md-6 mt-2 text-md-right'>
-                <button className='btn text-danger mm-button__flat mm-account-overview__delete-link '
-                  onClick={() => { removeAccounts(accounts) }}
-                  disabled={deleting}>
-                  {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
-                  <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-      ))}
+        ))}
+
     </>
   );
 };
@@ -273,7 +330,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
       </div>
       <div className='col-3 col-md-2'>
         <div className='float-right'>
-          {!reviewSubscriptionFlag ? <Link to={`/account-details/${account.id}`}><IconEdit className='edit-icon'/></Link> : null}
+          {!reviewSubscriptionFlag ? <Link to={`/account-details/${account.id}`}><IconEdit className='edit-icon' /></Link> : null}
           {deleting ? <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true' /> :
             <DeleteIcon className='ml-2 ml-md-3 trash-icon' onClick={() => deleteAccount(account.id)} />
           }

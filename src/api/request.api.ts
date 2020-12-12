@@ -76,6 +76,10 @@ export const getAccount = (): Promise<ApiResponse> => {
   return http.get(urls.auth.ACCOUNTS);
 };
 
+export const getAccountWithProvider = (): Promise<ApiResponse> => {
+  return http.get(urls.auth.ACCOUNTS_WITH_PROVIDER);
+};
+
 export const getProfile = () => {
   return http.get(urls.auth.PROFILE);
 };

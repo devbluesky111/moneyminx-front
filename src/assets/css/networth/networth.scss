@@ -695,12 +695,16 @@ a.upgrader-btn {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
-  color: $green;
+  color: $redAlert;
 }
 .dropdown-box {
   padding-bottom: 10px;
   max-height: 520px;
   overflow-y: auto;
+
+  hr {
+    margin: 12px 24px;
+  }
 }
 .dropdown-box ul li {
   padding: 10px 24px;
@@ -738,6 +742,12 @@ a.upgrader-btn {
 }
 .dropdown-box ul.success li:before {
   background: $green;
+}
+.dropdown-box ul.warning li:before {
+  background: $yellow;
+}
+.dropdown-box ul.error li:before {
+  background: $redAlert;
 }
 .dropdown-box ul li h5 {
   font-weight: 600;
