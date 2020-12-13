@@ -157,9 +157,9 @@
 
     &:disabled {
       cursor: not-allowed;
-      background: $grayOpacity40;
-      color: $white;
-      border: none;
+      background: none;
+      color: $gray;
+      border: 1.5px solid $gray;
     }
 
     @media (max-width: $md - 1) {
@@ -501,4 +501,10 @@
 
 .subscription-cancel-confirmation {
   z-index: 3;
+}
+.currency-select {
+  button {
+    width: 100% !important;
+    text-transform: uppercase;
+  }
 }

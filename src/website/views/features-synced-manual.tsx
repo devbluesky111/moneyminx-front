@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
+import { ReactComponent as SyncedOrManual } from 'assets/images/home/synced-or-manual.svg';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
-import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
-
 
 const FeaturesSyncedManual = () => {
   return (
@@ -25,7 +24,7 @@ export const FeaturesSyncedManualTopSection = () => {
     <section>
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
-          <div className=''>
+          <div>
             <h1>Synced or Manual Account</h1>
             <div className='p-b-10'>
               <p className='text'>
@@ -108,7 +107,7 @@ export const FeaturesSyncedManualBottomSection = () => {
     <section className='feature-section feature-section-reversed'>
       <div className='row'>
         <div className='col-lg-7 feature-image'>
-          <AboutNetWorthChart className='mm-about-net-worth-chart' />
+          <SyncedOrManual />
         </div>
         <div className='col-lg-5 feature-content'>
           <h2>Manual Accounts</h2>
