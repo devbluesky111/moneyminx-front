@@ -57,9 +57,9 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
 
   return (
     <div className='card mm-setting-card'>
-      <div className='card-body d-sm-flex justify-content-between align-items-center'>
-        <div className='mm-profile-overview__title'>
-          Profile Picture
+      <div className='card-body'>
+        <div className='mm-profile-overview__title'>Profile Picture</div>
+        <div className='d-sm-flex justify-content-between align-items-center'>
           <div className='mm-profile-overview__title-pp' onClick={() => handleFileBrowserOpen(ppRef)} role='button'>
             <img
               alt='Money Minx Investor'
@@ -69,19 +69,20 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ pictureURL }) => {
               height='100'
             />
           </div>
-        </div>
-        <div className='mt-4 mt-sm-0'>
-          <button
-            type='button'
-            className='btn btn-outline-primary mm-button btn-lg'
-            onClick={handleProfileChange}
-            disabled={!profileChanged}
-          >
-            {changing && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />}
-            <MMToolTip placement='top' message='To change your profile pic, click on the current image on the left.'>
-              <span className={'ml-1'}> {changing ? 'Saving...' : 'Save Picture'}</span>
-            </MMToolTip>
-          </button>
+          <div className='mm-profile-pic-help text--gray'>Square images work best <br />(e.g. 300 x 300)</div>
+          <div className='mt-4 mt-sm-0'>
+            <button
+              type='button'
+              className='btn btn-outline-primary mm-button btn-lg'
+              onClick={handleProfileChange}
+              disabled={!profileChanged}
+            >
+              {changing && <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />}
+              <MMToolTip placement='top' message='To change your profile pic, click on the current image on the left.'>
+                <span className={'ml-1'}> {changing ? 'Saving...' : 'Save Picture'}</span>
+              </MMToolTip>
+            </button>
+          </div>
         </div>
       </div>
       <ImageInput handleChange={handleChange} imageRef={ppRef} />

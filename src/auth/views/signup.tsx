@@ -81,7 +81,7 @@ export const SignupMainSection = () => {
       });
     }
 
-    return event(events.startTrail);
+    return event(events.startTrial);
   };
 
   const getValidationText = () => {
