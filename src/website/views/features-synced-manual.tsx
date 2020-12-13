@@ -5,9 +5,7 @@ import WebsiteLayout from 'website/website.layout';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import { ReactComponent as SyncedOrManual } from 'assets/images/home/synced-or-manual.svg';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
-import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
-
 
 const FeaturesSyncedManual = () => {
   return (
