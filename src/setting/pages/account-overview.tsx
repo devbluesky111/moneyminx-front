@@ -316,7 +316,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <span>Connection error</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
-                      <button type='button' className='btn btn-outline-primary mm-button btn-lg'>
+                      <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleConnectAccount}>
                         Fix Connection
                       </button>
                     </div>
@@ -328,7 +328,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <span>Needs more info</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
-                      <button type='button' className='btn btn-outline-primary mm-button btn-lg'>
+                      <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleConnectAccount}>
                         Fix Connection
                       </button>
                     </div>
