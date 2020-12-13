@@ -490,7 +490,7 @@ const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount }) =
       <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
       <button
         type='button'
-        className='btn btn-primary'
+        className='mm-btn-animate mm-btn-primary'
         onClick={handleConnectAccount}
       >
         Fix Connection
