@@ -1,20 +1,20 @@
+import Zabo from 'zabo-sdk-js';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import Zabo from 'zabo-sdk-js';
 import appEnv from 'app/app.env';
-import { events } from '@mm/data/event-list';
-import { AuthLayout } from 'layouts/auth.layout';
-import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
-import { useModal } from 'common/components/modal';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import useAnalytics from 'common/hooks/useAnalytics';
-import useGetFastlink from 'auth/hooks/useGetFastlink';
+import useToast from 'common/hooks/useToast';
+import { events } from '@mm/data/event-list';
+import { AuthLayout } from 'layouts/auth.layout';
+import { getFastlink } from 'api/request.api';
+import { useAuthState } from 'auth/auth.context';
+import { useModal } from 'common/components/modal';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { appRouteConstants } from 'app/app-route.constant';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 // import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
@@ -37,10 +37,12 @@ const ConnectAccount = () => {
 export default ConnectAccount;
 export const ConnectAccountMainSection = () => {
   const location = useLocation();
+  const { mmToast } = useToast();
   const { event } = useAnalytics();
   const { onboarded } = useAuthState();
   const manualAccountModal = useModal();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>()
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -50,11 +52,24 @@ export const ConnectAccountMainSection = () => {
     initializeZabo();
   }, []);
 
-  const { error, data, loading } = useGetFastlink();
   const fastlinkModal = useModal();
   const history = useHistory();
 
-  const handleConnectAccount = () => {
+  const handleConnectAccount = async () => {
+    const { data, error } = await getFastlink();
+
+    if (error) {
+      return mmToast('Error Occurred', { type: 'error' });;
+    }
+
+    const fastLinkOptions: FastLinkOptionsType = {
+      fastLinkURL: data.fastLinkUrl || '',
+      token: data.accessToken || '',
+      config: data.params || {}
+    };
+
+    setFastLinkOptions(fastLinkOptions);
+
     event(events.connectAccount);
 
     return fastlinkModal.open();
@@ -65,7 +80,7 @@ export const ConnectAccountMainSection = () => {
 
     return manualAccountModal.open();
   };
-// eslint-disable-next-line
+  // eslint-disable-next-line
   const handleCryptoExchange = () => {
     event(events.cryptoExchange);
 
@@ -90,16 +105,6 @@ export const ConnectAccountMainSection = () => {
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
 
     return history.push(location);
-  };
-
-  if (loading || error || !data) {
-    return <CircularSpinner />;
-  }
-
-  const fastLinkOptions: FastLinkOptionsType = {
-    fastLinkURL: data.fastLinkUrl || '',
-    token: data.accessToken || '',
-    config: data?.params || {}
   };
 
   return (
@@ -161,7 +166,7 @@ export const ConnectAccountMainSection = () => {
                   <button
                     className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto'
                     type='button'
-                    /*onClick={handleCryptoExchange}*/
+                  /*onClick={handleCryptoExchange}*/
                   >
                     Add Crypto Exchanges
                   </button>
@@ -201,11 +206,13 @@ export const ConnectAccountMainSection = () => {
       </div>
       <ManualAccountModal manualAccountModal={manualAccountModal} />
       {!onboarded ? <ConnectAccountSteps isConnectAccount /> : null}
-      <FastLinkModal
-        fastLinkModal={fastlinkModal}
-        fastLinkOptions={fastLinkOptions}
-        handleSuccess={handleConnectAccountSuccess}
-      />
+      {fastLinkOptions &&
+        <FastLinkModal
+          fastLinkModal={fastlinkModal}
+          fastLinkOptions={fastLinkOptions}
+          handleSuccess={handleConnectAccountSuccess}
+        />
+      }
     </div>
   );
 };
