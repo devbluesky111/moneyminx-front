@@ -99,6 +99,7 @@ export const ConnectAccountMainSection = () => {
   const fastLinkOptions: FastLinkOptionsType = {
     fastLinkURL: data.fastLinkUrl || '',
     token: data.accessToken || '',
+    config: data?.params || {}
   };
 
   return (
