@@ -7,7 +7,7 @@ import FastLinkModal from 'yodlee/fast-link.modal';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import useGetSubscription from 'auth/hooks/useGetSubscription';
 import useToast from 'common/hooks/useToast';
-import useGetFastlink from 'auth/hooks/useGetFastlink';
+import useGetFastlinkUpdate from 'auth/hooks/useGetFastlinkUpdate';
 import { Account } from 'auth/auth.types';
 import { events } from '@mm/data/event-list';
 import { groupByProviderName } from 'auth/auth.helper';
@@ -209,15 +209,17 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
+  const [accId, setAccId] = useState<number>(1);
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
   const fastlinkModal = useModal();
 
-  const { data } = useGetFastlink();
+  const { data } = useGetFastlinkUpdate(accId);
 
   const fastLinkOptions: FastLinkOptionsType = {
     fastLinkURL: data?.fastLinkUrl || '',
     token: data?.accessToken || '',
+    config: data?.params || {},
   };
 
   const handleConnectAccountSuccess = () => {
@@ -226,7 +228,8 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     return history.push(location);
   };
 
-  const handleConnectAccount = () => {
+  const handleConnectAccount = (accId: number) => {
+    setAccId(accId);
     event(events.connectAccount);
 
     return fastlinkModal.open();
@@ -312,7 +315,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <span>Connection error</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
-                      <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleConnectAccount}>
+                      <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={() => handleConnectAccount(group.accounts[0].id)}>
                         Fix Connection
                       </button>
                     </div>
@@ -324,7 +327,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <span>Needs more info</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
-                      <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={handleConnectAccount}>
+                      <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={() => handleConnectAccount(group.accounts[0].id)}>
                         Fix Connection
                       </button>
                     </div>
@@ -363,7 +366,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                   <div className='col-12 col-md-6'>
                     {!reviewSubscriptionFlag ? (
                       <div className='mm-account-overview__update-link mb-3 mb-md-0'>
-                        <span className='purple-links update-credentials' onClick={handleConnectAccount}>Update Credentials</span>
+                        <span className='purple-links update-credentials' onClick={() => handleConnectAccount(group.accounts[0].id)}>Update Credentials</span>
                       </div>
                     ) : (
                         ''

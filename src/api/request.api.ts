@@ -64,6 +64,10 @@ export const getFastlink = () => {
   return http.get(urls.yodlee.FAST_LINK);
 };
 
+export const getFastlinkUpdate = (accountId: number) => {
+  return http.get(urls.yodlee.FAST_LINK_UPDATE.replace(':accountId', accountId.toString()));
+};
+
 export const getAccountRefresh = () => {
   return http.get(urls.auth.ACCOUNT_REFRESH);
 };

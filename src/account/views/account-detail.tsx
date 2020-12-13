@@ -7,7 +7,7 @@ import AppFooter from 'common/app.footer';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import FastLinkModal from 'yodlee/fast-link.modal';
-import useGetFastlink from 'auth/hooks/useGetFastlink';
+import useGetFastlinkUpdate from 'auth/hooks/useGetFastlinkUpdate';
 import useAnalytics from 'common/hooks/useAnalytics';
 import { Account } from 'auth/auth.types';
 import { appRouteConstants } from 'app/app-route.constant';
@@ -43,7 +43,9 @@ const AccountDetail: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
   const { event } = useAnalytics();
-  const { data } = useGetFastlink();
+  const [accId, setAccId] = useState<number>(1);
+
+  const { data } = useGetFastlinkUpdate(accId);
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [AccountDetails, setAccountDetails] = useState<Account>();
@@ -77,6 +79,7 @@ const AccountDetail: React.FC = () => {
   const fastLinkOptions: FastLinkOptionsType = {
     fastLinkURL: data?.fastLinkUrl || '',
     token: data?.accessToken || '',
+    config: data?.params || {}
   };
 
   useEffect(() => {
@@ -103,7 +106,8 @@ const AccountDetail: React.FC = () => {
     return history.push(location);
   };
 
-  const handleConnectAccount = () => {
+  const handleConnectAccount = (accId: number) => {
+    setAccId(accId);
     event(events.connectAccount);
 
     return fastlinkModal.open();
@@ -331,14 +335,14 @@ const AccountDetail: React.FC = () => {
                                     <NeedsInfo />
                                     <span className='needsInfo'>Needs Info</span>
                                     {popup &&
-                                      <Popup AccountDetails={AccountDetails} handleConnectAccount={handleConnectAccount} />
+                                      <Popup AccountDetails={AccountDetails} handleConnectAccount={() => handleConnectAccount(AccountDetails.id)} />
                                     }
                                   </div> : (AccountDetails) ?
                                     <div className='attention-section' onMouseEnter={() => setPopup(true)} onMouseLeave={() => setPopup(false)}>
                                       <NotLinked />
                                       <span className='attention'>Attention</span>
                                       {popup &&
-                                        <Popup AccountDetails={AccountDetails} handleConnectAccount={handleConnectAccount} />
+                                        <Popup AccountDetails={AccountDetails} handleConnectAccount={() => handleConnectAccount(AccountDetails.id)} />
                                       }
                                     </div> :
                                     <></>

@@ -41,6 +41,8 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
     fastLinkModal.close();
   };
 
+  console.log(fastLinkOptions)
+
   const { init } = useYodlee({
     fastLinkOptions,
     onSuccess,
