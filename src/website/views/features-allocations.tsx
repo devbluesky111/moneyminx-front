@@ -24,8 +24,8 @@ export const FeaturesAllocationsTopSection = () => {
     <section>
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
-          <div className=''>
-            <h1>Asset Allocations</h1>
+          <div>
+            <h1>Asset Allocation</h1>
             <div className='p-b-10'>
               <p className='text'>
                 Keep your asset allocation up to date with little effort needed. Change your allocation to view it by type, class, risk or country.

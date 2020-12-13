@@ -118,7 +118,7 @@ export const ProfileOverview = () => {
       <div className='card mm-setting-card'>
         <div className='card-body d-flex justify-content-between align-items-center'>
           <div className='mm-profile-overview__title'>
-            {fullName}
+            {fullName || 'Investor'}
             <span className='text-primary px-2'>#{user.id}</span>
             <MMToolTip
               placement='top'

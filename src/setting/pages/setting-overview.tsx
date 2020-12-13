@@ -90,7 +90,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
             <div className='mm-setting-form form-group mt-3 mb-5 row align-items-center'>
               <label className='col-sm-3 col-md-3 mb-0'>Base currency</label>
               <div className='col-sm-3 col-md-3'>
-                <div className='form-wrap'>
+                <div className='form-wrap currency-select'>
                   {currentSubscription &&
                   (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') ? (
                     <span>{currency}</span>
@@ -106,7 +106,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
               </div>
               {currentSubscription && (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') && (
                 <label className='col-sm-6 col-md-6 text-danger'>
-                  Your plan only supports USD. To enalbe multi currency support upgrade your plan.
+                  Your plan only supports USD. To enable multi currency support upgrade your plan.
                 </label>
               )}
             </div>

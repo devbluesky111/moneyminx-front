@@ -26,8 +26,8 @@ export const FeaturesNetWorthTopSection = () => {
     <section>
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
-          <div className=''>
-            <h1>Net Worth Tracker</h1>
+          <div>
+            <h1>Net Worth Calculator</h1>
             <div className='p-b-10'>
               <p className='text'>
                 Money Minx allows you to track all of your assets and liabilities in one place to help you track your net worth.
@@ -111,10 +111,10 @@ export const FeaturesNetWorthNetWorthSection = () => {
             <AboutNetWorthChart />
           </div>
           <div className='col-lg-5 feature-content'>
-              <h2>Net Worth Charts</h2>
+              <h2>Liquid Net Worth</h2>
               <p>
-                Once your accounts are added we will keep them in sync so you will always know what your current net worth is,
-                You can also keep an eye on your historical net worth and see it grow with time.
+                Classify your assets into investment assets and other assets, set liquidity levels and always know what your current liquid
+                net worth is.
               </p>
           </div>
         </div>
@@ -126,7 +126,7 @@ export const FeaturesNetWorthProjections = () => {
     <section className='feature-section feature-text-left'>
       <div className='row'>
         <div className='col-lg-5 feature-content'>
-          <h2>Net Worth Projections</h2>
+          <h2>Future Net Worth</h2>
           <p>
             Money Minx will use the data your provide and estimated returns to give you a sense of what your net worth will look like into the future.
           </p>
