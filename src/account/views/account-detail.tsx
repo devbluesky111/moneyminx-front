@@ -43,6 +43,7 @@ const AccountDetail: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
   const { event } = useAnalytics();
+  const { data } = useGetFastlink();
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [AccountDetails, setAccountDetails] = useState<Account>();
@@ -73,6 +74,11 @@ const AccountDetail: React.FC = () => {
   const activityDetailsModal = useModal();
   const fastlinkModal = useModal();
 
+  const fastLinkOptions: FastLinkOptionsType = {
+    fastLinkURL: data?.fastLinkUrl || '',
+    token: data?.accessToken || '',
+  };
+
   useEffect(() => {
     fetchAccountDetails(accountId, baseCurrency);
     if (
@@ -90,13 +96,6 @@ const AccountDetail: React.FC = () => {
       setCurrencySymbol(getCurrencySymbol(AccountDetails.currency));
     }
   }, [AccountDetails])
-
-  const { data } = useGetFastlink();
-
-  const fastLinkOptions: FastLinkOptionsType = {
-    fastLinkURL: data?.fastLinkUrl || '',
-    token: data?.accessToken || '',
-  };
 
   const handleConnectAccountSuccess = () => {
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
@@ -332,36 +331,14 @@ const AccountDetail: React.FC = () => {
                                     <NeedsInfo />
                                     <span className='needsInfo'>Needs Info</span>
                                     {popup &&
-                                      <div className='popup'>
-                                        <span className='pb-2'>Connection Status</span>
-                                        <span className='pb-2'>Last updated {AccountDetails?.providerAccount?.updatedAt ? getRelativeDate(AccountDetails?.providerAccount?.updatedAt.toString()) : getRelativeDate(AccountDetails?.providerAccount?.createdAt.toString())}</span>
-                                        <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
-                                        <button
-                                          type='button'
-                                          className='btn btn-primary'
-                                          onClick={handleConnectAccount}
-                                        >
-                                          Fix Connection
-                                      </button>
-                                      </div>
+                                      <Popup AccountDetails={AccountDetails} handleConnectAccount={handleConnectAccount} />
                                     }
                                   </div> : (AccountDetails) ?
                                     <div className='attention-section' onMouseEnter={() => setPopup(true)} onMouseLeave={() => setPopup(false)}>
                                       <NotLinked />
                                       <span className='attention'>Attention</span>
                                       {popup &&
-                                        <div className='popup'>
-                                          <span className='pb-2'>Connection Status</span>
-                                          <span className='pb-2'>Last updated {AccountDetails?.providerAccount?.updatedAt ? getRelativeDate(AccountDetails?.providerAccount?.updatedAt.toString()) : getRelativeDate(AccountDetails?.providerAccount?.createdAt.toString())}</span>
-                                          <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
-                                          <button
-                                            type='button'
-                                            className='btn btn-primary'
-                                            onClick={handleConnectAccount}
-                                          >
-                                            Fix Connection
-                                            </button>
-                                        </div>
+                                        <Popup AccountDetails={AccountDetails} handleConnectAccount={handleConnectAccount} />
                                       }
                                     </div> :
                                     <></>
@@ -494,3 +471,26 @@ const AccountDetail: React.FC = () => {
 };
 
 export default AccountDetail;
+
+export interface PopupProps {
+  AccountDetails: Account;
+  handleConnectAccount: () => void;
+}
+
+const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount }) => {
+
+  return (
+    <div className='popup'>
+      <span className='pb-2'>Connection Status</span>
+      <span className='pb-2'>Last updated {AccountDetails?.providerAccount?.updatedAt ? getRelativeDate(AccountDetails?.providerAccount?.updatedAt.toString()) : getRelativeDate(AccountDetails?.providerAccount?.createdAt.toString())}</span>
+      <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
+      <button
+        type='button'
+        className='btn btn-primary'
+        onClick={handleConnectAccount}
+      >
+        Fix Connection
+      </button>
+    </div>
+  )
+}
