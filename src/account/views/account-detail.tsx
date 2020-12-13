@@ -1,15 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { Button, Dropdown } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import AppFooter from 'common/app.footer';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import FastLinkModal from 'yodlee/fast-link.modal';
+import useGetFastlink from 'auth/hooks/useGetFastlink';
+import useAnalytics from 'common/hooks/useAnalytics';
 import { Account } from 'auth/auth.types';
+import { appRouteConstants } from 'app/app-route.constant';
+import { events } from '@mm/data/event-list';
 import { enumerateStr } from 'common/common-helper';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
+import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { getDate, getMonthYear, getQuarter, getRelativeDate, getYear } from 'common/moment.helper';
 import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
@@ -34,6 +40,9 @@ import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from 
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
 
 const AccountDetail: React.FC = () => {
+  const location = useLocation();
+  const history = useHistory();
+  const { event } = useAnalytics();
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [AccountDetails, setAccountDetails] = useState<Account>();
@@ -62,6 +71,7 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
+  const fastlinkModal = useModal();
 
   useEffect(() => {
     fetchAccountDetails(accountId, baseCurrency);
@@ -80,6 +90,25 @@ const AccountDetail: React.FC = () => {
       setCurrencySymbol(getCurrencySymbol(AccountDetails.currency));
     }
   }, [AccountDetails])
+
+  const { data } = useGetFastlink();
+
+  const fastLinkOptions: FastLinkOptionsType = {
+    fastLinkURL: data?.fastLinkUrl || '',
+    token: data?.accessToken || '',
+  };
+
+  const handleConnectAccountSuccess = () => {
+    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
+
+    return history.push(location);
+  };
+
+  const handleConnectAccount = () => {
+    event(events.connectAccount);
+
+    return fastlinkModal.open();
+  };
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
@@ -299,29 +328,42 @@ const AccountDetail: React.FC = () => {
                                   <span className='good'>Good</span>
                                 </>
                                 : (AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED') ?
-                                  <>
+                                  <div className='attention-section' onMouseEnter={() => setPopup(true)} onMouseLeave={() => setPopup(false)}>
                                     <NeedsInfo />
                                     <span className='needsInfo'>Needs Info</span>
-                                  </> : (AccountDetails) ?
-                                    <>
-                                      <div className='attention-section' onMouseEnter={() => setPopup(true)} onMouseLeave={() => setPopup(false)}>
-                                        <NotLinked />
-                                        <span className='attention'>Attention</span>
-                                        {popup &&
-                                          <div className='popup'>
-                                            <span className='pb-2'>Connection Status</span>
-                                            <span className='pb-2'>Last updated {AccountDetails?.providerAccount?.updatedAt ? getRelativeDate(AccountDetails?.providerAccount?.updatedAt.toString()) : getRelativeDate(AccountDetails?.providerAccount?.createdAt.toString())}</span>
-                                            <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
-                                            <button
-                                              type='button'
-                                              className='btn btn-primary'
-                                            >
-                                              Fix Connection
-                                            </button>
-                                          </div>
-                                        }
+                                    {popup &&
+                                      <div className='popup'>
+                                        <span className='pb-2'>Connection Status</span>
+                                        <span className='pb-2'>Last updated {AccountDetails?.providerAccount?.updatedAt ? getRelativeDate(AccountDetails?.providerAccount?.updatedAt.toString()) : getRelativeDate(AccountDetails?.providerAccount?.createdAt.toString())}</span>
+                                        <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
+                                        <button
+                                          type='button'
+                                          className='btn btn-primary'
+                                          onClick={handleConnectAccount}
+                                        >
+                                          Fix Connection
+                                      </button>
                                       </div>
-                                    </> :
+                                    }
+                                  </div> : (AccountDetails) ?
+                                    <div className='attention-section' onMouseEnter={() => setPopup(true)} onMouseLeave={() => setPopup(false)}>
+                                      <NotLinked />
+                                      <span className='attention'>Attention</span>
+                                      {popup &&
+                                        <div className='popup'>
+                                          <span className='pb-2'>Connection Status</span>
+                                          <span className='pb-2'>Last updated {AccountDetails?.providerAccount?.updatedAt ? getRelativeDate(AccountDetails?.providerAccount?.updatedAt.toString()) : getRelativeDate(AccountDetails?.providerAccount?.createdAt.toString())}</span>
+                                          <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
+                                          <button
+                                            type='button'
+                                            className='btn btn-primary'
+                                            onClick={handleConnectAccount}
+                                          >
+                                            Fix Connection
+                                            </button>
+                                        </div>
+                                      }
+                                    </div> :
                                     <></>
                               }
                             </>
@@ -440,6 +482,12 @@ const AccountDetail: React.FC = () => {
             </div>
           </div>
         )}
+      {data &&
+        <FastLinkModal
+          fastLinkModal={fastlinkModal}
+          fastLinkOptions={fastLinkOptions}
+          handleSuccess={handleConnectAccountSuccess}
+        />}
       {!loading && <AppFooter />}
     </div>
   );

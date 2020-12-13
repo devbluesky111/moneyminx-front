@@ -213,15 +213,11 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const accountsByProvider = groupByProviderName(accountList);
   const fastlinkModal = useModal();
 
-  const { error, data, loading } = useGetFastlink();
-
-  if (loading || error || !data) {
-    return <CircularSpinner />;
-  }
+  const { data } = useGetFastlink();
 
   const fastLinkOptions: FastLinkOptionsType = {
-    fastLinkURL: data.fastLinkUrl || '',
-    token: data.accessToken || '',
+    fastLinkURL: data?.fastLinkUrl || '',
+    token: data?.accessToken || '',
   };
 
   const handleConnectAccountSuccess = () => {
@@ -393,11 +389,12 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
           ))}
         </div>
       ))}
-      <FastLinkModal
-        fastLinkModal={fastlinkModal}
-        fastLinkOptions={fastLinkOptions}
-        handleSuccess={handleConnectAccountSuccess}
-      />
+      {data &&
+        <FastLinkModal
+          fastLinkModal={fastlinkModal}
+          fastLinkOptions={fastLinkOptions}
+          handleSuccess={handleConnectAccountSuccess}
+        />}
     </>
   );
 };
