@@ -322,6 +322,19 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                     </div>
                   </div>
                 )}
+                {status === 'warning' && (
+                  <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
+                    <div className='col-12 col-md-6 text-warning pl-3'>
+                      <span>Needs more info</span>
+                    </div>
+                    <div className='col-12 col-md-6 mt-2 text-md-right'>
+                      <button type='button' className='btn btn-outline-primary mm-button btn-lg'>
+                        Fix Connection
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 <div className={['row pb-2 pt-1 align-items-center', status === 'error' ? 'pt-4' : ''].join(' ')}>
                   <div className='col-10 col-md-6'>
                     <div>
