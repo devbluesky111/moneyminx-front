@@ -21,10 +21,10 @@ import { ReactComponent as HomeBannerImg } from 'assets/images/home/home-banner-
 import { ReactComponent as SyncedOrManual } from 'assets/images/home/synced-or-manual.svg';
 import { ReactComponent as FeatureIconFour } from 'assets/images/home/feature-icon4.svg';
 import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-icon3.svg';
-import { ReactComponent as NetWorthCalculator } from 'assets/images/features/net-worth-calculator.svg';
+import { ReactComponent as HomeNetWorthChart } from 'assets/images/features/net-worth-calculator.svg';
 import { ReactComponent as HomeMulticurrency } from 'assets/images/features/multicurrency.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
-import { ReactComponent as InvestmentsAndCryptos} from 'assets/images/features/crypto-currency-tracker.svg';
+import { ReactComponent as InvestmentsAndCryptos} from 'assets/images/features/investment-assets-cryptos.svg';
 import { ReactComponent as HomeTransactionHistory } from 'assets/images/features/transaction-history.svg';
 
 const Home = () => {
@@ -129,7 +129,7 @@ export const HomeNetWorthSection = () => {
               </p>
             </div>
           <div className='col-lg-7 feature-image'>
-              <NetWorthCalculator />
+              <HomeNetWorthChart />
           </div>
       </div>
     </section>
@@ -178,7 +178,7 @@ export const HomeCryptosSection = () => {
     <section className='feature-section feature-section-reversed'>
         <div className='row'>
           <div className='col-lg-7 feature-image'>
-            <InvestmentsAndCryptos />
+            <InvestmentsAndCryptos className='mm-custom-networth-chart' />
           </div>
           <div className='col-lg-5 feature-content'>
               <a href='/features/cryptos'>

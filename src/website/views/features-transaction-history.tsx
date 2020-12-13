@@ -2,11 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
-import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
-import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
-import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
-import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
-
+import TransactionHistoryFraud from 'assets/images/features/catch-fraud.svg';
+import AccountHoldings from 'assets/images/features/account-holdings.svg';
 
 const FeaturesTransactionHistory = () => {
   return (
@@ -42,55 +39,7 @@ export const FeaturesTransactionHistoryTopSection = () => {
         </div>
         <div className='col-12 col-xl-5'>
           <div className='mm-about-right-banner'>
-            <div className='account-wrap bg-white top-box'>
-              <h3>Connected Accounts</h3>
-              <p>Go ahead, add more accounts</p>
-            </div>
-
-            <div className='account-wrap bg-white border'>
-              <h4>
-                <span className='logo-icon'>
-                  <AboutWealthFrontIcon />
-                </span>
-                Wealthfront
-              </h4>
-              <ul className='account-list'>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />{' '}
-                  </span>
-                  Joint Cash Account
-                </li>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />
-                  </span>{' '}
-                  Investment Account
-                </li>
-              </ul>
-            </div>
-            <div className='account-wrap bg-white border small-box'>
-              <h4>
-                <span className='logo-icon'>
-                  <img alt='Peer Street' src={PeerStreetLogo} />
-                </span>
-                Peer Street
-              </h4>
-              <ul className='account-list'>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />{' '}
-                  </span>
-                  Individual Investor Account
-                </li>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />
-                  </span>{' '}
-                  Self-directed IRA
-                </li>
-              </ul>
-            </div>
+            <img src={TransactionHistoryFraud} alt={'Transaction history to catch fraud'} />
           </div>
         </div>
       </div>
@@ -103,7 +52,7 @@ export const FeaturesTransactionHistoryBottomSection = () => {
     <section className='feature-section feature-section-reversed'>
       <div className='row'>
         <div className='col-lg-7 feature-image'>
-          <AboutNetWorthChart className='mm-about-net-worth-chart' />
+          <img src={AccountHoldings} alt={'All account holdings in one place'} />
         </div>
         <div className='col-lg-5 feature-content'>
           <h2>Account Holdings</h2>

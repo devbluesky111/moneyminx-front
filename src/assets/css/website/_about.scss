@@ -389,6 +389,10 @@ span.twitter-icon {
     @media (min-width: $md + 432) {
       padding-left: 100px;
     }
+
+    img {
+      max-height: 580px;
+    }
   }
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
-import CryptosImg from 'assets/images/home/investment-assets-cryptos.svg';
+import CryptosImg from 'assets/images/features/investment-assets-cryptos.svg';
 import SyncCryptoAccountsImg from 'assets/images/features/sync-crypto-accounts.svg';
 
 const FeaturesCryptos = () => {
