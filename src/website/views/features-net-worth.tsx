@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import WebsiteLayout from 'website/website.layout';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
-import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
+import { ReactComponent as LiquidNetWorth } from 'assets/images/features/liquid-net-worth.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
 import { ReactComponent as HomeNetWorthProjections } from 'assets/images/home/net-worth-projections.svg';
 
@@ -49,16 +49,16 @@ export const FeaturesNetWorthTopSection = () => {
         <div className='col-12 col-xl-5'>
           <div className='mm-about-right-banner'>
             <div className='account-wrap bg-white top-box'>
-              <h3>Connected Accounts</h3>
+              <span className='medium-heading-light'>Connected Accounts</span>
               <p>Go ahead, add more accounts</p>
             </div>
             <div className='account-wrap bg-white border'>
-              <h4>
-                <span className='logo-icon'>
-                  <AboutWealthFrontIcon />
-                </span>
+              <span className='logo-icon'>
+                <AboutWealthFrontIcon />
+              </span>
+              <span className='company-name'>
                 Wealthfront
-              </h4>
+              </span>
               <ul className='account-list'>
                 <li>
                   <span className='switch-icon'>
@@ -75,12 +75,10 @@ export const FeaturesNetWorthTopSection = () => {
               </ul>
             </div>
             <div className='account-wrap bg-white border small-box'>
-              <h4>
                 <span className='logo-icon'>
                   <img alt='Peer Street' src={PeerStreetLogo} />
                 </span>
-                Peer Street
-              </h4>
+              <span className='company-name'>Peer Street</span>
               <ul className='account-list'>
                 <li>
                   <span className='switch-icon'>
@@ -108,7 +106,7 @@ export const FeaturesNetWorthNetWorthSection = () => {
     <section className='feature-section feature-section-reversed'>
         <div className='row'>
           <div className='col-lg-7 feature-image'>
-            <AboutNetWorthChart />
+            <LiquidNetWorth />
           </div>
           <div className='col-lg-5 feature-content'>
               <h2>Liquid Net Worth</h2>
