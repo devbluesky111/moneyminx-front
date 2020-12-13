@@ -160,7 +160,7 @@ export const HomeMulticurrencySection = () => {
         <div className='row'>
           <div className='col-lg-5 feature-content'>
             <a href='/features/multicurrency'>
-              <h2>Multicurrency</h2>
+              <h2>Multi Currency</h2>
             </a>
             <p>
               Money Minx is built with the international investor in mind. Choose a home base currency, convert and view your accounts in any currency.

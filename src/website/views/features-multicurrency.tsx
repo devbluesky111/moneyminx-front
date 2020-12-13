@@ -25,7 +25,7 @@ export const FeaturesMulticurrencyTopSection = () => {
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
           <div>
-            <h1>Multicurrency</h1>
+            <h1>Multi Currency</h1>
             <div className='p-b-10'>
               <p className='text'>
                 Money Minx is built for the international investor in mind.
