@@ -61,7 +61,7 @@ export const FeaturesTransactionHistoryBottomSection = () => {
         <div className='col-lg-5 feature-content'>
           <h2>Account Holdings</h2>
           <p>
-            Never forgot what holdings each of your accounts hold and find duplicate holdings across your accounts. With Money Minx
+            Never forget what holdings each of your accounts hold and find duplicate holdings across your accounts. With Money Minx
             you can easily review all of your holdings.
           </p>
         </div>

@@ -204,7 +204,7 @@ export const HomeSyncedManualSection = () => {
               <h2>Synced or Manual Accounts</h2>
             </a>
             <p className='text'>
-              Sync with over 25k supported institutions or use manual accounts.
+              Sync with over 21k supported institutions or use manual accounts.
               Manual accounts are a great way to track non-traditional investments, like comic books, art, rare legos and more - no logins necessary.
             </p>
           </div>
