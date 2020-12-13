@@ -27,11 +27,11 @@ const FooterList = () => {
         <div className='wf-list-wrapper py-2'>
           <span className='footer-feature-title'>Features</span>
           <div className='wf-list-items'>
-            <h3 className='footer-feature'><a className='text-white' href='/features/net-worth'>Net Worth Tracker</a></h3>
-            <h3 className='footer-feature'><a className='text-white' href='/features/allocations'>Asset Allocation Chart</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/features/net-worth'>Net Worth Calculator</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/features/allocations'>Asset Allocation</a></h3>
             <h3 className='footer-feature'><a className='text-white' href='/features/cryptos'>Crypto Tracker</a></h3>
-            <h3 className='footer-feature'><a className='text-white' href='/features/synced-and-manual'>Synced and Manual Accounts</a></h3>
-            <h3 className='footer-feature'><a className='text-white' href='/features/multicurrency'>Multicurrency</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/features/synced-and-manual'>Synced or Manual Accounts</a></h3>
+            <h3 className='footer-feature'><a className='text-white' href='/features/multicurrency'>Multi Currency</a></h3>
             <h3 className='footer-feature'><a className='text-white' href='/features/transaction-history'>Transaction History</a></h3>
           </div>
         </div>
