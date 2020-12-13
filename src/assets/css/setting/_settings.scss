@@ -502,3 +502,9 @@
 .subscription-cancel-confirmation {
   z-index: 3;
 }
+.currency-select {
+  button {
+    width: 100% !important;
+    text-transform: uppercase;
+  }
+}

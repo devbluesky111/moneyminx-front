@@ -182,13 +182,13 @@ export const HomeCryptosSection = () => {
           </div>
           <div className='col-lg-5 feature-content'>
               <a href='/features/cryptos'>
-                <h2>Investments, Assets & Cryptos
+                <h2>Crypto Tracker
                   <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
                 </h2>
               </a>
               <p>
-                Track your stocks, bonds, mutual funds, ETFS, crypto wallets and more all in one place.
-                Sync your account with over 25,000 institutions world wide and most crypto wallets out there.
+                Connect your cryptocurrency wallets, including Coinbase, Binance, Gemini and more.
+                Keep an eye on your Bitcoin, Ethereum and other cryptos at all times.
               </p>
           </div>
         </div>
@@ -204,8 +204,8 @@ export const HomeSyncedManualSection = () => {
               <h2>Synced or Manual Accounts</h2>
             </a>
             <p className='text'>
-              You can sync your accounts or manually update them if you prefer.
-              Manual accounts are a great way to track non-traditional investments, like comic books, art, rare legos and more.
+              Sync with over 25k supported institutions or use manual accounts.
+              Manual accounts are a great way to track non-traditional investments, like comic books, art, rare legos and more - no logins necessary.
             </p>
           </div>
           <div className='col-lg-7 feature-image'>
