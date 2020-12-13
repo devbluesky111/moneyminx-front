@@ -60,7 +60,7 @@ const useYodlee: YodleeHookType = ({
     window.fastlink?.open(
       {
         fastLinkURL,
-        params: { config },
+        params: config,
         ...getTokenString(currentToken || token),
         onSuccess: (customerData: any) => {
           setData(customerData);
