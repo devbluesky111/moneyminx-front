@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import WebsiteLayout from 'website/website.layout';
 import { ReactComponent as SecurityChart } from 'assets/images/security/chart.svg';
@@ -8,9 +9,13 @@ import { ReactComponent as SecurityPieChart } from 'assets/images/security/pie-c
 import { ReactComponent as SecurityTickIcon } from 'assets/images/security/tick-icon.svg';
 import { ReactComponent as SecurityPartnerChart } from 'assets/images/security/partner-chart.svg';
 import { ReactComponent as SecurityYodleeLogo } from 'assets/images/security/yodlee-logo.svg';
+
 const Security = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Money Minx Security | Money Minx</title>
+      </Helmet>
       <SecurityTopSection />
       <SecurityHeroSection />
       <SecurityPracticeSection />
@@ -95,7 +100,7 @@ export const SecurityPracticeSection = () => {
             <h2 className='large-heading-light'>Secure. Private. Trusted.</h2>
             <p className='text text-gap'>
               Our website’s encryption is of the utmost importance. We stay on top of security vulnerabilities and keep
-              up-to-date with best practices, including the followingractices, including the following:
+              up-to-date with best practices, including the following:
             </p>
           </div>
           <div className='col-lg-6'>
@@ -174,7 +179,7 @@ export const SecurityInvestmentSection = () => {
               <h2 className='large-heading-light mb-5'>No One Can Access Your Money or Your Investments</h2>
               <p className='text'>
                 Your Money Minx account only has read access to your data. Money Minx can’t trigger transfers,
-                transactons or any other events with your banks, brokerages and investment sites. In the event that your
+                transactions or any other events with your banks, brokerages and investment sites. In the event that your
                 Money Minx account is ever compromised, we’ve design our application to ensure that you are still safe.
               </p>
               <p className='text'>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import noticeData from '@mm/data/notice.json';
 import WebsiteLayout from 'website/website.layout';
@@ -20,6 +21,9 @@ const noticeContentSection = () => {
 const Notice = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Notices | Money Minx</title>
+      </Helmet>
       <div className='mm-container notice-wrapper'>
         <div className='notice-header'>
           <h1>{notice.title}</h1>

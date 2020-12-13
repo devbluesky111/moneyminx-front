@@ -1,16 +1,20 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
+import LiquidNetWorth from 'assets/images/features/liquid-net-worth.svg';
 import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
+import HomeNetWorthProjections from 'assets/images/home/net-worth-projections.svg';
 import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
-import { ReactComponent as LiquidNetWorth } from 'assets/images/features/liquid-net-worth.svg';
 import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
-import { ReactComponent as HomeNetWorthProjections } from 'assets/images/home/net-worth-projections.svg';
 
 const FeaturesNetWorth = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Net Worth Calculator | Money Minx</title>
+      </Helmet>
       <div className='mm-new-container'>
         <FeaturesNetWorthTopSection />
         <FeaturesNetWorthNetWorthSection />
@@ -106,7 +110,7 @@ export const FeaturesNetWorthNetWorthSection = () => {
     <section className='feature-section feature-section-reversed'>
         <div className='row'>
           <div className='col-lg-7 feature-image'>
-            <LiquidNetWorth />
+            <img src={LiquidNetWorth} alt='Calculate liquid net worth'/>
           </div>
           <div className='col-lg-5 feature-content'>
               <h2>Liquid Net Worth</h2>
@@ -130,7 +134,7 @@ export const FeaturesNetWorthProjections = () => {
           </p>
         </div>
         <div className='col-lg-7 feature-image'>
-          <HomeNetWorthProjections />
+          <img src={HomeNetWorthProjections} alt='Calculate future projection'/>
         </div>
       </div>
     </section>

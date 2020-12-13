@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
@@ -8,6 +9,9 @@ import AccountHoldings from 'assets/images/features/account-holdings.svg';
 const FeaturesTransactionHistory = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Portfolio Transactions History | Money Minx</title>
+      </Helmet>
       <div className='mm-new-container'>
         <FeaturesTransactionHistoryTopSection />
         <FeaturesTransactionHistoryBottomSection />

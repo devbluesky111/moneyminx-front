@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
@@ -8,6 +9,9 @@ import SyncCryptoAccountsImg from 'assets/images/features/sync-crypto-accounts.s
 const FeaturesCryptos = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Crypto Portfolio Tracker | Money Minx</title>
+      </Helmet>
       <div className='mm-new-container'>
         <FeaturesCryptosTopSection />
         <FeaturesCryptosBottomSection />

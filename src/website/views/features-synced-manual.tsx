@@ -1,13 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
-import { ReactComponent as ManualAccountsImg } from 'assets/images/features/manual-accounts.svg';
 import Sync21k from 'assets/images/features/over-21k-institutions.svg';
+import ManualAccountsImg from 'assets/images/features/manual-accounts.svg';
 
 const FeaturesSyncedManual = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Synced or Manual Accounts | Money Minx</title>
+      </Helmet>
       <div className='mm-new-container'>
         <FeaturesSyncedManualTopSection />
         <FeaturesSyncedManualBottomSection />
@@ -23,7 +27,7 @@ export const FeaturesSyncedManualTopSection = () => {
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
           <div>
-            <h1>Synced or Manual Account</h1>
+            <h1>Synced or Manual Accounts</h1>
             <div className='p-b-10'>
               <p className='text'>
                 Money Minx allows you to track all of your assets and liabilities in one place to help you track your net worth.
@@ -57,7 +61,7 @@ export const FeaturesSyncedManualBottomSection = () => {
     <section className='feature-section feature-section-reversed'>
       <div className='row'>
         <div className='col-lg-7 feature-image'>
-          <ManualAccountsImg />
+          <img src={ManualAccountsImg} alt={'Sync 21k institutions'} />
         </div>
         <div className='col-lg-5 feature-content'>
           <h2>Manual Accounts</h2>

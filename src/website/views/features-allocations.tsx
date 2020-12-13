@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
@@ -9,6 +10,9 @@ import AllocationSharingImg from 'assets/images/features/share-asset-allocation.
 const FeaturesAllocations = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Asset Allocation | Money Minx</title>
+      </Helmet>
       <div className='mm-new-container'>
         <FeaturesAllocationsTopSection />
         <FeaturesAllocationsBottomSection />

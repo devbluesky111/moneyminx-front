@@ -1,14 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
-
-import BaseCurrency from '../../assets/images/features/base-currency.svg';
-import SelectCurrency from '../../assets/images/features/select-currency.svg';
+import BaseCurrency from 'assets/images/features/base-currency.svg';
+import SelectCurrency from 'assets/images/features/select-currency.svg';
 
 const FeaturesMulticurrency = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Multi Currency Portfolio | Money Minx</title>
+      </Helmet>
       <div className='mm-new-container'>
         <FeaturesMulticurrencyTopSection />
         <FeaturesMulticurrencyBottomSection />
