@@ -205,7 +205,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                               </tbody>
                             </React.Fragment>
                           )
-                        })};
+                        })}
                   </table>
                     </div>
                   </div>

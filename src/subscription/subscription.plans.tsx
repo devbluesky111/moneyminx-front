@@ -138,7 +138,7 @@ const SubscriptionPlans = () => {
                 </ul>
                 <GALink
                   to={`/auth/signup?priceId=${pt.priceId}&planName=${pt.name}&planPrice=${pt.price}`}
-                  eventArgs={{ ...events.trialFromPricing, value: pt.price }}
+                  eventArgs={{ ...events.trialFromPricing, action:`Clicked on start ${pt.name} plan`, value: pt.price }}
                 >
                   <button className='mm-btn-animate trial-btn ml-3 btn-xs-block'>Start 14 day trial</button>
                 </GALink>

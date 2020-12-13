@@ -6,6 +6,7 @@ import appEnv from 'app/app.env';
 import { events } from '@mm/data/event-list';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useAuthState } from 'auth/auth.context';
+import MMToolTip from 'common/components/tooltip';
 import { useModal } from 'common/components/modal';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import useAnalytics from 'common/hooks/useAnalytics';
@@ -64,7 +65,7 @@ export const ConnectAccountMainSection = () => {
 
     return manualAccountModal.open();
   };
-
+// eslint-disable-next-line
   const handleCryptoExchange = () => {
     event(events.cryptoExchange);
 
@@ -103,7 +104,7 @@ export const ConnectAccountMainSection = () => {
 
   return (
     <div className='main-table-wrapper'>
-      <div className=''>
+      <div>
         <div className='row login-wrapper'>
           <div className='guide-content'>
             <Link to='/net-worth'>
@@ -153,13 +154,19 @@ export const ConnectAccountMainSection = () => {
                 >
                   Add Banks and Investments
                 </button>
-                <button
-                  className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto'
-                  type='button'
-                  onClick={handleCryptoExchange}
+                <MMToolTip
+                  placement='top'
+                  message='Stay tuned, crypto accounts are almost ready.'
                 >
-                  Add Crypto Exchanges
-                </button>
+                  <button
+                    className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto'
+                    type='button'
+                    /*onClick={handleCryptoExchange}*/
+                  >
+                    Add Crypto Exchanges
+                  </button>
+                </MMToolTip>
+                <span className='badge badge-pill badge-primary mm-coming-soon'>Coming Soon!</span>
               </div>
               <div className='manual-account-section'>
                 <h2>

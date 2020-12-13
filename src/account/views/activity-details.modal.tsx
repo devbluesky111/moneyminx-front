@@ -26,7 +26,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
   const fetchActivityTypes = async () => {
     const { data, error } = await getActivityTypes();
     if (!error) {
-      let types = [];
+      const types = [];
       for (let i = 0; i < data.length; i++) {
         types.push(data[i].type);
       }
@@ -100,7 +100,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
         };
 
         const handleYesNoChange = (e: React.ChangeEvent<any>) => {
-          const value = e.target.value === 'Yes' ? true : false;
+          const value = e.target.value === 'Yes';
           setValues({ ...values, [e.target.name]: value });
         };
 
@@ -113,8 +113,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
             <Modal
               {...activityDetailsModal.props}
               title={activityDetails?.description || 'New Activity'}
-              size='xxl'
-              bgColor='#081833'
+              size='md'
               canBeClosed
               onClose={() => activityDetailsModal.close()}
             >
@@ -122,14 +121,13 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                 <div className='mm-manual-account-modal__title mt-3'>
                   {activityDetails && !activityDetails.isManual ? (
                     <>
-                      <div className='row one-row'>
-                        <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Date</div>
-                          <div className='col-sm-8 text-light'>{getDateFormatedString(values.date)}</div>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Date</div>
+                          <div className='col-sm'>{getDateFormatedString(values.date)}</div>
                         </div>
-                        <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Type</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Type</div>
+                          <div className='col-sm'>
                             <SelectInput
                               args={activityTypes}
                               onChange={handleSelectChange}
@@ -139,31 +137,29 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                             />
                           </div>
                         </div>
-                        <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Description</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Description</div>
+                          <div className='col-sm'>
                             <Form.Control onChange={handleChange} name='description' value={values.description} />
                           </div>
                         </div>
-                      </div>
-                      <div className='row one-row'>
-                        <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Amount</div>
-                          <div className='col-sm-8 text-light'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm text-light'>Amount</div>
+                          <div className='col-sm text-light'>
                             {currencySymbol}
                             {values.amount}
                           </div>
                         </div>
-                        <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Balance</div>
-                          <div className='col-sm-8 text-light'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Balance</div>
+                          <div className='col-sm'>
                             {currencySymbol}
                             {values.balance}
                           </div>
                         </div>
-                        <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Income</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Income</div>
+                          <div className='col-sm'>
                             <SelectInput
                               args={['Yes', 'No']}
                               onChange={handleYesNoChange}
@@ -172,9 +168,9 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                             />
                           </div>
                         </div>
-                        <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>CashFlow</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>CashFlow</div>
+                          <div className='col-sm'>
                             <SelectInput
                               args={['Yes', 'No']}
                               onChange={handleYesNoChange}
@@ -183,14 +179,12 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                             />
                           </div>
                         </div>
-                      </div>
                     </>
                   ) : (
                     <>
-                      <div className='row one-row'>
-                        <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Date</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Date</div>
+                          <div className='col-sm'>
                             <ReactDatePicker
                               name='date'
                               selected={values.date ? new Date(values.date) : null}
@@ -200,9 +194,9 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                             />
                           </div>
                         </div>
-                        <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Type</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Type</div>
+                          <div className='col-sm'>
                             <SelectInput
                               args={activityTypes}
                               onChange={handleSelectChange}
@@ -212,29 +206,27 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                             />
                           </div>
                         </div>
-                        <div className='col-sm-12 col-md-4 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Description</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Description</div>
+                          <div className='col-sm'>
                             <Form.Control onChange={handleChange} name='description' value={values.description} />
                           </div>
                         </div>
-                      </div>
-                      <div className='row one-row'>
-                        <div className='col-sm-12 col-md-3  mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Amount</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Amount</div>
+                          <div className='col-sm'>
                             <Form.Control onChange={handleChange} type='number' name='amount' value={values.amount} />
                           </div>
                         </div>
-                        <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Balance</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Balance</div>
+                          <div className='col-sm'>
                             <Form.Control onChange={handleChange} type='number' name='balance' value={values.balance} />
                           </div>
                         </div>
-                        <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>Income</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>Income</div>
+                          <div className='col-sm'>
                             <SelectInput
                               args={['Yes', 'No']}
                               onChange={handleYesNoChange}
@@ -243,9 +235,9 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                             />
                           </div>
                         </div>
-                        <div className='col-sm-12 col-md-3 mt-3 row align-items-center'>
-                          <div className='col-sm-4 text-light'>CashFlow</div>
-                          <div className='col-sm-8'>
+                      <div className='row mt-2 align-items-center'>
+                          <div className='col-sm'>CashFlow</div>
+                          <div className='col-sm'>
                             <SelectInput
                               args={['Yes', 'No']}
                               onChange={handleYesNoChange}
@@ -254,7 +246,6 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                             />
                           </div>
                         </div>
-                      </div>
                     </>
                   )}
                   <div className='action-wrapper mt-3 form-wrap'>
@@ -269,7 +260,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                           onChange={() => toggleFormCheck('isIgnored')}
                           aria-checked={values.isIgnored}
                         />
-                        <span className='geekmark checkbox-light' />
+                        <span className='geekmark' />
                       </label>
                     </span>
                     <button
