@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Reset Your Money Minx Password</title>
+  <title>Money Minx Trial Expiring</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;700&ampdisplay=swap" rel="stylesheet" />
   <meta name="color-scheme" content="light">
@@ -289,7 +289,6 @@
     }
   </style>
 </head>
-
 <body style="margin: 0; padding: 0;">
 <table class="outer-table" cellspacing="0" cellpadding="0">
   <tr>
@@ -310,37 +309,152 @@
     <td>
       <table class="hero">
         <tr>
-          <td class="title">Reset Password</td>
-        </tr>
-        <tr>
-          <td class="text">
-            <p>
-              We heard that you lost your Money Minx password. Sorry about that!
-            </p>
-            <p>
-              Don’t worry! You can use the following link to reset your password:
-            </p>
-            <p>
-              <a href="https://{{resetPasswordLink}}">
-                https://{{resetPasswordLink}}
-              </a>
-            </p>
-            <p>
-              If you don’t use this link within 3 hours it will expire. To get a new password reset link visit <a href="https://{{resetPasswordUrl}}
-">https://{{resetPasswordUrl}}</a>
-            </p>
-            <p>
-              Thanks,<br>
-              The Money Minx Team
-            </p>
+          <td class="title">
+            <span>Heads up</span>
+            <span class="text-error">Trial Expires in {{daysLeft}} days</span>
           </td>
         </tr>
         <tr>
+          <td class="text">
+            Your Money Minx trial ends in {{daysLeft}} days. Log in to your account and hit subscribe to keep your
+            access going.
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 2rem 0;">
+            <a href="{{accountLink}}" class="btn-primary">Go to My Account</a>
+          </td>
+        </tr>
       </table>
     </td>
   </tr>
+  <!--quick snapshot-->
+  <!--title-->
+  <tr>
+    <td class="quick-response-title">Here is a quick snapshot of your account:</td>
+  </tr>
 
+  <!--investment data-->
+  <tr>
+    <td class="wrapper">
+      <table>
+        <tr>
+          <td class="inner-wrapper">
+            <table style="width: 100%;">
+              <tr>
+                <td>
+                  <span class="text-cyan">Investment Asset</span>
+                  <span class="text-digit">{{investmentAsset}}</span>
+                </td>
+                <td>
+                  <span class="text-blue">Other Assets</span>
+                  <span class="text-digit">{{otherAssets}}</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td class="inner-wrapper">
+            <table style="width: 100%;">
+              <tr>
+                <td>
+                  <span class="text-red">liabilities</span>
+                  <span class="text-digit">{{liabilities}}</span>
+                </td>
+                <td>
+                  <span class="text-purple">Net worth</span>
+                  <span class="text-digit">{{netWorth}}</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr></tr>
 
+  <!--quick snapshot ended-->
+  <tr>
+    <td style="padding-top: 1rem;">
+      <table class="why-table">
+        <tr>
+          <td class="sec-title" colspan="3">Investors are using Money Minx to:</td>
+        </tr>
+        <tr>
+          <td class="col-3 benefits">
+            <a href="https://app.moneyminx.com">
+              <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/de901416-9e0a-4b96-bff6-913a765522ce/300x300.png" width="100" style="width: 100%; max-width: 100px;" alt="Skip monthly spreadsheet update" />
+            </a>
+            <span class="img-desc">Skip monthly spreadsheet update</span>
+          </td>
+          <td class="col-3 benefits">
+            <a href="https://app.moneyminx.com">
+              <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/32adac8c-bbb2-4599-aa04-bbf576ac05f4/300x300.png" width="100" style="width: 100%; max-width: 100px;" alt="Visualize data" />
+            </a>
+            <span class="img-desc">Visualize their data in awesome charts, graphs and tools.</span>
+          </td>
+          <td class="col-3 benefits">
+            <a href="https://app.moneyminx.com">
+              <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/fd502ed7-c8b8-4cb8-968d-70a5b5641f7e/300x300.png" width="100" style="width: 100%; max-width: 100px;" alt="Check and balance" />
+            </a>
+            <span class="img-desc">See where they are doing good or where they are falling short.</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <hr />
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table class="security-trust-table">
+        <tr>
+          <td class="col-2 security-col">
+            <h5 class="sec-title">Serious about security</h5>
+            <table style="width: 100%;">
+              <tr>
+                <td style="width: 50px;">
+                  <a href="https://app.moneyminx.com">
+                        <span class="rounded-icon">
+                        <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/a48759d3-5d4e-42d8-a701-f4fb5c55f1b7/72x72.png" width="24" style="width: 100%; max-width: 24px;" alt="Security" />
+                        </span>
+                  </a>
+                </td>
+                <td>&nbsp;&nbsp;</td>
+                <td>
+                  <span class="sec-text">The security of your information is our top priority</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+
+          <td class="col-2">
+            <h5 class="sec-title">Trusted by investors</h5>
+            <table style="width: 100%;">
+              <tr>
+                <td style="width: 50px;">
+                  <span class="rounded-icon"><img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/3e8b494f-efcc-4ef8-85ef-5cc68395972b/72x74.png" width="24" style="width: 100%; max-width: 24px;" alt="Trusted" /></span>
+                </td>
+                <td>&nbsp;&nbsp;</td>
+                <td>
+                  <span class="sec-text">Investors from all over the world are using Money Minx</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <!--get started row-->
+  <tr>
+    <td class="get-started-data">
+      <a href="https://app.moneyminx.com" class="btn-primary">Go to My Account</a>
+    </td>
+  </tr>
   <tr>
     <td>
 
