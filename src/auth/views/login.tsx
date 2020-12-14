@@ -94,7 +94,7 @@ export const LoginMainSection = () => {
     <div className='main-table-wrapper'>
       {refreshLoading ?
         <div className='refresh-loading'>
-          <LogoWhiteImg className='loading-logo'/>
+          <LogoWhiteImg className='loading-logo' />
           <MessageChange />
         </div> :
         <div className=''>
@@ -331,11 +331,10 @@ export const MessageChange = () => {
 
   const showMessage = () => {
     const randomIndex = Math.floor(Math.random() * 5);
-    if (messageArr[randomIndex] === showingMessage) {
-      showMessage();
-    } else {
-      setShowingMessage(messageArr[randomIndex]);
+    if (messageArr[randomIndex] != showingMessage) {
+      return setShowingMessage(messageArr[randomIndex]);
     }
+    showMessage();
   }
 
   useEffect(() => {
