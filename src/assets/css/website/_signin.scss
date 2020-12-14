@@ -294,6 +294,44 @@ span.forgot-pass {
   font-weight: 400;
 }
 
+.refresh-loading {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  background: $purple;
+  padding: 45vh 10% 0 10%;
+  font-weight: 300;
+  font-size: 1.5rem;
+  line-height: 30px;
+  color: $white;
+
+  .loading {
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 23px;
+  }
+
+  @media(max-width: $sm) {
+      .getting-ready {
+        font-weight: 300;
+        font-size: 15px;
+        line-height: 19px;
+    }
+  }
+
+  .progress {
+    height: 4px;
+    background-color: rgba($white, 0.3);
+
+    .progress-bar {
+      background-color: $white;
+    }
+  }
+}
+
 //Footer Second
 .footer-second {
   border-top: 1px solid rgba(150, 158, 172, 0.25);
