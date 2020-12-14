@@ -209,7 +209,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
-  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: 'https://fl4.sandbox.yodlee.com/authenticate/restserver/fastlink', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } });
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } });
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
   const fastlinkModal = useModal();

@@ -66,7 +66,7 @@ const AccountDetail: React.FC = () => {
   const [baseCurrency, setBaseCurrency] = useState<boolean>(false);
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const [popup, setPopup] = useState<boolean>(false);
-  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: 'https://fl4.sandbox.yodlee.com/authenticate/restserver/fastlink', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } });
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } });
 
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];

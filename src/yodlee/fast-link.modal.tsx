@@ -52,8 +52,10 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   const open = fastLinkModal.props?.open;
 
   useEffect(() => {
-    initRef?.current?.click();
-  }, [open]);
+    if (fastLinkOptions.fastLinkURL) {
+      initRef?.current?.click();
+    }
+  }, [open, fastLinkOptions]);
 
   const handleInit = () => {
     init({ tokenValue: token, tokenType: 'AccessToken' });
