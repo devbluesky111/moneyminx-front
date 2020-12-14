@@ -4,7 +4,6 @@ import { TokenType, YodleeHookType } from './yodlee.type';
 
 const useYodlee: YodleeHookType = ({
   containerId = 'fastlinkContainer',
-  createScriptTag = true,
   fastLinkOptions: { fastLinkURL, token, config },
   onSuccess,
   onError,
@@ -15,10 +14,11 @@ const useYodlee: YodleeHookType = ({
   const [error, setError] = useState<any>(null);
   const [data, setData] = useState(null);
   const [active, setActive] = useState(false);
+  const [scriptTagCreated, setScriptTagCreated] = useState(false);
 
   useEffect(() => {
     let script: HTMLScriptElement;
-    if (createScriptTag) {
+    if (!scriptTagCreated && fastLinkURL) {
       script = document.createElement('script');
 
       script.id = 'yodlee-fastlink-script';
@@ -29,15 +29,16 @@ const useYodlee: YodleeHookType = ({
       script.onerror = () => setError('Yodlee FastLink library could not be loaded!');
 
       document.body.appendChild(script);
+      setScriptTagCreated(true);
     }
 
     return () => {
       window.fastlink?.close();
-      if (createScriptTag) {
+      if (!scriptTagCreated) {
         document.body.removeChild(script);
       }
     };
-  }, [createScriptTag, fastLinkURL]);
+  }, [fastLinkURL, scriptTagCreated]);
 
   const init = (currentToken?: TokenType) => {
     const getTokenString = (t?: TokenType) => {

@@ -21,24 +21,34 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   const dispatch = useAuthDispatch();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSuccess = () => {
+  const onSuccess = async () => {
+    setLoading(true);
     mmToast('Successfully Logged in with Yodlee', { type: 'success' });
-    handleSuccess();
+    const { error } = await getRefreshedAccount({ dispatch });
+    setLoading(false);
+
+    if (error) {
+      mmToast('Error Occurred on Fetching user Details', { type: 'error' });
+    }
+
+    return handleSuccess();
   };
 
-  const onError = () => {
-    mmToast('Error Occurred', { type: 'error' });
+  const onError = (err: any) => {
+    const errorList = err
+      ? Object.keys(err).map((ek, i) => (
+          <li key={i}>
+            {[ek]}:{err[ek]}
+          </li>
+        ))
+      : null;
+    mmToast(<ul>{errorList}</ul>, { type: 'error', autoClose: false });
   };
 
   const onClose = async (args: any) => {
     setLoading(true);
 
-    const { error } = await getRefreshedAccount({ dispatch });
-    if (error) {
-      mmToast('Error Occurred on Fetching user Details', { type: 'error' });
-    }
-    setLoading(false);
-    fastLinkModal.close();
+    return fastLinkModal.close();
   };
 
   const { init } = useYodlee({
@@ -49,13 +59,13 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   });
 
   const token = (fastLinkOptions.token as any) || '';
-  const open = fastLinkModal.props?.open;
+  const fastLinkURL = fastLinkOptions.fastLinkURL;
 
   useEffect(() => {
-    if (fastLinkOptions.fastLinkURL) {
+    if (fastLinkURL) {
       initRef?.current?.click();
     }
-  }, [open, fastLinkOptions]);
+  }, [fastLinkURL]);
 
   const handleInit = () => {
     init({ tokenValue: token, tokenType: 'AccessToken' });
