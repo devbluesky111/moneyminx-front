@@ -339,7 +339,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       />
                     </div>
                   </li>
-                  <li>
+                  <li className='currency-select'>
                     <span className='form-subheading'>Currency</span>
                     <SelectInput
                       args={enumerateStr(CurrencyOptions)}
