@@ -7,7 +7,6 @@ import AppFooter from 'common/app.footer';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import FastLinkModal from 'yodlee/fast-link.modal';
-import useGetFastlinkUpdate from 'auth/hooks/useGetFastlinkUpdate';
 import useAnalytics from 'common/hooks/useAnalytics';
 import { Account } from 'auth/auth.types';
 import { appRouteConstants } from 'app/app-route.constant';
@@ -17,7 +16,7 @@ import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { getDate, getMonthYear, getQuarter, getRelativeDate, getYear } from 'common/moment.helper';
-import { getAccountDetails, getAccountHoldings, getAccountActivity } from 'api/request.api';
+import { getAccountDetails, getAccountHoldings, getAccountActivity, getFastlinkUpdate } from 'api/request.api';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
@@ -38,14 +37,13 @@ import MMToolTip from '../../common/components/tooltip';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
+import useToast from 'common/hooks/useToast';
 
 const AccountDetail: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
   const { event } = useAnalytics();
-  const [accId, setAccId] = useState<number>(1);
 
-  const { data } = useGetFastlinkUpdate(accId);
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [AccountDetails, setAccountDetails] = useState<Account>();
@@ -68,6 +66,7 @@ const AccountDetail: React.FC = () => {
   const [baseCurrency, setBaseCurrency] = useState<boolean>(false);
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const [popup, setPopup] = useState<boolean>(false);
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } });
 
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
@@ -75,12 +74,7 @@ const AccountDetail: React.FC = () => {
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
   const fastlinkModal = useModal();
-
-  const fastLinkOptions: FastLinkOptionsType = {
-    fastLinkURL: data?.fastLinkUrl || '',
-    token: data?.accessToken || '',
-    config: data?.params || {}
-  };
+  const { mmToast } = useToast();
 
   useEffect(() => {
     fetchAccountDetails(accountId, baseCurrency);
@@ -106,8 +100,21 @@ const AccountDetail: React.FC = () => {
     return history.push(location);
   };
 
-  const handleConnectAccount = (accId: number) => {
-    setAccId(accId);
+  const handleConnectAccount = async (accId: number) => {
+    const { data, error } = await getFastlinkUpdate(accId);
+
+    if (error) {
+      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });;
+    }
+
+    const fastLinkOptions: FastLinkOptionsType = {
+      fastLinkURL: data.fastLinkUrl,
+      token: data.accessToken,
+      config: data.params
+    };
+
+    setFastLinkOptions(fastLinkOptions);
+
     event(events.connectAccount);
 
     return fastlinkModal.open();
@@ -463,12 +470,11 @@ const AccountDetail: React.FC = () => {
             </div>
           </div>
         )}
-      {data &&
-        <FastLinkModal
-          fastLinkModal={fastlinkModal}
-          fastLinkOptions={fastLinkOptions}
-          handleSuccess={handleConnectAccountSuccess}
-        />}
+      <FastLinkModal
+        fastLinkModal={fastlinkModal}
+        fastLinkOptions={fastLinkOptions}
+        handleSuccess={handleConnectAccountSuccess}
+      />
       {!loading && <AppFooter />}
     </div>
   );

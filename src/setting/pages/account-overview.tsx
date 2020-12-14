@@ -7,13 +7,13 @@ import FastLinkModal from 'yodlee/fast-link.modal';
 import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import useGetSubscription from 'auth/hooks/useGetSubscription';
 import useToast from 'common/hooks/useToast';
-import useGetFastlinkUpdate from 'auth/hooks/useGetFastlinkUpdate';
 import { Account } from 'auth/auth.types';
 import { events } from '@mm/data/event-list';
 import { groupByProviderName } from 'auth/auth.helper';
 import { deleteAccounts, deleteAccountById, fetchConnectionInfo } from 'auth/auth.service';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getRelativeDate } from 'common/moment.helper';
+import { getFastlinkUpdate } from 'api/request.api';
 import { pricingDetailConstant } from 'common/common.constant';
 import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { fNumber, numberWithCommas } from 'common/number.helper';
@@ -209,18 +209,10 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
-  const [accId, setAccId] = useState<number>(1);
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } });
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
   const fastlinkModal = useModal();
-
-  const { data } = useGetFastlinkUpdate(accId);
-
-  const fastLinkOptions: FastLinkOptionsType = {
-    fastLinkURL: data?.fastLinkUrl || '',
-    token: data?.accessToken || '',
-    config: data?.params || {},
-  };
 
   const handleConnectAccountSuccess = () => {
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
@@ -228,8 +220,21 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     return history.push(location);
   };
 
-  const handleConnectAccount = (accId: number) => {
-    setAccId(accId);
+  const handleConnectAccount = async (accId: number) => {
+    const { data, error } = await getFastlinkUpdate(accId);
+
+    if (error) {
+      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });;
+    }
+
+    const fastLinkOptions: FastLinkOptionsType = {
+      fastLinkURL: data.fastLinkUrl,
+      token: data.accessToken,
+      config: data.params
+    };
+
+    setFastLinkOptions(fastLinkOptions);
+
     event(events.connectAccount);
 
     return fastlinkModal.open();
@@ -392,12 +397,11 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
           ))}
         </div>
       ))}
-      {data &&
-        <FastLinkModal
-          fastLinkModal={fastlinkModal}
-          fastLinkOptions={fastLinkOptions}
-          handleSuccess={handleConnectAccountSuccess}
-        />}
+      <FastLinkModal
+        fastLinkModal={fastlinkModal}
+        fastLinkOptions={fastLinkOptions}
+        handleSuccess={handleConnectAccountSuccess}
+      />
     </>
   );
 };

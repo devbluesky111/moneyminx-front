@@ -168,7 +168,7 @@ export const lowerCaseAllWordsExceptFirstLetters = (str: string) => {
 export const formater = (val: string) => {
   let _val = '';
   if (val) {
-    _val = val.replaceAll('_', ' ');
+    _val = val.replace(/_/g, ' ');
   }
   const desiredOutput = upperCaseFirstLetter(lowerCaseAllWordsExceptFirstLetters(_val));
 
