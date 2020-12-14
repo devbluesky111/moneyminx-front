@@ -21,10 +21,10 @@ import { ReactComponent as HomeBannerImg } from 'assets/images/home/home-banner-
 import { ReactComponent as SyncedOrManual } from 'assets/images/home/synced-or-manual.svg';
 import { ReactComponent as FeatureIconFour } from 'assets/images/home/feature-icon4.svg';
 import { ReactComponent as FeatureIconThree } from 'assets/images/home/feature-icon3.svg';
-import { ReactComponent as HomeNetWorthChart } from 'assets/images/home/home-networth.svg';
+import { ReactComponent as HomeNetWorthChart } from 'assets/images/features/net-worth-calculator.svg';
 import { ReactComponent as HomeMulticurrency } from 'assets/images/features/multicurrency.svg';
 import { ReactComponent as HomeAllocationChart } from 'assets/images/home/allocation-pie-chart.svg';
-import { ReactComponent as InvestmentsAndCryptos} from 'assets/images/home/investment-assets-cryptos.svg';
+import { ReactComponent as InvestmentsAndCryptos} from 'assets/images/features/investment-assets-cryptos.svg';
 import { ReactComponent as HomeTransactionHistory } from 'assets/images/features/transaction-history.svg';
 
 const Home = () => {
@@ -204,7 +204,7 @@ export const HomeSyncedManualSection = () => {
               <h2>Synced or Manual Accounts</h2>
             </a>
             <p className='text'>
-              Sync with over 25k supported institutions or use manual accounts.
+              Sync with over 21k supported institutions or use manual accounts.
               Manual accounts are a great way to track non-traditional investments, like comic books, art, rare legos and more - no logins necessary.
             </p>
           </div>
@@ -246,7 +246,7 @@ export const HomeComingSoonSection = () => {
               <div className='feature-icon py-3'>
                 <FeatureIconTwo />
               </div>
-              <h2 className='py-3'>International Banks</h2>
+              <h3 className='py-3'>International Banks</h3>
               <p>Additional international banks will be supported soon.</p>
             </div>
           </div>
@@ -257,7 +257,7 @@ export const HomeComingSoonSection = () => {
                   <CSMinxWinks />
                 </Link>
               </div>
-              <h2 className='py-3'>Minx Winks</h2>
+              <h3 className='py-3'>Minx Winks</h3>
               <p>Get tips and strategies from our wealth of investment knowledge</p>
             </div>
           </div>
@@ -266,7 +266,7 @@ export const HomeComingSoonSection = () => {
               <div className='feature-icon py-3'>
                 <FeatureIconFour />
               </div>
-              <h2 className='py-3'>Minx Measure-up</h2>
+              <h3 className='py-3'>Minx Measure-up</h3>
               <p>Compare your portfolio to other investors with similar profiles and get helpful insights from others
                 with real world experience.</p>
             </div>
@@ -276,7 +276,7 @@ export const HomeComingSoonSection = () => {
               <div className='feature-icon py-3'>
                 <FeatureIconThree />
               </div>
-              <h2 className='py-3'>Performance Tracking</h2>
+              <h3 className='py-3'>Performance Tracking</h3>
               <p>See how all of your investments are performing in one full financial picture. Money Weighted or Time Weighted returns.</p>
             </div>
           </div>
@@ -285,7 +285,7 @@ export const HomeComingSoonSection = () => {
               <div className='feature-icon py-3'>
                 <FeatureIconSix />
               </div>
-              <h2 className='py-3'>Income Projections</h2>
+              <h3 className='py-3'>Income Projections</h3>
               <p>Track which investments are paying interest, dividends or royalties and create an income projection schedule.</p>
             </div>
           </div>
@@ -294,7 +294,7 @@ export const HomeComingSoonSection = () => {
               <div className='feature-icon py-3'>
                 <FeatureIconRealEstate />
               </div>
-                <h2 className='py-3'>Real Estate</h2>
+                <h3 className='py-3'>Real Estate</h3>
               <p>Add the addresses of your properties and we'll track the market value for you.</p>
             </div>
           </div>
@@ -327,7 +327,7 @@ export const HomeBlogSection = () => {
   return (
     <div className='home-blog-section'>
       <div className='blog-content-left'>
-        <h2>Learn about investing platforms and strategies</h2>
+        <h4>Learn about investing platforms and strategies</h4>
         <p>
           <span className='block'>Visit our blog to learn about alternative investing,</span>
           diversifying your portfolio and crowdfunding.
@@ -365,11 +365,11 @@ export const HomeBlogSection = () => {
                     <div className='blog-img mm-blog-img'>
                       <img alt={blog?.slug} src={blog?.jetpack_featured_media_url || HomeBlogImgOne} />
                     </div>
-                    <h2 className='blog-header'>
+                    <h4 className='blog-header'>
                       <a href={blog?.link || '/'} target='_blank' rel='noopener noreferrer'>
                         {title || ''}
                       </a>
-                    </h2>
+                    </h4>
                     <p className='blog-content'>{excerpt}</p>
                   </div>
                 </div>

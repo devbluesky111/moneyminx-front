@@ -70,6 +70,7 @@
 
 ul.account-list {
   padding-left: 0;
+  padding-top: 20px;
 }
 
 ul.account-list li {
@@ -131,8 +132,16 @@ ul.account-list li {
 
 .logo-icon {
   margin-right: 20px;
+  font-size: 1.25rem;
+  line-height: 25px;
+  font-weight: 400;
 }
-
+.company-name {
+  font-size: 1.25rem;
+  line-height: 25px;
+  font-weight: 400;
+  margin-bottom: 26px;
+}
 .owner-section {
   padding-top: 98px;
   padding-bottom: 56px;
@@ -379,6 +388,10 @@ span.twitter-icon {
 
     @media (min-width: $md + 432) {
       padding-left: 100px;
+    }
+
+    img {
+      max-height: 580px;
     }
   }
 }
