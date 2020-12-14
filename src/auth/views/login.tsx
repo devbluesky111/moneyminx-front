@@ -1,19 +1,18 @@
 import FacebookLogin from 'react-facebook-login';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Formik } from 'formik';
-import { isEmpty } from 'lodash';
 import { useHistory, Link, useLocation } from 'react-router-dom';
 
+import { Formik } from 'formik';
+import { isEmpty } from 'lodash';
 import env from 'app/app.env';
 import useToast from 'common/hooks/useToast';
-
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import { appRouteConstants } from 'app/app-route.constant';
 import { pricingDetailConstant } from 'common/common.constant';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import { ReactComponent as LogoWhiteImg } from 'assets/icons/MoneyMinx Logo.svg';
+import { ReactComponent as LogoWhiteImg } from 'assets/icons/money-minx-white-logo.svg';
 import { EMAIL_IS_EMPTY, PWD_IS_EMPTY } from 'lang/en/validation.json';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
 import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
@@ -95,7 +94,7 @@ export const LoginMainSection = () => {
     <div className='main-table-wrapper'>
       {refreshLoading ?
         <div className='refresh-loading'>
-          <LogoWhiteImg />
+          <LogoWhiteImg className='loading-logo'/>
           <MessageChange />
         </div> :
         <div className=''>
@@ -262,7 +261,7 @@ export const LoginMainSection = () => {
                           </p>
                           <button className='mm-btn-animate mm-btn-primary' type='submit' disabled={props.isSubmitting}>
                             Log in
-                        </button>
+                          </button>
                         </form>
                       );
                     }}
@@ -297,7 +296,7 @@ export const LoginMainSection = () => {
                       {'Don’t have an account? '}
                       <Link to='/signup' className='purple-links'>
                         Sign Up
-                    </Link>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -321,26 +320,26 @@ export const LoginMainSection = () => {
 
 export const MessageChange = () => {
   const messageArr = [
-    "Getting ready for the big reveal.",
-    "Are you ready for your updated net worth?",
-    "You can't get to your goals if you don't know where you are",
-    "Here's to clarity",
-    "Something else will be here soon"
+    'Getting ready for the big reveal.',
+    'Are you ready for your updated net worth?',
+    'You can\'t get to your goals if you don\'t know where you are',
+    'Here\'s to clarity',
+    'Something else will be here soon'
   ];
 
   const [showingMessage, setShowingMessage] = useState<string>('Getting ready for the big reveal.');
 
-  const changeMessage = () => {
+  const showMessage = () => {
     const randomIndex = Math.floor(Math.random() * 5);
     if (messageArr[randomIndex] === showingMessage) {
-      changeMessage();
+      showMessage();
     } else {
       setShowingMessage(messageArr[randomIndex]);
     }
   }
 
   useEffect(() => {
-    setTimeout(changeMessage, 2000);
+    setTimeout(showMessage, 2000);
   })
 
   return (

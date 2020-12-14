@@ -293,7 +293,7 @@ span.forgot-pass {
   margin-bottom: 40px;
   font-weight: 400;
 }
-
+// Loading screen
 .refresh-loading {
   width: 100vw;
   height: 100vh;
@@ -312,6 +312,10 @@ span.forgot-pass {
   span {
     display: block;
   }
+}
+.loading-logo {
+  height: 64px;
+  width: 300px;
 }
 
 //Footer Second
