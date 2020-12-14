@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import termData from '@mm/data/terms.json';
 import WebsiteLayout from 'website/website.layout';
@@ -19,6 +20,9 @@ const termContentSection = () => {
 const TermOfService = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Money Minx Terms of Service | Money Minx</title>
+      </Helmet>
       <div className='mm-container wrapper notice-wrapper'>
         <div className='notice-header'>
           <h1>{terms.title}</h1>
