@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
@@ -9,6 +10,9 @@ import AllocationSharingImg from 'assets/images/features/share-asset-allocation.
 const FeaturesAllocations = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Asset Allocation | Money Minx</title>
+      </Helmet>
       <div className='mm-new-container'>
         <FeaturesAllocationsTopSection />
         <FeaturesAllocationsBottomSection />
@@ -62,8 +66,7 @@ export const FeaturesAllocationsBottomSection = () => {
         <div className='col-lg-5 feature-content'>
           <h2>Allocation History</h2>
           <p>
-            Depending on your plan level you will have access to the past 6 months, 12 months or all historical allocation charts.
-            This will allow you to review how your account was set up before or after a large swing in the market.
+            Go back through history and see how your asset allocation chart has changed with time.
           </p>
           <p>
             You can also review past allocations and compare it to the performance of your account to determine what is the right allocation for you.

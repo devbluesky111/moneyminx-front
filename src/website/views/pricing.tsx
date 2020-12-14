@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import WebsiteLayout from 'website/website.layout';
 import { ReactComponent as PricingPieChart } from 'assets/images/pricing/pricing-pie-chart.svg';
@@ -8,6 +9,9 @@ import SubscriptionPlans from 'subscription/subscription.plans';
 const Pricing = () => {
   return (
     <WebsiteLayout isSignupToday={false}>
+      <Helmet>
+        <title>Money Minx Pricing | Money Minx</title>
+      </Helmet>
       <PricingTopSection />
       <SubscriptionPlans />
     </WebsiteLayout>
