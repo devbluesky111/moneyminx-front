@@ -329,12 +329,13 @@ export const MessageChange = () => {
 
   const [showingMessage, setShowingMessage] = useState<string>('Getting ready for the big reveal.');
 
-  const showMessage = () => {
+  const showMessage: any = () => {
     const randomIndex = Math.floor(Math.random() * 5);
-    if (messageArr[randomIndex] != showingMessage) {
-      return setShowingMessage(messageArr[randomIndex]);
+    if (messageArr[randomIndex] === showingMessage) {
+      return showMessage();
     }
-    showMessage();
+
+    setShowingMessage(messageArr[randomIndex]);
   }
 
   useEffect(() => {
