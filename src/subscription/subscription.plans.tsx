@@ -101,7 +101,7 @@ const SubscriptionPlans = () => {
                     <div className='tick-icon'>
                       <PricingTickIcon />
                     </div>
-                    Support for syncing with over 25,000 institutions
+                    Support for syncing with over 21,000 institutions
                   </li>
                   <li>
                     <div className='tick-icon'>
@@ -138,7 +138,7 @@ const SubscriptionPlans = () => {
                 </ul>
                 <GALink
                   to={`/auth/signup?priceId=${pt.priceId}&planName=${pt.name}&planPrice=${pt.price}`}
-                  eventArgs={{ ...events.trialFromPricing, value: pt.price }}
+                  eventArgs={{ ...events.trialFromPricing, action:`Clicked on start ${pt.name} plan`, value: pt.price }}
                 >
                   <button className='mm-btn-animate trial-btn ml-3 btn-xs-block'>Start 14 day trial</button>
                 </GALink>

@@ -1,8 +1,8 @@
 import { Dropdown } from 'react-bootstrap';
 import ReactDatePicker from 'react-datepicker';
 import React, { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import useSettings from 'setting/hooks/useSettings';
 import { Account } from 'auth/auth.types';
 import { getAccount } from 'api/request.api';
@@ -11,7 +11,6 @@ import { arrGroupBy, enumerateStr, serialize } from 'common/common-helper';
 import { AccountCategory, TimeIntervalEnum } from 'networth/networth.enum';
 import { initialState, useNetworthDispatch, useNetworthState } from 'networth/networth.context';
 import { getDateString, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
-
 import {
   clearFilter,
   setFilterToDate,
@@ -22,6 +21,7 @@ import {
   setFilterTimeInterval,
 } from 'networth/networth.actions';
 import { NetworthFilterProps, NetworthState, TFilterKey } from 'networth/networth.type';
+
 import { numberWithCommas, fNumber } from '../../../common/number.helper';
 
 const NetworthFilter = (props: NetworthFilterProps) => {
@@ -90,7 +90,15 @@ const NetworthFilter = (props: NetworthFilterProps) => {
   };
 
   if (!currentAccount) {
-    return <CircularSpinner />;
+    return (
+      <div className='row'>
+        <div className='col-12 dropdowns-container'>
+          <div className='dflex-center mb-15'>
+            <Skeleton width={265} height={50} count={3}/>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const clearNetworthFilter = () => {

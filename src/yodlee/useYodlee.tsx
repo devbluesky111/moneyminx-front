@@ -5,7 +5,7 @@ import { TokenType, YodleeHookType } from './yodlee.type';
 const useYodlee: YodleeHookType = ({
   containerId = 'fastlinkContainer',
   createScriptTag = true,
-  fastLinkOptions: { fastLinkURL, token, configName = 'Aggregation' },
+  fastLinkOptions: { fastLinkURL, token, config },
   onSuccess,
   onError,
   onClose,
@@ -60,7 +60,7 @@ const useYodlee: YodleeHookType = ({
     window.fastlink?.open(
       {
         fastLinkURL,
-        params: { configName },
+        params: config,
         ...getTokenString(currentToken || token),
         onSuccess: (customerData: any) => {
           setData(customerData);

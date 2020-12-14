@@ -205,8 +205,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                               </tbody>
                             </React.Fragment>
                           )
-                        })};
-                  </table>
+                        })}
+                      </table>
                     </div>
                   </div>
                 </div >
@@ -232,18 +232,27 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                   <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center mm-allocation-overview__block-chart-overview'>
                     <AllocationChartSVG className='mm-allocation-overview__block--chart' />
                     <AllocationLegendSVG className='mm-allocation-overview__block--legend' />
-                    <div className='mm-allocation-overview__block-element text-center'>
-                      <div className='mm-allocation-overview__block-element--middle'>
-                        <div className='d-inline-flex align-items-center'>
-                          <MeasureUpIcon />
-                          <div className='mm-allocation-overview__block-element--text ml-2'>Minx Measure-up</div>
+                    {((Object.keys(allocations).length === 0) && chartData.length === 0) ?
+                      <div className='mm-allocation-overview__block-element text-center'>
+                        <div className='mm-allocation-overview__block-element--middle'>
+                          <div className='d-inline-flex align-items-center'>
+                            <div className='mm-allocation-overview__block-element--text ml-2'>No enough data</div>
+                          </div>
+                          <p>Historical charts will become available once your cross a month end.</p>
                         </div>
-                        <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
-                        <Link to='/settings?active=Profile' className='mm-btn-animate mm-btn-primary'>
-                          Complete Profile
-                    </Link>
-                      </div>
-                    </div>
+                      </div> :
+                      <div className='mm-allocation-overview__block-element text-center'>
+                        <div className='mm-allocation-overview__block-element--middle'>
+                          <div className='d-inline-flex align-items-center'>
+                            <MeasureUpIcon />
+                            <div className='mm-allocation-overview__block-element--text ml-2'>Minx Measure-up</div>
+                          </div>
+                          <p>Portfolio comparisons are coming soon. Complete your profile for better results once live.</p>
+                          <Link to='/settings?active=Profile' className='mm-btn-animate mm-btn-primary'>
+                            Complete Profile
+                          </Link>
+                        </div>
+                      </div>}
                   </div>
                 </div >
               </div >

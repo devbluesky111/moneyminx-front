@@ -1,15 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
-import PeerStreetLogo from 'assets/images/subscription/peerstreetlogo.png';
-import { ReactComponent as AboutSwitchIcon } from 'assets/images/about/switch.svg';
-import { ReactComponent as AboutNetWorthChart } from 'assets/images/about/networth.svg';
-import { ReactComponent as AboutWealthFrontIcon } from 'assets/images/about/wealthfront.svg';
+import BaseCurrency from 'assets/images/features/base-currency.svg';
+import SelectCurrency from 'assets/images/features/select-currency.svg';
 
 const FeaturesMulticurrency = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Multi Currency Portfolio | Money Minx</title>
+      </Helmet>
       <div className='mm-new-container'>
         <FeaturesMulticurrencyTopSection />
         <FeaturesMulticurrencyBottomSection />
@@ -24,8 +26,8 @@ export const FeaturesMulticurrencyTopSection = () => {
     <section>
       <div className='row mm-about-top-section'>
         <div className='col-12 col-xl-7'>
-          <div className=''>
-            <h1>Multicurrency</h1>
+          <div>
+            <h1>Multi Currency</h1>
             <div className='p-b-10'>
               <p className='text'>
                 Money Minx is built for the international investor in mind.
@@ -43,55 +45,7 @@ export const FeaturesMulticurrencyTopSection = () => {
         </div>
         <div className='col-12 col-xl-5'>
           <div className='mm-about-right-banner'>
-            <div className='account-wrap bg-white top-box'>
-              <h3>Connected Accounts</h3>
-              <p>Go ahead, add more accounts</p>
-            </div>
-
-            <div className='account-wrap bg-white border'>
-              <h4>
-                <span className='logo-icon'>
-                  <AboutWealthFrontIcon />
-                </span>
-                Wealthfront
-              </h4>
-              <ul className='account-list'>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />{' '}
-                  </span>
-                  Joint Cash Account
-                </li>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />
-                  </span>{' '}
-                  Investment Account
-                </li>
-              </ul>
-            </div>
-            <div className='account-wrap bg-white border small-box'>
-              <h4>
-                <span className='logo-icon'>
-                  <img alt='Peer Street' src={PeerStreetLogo} />
-                </span>
-                Peer Street
-              </h4>
-              <ul className='account-list'>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />{' '}
-                  </span>
-                  Individual Investor Account
-                </li>
-                <li>
-                  <span className='switch-icon'>
-                    <AboutSwitchIcon />
-                  </span>{' '}
-                  Self-directed IRA
-                </li>
-              </ul>
-            </div>
+            <img src={BaseCurrency} alt={'Multi Currency Base Currency'} />
           </div>
         </div>
       </div>
@@ -104,7 +58,7 @@ export const FeaturesMulticurrencyBottomSection = () => {
     <section className='feature-section feature-section-reversed'>
       <div className='row'>
         <div className='col-lg-7 feature-image'>
-          <AboutNetWorthChart className='mm-about-net-worth-chart' />
+          <img src={SelectCurrency} alt={'Multi Currency Choose Currency'} />
         </div>
         <div className='col-lg-5 feature-content'>
           <h2>Supported Currencies</h2>

@@ -169,16 +169,17 @@
 .home-blog-section .blog-content-left {
   width: 85%;
 
-  h2 {
+  h4 {
     max-width: 748px;
-    line-height: 46px;
+    line-height: 40px;
     margin-bottom: 20px;
     font-weight: 300;
     font-size: 2.25rem;
 
     @media (min-width: $md) {
       font-size: 3.5rem;
-      margin-bottom: 40px;
+      margin-bottom: 24px;
+      line-height: 54px;
     }
   }
 
@@ -416,9 +417,6 @@ span.above-tag-text {
     width: 100%;
   }
 
-  .home-blog-section .blog-content-left h2 {
-    max-width: none;
-  }
 }
 
 @media (max-width: $sm) {
@@ -874,13 +872,13 @@ button.bg-primary:focus {
         padding-right: 80px;
       }
 
-      h2,
+      h3,
       p {
         color: $white;
         font-weight: 300;
       }
 
-      h2 {
+      h3 {
         font-size: 1.75rem;
       }
 
@@ -1238,7 +1236,7 @@ button.bg-primary:focus {
       order: 1
     }
   }
-  svg {
+  svg, img {
     position: absolute;
     right: calc(100% - 520px);
   }

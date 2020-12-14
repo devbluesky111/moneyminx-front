@@ -7,10 +7,16 @@ export interface TokenType {
   tokenValue: string;
 }
 
+export interface FastLinkConfig {
+  flow: string;
+  configName: ConfigType;
+  providerAccountId: number
+}
+
 export interface FastLinkOptionsType {
   fastLinkURL: string;
   token?: TokenType;
-  configName?: ConfigType;
+  config?: FastLinkConfig;
 }
 
 export interface YodleeHookPropsType {

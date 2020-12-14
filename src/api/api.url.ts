@@ -46,6 +46,7 @@ export const urls = {
   },
   yodlee: {
     FAST_LINK: '/account/yodlee/fastlink',
+    FAST_LINK_UPDATE: '/account/yodlee/fastlink?update=true&accountId=:accountId',
   },
   networth: {
     NETWORTH: '/networth',

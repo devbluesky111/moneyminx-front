@@ -63,6 +63,11 @@
   &__update-link {
     font-weight: 500;
     font-size: 0.875rem;
+
+    .update-credentials {
+      color: $purple;
+      cursor: pointer;
+    }
   }
 
   &__delete-link {
