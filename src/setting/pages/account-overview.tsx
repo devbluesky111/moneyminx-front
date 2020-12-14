@@ -233,8 +233,6 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
       config: data.params
     };
 
-    console.log(data)
-
     setFastLinkOptions(fastLinkOptions);
 
     event(events.connectAccount);
