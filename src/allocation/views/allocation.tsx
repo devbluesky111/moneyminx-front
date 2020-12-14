@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 import AppHeader from 'common/app.header';
 import AppFooter from 'common/app.footer';
@@ -20,7 +21,37 @@ const Allocation: React.FC<AllocationProps> = () => {
   const { fetching, allocations, allocationChartData } = useAllocation(filter);
 
   if (!allocations || !allocationChartData) {
-    return <CircularSpinner />;
+    return (
+      <div className='mm-setting mm-allocation'>
+        <AppHeader
+          toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
+          toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+          open={openRightNav}
+        />
+        <div className='app-subheader-container px-4'>
+          <Skeleton width={200} height={50} count={1}/>
+        </div>
+        <div className='content-wrapper'>
+          <div className='container'>
+            <section className='mm-allocation-overview'>
+              <div className='mm-allocation-overview__wrapper'>
+                <div className='row'>
+                  <div className='col-xl-4'>
+                    <Skeleton width={375} height={810}/>
+                  </div >
+                  <div className='col-xl-4'>
+                    <Skeleton width={375} height={810}/>
+                  </div >
+                  <div className='col-xl-4'>
+                    <Skeleton width={375} height={810}/>
+                  </div >
+                </div >
+              </div >
+            </section >
+          </div >
+        </div >
+      </div>
+    );
   }
 
   if (fetching && !counter) {
