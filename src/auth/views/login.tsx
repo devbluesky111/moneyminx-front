@@ -182,7 +182,7 @@ export const LoginMainSection = () => {
                         if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
                           setRefreshLoading(true);
 
-                          let accounts = await axios.get(appEnv.BASE_URL + 'account/me?refresh=true', {
+                          let accounts = await axios.get(appEnv.BASE_URL + 'account1/me?refresh=true', {
                             headers: {
                               authorization: `Bearer ${storage.accessToken()}`,
                             },
@@ -196,12 +196,9 @@ export const LoginMainSection = () => {
                             if (response.status === 200) {
                               return response.data
                             }
-                            return null;
-                          });
-
-                          if (!accounts) {
+                          }).catch((err) => {
                             return mmToast('Refresh Failed', { type: 'error' });
-                          }
+                          });
 
                           // const accounts = await getRefreshedAccount({ dispatch });
 
