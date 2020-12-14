@@ -42,7 +42,7 @@ export const ConnectAccountMainSection = () => {
   const { onboarded } = useAuthState();
   const manualAccountModal = useModal();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
-  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>()
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } })
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -59,13 +59,13 @@ export const ConnectAccountMainSection = () => {
     const { data, error } = await getFastlink();
 
     if (error) {
-      return mmToast('Error Occurred', { type: 'error' });;
+      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });;
     }
 
     const fastLinkOptions: FastLinkOptionsType = {
-      fastLinkURL: data.fastLinkUrl || '',
-      token: data.accessToken || '',
-      config: data.params || {}
+      fastLinkURL: data.fastLinkUrl,
+      token: data.accessToken,
+      config: data.params
     };
 
     setFastLinkOptions(fastLinkOptions);
@@ -206,13 +206,11 @@ export const ConnectAccountMainSection = () => {
       </div>
       <ManualAccountModal manualAccountModal={manualAccountModal} />
       {!onboarded ? <ConnectAccountSteps isConnectAccount /> : null}
-      {fastLinkOptions &&
-        <FastLinkModal
-          fastLinkModal={fastlinkModal}
-          fastLinkOptions={fastLinkOptions}
-          handleSuccess={handleConnectAccountSuccess}
-        />
-      }
+      <FastLinkModal
+        fastLinkModal={fastlinkModal}
+        fastLinkOptions={fastLinkOptions}
+        handleSuccess={handleConnectAccountSuccess}
+      />
     </div>
   );
 };
