@@ -293,6 +293,30 @@ span.forgot-pass {
   margin-bottom: 40px;
   font-weight: 400;
 }
+// Loading screen
+.refresh-loading {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  background: $purple;
+  padding: 45vh 10% 0 10%;
+  font-weight: 300;
+  font-size: 1.5rem;
+  line-height: 30px;
+  color: $white;
+  text-align: center;
+
+  span {
+    display: block;
+  }
+}
+.loading-logo {
+  height: 64px;
+  width: 300px;
+}
 
 //Footer Second
 .footer-second {
