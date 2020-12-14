@@ -25,6 +25,9 @@ import { getCurrentSubscription, postFacebookLogin, getSubscription } from 'api/
 
 import EmailNeededModal from './inc/email-needed.modal';
 import AssociateEmailModal from './inc/associate-email.modal';
+import axios from 'axios';
+import { storage } from 'app/app.storage';
+import appEnv from 'app/app.env';
 
 const Login = () => {
   return (
@@ -47,6 +50,7 @@ export const LoginMainSection = () => {
   const [associateMessage, setAssociateMessage] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [refreshLoading, setRefreshLoading] = useState<boolean>(false);
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const visibilityIcon = passwordVisible ? <VisibleIcon /> : <HiddenIcon />;
 
@@ -98,9 +102,9 @@ export const LoginMainSection = () => {
           <span className='loading'>Loading...</span>
           <LogoWhiteImg />
         </div>
-        <ProgressBar now={60} />
+        <ProgressBar now={uploadPercentage} />
         <div className='d-flex mt-3 justify-content-between align-items-center'>
-          <span>56%</span>
+          <span>{uploadPercentage}%</span>
           <span className='getting-ready'>Getting ready for the big reveal.</span>
         </div>
       </div> :
@@ -177,7 +181,29 @@ export const LoginMainSection = () => {
                         const { data } = await getCurrentSubscription();
                         if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
                           setRefreshLoading(true);
-                          const accounts = await getRefreshedAccount({ dispatch });
+
+                          let accounts = await axios.get(appEnv.BASE_URL + 'account/me?refresh=true', {
+                            headers: {
+                              authorization: `Bearer ${storage.accessToken()}`,
+                            },
+                            onDownloadProgress: progressEvent => {
+                              const total = parseFloat(progressEvent.total);
+                              const current = progressEvent.currentTarget.response.length;
+                              let percentCompleted = Math.floor(current / total * 100)
+                              setUploadPercentage(percentCompleted);
+                            }
+                          }).then((response) => {
+                            if (response.status === 200) {
+                              return response.data
+                            }
+                            return null;
+                          });
+
+                          if (!accounts) {
+                            return mmToast('Refresh Failed', { type: 'error' });
+                          }
+
+                          // const accounts = await getRefreshedAccount({ dispatch });
 
                           const manualAccounts = accounts?.data?.filter(
                             (account: Record<string, string>) => account.isManual
@@ -199,7 +225,7 @@ export const LoginMainSection = () => {
                         } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
                       }
 
-                      // setRefreshLoading(false);
+                      setRefreshLoading(false);
 
                       actions.setFieldError(
                         'password',
