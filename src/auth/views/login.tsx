@@ -8,7 +8,7 @@ import env from 'app/app.env';
 import useToast from 'common/hooks/useToast';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
-import { useAuthDispatch } from 'auth/auth.context';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { appRouteConstants } from 'app/app-route.constant';
 import { pricingDetailConstant } from 'common/common.constant';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -42,6 +42,7 @@ export const LoginMainSection = () => {
   const associateModal = useModal();
   const dispatch = useAuthDispatch();
   const emailNeededModal = useModal();
+  const { onboarded } = useAuthState();
   const [fbToken, setFBToken] = useState<string>('');
   const [associateMessage, setAssociateMessage] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -188,7 +189,7 @@ export const LoginMainSection = () => {
                             manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
                           ) {
                             history.push(appRouteConstants.subscription.REVIEW);
-                          } else if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
+                          } else if (!onboarded) return history.push(appRouteConstants.networth.NET_WORTH);
                           else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                         } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
                       }
