@@ -42,12 +42,11 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
           </li>
         ))
       : null;
-    mmToast(<ul>{errorList}</ul>, { type: 'error', autoClose: false });
+
+    return mmToast(<ul>{errorList}</ul>, { type: 'error', autoClose: false });
   };
 
   const onClose = async (args: any) => {
-    setLoading(true);
-
     return fastLinkModal.close();
   };
 
