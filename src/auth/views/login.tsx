@@ -1,12 +1,12 @@
 import FacebookLogin from 'react-facebook-login';
-import React, { ChangeEvent, useState } from 'react';
-import { ProgressBar } from 'react-bootstrap';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { Formik } from 'formik';
+import { isEmpty } from 'lodash';
 import { useHistory, Link, useLocation } from 'react-router-dom';
 
 import env from 'app/app.env';
-import { Formik } from 'formik';
-import { isEmpty } from 'lodash';
 import useToast from 'common/hooks/useToast';
+
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
@@ -25,9 +25,6 @@ import { getCurrentSubscription, postFacebookLogin, getSubscription } from 'api/
 
 import EmailNeededModal from './inc/email-needed.modal';
 import AssociateEmailModal from './inc/associate-email.modal';
-import axios from 'axios';
-import { storage } from 'app/app.storage';
-import appEnv from 'app/app.env';
 
 const Login = () => {
   return (
@@ -50,7 +47,6 @@ export const LoginMainSection = () => {
   const [associateMessage, setAssociateMessage] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [refreshLoading, setRefreshLoading] = useState<boolean>(false);
-  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const visibilityIcon = passwordVisible ? <VisibleIcon /> : <HiddenIcon />;
 
@@ -97,17 +93,11 @@ export const LoginMainSection = () => {
   return (
 
     <div className='main-table-wrapper'>
-      {refreshLoading ? <div className='refresh-loading'>
-        <div className='d-flex mb-3 justify-content-between align-items-center'>
-          <span className='loading'>Loading...</span>
+      {refreshLoading ?
+        <div className='refresh-loading'>
           <LogoWhiteImg />
-        </div>
-        <ProgressBar now={uploadPercentage} />
-        <div className='d-flex mt-3 justify-content-between align-items-center'>
-          <span>{uploadPercentage}%</span>
-          <span className='getting-ready'>Getting ready for the big reveal.</span>
-        </div>
-      </div> :
+          <MessageChange />
+        </div> :
         <div className=''>
           <div className='row login-wrapper'>
             <div className='guide-content'>
@@ -182,26 +172,7 @@ export const LoginMainSection = () => {
                         if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
                           setRefreshLoading(true);
 
-                          let accounts = await axios.get(appEnv.BASE_URL + 'account/me?refresh=true', {
-                            headers: {
-                              authorization: `Bearer ${storage.accessToken()}`,
-                            },
-                            onDownloadProgress: progressEvent => {
-                              const total = parseFloat(progressEvent.total);
-                              const current = progressEvent.currentTarget.response.length;
-                              let percentCompleted = Math.floor(current / total * 100)
-                              setUploadPercentage(percentCompleted);
-                            }
-                          }).then((response) => {
-                            if (response.status === 200) {
-                              mmToast('Refresh Success', { type: 'success' });
-                              return response.data
-                            }
-                          }).catch((err) => {
-                            return mmToast('Refresh Failed', { type: 'error' });
-                          });
-
-                          // const accounts = await getRefreshedAccount({ dispatch });
+                          const accounts = await getRefreshedAccount({ dispatch });
 
                           const manualAccounts = accounts?.data?.filter(
                             (account: Record<string, string>) => account.isManual
@@ -223,7 +194,7 @@ export const LoginMainSection = () => {
                         } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
                       }
 
-                      setRefreshLoading(false);
+                      // setRefreshLoading(false);
 
                       actions.setFieldError(
                         'password',
@@ -347,3 +318,34 @@ export const LoginMainSection = () => {
     </div>
   );
 };
+
+export const MessageChange = () => {
+  const messageArr = [
+    "Getting ready for the big reveal.",
+    "Are you ready for your updated net worth?",
+    "You can't get to your goals if you don't know where you are",
+    "Here's to clarity",
+    "Something else will be here soon"
+  ];
+
+  const [showingMessage, setShowingMessage] = useState<string>('Getting ready for the big reveal.');
+
+  const showMessage = () => {
+    const randonIndex = Math.floor(Math.random() * 5);
+    if (messageArr[randonIndex] === showingMessage) {
+      showMessage();
+    } else {
+      setShowingMessage(messageArr[randonIndex]);
+    }
+  }
+
+  useEffect(() => {
+    setTimeout(showMessage, 2000);
+  })
+
+  return (
+    <span className='mt-5'>
+      {showingMessage}
+    </span>
+  );
+}

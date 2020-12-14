@@ -307,28 +307,10 @@ span.forgot-pass {
   font-size: 1.5rem;
   line-height: 30px;
   color: $white;
+  text-align: center;
 
-  .loading {
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 23px;
-  }
-
-  @media(max-width: $sm) {
-      .getting-ready {
-        font-weight: 300;
-        font-size: 15px;
-        line-height: 19px;
-    }
-  }
-
-  .progress {
-    height: 4px;
-    background-color: rgba($white, 0.3);
-
-    .progress-bar {
-      background-color: $white;
-    }
+  span {
+    display: block;
   }
 }
 
