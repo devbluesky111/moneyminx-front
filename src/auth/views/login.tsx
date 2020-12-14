@@ -330,17 +330,17 @@ export const MessageChange = () => {
 
   const [showingMessage, setShowingMessage] = useState<string>('Getting ready for the big reveal.');
 
-  const showMessage = () => {
-    const randonIndex = Math.floor(Math.random() * 5);
-    if (messageArr[randonIndex] === showingMessage) {
-      showMessage();
+  const changeMessage = () => {
+    const randomIndex = Math.floor(Math.random() * 5);
+    if (messageArr[randomIndex] === showingMessage) {
+      changeMessage();
     } else {
-      setShowingMessage(messageArr[randonIndex]);
+      setShowingMessage(messageArr[randomIndex]);
     }
   }
 
   useEffect(() => {
-    setTimeout(showMessage, 2000);
+    setTimeout(changeMessage, 2000);
   })
 
   return (
