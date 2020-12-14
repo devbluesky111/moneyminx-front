@@ -182,7 +182,7 @@ export const LoginMainSection = () => {
                         if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
                           setRefreshLoading(true);
 
-                          let accounts = await axios.get(appEnv.BASE_URL + 'account1/me?refresh=true', {
+                          let accounts = await axios.get(appEnv.BASE_URL + 'account/me?refresh=true', {
                             headers: {
                               authorization: `Bearer ${storage.accessToken()}`,
                             },
