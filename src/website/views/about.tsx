@@ -60,17 +60,15 @@ export const AboutTopSection = () => {
         <div className='col-12 col-xl-5'>
           <div className='mm-about-right-banner'>
             <div className='account-wrap bg-white top-box'>
-              <h3>Connected Accounts</h3>
+              <span className='medium-heading-light'>Connected Accounts</span>
               <p>Go ahead, add more accounts</p>
             </div>
 
             <div className='account-wrap bg-white border'>
-              <h4>
-                <span className='logo-icon'>
-                  <AboutWealthFrontIcon />
-                </span>
-                Wealthfront
-              </h4>
+              <span className='logo-icon'>
+                <AboutWealthFrontIcon />
+              </span>
+              <span className='company-name'>Wealthfront</span>
               <ul className='account-list'>
                 <li>
                   <span className='switch-icon'>
@@ -87,12 +85,10 @@ export const AboutTopSection = () => {
               </ul>
             </div>
             <div className='account-wrap bg-white border small-box'>
-              <h4>
                 <span className='logo-icon'>
                   <img alt='Peer Street' src={PeerStreetLogo} />
                 </span>
-                Peer Street
-              </h4>
+              <span className='company-name'>Peer Street</span>
               <ul className='account-list'>
                 <li>
                   <span className='switch-icon'>
@@ -127,7 +123,7 @@ export const AboutOwnerSection = () => {
           </div>
           <div className='col-xl-7 mm-owner-section-info'>
             <div className='owner-info'>
-              <h2 className='mb-3'>Meet our Founders</h2>
+              <h2 className='mb-3'>Money Minx Founders</h2>
               <p className='text'>
                 Money Minx was started by Hussein and Jessica, a husband/wife team and investors from Southern California.
             </p>
@@ -178,7 +174,7 @@ export const AboutNetWorthSection = () => {
             <p>
               <span className='highlighted-text'>One of our many features</span>
             </p>
-            <h2>Net Worth</h2>
+            <h2>Net Worth Calculator</h2>
             <p className='text'>
               By adding all of your assets and investments to Money Minx you will be able to easily calculate your Net Worth. We support
               banks, crowdfunding sites, financial firms, multiple currencies and more. Crypto wallets are also coming soon.

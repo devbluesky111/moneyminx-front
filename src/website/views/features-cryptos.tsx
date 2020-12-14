@@ -1,13 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
-import CryptosImg from 'assets/images/home/investment-assets-cryptos.svg';
+import CryptosImg from 'assets/images/features/investment-assets-cryptos.svg';
 import SyncCryptoAccountsImg from 'assets/images/features/sync-crypto-accounts.svg';
 
 const FeaturesCryptos = () => {
   return (
     <WebsiteLayout>
+      <Helmet>
+        <title>Crypto Portfolio Tracker | Money Minx</title>
+      </Helmet>
       <div className='mm-new-container'>
         <FeaturesCryptosTopSection />
         <FeaturesCryptosBottomSection />
@@ -59,8 +63,7 @@ export const FeaturesCryptosBottomSection = () => {
         <div className='col-lg-5 feature-content'>
           <h2>Cryptocurrency Wallets</h2>
           <p className='text'>
-            If you use one of the many popular crypto wallets like Coinbase, Gemini or Binance, you can keep your crypto currency balance
-            up-to-date in Money Minx at all times.
+            Sync your Money Minx accounts with most popular crypto wallets like Coinbase, Gemini, Binance and more.
           </p>
         </div>
       </div>
