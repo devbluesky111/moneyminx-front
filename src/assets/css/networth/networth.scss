@@ -698,6 +698,7 @@ a.upgrader-btn {
   color: $redAlert;
 }
 .dropdown-box {
+  padding-top: 10px;
   padding-bottom: 10px;
   max-height: 520px;
   overflow-y: auto;
@@ -709,24 +710,25 @@ a.upgrader-btn {
 .dropdown-box ul li {
   padding: 10px 24px;
   position: relative;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  -ms-flex-align: start;
-  -webkit-align-items: flex-start;
   align-items: flex-start;
+
+  a {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+  }
+}
+.account-filter-dd-row {
+  display: contents;
+  width: 100%;
+  align-items: baseline;
+}
+.account-filter-dd-balance {
+  margin-left: auto;
 }
 .dropdown-box ul li:hover {
   background: rgba(83, 76, 234, 0.3);
-}
-.dropdown-box ul li a {
-  width: 100%;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -ms-flex-align: start;
-  -webkit-align-items: flex-start;
-  align-items: flex-start;
 }
 .dropdown-box ul li:before {
   content: '';
@@ -738,15 +740,19 @@ a.upgrader-btn {
   border-radius: 2px;
 }
 .dropdown-box ul.pending li:before {
+  margin-top: 3px;
   background: $redAlert;
 }
 .dropdown-box ul.success li:before {
+  margin-top: 3px;
   background: $green;
 }
 .dropdown-box ul.warning li:before {
+  margin-top: 3px;
   background: $yellow;
 }
 .dropdown-box ul.error li:before {
+  margin-top: 3px;
   background: $redAlert;
 }
 .dropdown-box ul li h5 {
@@ -1134,7 +1140,7 @@ a.upgrader-btn {
   color: $black;
 }
 .table-holder .table.account tbody td:first-child {
-  min-width: 300px;
+  min-width: 282px;
   overflow-wrap: break-word;
 }
 .table-holder .table tbody td:not(:first-child),
