@@ -4,7 +4,6 @@ import { Table } from 'react-bootstrap';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { gc } from 'common/interval-parser';
 import { getHoldingsDetails } from 'api/request.api';
-import { ReactComponent as Edited } from 'assets/images/account/Edited.svg';
 import { useModal } from 'common/components/modal';
 
 import HoldingsDetailsModal from './holdings-details.modal';
@@ -13,7 +12,6 @@ import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
 export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData, openEditPositionModalFun, closeEditPositionModalFun, currencySymbol }) => {
 
   const [holdings, setHoldings] = useState<AccountHoldingItem[]>([]);
-  const [editIndex, setEditIndex] = useState<number>(-1);
   const [holdingsDetails, setHoldingsDetails] = useState<any>();
 
   const holdingsDetailsModal = useModal();
@@ -59,7 +57,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                   </thead>
                   <tbody>
                     {holdings?.length > 0 && holdings.map((item, index) => (
-                      <tr key={index} onMouseEnter={() => { setEditIndex(index) }} onMouseLeave={() => { setEditIndex(-1) }} onClick={() => openEditPositionModal(item.id)} >
+                      <tr key={index} onClick={() => openEditPositionModal(item.id)} >
                         <td>{item.description}</td>
                         <td className='hide-type'>{item.price ? currencySymbol : ''}{numberWithCommas(fNumber(item.price, 2))}</td>
                         <td >{item.quantity}</td>
