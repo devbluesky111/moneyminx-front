@@ -10,15 +10,14 @@ export interface PlaceholderProps {
 export const Placeholder: React.FC<PlaceholderProps> = ({ type }) => {
     const [message, setMessage] = useState<string>('');
 
-    const messagesObject = {
-        chart: 'Add your first account to start displaying your net worth chart.',
-        investment: 'You don\'t have any investment assets yet. Get started by adding an account.',
-        other: 'You don\'t have any other assets yet. Get started by adding an account.',
-        liabilities: 'You don\'t have any liabilities assets yet. Get started by adding an account.',
-        networth: 'Add your first account to start calculating your net worth.'
-    }
-
     useEffect(() => {
+        const messagesObject = {
+            chart: 'Add your first account to start displaying your net worth chart.',
+            investment: 'You don\'t have any investment assets yet. Get started by adding an account.',
+            other: 'You don\'t have any other assets yet. Get started by adding an account.',
+            liabilities: 'You don\'t have any liabilities assets yet. Get started by adding an account.',
+            networth: 'Add your first account to start calculating your net worth.'
+        }
         let message = '';
         switch (type) {
             case 'chart':
@@ -38,7 +37,7 @@ export const Placeholder: React.FC<PlaceholderProps> = ({ type }) => {
                 break;
         };
         setMessage(message)
-    }, [type, messagesObject]);
+    }, [type]);
 
     return (
         <div className='networth-placeholder'>
