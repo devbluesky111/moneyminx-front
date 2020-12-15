@@ -1,10 +1,10 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 
 import { TokenType, YodleeHookType } from './yodlee.type';
 
 const useYodlee: YodleeHookType = ({
   containerId = 'fastlinkContainer',
-  createScriptTag = true,
   fastLinkOptions: { fastLinkURL, token, config },
   onSuccess,
   onError,
@@ -15,10 +15,20 @@ const useYodlee: YodleeHookType = ({
   const [error, setError] = useState<any>(null);
   const [data, setData] = useState(null);
   const [active, setActive] = useState(false);
+  const [scriptTagCreated, setScriptTagCreated] = useState(false);
+
+  const fastlink = window.fastlink;
+
+  useEffect(() => {
+    if (fastlink) {
+      setActive(true);
+    }
+  }, [fastlink]);
 
   useEffect(() => {
     let script: HTMLScriptElement;
-    if (createScriptTag) {
+    const body: Node = document.body;
+    if (!scriptTagCreated && fastLinkURL) {
       script = document.createElement('script');
 
       script.id = 'yodlee-fastlink-script';
@@ -28,16 +38,17 @@ const useYodlee: YodleeHookType = ({
       script.onload = () => setReady(true);
       script.onerror = () => setError('Yodlee FastLink library could not be loaded!');
 
-      document.body.appendChild(script);
+      body.appendChild(script);
+      setScriptTagCreated(true);
     }
 
     return () => {
       window.fastlink?.close();
-      if (createScriptTag) {
-        document.body.removeChild(script);
+      if (scriptTagCreated && script) {
+        body.removeChild(script);
       }
     };
-  }, [createScriptTag, fastLinkURL]);
+  }, [fastLinkURL, scriptTagCreated]);
 
   const init = (currentToken?: TokenType) => {
     const getTokenString = (t?: TokenType) => {
@@ -55,7 +66,9 @@ const useYodlee: YodleeHookType = ({
       }
     };
 
-    setActive(true);
+    if (!active) {
+      return <p>Loading......</p>;
+    }
 
     window.fastlink?.open(
       {

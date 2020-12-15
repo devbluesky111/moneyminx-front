@@ -1,17 +1,18 @@
 import FacebookLogin from 'react-facebook-login';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useHistory, Link, useLocation } from 'react-router-dom';
 
-import env from 'app/app.env';
 import { Formik } from 'formik';
 import { isEmpty } from 'lodash';
+import env from 'app/app.env';
 import useToast from 'common/hooks/useToast';
 import { AuthLayout } from 'layouts/auth.layout';
 import { useModal } from 'common/components/modal';
-import { useAuthDispatch } from 'auth/auth.context';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { appRouteConstants } from 'app/app-route.constant';
 import { pricingDetailConstant } from 'common/common.constant';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
+import { ReactComponent as LogoWhiteImg } from 'assets/icons/money-minx-white-logo.svg';
 import { EMAIL_IS_EMPTY, PWD_IS_EMPTY } from 'lang/en/validation.json';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
 import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
@@ -41,9 +42,11 @@ export const LoginMainSection = () => {
   const associateModal = useModal();
   const dispatch = useAuthDispatch();
   const emailNeededModal = useModal();
+  const { onboarded } = useAuthState();
   const [fbToken, setFBToken] = useState<string>('');
   const [associateMessage, setAssociateMessage] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [refreshLoading, setRefreshLoading] = useState<boolean>(false);
 
   const visibilityIcon = passwordVisible ? <VisibleIcon /> : <HiddenIcon />;
 
@@ -88,210 +91,221 @@ export const LoginMainSection = () => {
   };
 
   return (
-    <div className='main-table-wrapper'>
-      <div className=''>
-        <div className='row login-wrapper'>
-          <div className='guide-content'>
-            <Link to='/'>
-              <LogoImg className='icon auth-logo' />
-            </Link>
 
-            <div className='auth-left-content'>
-              <h1>Three easy steps to get started with Money Minx</h1>
-              <ul>
-                <li>Find your accounts</li>
-                <li>Connect it securely to Money Minx</li>
-                <li>Let Money Minx do the rest</li>
-              </ul>
-              <div className='guide-bottom'>
-                <h2>Serious about security</h2>
-                <div className='guide-icon-wrap'>
-                  <span className='locked-icon'>
-                    <LoginLockIcon />
-                  </span>
-                  <p>The security of your information is our top priority</p>
-                </div>
-                <h2>Trusted by investors</h2>
-                <div className='guide-icon-wrap'>
-                  <span className='shield-icon'>
-                    <LoginShieldIcon />
-                  </span>
-                  <p>Investors from all over the world are using Money Minx</p>
+    <div className='main-table-wrapper'>
+      {refreshLoading ?
+        <div className='refresh-loading'>
+          <LogoWhiteImg className='loading-logo' />
+          <MessageChange />
+        </div> :
+        <div className=''>
+          <div className='row login-wrapper'>
+            <div className='guide-content'>
+              <Link to='/'>
+                <LogoImg className='icon auth-logo' />
+              </Link>
+
+              <div className='auth-left-content'>
+                <h1>Three easy steps to get started with Money Minx</h1>
+                <ul>
+                  <li>Find your accounts</li>
+                  <li>Connect it securely to Money Minx</li>
+                  <li>Let Money Minx do the rest</li>
+                </ul>
+                <div className='guide-bottom'>
+                  <h2>Serious about security</h2>
+                  <div className='guide-icon-wrap'>
+                    <span className='locked-icon'>
+                      <LoginLockIcon />
+                    </span>
+                    <p>The security of your information is our top priority</p>
+                  </div>
+                  <h2>Trusted by investors</h2>
+                  <div className='guide-icon-wrap'>
+                    <span className='shield-icon'>
+                      <LoginShieldIcon />
+                    </span>
+                    <p>Investors from all over the world are using Money Minx</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className='bg-white credentials-wrapper'>
-            <div className='credentials-content'>
-              <div className='logo-img-wrapper'>
-                <LogoImg className='auth-logo' />
-              </div>
-              <h2>Welcome back</h2>
-              <p>Your accounts are ready for you. Hope you will reach your goals</p>
-              <div className={isLoggedOut ? 'session-expired' : 'session-expired hide-me'}>
-                <p>Thanks for visiting. See you next time.</p>
-              </div>
-              <div className={isExpired ? 'session-expired' : 'session-expired hide-me'}>
-                <p>We thought you left, so we logged you out to protect your account.</p>
-              </div>
-              <div className='form-wrap'>
-                <Formik
-                  validateOnChange={false}
-                  initialValues={{ email: '', password: '' }}
-                  onSubmit={async (values, actions) => {
-                    const isEmailEmpty = isEmpty(values.email);
-                    const isPasswordEmpty = isEmpty(values.password);
-                    const hasEmptyFields = isEmailEmpty || isPasswordEmpty;
+            <div className='bg-white credentials-wrapper'>
+              <div className='credentials-content'>
+                <div className='logo-img-wrapper'>
+                  <LogoImg className='auth-logo' />
+                </div>
+                <h2>Welcome back</h2>
+                <p>Your accounts are ready for you. Hope you will reach your goals</p>
+                <div className={isLoggedOut ? 'session-expired' : 'session-expired hide-me'}>
+                  <p>Thanks for visiting. See you next time.</p>
+                </div>
+                <div className={isExpired ? 'session-expired' : 'session-expired hide-me'}>
+                  <p>We thought you left, so we logged you out to protect your account.</p>
+                </div>
+                <div className='form-wrap'>
+                  <Formik
+                    validateOnChange={false}
+                    initialValues={{ email: '', password: '' }}
+                    onSubmit={async (values, actions) => {
+                      const isEmailEmpty = isEmpty(values.email);
+                      const isPasswordEmpty = isEmpty(values.password);
+                      const hasEmptyFields = isEmailEmpty || isPasswordEmpty;
 
-                    if (hasEmptyFields) {
-                      if (isEmailEmpty) {
-                        actions.setFieldError('email', EMAIL_IS_EMPTY);
+                      if (hasEmptyFields) {
+                        if (isEmailEmpty) {
+                          actions.setFieldError('email', EMAIL_IS_EMPTY);
+                        }
+                        if (isPasswordEmpty) {
+                          actions.setFieldError('password', PWD_IS_EMPTY);
+                        }
+
+                        return false;
                       }
-                      if (isPasswordEmpty) {
-                        actions.setFieldError('password', PWD_IS_EMPTY);
+
+                      const { error } = await login({ dispatch, payload: values });
+                      actions.setSubmitting(false);
+
+                      if (!error) {
+                        const { data } = await getCurrentSubscription();
+                        if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
+                          setRefreshLoading(true);
+
+                          const accounts = await getRefreshedAccount({ dispatch });
+
+                          const manualAccounts = accounts?.data?.filter(
+                            (account: Record<string, string>) => account.isManual
+                          ).length;
+
+                          const autoAccounts = accounts?.data?.filter(
+                            (account: Record<string, string>) => !account.isManual
+                          ).length;
+
+                          const subscriptionDetails = await getSubscription({ priceId: data.priceId });
+                          mmToast('Sign in Success', { type: 'success' });
+                          if (
+                            autoAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
+                            manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
+                          ) {
+                            history.push(appRouteConstants.subscription.REVIEW);
+                          } else if (!onboarded) return history.push(appRouteConstants.networth.NET_WORTH);
+                          else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
+                        } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
                       }
 
-                      return false;
-                    }
+                      // setRefreshLoading(false);
 
-                    const { error } = await login({ dispatch, payload: values });
-                    actions.setSubmitting(false);
+                      actions.setFieldError(
+                        'password',
+                        error?.message && typeof error.message !== 'object'
+                          ? error.message
+                          : 'Please enter valid credentials'
+                      );
+                    }}
+                  >
+                    {(props) => {
+                      const updateEmailAddress = (event: ChangeEvent<HTMLInputElement>) => {
+                        dispatch({ type: 'UPDATE_EMAIL_ADDRESS', email: event.target.value });
+                        return props.handleChange(event);
+                      };
+                      const { errors } = props;
 
-                    if (!error) {
-                      const { data } = await getCurrentSubscription();
-                      if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
-                        const accounts = await getRefreshedAccount({ dispatch });
+                      const hasError = (field: 'email' | 'password') => errors[field];
 
-                        const manualAccounts = accounts?.data?.filter(
-                          (account: Record<string, string>) => account.isManual
-                        ).length;
+                      const emailClass = hasError('email') ? 'email invalid' : 'email';
+                      const passClass = hasError('password') ? 'password invalid' : 'password';
 
-                        const autoAccounts = accounts?.data?.filter(
-                          (account: Record<string, string>) => !account.isManual
-                        ).length;
-
-                        const subscriptionDetails = await getSubscription({ priceId: data.priceId });
-                        mmToast('Sign in Success', { type: 'success' });
-                        if (
-                          autoAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
-                          manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
-                        ) {
-                          history.push(appRouteConstants.subscription.REVIEW);
-                        } else if (accounts?.data?.length) return history.push(appRouteConstants.networth.NET_WORTH);
-                        else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
-                      } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
-                    }
-
-                    actions.setFieldError(
-                      'password',
-                      error?.message && typeof error.message !== 'object'
-                        ? error.message
-                        : 'Please enter valid credentials'
-                    );
-                  }}
-                >
-                  {(props) => {
-                    const updateEmailAddress = (event: ChangeEvent<HTMLInputElement>) => {
-                      dispatch({ type: 'UPDATE_EMAIL_ADDRESS', email: event.target.value });
-                      return props.handleChange(event);
-                    };
-                    const { errors } = props;
-
-                    const hasError = (field: 'email' | 'password') => errors[field];
-
-                    const emailClass = hasError('email') ? 'email invalid' : 'email';
-                    const passClass = hasError('password') ? 'password invalid' : 'password';
-
-                    return (
-                      <form onSubmit={props.handleSubmit}>
-                        <div className='align-items-start input-wrapper'>
-                          <div className='email-wrap'>
-                            <input
-                              type='email'
-                              className={emailClass}
-                              onChange={updateEmailAddress}
-                              onBlur={props.handleBlur}
-                              value={props.values.email}
-                              name='email'
-                              placeholder='Email'
-                            />
+                      return (
+                        <form onSubmit={props.handleSubmit}>
+                          <div className='align-items-start input-wrapper'>
+                            <div className='email-wrap'>
+                              <input
+                                type='email'
+                                className={emailClass}
+                                onChange={updateEmailAddress}
+                                onBlur={props.handleBlur}
+                                value={props.values.email}
+                                name='email'
+                                placeholder='Email'
+                              />
+                            </div>
+                            {hasError('email') ? <div className='mt-2 feedback'>{props.errors.email}</div> : null}
                           </div>
-                          {hasError('email') ? <div className='mt-2 feedback'>{props.errors.email}</div> : null}
-                        </div>
 
-                        <div className='align-items-center'>
-                          <div className='password-wrap'>
-                            <input
-                              name='password'
-                              className={passClass}
-                              placeholder='Password'
-                              onBlur={props.handleBlur}
-                              onChange={props.handleChange}
-                              value={props.values.password}
-                              type={passwordVisible ? 'text' : 'password'}
-                            />
-                            <span
-                              className='visibility-icon'
-                              onClick={() => setPasswordVisible(!passwordVisible)}
-                              role='button'
-                            >
-                              {visibilityIcon}
+                          <div className='align-items-center'>
+                            <div className='password-wrap'>
+                              <input
+                                name='password'
+                                className={passClass}
+                                placeholder='Password'
+                                onBlur={props.handleBlur}
+                                onChange={props.handleChange}
+                                value={props.values.password}
+                                type={passwordVisible ? 'text' : 'password'}
+                              />
+                              <span
+                                className='visibility-icon'
+                                onClick={() => setPasswordVisible(!passwordVisible)}
+                                role='button'
+                              >
+                                {visibilityIcon}
+                              </span>
+                            </div>
+                            {hasError('password') ? <div className='mt-2 feedback'>{props.errors.password}</div> : null}
+                          </div>
+
+                          <p>
+                            <span className='forgot-pass purple-links'>
+                              <Link to={appRouteConstants.auth.FORGOT_PASSWORD}>Forgot Password?</Link>
                             </span>
-                          </div>
-                          {hasError('password') ? <div className='mt-2 feedback'>{props.errors.password}</div> : null}
-                        </div>
+                          </p>
+                          <button className='mm-btn-animate mm-btn-primary' type='submit' disabled={props.isSubmitting}>
+                            Log in
+                          </button>
+                        </form>
+                      );
+                    }}
+                  </Formik>
 
-                        <p>
-                          <span className='forgot-pass purple-links'>
-                            <Link to={appRouteConstants.auth.FORGOT_PASSWORD}>Forgot Password?</Link>
-                          </span>
-                        </p>
-                        <button className='mm-btn-animate mm-btn-primary' type='submit' disabled={props.isSubmitting}>
-                          Log in
-                        </button>
-                      </form>
-                    );
-                  }}
-                </Formik>
-
-                <div className='facebook-login'>
-                  <div className='social-login-options'>
-                    <span>Or, log in with:</span>
-                    <div className='fb-icon-wrap'>
-                      <FacebookLogin
-                        authType='rerequest'
-                        textButton=''
-                        fields='email'
-                        isMobile={false}
-                        autoLoad={false}
-                        reAuthenticate={true}
-                        callback={responseFacebook}
-                        scope='public_profile,email'
-                        icon={<LoginFacebookIcon className='social-login-fb' />}
-                        appId={env.FACEBOOK_APP_ID || ''}
-                        buttonStyle={{
-                          background: 'transparent',
-                          padding: 0,
-                        }}
-                      />
+                  <div className='facebook-login'>
+                    <div className='social-login-options'>
+                      <span>Or, log in with:</span>
+                      <div className='fb-icon-wrap'>
+                        <FacebookLogin
+                          authType='rerequest'
+                          textButton=''
+                          fields='email'
+                          isMobile={false}
+                          autoLoad={false}
+                          reAuthenticate={true}
+                          callback={responseFacebook}
+                          scope='public_profile,email'
+                          icon={<LoginFacebookIcon className='social-login-fb' />}
+                          appId={env.FACEBOOK_APP_ID || ''}
+                          buttonStyle={{
+                            background: 'transparent',
+                            padding: 0,
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <div className='auth-end-element'>
-                    {'Don’t have an account? '}
-                    <Link to='/signup' className='purple-links'>
-                      Sign Up
-                    </Link>
+                  <div>
+                    <div className='auth-end-element'>
+                      {'Don’t have an account? '}
+                      <Link to='/signup' className='purple-links'>
+                        Sign Up
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      }
 
       <AssociateEmailModal
         source='login'
@@ -304,3 +318,34 @@ export const LoginMainSection = () => {
     </div>
   );
 };
+
+export const MessageChange = () => {
+  const messageArr = [
+    'Getting ready for the big reveal.',
+    'Are you ready for your updated net worth?',
+    'You can\'t get to your goals if you don\'t know where you are',
+    'Here\'s to clarity',
+    'Something else will be here soon'
+  ];
+
+  const [showingMessage, setShowingMessage] = useState<string>('Getting ready for the big reveal.');
+
+  const showMessage: any = () => {
+    const randomIndex = Math.floor(Math.random() * 5);
+    if (messageArr[randomIndex] === showingMessage) {
+      return showMessage();
+    }
+
+    setShowingMessage(messageArr[randomIndex]);
+  }
+
+  useEffect(() => {
+    setTimeout(showMessage, 2000);
+  })
+
+  return (
+    <span className='mt-5'>
+      {showingMessage}
+    </span>
+  );
+}

@@ -166,7 +166,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         investedDate: getInitialDate('investedDate'),
         employerMatch: currentFormFields?.employerMatch || '',
         streetAddress: currentFormFields?.streetAddress || '',
-        amountInvested: currentFormFields?.amountInvested || '',
+        amountInvested: currentFormFields?.amountInvested || null,
         associatedLoan: currentFormFields?.associatedLoan || '',
         originationDate: getInitialDate('originationDate'),
         originalBalance: currentFormFields?.originalBalance || '',
@@ -178,18 +178,18 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
         employerMatchLimit: currentFormFields?.employerMatchLimit || '',
         associatedMortgage: currentFormFields?.associatedMortgage || '',
-        calculateReturnsOn: currentFormFields?.calculateReturnsOn || '',
-        postMoneyValuation: currentFormFields?.postMoneyValuation || '',
-        currentMarketValue: currentFormFields?.currentMarketValue || '',
-        targetInterestRate: currentFormFields?.targetInterestRate || '',
-        separateLoanBalance: currentFormFields?.separateLoanBalance || '',
-        employerMatchLimitIn: currentFormFields?.employerMatchLimitIn || '',
-        includeEmployerMatch: currentFormFields?.includeEmployerMatch || '',
-        separateShortBalance: currentFormFields?.separateShortBalance || '',
-        estimatedAnnualReturns: currentFormFields?.estimatedAnnualReturns || '',
-        estimatedAnnualRevenues: currentFormFields?.estimatedAnnualRevenues || '',
-        employerMatchContribution: currentFormFields?.employerMatchContribution || '',
-        estimatedAnnualPrincipalReduction: currentFormFields?.estimatedAnnualPrincipalReduction || '',
+        calculateReturnsOn: currentFormFields?.calculateReturnsOn || 'equity',
+        postMoneyValuation: currentFormFields?.postMoneyValuation || null,
+        currentMarketValue: currentFormFields?.currentMarketValue || null,
+        targetInterestRate: currentFormFields?.targetInterestRate || null,
+        separateLoanBalance: currentFormFields?.separateLoanBalance || true,
+        employerMatchLimitIn: currentFormFields?.employerMatchLimitIn || 'percentage',
+        includeEmployerMatch: currentFormFields?.includeEmployerMatch || true,
+        separateShortBalance: currentFormFields?.separateShortBalance || true,
+        estimatedAnnualReturns: currentFormFields?.estimatedAnnualReturns || null,
+        estimatedAnnualRevenues: currentFormFields?.estimatedAnnualRevenues || null,
+        employerMatchContribution: currentFormFields?.employerMatchContribution || true,
+        estimatedAnnualPrincipalReduction: currentFormFields?.estimatedAnnualPrincipalReduction || null,
       }}
       enableReinitialize
       validationSchema={loginValidationSchema}
@@ -336,7 +336,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       />
                     </div>
                   </li>
-                  <li>
+                  <li className='currency-select'>
                     <span className='form-subheading'>Currency</span>
                     <SelectInput
                       args={enumerateStr(CurrencyOptions)}
