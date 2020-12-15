@@ -44,7 +44,7 @@ const useYodlee: YodleeHookType = ({
 
     return () => {
       window.fastlink?.close();
-      if (scriptTagCreated) {
+      if (scriptTagCreated && script) {
         body.removeChild(script);
       }
     };
