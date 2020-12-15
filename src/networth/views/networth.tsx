@@ -171,7 +171,7 @@ const Networth = () => {
                   {Object.keys(accounts).length !== 0 ?
                     <div className='graphbox'>
                       <ul>
-                        {currentInvestmentAsset ? (
+                        {(fCategories.length === 0 || fCategories.includes('Investment Assets')) &&
                           <li className='inv-data'>
                             <span>Investment Assets</span>
                             <h3>
@@ -179,8 +179,8 @@ const Networth = () => {
                               {numberWithCommas(fNumber(currentInvestmentAsset, 0))}
                             </h3>
                           </li>
-                        ) : null}
-                        {currentOtherAssets ? (
+                        }
+                        {(fCategories.length === 0 || fCategories.includes('Other Assets')) &&
                           <li className='other-data'>
                             <span>Other Assets</span>
                             <h3>
@@ -188,8 +188,8 @@ const Networth = () => {
                               {numberWithCommas(fNumber(currentOtherAssets, 0))}
                             </h3>
                           </li>
-                        ) : null}
-                        {currentLiabilities ? (
+                        }
+                        {(fCategories.length === 0 || fCategories.includes('Liabilities')) &&
                           <li className='lty-data'>
                             <span>Liabilities</span>
                             <h3>
@@ -197,8 +197,8 @@ const Networth = () => {
                               {numberWithCommas(fNumber(currentLiabilities, 0))}
                             </h3>
                           </li>
-                        ) : null}
-                        {currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
+                        }
+                        {(fCategories.length === 0 || fCategories.length === 3) &&
                           <li className='nw-data'>
                             <span>Net Worth</span>
                             <h3>
@@ -206,7 +206,7 @@ const Networth = () => {
                               {numberWithCommas(fNumber(currentNetworth, 0))}
                             </h3>
                           </li>
-                        ) : null}
+                        }
                       </ul>
                       <div className='chartbox'>
                         <NetworthBarGraph networth={networth} fCategories={fCategories} currencySymbol={currencySymbol} />

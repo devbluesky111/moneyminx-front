@@ -38,7 +38,7 @@ export const Placeholder: React.FC<PlaceholderProps> = ({ type }) => {
                 break;
         };
         setMessage(message)
-    }, [type]);
+    }, [type, messagesObject]);
 
     return (
         <div className='networth-placeholder'>
