@@ -50,7 +50,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
     return fastLinkModal.close();
   };
 
-  const { init } = useYodlee({
+  const { init, active } = useYodlee({
     fastLinkOptions,
     onSuccess,
     onError,
@@ -61,10 +61,10 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   const fastLinkURL = fastLinkOptions.fastLinkURL;
 
   useEffect(() => {
-    if (fastLinkURL) {
+    if (fastLinkURL && active) {
       initRef?.current?.click();
     }
-  }, [fastLinkURL]);
+  }, [fastLinkURL, active]);
 
   const handleInit = () => {
     init({ tokenValue: token, tokenType: 'AccessToken' });
@@ -73,7 +73,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   return (
     <Modal {...fastLinkModal.props} title='' size={'xs'} type={ModalTypeEnum.NO_HEADER} canBeClosed>
       <div id='fastlinkContainer' />
-      {loading ? <CircularSpinner /> : null}
+      {loading || !active ? <CircularSpinner /> : null}
       <button ref={initRef} onClick={handleInit} className='hidden' />
     </Modal>
   );
