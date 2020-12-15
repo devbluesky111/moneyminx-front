@@ -357,12 +357,12 @@
         <tr>
           <td class="title">
             <span class="col-6">Heads up</span>
-            <span class="col-6 text-error text-right">Trial Expires in 3 days</span>
+            <span class="col-6 text-error text-right">Trial Expires in {{daysLeft}} days</span>
           </td>
         </tr>
         <tr>
           <td class="text">
-            Your Money Minx trial ends in 3 days. Log in to your account and hit subscribe to keep your
+            Your Money Minx trial ends in {{daysLeft}} days. Log in to your account and hit subscribe to keep your
             access going.
           </td>
         </tr>
@@ -390,11 +390,11 @@
               <tr>
                 <td class="col-md-6">
                   <span class="text-cyan d-block">Investment Asset</span>
-                  <span class="text-digit d-block">$323,4545</span>
+                  <span class="text-digit d-block">{{investmentAsset}}</span>
                 </td>
                 <td class="col-md-6">
                   <span class="text-blue d-block">Other Assets</span>
-                  <span class="text-digit d-block">$323,4545</span>
+                  <span class="text-digit d-block">{{otherAssets}}</span>
                 </td>
               </tr>
             </table>
@@ -404,11 +404,11 @@
               <tr>
                 <td class="col-md-6">
                   <span class="text-red d-block">liabilities</span>
-                  <span class="text-digit d-block">$323,4545</span>
+                  <span class="text-digit d-block">{{liabilities}}</span>
                 </td>
                 <td class="col-md-6">
                   <span class="text-purple d-block">Net worth</span>
-                  <span class="text-digit d-block">$323,4545</span>
+                  <span class="text-digit d-block">{{netWorth}}</span>
                 </td>
               </tr>
             </table>
