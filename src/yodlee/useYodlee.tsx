@@ -18,6 +18,7 @@ const useYodlee: YodleeHookType = ({
 
   useEffect(() => {
     let script: HTMLScriptElement;
+    const body: Node = document.body;
     if (!scriptTagCreated && fastLinkURL) {
       script = document.createElement('script');
 
@@ -28,14 +29,14 @@ const useYodlee: YodleeHookType = ({
       script.onload = () => setReady(true);
       script.onerror = () => setError('Yodlee FastLink library could not be loaded!');
 
-      document.body.appendChild(script);
+      body.appendChild(script);
       setScriptTagCreated(true);
     }
 
     return () => {
       window.fastlink?.close();
-      if (!scriptTagCreated) {
-        document.body.removeChild(script);
+      if (scriptTagCreated) {
+        body.removeChild(script);
       }
     };
   }, [fastLinkURL, scriptTagCreated]);
