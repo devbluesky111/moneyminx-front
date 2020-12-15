@@ -71,7 +71,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
       return false;
     }
 
-    if (isBefore(_date, getMonthSubtracted(getNumberOfChartHistory()))) {
+    if (getNumberOfChartHistory() && isBefore(_date, getMonthSubtracted(getNumberOfChartHistory()))) {
       setIsDateValid(false);
 
       return true;
