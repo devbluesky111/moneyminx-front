@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 
-import { fNumber } from 'common/number.helper';
+import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useModal } from 'common/components/modal';
 import {
   isAfter,
@@ -71,7 +71,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
       return false;
     }
 
-    if (isBefore(_date, getMonthSubtracted(getNumberOfChartHistory()))) {
+    if (getNumberOfChartHistory() && isBefore(_date, getMonthSubtracted(getNumberOfChartHistory()))) {
       setIsDateValid(false);
 
       return true;
@@ -188,12 +188,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
                               </td>
                                 <td>
                                   <span className='d-block'>Value</span>
-                                  {currencySymbol}
-                                  {fNumber(al.allocationValue, 2)}
-                                </td>
-                                <td>
-                                  <span className='d-block'>Value</span>
-                                  {al.allocationValue ? `${currencySymbol}${fNumber(al.allocationValue, 2)}` : 0}
+                                  {al.allocationValue ? `${currencySymbol}${numberWithCommas(fNumber(al.allocationValue, 2))}` : 0}
                                 </td>
                               </tr>
                             </React.Fragment>
@@ -206,7 +201,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
                           <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
                           <td>
                             {currencySymbol}
-                            {fNumber(getTotal(allocationKey)?.total || 0, 2)}
+                            {numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 2))}
                           </td>
                         </tr>
                       </tbody>

@@ -42,7 +42,7 @@ export const ConnectAccountMainSection = () => {
   const { onboarded } = useAuthState();
   const manualAccountModal = useModal();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
-  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>()
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } })
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -59,13 +59,13 @@ export const ConnectAccountMainSection = () => {
     const { data, error } = await getFastlink();
 
     if (error) {
-      return mmToast('Error Occurred', { type: 'error' });;
+      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });;
     }
 
     const fastLinkOptions: FastLinkOptionsType = {
-      fastLinkURL: data.fastLinkUrl || '',
-      token: data.accessToken || '',
-      config: data.params || {}
+      fastLinkURL: data.fastLinkUrl,
+      token: data.accessToken,
+      config: data.params
     };
 
     setFastLinkOptions(fastLinkOptions);
@@ -178,7 +178,7 @@ export const ConnectAccountMainSection = () => {
                   <span className='manual-heading'>Add a manual account instead</span>
                 </h2>
                 <p>
-                  If your financial institution is not support or if you want to track a non traditional asset or
+                  If your financial institution is not supported or if you want to track a non traditional asset or
                   liability you can add the details manually.
                 </p>
                 <button
@@ -206,13 +206,11 @@ export const ConnectAccountMainSection = () => {
       </div>
       <ManualAccountModal manualAccountModal={manualAccountModal} />
       {!onboarded ? <ConnectAccountSteps isConnectAccount /> : null}
-      {fastLinkOptions &&
-        <FastLinkModal
-          fastLinkModal={fastlinkModal}
-          fastLinkOptions={fastLinkOptions}
-          handleSuccess={handleConnectAccountSuccess}
-        />
-      }
+      <FastLinkModal
+        fastLinkModal={fastlinkModal}
+        fastLinkOptions={fastLinkOptions}
+        handleSuccess={handleConnectAccountSuccess}
+      />
     </div>
   );
 };
