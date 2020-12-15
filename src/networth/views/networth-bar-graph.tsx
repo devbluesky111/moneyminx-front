@@ -3,7 +3,7 @@ import React from 'react';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Area, ReferenceArea } from 'recharts';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import { NetworthBarGraphProps } from 'networth/networth.type';
+import { NetworthTooltipPayloadItem, NetworthBarGraphProps } from 'networth/networth.type';
 import { formatter, getInterval } from 'common/bar-graph-helper';
 
 const CustomTooltip = (props: any) => {
@@ -21,7 +21,7 @@ const CustomTooltip = (props: any) => {
     }
     return (
       <div className='bar-tooltip'>
-        { payload.map((item: any, index: number) => (
+        { payload.map((item: NetworthTooltipPayloadItem, index: number) => (
           <div key={index}>
             <div className='item-name'>
               <div style={{ backgroundColor: item.color }} />
