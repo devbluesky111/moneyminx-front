@@ -142,56 +142,58 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
     }
   };
 
-  const getInitialDate = (key: string): Date => {
-    return currentFormFields && currentFormFields[key] ? getUTC(currentFormFields[key]) : getUTC();
+  const getInitialDate = (key: string): Date | undefined => {
+    return currentFormFields && currentFormFields[key] ? getUTC(currentFormFields[key]) : undefined;
   };
 
   return (
     <Formik
-      initialValues={{
-        currency: currentFormFields?.currency || CurrencyOptions.USD,
-        mmCategory: accountCategory || currentAccount?.category?.mmCategory || '',
-        accountName: currentAccount?.accountName || '',
-        city: currentFormFields?.city || '',
-        state: currentFormFields?.state || '',
-        mmAccountType: accountType || '',
-        zipCode: currentFormFields?.zipCode || '',
-        country: currentFormFields?.country || '',
-        mmAccountSubType: accountSubtype || '',
-        liquidity: currentFormFields?.liquidity || '',
-        ownEstimate: currentFormFields?.ownEstimate || '',
-        principalBalance: currentFormFields?.principalBalance || '',
-        useZestimate: currentFormFields?.useZestimate || '',
-        interestRate: currentFormFields?.interestRate || '',
-        maturityDate: getInitialDate('maturityDate'),
-        investedDate: getInitialDate('investedDate'),
-        employerMatch: currentFormFields?.employerMatch || '',
-        streetAddress: currentFormFields?.streetAddress || '',
-        amountInvested: currentFormFields?.amountInvested || null,
-        associatedLoan: currentFormFields?.associatedLoan || '',
-        originationDate: getInitialDate('originationDate'),
-        originalBalance: currentFormFields?.originalBalance || '',
-        paymentsPerYear: currentFormFields?.paymentsPerYear || '',
-        calculatedEquity: currentFormFields?.calculatedEquity || '',
-        currentValuation: currentFormFields?.currentValuation || '',
-        termForInvestment: currentFormFields?.termForInvestment || '',
-        businessStartDate: getInitialDate('businessStartDate'),
+      initialValues={
+        {
+          currency: currentFormFields?.currency || CurrencyOptions.USD,
+          mmCategory: accountCategory || currentAccount?.category?.mmCategory || '',
+          accountName: currentAccount?.accountName || '',
+          city: currentFormFields?.city || '',
+          state: currentFormFields?.state || '',
+          mmAccountType: accountType || '',
+          zipCode: currentFormFields?.zipCode || '',
+          country: currentFormFields?.country || '',
+          mmAccountSubType: accountSubtype || '',
+          liquidity: currentFormFields?.liquidity || '',
+          ownEstimate: currentFormFields?.ownEstimate || '',
+          principalBalance: currentFormFields?.principalBalance || '',
+          useZestimate: currentFormFields?.useZestimate || '',
+          interestRate: currentFormFields?.interestRate || '',
+          maturityDate: getInitialDate('maturityDate'),
+          investedDate: getInitialDate('investedDate'),
+          employerMatch: currentFormFields?.employerMatch || '',
+          streetAddress: currentFormFields?.streetAddress || '',
+          amountInvested: currentFormFields?.amountInvested || null,
+          associatedLoan: currentFormFields?.associatedLoan || '',
+          originationDate: getInitialDate('originationDate'),
+          originalBalance: currentFormFields?.originalBalance || '',
+          paymentsPerYear: currentFormFields?.paymentsPerYear || '',
+          calculatedEquity: currentFormFields?.calculatedEquity || '',
+          currentValuation: currentFormFields?.currentValuation || '',
+          termForInvestment: currentFormFields?.termForInvestment || '',
+          businessStartDate: getInitialDate('businessStartDate'),
 
-        employerMatchLimit: currentFormFields?.employerMatchLimit || '',
-        associatedMortgage: currentFormFields?.associatedMortgage || '',
-        calculateReturnsOn: currentFormFields?.calculateReturnsOn || 'equity',
-        postMoneyValuation: currentFormFields?.postMoneyValuation || null,
-        currentMarketValue: currentFormFields?.currentMarketValue || null,
-        targetInterestRate: currentFormFields?.targetInterestRate || null,
-        separateLoanBalance: currentFormFields?.separateLoanBalance || true,
-        employerMatchLimitIn: currentFormFields?.employerMatchLimitIn || 'percentage',
-        includeEmployerMatch: currentFormFields?.includeEmployerMatch || true,
-        separateShortBalance: currentFormFields?.separateShortBalance || true,
-        estimatedAnnualReturns: currentFormFields?.estimatedAnnualReturns || null,
-        estimatedAnnualRevenues: currentFormFields?.estimatedAnnualRevenues || null,
-        employerMatchContribution: currentFormFields?.employerMatchContribution || true,
-        estimatedAnnualPrincipalReduction: currentFormFields?.estimatedAnnualPrincipalReduction || null,
-      }}
+          employerMatchLimit: currentFormFields?.employerMatchLimit || '',
+          associatedMortgage: currentFormFields?.associatedMortgage || '',
+          calculateReturnsOn: currentFormFields?.calculateReturnsOn || 'equity',
+          postMoneyValuation: currentFormFields?.postMoneyValuation || null,
+          currentMarketValue: currentFormFields?.currentMarketValue || null,
+          targetInterestRate: currentFormFields?.targetInterestRate || null,
+          separateLoanBalance: currentFormFields?.separateLoanBalance || true,
+          employerMatchLimitIn: currentFormFields?.employerMatchLimitIn || 'percentage',
+          includeEmployerMatch: currentFormFields?.includeEmployerMatch || true,
+          separateShortBalance: currentFormFields?.separateShortBalance || true,
+          estimatedAnnualReturns: currentFormFields?.estimatedAnnualReturns || null,
+          estimatedAnnualRevenues: currentFormFields?.estimatedAnnualRevenues || null,
+          employerMatchContribution: currentFormFields?.employerMatchContribution || true,
+          estimatedAnnualPrincipalReduction: currentFormFields?.estimatedAnnualPrincipalReduction || null,
+        } as Record<string, any>
+      }
       enableReinitialize
       validationSchema={loginValidationSchema}
       onSubmit={async (values, actions) => {
@@ -209,14 +211,18 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         let data = {
           calculatedEntity:
             values.ownEstimate && values.principalBalance ? +values.ownEstimate - +values.principalBalance : '',
-          maturityDate: getUTC(values.maturityDate),
-          investedDate: getUTC(values.investedDate),
-          originationDate: getUTC(values.originationDate),
-          businessStartDate: getUTC(values.businessStartDate),
         };
+        const dateKeys = ['maturityDate', 'investedDate', 'originationDate', 'businessStartDate'];
+        dateKeys.forEach((dateKey) => {
+          const dateValue = values[dateKey];
+
+          if (dateValue) {
+            data = { ...data, [dateKey]: getUTC(dateValue) };
+          }
+        });
 
         Object.keys(values).forEach((key: any) => {
-          const value = (values as any)[key];
+          const value = values[key];
 
           if (value === 'yes' || value === 'no') {
             data = { ...data, [key]: mapping[value] };
