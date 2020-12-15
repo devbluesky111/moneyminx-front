@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 
 import { TokenType, YodleeHookType } from './yodlee.type';
@@ -15,6 +16,14 @@ const useYodlee: YodleeHookType = ({
   const [data, setData] = useState(null);
   const [active, setActive] = useState(false);
   const [scriptTagCreated, setScriptTagCreated] = useState(false);
+
+  const fastlink = window.fastlink;
+
+  useEffect(() => {
+    if (fastlink) {
+      setActive(true);
+    }
+  }, [fastlink]);
 
   useEffect(() => {
     let script: HTMLScriptElement;
@@ -57,7 +66,9 @@ const useYodlee: YodleeHookType = ({
       }
     };
 
-    setActive(true);
+    if (!active) {
+      return <p>Loading......</p>;
+    }
 
     window.fastlink?.open(
       {
