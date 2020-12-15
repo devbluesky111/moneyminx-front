@@ -7,6 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import useToast from 'common/hooks/useToast';
 import { MMCategories } from 'auth/auth.enum';
+import { getUTC } from 'common/moment.helper';
 import { fNumber } from 'common/number.helper';
 import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
@@ -142,7 +143,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
   };
 
   const getInitialDate = (key: string): Date => {
-    return currentFormFields && currentFormFields[key] ? new Date(currentFormFields[key]) : new Date();
+    return currentFormFields && currentFormFields[key] ? getUTC(currentFormFields[key]) : getUTC();
   };
 
   return (
@@ -208,6 +209,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         let data = {
           calculatedEntity:
             values.ownEstimate && values.principalBalance ? +values.ownEstimate - +values.principalBalance : '',
+          maturityDate: getUTC(values.maturityDate),
+          investedDate: getUTC(values.investedDate),
+          originationDate: getUTC(values.originationDate),
+          businessStartDate: getUTC(values.businessStartDate),
         };
 
         Object.keys(values).forEach((key: any) => {
@@ -374,9 +379,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     <span className='form-subheading'>Origination Date</span>
                     <ReactDatePicker
                       name='originationDate'
-                      selected={new Date(values.originationDate)}
+                      selected={values.originationDate}
                       onChange={(val: Date) => {
-                        setFieldValue('originationDate', moment(val).toISOString());
+                        setFieldValue('originationDate', moment(val));
                       }}
                     />
                   </li>
@@ -393,9 +398,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     <span className='form-subheading'>Maturity Date</span>
                     <ReactDatePicker
                       name='maturityDate'
-                      selected={new Date(values.maturityDate)}
+                      selected={values.maturityDate}
                       onChange={(val: Date) => {
-                        setFieldValue('maturityDate', moment(val).toISOString());
+                        setFieldValue('maturityDate', moment(val));
                       }}
                     />
                   </li>
@@ -439,9 +444,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     <span className='form-subheading'>When did you invest?</span>
                     <ReactDatePicker
                       name='investedDate'
-                      selected={new Date(values.investedDate)}
+                      selected={values.investedDate}
                       onChange={(val: Date) => {
-                        setFieldValue('investedDate', moment(val).toISOString());
+                        setFieldValue('investedDate', moment(val));
                       }}
                     />
                   </li>
@@ -502,9 +507,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     <span className='form-subheading'>Date Established</span>
                     <ReactDatePicker
                       name='businessStartDate'
-                      selected={new Date(values.businessStartDate)}
+                      selected={values.businessStartDate}
                       onChange={(val: Date) => {
-                        setFieldValue('businessStartDate', moment(val).toISOString());
+                        setFieldValue('businessStartDate', moment(val));
                       }}
                     />
                   </li>
