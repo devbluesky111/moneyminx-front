@@ -168,8 +168,9 @@ const NetworthFilter = (props: NetworthFilterProps) => {
                   {currentAccount.map((account, index) => {
                     return (
                       <li key={account.id}>
-                        <label>
-                          <input
+                        <div className='account-filter-dd-row'>
+                          <label>
+                            <input
                             name='accBox'
                             type='checkbox'
                             aria-describedby='Investment assets'
@@ -177,14 +178,16 @@ const NetworthFilter = (props: NetworthFilterProps) => {
                             aria-checked={fAccounts.includes(account.id)}
                             checked={fAccounts.includes(account.id)}
                             onChange={handleAccountChange}
-                          />
-                          <span />
-                        </label>
-                        <div>
-                          <h5>{account.accountName}</h5>
-                          <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                            />
+                            <span />
+                          </label>
+                          <div className='pr-1'>
+                            <h5>{account.accountName}</h5>
+                            <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                          </div>
+                          <div className='account-filter-dd-balance'>
+                            {data?.currency ? getCurrencySymbol(data.currency) : ''}{numberWithCommas(fNumber(account.balance, 2))}</div>
                         </div>
-                        <div>{data?.currency ? getCurrencySymbol(data.currency) : ''}{numberWithCommas(fNumber(account.balance, 2))}</div>
                       </li>
                     );
                   })}

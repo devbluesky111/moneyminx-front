@@ -178,7 +178,7 @@ export const ConnectAccountMainSection = () => {
                   <span className='manual-heading'>Add a manual account instead</span>
                 </h2>
                 <p>
-                  If your financial institution is not support or if you want to track a non traditional asset or
+                  If your financial institution is not supported or if you want to track a non traditional asset or
                   liability you can add the details manually.
                 </p>
                 <button

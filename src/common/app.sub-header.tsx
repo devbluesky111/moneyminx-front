@@ -89,7 +89,7 @@ const AppSubHeader = () => {
                       return (
                         <li key={index}>
                           <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
-                            <div>
+                            <div className='pr-1'>
                               <h5>{account.accountName}</h5>
                               <span>{getRelativeDate(account.balancesFetchedAt)}</span>
                             </div>
@@ -128,7 +128,7 @@ const AppSubHeader = () => {
                     return (
                       <li key={index}>
                         <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
-                          <div>
+                          <div className='pr-1'>
                             <h5>{account.accountName}</h5>
                             <span>{getRelativeDate(account.balancesFetchedAt)}</span>
                           </div>
