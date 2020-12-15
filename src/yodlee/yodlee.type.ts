@@ -10,7 +10,7 @@ export interface TokenType {
 export interface FastLinkConfig {
   flow: string;
   configName: ConfigType;
-  providerAccountId: number
+  providerAccountId: number;
 }
 
 export interface FastLinkOptionsType {
