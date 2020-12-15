@@ -17,7 +17,6 @@ import { AllocationSectionEnum } from 'allocation/allocation.enum';
 import { AllocationOverviewProps } from 'allocation/allocation.type';
 import { getHoldingsAccountsByDescription } from 'api/request.api';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
-import { ReactComponent as Download } from 'assets/images/allocation/download.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
 import { ReactComponent as MeasureUpIcon } from 'assets/images/allocation/measure-up-icon.svg';
 import { ReactComponent as AllocationChartSVG } from 'assets/images/allocation/allocation-chart.svg';
@@ -225,7 +224,6 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                       Here’s how investors with similar profiles are currently allocated
                     </p>
                     <div className='mm-allocation-overview__block--action'>
-                      <Download className='mr-3' />
                       <Share />
                     </div>
                   </div>
