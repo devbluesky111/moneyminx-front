@@ -28,6 +28,7 @@ import NetworthHead from './inc/networth-head';
 import NetworthFilter from './inc/networth-filter';
 import NetworthBarGraph from './networth-bar-graph';
 import useAnalytics from '../../common/hooks/useAnalytics';
+import { Placeholder } from './inc/placeholder';
 
 const Networth = () => {
   useProfile();
@@ -166,52 +167,58 @@ const Networth = () => {
             <NetworthFilter handleLoad={handleLoad} />
             <div className='row mb-40'>
               <div className='col-lg-9 mob-btm'>
-                <div className='ct-box'>
-                  <div className='graphbox'>
-                    <ul>
-                      {currentInvestmentAsset ? (
-                        <li className='inv-data'>
-                          <span>Investment Assets</span>
-                          <h3>
-                            {currencySymbol}
-                            {numberWithCommas(fNumber(currentInvestmentAsset, 0))}
-                          </h3>
-                        </li>
-                      ) : null}
-                      {currentOtherAssets ? (
-                        <li className='other-data'>
-                          <span>Other Assets</span>
-                          <h3>
-                            {currencySymbol}
-                            {numberWithCommas(fNumber(currentOtherAssets, 0))}
-                          </h3>
-                        </li>
-                      ) : null}
-                      {currentLiabilities ? (
-                        <li className='lty-data'>
-                          <span>Liabilities</span>
-                          <h3>
-                            {currencySymbol}
-                            {numberWithCommas(fNumber(currentLiabilities, 0))}
-                          </h3>
-                        </li>
-                      ) : null}
-                      {currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
-                        <li className='nw-data'>
-                          <span>Net Worth</span>
-                          <h3>
-                            {currencySymbol}
-                            {numberWithCommas(fNumber(currentNetworth, 0))}
-                          </h3>
-                        </li>
-                      ) : null}
-                    </ul>
-                    <div className='chartbox'>
-                      <NetworthBarGraph networth={networth} fCategories={fCategories} currencySymbol={currencySymbol} />
+                <div className={['ct-box', Object.keys(accounts).length === 0 ? 'ct-box-placeholder' : ''].join(' ')}>
+                  {Object.keys(accounts).length !== 0 ?
+                    <div className='graphbox'>
+                      <ul>
+                        {currentInvestmentAsset ? (
+                          <li className='inv-data'>
+                            <span>Investment Assets</span>
+                            <h3>
+                              {currencySymbol}
+                              {numberWithCommas(fNumber(currentInvestmentAsset, 0))}
+                            </h3>
+                          </li>
+                        ) : null}
+                        {currentOtherAssets ? (
+                          <li className='other-data'>
+                            <span>Other Assets</span>
+                            <h3>
+                              {currencySymbol}
+                              {numberWithCommas(fNumber(currentOtherAssets, 0))}
+                            </h3>
+                          </li>
+                        ) : null}
+                        {currentLiabilities ? (
+                          <li className='lty-data'>
+                            <span>Liabilities</span>
+                            <h3>
+                              {currencySymbol}
+                              {numberWithCommas(fNumber(currentLiabilities, 0))}
+                            </h3>
+                          </li>
+                        ) : null}
+                        {currentInvestmentAsset && currentOtherAssets && currentLiabilities ? (
+                          <li className='nw-data'>
+                            <span>Net Worth</span>
+                            <h3>
+                              {currencySymbol}
+                              {numberWithCommas(fNumber(currentNetworth, 0))}
+                            </h3>
+                          </li>
+                        ) : null}
+                      </ul>
+                      <div className='chartbox'>
+                        <NetworthBarGraph networth={networth} fCategories={fCategories} currencySymbol={currencySymbol} />
+                      </div>
                     </div>
-                  </div>
+                    :
+                    <Placeholder type='chart' />
+                  }
                 </div>
+
               </div>
+
               <div className='col-lg-3 mob-btm'>
                 <div className='ct-box padd-20'>
                   <div className='measure-box'>
@@ -241,73 +248,76 @@ const Networth = () => {
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-b'>
-                    <div className='table-holder'>
-                      <Table className='tb-responsive' id='table-investment-xls'>
-                        <thead onClick={toggleInvestment}>
-                          <tr data-toggle='collapse'>
-                            <th>
-                              <span className={!fToggleInvestment ? 't-span' : ''}>Investment Assets</span>
-                            </th>
-                            <th className={!fToggleInvestment ? 'd-hide' : ''}>Type</th>
-
-                            {investmentAssets?.[0]?.balances.map((item, idx) => (
-                              <th key={idx} className={gc(item.interval)}>
-                                {item.interval}
+                    {Object.keys(accounts).includes('Investment Assets') ?
+                      <div className='table-holder'>
+                        <Table className='tb-responsive' id='table-investment-xls'>
+                          <thead onClick={toggleInvestment}>
+                            <tr data-toggle='collapse'>
+                              <th>
+                                <span className={!fToggleInvestment ? 't-span' : ''}>Investment Assets</span>
                               </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        {fToggleInvestment ? (
-                          <tbody>
-                            {investmentAssets?.map((iAsset, index) => {
-                              return (
-                                <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
-                                  <td>{iAsset.accountName}</td>
-                                  <td className={`hide-type`}>{iAsset.accountType}</td>
-                                  {iAsset.balances.map((b, idx) => (
-                                    <td
-                                      key={`${index}-${idx}`}
-                                      className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
-                                    >
-                                      <span className={gc(b.interval)}>{b.interval}</span>
-                                      {currencySymbol}{numberWithCommas(fNumber(b.balance, 2))}
-                                    </td>
-                                  ))}
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        ) : null}
-                        <tfoot className={'projection'}>
-                          <tr data-href='#'>
-                            <td>
-                              <Link
-                                to='#'
-                                className='warning-popover'
-                                data-classname='warning-pop'
-                                data-container='body'
-                                title='Warning'
-                                data-toggle='popover'
-                                data-placement='right'
-                                data-content=''
-                              >
-                                Total
+                              <th className={!fToggleInvestment ? 'd-hide' : ''}>Type</th>
+
+                              {investmentAssets?.[0]?.balances.map((item, idx) => (
+                                <th key={idx} className={gc(item.interval)}>
+                                  {item.interval}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          {fToggleInvestment ? (
+                            <tbody>
+                              {investmentAssets?.map((iAsset, index) => {
+                                return (
+                                  <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
+                                    <td>{iAsset.accountName}</td>
+                                    <td className={`hide-type`}>{iAsset.accountType}</td>
+                                    {iAsset.balances.map((b, idx) => (
+                                      <td
+                                        key={`${index}-${idx}`}
+                                        className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
+                                      >
+                                        <span className={gc(b.interval)}>{b.interval}</span>
+                                        {currencySymbol}{numberWithCommas(fNumber(b.balance, 2))}
+                                      </td>
+                                    ))}
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          ) : null}
+                          <tfoot className={'projection'}>
+                            <tr data-href='#'>
+                              <td>
+                                <Link
+                                  to='#'
+                                  className='warning-popover'
+                                  data-classname='warning-pop'
+                                  data-container='body'
+                                  title='Warning'
+                                  data-toggle='popover'
+                                  data-placement='right'
+                                  data-content=''
+                                >
+                                  Total
                               </Link>
-                            </td>
-                            <td className={[!fToggleInvestment ? 'd-hide' : '', `hide-type`].join(' ')}>{''}</td>
-                            {networth?.map((nItem, idx) => (
-                              <td
-                                key={idx}
-                                className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
-                              >
-                                <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                {currencySymbol}{numberWithCommas(fNumber(nItem.investmentAssets, 2))}
                               </td>
-                            ))}
-                          </tr>
-                        </tfoot>
-                      </Table>
-                    </div>
+                              <td className={[!fToggleInvestment ? 'd-hide' : '', `hide-type`].join(' ')}>{''}</td>
+                              {networth?.map((nItem, idx) => (
+                                <td
+                                  key={idx}
+                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
+                                >
+                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
+                                  {currencySymbol}{numberWithCommas(fNumber(nItem.investmentAssets, 2))}
+                                </td>
+                              ))}
+                            </tr>
+                          </tfoot>
+                        </Table>
+                      </div> :
+                      <Placeholder type='investment' />
+                    }
                   </div>
                 </div>
               </div>
@@ -316,59 +326,62 @@ const Networth = () => {
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-g'>
-                    <div className='table-holder'>
-                      <Table className='tb-responsive' id='table-other-xls'>
-                        <thead onClick={toggleOther}>
-                          <tr>
-                            <th>
-                              <span className={!fToggleOther ? 't-span' : ''}>Other Assets</span>
-                            </th>
-                            <th className={!fToggleOther ? 'd-hide' : ''}>Type</th>
-                            {otherAssets?.[0]?.balances.map((item, idx) => (
-                              <th key={idx} className={gc(item.interval)}>
-                                {item.interval}
+                    {Object.keys(accounts).includes('Other Assets') ?
+                      <div className='table-holder'>
+                        <Table className='tb-responsive' id='table-other-xls'>
+                          <thead onClick={toggleOther}>
+                            <tr>
+                              <th>
+                                <span className={!fToggleOther ? 't-span' : ''}>Other Assets</span>
                               </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        {fToggleOther ? (
-                          <tbody>
-                            {otherAssets?.map((oAsset, index) => {
-                              return (
-                                <tr key={index} onClick={() => handleAccountDetail(oAsset.accountId)}>
-                                  <td>{oAsset.accountName}</td>
-                                  <td className={`hide-type`}>{oAsset.accountType}</td>
-                                  {oAsset.balances.map((b, idx) => (
-                                    <td
-                                      key={`${index}-${idx}`}
-                                      className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
-                                    >
-                                      <span className={gc(b.interval)}>{b.interval}</span>
-                                      {currencySymbol}{numberWithCommas(fNumber(b.balance, 2))}
-                                    </td>
-                                  ))}
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        ) : null}
-                        <tfoot className={'projection'}>
-                          <tr data-href='#'>
-                            <td className={'text--primary'}>Total</td>
-                            <td className={[!fToggleOther ? 'd-hide' : '', `hide-type`].join(' ')}>{''}</td>
-                            {networth?.map((nItem, idx) => (
-                              <td
-                                key={idx}
-                                className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
-                              >
-                                <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                {currencySymbol}{numberWithCommas(fNumber(nItem.otherAssets, 2))}
-                              </td>
-                            ))}
-                          </tr>
-                        </tfoot>
-                      </Table>
-                    </div>
+                              <th className={!fToggleOther ? 'd-hide' : ''}>Type</th>
+                              {otherAssets?.[0]?.balances.map((item, idx) => (
+                                <th key={idx} className={gc(item.interval)}>
+                                  {item.interval}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          {fToggleOther ? (
+                            <tbody>
+                              {otherAssets?.map((oAsset, index) => {
+                                return (
+                                  <tr key={index} onClick={() => handleAccountDetail(oAsset.accountId)}>
+                                    <td>{oAsset.accountName}</td>
+                                    <td className={`hide-type`}>{oAsset.accountType}</td>
+                                    {oAsset.balances.map((b, idx) => (
+                                      <td
+                                        key={`${index}-${idx}`}
+                                        className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
+                                      >
+                                        <span className={gc(b.interval)}>{b.interval}</span>
+                                        {currencySymbol}{numberWithCommas(fNumber(b.balance, 2))}
+                                      </td>
+                                    ))}
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          ) : null}
+                          <tfoot className={'projection'}>
+                            <tr data-href='#'>
+                              <td className={'text--primary'}>Total</td>
+                              <td className={[!fToggleOther ? 'd-hide' : '', `hide-type`].join(' ')}>{''}</td>
+                              {networth?.map((nItem, idx) => (
+                                <td
+                                  key={idx}
+                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
+                                >
+                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
+                                  {currencySymbol}{numberWithCommas(fNumber(nItem.otherAssets, 2))}
+                                </td>
+                              ))}
+                            </tr>
+                          </tfoot>
+                        </Table>
+                      </div> :
+                      <Placeholder type='other' />
+                    }
                   </div>
                 </div>
               </div>
@@ -377,59 +390,62 @@ const Networth = () => {
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-r'>
-                    <div className='table-holder'>
-                      <Table className='tb-responsive' id='table-liabilities-xls'>
-                        <thead onClick={toggleLiabilities}>
-                          <tr>
-                            <th>
-                              <span className={!fToggleLiabilities ? 't-span' : ''}>Liabilities</span>
-                            </th>
-                            <th className={!fToggleLiabilities ? 'd-hide' : ''}>Type</th>
-                            {liabilities?.[0]?.balances.map((item, idx) => (
-                              <th key={idx} className={gc(item.interval)}>
-                                {item.interval}
+                    {Object.keys(accounts).includes('Liabilities') ?
+                      <div className='table-holder'>
+                        <Table className='tb-responsive' id='table-liabilities-xls'>
+                          <thead onClick={toggleLiabilities}>
+                            <tr>
+                              <th>
+                                <span className={!fToggleLiabilities ? 't-span' : ''}>Liabilities</span>
                               </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        {fToggleLiabilities ? (
-                          <tbody className={'projection'}>
-                            {liabilities?.map((liability, index) => {
-                              return (
-                                <tr key={index} onClick={() => handleAccountDetail(liability.accountId)}>
-                                  <td>{liability.accountName}</td>
-                                  <td className={`hide-type`}>{liability.accountType}</td>
-                                  {liability.balances.map((b, idx) => (
-                                    <td
-                                      key={`${index}-${idx}`}
-                                      className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
-                                    >
-                                      <span className={gc(b.interval)}>{b.interval}</span>
-                                      {currencySymbol}{numberWithCommas(fNumber(b.balance, 2))}
-                                    </td>
-                                  ))}
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        ) : null}
-                        <tfoot className={'projection'}>
-                          <tr>
-                            <td className={'text--primary'}>Total</td>
-                            <td className={[!fToggleInvestment ? 'd-hide' : '', `hide-type`].join(' ')}>{''}</td>
-                            {networth?.map((nItem, idx) => (
-                              <td
-                                key={idx}
-                                className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
-                              >
-                                <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                {currencySymbol}{numberWithCommas(fNumber(nItem.liabilities, 2))}
-                              </td>
-                            ))}
-                          </tr>
-                        </tfoot>
-                      </Table>
-                    </div>
+                              <th className={!fToggleLiabilities ? 'd-hide' : ''}>Type</th>
+                              {liabilities?.[0]?.balances.map((item, idx) => (
+                                <th key={idx} className={gc(item.interval)}>
+                                  {item.interval}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          {fToggleLiabilities ? (
+                            <tbody className={'projection'}>
+                              {liabilities?.map((liability, index) => {
+                                return (
+                                  <tr key={index} onClick={() => handleAccountDetail(liability.accountId)}>
+                                    <td>{liability.accountName}</td>
+                                    <td className={`hide-type`}>{liability.accountType}</td>
+                                    {liability.balances.map((b, idx) => (
+                                      <td
+                                        key={`${index}-${idx}`}
+                                        className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
+                                      >
+                                        <span className={gc(b.interval)}>{b.interval}</span>
+                                        {currencySymbol}{numberWithCommas(fNumber(b.balance, 2))}
+                                      </td>
+                                    ))}
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          ) : null}
+                          <tfoot className={'projection'}>
+                            <tr>
+                              <td className={'text--primary'}>Total</td>
+                              <td className={[!fToggleInvestment ? 'd-hide' : '', `hide-type`].join(' ')}>{''}</td>
+                              {networth?.map((nItem, idx) => (
+                                <td
+                                  key={idx}
+                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
+                                >
+                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
+                                  {currencySymbol}{numberWithCommas(fNumber(nItem.liabilities, 2))}
+                                </td>
+                              ))}
+                            </tr>
+                          </tfoot>
+                        </Table>
+                      </div> :
+                      <Placeholder type='liabilities' />
+                    }
                   </div>
                 </div>
               </div>
@@ -438,89 +454,93 @@ const Networth = () => {
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-v'>
-                    <div className='table-holder'>
-                      <Table className='tb-responsive' id='table-net-xls'>
-                        <thead onClick={toggleNet}>
-                          <tr>
-                            <th>
-                              <span className={!fToggleNet ? 't-span text--primary' : 'text--primary'}>Net Worth</span>
-                            </th>
-                            <th className='tab-hide'>{''}</th>
-                            {networth?.map((nItem, idx) => (
-                              <th key={idx} className={gc(nItem.interval)}>
-                                {nItem.interval}
+                    {Object.keys(accounts).length !== 0 ?
+
+                      <div className='table-holder'>
+                        <Table className='tb-responsive' id='table-net-xls'>
+                          <thead onClick={toggleNet}>
+                            <tr>
+                              <th>
+                                <span className={!fToggleNet ? 't-span text--primary' : 'text--primary'}>Net Worth</span>
                               </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        {fToggleNet ? (
-                          <tbody className={'projection networth'}>
-                            <tr data-href='#'>
-                              <td>Investment Assets</td>
-                              <td className='tab-hide'>{''}</td>
+                              <th className='tab-hide'>{''}</th>
                               {networth?.map((nItem, idx) => (
-                                <td
-                                  key={idx}
-                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
-                                    ' '
-                                  )}
-                                >
-                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}{numberWithCommas(fNumber(nItem.investmentAssets, 2))}
-                                </td>
+                                <th key={idx} className={gc(nItem.interval)}>
+                                  {nItem.interval}
+                                </th>
                               ))}
                             </tr>
-                            <tr data-href='#'>
-                              <td>Other Assets</td>
-                              <td className='tab-hide'>{''}</td>
+                          </thead>
+                          {fToggleNet ? (
+                            <tbody className={'projection networth'}>
+                              <tr data-href='#'>
+                                <td>Investment Assets</td>
+                                <td className='tab-hide'>{''}</td>
+                                {networth?.map((nItem, idx) => (
+                                  <td
+                                    key={idx}
+                                    className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
+                                      ' '
+                                    )}
+                                  >
+                                    <span className={gc(nItem.interval)}>{nItem.interval}</span>
+                                    {currencySymbol}{numberWithCommas(fNumber(nItem.investmentAssets, 2))}
+                                  </td>
+                                ))}
+                              </tr>
+                              <tr data-href='#'>
+                                <td>Other Assets</td>
+                                <td className='tab-hide'>{''}</td>
 
-                              {networth?.map((nItem, idx) => (
-                                <td
-                                  key={idx}
-                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
-                                    ' '
-                                  )}
-                                >
-                                  <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}{numberWithCommas(fNumber(nItem.otherAssets, 2))}
-                                </td>
-                              ))}
-                            </tr>
-                            <tr data-href='#'>
-                              <td>Liabilities</td>
-                              <td className='tab-hide'>{''}</td>
+                                {networth?.map((nItem, idx) => (
+                                  <td
+                                    key={idx}
+                                    className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
+                                      ' '
+                                    )}
+                                  >
+                                    <span className={gc(nItem.interval)}>{nItem.interval}</span>
+                                    {currencySymbol}{numberWithCommas(fNumber(nItem.otherAssets, 2))}
+                                  </td>
+                                ))}
+                              </tr>
+                              <tr data-href='#'>
+                                <td>Liabilities</td>
+                                <td className='tab-hide'>{''}</td>
 
+                                {networth?.map((nItem, idx) => (
+                                  <td
+                                    key={idx}
+                                    className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
+                                      ' '
+                                    )}
+                                  >
+                                    <span className={gc(nItem.interval)}>{nItem.interval}</span>
+                                    {currencySymbol}{numberWithCommas(fNumber(nItem.liabilities, 2))}
+                                  </td>
+                                ))}
+                              </tr>
+                            </tbody>
+                          ) : null}
+                          <tfoot className={'projection'}>
+                            <tr>
+                              <td className={'text--primary'}>Net Worth</td>
+                              <td className='tab-hide'>{''}</td>
                               {networth?.map((nItem, idx) => (
                                 <td
                                   key={idx}
-                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
-                                    ' '
-                                  )}
+                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
                                 >
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}{numberWithCommas(fNumber(nItem.liabilities, 2))}
+                                  {currencySymbol}{numberWithCommas(fNumber(nItem.networth || 0, 2))}
                                 </td>
                               ))}
                             </tr>
-                          </tbody>
-                        ) : null}
-                        <tfoot className={'projection'}>
-                          <tr>
-                            <td className={'text--primary'}>Net Worth</td>
-                            <td className='tab-hide'>{''}</td>
-                            {networth?.map((nItem, idx) => (
-                              <td
-                                key={idx}
-                                className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
-                              >
-                                <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                {currencySymbol}{numberWithCommas(fNumber(nItem.networth || 0, 2))}
-                              </td>
-                            ))}
-                          </tr>
-                        </tfoot>
-                      </Table>
-                    </div>
+                          </tfoot>
+                        </Table>
+                      </div> :
+                      <Placeholder type='networth' />
+                    }
                   </div>
                 </div>
               </div>
