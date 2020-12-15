@@ -126,19 +126,19 @@
         display: flex;
         justify-content: space-between;
         margin: 0;
-        padding-top: 0.75rem;
-        padding-bottom: 0.75rem;
+        padding: 0.75rem 0.25rem 0.75rem 0.25rem;
         min-height: 48px;
         max-width: 716px;
       }
 
       li {
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
         border-right: 1px solid $grayOpacity20;
         font-size: 0.875rem;
         font-weight: 500;
         color: $darkGray;
+        text-align: center;
+        width: 100%;
+        margin: auto;
 
         &:last-child {
           border-right: none;
