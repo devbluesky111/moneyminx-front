@@ -76,7 +76,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
             </div>
           </div>
         </div>
-      ) : (<span className='no-data'>No holdings data</span>)}
+      ) : (<span className='no-data'>No holdings found</span>)}
       {holdingsDetails && <HoldingsDetailsModal holdingsDetailsModal={holdingsDetailsModal} holdingsDetails={holdingsDetails} closeEditPositionModal={closeEditPositionModalFun} currencySymbol={currencySymbol} />}
     </section >
   );

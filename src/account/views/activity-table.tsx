@@ -71,7 +71,7 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
             </div>
           </div>
         </div>
-      ) : (<span className='no-data'>No transaction data</span>)}
+      ) : (<span className='no-data'>No transactions found</span>)}
       {activityDetails && <ActivityDetailsModal activityDetailsModal={activityDetailsModal} activityDetails={activityDetails} closeEditActivityModal={closeEditActivityModalFun} currencySymbol={currencySymbol} />}
     </section>
   );
