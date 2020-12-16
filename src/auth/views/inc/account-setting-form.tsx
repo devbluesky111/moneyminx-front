@@ -160,25 +160,25 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           country: currentFormFields?.country || '',
           mmAccountSubType: accountSubtype || '',
           liquidity: currentFormFields?.liquidity || '',
-          ownEstimate: currentFormFields?.ownEstimate || '',
-          principalBalance: currentFormFields?.principalBalance || '',
-          useZestimate: currentFormFields?.useZestimate || '',
-          interestRate: currentFormFields?.interestRate || '',
+          ownEstimate: currentFormFields?.ownEstimate || null,
+          principalBalance: currentFormFields?.principalBalance || null,
+          useZestimate: currentFormFields?.useZestimate || true,
+          interestRate: currentFormFields?.interestRate || null,
           maturityDate: getInitialDate('maturityDate'),
           investedDate: getInitialDate('investedDate'),
-          employerMatch: currentFormFields?.employerMatch || '',
+          employerMatch: currentFormFields?.employerMatch || null,
           streetAddress: currentFormFields?.streetAddress || '',
           amountInvested: currentFormFields?.amountInvested || null,
           associatedLoan: currentFormFields?.associatedLoan || '',
           originationDate: getInitialDate('originationDate'),
-          originalBalance: currentFormFields?.originalBalance || '',
-          paymentsPerYear: currentFormFields?.paymentsPerYear || '',
-          calculatedEquity: currentFormFields?.calculatedEquity || '',
-          currentValuation: currentFormFields?.currentValuation || '',
-          termForInvestment: currentFormFields?.termForInvestment || '',
+          originalBalance: currentFormFields?.originalBalance || null,
+          paymentsPerYear: currentFormFields?.paymentsPerYear || null,
+          calculatedEquity: currentFormFields?.calculatedEquity || null,
+          currentValuation: currentFormFields?.currentValuation || null,
+          termForInvestment: currentFormFields?.termForInvestment || null,
           businessStartDate: getInitialDate('businessStartDate'),
 
-          employerMatchLimit: currentFormFields?.employerMatchLimit || '',
+          employerMatchLimit: currentFormFields?.employerMatchLimit || null,
           associatedMortgage: currentFormFields?.associatedMortgage || '',
           calculateReturnsOn: currentFormFields?.calculateReturnsOn || 'equity',
           postMoneyValuation: currentFormFields?.postMoneyValuation || null,
@@ -379,6 +379,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleChange}
                       name='interestRate'
                       value={values.interestRate}
+                      step='any'
                     />
                   </li>
                   <li className={hc('originationDate')}>
@@ -398,6 +399,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleChange}
                       name='originalBalance'
                       value={values.originalBalance}
+                      step='any'
                     />
                   </li>
                   <li className={hc('maturityDate')}>
@@ -418,6 +420,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       type='number'
                       name='termForInvestment'
                       value={values.termForInvestment}
+                      step='any'
                     />
                   </li>
 
@@ -428,6 +431,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       type='number'
                       name='principalBalance'
                       value={values.principalBalance}
+                      step='any'
                     />
                   </li>
                   <li className={hc('paymentsPerYear')}>
@@ -437,6 +441,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleChange}
                       name='paymentsPerYear'
                       value={values.paymentsPerYear}
+                      step='any'
                     />
                   </li>
                 </ul>
@@ -463,6 +468,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       type='number'
                       name='amountInvested'
                       value={values.amountInvested}
+                      step='any'
                     />
                   </li>
                   <li className={hc('currentMarketValue')}>
@@ -472,6 +478,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       type='number'
                       name='currentMarketValue'
                       value={values.currentMarketValue}
+                      step='any'
                     />
                   </li>
                   <li className={hc('targetInterestRate')}>
@@ -481,6 +488,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       type='number'
                       name='targetInterestRate'
                       value={values.targetInterestRate}
+                      step='any'
                     />
                   </li>
                   <li className={hc('postMoneyValuation')}>
@@ -490,6 +498,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       type='number'
                       name='postMoneyValuation'
                       value={values.postMoneyValuation}
+                      step='any'
                     />
                   </li>
                   <li className={hc('currentValuation')}>
@@ -499,6 +508,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleChange}
                       name='currentValuation'
                       value={values.currentValuation}
+                      step='any'
                     />
                   </li>
                 </ul>
@@ -527,6 +537,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       name='estimatedAnnualRevenues'
                       value={values.estimatedAnnualRevenues}
                       placeholder='12,000'
+                      step='any'
                     />
                   </li>
                   <li className={`${hc('associatedLoan')}`}>
@@ -642,7 +653,13 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     </div>
                     <div className='right-input'>
                       <div className='form-field-group'>
-                        <Form.Control type='number' name='employerMatch' onChange={handleChange} placeholder='50' />
+                        <Form.Control
+                          type='number'
+                          name='employerMatch'
+                          onChange={handleChange}
+                          placeholder='50'
+                          step='any'
+                        />
                         <span className='input-add-on'>%</span>
                       </div>
                     </div>
@@ -684,6 +701,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                           onChange={handleChange}
                           placeholder='5'
                           value={values.employerMatchLimit}
+                          step='any'
                         />
                         <span className='input-add-on'>
                           {values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT ? '$' : '%'}
@@ -771,6 +789,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     placeholder='5'
                     name='estimatedAnnualReturns'
                     value={values.estimatedAnnualReturns}
+                    step='any'
                   />
                   <span className='input-add-on'>%</span>
                 </div>
@@ -788,6 +807,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     placeholder='5'
                     name='estimatedAnnualPrincipalReduction'
                     value={values.estimatedAnnualPrincipalReduction}
+                    step='any'
                   />
                   <span className='input-add-on'>%</span>
                 </div>
@@ -829,7 +849,13 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                         Use my own estimate
                       </label>
                     </div>
-                    <Form.Control onChange={handleChange} type='number' name='ownEstimate' value={values.ownEstimate} />
+                    <Form.Control
+                      onChange={handleChange}
+                      type='number'
+                      name='ownEstimate'
+                      value={values.ownEstimate}
+                      step='any'
+                    />
                   </div>
                 </div>
               </div>
