@@ -2,12 +2,12 @@ import { AccountItem } from 'networth/networth.type';
 import { AccountCategory } from 'networth/networth.enum';
 import { getMonthYear, getQuarter, getYear } from 'common/moment.helper';
 
-import { parseUTCString } from './moment.helper';
+import { parseString } from './moment.helper';
 
 export const parseInterval = (obj: Record<string, any>, isQuarter: boolean = false): Record<string, any> => {
   return {
     ...obj,
-    interval: parseUTCString(obj.interval, isQuarter),
+    interval: parseString(obj.interval, isQuarter),
   };
 };
 
