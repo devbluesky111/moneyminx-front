@@ -4,6 +4,8 @@ import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, Cartesi
 import { AccountBarGraphProps } from 'account/account.type';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { formatter, getInterval } from 'common/bar-graph-helper';
+import { AccountCategory } from 'networth/networth.enum';
+import { BarChartColors } from 'common/color';
 
 const CustomTooltip = (props: any) => {
   const { active, payload, currencySymbol } = props;
@@ -38,7 +40,7 @@ const renderCustomRALabel = (props: any) => {
   }} x={x + 15} y={y + 25} fill='#534CEA' fillOpacity='0.4'>projected</text>;
 };
 
-const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, currencySymbol }) => {
+const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, currencySymbol, mmCategory }) => {
 
   let max = 0;
   for (let i = 0; i < data.length; i++) {
@@ -58,6 +60,17 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
   let _interval = getInterval(max);
   if (max > _interval * 3.5) {
     _interval = getInterval(max + _interval / 2);
+  }
+
+  const getBarColor = (mmCategory: string) => {
+    if (mmCategory === AccountCategory.INVESTMENT_ASSETS) {
+      return BarChartColors.BLUE;
+    }
+    if (mmCategory === AccountCategory.OTHER_ASSETS) {
+      return BarChartColors.CYAN;
+    }
+
+    return BarChartColors.RED;
   }
 
   return (
@@ -113,7 +126,7 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
             cursor={false}
             content={<CustomTooltip currencySymbol={currencySymbol} />}
           />
-          <Bar dataKey='value' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]} />
+          <Bar dataKey='value' barSize={10} fill={getBarColor(mmCategory)} radius={[2, 2, 0, 0]} />
         </ComposedChart>
       </ResponsiveContainer>
     </div>
