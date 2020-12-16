@@ -1,18 +1,27 @@
 .app-subheader-container.account {
 
-  .left-box {
-    flex: 0.5;
-  }
-  .middle-box {
-    flex: 0.5;
-    
-    .providerLogo {
-      max-width: 140px;
-      max-height: 48px;
-    }
+  .providerLogo {
+    height: 48px;
+    position: absolute;
+    left: 45%;
 
-    span {
-      font-weight: bold;
+    @media(max-width: $md) {
+      left: 70%
+    }
+  }
+
+  span {
+    font-weight: bold;
+  }
+
+  .base-currency-toggle {
+    position: absolute;
+    right: 1rem;
+
+    @media(max-width: $md) {
+      position: relative;
+      margin-top: 100px;
+      margin-left: -318px;
     }
   }
 }
