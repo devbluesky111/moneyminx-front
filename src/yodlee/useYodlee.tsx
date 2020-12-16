@@ -48,7 +48,7 @@ const useYodlee: YodleeHookType = ({
         body.removeChild(script);
       }
     };
-  }, [fastLinkURL, scriptTagCreated]);
+  }, [fastLinkURL, scriptTagCreated, config]);
 
   const init = (currentToken?: TokenType) => {
     const getTokenString = (t?: TokenType) => {
