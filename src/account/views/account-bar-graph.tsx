@@ -65,9 +65,8 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
       return '#235ee7';
     } else if (mmCategory === 'Other Assets') {
       return '#29cfd6';
-    } else {
-      return '#d3365f';
     }
+    return '#d3365f';
   }
 
   return (
