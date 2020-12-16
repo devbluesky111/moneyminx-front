@@ -7,6 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import useToast from 'common/hooks/useToast';
 import { MMCategories } from 'auth/auth.enum';
+import { getMomentDate, getUTC } from 'common/moment.helper';
 import { fNumber } from 'common/number.helper';
 import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
@@ -141,59 +142,58 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
     }
   };
 
+  const getInitialDate = (key: string): Date | undefined => {
+    return currentFormFields && currentFormFields[key] ? getMomentDate(currentFormFields[key]) : undefined;
+  };
+
   return (
     <Formik
-      initialValues={{
-        currency: currentFormFields?.currency || CurrencyOptions.USD,
-        mmCategory: accountCategory || currentAccount?.category?.mmCategory || '',
-        accountName: currentAccount?.accountName || '',
-        city: currentFormFields?.city || '',
-        state: currentFormFields?.state || '',
-        mmAccountType: accountType || '',
-        zipCode: currentFormFields?.zipCode || '',
-        country: currentFormFields?.country || '',
-        mmAccountSubType: accountSubtype || '',
-        liquidity: currentFormFields?.liquidity || '',
-        ownEstimate: currentFormFields?.ownEstimate || null,
-        principalBalance: currentFormFields?.principalBalance || null,
-        useZestimate: currentFormFields?.useZestimate || true,
-        interestRate: currentFormFields?.interestRate || null,
-        maturityDate:
-          currentFormFields && currentFormFields.maturityDate ? new Date(currentFormFields.maturityDate) : new Date(),
-        investedDate:
-          currentFormFields && currentFormFields.investedDate ? new Date(currentFormFields.investedDate) : new Date(),
-        employerMatch: currentFormFields?.employerMatch || null,
-        streetAddress: currentFormFields?.streetAddress || '',
-        amountInvested: currentFormFields?.amountInvested || null,
-        associatedLoan: currentFormFields?.associatedLoan || '',
-        originationDate:
-          currentFormFields && currentFormFields.originationDate
-            ? new Date(currentFormFields.originationDate)
-            : new Date(),
-        originalBalance: currentFormFields?.originalBalance || null,
-        paymentsPerYear: currentFormFields?.paymentsPerYear || null,
-        calculatedEquity: currentFormFields?.calculatedEquity || null,
-        currentValuation: currentFormFields?.currentValuation || null,
-        termForInvestment: currentFormFields?.termForInvestment || null,
-        businessStartDate:
-          currentFormFields && currentFormFields.businessStartDate
-            ? new Date(currentFormFields.businessStartDate)
-            : new Date(),
-        employerMatchLimit: currentFormFields?.employerMatchLimit || null,
-        associatedMortgage: currentFormFields?.associatedMortgage || '',
-        calculateReturnsOn: currentFormFields?.calculateReturnsOn || 'equity',
-        postMoneyValuation: currentFormFields?.postMoneyValuation || null,
-        currentMarketValue: currentFormFields?.currentMarketValue || null,
-        targetInterestRate: currentFormFields?.targetInterestRate || null,
-        separateLoanBalance: currentFormFields?.separateLoanBalance || true,
-        employerMatchLimitIn: currentFormFields?.employerMatchLimitIn || 'percentage',
-        includeEmployerMatch: currentFormFields?.includeEmployerMatch || true,
-        separateShortBalance: currentFormFields?.separateShortBalance || true,
-        estimatedAnnualReturns: currentFormFields?.estimatedAnnualReturns || null,
-        estimatedAnnualRevenues: currentFormFields?.estimatedAnnualRevenues || null,
-        employerMatchContribution: currentFormFields?.employerMatchContribution || true,
-        estimatedAnnualPrincipalReduction: currentFormFields?.estimatedAnnualPrincipalReduction || null,
-      }}
+      initialValues={
+        {
+          currency: currentFormFields?.currency || CurrencyOptions.USD,
+          mmCategory: accountCategory || currentAccount?.category?.mmCategory || '',
+          accountName: currentAccount?.accountName || '',
+          city: currentFormFields?.city || '',
+          state: currentFormFields?.state || '',
+          mmAccountType: accountType || '',
+          zipCode: currentFormFields?.zipCode || '',
+          country: currentFormFields?.country || '',
+          mmAccountSubType: accountSubtype || '',
+          liquidity: currentFormFields?.liquidity || '',
+          ownEstimate: currentFormFields?.ownEstimate || '',
+          principalBalance: currentFormFields?.principalBalance || '',
+          useZestimate: currentFormFields?.useZestimate || '',
+          interestRate: currentFormFields?.interestRate || '',
+          maturityDate: getInitialDate('maturityDate'),
+          investedDate: getInitialDate('investedDate'),
+          employerMatch: currentFormFields?.employerMatch || '',
+          streetAddress: currentFormFields?.streetAddress || '',
+          amountInvested: currentFormFields?.amountInvested || null,
+          associatedLoan: currentFormFields?.associatedLoan || '',
+          originationDate: getInitialDate('originationDate'),
+          originalBalance: currentFormFields?.originalBalance || '',
+          paymentsPerYear: currentFormFields?.paymentsPerYear || '',
+          calculatedEquity: currentFormFields?.calculatedEquity || '',
+          currentValuation: currentFormFields?.currentValuation || '',
+          termForInvestment: currentFormFields?.termForInvestment || '',
+          businessStartDate: getInitialDate('businessStartDate'),
+
+          employerMatchLimit: currentFormFields?.employerMatchLimit || '',
+          associatedMortgage: currentFormFields?.associatedMortgage || '',
+          calculateReturnsOn: currentFormFields?.calculateReturnsOn || 'equity',
+          postMoneyValuation: currentFormFields?.postMoneyValuation || null,
+          currentMarketValue: currentFormFields?.currentMarketValue || null,
+          targetInterestRate: currentFormFields?.targetInterestRate || null,
+          separateLoanBalance: currentFormFields?.separateLoanBalance || true,
+          employerMatchLimitIn: currentFormFields?.employerMatchLimitIn || 'percentage',
+          includeEmployerMatch: currentFormFields?.includeEmployerMatch || true,
+          separateShortBalance: currentFormFields?.separateShortBalance || true,
+          estimatedAnnualReturns: currentFormFields?.estimatedAnnualReturns || null,
+          estimatedAnnualRevenues: currentFormFields?.estimatedAnnualRevenues || null,
+          employerMatchContribution: currentFormFields?.employerMatchContribution || true,
+          estimatedAnnualPrincipalReduction: currentFormFields?.estimatedAnnualPrincipalReduction || null,
+        } as Record<string, any>
+      }
       enableReinitialize
       validationSchema={loginValidationSchema}
       onSubmit={async (values, actions) => {
@@ -212,9 +212,17 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           calculatedEntity:
             values.ownEstimate && values.principalBalance ? +values.ownEstimate - +values.principalBalance : '',
         };
+        const dateKeys = ['maturityDate', 'investedDate', 'originationDate', 'businessStartDate'];
+        dateKeys.forEach((dateKey) => {
+          const dateValue = values[dateKey];
+
+          if (dateValue) {
+            data = { ...data, [dateKey]: getUTC(dateValue) };
+          }
+        });
 
         Object.keys(values).forEach((key: any) => {
-          const value = (values as any)[key];
+          const value = values[key];
 
           if (value === 'yes' || value === 'no') {
             data = { ...data, [key]: mapping[value] };
@@ -377,9 +385,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     <span className='form-subheading'>Origination Date</span>
                     <ReactDatePicker
                       name='originationDate'
-                      selected={new Date(values.originationDate)}
+                      selected={values.originationDate}
                       onChange={(val: Date) => {
-                        setFieldValue('originationDate', moment(val).toISOString());
+                        setFieldValue('originationDate', moment(val));
                       }}
                     />
                   </li>
@@ -396,9 +404,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     <span className='form-subheading'>Maturity Date</span>
                     <ReactDatePicker
                       name='maturityDate'
-                      selected={new Date(values.maturityDate)}
+                      selected={values.maturityDate}
                       onChange={(val: Date) => {
-                        setFieldValue('maturityDate', moment(val).toISOString());
+                        setFieldValue('maturityDate', moment(val));
                       }}
                     />
                   </li>
@@ -442,9 +450,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     <span className='form-subheading'>When did you invest?</span>
                     <ReactDatePicker
                       name='investedDate'
-                      selected={new Date(values.investedDate)}
+                      selected={values.investedDate}
                       onChange={(val: Date) => {
-                        setFieldValue('investedDate', moment(val).toISOString());
+                        setFieldValue('investedDate', moment(val));
                       }}
                     />
                   </li>
@@ -505,9 +513,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                     <span className='form-subheading'>Date Established</span>
                     <ReactDatePicker
                       name='businessStartDate'
-                      selected={new Date(values.businessStartDate)}
+                      selected={values.businessStartDate}
                       onChange={(val: Date) => {
-                        setFieldValue('businessStartDate', moment(val).toISOString());
+                        setFieldValue('businessStartDate', moment(val));
                       }}
                     />
                   </li>
