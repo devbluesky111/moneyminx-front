@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { Button, Dropdown } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
 
 import AppFooter from 'common/app.footer';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
@@ -218,7 +219,24 @@ const AccountDetail: React.FC = () => {
       <hr className='mt-0 mb-4' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       {loading ? (
-        <CircularSpinner />
+        <div className='content-wrapper'>
+          <div className='container'>
+            <div className='mm-account'>
+              <div className='mm-account__selection mb-3'>
+                <Skeleton width={200} height={50} count={1}/>
+              </div>
+              <div className='mb-40'>
+                <Skeleton width={1232} height={450} />
+              </div>
+              <div className='d-flex justify-content-between flex-wrap'>
+                <div className='mm-plan-radios mb-4'>
+                  <Skeleton width={200} height={50} count={1}/>
+                </div>
+              </div>
+              <Skeleton width={1232} height={250} />
+            </div>
+          </div>
+        </div>
       ) : (
           <div className='content-wrapper'>
             <div className='container'>
