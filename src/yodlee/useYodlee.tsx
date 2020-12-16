@@ -38,8 +38,11 @@ const useYodlee: YodleeHookType = ({
       script.onload = () => setReady(true);
       script.onerror = () => setError('Yodlee FastLink library could not be loaded!');
 
-      body.appendChild(script);
-      setScriptTagCreated(true);
+      let s = document.getElementById('yodlee-fastlink-script');
+      if (!s) {
+        body.appendChild(script);
+        setScriptTagCreated(true);
+      }
     }
 
     return () => {
@@ -48,7 +51,7 @@ const useYodlee: YodleeHookType = ({
         body.removeChild(script);
       }
     };
-  }, [fastLinkURL, scriptTagCreated]);
+  }, [fastLinkURL, scriptTagCreated, config]);
 
   const init = (currentToken?: TokenType) => {
     const getTokenString = (t?: TokenType) => {
