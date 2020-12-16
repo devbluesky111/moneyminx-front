@@ -37,10 +37,10 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   const onError = (err: any) => {
     const errorList = err
       ? Object.keys(err).map((ek, i) => (
-          <li key={i}>
-            {[ek]}:{err[ek]}
-          </li>
-        ))
+        <li key={i}>
+          {[ek]}:{err[ek]}
+        </li>
+      ))
       : null;
 
     return mmToast(<ul>{errorList}</ul>, { type: 'error', autoClose: false });
@@ -61,10 +61,10 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   const fastLinkURL = fastLinkOptions.fastLinkURL;
 
   useEffect(() => {
-    if (fastLinkURL && active) {
+    if (fastLinkURL !== '' && active) {
       initRef?.current?.click();
     }
-  }, [fastLinkURL, active]);
+  }, [fastLinkURL, active, fastLinkOptions]);
 
   const handleInit = () => {
     init({ tokenValue: token, tokenType: 'AccessToken' });
