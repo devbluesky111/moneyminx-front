@@ -40,7 +40,6 @@ const renderCustomRALabel = (props: any) => {
 
 const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, currencySymbol, mmCategory }) => {
 
-  console.log(mmCategory);
   let max = 0;
   for (let i = 0; i < data.length; i++) {
     if (data[i].value > max) {
