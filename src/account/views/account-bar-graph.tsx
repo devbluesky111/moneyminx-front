@@ -4,6 +4,8 @@ import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, Cartesi
 import { AccountBarGraphProps } from 'account/account.type';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { formatter, getInterval } from 'common/bar-graph-helper';
+import { AccountCategory } from 'networth/networth.enum';
+import { BarChartColors } from 'common/color';
 
 const CustomTooltip = (props: any) => {
   const { active, payload, currencySymbol } = props;
@@ -61,12 +63,14 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
   }
 
   const getBarColor = (mmCategory: string) => {
-    if (mmCategory === 'Investment Assets') {
-      return '#235ee7';
-    } else if (mmCategory === 'Other Assets') {
-      return '#29cfd6';
+    if (mmCategory === AccountCategory.INVESTMENT_ASSETS) {
+      return BarChartColors.BLUE;
     }
-    return '#d3365f';
+    if (mmCategory === AccountCategory.OTHER_ASSETS) {
+      return BarChartColors.CYAN;
+    }
+
+    return BarChartColors.RED;
   }
 
   return (
