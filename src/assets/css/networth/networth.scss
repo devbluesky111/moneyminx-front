@@ -623,7 +623,9 @@ a.upgrader-btn {
     width: 300px;
   }
 }
-
+.hr-darkBg {
+  border-top: 1px solid $grayOpacity24;
+}
 .myaccount-drop .dropdown-toggle:after {
   width: 8px;
   height: 8px;
