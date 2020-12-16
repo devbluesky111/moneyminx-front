@@ -188,7 +188,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
                               </td>
                                 <td>
                                   <span className='d-block'>Value</span>
-                                  {al.allocationValue ? `${currencySymbol}${numberWithCommas(fNumber(al.allocationValue, 2))}` : 0}
+                                  {al.allocationValue ? `${currencySymbol}${numberWithCommas(fNumber(al.allocationValue, 0))}` : 0}
                                 </td>
                               </tr>
                             </React.Fragment>
@@ -201,7 +201,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
                           <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
                           <td>
                             {currencySymbol}
-                            {numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 2))}
+                            {numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 0))}
                           </td>
                         </tr>
                       </tbody>
