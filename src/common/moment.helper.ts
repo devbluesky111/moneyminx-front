@@ -27,6 +27,15 @@ export const parseUTCString = (str: string, isQuarter?: boolean) => {
 
   return moment.utc(str, 'MMM YYYY').local().format('MMM YYYY');
 };
+
+export const parseString = (str: string, isQuarter?: boolean) => {
+  if (isQuarter) {
+    return moment(str, 'Q YYYY').format('[Q]Q YYYY');
+  }
+
+  return moment(str, 'MMM YYYY').format('MMM YYYY');
+};
+
 export const parseDate = (str: string) => {
   if (str.includes('Q')) {
     return moment.utc(str, 'Q YYYY').toDate();

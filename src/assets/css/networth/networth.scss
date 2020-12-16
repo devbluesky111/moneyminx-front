@@ -1051,6 +1051,39 @@ a.upgrader-btn {
   position: relative;
 }
 
+.ct-box-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../images/networth/Blur.png');
+  background-size: contain;
+}
+
+.networth-placeholder {
+  text-align: center;
+
+  p {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 150%;
+    color: $gray;
+    max-width: 297px;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+
+  a {
+    height: 40px;
+    margin: auto;
+    width: 100%;
+    max-width: 236px;
+
+    @media (min-width: $md) {
+      min-width: 236px;
+    }
+  }
+}
+
 .ct-box:before {
   content: '';
   position: absolute;

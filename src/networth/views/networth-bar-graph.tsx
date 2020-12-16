@@ -3,7 +3,7 @@ import React from 'react';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Area, ReferenceArea } from 'recharts';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import { NetworthBarGraphProps } from 'networth/networth.type';
+import { NetworthTooltipPayloadItem, NetworthBarGraphProps } from 'networth/networth.type';
 import { formatter, getInterval } from 'common/bar-graph-helper';
 
 const CustomTooltip = (props: any) => {
@@ -21,32 +21,26 @@ const CustomTooltip = (props: any) => {
     }
     return (
       <div className='bar-tooltip'>
-        { payload.map((item: any, index: number) => (
+        { payload.map((item: NetworthTooltipPayloadItem, index: number) => (
           <div key={index}>
-            {item.value ?
-              (
-                <>
-                  <div className='item-name'>
-                    <div style={{ backgroundColor: item.color }} />
-                    {item.name === 'investmentAssets' &&
-                      <span>Investment Assets</span>
-                    }
-                    {item.name === 'otherAssets' &&
-                      <span>Other Assets</span>
-                    }
-                    {item.name === 'liabilities' &&
-                      <span>Liabilities Assets</span>
-                    }
-                    {item.name === 'networth' &&
-                      <span>Net Worth</span>
-                    }
-                  </div>
-                  <div className='item-value'>
-                    {`${currencySymbol}${numberWithCommas(fNumber(item.value, 0))}`}
-                  </div>
-                </>
-              ) : null
-            }
+            <div className='item-name'>
+              <div style={{ backgroundColor: item.color }} />
+              {item.name === 'investmentAssets' &&
+                <span>Investment Assets</span>
+              }
+              {item.name === 'otherAssets' &&
+                <span>Other Assets</span>
+              }
+              {item.name === 'liabilities' &&
+                <span>Liabilities Assets</span>
+              }
+              {item.name === 'networth' &&
+                <span>Net Worth</span>
+              }
+            </div>
+            <div className='item-value'>
+              {`${currencySymbol}${numberWithCommas(fNumber(item.value, 0))}`}
+            </div>
           </div>
         ))}
 
@@ -151,12 +145,10 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth, fCategori
             cursor={false}
             content={<CustomTooltip currencySymbol={currencySymbol} />}
           />
-          {
-            fCategories && (fCategories.length === 1 || fCategories.length === 2) ? null : <Area dataKey='networth' type='monotone' stroke='#534cea' strokeOpacity='0' fill='url(#colorUv)' />
-          }
-          <Bar dataKey='investmentAssets' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]} />
-          <Bar dataKey='otherAssets' barSize={10} fill='#29CFD6' radius={[2, 2, 0, 0]} />
-          <Bar dataKey='liabilities' barSize={10} fill='#D3365F' radius={[2, 2, 0, 0]} />
+          {(fCategories.length === 0 || fCategories.length === 3) && <Area dataKey='networth' type='monotone' stroke='#534cea' strokeOpacity='0' fill='url(#colorUv)' />}
+          {(fCategories.length === 0 || fCategories.includes('Investment Assets')) && <Bar dataKey='investmentAssets' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]} />}
+          {(fCategories.length === 0 || fCategories.includes('Other Assets')) && <Bar dataKey='otherAssets' barSize={10} fill='#29CFD6' radius={[2, 2, 0, 0]} />}
+          {(fCategories.length === 0 || fCategories.includes('Liabilities')) && <Bar dataKey='liabilities' barSize={10} fill='#D3365F' radius={[2, 2, 0, 0]} />}
         </ComposedChart>
       </ResponsiveContainer>
     </div>
