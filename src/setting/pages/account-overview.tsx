@@ -162,7 +162,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({
           <div className='col-10 col-md-6'>
             <div>
               <DefaultProviderLogo className='mr-3 mr-md-4' />
-              <span className='mm-account-overview__block-title'>My own account</span>
+              <span className='mm-account-overview__block-title'>Money Minx Manual</span>
             </div>
           </div>
         </div>
@@ -316,10 +316,10 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
               <div className={['card mm-setting-card', getStatusClassName(status)].join(' ')}>
                 {status === 'error' && (
                   <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
-                    <div className='col-12 col-md-6 text-danger pl-3'>
+                    <div className='col-6 text-danger pl-3'>
                       <span>Connection error</span>
                     </div>
-                    <div className='col-12 col-md-6 mt-2 text-md-right'>
+                    <div className='col-6 mt-2 text-md-right'>
                       <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={() => handleConnectAccount(group.accounts[0].id)}>
                         Fix Connection
                       </button>
@@ -504,7 +504,7 @@ const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({
         <div className='subs-content three'>
           <p>
             You need to delete {connectedAccountDiff > 0 ? connectedAccountDiff : 0} connected accounts and{' '}
-            {manualAccountDiff > 0 ? manualAccountDiff : 0} manual to be able to use this plan.
+            {manualAccountDiff > 0 ? manualAccountDiff : 0} manual accounts to be able to use this plan.
           </p>
         </div>
         <div className='subs-content four'>
