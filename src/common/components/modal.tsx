@@ -26,6 +26,7 @@ interface Props {
   size?: keyof Size;
   type?: ModalTypeEnum;
   bgColor?: string;
+  loading?: boolean;
 }
 
 export interface ModalType {
@@ -39,14 +40,15 @@ export interface ModalType {
 
 const Modal: React.FC<Props> = ({
   open,
+  type,
   title,
+  loading,
   onClose,
+  bgColor,
   children,
   size = 'md',
   backdrop = true,
   canBeClosed = false,
-  type,
-  bgColor,
 }) => {
   const classNames = `${backdrop ? 'modal mm-modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
   const modalClasses = `modal-dialog modal-dialog-centered modal-${size}`;
@@ -54,15 +56,17 @@ const Modal: React.FC<Props> = ({
     if (event?.target?.className === 'modal mm-modal-backdrop modal-show') {
       onClose();
     }
-  }
+  };
 
   return (
     <div className={classNames} tabIndex={-1} role='dialog' aria-hidden='true' onClick={clickOutsideModalHandler}>
       <div className={modalClasses} role='document'>
-        <div className='modal-content' style={{ backgroundColor: bgColor }}>
+        <div className={`modal-content ${loading ? 'loading' : ''}`.trim()} style={{ backgroundColor: bgColor }}>
           {type === ModalTypeEnum.NO_HEADER ? null : (
             <div className='modal-header'>
-              <h5 className='modal-title' style={{ color: bgColor ? 'white' : 'inherit' }}>{title}</h5>
+              <h5 className='modal-title' style={{ color: bgColor ? 'white' : 'inherit' }}>
+                {title}
+              </h5>
               {canBeClosed && (
                 <div onClick={() => onClose()} className='close' role='button'>
                   <AiOutlineClose className='modal-close' style={{ color: bgColor ? 'white' : 'inherit' }} />

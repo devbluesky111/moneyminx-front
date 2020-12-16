@@ -4,11 +4,10 @@
   display: flex;
 
   .row {
-
     margin-right: 0;
 
     @media (min-width: $sm) {
-    margin-right: -15px;
+      margin-right: -15px;
     }
   }
 }
@@ -26,7 +25,6 @@
   @media (min-width: $lg) {
     padding-left: 110px;
   }
-
 }
 
 .guide-content {
@@ -198,7 +196,8 @@
   padding: 0 20px;
   color: $darkGray;
 
-  &:active, &:focus {
+  &:active,
+  &:focus {
     border: 1px solid $gray;
   }
 
@@ -313,6 +312,13 @@ span.forgot-pass {
     display: block;
   }
 }
+.modal-loading {
+  @extend .refresh-loading;
+  width: 100%;
+  height: 100%;
+  padding: 5%;
+}
+
 .loading-logo {
   height: 64px;
   width: 300px;
@@ -322,7 +328,7 @@ span.forgot-pass {
 .footer-second {
   border-top: 1px solid rgba(150, 158, 172, 0.25);
   background-color: $lightBg;
-  margin-top:auto;
+  margin-top: auto;
 }
 ul.footer-list {
   padding-left: 0;
@@ -377,9 +383,9 @@ ul.footer-list li {
   margin-bottom: 72px;
 
   @media (max-width: $md) {
-      display: block;
-      margin-bottom: 26px;
-    }
+    display: block;
+    margin-bottom: 26px;
+  }
 }
 
 //session Expired

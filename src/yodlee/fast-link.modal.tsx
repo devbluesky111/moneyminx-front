@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import useToast from 'common/hooks/useToast';
+import LoadingScreen from 'common/loading-screen';
 import { useAuthDispatch } from 'auth/auth.context';
 import { getRefreshedAccount } from 'auth/auth.service';
 import { Modal, ModalTypeEnum } from 'common/components/modal';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import useYodlee from './useYodlee';
 import { FastLinkOptionsType } from './yodlee.type';
@@ -37,10 +37,10 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   const onError = (err: any) => {
     const errorList = err
       ? Object.keys(err).map((ek, i) => (
-        <li key={i}>
-          {[ek]}:{err[ek]}
-        </li>
-      ))
+          <li key={i}>
+            {[ek]}:{err[ek]}
+          </li>
+        ))
       : null;
 
     return mmToast(<ul>{errorList}</ul>, { type: 'error', autoClose: false });
@@ -71,10 +71,19 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   };
 
   return (
-    <Modal {...fastLinkModal.props} title='' size={'xs'} type={ModalTypeEnum.NO_HEADER} canBeClosed>
-      <div id='fastlinkContainer' />
-      {loading || !active ? <CircularSpinner /> : null}
-      <button ref={initRef} onClick={handleInit} className='hidden' />
+    <Modal
+      {...fastLinkModal.props}
+      title=''
+      size={'xs'}
+      canBeClosed
+      loading={loading || !active}
+      type={ModalTypeEnum.NO_HEADER}
+    >
+      <div className='fastlink-modal-container'>
+        <div id='fastlinkContainer' />
+        {loading || !active ? <LoadingScreen onModal /> : null}
+        <button ref={initRef} onClick={handleInit} className='hidden' />
+      </div>
     </Modal>
   );
 };
