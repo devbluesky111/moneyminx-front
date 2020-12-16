@@ -8,7 +8,7 @@ import FieldChangeModal from 'allocation/modal/field-change-modal';
 import SelectAccountModal from 'allocation/modal/select-account.modal';
 import { shortId } from 'common/common-helper';
 import { useModal } from 'common/components/modal';
-import { getStringDate } from 'common/moment.helper';
+import { getStringDate, getMonthYear } from 'common/moment.helper';
 import { MMPieChart } from 'common/components/pie-chart';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
@@ -218,7 +218,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
               <div className={getSectionClass(AllocationSectionEnum.SIMILAR_ALLOCATION)}>
                 <div className='mm-allocation-overview__block'>
                   <div className='allocation-card-top no-border'>
-                    <div className='mm-allocation-overview__block--date'>{getStringDate()}</div>
+                    <div className='mm-allocation-overview__block--date'>{getMonthYear()}</div>
                     <div className='mm-allocation-overview__block--title'>Similar Investors</div>
                     <p className='mm-allocation-overview__block--subtitle'>
                       Here’s how investors with similar profiles are currently allocated
