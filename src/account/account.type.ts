@@ -17,6 +17,7 @@ export interface AccountBarGraphProps {
   data: AccountChartItem[];
   curInterval: string;
   currencySymbol: string;
+  mmCategory: string;
 }
 
 export interface AccountHoldingItem {

@@ -128,6 +128,7 @@ const AccountDetail: React.FC = () => {
   const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
     const { data, error } = await getAccountDetails(accountId, baseCurrency);
     if (!error) {
+      console.log(data)
       setAccountDetails(data);
     }
   };
@@ -223,14 +224,14 @@ const AccountDetail: React.FC = () => {
           <div className='container'>
             <div className='mm-account'>
               <div className='mm-account__selection mb-3'>
-                <Skeleton width={200} height={50} count={1}/>
+                <Skeleton width={200} height={50} count={1} />
               </div>
               <div className='mb-40'>
                 <Skeleton width={1232} height={450} />
               </div>
               <div className='d-flex justify-content-between flex-wrap'>
                 <div className='mm-plan-radios mb-4'>
-                  <Skeleton width={200} height={50} count={1}/>
+                  <Skeleton width={200} height={50} count={1} />
                 </div>
               </div>
               <Skeleton width={1232} height={250} />
@@ -419,7 +420,7 @@ const AccountDetail: React.FC = () => {
                     </ul>
                     <div className='chartbox'>
                       {AccountHoldings && curAccountHoldingsItem && (
-                        <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} currencySymbol={currencySymbol} />
+                        <AccountBarGraph data={AccountHoldings?.charts} curInterval={curAccountHoldingsItem?.[0]?.interval} currencySymbol={currencySymbol} mmCategory={AccountDetails?.category?.mmCategory} />
                       )}
                     </div>
                   </div>

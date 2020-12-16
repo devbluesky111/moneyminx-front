@@ -38,8 +38,9 @@ const renderCustomRALabel = (props: any) => {
   }} x={x + 15} y={y + 25} fill='#534CEA' fillOpacity='0.4'>projected</text>;
 };
 
-const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, currencySymbol }) => {
+const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, currencySymbol, mmCategory }) => {
 
+  console.log(mmCategory);
   let max = 0;
   for (let i = 0; i < data.length; i++) {
     if (data[i].value > max) {
@@ -58,6 +59,16 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
   let _interval = getInterval(max);
   if (max > _interval * 3.5) {
     _interval = getInterval(max + _interval / 2);
+  }
+
+  const getBarColor = (mmCategory: string) => {
+    if (mmCategory === 'Investment Assets') {
+      return '#235ee7';
+    } else if (mmCategory === 'Other Assets') {
+      return '#29cfd6';
+    } else {
+      return '#d3365f';
+    }
   }
 
   return (
@@ -113,7 +124,7 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
             cursor={false}
             content={<CustomTooltip currencySymbol={currencySymbol} />}
           />
-          <Bar dataKey='value' barSize={10} fill='#235EE7' radius={[2, 2, 0, 0]} />
+          <Bar dataKey='value' barSize={10} fill={getBarColor(mmCategory)} radius={[2, 2, 0, 0]} />
         </ComposedChart>
       </ResponsiveContainer>
     </div>
