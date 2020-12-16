@@ -241,9 +241,9 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   };
 
   let accountsByStatus: AccountByStatus = {
-    success: [],
-    warning: [],
     error: [],
+    warning: [],
+    success: []
   };
 
   for (let p_name in accountsByProvider) {
