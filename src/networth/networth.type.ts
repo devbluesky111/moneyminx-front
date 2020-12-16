@@ -75,8 +75,16 @@ export interface NetworthBarGraphProps {
   currencySymbol: string;
 }
 
+export interface NetworthTooltipPayloadItem {
+  color: string;
+  name: string;
+  value: number;
+}
+
 export interface NetworthFilterProps {
   handleLoad: () => void;
 }
 
 export type TFilterKey = keyof NetworthState;
+
+
