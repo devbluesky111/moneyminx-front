@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import useToast from 'common/hooks/useToast';
 import { MMCategories } from 'auth/auth.enum';
-import { getUTC } from 'common/moment.helper';
+import { getMomentDate, getUTC } from 'common/moment.helper';
 import { fNumber } from 'common/number.helper';
 import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
@@ -143,7 +143,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
   };
 
   const getInitialDate = (key: string): Date | undefined => {
-    return currentFormFields && currentFormFields[key] ? getUTC(currentFormFields[key]) : undefined;
+    return currentFormFields && currentFormFields[key] ? getMomentDate(currentFormFields[key]) : undefined;
   };
 
   return (

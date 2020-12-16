@@ -90,3 +90,5 @@ export const getMonthSubtracted = (month: number) => moment.utc().subtract(month
 export const getLastDateOfMonth = (date: Date) => moment(date).endOf('month').toDate();
 
 export const getUTCString = (data?: Date) => moment.utc(data).toISOString();
+
+export const getMomentDate = (str: string) => moment(str).toDate();
