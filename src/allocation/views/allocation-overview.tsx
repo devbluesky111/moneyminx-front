@@ -199,7 +199,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                 <tr className='mm-allocation-overview__table--footer'>
                                   <td>Total</td>
                                   <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
-                                  <td>{currencySymbol}{numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 2))}</td>
+                                  <td>{currencySymbol}{numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 0))}</td>
                                 </tr>
                               </tbody>
                             </React.Fragment>

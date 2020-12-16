@@ -321,17 +321,20 @@ export const LoginMainSection = () => {
 
 export const MessageChange = () => {
   const messageArr = [
-    'Getting ready for the big reveal.',
-    'Are you ready for your updated net worth?',
-    'You can\'t get to your goals if you don\'t know where you are',
-    'Here\'s to clarity',
-    'Something else will be here soon'
+    'Queue the suspenseful music...',
+    'I see you baby, loading that page...',
+    'I bet you wish this page would work work work work work.',
+    'Got your mind on your money and your money on your mind?',
+    'I like big bucks and I can not lie.',
+    'Like Axl says, just a little patience. Mmm, yeahhh.',
+    'Whoa, we\'re half way there. Whoaaaaa living on a prayer...',
+    'I still haven\'t found what I\'m looking for...',
   ];
 
-  const [showingMessage, setShowingMessage] = useState<string>('Getting ready for the big reveal.');
+  const [showingMessage, setShowingMessage] = useState<string>('I like big bucks and I can not lie.');
 
   const showMessage: any = () => {
-    const randomIndex = Math.floor(Math.random() * 5);
+    const randomIndex = Math.floor(Math.random() * 8);
     if (messageArr[randomIndex] === showingMessage) {
       return showMessage();
     }
@@ -340,7 +343,7 @@ export const MessageChange = () => {
   }
 
   useEffect(() => {
-    setTimeout(showMessage, 2000);
+    setTimeout(showMessage, 2500);
   })
 
   return (
