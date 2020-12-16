@@ -38,8 +38,11 @@ const useYodlee: YodleeHookType = ({
       script.onload = () => setReady(true);
       script.onerror = () => setError('Yodlee FastLink library could not be loaded!');
 
-      body.appendChild(script);
-      setScriptTagCreated(true);
+      let s = document.getElementById('yodlee-fastlink-script');
+      if (!s) {
+        body.appendChild(script);
+        setScriptTagCreated(true);
+      }
     }
 
     return () => {
