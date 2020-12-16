@@ -99,7 +99,7 @@ const AppSubHeader = () => {
                       )
                     })}
                   </ul>
-                  <hr />
+                  <hr className='hr-darkBg'/>
                 </div>
               }
               {warningAccounts.length > 0 &&
@@ -119,7 +119,7 @@ const AppSubHeader = () => {
                       )
                     })}
                   </ul>
-                  <hr />
+                  <hr className='hr-darkBg'/>
                 </div>
               }
               {successAccounts.length > 0 &&

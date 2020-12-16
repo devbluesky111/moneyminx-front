@@ -42,7 +42,7 @@ const AccountSettings = () => {
         <div>
           <div className='row login-wrapper'>
             <div className='guide-content'>
-              <Link to='/'>
+              <Link to='/net-worth'>
                 <LogoImg className='icon auth-logo' />
               </Link>
 
