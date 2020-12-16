@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Welcome to Money Minx</title>
+  <title>Money Minx Trial Expiring</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;700&ampdisplay=swap" rel="stylesheet" />
   <meta name="color-scheme" content="light">
@@ -145,9 +145,9 @@
       padding: 40px 60px 60px 40px;
       color: #ffffff;
     }
-    .text-right {
+    /* .text-right {
       margin-left: 1rem;
-    }
+    } */
     .footer-text {
       font-size: 0.875rem;
       line-height: 150%;
@@ -186,7 +186,7 @@
     }
     .text-error {
       color: #ec5555;
-      padding-left: 12rem;
+      /* padding-left: 12rem; */
       font-size: 1.25rem;
       line-height: 1.5625rem;
     }
@@ -196,7 +196,17 @@
       font-size: 1rem;
       line-height: 150%;
     }
-    .horizontal-line {
+    .col-6 {
+        width: 360px;
+        max-width: 50%;
+        display: table-cell;
+      }
+      td.inner-wrapper {
+    width: 360px;
+    max-width: 50%;
+    display: table-cell;
+}
+.horizontal-line {
       margin-top: 60px;
       margin-bottom: 30px;
     }
@@ -206,10 +216,24 @@
         display: inline-block;
         text-align: left;
       }
-      .text-right {
-        width: 300px;
+      .inner-wrapper {
+        width: 100%;
+        text-align: left;
+        padding: 0.5rem;
+        display: block;
+      }
+      .d-block {
+        display: block;
+      }
+      .col-md-6 {
+        width: 360px;
+        max-width: 50%;
         display: table-cell;
-        text-align: right;
+      }
+      td.inner-wrapper {
+        width: 100%;
+    max-width: 100%;
+    display: block
       }
     }
 
@@ -232,12 +256,12 @@
         padding: 40px 20px 60px 20px
       }
 
-      .text-right {
+      /* .text-right {
         width:130px;
         max-width:50% !important;
         display: table-cell;
-        margin-left: 4rem;
-      }
+        margin-left: 9rem;
+      } */
       .col-2{
         width: 100% !important;
         display:inline;
@@ -271,7 +295,7 @@
 
       }
       .text-error {
-        display: block;
+        /* display: block; */
         color: #ec5555;
         padding-left: 0;
         font-size: 1rem;
@@ -301,16 +325,19 @@
       .benefits a {
         padding-right: 28px;
       }
+      .col-6 {
+      width: 168px;
+      }
     }
   </style>
 </head>
-<body style="margin:0; padding: 0;">
+<body style="margin: 0; padding: 0;">
 <table class="outer-table" cellspacing="0" cellpadding="0">
   <tr>
     <td>
       <table class="header-table">
         <tr>
-          <td class="col-2">
+          <td class="col-6">
             <a href="https://app.moneyminx.com" target="_blank">
               <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/19f99b8d-f061-40a4-8cfe-3d773c60b7da/330x105.png" width="110" alt="Money Minx Logo" />
             </a>
@@ -323,25 +350,73 @@
     <td>
       <table class="hero">
         <tr>
-          <td class="title">Welcome aboard!</td>
+          <td class="title">
+            <span class="col-6">Heads up</span>
+            <span class="col-6 text-error text-right">Trial Expires in {{daysLeft}} days</span>
+          </td>
         </tr>
         <tr>
           <td class="text">
-            We’re here to help you track your investment portfolio and connect with other investors so you can
-            achieve your investment goals. Get started by completing your profile and syncing your investment
-            accounts.
+            Your Money Minx trial ends in {{daysLeft}} days. Log in to your account and hit subscribe to keep your
+            access going.
           </td>
         </tr>
         <tr>
           <td style="padding: 2rem 0;">
-            <a href="https://app.moneyminx.com" class="btn-primary">Get Started</a>
+            <a href="{{accountLink}}" class="btn-primary">Go to My Account</a>
           </td>
         </tr>
       </table>
     </td>
   </tr>
+  <!--quick snapshot-->
+  <!--title-->
   <tr>
-    <td>
+    <td class="quick-response-title">Here is a quick snapshot of your account:</td>
+  </tr>
+
+  <!--investment data-->
+  <tr>
+    <td class="wrapper">
+      <table>
+        <tr>
+          <td class="inner-wrapper">
+            <table style="width: 100%;">
+              <tr>
+                <td class="col-md-6">
+                  <span class="text-cyan d-block">Investment Asset</span>
+                  <span class="text-digit d-block">{{investmentAsset}}</span>
+                </td>
+                <td class="col-md-6">
+                  <span class="text-blue d-block">Other Assets</span>
+                  <span class="text-digit d-block">{{otherAssets}}</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td class="inner-wrapper">
+            <table style="width: 100%;">
+              <tr>
+                <td class="col-md-6">
+                  <span class="text-red d-block">liabilities</span>
+                  <span class="text-digit d-block">{{liabilities}}</span>
+                </td>
+                <td class="col-md-6">
+                  <span class="text-purple d-block">Net worth</span>
+                  <span class="text-digit d-block">{{netWorth}}</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr></tr>
+
+  <!--quick snapshot ended-->
+  <tr>
+    <td style="padding-top: 1rem;">
       <table class="why-table">
         <tr>
           <td colspan="3">
@@ -357,7 +432,7 @@
           </td>
           <td class="col-3 benefits d-table-row">
             <a class="d-table-cell" href="https://app.moneyminx.com">
-              <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/32adac8c-bbb2-4599-aa04-bbf576ac05f4/300x300.png" width="100" alt="Visualize data" />
+              <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/32adac8c-bbb2-4599-aa04-bbf576ac05f4/300x300.png" width="100"alt="Visualize data" />
             </a>
             <span class="img-desc d-table-cell">Visualize their data in awesome charts, graphs and tools.</span>
           </td>
@@ -380,15 +455,14 @@
     <td>
       <table class="security-trust-table">
         <tr>
-
           <td class="col-2 security-col">
             <h5 class="sec-title">Serious about security</h5>
-            <table style="width:100%">
+            <table style="width: 100%;">
               <tr>
-                <td style="width:50px;">
+                <td style="width: 50px;">
                   <a href="https://app.moneyminx.com">
                         <span class="rounded-icon">
-                        <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/a48759d3-5d4e-42d8-a701-f4fb5c55f1b7/72x72.png" width="24" height="24" alt="Security" />
+                        <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/a48759d3-5d4e-42d8-a701-f4fb5c55f1b7/72x72.png" width="24" height="24" style="width: 100%; max-width: 24px;" alt="Security" />
                         </span>
                   </a>
                 </td>
@@ -402,12 +476,10 @@
 
           <td class="col-2">
             <h5 class="sec-title">Trusted by investors</h5>
-            <table style="width:100%">
+            <table style="width: 100%;">
               <tr>
-                <td style="width:50px;">
-                  <a href="https://app.moneyminx.com">
-                    <span class="rounded-icon"><img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/3e8b494f-efcc-4ef8-85ef-5cc68395972b/72x74.png" width="24" height="24" alt="Trusted" /></span>
-                  </a>
+                <td style="width: 50px;">
+                  <span class="rounded-icon"><img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/3e8b494f-efcc-4ef8-85ef-5cc68395972b/72x74.png" width="24" height="24" style="width: 100%; max-width: 24px;" alt="Trusted" /></span>
                 </td>
                 <td>&nbsp;&nbsp;</td>
                 <td>
@@ -416,7 +488,6 @@
               </tr>
             </table>
           </td>
-
         </tr>
       </table>
     </td>
@@ -424,7 +495,7 @@
   <!--get started row-->
   <tr>
     <td class="get-started-data">
-      <a href="https://app.moneyminx.com" class="btn-primary">Get Started</a>
+      <a href="https://app.moneyminx.com" class="btn-primary">Go to My Account</a>
     </td>
   </tr>
   <tr>
@@ -433,7 +504,6 @@
     </td>
   </tr>
 </table>
-<!--Footer-->
 <table class="footer-table">
   <tr>
     <td class="footer-text" colspan="2">
@@ -452,37 +522,37 @@
   </tr>
   <tr style="padding-top: 1rem;">
     <td style="padding-top: 1rem;" class="copy">© 2020 Money Minx. All rights reserved.</td>
-    <td style="padding-top: 2rem;" class="links">
+    <td style="padding-top: 1rem;" class="links">
       <table>
         <tr>
           <td>
             <a href="https://www.facebook.com/moneyminx" target="_blank"
-            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/57eacddb-3451-4078-98a3-ccfe817194d3/62x62.png" width="22" alt="Facebook Link"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/57eacddb-3451-4078-98a3-ccfe817194d3/62x62.png" width="22" style="width: 100%; max-width: 22px;" alt="Facebook Link"
             /></a>
           </td>
           <td>
             <a href="https://twitter.com/moneyminxapp" target="_blank"
-            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/4e024626-9a2e-41a6-92a2-74eebdcb22fb/62x60.png" width="22" alt="Twitter Link"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/4e024626-9a2e-41a6-92a2-74eebdcb22fb/62x60.png" width="22" style="width: 100%; max-width: 22px;" alt="Twitter Link"
             /></a>
           </td>
           <td>
             <a href="https://instagram.com/moneyminxapp" target="_blank"
-            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/63bcdb83-31f4-4071-b716-521c728071fd/62x62.png" width="22" alt="Instagram Link"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/63bcdb83-31f4-4071-b716-521c728071fd/62x62.png" width="22" style="width: 100%; max-width: 22px;" alt="Instagram Link"
             /></a>
           </td>
           <td>
             <a href="https://linkedin.com/company/moneyminx" target="_blank"
-            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/a50bfb51-a507-44bd-9a16-ef74583950c7/62x60.png" width="22" alt="Linkedin Link"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/a50bfb51-a507-44bd-9a16-ef74583950c7/62x60.png" width="22" style="width: 100%; max-width: 22px;" alt="Linkedin Link"
             /></a>
           </td>
           <td>
             <a href="https://www.youtube.com/channel/UCmWuUaetlK3fABjglo9cEaQ" target="_blank"
-            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/3aeff7ee-bb6b-4dfa-92ec-96903e78b0ce/62x60.png" width="22" alt="Youtube Link"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/3aeff7ee-bb6b-4dfa-92ec-96903e78b0ce/62x60.png" width="22" style="width: 100%; max-width: 22px;" alt="Youtube Link"
             /></a>
           </td>
           <td>
             <a href="https://www.pinterest.com/moneyminx/" target="_blank"
-            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/0b22ad09-8a19-493e-8f4f-a0c994429c89/60x62.png" width="22" alt="Pinterest Link"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/0b22ad09-8a19-493e-8f4f-a0c994429c89/60x62.png" width="22" style="width: 100%; max-width: 22px;" alt="Pinterest Link"
             /></a>
           </td>
         </tr>
