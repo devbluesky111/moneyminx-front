@@ -9,6 +9,10 @@ const NetworthLayout: React.FC = ({ children }) => {
   const [openRightNav, setOpenRightNav] = useState<boolean>(false);
   const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
 
+  const closeRightNav = () => {
+    setOpenRightNav(false);
+  }
+
   return (
     <>
       <AppHeader
@@ -17,8 +21,8 @@ const NetworthLayout: React.FC = ({ children }) => {
         open={openRightNav}
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
+      <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
       {children}
-      <div className='mm-slider-bg-overlay'/>
       <AppFooter />
     </>
   );
