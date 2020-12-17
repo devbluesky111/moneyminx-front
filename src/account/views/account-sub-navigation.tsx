@@ -16,7 +16,7 @@ export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = (props)
         <div className='app-subheader-container px-4 account align-items-center'>
           <AppSubHeader />
           {providerLogo ?
-            <Image src={providerLogo} className='providerLogo' />
+            <Image src={providerLogo} className='providerLogo d-none d-md-block' />
             : <span>{providerName ? providerName : ''}</span>
           }
           <span className='mm-switch-block d-flex align-items-center base-currency-toggle'>
@@ -33,8 +33,16 @@ export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = (props)
               onClick={toggleBaseCurrency}
               role='button'
             />
-            <span className='ml-2 view-in-base-currency'>View in base currency ({data?.currency})</span>
+            <span className='d-none d-md-block ml-2 view-in-base-currency'>View in base currency</span>
+            <span className='ml-2 view-in-base-currency'> ({data?.currency})</span>
           </span>
+
+        </div>
+        <div className='d-md-none py-3 w-100 text-center'>
+          {providerLogo ?
+            <Image src={providerLogo} className='s-providerLogo' />
+            : <span>{providerName ? providerName : ''}</span>
+          }
         </div>
       </div>
     </section>

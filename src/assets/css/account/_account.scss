@@ -3,27 +3,25 @@
   .providerLogo {
     height: 48px;
     position: absolute;
-    left: 45%;
+    left: 43%;
 
-    @media(max-width: $md) {
-      left: 70%
+    @media(max-width: $desk) {
+      left: 32%;
     }
   }
 
-  span {
+  > span {
     font-weight: bold;
   }
 
   .base-currency-toggle {
     position: absolute;
     right: 1rem;
-
-    @media(max-width: $md) {
-      position: relative;
-      margin-top: 100px;
-      margin-left: -318px;
-    }
   }
+}
+
+.s-providerLogo {
+  height: 48px;
 }
 
 .mm-account {
