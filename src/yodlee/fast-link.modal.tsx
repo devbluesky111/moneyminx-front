@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import useToast from 'common/hooks/useToast';
-import LoadingScreen from 'common/loading-screen';
+import { logger } from 'common/logger.helper';
 import { useAuthDispatch } from 'auth/auth.context';
 import { getRefreshedAccount } from 'auth/auth.service';
 import { Modal, ModalTypeEnum } from 'common/components/modal';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import useYodlee from './useYodlee';
 import { FastLinkOptionsType } from './yodlee.type';
@@ -21,7 +22,9 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   const dispatch = useAuthDispatch();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSuccess = async () => {
+  const onSuccess = async (args: any) => {
+    logger.log('fastlink onsuccess arguments', args);
+
     setLoading(true);
     mmToast('Successfully Logged in with Yodlee', { type: 'success' });
     const { error } = await getRefreshedAccount({ dispatch });
@@ -35,6 +38,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   };
 
   const onError = (err: any) => {
+    logger.log('fastlink onerror log', err);
     const errorList = err
       ? Object.keys(err).map((ek, i) => (
           <li key={i}>
@@ -47,6 +51,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   };
 
   const onClose = async (args: any) => {
+    logger.log('fastlink onclose arguments', args);
     return fastLinkModal.close();
   };
 
@@ -81,7 +86,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
     >
       <div className='fastlink-modal-container'>
         <div id='fastlinkContainer' />
-        {loading || !active ? <LoadingScreen onModal /> : null}
+        {loading || !active ? <CircularSpinner /> : null}
         <button ref={initRef} onClick={handleInit} className='hidden' />
       </div>
     </Modal>

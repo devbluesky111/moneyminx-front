@@ -3,15 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import appEnv from 'app/app.env';
-import MMToolTip from 'common/components/tooltip';
-import FastLinkModal from 'yodlee/fast-link.modal';
-import useAnalytics from 'common/hooks/useAnalytics';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
-import { AuthLayout } from 'layouts/auth.layout';
 import { getFastlink } from 'api/request.api';
+import { logger } from 'common/logger.helper';
+import { AuthLayout } from 'layouts/auth.layout';
 import { useAuthState } from 'auth/auth.context';
+import MMToolTip from 'common/components/tooltip';
+import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
+import useAnalytics from 'common/hooks/useAnalytics';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { appRouteConstants } from 'app/app-route.constant';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
@@ -42,7 +43,11 @@ export const ConnectAccountMainSection = () => {
   const { onboarded } = useAuthState();
   const manualAccountModal = useModal();
   const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
-  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } })
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({
+    fastLinkURL: '',
+    token: { tokenType: 'AccessToken', tokenValue: '' },
+    config: { flow: '', configName: 'Aggregation', providerAccountId: 0 },
+  });
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -59,13 +64,13 @@ export const ConnectAccountMainSection = () => {
     const { data, error } = await getFastlink();
 
     if (error) {
-      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });;
+      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });
     }
 
     const fastLinkOptions: FastLinkOptionsType = {
       fastLinkURL: data.fastLinkUrl,
       token: data.accessToken,
-      config: data.params
+      config: data.params,
     };
 
     setFastLinkOptions(fastLinkOptions);
@@ -103,6 +108,7 @@ export const ConnectAccountMainSection = () => {
 
   const handleConnectAccountSuccess = () => {
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
+    logger.log('fastlink onsuccess location', location);
 
     return history.push(location);
   };
@@ -159,14 +165,11 @@ export const ConnectAccountMainSection = () => {
                 >
                   Add Banks and Investments
                 </button>
-                <MMToolTip
-                  placement='top'
-                  message='Stay tuned, crypto accounts are almost ready.'
-                >
+                <MMToolTip placement='top' message='Stay tuned, crypto accounts are almost ready.'>
                   <button
                     className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto'
                     type='button'
-                  /*onClick={handleCryptoExchange}*/
+                    /*onClick={handleCryptoExchange}*/
                   >
                     Add Crypto Exchanges
                   </button>
