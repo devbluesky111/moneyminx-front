@@ -139,7 +139,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
       ) : (
         <div className='allocation-content'>
           <div
-            className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center allocation-page-chart-wrapper'
+            className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center allocation-page-chart-wrapper p-b-4'
             id='selected-allocation-pie-chart'
           >
             <MMPieChart chartData={chartData} currencySymbol={currencySymbol} />
