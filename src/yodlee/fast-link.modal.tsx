@@ -79,7 +79,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
     <Modal
       {...fastLinkModal.props}
       title=''
-      size={'xs'}
+      size={'sm'}
       canBeClosed
       loading={loading || !active}
       type={ModalTypeEnum.NO_HEADER}
