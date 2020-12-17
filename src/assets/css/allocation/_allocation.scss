@@ -194,6 +194,8 @@
       float: none;
       display: block;
       margin: 0;
+      border-bottom: 1px solid $grayOpacity20;
+      padding-bottom: 16px;
 
       @media (min-width: 675px) and (max-width: 1199px) {
         float: right;

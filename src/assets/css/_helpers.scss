@@ -85,3 +85,10 @@ $px: 20;
   }
 }
 @include font-size-class ;
+
+// Mainly used for currency dropdowns
+.text-uppercase {
+  button {
+    text-transform: uppercase;
+  }
+}
