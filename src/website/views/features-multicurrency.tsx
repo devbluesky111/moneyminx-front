@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import WebsiteLayout from 'website/website.layout';
-import BaseCurrency from 'assets/images/features/base-currency.svg';
+import BaseCurrency from 'assets/images/features/multicurrency.svg';
 import SelectCurrency from 'assets/images/features/select-currency.svg';
 
 const FeaturesMulticurrency = () => {
