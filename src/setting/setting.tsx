@@ -53,6 +53,10 @@ const Settings: React.FC<SettingsProps> = () => {
     }
   };
 
+  const closeRightNav = () => {
+    setOpenRightNav(false);
+  }
+
   return (
     <div className='mm-setting'>
       <AppHeader
@@ -65,7 +69,7 @@ const Settings: React.FC<SettingsProps> = () => {
         <SettingTitleSection handlePageSelect={handlePageSelect} pageTitle={page} />
         {renderTabContent()}
       </div>
-      <div className='mm-slider-bg-overlay' />
+      <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
       <AppFooter />
     </div>
   );

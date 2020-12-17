@@ -29,7 +29,7 @@ const Allocation: React.FC<AllocationProps> = () => {
           open={openRightNav}
         />
         <div className='app-subheader-container px-4'>
-          <Skeleton width={200} height={50} count={1}/>
+          <Skeleton width={200} height={50} count={1} />
         </div>
         <div className='content-wrapper'>
           <div className='container'>
@@ -37,13 +37,13 @@ const Allocation: React.FC<AllocationProps> = () => {
               <div className='mm-allocation-overview__wrapper'>
                 <div className='row'>
                   <div className='col-xl-4'>
-                    <Skeleton width={375} height={810}/>
+                    <Skeleton width={375} height={810} />
                   </div >
                   <div className='col-xl-4'>
-                    <Skeleton width={375} height={810}/>
+                    <Skeleton width={375} height={810} />
                   </div >
                   <div className='col-xl-4'>
-                    <Skeleton width={375} height={810}/>
+                    <Skeleton width={375} height={810} />
                   </div >
                 </div >
               </div >
@@ -63,6 +63,10 @@ const Allocation: React.FC<AllocationProps> = () => {
     setFilter(type);
   };
 
+  const closeRightNav = () => {
+    setOpenRightNav(false);
+  }
+
   return (
     <div className='mm-setting mm-allocation'>
       <AppHeader
@@ -71,10 +75,14 @@ const Allocation: React.FC<AllocationProps> = () => {
         open={openRightNav}
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
-      <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
+      <div onClick={closeRightNav} >
+        <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
+      </div>
       <hr className='mt-0 mb-4' />
       <div className='mm-slider-bg-overlay' />
-      <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
+      <div onClick={closeRightNav} >
+        <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
+      </div>
       <AppFooter />
     </div>
   );

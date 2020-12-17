@@ -204,6 +204,10 @@ const AccountDetail: React.FC = () => {
     activityDetailsModal.open();
   }
 
+  const closeRightNav = () => {
+    setOpenRightNav(false);
+  }
+
   return (
     <div className='mm-setting'>
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
@@ -216,7 +220,9 @@ const AccountDetail: React.FC = () => {
         open={openRightNav}
       />
       {!loading && AccountDetails && (
-        <AccountSubNavigation AccountDetails={AccountDetails} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
+        <div onClick={closeRightNav} >
+          <AccountSubNavigation AccountDetails={AccountDetails} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
+        </div>
       )}
       <hr className='mt-0' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
@@ -240,7 +246,7 @@ const AccountDetail: React.FC = () => {
           </div>
         </div>
       ) : (
-          <div className='content-wrapper'>
+          <div className='content-wrapper' onClick={closeRightNav}>
             <div className='container'>
               <div className='mm-account'>
                 <div className='mm-account__selection mb-3'>
