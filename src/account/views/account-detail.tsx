@@ -216,7 +216,7 @@ const AccountDetail: React.FC = () => {
         open={openRightNav}
       />
       {!loading && AccountDetails && (
-        <AccountSubNavigation providerLogo={AccountDetails?.providerLogo} providerName={AccountDetails?.providerName} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
+        <AccountSubNavigation AccountDetails={AccountDetails} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
       )}
       <hr className='mt-0 mb-4' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />

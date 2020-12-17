@@ -1,8 +1,8 @@
 import { ModalType } from "common/components/modal";
+import { Account } from 'auth/auth.types';
 
 export interface AccountSubNavigationProps {
-  providerLogo: string;
-  providerName: string;
+  AccountDetails: Account;
   baseCurrency: boolean;
   toggleBaseCurrency: () => void;
 }

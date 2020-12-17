@@ -6,19 +6,18 @@ import useSettings from 'setting/hooks/useSettings';
 import AppSubHeader from '../../common/app.sub-header';
 import { AccountSubNavigationProps } from '../account.type';
 
-export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = (props) => {
-  const { providerLogo, providerName, baseCurrency, toggleBaseCurrency } = props;
+export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = ({ AccountDetails, baseCurrency, toggleBaseCurrency }) => {
   const { data } = useSettings();
 
   return (
     <section>
       <div className='content-container mm-account-sub-nav'>
         <div className='app-subheader-container px-4 account align-items-center'>
-          <AppSubHeader />
+          <AppSubHeader AccountDetails={AccountDetails} />
           <div className='middle-box'>
-            {providerLogo ?
-              <Image src={providerLogo} className='providerLogo' />
-              : <span>{providerName ? providerName : ''}</span>
+            {AccountDetails.providerLogo ?
+              <Image src={AccountDetails.providerLogo} className='providerLogo' />
+              : <span>{AccountDetails.providerName ? AccountDetails.providerName : ''}</span>
             }
           </div>
           <span className='mm-switch-block d-flex align-items-center'>
