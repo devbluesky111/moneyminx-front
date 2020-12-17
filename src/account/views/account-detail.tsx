@@ -218,7 +218,7 @@ const AccountDetail: React.FC = () => {
       {!loading && AccountDetails && (
         <AccountSubNavigation AccountDetails={AccountDetails} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
       )}
-      <hr className='mt-0 mb-4' />
+      <hr className='mt-0' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       {loading ? (
         <div className='content-wrapper'>
@@ -244,7 +244,7 @@ const AccountDetail: React.FC = () => {
             <div className='container'>
               <div className='mm-account'>
                 <div className='mm-account__selection mb-3'>
-                  <div className='mm-account__selection--info float-lg-left'>
+                  <div className='mm-account__selection--info'>
                     <SettingsGear className='float-left mr-2 settings-gear-button' onClick={() => setAccSetting(true)} />
                     <ul>
                       <li>{AccountDetails?.accountName}</li>

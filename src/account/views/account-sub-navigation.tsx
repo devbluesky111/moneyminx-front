@@ -14,13 +14,11 @@ export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = ({ Acco
       <div className='content-container mm-account-sub-nav'>
         <div className='app-subheader-container px-4 account align-items-center'>
           <AppSubHeader AccountDetails={AccountDetails} />
-          <div className='middle-box'>
-            {AccountDetails.providerLogo ?
-              <Image src={AccountDetails.providerLogo} className='providerLogo' />
-              : <span>{AccountDetails.providerName ? AccountDetails.providerName : ''}</span>
-            }
-          </div>
-          <span className='mm-switch-block d-flex align-items-center'>
+          {AccountDetails.providerLogo ?
+            <Image src={AccountDetails.providerLogo} className='providerLogo d-none d-md-block' />
+            : <span>{AccountDetails.providerName ? AccountDetails.providerName : ''}</span>
+          }
+          <span className='mm-switch-block d-flex align-items-center base-currency-toggle'>
             <input
               value='true'
               name='baseCurrency'
@@ -30,12 +28,20 @@ export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = ({ Acco
               checked={baseCurrency}
             />
             <label
-              className='mm-switch mt-md-0 mt-sm-3'
+              className='mm-switch'
               onClick={toggleBaseCurrency}
               role='button'
             />
-            <span className='ml-2 view-in-base-currency'>View in base currency ({data?.currency})</span>
+            <span className='d-none d-md-block ml-2 view-in-base-currency'>View in base currency</span>
+            <span className='ml-2 view-in-base-currency'> ({data?.currency})</span>
           </span>
+
+        </div>
+        <div className='d-md-none pb-3 text-center'>
+          {AccountDetails.providerLogo ?
+            <Image src={AccountDetails.providerLogo} className='s-providerLogo' />
+            : <span>{AccountDetails.providerName ? AccountDetails.providerName : ''}</span>
+          }
         </div>
       </div>
     </section>
