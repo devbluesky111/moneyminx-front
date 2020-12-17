@@ -1,24 +1,31 @@
 .app-subheader-container.account {
 
-  .left-box {
-    flex: 0.5;
-  }
-  .middle-box {
-    flex: 0.5;
-    
-    .providerLogo {
-      max-width: 140px;
-      max-height: 48px;
-    }
+  .providerLogo {
+    height: 48px;
+    position: absolute;
+    left: 43%;
 
-    span {
-      font-weight: bold;
+    @media(max-width: $desk) {
+      left: 32%;
     }
+  }
+
+  > span {
+    font-weight: bold;
+  }
+
+  .base-currency-toggle {
+    position: absolute;
+    right: 1rem;
   }
 }
 
+.s-providerLogo {
+  height: 48px;
+}
+
 .mm-account {
-  padding: 2.063rem 1.125rem;
+  padding: 0.25rem 1.125rem;
   background: $lightBg;
 
   @media (min-width: $md) {
@@ -96,7 +103,7 @@
 
   &__selection {
 
-    @media(max-width: 1250px) {
+    @media(max-width: 1350px) {
       display: flex;
       flex-direction: column;
     }
@@ -129,7 +136,7 @@
         margin: 0;
         padding: 0.75rem 0.25rem 0.75rem 0.25rem;
         min-height: 48px;
-        max-width: 740px;
+        max-width: 864px;
       }
 
       li {
