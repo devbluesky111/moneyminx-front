@@ -9,6 +9,7 @@ import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import useAnalytics from 'common/hooks/useAnalytics';
+import useToast from 'common/hooks/useToast';
 import { Account } from 'auth/auth.types';
 import { appRouteConstants } from 'app/app-route.constant';
 import { events } from '@mm/data/event-list';
@@ -38,7 +39,6 @@ import MMToolTip from '../../common/components/tooltip';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 import { ReactComponent as InfoIcon } from '../../assets/images/signup/info.svg';
-import useToast from 'common/hooks/useToast';
 
 const AccountDetail: React.FC = () => {
   const location = useLocation();
@@ -79,6 +79,16 @@ const AccountDetail: React.FC = () => {
   const { mmToast } = useToast();
 
   useEffect(() => {
+    const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
+      const { data, error } = await getAccountDetails(accountId, baseCurrency);
+      if (!error) {
+        setAccountDetails(data);
+      }
+      if (error?.statusCode === 403) {
+        return history.push(appRouteConstants.networth.NET_WORTH);
+      }
+    };
+
     fetchAccountDetails(accountId, baseCurrency);
     if (
       (fromDate === undefined && toDate === undefined) ||
@@ -88,7 +98,7 @@ const AccountDetail: React.FC = () => {
       if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval, baseCurrency);
       if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval, baseCurrency);
     }
-  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen, newActivityModalOpen, editActivityModalOpen, baseCurrency]);
+  }, [accountId, fromDate, toDate, timeInterval, tableType, accSetting, newPositonModalOpen, editPositonModalOpen, newActivityModalOpen, editActivityModalOpen, baseCurrency, history]);
 
   useEffect(() => {
     if (AccountDetails) {
@@ -124,13 +134,6 @@ const AccountDetail: React.FC = () => {
 
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
-  };
-
-  const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
-    const { data, error } = await getAccountDetails(accountId, baseCurrency);
-    if (!error) {
-      setAccountDetails(data);
-    }
   };
 
   const fetchAccountHoldings = async (accountId: string, fromDate: any, toDate: any, timeInterval: string, baseCurrency: boolean) => {
