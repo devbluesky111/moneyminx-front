@@ -38,7 +38,7 @@ export const AccountSubNavigation: React.FC<AccountSubNavigationProps> = (props)
           </span>
 
         </div>
-        <div className='d-md-none py-3 w-100 text-center'>
+        <div className='d-md-none pb-3 text-center'>
           {providerLogo ?
             <Image src={providerLogo} className='s-providerLogo' />
             : <span>{providerName ? providerName : ''}</span>

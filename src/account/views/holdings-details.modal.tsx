@@ -511,7 +511,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='row mt-2 align-items-center'>
                                   <div className='col-sm'>Cost Currency</div>
                                   <div className='col-sm '>
-                                    <div className='form-field-group'>
+                                    <div className='form-field-group text-uppercase'>
                                       <SelectInput
                                         args={curArr}
                                         onChange={handleSelectChange}
@@ -762,7 +762,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='row mt-2 align-items-center'>
                                   <div className='col-sm'>Price Currency</div>
                                   <div className='col-sm'>
-                                    <div className='form-field-group'>
+                                    <div className='form-field-group text-uppercase'>
                                       <SelectInput
                                         args={curArr}
                                         onChange={handleSelectChange}
@@ -802,7 +802,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='row mt-2 align-items-center'>
                                   <div className='col-sm'>Cost Currency</div>
                                   <div className='col-sm '>
-                                    <div className='form-field-group'>
+                                    <div className='form-field-group text-uppercase'>
                                       <SelectInput
                                         args={curArr}
                                         onChange={handleSelectChange}
@@ -900,7 +900,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='row mt-2 align-items-center'>
                                   <div className='col-sm'>Vested Currency</div>
                                   <div className='col-sm'>
-                                    <div className='form-field-group'>
+                                    <div className='form-field-group text-uppercase'>
                                       <SelectInput
                                         args={curArr}
                                         onChange={handleSelectChange}
@@ -953,7 +953,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='row mt-2 align-items-center'>
                                   <div className='col-sm'>Unvested Currency</div>
                                   <div className='col-sm'>
-                                    <div className='form-field-group'>
+                                    <div className='form-field-group text-uppercase'>
                                       <SelectInput
                                         args={curArr}
                                         onChange={handleSelectChange}
@@ -1017,7 +1017,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='row mt-2 align-items-center'>
                                   <div className='col-sm'>Strike Currency</div>
                                   <div className='col-sm'>
-                                    <div className='form-field-group'>
+                                    <div className='form-field-group text-uppercase'>
                                       <SelectInput
                                         args={curArr}
                                         onChange={handleSelectChange}
