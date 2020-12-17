@@ -13,7 +13,11 @@ import { pricingDetailConstant } from './common.constant';
 import { useModal } from './components/modal';
 import { getCurrencySymbol } from './currency-helper';
 
-const AppSubHeader = () => {
+export interface AppSubHeaderProps {
+  AccountDetails?: Account;
+}
+
+const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
   const history = useHistory();
   const [availableNumber, setAvailableNumber] = useState<number>(0);
   const [successAccounts, setSuccessAccounts] = useState<Account[]>([]);
@@ -36,7 +40,7 @@ const AppSubHeader = () => {
       }
     };
     fetchCurrentAccount();
-  }, []);
+  }, [AccountDetails]);
 
   const checkAccountLimit = async () => {
     const { data } = await getCurrentSubscription();
@@ -99,7 +103,7 @@ const AppSubHeader = () => {
                       )
                     })}
                   </ul>
-                  <hr className='hr-darkBg'/>
+                  <hr className='hr-darkBg' />
                 </div>
               }
               {warningAccounts.length > 0 &&
@@ -119,7 +123,7 @@ const AppSubHeader = () => {
                       )
                     })}
                   </ul>
-                  <hr className='hr-darkBg'/>
+                  <hr className='hr-darkBg' />
                 </div>
               }
               {successAccounts.length > 0 &&

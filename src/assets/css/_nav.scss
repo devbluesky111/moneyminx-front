@@ -41,22 +41,10 @@
 .mm-app-nav-icon {
   height: 42px;
 }
-
 .profilemenu.open-slidebar {
   &+.collapse {
-    &+.content-container {
-      &+.mm-slider-bg-overlay {
-        display: block;
-      }
-    }
-  }
-}
-.profilemenu.open-slidebar {
-  &+.collapse {
-    &+.mm-settings-container {
-      &+.mm-slider-bg-overlay {
-        display: block;
-      }
+    &+.mm-slider-bg-overlay {
+      display: block;
     }
   }
 }
