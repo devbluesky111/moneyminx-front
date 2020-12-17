@@ -220,12 +220,11 @@ const AccountDetail: React.FC = () => {
         open={openRightNav}
       />
       {!loading && AccountDetails && (
-        <div onClick={closeRightNav} >
-          <AccountSubNavigation AccountDetails={AccountDetails} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
-        </div>
+        <AccountSubNavigation AccountDetails={AccountDetails} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
       )}
       <hr className='mt-0' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
+      <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
       {loading ? (
         <div className='content-wrapper'>
           <div className='container'>
@@ -246,7 +245,7 @@ const AccountDetail: React.FC = () => {
           </div>
         </div>
       ) : (
-          <div className='content-wrapper' onClick={closeRightNav}>
+          <div className='content-wrapper'>
             <div className='container'>
               <div className='mm-account'>
                 <div className='mm-account__selection mb-3'>

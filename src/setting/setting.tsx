@@ -65,11 +65,11 @@ const Settings: React.FC<SettingsProps> = () => {
         open={openRightNav}
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
+      <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
       <div className={containerClass}>
         <SettingTitleSection handlePageSelect={handlePageSelect} pageTitle={page} />
         {renderTabContent()}
       </div>
-      <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
       <AppFooter />
     </div>
   );

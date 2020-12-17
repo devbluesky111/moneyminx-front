@@ -75,14 +75,10 @@ const Allocation: React.FC<AllocationProps> = () => {
         open={openRightNav}
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
-      <div onClick={closeRightNav} >
-        <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
-      </div>
+      <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
+      <AllocationSubNavigation onTypeChange={handleTypeChange} filter={filter} />
       <hr className='mt-0 mb-4' />
-      <div className='mm-slider-bg-overlay' />
-      <div onClick={closeRightNav} >
-        <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
-      </div>
+      <AllocationOverview allocations={allocations} chartData={allocationChartData} filter={filter} />
       <AppFooter />
     </div>
   );
