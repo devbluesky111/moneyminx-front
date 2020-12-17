@@ -16,7 +16,7 @@ import { enumerateStr } from 'common/common-helper';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
-import { getDate, getMonthYear, getQuarter, getRelativeDate, getYear } from 'common/moment.helper';
+import { getDate, getMonthYear, getQuarter, getRelativeDate, getYear, parseDateFromString } from 'common/moment.helper';
 import { getAccountDetails, getAccountHoldings, getAccountActivity, getFastlinkUpdate } from 'api/request.api';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
@@ -67,6 +67,7 @@ const AccountDetail: React.FC = () => {
   const [baseCurrency, setBaseCurrency] = useState<boolean>(false);
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const [popup, setPopup] = useState<boolean>(false);
+  const [fDate, setFDate] = useState<string>('');
   const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } });
 
   const { pathname } = useLocation();
@@ -135,6 +136,7 @@ const AccountDetail: React.FC = () => {
   const fetchAccountHoldings = async (accountId: string, fromDate: any, toDate: any, timeInterval: string, baseCurrency: boolean) => {
     const { data, error } = await getAccountHoldings({ accountId, fromDate, toDate, timeInterval, baseCurrency });
     if (!error) {
+      setFDate(data.charts?.[0].interval);
       setAccountHoldings(data);
       setLoading(false);
       setFilterLoading(false);
@@ -216,7 +218,7 @@ const AccountDetail: React.FC = () => {
       {!loading && AccountDetails && (
         <AccountSubNavigation providerLogo={AccountDetails?.providerLogo} providerName={AccountDetails?.providerName} baseCurrency={baseCurrency} toggleBaseCurrency={() => setBaseCurrency(!baseCurrency)} />
       )}
-      <hr className='mt-0 mb-4' />
+      <hr className='mt-0' />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       {loading ? (
         <div className='content-wrapper'>
@@ -242,7 +244,7 @@ const AccountDetail: React.FC = () => {
             <div className='container'>
               <div className='mm-account'>
                 <div className='mm-account__selection mb-3'>
-                  <div className='mm-account__selection--info float-lg-left'>
+                  <div className='mm-account__selection--info'>
                     <SettingsGear className='float-left mr-2 settings-gear-button' onClick={() => setAccSetting(true)} />
                     <ul>
                       <li>{AccountDetails?.accountName}</li>
@@ -262,10 +264,10 @@ const AccountDetail: React.FC = () => {
                           </button>
                         )}
                         <ReactDatePicker
-                          selected={fromDate ? new Date(fromDate) : null}
+                          selected={fromDate ? new Date(fromDate) : fDate ? parseDateFromString(fDate) : null}
                           onChange={(date) => onChange('start', date)}
                           // selectsStart
-                          startDate={fromDate ? new Date(fromDate) : null}
+                          startDate={fromDate ? new Date(fromDate) : fDate ? parseDateFromString(fDate) : null}
                           dateFormat='MM/yyyy'
                           showMonthYearPicker
                           minDate={new Date('1900-01-01')}
@@ -277,7 +279,7 @@ const AccountDetail: React.FC = () => {
                                 <input
                                   type='text'
                                   className={['month_year', dateFromFilterOn ? 'active' : ''].join(' ')}
-                                  value={getMonthYear(fromDate)}
+                                  value={fromDate ? getMonthYear(fromDate) : fDate ? getMonthYear(fDate) : getMonthYear(new Date())}
                                   readOnly
                                 />
                               </div>
