@@ -146,7 +146,7 @@ export function put(url: string, data: any): any {
     },
   });
 }
-export function patch(url: string, data: any): any {
+export function patch(url: string, data?: any): any {
   return axiosInstance({
     method: 'patch',
     url,
