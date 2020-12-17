@@ -27,8 +27,8 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
   const [clickEvent, setClickEvent] = useState<boolean>(false);
   const [currentAccount, setCurrentAccount] = useState<Account>();
   const [completedProviderName, setCompletedProviderName] = useState<string[]>([]);
-  const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
-  const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
+  const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>([]);
+  const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>({});
 
   useEffect(() => {
     const getUser = async () => {
@@ -45,7 +45,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
    * set current provider accounts
    */
   useEffect(() => {
-    if (accounts) {
+    if (accounts?.length) {
       setCurrentAccount(accounts[0]);
       const accountsByProvider = groupByProviderName(accounts);
       setAccountsByProviderName(accountsByProvider);
