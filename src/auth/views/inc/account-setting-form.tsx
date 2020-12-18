@@ -354,6 +354,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleSelectChange}
                       value={values.currency}
                       name='currency'
+                      single={true}
                     />
                   </li>
 
