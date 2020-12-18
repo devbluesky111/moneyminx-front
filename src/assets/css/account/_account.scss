@@ -448,6 +448,12 @@
 }
 
 .mm-holdings-details-modal {
+  div {
+    color: $darkGray
+  }
+  .table-heading {
+    color: $gray;
+  }
 
   .form-control {
     height: 48px;
@@ -527,7 +533,8 @@
   }
 
   .key {
-    font-weight: bold;
+    font-weight: 600;
+    color: $darkGray;
   }
 
   .action-wrapper {
@@ -572,10 +579,14 @@
   }
 
   .unclassified {
-    color: $gray;
-    font-size: 0.875rem;
+    color: $gray !important;
+    font-size: 1rem;
     border-bottom: 1px solid rgba($gray, 0.24);
-    margin: 15px 0 25px;
+    margin: 15px 0 0 0;
+
+    div.col-sm {
+      padding-left: 0;
+    }
   }
 
   .current-m {
@@ -609,7 +620,7 @@
     }
   
     .nav-tabs .nav-link.active, .nav-tabs .active.mm-nav-link, .nav-tabs .nav-item.show .nav-link, .nav-tabs .show.mm-nav-item .nav-link, .nav-tabs .nav-item.show .mm-nav-link, .nav-tabs .show.mm-nav-item .mm-nav-link {
-      color: $darkGray;
+      color: $purple;
       border: 1.5px solid $white;
     }
 
@@ -708,6 +719,12 @@
 }
 
 .mm-activity-details-modal {
+  div {
+    color: $darkGray
+  }
+  .table-heading {
+    color: $gray;
+  }
 
   .form-control {
     height: 48px;
@@ -760,7 +777,8 @@
   }
 
   .key {
-    font-weight: bold;
+    font-weight: 600;
+    color: $darkGray;
   }
 
   .action-wrapper {
@@ -816,4 +834,23 @@
     min-width: 120px;
   }
 
+}
+#holdings-details-modal-tabpane-classifications {
+  max-width: 752px;
+
+  .dropdown-select-input {
+    max-width: 300px;
+  }
+
+  .classification-percentage {
+    max-width: 174px;
+  }
+}
+.classify-percentage {
+  text-align: right;
+  margin-right: 70px;
+}
+.classify-total-percentage {
+  text-align: right;
+  margin-right: 60px;
 }
