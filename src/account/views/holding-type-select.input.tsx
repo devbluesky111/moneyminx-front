@@ -1,38 +1,22 @@
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 
-import { formater } from 'common/common-helper';
+import { foramtHoldingType } from 'account/views/holdings-details.modal';
 
-interface MMSelectProps {
-  title: string;
-}
-
-const MMSelect: React.FC<MMSelectProps> = ({ children, title }) => {
-  return (
-    <Dropdown className='drop-box'>
-      <Dropdown.Toggle className='dropdown-toggle'>{title}</Dropdown.Toggle>
-      <Dropdown.Menu className='mm-dropdown-menu'>{children}</Dropdown.Menu>
-    </Dropdown>
-  );
-};
-
-export default MMSelect;
-
-interface SelectInputProps {
+interface HoldingTypeSelectInputProps {
   args: any[];
   onChange: (e: React.ChangeEvent<any>) => void;
   value: string;
   name: string;
-  format?: boolean;
   single?: boolean;
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, value, format, single }) => {
+export const HoldingTypeSelectInput: React.FC<HoldingTypeSelectInputProps> = ({ name, args, onChange, value, single }) => {
   const [show, setShow] = useState(false);
 
   return (
     <Dropdown className='drop-box dropdown-select-input' onToggle={(nextShow) => setShow(nextShow)} show={show}>
-      <Dropdown.Toggle className='dropdown-toggle'>{formater(value)}</Dropdown.Toggle>
+      <Dropdown.Toggle className='dropdown-toggle'>{value}</Dropdown.Toggle>
       <Dropdown.Menu className='mm-dropdown-menu'>
         <ul className={['checkbox-list', single ? 'single' : ''].join(' ')}>
           {args?.map((val, index) => {
@@ -51,7 +35,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, 
                       setShow(false);
                     }}
                   />
-                  <span>{format ? formater(val) : val}</span>
+                  <span>{foramtHoldingType(val)}</span>
                 </label>
               </li>
             );

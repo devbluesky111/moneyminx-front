@@ -17,6 +17,7 @@ import { getClassification, getHoldingTypes, patchPosition, postPosition } from 
 import { ClassificationsSelectInput } from './classifications.select.input';
 import { ReactComponent as AddNewIcon } from '../../assets/images/account/AddNew.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/images/account/Delete.svg';
+import { HoldingTypeSelectInput } from './holding-type-select.input';
 
 export const foramtHoldingType = (str: string) => {
   if (['CD', 'ETF', 'ETN'].includes(str)) {
@@ -736,12 +737,11 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>Holding Type</div>
                                     <div className='col-sm'>
                                       <div className='form-field-group'>
-                                        <SelectInput
+                                        <HoldingTypeSelectInput
                                           args={holdingTypes}
                                           onChange={handleSelectChange}
                                           value={values.holdingType}
                                           name='holdingType'
-                                          isHoldingTypes={true}
                                           single={true}
                                         />
                                       </div>
@@ -1150,12 +1150,11 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='col-sm-3'>Type</div>
                                 <div className='col-sm-6'>
                                   <div className='form-field-group'>
-                                    <SelectInput
+                                    <HoldingTypeSelectInput
                                       args={holdingTypes}
                                       onChange={handleSelectChange}
                                       value={values.holdingType}
                                       name='holdingType'
-                                      isHoldingTypes={true}
                                       single={true}
                                     />
                                   </div>
