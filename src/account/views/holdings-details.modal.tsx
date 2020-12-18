@@ -427,7 +427,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
             <Modal
               {...holdingsDetailsModal.props}
               title={holdingsDetails?.description || 'New Position'}
-              size={holdingsDetails ? 'xxl' : 'lg'}
+              size={holdingsDetails ? 'xxl' : 'xl'}
               canBeClosed
               onClose={() => {
                 holdingsDetailsModal.close();
@@ -1021,7 +1021,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               <div className='col-sm key'>General Details</div>
                             </div>
                             <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Name</div>
+                              <div className='col-sm-4'>Name</div>
                               <div className='col-sm-6'>
                                 <div className='form-field-group'>
                                   <Form.Control onChange={handleChange} name='description' value={values.description} />
@@ -1029,7 +1029,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               </div>
                             </div>
                             <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Type</div>
+                              <div className='col-sm-4'>Type</div>
                               <div className='col-sm-6'>
                                 <div className='form-field-group'>
                                   <SelectInput
@@ -1043,7 +1043,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               </div>
                             </div>
                             <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Quantity</div>
+                              <div className='col-sm-4'>Quantity</div>
                               <div className='col-sm-6'>
                                 <div className='form-field-group'>
                                   <Form.Control
@@ -1056,7 +1056,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               </div>
                             </div>
                             <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Price per Unit</div>
+                              <div className='col-sm-4'>Price per Unit</div>
                               <div className='col-sm-6'>
                                 <div className='form-field-group'>
                                   <Form.Control
@@ -1070,7 +1070,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               </div>
                             </div>
                             <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Cost per Unit</div>
+                              <div className='col-sm-4'>Cost per Unit</div>
                               <div className='col-sm-6'>
                                 <div className='form-field-group'>
                                   <Form.Control
@@ -1084,11 +1084,11 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               </div>
                             </div>
                             <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Current Market Value</div>
-                              <div className='col-sm-6'>{values.price * values.quantity}$</div>
+                              <div className='col-sm-4'>Current Market Value</div>
+                              <div className='col-sm-6'>${values.price * values.quantity}</div>
                             </div>
                             <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Gain / loss</div>
+                              <div className='col-sm-4'>Gain / loss</div>
                               <div
                                 className={[
                                   'col-sm-6',
@@ -1097,7 +1097,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     : 'text-danger',
                                 ].join(' ')}
                               >
-                                {(values.price - values.costBasis) * values.quantity}$
+                                ${(values.price - values.costBasis) * values.quantity}
                               </div>
                             </div>
                           </div>
