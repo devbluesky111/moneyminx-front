@@ -1,8 +1,8 @@
-import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { Tabs, Tab, Form } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react';
 
+import moment from 'moment';
 import { Formik } from 'formik';
 import { gc } from 'common/interval-parser';
 import useToast from 'common/hooks/useToast';
@@ -13,13 +13,13 @@ import { SelectInput } from 'common/components/input/select.input';
 import { enumerateStr, formater, getUnique } from 'common/common-helper';
 import { DisabledInputProps, HoldingsDetailsModalProps } from 'account/account.type';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
+import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
+import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 
 import { ClassificationsSelectInput } from './classifications.select.input';
-import { ReactComponent as AddNewIcon } from '../../assets/images/account/AddNew.svg';
-import { ReactComponent as DeleteIcon } from '../../assets/images/account/Delete.svg';
 import { HoldingTypeSelectInput } from './holding-type-select.input';
 
-export const foramtHoldingType = (str: string) => {
+export const formatHoldingType = (str: string) => {
   if (['CD', 'ETF', 'ETN'].includes(str)) {
     return str;
   }
@@ -459,7 +459,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 {values.holdingType && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Holding Type</div>
-                                    <div className='col-sm'>{foramtHoldingType(values.holdingType)}</div>
+                                    <div className='col-sm'>{formatHoldingType(values.holdingType)}</div>
                                   </div>
                                 )}
                                 {values.securityType && (
@@ -506,20 +506,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         value={values.costBasis}
                                       />
                                       <span className='input-add-on'>{currencySymbol}</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Cost Currency</div>
-                                  <div className='col-sm '>
-                                    <div className='form-field-group text-uppercase'>
-                                      <SelectInput
-                                        args={curArr}
-                                        onChange={handleSelectChange}
-                                        value={values.costBasisCurrency}
-                                        name='costBasisCurrency'
-                                        single={true}
-                                      />
                                     </div>
                                   </div>
                                 </div>
@@ -576,12 +562,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>{values.vestedValue}</div>
                                   </div>
                                 )}
-                                {values.vestedValue && (
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Vested Currency</div>
-                                    <div className='col-sm'>{values.vestedValueCurrency}</div>
-                                  </div>
-                                )}
                                 {values.vestedDate && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Vested Date</div>
@@ -598,12 +578,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Unvested Value</div>
                                     <div className='col-sm'>{values.unvestedValue}</div>
-                                  </div>
-                                )}
-                                {values.unvestedValue && (
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Unvested Currency</div>
-                                    <div className='col-sm'>{values.unvestedValueCurrency}</div>
                                   </div>
                                 )}
                                 {values.exercisedQuantity && (
@@ -628,12 +602,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Spread</div>
                                     <div className='col-sm'>{values.spread}</div>
-                                  </div>
-                                )}
-                                {values.spread && (
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Spread Currency</div>
-                                    <div className='col-sm'>{values.spreadCurrency}</div>
                                   </div>
                                 )}
                                 {values.strikePrice && (
