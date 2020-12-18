@@ -27,7 +27,10 @@ export const foramtHoldingType = (str: string) => {
   if (['cd', 'etf', 'etn'].includes(str)) {
     return str.toUpperCase();
   }
-  const newStr = str[0].toUpperCase() + str.slice(1);
+  if (!str) {
+    return '';
+  }
+  const newStr = str?.[0].toUpperCase() + str.slice(1);
   const strArr = newStr.split(/(?=[A-Z])/);
   return strArr?.join(' ');
 };
