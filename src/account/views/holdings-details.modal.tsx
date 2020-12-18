@@ -38,13 +38,13 @@ const DisabledInput: React.FC<DisabledInputProps> = ({ currencySymbol }) => {
 };
 
 const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
-  accountId,
-  currencySymbol,
-  holdingsDetails,
-  holdingsDetailsModal,
-  closeNewPositionModal,
-  closeEditPositionModal,
-}) => {
+                                                                     accountId,
+                                                                     currencySymbol,
+                                                                     holdingsDetails,
+                                                                     holdingsDetailsModal,
+                                                                     closeNewPositionModal,
+                                                                     closeEditPositionModal,
+                                                                   }) => {
   const [loading, setLoading] = useState(false);
   const [years, setYears] = useState<string[]>([]);
   const [classificationForTypes, setClassificationForTypes] = useState<string[]>([]);
@@ -654,15 +654,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>{values.accruedIncome}</div>
                                   </div>
                                 )}
-                              <div className='row mt-5'>
-                                <div className='col-sm key'>Futures and Commodities</div>
-                              </div>
-                              {values.contractQuantity && (
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Contract Quantity</div>
-                                  <div className='col-sm'>{values.contractQuantity}</div>
+                                <div className='row mt-5'>
+                                  <div className='col-sm key'>Futures and Commodities</div>
                                 </div>
-                              )}
+                                {values.contractQuantity && (
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Contract Quantity</div>
+                                    <div className='col-sm'>{values.contractQuantity}</div>
+                                  </div>
+                                )}
                               </div>
                             </div>
                           ) : (
@@ -692,7 +692,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         onChange={handleSelectChange}
                                         value={values.holdingType}
                                         name='holdingType'
-                                        isHoldingTypes={true}
+                                        single={true}
                                       />
                                     </div>
                                   </div>
@@ -805,6 +805,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         onChange={handleSelectChange}
                                         value={values.optionType}
                                         name='optionType'
+                                        single={true}
                                       />
                                     </div>
                                   </div>
@@ -1036,7 +1037,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     onChange={handleSelectChange}
                                     value={values.holdingType}
                                     name='holdingType'
-                                    isHoldingTypes={true}
+                                    single={true}
                                   />
                                 </div>
                               </div>
@@ -1158,7 +1159,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           .filter((i: any) => i.interval === `Mar ${item}`)
                                           .map((i: any, k: number) => (
                                             <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value} 
+                                              {currencySymbol} {i.value}
                                             </div>
                                           ))
                                       ) : (
@@ -1175,7 +1176,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           .filter((i: any) => i.interval === `Apr ${item}`)
                                           .map((i: any, k: number) => (
                                             <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value} 
+                                              {currencySymbol} {i.value}
                                             </div>
                                           ))
                                       ) : (
@@ -1192,7 +1193,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           .filter((i: any) => i.interval === `May ${item}`)
                                           .map((i: any, k: number) => (
                                             <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value} 
+                                              {currencySymbol} {i.value}
                                             </div>
                                           ))
                                       ) : (
@@ -1209,7 +1210,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           .filter((i: any) => i.interval === `Jun ${item}`)
                                           .map((i: any, k: number) => (
                                             <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value} 
+                                              {currencySymbol} {i.value}
                                             </div>
                                           ))
                                       ) : (
@@ -1232,7 +1233,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           .filter((i: any) => i.interval === `Jul ${item}`)
                                           .map((i: any, k: number) => (
                                             <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value} 
+                                              {currencySymbol} {i.value}
                                             </div>
                                           ))
                                       ) : (
@@ -1249,7 +1250,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           .filter((i: any) => i.interval === `Aug ${item}`)
                                           .map((i: any, k: number) => (
                                             <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value} 
+                                              {currencySymbol} {i.value}
                                             </div>
                                           ))
                                       ) : (
@@ -1266,7 +1267,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           .filter((i: any) => i.interval === `Sep ${item}`)
                                           .map((i: any, k: number) => (
                                             <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value} 
+                                              {currencySymbol} {i.value}
                                             </div>
                                           ))
                                       ) : (
@@ -1283,7 +1284,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           .filter((i: any) => i.interval === `Oct ${item}`)
                                           .map((i: any, k: number) => (
                                             <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value} 
+                                              {currencySymbol} {i.value}
                                             </div>
                                           ))
                                       ) : (
