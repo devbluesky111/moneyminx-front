@@ -1765,7 +1765,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               <div className='row pt-2 pb-2 align-items-center classification-total'>
                                 <div className='col-sm text--primary'>Type Classification Total</div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
-                                  <div className='form-field-group text--primary'>100.00 %</div>
+                                  <div className='form-field-group text--primary classify-total-percentage'>100.00 %</div>
                                   <div className='btn-icon-purple'>
                                     <AddNewIcon onClick={() => addNewClassification('Type')} />
                                   </div>
@@ -1778,7 +1778,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   </span>
                                 </div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
-                                  <div className='form-field-group'>
+                                  <div className='form-field-group classify-percentage'>
                                     <span className={getUnclassifiedRest('Type') < 0 ? 'text-danger' : ''}>
                                       {fNumber(getUnclassifiedRest('Type'),2)} %
                                     </span>
@@ -1824,7 +1824,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               <div className='row pt-2 pb-2 align-items-center classification-total'>
                                 <div className='col-sm text--primary'>Asset Class Classification Total</div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
-                                  <div className='form-field-group text--primary'>100.00 %</div>
+                                  <div className='form-field-group text--primary classify-total-percentage'>100.00 %</div>
                                   <div className='btn-icon-purple'>
                                     <AddNewIcon onClick={() => addNewClassification('Asset Class')} />
                                   </div>
@@ -1837,7 +1837,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   </span>
                                 </div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
-                                  <div className='form-field-group'>
+                                  <div className='form-field-group classify-percentage'>
                                     <span className={getUnclassifiedRest('Asset Class') < 0 ? 'text-danger' : ''}>
                                       {fNumber(getUnclassifiedRest('Asset Class'),2)} %
                                     </span>
@@ -1883,7 +1883,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               <div className='row pt-2 pb-2 align-items-center classification-total'>
                                 <div className='col-sm text--primary'>Country Classification Total</div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
-                                  <div className='form-field-group text--primary'>100.00 %</div>
+                                  <div className='form-field-group text--primary classify-total-percentage'>100.00 %</div>
                                   <div className='btn-icon-purple'>
                                     <AddNewIcon onClick={() => addNewClassification('Country')} />
                                   </div>
@@ -1896,7 +1896,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   </span>
                                 </div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
-                                  <div className='form-field-group'>
+                                  <div className='form-field-group classify-percentage'>
                                     <span className={getUnclassifiedRest('Country') < 0 ? 'text-danger' : ''}>
                                       {fNumber(getUnclassifiedRest('Country'),2)} %
                                     </span>
@@ -1942,7 +1942,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               <div className='row pt-2 pb-2 align-items-center classification-total'>
                                 <div className='col-sm text--primary'>Risk Classification Total</div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
-                                  <div className='form-field-group text--primary'>100.00 %</div>
+                                  <div className='form-field-group text--primary classify-total-percentage'>100.00 %</div>
                                   <div className='btn-icon-purple'>
                                     <AddNewIcon onClick={() => addNewClassification('Risk')} />
                                   </div>
@@ -1955,7 +1955,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   </span>
                                 </div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
-                                  <div className='form-field-group'>
+                                  <div className='form-field-group classify-percentage'>
                                     <span className={getUnclassifiedRest('Risk') < 0 ? 'text-danger' : ''}>
                                       {fNumber(getUnclassifiedRest('Risk'),2)} %
                                     </span>
