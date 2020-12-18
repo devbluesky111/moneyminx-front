@@ -528,9 +528,21 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 )}
                               </div>
                               <div className='col-sm'>
-                                <div className='row mt-1'>
-                                  <div className='col-sm key'>Options and Stock Options</div>
-                                </div>
+                                {((values.optionType !== 'unknown' && values.optionType) ||
+                                  values.vestedQuantity ||
+                                  values.vestedSharesExercisable ||
+                                  values.vestedValue ||
+                                  values.vestedDate ||
+                                  values.unvestedQuantity ||
+                                  values.unvestedValue ||
+                                  values.exercisedQuantity ||
+                                  values.expirationDate ||
+                                  values.grantDate ||
+                                  values.spread ||
+                                  values.strikePrice) &&
+                                  <div className='row mt-1'>
+                                    <div className='col-sm key'>Options and Stock Options</div>
+                                  </div>}
                                 {values.optionType !== 'unknown' && values.optionType && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Option Type</div>
@@ -614,9 +626,17 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 )}
                               </div>
                               <div className='col-sm'>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm key'>CDs, Bonds and Loans</div>
-                                </div>
+                                {(values.couponRate ||
+                                  values.interestRate ||
+                                  values.maturityDate ||
+                                  values.term ||
+                                  values.accruedInterest ||
+                                  values.accruedIncome ||
+                                  values.contractQuantity) &&
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm key'>CDs, Bonds and Loans</div>
+                                  </div>
+                                }
                                 {values.couponRate && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Coupon</div>
@@ -653,9 +673,11 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>{values.accruedIncome}</div>
                                   </div>
                                 )}
-                                <div className='row mt-5'>
-                                  <div className='col-sm key'>Futures and Commodities</div>
-                                </div>
+                                {values.contractQuantity &&
+                                  <div className='row mt-5'>
+                                    <div className='col-sm key'>Futures and Commodities</div>
+                                  </div>
+                                }
                                 {values.contractQuantity && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Contract Quantity</div>
