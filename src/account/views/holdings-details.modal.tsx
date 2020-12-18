@@ -128,7 +128,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
     let unique_years = getUnique(_years);
     setYears(unique_years);
-  }, [holdingsDetails]);
+  }, [holdingsDetails, holdingsDetailsModal]);
 
   // new position
   let yearsArr: any[] = [];
@@ -141,6 +141,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
   return (
     <Formik
+      enableReinitialize
       initialValues={{
         holdingType: holdingsDetails?.holdingType || '',
         securityType: holdingsDetails?.securityType || '',
