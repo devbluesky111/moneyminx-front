@@ -645,12 +645,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     </div>
                                   </div>
                                 )}
-                                {values.strikePrice && (
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Strike Currency</div>
-                                    <div className='col-sm'>{values.strikePriceCurrency}</div>
-                                  </div>
-                                )}
                                 <div className='row mt-5'>
                                   <div className='col-sm key mb-3'>Futures and Commodities</div>
                                 </div>
@@ -695,22 +689,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>{values.accruedInterest}</div>
                                   </div>
                                 )}
-                                {values.accruedInterest && (
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Interest Currency</div>
-                                    <div className='col-sm'>{values.accruedInterestCurrency}</div>
-                                  </div>
-                                )}
                                 {values.accruedIncome && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Accrued Income</div>
                                     <div className='col-sm'>{values.accruedIncome}</div>
-                                  </div>
-                                )}
-                                {values.accruedIncome && (
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Income Currency</div>
-                                    <div className='col-sm'>{values.accruedIncomeCurrency}</div>
                                   </div>
                                 )}
                               </div>
@@ -762,20 +744,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     </div>
                                   </div>
                                   <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Price Currency</div>
-                                    <div className='col-sm'>
-                                      <div className='form-field-group text-uppercase'>
-                                        <SelectInput
-                                          args={curArr}
-                                          onChange={handleSelectChange}
-                                          value={values.priceCurrency}
-                                          name='priceCurrency'
-                                          single={true}
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Quantity</div>
                                     <div className='col-sm'>
                                       <div className='form-field-group'>
@@ -799,20 +767,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           value={values.costBasis}
                                         />
                                         <span className='input-add-on'>{currencySymbol}</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Cost Currency</div>
-                                    <div className='col-sm '>
-                                      <div className='form-field-group text-uppercase'>
-                                        <SelectInput
-                                          args={curArr}
-                                          onChange={handleSelectChange}
-                                          value={values.costBasisCurrency}
-                                          name='costBasisCurrency'
-                                          single={true}
-                                        />
                                       </div>
                                     </div>
                                   </div>
@@ -903,20 +857,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     </div>
                                   </div>
                                   <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Vested Currency</div>
-                                    <div className='col-sm'>
-                                      <div className='form-field-group text-uppercase'>
-                                        <SelectInput
-                                          args={curArr}
-                                          onChange={handleSelectChange}
-                                          value={values.vestedValueCurrency}
-                                          name='vestedValueCurrency'
-                                          single={true}
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Vested Date</div>
                                     <div className='col-sm'>
                                       <div className='form-field-group'>
@@ -952,20 +892,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           type='number'
                                           name='unvestedValue'
                                           value={values.unvestedValue}
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Unvested Currency</div>
-                                    <div className='col-sm'>
-                                      <div className='form-field-group text-uppercase'>
-                                        <SelectInput
-                                          args={curArr}
-                                          onChange={handleSelectChange}
-                                          value={values.unvestedValueCurrency}
-                                          name='unvestedValueCurrency'
-                                          single={true}
                                         />
                                       </div>
                                     </div>
@@ -1018,20 +944,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           value={values.strikePrice}
                                         />
                                         <span className='input-add-on'>{currencySymbol}</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Strike Currency</div>
-                                    <div className='col-sm'>
-                                      <div className='form-field-group text-uppercase'>
-                                        <SelectInput
-                                          args={curArr}
-                                          onChange={handleSelectChange}
-                                          value={values.strikePriceCurrency}
-                                          name='strikePriceCurrency'
-                                          single={true}
-                                        />
                                       </div>
                                     </div>
                                   </div>
