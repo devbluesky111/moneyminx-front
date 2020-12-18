@@ -325,7 +325,7 @@ export const MessageChange = () => {
     'I see you baby, loading that page...',
     'I bet you wish this page would work work work work work.',
     'Got your mind on your money and your money on your mind?',
-    'I like big bucks and I can not lie.',
+    'I like big bucks and I cannot lie.',
     'Like Axl says, just a little patience. Mmm, yeahhh.',
     'Whoa, we\'re half way there. Whoaaaaa living on a prayer...',
     'I still haven\'t found what I\'m looking for...',

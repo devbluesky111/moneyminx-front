@@ -9,6 +9,7 @@ interface Size {
   sm: string;
   xs: string;
   xxl: string;
+  fastlink: string;
 }
 
 export enum ModalTypeEnum {

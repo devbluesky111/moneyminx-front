@@ -29,7 +29,17 @@
 .modal-xxl {
   max-width: 1140px;
 }
+.modal-fastlink {
+  max-width: 372px;
 
+  .modal-content {
+    padding: 0;
+    height: 670px;
+  }
+  .modal-body {
+    padding: 0;
+  }
+}
 
 .modal-show {
   display: block;
