@@ -333,6 +333,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleAccountChange}
                       value={values.mmAccountType}
                       name='mmAccountType'
+                      single={true}
                     />
                   </li>
 
@@ -344,6 +345,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                         onChange={handleSubAccountChange}
                         value={values.mmAccountSubType}
                         name='mmAccountSubType'
+                        single={true}
                       />
                     </div>
                   </li>

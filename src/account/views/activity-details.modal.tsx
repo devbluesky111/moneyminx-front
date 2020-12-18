@@ -122,67 +122,70 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                   {activityDetails && !activityDetails.isManual ? (
                     <>
                       <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Date</div>
-                          <div className='col-sm'>{getDateFormatedString(values.date)}</div>
-                        </div>
+                        <div className='col-sm'>Date</div>
+                        <div className='col-sm'>{getDateFormatedString(values.date)}</div>
+                      </div>
                       <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Type</div>
-                          <div className='col-sm'>
-                            <SelectInput
-                              args={activityTypes}
-                              onChange={handleSelectChange}
-                              value={values.type}
-                              name='type'
-                              format={true}
-                            />
-                          </div>
+                        <div className='col-sm'>Type</div>
+                        <div className='col-sm'>
+                          <SelectInput
+                            args={activityTypes}
+                            onChange={handleSelectChange}
+                            value={values.type}
+                            name='type'
+                            format={true}
+                            single={true}
+                          />
                         </div>
+                      </div>
                       <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Description</div>
-                          <div className='col-sm'>
-                            <Form.Control onChange={handleChange} name='description' value={values.description} />
-                          </div>
+                        <div className='col-sm'>Description</div>
+                        <div className='col-sm'>
+                          <Form.Control onChange={handleChange} name='description' value={values.description} />
                         </div>
+                      </div>
                       <div className='row mt-2 align-items-center'>
-                          <div className='col-sm text-light'>Amount</div>
-                          <div className='col-sm text-light'>
-                            {currencySymbol}
-                            {values.amount}
-                          </div>
+                        <div className='col-sm text-light'>Amount</div>
+                        <div className='col-sm text-light'>
+                          {currencySymbol}
+                          {values.amount}
                         </div>
+                      </div>
                       <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Balance</div>
-                          <div className='col-sm'>
-                            {currencySymbol}
-                            {values.balance}
-                          </div>
+                        <div className='col-sm'>Balance</div>
+                        <div className='col-sm'>
+                          {currencySymbol}
+                          {values.balance}
                         </div>
+                      </div>
                       <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Income</div>
-                          <div className='col-sm'>
-                            <SelectInput
-                              args={['Yes', 'No']}
-                              onChange={handleYesNoChange}
-                              value={values.income ? 'Yes' : 'No'}
-                              name='income'
-                            />
-                          </div>
+                        <div className='col-sm'>Income</div>
+                        <div className='col-sm'>
+                          <SelectInput
+                            args={['Yes', 'No']}
+                            onChange={handleYesNoChange}
+                            value={values.income ? 'Yes' : 'No'}
+                            name='income'
+                            single={true}
+                          />
                         </div>
+                      </div>
                       <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>CashFlow</div>
-                          <div className='col-sm'>
-                            <SelectInput
-                              args={['Yes', 'No']}
-                              onChange={handleYesNoChange}
-                              value={values.cashFlow ? 'Yes' : 'No'}
-                              name='cashFlow'
-                            />
-                          </div>
+                        <div className='col-sm'>CashFlow</div>
+                        <div className='col-sm'>
+                          <SelectInput
+                            args={['Yes', 'No']}
+                            onChange={handleYesNoChange}
+                            value={values.cashFlow ? 'Yes' : 'No'}
+                            name='cashFlow'
+                            single={true}
+                          />
                         </div>
+                      </div>
                     </>
                   ) : (
-                    <>
-                      <div className='row mt-2 align-items-center'>
+                      <>
+                        <div className='row mt-2 align-items-center'>
                           <div className='col-sm'>Date</div>
                           <div className='col-sm'>
                             <ReactDatePicker
@@ -194,7 +197,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                             />
                           </div>
                         </div>
-                      <div className='row mt-2 align-items-center'>
+                        <div className='row mt-2 align-items-center'>
                           <div className='col-sm'>Type</div>
                           <div className='col-sm'>
                             <SelectInput
@@ -206,25 +209,25 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                             />
                           </div>
                         </div>
-                      <div className='row mt-2 align-items-center'>
+                        <div className='row mt-2 align-items-center'>
                           <div className='col-sm'>Description</div>
                           <div className='col-sm'>
                             <Form.Control onChange={handleChange} name='description' value={values.description} />
                           </div>
                         </div>
-                      <div className='row mt-2 align-items-center'>
+                        <div className='row mt-2 align-items-center'>
                           <div className='col-sm'>Amount</div>
                           <div className='col-sm'>
                             <Form.Control onChange={handleChange} type='number' name='amount' value={values.amount} />
                           </div>
                         </div>
-                      <div className='row mt-2 align-items-center'>
+                        <div className='row mt-2 align-items-center'>
                           <div className='col-sm'>Balance</div>
                           <div className='col-sm'>
                             <Form.Control onChange={handleChange} type='number' name='balance' value={values.balance} />
                           </div>
                         </div>
-                      <div className='row mt-2 align-items-center'>
+                        <div className='row mt-2 align-items-center'>
                           <div className='col-sm'>Income</div>
                           <div className='col-sm'>
                             <SelectInput
@@ -232,10 +235,11 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                               onChange={handleYesNoChange}
                               value={values.income ? 'Yes' : 'No'}
                               name='income'
+                              single={true}
                             />
                           </div>
                         </div>
-                      <div className='row mt-2 align-items-center'>
+                        <div className='row mt-2 align-items-center'>
                           <div className='col-sm'>CashFlow</div>
                           <div className='col-sm'>
                             <SelectInput
@@ -243,11 +247,12 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                               onChange={handleYesNoChange}
                               value={values.cashFlow ? 'Yes' : 'No'}
                               name='cashFlow'
+                              single={true}
                             />
                           </div>
                         </div>
-                    </>
-                  )}
+                      </>
+                    )}
                   <div className='action-wrapper mt-3 form-wrap'>
                     <span className='checkbox-item'>
                       <label className='check-box'>
@@ -273,10 +278,10 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                           <span className='ml-1'>Saving...</span>
                         </>
                       ) : (
-                        <>
-                          Save<span className='hide-sm ml-1'>Changes</span>
-                        </>
-                      )}
+                          <>
+                            Save<span className='hide-sm ml-1'>Changes</span>
+                          </>
+                        )}
                     </button>
                   </div>
                 </div>
