@@ -18,10 +18,14 @@ import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 
 import { ClassificationsSelectInput } from './classifications.select.input';
+import { HoldingTypeSelectInput } from './holding-type-select.input';
 
 export const foramtHoldingType = (str: string) => {
   if (['CD', 'ETF', 'ETN'].includes(str)) {
     return str;
+  }
+  if (['cd', 'etf', 'etn'].includes(str)) {
+    return str.toUpperCase();
   }
   const newStr = str[0].toUpperCase() + str.slice(1);
   const strArr = newStr.split(/(?=[A-Z])/);
@@ -708,7 +712,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>Holding Type</div>
                                     <div className='col-sm'>
                                       <div className='form-field-group'>
-                                        <SelectInput
+                                        <HoldingTypeSelectInput
                                           args={holdingTypes}
                                           onChange={handleSelectChange}
                                           value={values.holdingType}
