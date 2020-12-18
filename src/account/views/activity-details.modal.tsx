@@ -10,6 +10,7 @@ import { getDateFormatedString } from 'common/moment.helper';
 import { ActivityDetailsModalProps } from 'account/account.type';
 import { SelectInput } from 'common/components/input/select.input';
 import { getActivityTypes, patchTransaction, postTransaction } from 'api/request.api';
+import { numberWithCommas, fNumber } from '../../common/number.helper';
 
 const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
   accountId,
@@ -40,6 +41,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
 
   return (
     <Formik
+      enableReinitialize
       initialValues={{
         date: activityDetails && activityDetails.date ? new Date(activityDetails.date) : new Date(),
         type: activityDetails?.type || '',
@@ -121,7 +123,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                 <div className='mm-manual-account-modal__title mt-3'>
                   {activityDetails && !activityDetails.isManual ? (
                     <>
-                      <div className='row mt-2 align-items-center'>
+                      <div className='row mt-2 m-b-4 align-items-center'>
                         <div className='col-sm'>Date</div>
                         <div className='col-sm'>{getDateFormatedString(values.date)}</div>
                       </div>
@@ -144,18 +146,18 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                           <Form.Control onChange={handleChange} name='description' value={values.description} />
                         </div>
                       </div>
-                      <div className='row mt-2 align-items-center'>
-                        <div className='col-sm text-light'>Amount</div>
-                        <div className='col-sm text-light'>
+                      <div className='row m-y-4 align-items-center'>
+                        <div className='col-sm'>Amount</div>
+                        <div className='col-sm'>
                           {currencySymbol}
-                          {values.amount}
+                          {numberWithCommas(fNumber(values.amount,2))}
                         </div>
                       </div>
-                      <div className='row mt-2 align-items-center'>
+                      <div className='row m-t-7 m-b-5 align-items-center'>
                         <div className='col-sm'>Balance</div>
                         <div className='col-sm'>
                           {currencySymbol}
-                          {values.balance}
+                          {numberWithCommas(fNumber(values.balance,2))}
                         </div>
                       </div>
                       <div className='row mt-2 align-items-center'>
@@ -171,7 +173,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                         </div>
                       </div>
                       <div className='row mt-2 align-items-center'>
-                        <div className='col-sm'>CashFlow</div>
+                        <div className='col-sm'>Cash Flow</div>
                         <div className='col-sm'>
                           <SelectInput
                             args={['Yes', 'No']}
@@ -240,7 +242,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                           </div>
                         </div>
                         <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>CashFlow</div>
+                          <div className='col-sm'>Cash Flow</div>
                           <div className='col-sm'>
                             <SelectInput
                               args={['Yes', 'No']}
