@@ -22,7 +22,7 @@ export const HoldingTypeSelectInput: React.FC<HoldingTypeSelectInputProps> = ({ 
 
   return (
     <Dropdown className='drop-box dropdown-select-input' onToggle={(nextShow) => setShow(nextShow)} show={show}>
-      <Dropdown.Toggle className='dropdown-toggle'>{value}</Dropdown.Toggle>
+      <Dropdown.Toggle className='dropdown-toggle'>{foramtHoldingType(value)}</Dropdown.Toggle>
       <Dropdown.Menu className='mm-dropdown-menu'>
         <ul className={['checkbox-list', single ? 'single' : ''].join(' ')}>
           {args.sort()?.map((val, index) => {
