@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export type PlaceholderType = 'chart' | 'investment' | 'other' | 'liabilities' | 'networth';
+export type PlaceholderType = 'chart' | 'investment' | 'other' | 'liabilities' | 'networth' | 'manual';
 
 export interface PlaceholderProps {
     type: PlaceholderType;
@@ -12,11 +12,12 @@ export const Placeholder: React.FC<PlaceholderProps> = ({ type }) => {
 
     useEffect(() => {
         const messagesObject = {
-            chart: 'Add your first account to start displaying your net worth chart.',
-            investment: 'You don\'t have any investment assets yet. Get started by adding an account.',
-            other: 'You don\'t have any other assets yet. Get started by adding an account.',
-            liabilities: 'You don\'t have any liabilities assets yet. Get started by adding an account.',
-            networth: 'Add your first account to start calculating your net worth.'
+          chart: 'Add your first account to start displaying your net worth chart.',
+          investment: 'You don\'t have any investment assets yet. Get started by adding an account.',
+          other: 'You don\'t have any other assets yet. Get started by adding an account.',
+          liabilities: 'You don\'t have any liabilities assets yet. Get started by adding an account.',
+          networth: 'Add your first account to start calculating your net worth.',
+          manual: 'You don\'t have any manual accounts yet. Get started by adding an account.'
         }
         let message = '';
         switch (type) {
@@ -35,7 +36,10 @@ export const Placeholder: React.FC<PlaceholderProps> = ({ type }) => {
             case 'networth':
                 message = messagesObject.networth;
                 break;
-        };
+          case 'manual':
+            message = messagesObject.manual;
+            break;
+        }
         setMessage(message)
     }, [type]);
 
