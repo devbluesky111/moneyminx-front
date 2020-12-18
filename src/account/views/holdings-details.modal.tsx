@@ -14,10 +14,10 @@ import { SelectInput } from 'common/components/input/select.input';
 import { formater, getUnique } from 'common/common-helper';
 import { DisabledInputProps, HoldingsDetailsModalProps } from 'account/account.type';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
-
-import { ClassificationsSelectInput } from './classifications.select.input';
 import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
+
+import { ClassificationsSelectInput } from './classifications.select.input';
 
 export const foramtHoldingType = (str: string) => {
   if (['CD', 'ETF', 'ETN'].includes(str)) {
@@ -1766,7 +1766,9 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='col-sm text--primary'>Type Classification Total</div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
                                   <div className='form-field-group text--primary'>100.00 %</div>
-                                  <AddNewIcon onClick={() => addNewClassification('Type')} />
+                                  <div className='btn-icon-purple'>
+                                    <AddNewIcon onClick={() => addNewClassification('Type')} />
+                                  </div>
                                 </div>
                               </div>
                               <div className='row pb-4 align-items-center unclassified'>
@@ -1823,7 +1825,9 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='col-sm text--primary'>Asset Class Classification Total</div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
                                   <div className='form-field-group text--primary'>100.00 %</div>
-                                  <AddNewIcon onClick={() => addNewClassification('Asset Class')} />
+                                  <div className='btn-icon-purple'>
+                                    <AddNewIcon onClick={() => addNewClassification('Asset Class')} />
+                                  </div>
                                 </div>
                               </div>
                               <div className='row pb-4 align-items-center unclassified'>
@@ -1880,7 +1884,9 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='col-sm text--primary'>Country Classification Total</div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
                                   <div className='form-field-group text--primary'>100.00 %</div>
-                                  <AddNewIcon onClick={() => addNewClassification('Country')} />
+                                  <div className='btn-icon-purple'>
+                                    <AddNewIcon onClick={() => addNewClassification('Country')} />
+                                  </div>
                                 </div>
                               </div>
                               <div className='row pb-4 align-items-center unclassified'>
@@ -1937,7 +1943,9 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='col-sm text--primary'>Risk Classification Total</div>
                                 <div className='col-sm d-flex justify-content-end align-items-center'>
                                   <div className='form-field-group text--primary'>100.00 %</div>
-                                  <AddNewIcon onClick={() => addNewClassification('Risk')} />
+                                  <div className='btn-icon-purple'>
+                                    <AddNewIcon onClick={() => addNewClassification('Risk')} />
+                                  </div>
                                 </div>
                               </div>
                               <div className='row pb-4 align-items-center unclassified'>
