@@ -400,7 +400,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         };
 
         const handleIsShortChange = (e: React.ChangeEvent<any>) => {
-          setValues({ ...values, isShort: !values.isShort });
+          const isShort = e.target.value === 'yes' ? true : false
+          setValues({ ...values, isShort: isShort });
         };
 
         const getUnclassifiedRest = (tabName: string) => {
@@ -797,23 +798,23 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Short?</div>
                                     <div className='col-sm mt-2'>
-                                      <div className='form-field-group'>
+                                      <div className='radio-custom'>
                                         <input
                                           type='radio'
+                                          value='yes'
                                           onChange={handleIsShortChange}
                                           name='isShort'
-                                          checked={values.isShort === true}
+                                          checked={values.isShort === 'yes' || values.isShort === true}
                                           aria-checked={!!values.isShort}
-                                          className='mr-1'
                                         />
-                                        <label className='mr-3'>Yes</label>
+                                        <label>Yes</label>
                                         <input
                                           onChange={handleIsShortChange}
                                           type='radio'
+                                          value='no'
                                           name='isShort'
-                                          checked={values.isShort === false}
+                                          checked={values.isShort === 'no' || values.isShort === false}
                                           aria-checked={!!values.isShort}
-                                          className='mr-1'
                                         />
                                         <label>No</label>
                                       </div>
