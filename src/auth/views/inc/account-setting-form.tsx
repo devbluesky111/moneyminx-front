@@ -367,6 +367,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleSelectChange}
                       value={values.liquidity}
                       name='liquidity'
+                      single={true}
                     />
                   </li>
                 </ul>
@@ -376,7 +377,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 <ul className='account-type-list'>
                   <li className={hc('interestRate')}>
                     <span className='form-subheading'>Interest Rate</span>
-
                     <Form.Control
                       type='number'
                       onChange={handleChange}
