@@ -1142,7 +1142,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           .filter((i: any) => i.interval === `Feb ${item}`)
                                           .map((i: any, k: number) => (
                                             <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
+                                              {currencySymbol} {i.value} 
                                             </div>
                                           ))
                                       ) : (
