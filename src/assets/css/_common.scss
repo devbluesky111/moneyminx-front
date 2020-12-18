@@ -248,8 +248,12 @@ button.dropdown-toggle {
 }
 
 #fastlinkContainer {
+  overflow-y: scroll;
+  max-height: 670px!important;
+  border-radius: 6px;
+
   iframe {
-    height: 100%;
+    border-radius: 6px;
   }
 }
 
