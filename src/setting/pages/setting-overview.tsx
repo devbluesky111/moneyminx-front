@@ -67,7 +67,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
     return subscriptionCancelModal.close();
   };
 
-  const handleDismiss = () => {};
+  const handleDismiss = () => { };
 
   const handleSave = async () => {
     setStatusText('Saving...');
@@ -92,16 +92,17 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
               <div className='col-sm-3 col-md-3'>
                 <div className='form-wrap currency-select'>
                   {currentSubscription &&
-                  (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') ? (
-                    <span>{currency}</span>
-                  ) : (
-                    <SelectInput
-                      args={curArr}
-                      onChange={(e) => setCurrency(e.target.value)}
-                      value={currency}
-                      name='currency'
-                    />
-                  )}
+                    (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') ? (
+                      <span>{currency}</span>
+                    ) : (
+                      <SelectInput
+                        args={curArr}
+                        onChange={(e) => setCurrency(e.target.value)}
+                        value={currency}
+                        name='currency'
+                        single={true}
+                      />
+                    )}
                 </div>
               </div>
               {currentSubscription && (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') && (
@@ -245,8 +246,8 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
               cancelSubscriptionError
                 ? 'Your subscription could not be cancelled. Please contact us for support.'
                 : `Your subscription is now cancelled. You can continue using Money Minx until ${moment('01-01-1970')
-                    .add(cancelAtDate, 'days')
-                    .format('MM/DD/YY')}.`
+                  .add(cancelAtDate, 'days')
+                  .format('MM/DD/YY')}.`
             }
             onDismiss={handleDismiss}
           />

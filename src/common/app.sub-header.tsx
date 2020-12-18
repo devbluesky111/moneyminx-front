@@ -4,13 +4,10 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { Account } from 'auth/auth.types';
 import { appRouteConstants } from 'app/app-route.constant';
-import { getAccount, getAccountWithProvider, getCurrentSubscription, getSubscription } from 'api/request.api';
+import { getAccountWithProvider } from 'api/request.api';
 
-import UpgradeAccountModal from './upgrade-account.modal';
 import { fNumber, numberWithCommas } from './number.helper';
 import { getRelativeDate } from './moment.helper';
-import { pricingDetailConstant } from './common.constant';
-import { useModal } from './components/modal';
 import { getCurrencySymbol } from './currency-helper';
 
 export interface AppSubHeaderProps {
@@ -19,12 +16,9 @@ export interface AppSubHeaderProps {
 
 const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
   const history = useHistory();
-  const [availableNumber, setAvailableNumber] = useState<number>(0);
   const [successAccounts, setSuccessAccounts] = useState<Account[]>([]);
   const [warningAccounts, setWarningAccounts] = useState<Account[]>([]);
   const [errorAccounts, setErrorAccounts] = useState<Account[]>([]);
-  const [manualMax, setManualMax] = useState<boolean>(false);
-  const upgradeAccountModal = useModal();
   const dropdownToggle = useRef(null);
 
   useEffect(() => {
@@ -42,41 +36,13 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
     fetchCurrentAccount();
   }, [AccountDetails]);
 
-  const checkAccountLimit = async () => {
-    const { data } = await getCurrentSubscription();
-    if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
-      const accounts = await getAccount();
-      const manualAccounts = accounts?.data?.filter(
-        (account: Record<string, string>) => account.isManual
-      ).length;
-      const autoAccounts = accounts?.data?.filter(
-        (account: Record<string, string>) => !account.isManual
-      ).length;
-      const subscriptionDetails = await getSubscription({ priceId: data.priceId });
-      let autoLimit = subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT];
-      let manualLimit = subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT];
-      if (autoLimit === 'Unlimited') autoLimit = 100;
-      if (manualLimit === 'Unlimited') manualLimit = 100;
-      if (autoAccounts < autoLimit) {
-        return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
-      } else
-        if (manualAccounts < manualLimit) {
-          setAvailableNumber(autoLimit);
-          return upgradeAccountModal.open();
-        } else {
-          setManualMax(true);
-          return upgradeAccountModal.open();
-        }
-    } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
-  }
-
   const clickElement = (dropdownToggle: any) => {
     dropdownToggle.current?.click();
   };
 
   return (
     <div className='left-box d-flex align-items-center float-lg-left'>
-      <span className='plus-btn' onClick={checkAccountLimit}>+</span>
+      <span className='plus-btn' onClick={() => history.push(appRouteConstants.auth.CONNECT_ACCOUNT)}>+</span>
       <div className='myaccount-drop'>
         <Dropdown className='drop-box' >
           <Dropdown.Toggle className='dropdown-toggle my-accounts' ref={dropdownToggle}>My Accounts</Dropdown.Toggle>
@@ -147,7 +113,6 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      {(availableNumber || manualMax) && <UpgradeAccountModal upgradeAccountModal={upgradeAccountModal} availableNumber={availableNumber} manualMax={manualMax} />}
     </div>
   );
 };

@@ -1066,7 +1066,7 @@ a.upgrader-btn {
   text-align: center;
 
   p {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1rem;
     line-height: 150%;
     color: $gray;
@@ -1283,14 +1283,15 @@ a.upgrader-btn {
 .checkbox-list {
   padding: 10px 0;
 }
-.checkbox-list li {
-  padding: 10px 24px;
-}
 .checkbox-list li:hover {
   background: rgba(83, 76, 234, 0.3);
 }
 .checkbox-list li label {
   position: relative;
+  width: 100%;
+  padding: 10px 24px;
+}
+.checkbox-list:not(.single) li label {
   padding-left: 30px;
 }
 .checkbox-list li label input {
@@ -1304,7 +1305,7 @@ a.upgrader-btn {
   letter-spacing: 0.02em;
   color: $white;
 }
-.checkbox-list li label span:before {
+.checkbox-list:not(.single) li label span:before {
   content: '';
   position: absolute;
   left: 0;
@@ -1314,7 +1315,7 @@ a.upgrader-btn {
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 4px;
 }
-.checkbox-list li label span:after {
+.checkbox-list:not(.single) li label span:after {
   content: '';
   position: absolute;
   top: 7px;
