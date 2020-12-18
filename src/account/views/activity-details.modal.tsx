@@ -40,6 +40,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
 
   return (
     <Formik
+      enableReinitialize
       initialValues={{
         date: activityDetails && activityDetails.date ? new Date(activityDetails.date) : new Date(),
         type: activityDetails?.type || '',

@@ -14,12 +14,18 @@ interface HoldingTypeSelectInputProps {
 export const HoldingTypeSelectInput: React.FC<HoldingTypeSelectInputProps> = ({ name, args, onChange, value, single }) => {
   const [show, setShow] = useState(false);
 
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === 'CD' || args[i] === 'ETF' || args[i] === 'ETN') {
+      args[i] = args[i].toLowerCase();
+    }
+  }
+
   return (
     <Dropdown className='drop-box dropdown-select-input' onToggle={(nextShow) => setShow(nextShow)} show={show}>
-      <Dropdown.Toggle className='dropdown-toggle'>{value}</Dropdown.Toggle>
+      <Dropdown.Toggle className='dropdown-toggle'>{foramtHoldingType(value)}</Dropdown.Toggle>
       <Dropdown.Menu className='mm-dropdown-menu'>
         <ul className={['checkbox-list', single ? 'single' : ''].join(' ')}>
-          {args?.map((val, index) => {
+          {args.sort()?.map((val, index) => {
             return (
               <li key={index}>
                 <label>

@@ -18,12 +18,19 @@ import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 
 import { ClassificationsSelectInput } from './classifications.select.input';
+import { HoldingTypeSelectInput } from './holding-type-select.input';
 
 export const foramtHoldingType = (str: string) => {
   if (['CD', 'ETF', 'ETN'].includes(str)) {
     return str;
   }
-  const newStr = str[0].toUpperCase() + str.slice(1);
+  if (['cd', 'etf', 'etn'].includes(str)) {
+    return str.toUpperCase();
+  }
+  if (!str) {
+    return '';
+  }
+  const newStr = str?.[0].toUpperCase() + str.slice(1);
   const strArr = newStr.split(/(?=[A-Z])/);
   return strArr?.join(' ');
 };
@@ -121,7 +128,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
     let unique_years = getUnique(_years);
     setYears(unique_years);
-  }, [holdingsDetails]);
+  }, [holdingsDetails, holdingsDetailsModal]);
 
   // new position
   let yearsArr: any[] = [];
@@ -134,6 +141,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
   return (
     <Formik
+      enableReinitialize
       initialValues={{
         holdingType: holdingsDetails?.holdingType || '',
         securityType: holdingsDetails?.securityType || '',
@@ -393,7 +401,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         };
 
         const handleIsShortChange = (e: React.ChangeEvent<any>) => {
-          setValues({ ...values, isShort: !values.isShort });
+          const isShort = e.target.value === 'yes' ? true : false
+          setValues({ ...values, isShort: isShort });
         };
 
         const getUnclassifiedRest = (tabName: string) => {
@@ -431,7 +440,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
               canBeClosed
               onClose={() => {
                 holdingsDetailsModal.close();
-                mmToast('Error Occurred', { type: 'error' });
               }}
             >
               <div className='modal-wrapper mm-holdings-details-modal'>
@@ -529,9 +537,21 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 )}
                               </div>
                               <div className='col-sm'>
-                                <div className='row mt-1'>
-                                  <div className='col-sm key'>Options and Stock Options</div>
-                                </div>
+                                {((values.optionType !== 'unknown' && values.optionType) ||
+                                  values.vestedQuantity ||
+                                  values.vestedSharesExercisable ||
+                                  values.vestedValue ||
+                                  values.vestedDate ||
+                                  values.unvestedQuantity ||
+                                  values.unvestedValue ||
+                                  values.exercisedQuantity ||
+                                  values.expirationDate ||
+                                  values.grantDate ||
+                                  values.spread ||
+                                  values.strikePrice) &&
+                                  <div className='row mt-1'>
+                                    <div className='col-sm key'>Options and Stock Options</div>
+                                  </div>}
                                 {values.optionType !== 'unknown' && values.optionType && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Option Type</div>
@@ -615,9 +635,17 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 )}
                               </div>
                               <div className='col-sm'>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm key'>CDs, Bonds and Loans</div>
-                                </div>
+                                {(values.couponRate ||
+                                  values.interestRate ||
+                                  values.maturityDate ||
+                                  values.term ||
+                                  values.accruedInterest ||
+                                  values.accruedIncome ||
+                                  values.contractQuantity) &&
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm key'>CDs, Bonds and Loans</div>
+                                  </div>
+                                }
                                 {values.couponRate && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Coupon</div>
@@ -654,9 +682,11 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>{values.accruedIncome}</div>
                                   </div>
                                 )}
-                                <div className='row mt-5'>
-                                  <div className='col-sm key'>Futures and Commodities</div>
-                                </div>
+                                {values.contractQuantity &&
+                                  <div className='row mt-5'>
+                                    <div className='col-sm key'>Futures and Commodities</div>
+                                  </div>
+                                }
                                 {values.contractQuantity && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Contract Quantity</div>
@@ -687,7 +717,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>Holding Type</div>
                                     <div className='col-sm'>
                                       <div className='form-field-group'>
-                                        <SelectInput
+                                        <HoldingTypeSelectInput
                                           args={holdingTypes}
                                           onChange={handleSelectChange}
                                           value={values.holdingType}
@@ -769,23 +799,23 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Short?</div>
                                     <div className='col-sm mt-2'>
-                                      <div className='form-field-group'>
+                                      <div className='radio-custom'>
                                         <input
                                           type='radio'
+                                          value='yes'
                                           onChange={handleIsShortChange}
                                           name='isShort'
-                                          checked={values.isShort === true}
+                                          checked={values.isShort === 'yes' || values.isShort === true}
                                           aria-checked={!!values.isShort}
-                                          className='mr-1'
                                         />
-                                        <label className='mr-3'>Yes</label>
+                                        <label>Yes</label>
                                         <input
                                           onChange={handleIsShortChange}
                                           type='radio'
+                                          value='no'
                                           name='isShort'
-                                          checked={values.isShort === false}
+                                          checked={values.isShort === 'no' || values.isShort === false}
                                           aria-checked={!!values.isShort}
-                                          className='mr-1'
                                         />
                                         <label>No</label>
                                       </div>
