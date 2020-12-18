@@ -9,7 +9,7 @@ import useToast from 'common/hooks/useToast';
 import { Modal } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { getDateFormatedString } from 'common/moment.helper';
-import { fNumber } from 'common/number.helper';
+import { fNumber, numberWithCommas } from 'common/number.helper';
 import { SelectInput } from 'common/components/input/select.input';
 import { formater, getUnique } from 'common/common-helper';
 import { DisabledInputProps, HoldingsDetailsModalProps } from 'account/account.type';
@@ -566,7 +566,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 )}
                                 {values.vestedSharesExercisable && (
                                   <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Vested Shared Exercisable</div>
+                                    <div className='col-sm'>Vested Shares Exercisable</div>
                                     <div className='col-sm'>{values.vestedSharesExercisable}</div>
                                   </div>
                                 )}
@@ -854,7 +854,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     </div>
                                   </div>
                                   <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Vested Shared Exercisable</div>
+                                    <div className='col-sm'>Vested Shares Exercisable</div>
                                     <div className='col-sm'>
                                       <div className='form-field-group'>
                                         <Form.Control
@@ -1113,11 +1113,11 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   </div>
                                 </div>
                               </div>
-                              <div className='row mt-2 align-items-center'>
-                                <div className='col-sm-3'>Current Market Value</div>
-                                <div className='col-sm-6'>{values.price * values.quantity}{currencySymbol}</div>
+                              <div className='row m-y-6 align-items-center'>
+                                <div className='col-sm-3'>Market Value</div>
+                                <div className='col-sm-6'>{currencySymbol}{numberWithCommas(fNumber(values.price * values.quantity,2))}</div>
                               </div>
-                              <div className='row mt-2 align-items-center'>
+                              <div className='row m-t-7 align-items-center'>
                                 <div className='col-sm-3'>Gain / loss</div>
                                 <div
                                   className={[
@@ -1127,7 +1127,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                       : 'text-danger',
                                   ].join(' ')}
                                 >
-                                  {(values.price - values.costBasis) * values.quantity}{currencySymbol}
+                                  {currencySymbol}{numberWithCommas(fNumber((values.price - values.costBasis) * values.quantity,2))}
                                 </div>
                               </div>
                             </div>
