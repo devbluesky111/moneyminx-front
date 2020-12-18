@@ -44,7 +44,7 @@ const WebsiteHeader = () => {
               <div className='mm-navbar-logo d-flex justify-content-between d-block d-md-none'>
                 <div>
                   <MoneyMinxLogoMobile className='mr-3' />
-                  <Beta />
+                  <div className='badge badge-pill badge-primary mm-coming-soon'>Beta</div>
                 </div>
               </div>
               <ul className='navbar-nav mr-auto navbar-menu-list'>
