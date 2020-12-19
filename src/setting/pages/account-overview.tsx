@@ -223,7 +223,6 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const accountsByProvider = groupByProviderName(accountList);
 
   const handleConnectAccountSuccess = async () => {
-    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
     await fetchNewAccounts();
@@ -232,6 +231,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     if (error) {
       mmToast('Error Occurred on Fetching user Details', { type: 'error' });
     }
+    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
 
     return history.push(location);
   };

@@ -5,7 +5,6 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import appEnv from 'app/app.env';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
-import { logger } from 'common/logger.helper';
 import { AuthLayout } from 'layouts/auth.layout';
 import useAccounts from 'auth/hooks/useAccounts';
 import MMToolTip from 'common/components/tooltip';
@@ -52,13 +51,13 @@ export const ConnectAccountMainSection = () => {
     token: { tokenType: 'AccessToken', tokenValue: '' },
     config: { flow: '', configName: 'Aggregation', providerAccountId: 0 },
   });
-  const [availableNumber, setAvailableNumber] = useState<number>(0);
-  const [manualMax, setManualMax] = useState<boolean>(false);
-  const upgradeAccountModal = useModal();
-  const [autoLoading, setAutoLoading] = useState<boolean>(false);
-  const [manualLoading, setManualLoading] = useState<boolean>(false);
   const dispatch = useAuthDispatch();
+  const upgradeAccountModal = useModal();
   const [loading, setLoading] = useState(false);
+  const [manualMax, setManualMax] = useState<boolean>(false);
+  const [autoLoading, setAutoLoading] = useState<boolean>(false);
+  const [availableNumber, setAvailableNumber] = useState<number>(0);
+  const [manualLoading, setManualLoading] = useState<boolean>(false);
   const { loading: accountFetching, fetchNewAccounts } = useAccounts();
 
   useEffect(() => {
@@ -163,17 +162,17 @@ export const ConnectAccountMainSection = () => {
   };
 
   const handleConnectAccountSuccess = async () => {
-    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
-    logger.log('fastlink onsuccess location', location);
-
     setLoading(true);
-    const { error } = await getRefreshedAccount({ dispatch });
+    const { error, data } = await getRefreshedAccount({ dispatch });
     await fetchNewAccounts();
-    setLoading(false);
+    if (data) {
+      setLoading(false);
+    }
 
     if (error) {
       mmToast('Error Occurred on Fetching user Details', { type: 'error' });
     }
+    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
 
     return history.push(location);
   };

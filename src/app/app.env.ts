@@ -4,7 +4,7 @@ config();
 
 export default {
   APP_ENVIRONMENT: process.env.NODE_ENV,
-  BASE_URL: 'http://localhost:9000/' || 'https://api.moneyminx.com/',
+  BASE_URL: process.env.REACT_APP_BASE_URL,
   FACEBOOK_APP_ID: process.env.REACT_APP_FACEBOOK_APP_ID,
   STRIPE_PUBLIC_KEY:
     process.env.REACT_APP_STRIPE_PUBLIC_KEY ||

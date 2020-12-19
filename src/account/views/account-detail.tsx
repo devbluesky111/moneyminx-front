@@ -129,7 +129,6 @@ const AccountDetail: React.FC = () => {
   }, [AccountDetails]);
 
   const handleConnectAccountSuccess = async () => {
-    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
     await fetchNewAccounts();
@@ -138,6 +137,7 @@ const AccountDetail: React.FC = () => {
     if (error) {
       return mmToast('Error occurred on fetching refreshed account', { type: 'error' });
     }
+    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
 
     return history.push(location);
   };
