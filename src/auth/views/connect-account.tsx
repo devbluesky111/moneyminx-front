@@ -3,6 +3,8 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import Zabo from 'zabo-sdk-js';
 import appEnv from 'app/app.env';
+import AppHeader from 'common/app.header';
+import AppSidebar from 'common/app.sidebar';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
 import { AuthLayout } from 'layouts/auth.layout';
