@@ -1563,8 +1563,13 @@ a.upgrader-btn {
   border-left: 2px solid $red;
 }
 .graphbox ul li.nw-data {
-  color: $purple;
-  border-left: 2px solid $purple;
+  color: $white;
+  padding: 10px 20px;
+  background: $purple;
+
+  h3 {
+    font-weight: 300;
+  }
 }
 
 .responsive-container {

@@ -138,6 +138,15 @@ const Networth = () => {
                   {Object.keys(accounts).length !== 0 ? (
                     <div className='graphbox'>
                       <ul>
+                        {(fCategories.length === 0 || fCategories.length === 3) && (
+                          <li className='nw-data'>
+                            <span>Net Worth</span>
+                            <h3>
+                              {currencySymbol}
+                              {numberWithCommas(fNumber(currentNetworth, 0))}
+                            </h3>
+                          </li>
+                        )}
                         {(fCategories.length === 0 || fCategories.includes('Investment Assets')) && (
                           <li className='inv-data'>
                             <span>Investment Assets</span>
@@ -162,15 +171,6 @@ const Networth = () => {
                             <h3>
                               {currencySymbol}
                               {numberWithCommas(fNumber(currentLiabilities, 0))}
-                            </h3>
-                          </li>
-                        )}
-                        {(fCategories.length === 0 || fCategories.length === 3) && (
-                          <li className='nw-data'>
-                            <span>Net Worth</span>
-                            <h3>
-                              {currencySymbol}
-                              {numberWithCommas(fNumber(currentNetworth, 0))}
                             </h3>
                           </li>
                         )}

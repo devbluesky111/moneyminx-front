@@ -564,6 +564,7 @@ export const ProfileOverview = () => {
                           <div className='col-md-5'>
                             <FormControl
                               type='number'
+                              min='0'
                               name='targetedRetirementAge'
                               value={values.targetedRetirementAge || ''}
                               onChange={handleChange}
@@ -630,6 +631,7 @@ export const ProfileOverview = () => {
                               <div className='col-md-5'>
                                 <FormControl
                                   type='number'
+                                  min='0'
                                   name='spouseTargetedRetirementAge'
                                   value={values.spouseTargetedRetirementAge || ''}
                                   onChange={handleChange}
