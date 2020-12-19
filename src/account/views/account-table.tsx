@@ -15,7 +15,6 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
   const [holdingsDetails, setHoldingsDetails] = useState<any>();
 
   const holdingsDetailsModal = useModal();
-  console.log(holdingsData)
   useEffect(() => {
     setHoldings(holdingsData);
   }, [holdingsData]);
