@@ -22,8 +22,8 @@ import {
   RegisterServicePayload,
   ChangePasswordServicePayload,
 } from './auth.types';
-import { setLoginSuccess } from './auth.actions';
 import { groupByProviderName } from './auth.helper';
+import { setAccountSuccess, setLoginSuccess } from './auth.actions';
 
 export const login = async ({ dispatch, payload }: LoginServicePayload): Promise<ApiResponse> => {
   dispatch({ type: auth.LOGIN });
@@ -85,10 +85,7 @@ export const getRefreshedAccount = async ({ dispatch }: { dispatch: Dispatch }):
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
-    dispatch({
-      type: auth.FETCH_ACCOUNT_SUCCESS,
-      payload: { user: data },
-    });
+    dispatch(setAccountSuccess(data));
   }
 
   return { data, error };
@@ -106,10 +103,7 @@ export const fetchConnectionInfo = async ({ dispatch }: { dispatch: Dispatch }):
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
-    dispatch({
-      type: auth.FETCH_ACCOUNT_SUCCESS,
-      payload: { user: data },
-    });
+    dispatch(setAccountSuccess(data));
   }
 
   return { data, error };
@@ -130,10 +124,7 @@ export const deleteAccounts = async ({ dispatch, accounts }: DeleteAccountPayloa
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
-    dispatch({
-      type: auth.FETCH_ACCOUNT_SUCCESS,
-      payload: { user: data },
-    });
+    dispatch(setAccountSuccess(data));
   }
 
   return { data, error };
@@ -146,10 +137,7 @@ export const deleteAccountById = async ({ dispatch, id }: { dispatch: Dispatch; 
   if (error) {
     dispatch({ type: auth.FETCH_ACCOUNT_FAILURE });
   } else {
-    dispatch({
-      type: auth.FETCH_ACCOUNT_SUCCESS,
-      payload: { user: data },
-    });
+    dispatch(setAccountSuccess(data));
   }
 
   return { data, error };

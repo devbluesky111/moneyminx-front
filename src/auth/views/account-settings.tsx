@@ -9,6 +9,7 @@ import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-ic
 
 import ConnectAccountSteps from './inc/connect-steps';
 import AccountSettingsSideBar from './account-settings-sidebar';
+import { patchCompleteProfile } from 'api/request.api';
 
 const AccountSettings = () => {
   const history = useHistory();
@@ -20,6 +21,12 @@ const AccountSettings = () => {
   const action = params.get('action');
 
   const isFromNetworth = action === 'addMoreAccount';
+
+  const skipAccountSettings = async () => {
+    await patchCompleteProfile();
+
+    return navigateToNetworth();
+  };
 
   const navigateToNetworth = () => {
     return history.push('/net-worth?from=accountSettings');
@@ -78,7 +85,7 @@ const AccountSettings = () => {
         {hasOverlaySteps() ? (
           <ConnectAccountSteps
             isAccountSettings
-            onSkip={navigateToNetworth}
+            onSkip={skipAccountSettings}
             isCompleted={finish}
             onFinish={navigateToNetworth}
           />

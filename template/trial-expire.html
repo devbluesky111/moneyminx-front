@@ -197,16 +197,16 @@
       line-height: 150%;
     }
     .col-6 {
-        width: 360px;
-        max-width: 50%;
-        display: table-cell;
-      }
-      td.inner-wrapper {
-    width: 360px;
-    max-width: 50%;
-    display: table-cell;
-}
-.horizontal-line {
+      width: 360px;
+      max-width: 50%;
+      display: table-cell;
+    }
+    td.inner-wrapper {
+      width: 360px;
+      max-width: 50%;
+      display: table-cell;
+    }
+    .horizontal-line {
       margin-top: 60px;
       margin-bottom: 30px;
     }
@@ -232,8 +232,8 @@
       }
       td.inner-wrapper {
         width: 100%;
-    max-width: 100%;
-    display: block
+        max-width: 100%;
+        display: block
       }
     }
 
@@ -326,8 +326,18 @@
         padding-right: 28px;
       }
       .col-6 {
-      width: 168px;
+        width: 168px;
       }
+    }
+    tr.space-above>td {
+      padding-top: 1em;
+    }
+    .summary-table {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .summary-table td {
+      padding: 2px 12px;
     }
   </style>
 </head>
@@ -378,41 +388,26 @@
   <!--investment data-->
   <tr>
     <td class="wrapper">
-      <table>
+      <table class="summary-table">
         <tr>
-          <td class="inner-wrapper">
-            <table style="width: 100%;">
-              <tr>
-                <td class="col-md-6">
-                  <span class="text-cyan d-block">Investment Asset</span>
-                  <span class="text-digit d-block">{{investmentAsset}}</span>
-                </td>
-                <td class="col-md-6">
-                  <span class="text-blue d-block">Other Assets</span>
-                  <span class="text-digit d-block">{{otherAssets}}</span>
-                </td>
-              </tr>
-            </table>
-          </td>
-          <td class="inner-wrapper">
-            <table style="width: 100%;">
-              <tr>
-                <td class="col-md-6">
-                  <span class="text-red d-block">liabilities</span>
-                  <span class="text-digit d-block">{{liabilities}}</span>
-                </td>
-                <td class="col-md-6">
-                  <span class="text-purple d-block">Net worth</span>
-                  <span class="text-digit d-block">{{netWorth}}</span>
-                </td>
-              </tr>
-            </table>
-          </td>
+          <td class="text-cyan">Investment Asset</td>
+          <td class="text-blue">Other Asset</td>
+        </tr>
+        <tr>
+          <td class="text-digit">{{investmentAsset}}</td>
+          <td class="text-digit">{{otherAssets}}</td>
+        </tr>
+        <tr class="space-above">
+          <td class="text-red">Liabilities</td>
+          <td class="text-purple">Net Worth</td>
+        </tr>
+        <tr>
+          <td class="text-digit">{{liabilities}}</td>
+          <td class="text-digit">{{netWorth}}</td>
         </tr>
       </table>
     </td>
   </tr>
-  <tr></tr>
 
   <!--quick snapshot ended-->
   <tr>

@@ -35,6 +35,7 @@ import useAnalytics from 'common/hooks/useAnalytics';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
+import { Placeholder } from '../../networth/views/inc/placeholder';
 
 export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag = false }) => {
   const history = useHistory();
@@ -167,11 +168,10 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({
             </div>
           </div>
         </div>
-
+        {manualAccountList.length === 0 && <Placeholder type='manual' />}
         {manualAccountList.map((acc, index) => {
           return <AccountRow account={acc} key={index} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
         })}
-
         <div className='row py-3 align-items-center'>
           <div className='col-12 col-md-6' />
           <div className='col-12 col-md-6 text-md-right'>
@@ -183,7 +183,6 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({
               disabled={deleting}
             >
               {deleting ? <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' /> : null}
-              <span className={'ml-1'}> {deleting ? 'Deleting...' : 'Delete account and remove data'}</span>
             </button>
           </div>
         </div>

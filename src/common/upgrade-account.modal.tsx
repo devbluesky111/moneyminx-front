@@ -1,7 +1,6 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-import { appRouteConstants } from 'app/app-route.constant';
 import { Modal, ModalType } from 'common/components/modal';
 
 interface Props {
@@ -17,11 +16,11 @@ const UpgradeAccountModal: React.FC<Props> = ({ upgradeAccountModal, availableNu
             <div className='modal-wrapper'>
                 {manualMax ?
                     <p>
-                        You have reached the maximum allowed accounts for your plan. Upgrade your account to add more.
+                        Your plan allows for {manualMax} manual accounts. Click below to compare plans and upgrade.
                     </p>
                     :
                     <p>
-                        Your plan allows for {availableNumber} connected accounts. Click below to compare plans and upgrade or add a manual account instead.
+                        Your plan allows for {availableNumber} connected accounts. Click below to compare plans and upgrade.
                     </p>
                 }
                 <div className='modal-btn-wrapper modal-button-and-text-link'>
@@ -31,11 +30,6 @@ const UpgradeAccountModal: React.FC<Props> = ({ upgradeAccountModal, availableNu
                     >
                         Compare Plans
                     </button>
-                    {!manualMax &&
-                    <div className='text-center'>
-                      <Link className='link-gray' to='/connect-account' onClick={() => { history.push(appRouteConstants.auth.CONNECT_ACCOUNT); upgradeAccountModal.close(); }}>Add Manual Account</Link>
-                    </div>
-                    }
                 </div>
             </div>
         </Modal>
