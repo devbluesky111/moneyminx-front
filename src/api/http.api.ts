@@ -48,11 +48,6 @@ axiosInstance.interceptors.response.use(
     const url = config.url;
     const status = response.status;
 
-    logger.gp('Axios Response');
-    logger.log('Axios response ', response);
-    logger.log('Axios config', config);
-    logger.gpEnd();
-
     const retry = async () => {
       await wait(5000);
 
