@@ -3,23 +3,27 @@ import React, { useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import appEnv from 'app/app.env';
+import AppHeader from 'common/app.header';
+import AppSidebar from 'common/app.sidebar';
 import MMToolTip from 'common/components/tooltip';
+import LoadingScreen from 'common/loading-screen';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import useAnalytics from 'common/hooks/useAnalytics';
+import useAccounts from 'auth/hooks/useAccounts';
 import useToast from 'common/hooks/useToast';
 import UpgradeAccountModal from 'common/upgrade-account.modal';
 import { events } from '@mm/data/event-list';
 import { AuthLayout } from 'layouts/auth.layout';
-import { getAccount, getCurrentSubscription, getFastlink, getSubscription } from 'api/request.api';
-import { useAuthState } from 'auth/auth.context';
-import { useModal } from 'common/components/modal';
+import { getRefreshedAccount } from 'auth/auth.service';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { appRouteConstants } from 'app/app-route.constant';
+import { pricingDetailConstant } from 'common/common.constant';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-// import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
-import { pricingDetailConstant } from 'common/common.constant';
+import { getAccount, getCurrentSubscription, getFastlink, getSubscription } from 'api/request.api';
+import { useModal } from 'common/components/modal';
 
 import ConnectAccountSteps from './inc/connect-steps';
 import ManualAccountModal from './inc/manual-account.modal';
@@ -30,8 +34,24 @@ const config = {
 };
 
 const ConnectAccount = () => {
+  const { onboarded } = useAuthState();
+  const [openRightNav, setOpenRightNav] = useState<boolean>(false);
+  const [openLeftNav, setOpenLeftNav] = useState<boolean>(false);
+
+  const closeRightNav = () => {
+    setOpenRightNav(false);
+  }
+
   return (
     <AuthLayout>
+      {onboarded ?
+        <AppHeader
+          toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
+          toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+          open={openRightNav}
+        /> : null}
+      <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
+      <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
       <ConnectAccountMainSection />
     </AuthLayout>
   );
@@ -43,13 +63,20 @@ export const ConnectAccountMainSection = () => {
   const { event } = useAnalytics();
   const { onboarded } = useAuthState();
   const manualAccountModal = useModal();
-  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } })
-  const [availableNumber, setAvailableNumber] = useState<number>(0);
-  const [manualMax, setManualMax] = useState<boolean>(false);
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({
+    fastLinkURL: '',
+    token: { tokenType: 'AccessToken', tokenValue: '' },
+    config: { flow: '', configName: 'Aggregation', providerAccountId: 0 },
+  });
+  const dispatch = useAuthDispatch();
   const upgradeAccountModal = useModal();
+  const [loading, setLoading] = useState(false);
+  const [manualMax, setManualMax] = useState<boolean>(false);
   const [autoLoading, setAutoLoading] = useState<boolean>(false);
+  const [availableNumber, setAvailableNumber] = useState<number>(0);
   const [manualLoading, setManualLoading] = useState<boolean>(false);
   const [zaboLoading, setZaboLoading] = useState<boolean>(false);
+  const { loading: accountFetching, fetchNewAccounts } = useAccounts();
 
   const fastlinkModal = useModal();
   const history = useHistory();
@@ -58,13 +85,13 @@ export const ConnectAccountMainSection = () => {
     const { data, error } = await getFastlink();
 
     if (error) {
-      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });;
+      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });
     }
 
     const fastLinkOptions: FastLinkOptionsType = {
       fastLinkURL: data.fastLinkUrl,
       token: data.accessToken,
-      config: data.params
+      config: data.params,
     };
 
     setFastLinkOptions(fastLinkOptions);
@@ -79,9 +106,7 @@ export const ConnectAccountMainSection = () => {
     const { data } = await getCurrentSubscription();
     if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
       const accounts = await getAccount();
-      const autoAccounts = accounts?.data?.filter(
-        (account: Record<string, string>) => !account.isManual
-      ).length;
+      const autoAccounts = accounts?.data?.filter((account: Record<string, string>) => !account.isManual).length;
       const subscriptionDetails = await getSubscription({ priceId: data.priceId });
       let autoLimit = subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT];
       if (autoLimit === 'Unlimited') autoLimit = 100;
@@ -90,22 +115,20 @@ export const ConnectAccountMainSection = () => {
         return handleConnectAccount();
       } else {
         setAvailableNumber(autoLimit);
-        setAutoLoading(false)
+        setAutoLoading(false);
         return upgradeAccountModal.open();
       }
     }
     setAutoLoading(false);
     return history.push(appRouteConstants.subscription.SUBSCRIPTION);
-  }
+  };
 
   const checkManualAccountLimit = async () => {
     setManualLoading(true);
     const { data } = await getCurrentSubscription();
     if (data?.subscriptionStatus === 'active' || data?.subscriptionStatus === 'trialing') {
       const accounts = await getAccount();
-      const manualAccounts = accounts?.data?.filter(
-        (account: Record<string, string>) => account.isManual
-      ).length;
+      const manualAccounts = accounts?.data?.filter((account: Record<string, string>) => account.isManual).length;
       const subscriptionDetails = await getSubscription({ priceId: data.priceId });
       let manualLimit = subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT];
       if (manualLimit === 'Unlimited') manualLimit = 100;
@@ -120,7 +143,7 @@ export const ConnectAccountMainSection = () => {
     }
     setManualLoading(false);
     return history.push(appRouteConstants.subscription.SUBSCRIPTION);
-  }
+  };
 
   const handleManualAccount = () => {
     event(events.manualConnectAccount);
@@ -153,21 +176,35 @@ export const ConnectAccountMainSection = () => {
       });
   };
 
-  const handleConnectAccountSuccess = () => {
+  const handleConnectAccountSuccess = async () => {
+    setLoading(true);
+    const { error, data } = await getRefreshedAccount({ dispatch });
+    await fetchNewAccounts();
+    if (data) {
+      setLoading(false);
+    }
+
+    if (error) {
+      mmToast('Error Occurred on Fetching user Details', { type: 'error' });
+    }
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
+    location.search = 'from=fastLink';
 
     return history.push(location);
   };
+
+  if (loading || accountFetching) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className='main-table-wrapper'>
       <div>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            <Link to='/net-worth'>
+            {!onboarded ? <Link to='/net-worth'>
               <LogoImg className='icon auth-logo' />
-            </Link>
-
+            </Link> : null}
             <div className='auth-left-content'>
               <h1>Three easy steps to get started with Money Minx</h1>
               <ul>
@@ -209,13 +246,12 @@ export const ConnectAccountMainSection = () => {
                   type='button'
                   onClick={checkConnectedAccountLimit}
                 >
-                  {autoLoading && <span className='spinner-grow spinner-grow-sm mr-2' role='status' aria-hidden='true' />}
+                  {autoLoading && (
+                    <span className='spinner-grow spinner-grow-sm mr-2' role='status' aria-hidden='true' />
+                  )}
                   Add Banks and Investments
                 </button>
-                <MMToolTip
-                  placement='top'
-                  message='Stay tuned, crypto accounts are almost ready.'
-                >
+                <MMToolTip placement='top' message='Stay tuned, crypto accounts are almost ready.'>
                   <button
                     className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto d-flex align-items-center justify-content-center'
                     type='button'
@@ -240,7 +276,9 @@ export const ConnectAccountMainSection = () => {
                   type='submit'
                   onClick={checkManualAccountLimit}
                 >
-                  {manualLoading && <span className='spinner-grow spinner-grow-sm mr-2' role='status' aria-hidden='true' />}
+                  {manualLoading && (
+                    <span className='spinner-grow spinner-grow-sm mr-2' role='status' aria-hidden='true' />
+                  )}
                   Add Manual Account
                 </button>
                 {/*<h2>
@@ -266,7 +304,13 @@ export const ConnectAccountMainSection = () => {
         fastLinkOptions={fastLinkOptions}
         handleSuccess={handleConnectAccountSuccess}
       />
-      {(availableNumber || manualMax) && <UpgradeAccountModal upgradeAccountModal={upgradeAccountModal} availableNumber={availableNumber} manualMax={manualMax} />}
+      {(availableNumber || manualMax) && (
+        <UpgradeAccountModal
+          upgradeAccountModal={upgradeAccountModal}
+          availableNumber={availableNumber}
+          manualMax={manualMax}
+        />
+      )}
     </div>
   );
 };

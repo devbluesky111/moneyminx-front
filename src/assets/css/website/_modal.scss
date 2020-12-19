@@ -80,6 +80,10 @@ button.hidden {
   margin: 0 auto;
   padding: 1rem 0.75rem 2.5rem 0.75rem;
 
+  &.loading {
+    padding: 0;
+  }
+
   @media (min-width: $sm) {
     padding: 1rem 0.75rem 2.5rem 0.75rem;
   }
@@ -215,7 +219,6 @@ button.hidden {
   }
 }
 .mm-form {
-
   input {
     height: 48px;
     font-size: 0.875rem;
@@ -251,4 +254,8 @@ button.hidden {
     width: auto !important;
     padding: 0 30px;
   }
+}
+
+.fastlink-modal-container {
+  min-height: 50px;
 }
