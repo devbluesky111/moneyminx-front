@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import CircularSpinner from 'common/components/spinner/circular-spinner';
-import DefaultAvatar from 'assets/icons/default-avatar.svg';
-import FastLinkModal from 'yodlee/fast-link.modal';
-import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
-import useGetSubscription from 'auth/hooks/useGetSubscription';
-import useToast from 'common/hooks/useToast';
 import { Account } from 'auth/auth.types';
+import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
-import { groupByProviderName } from 'auth/auth.helper';
-import { deleteAccounts, deleteAccountById, fetchConnectionInfo } from 'auth/auth.service';
-import { appRouteConstants } from 'app/app-route.constant';
-import { getRelativeDate } from 'common/moment.helper';
+import FastLinkModal from 'yodlee/fast-link.modal';
 import { getFastlinkUpdate } from 'api/request.api';
+import { groupByProviderName } from 'auth/auth.helper';
+import { getRelativeDate } from 'common/moment.helper';
+import { appRouteConstants } from 'app/app-route.constant';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
+import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { pricingDetailConstant } from 'common/common.constant';
-import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-/*import { ReactComponent as Refresh } from 'assets/icons/refresh.svg';*/
-import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import { ReactComponent as IconEdit } from 'assets/icons/icon-edit.svg';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 import { ReactComponent as DefaultProviderLogo } from 'assets/icons/mm-default-provider.svg';
+import { deleteAccounts, deleteAccountById, fetchConnectionInfo, getRefreshedAccount } from 'auth/auth.service';
 
 import {
   AccountRowProps,
@@ -30,12 +29,14 @@ import {
   AccountDialogBoxProps,
   SubscriptionConnectionWarningProps,
 } from 'setting/setting.type';
-import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
-import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
-import { FastLinkOptionsType } from 'yodlee/yodlee.type';
+import useAccounts from 'auth/hooks/useAccounts';
+import LoadingScreen from 'common/loading-screen';
 import { useModal } from 'common/components/modal';
 import useAnalytics from 'common/hooks/useAnalytics';
-import { Placeholder } from '../../networth/views/inc/placeholder';
+import { FastLinkOptionsType } from 'yodlee/yodlee.type';
+import { Placeholder } from 'networth/views/inc/placeholder';
+import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
+import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 
 export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag = false }) => {
   const history = useHistory();
@@ -45,18 +46,19 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
   const { fetchingSubscription, subscription } = useGetSubscription(currentSubscription?.priceId);
 
+  const accountLength = accounts.length;
   useEffect(() => {
-    if (!accounts) {
+    if (!accountLength) {
       const getUser = async () => {
         await fetchConnectionInfo({ dispatch });
       };
       getUser();
     }
-  }, [accounts, dispatch]);
+  }, [accountLength, dispatch]);
 
   const loading = fetchingCurrentSubscription || fetchingSubscription;
 
-  if (loading || !accounts) {
+  if (loading || !accounts.length) {
     return <CircularSpinner />;
   }
 
@@ -167,7 +169,7 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({
             </div>
           </div>
         </div>
-        {(manualAccountList.length === 0) && <Placeholder type='manual' />}
+        {manualAccountList.length === 0 && <Placeholder type='manual' />}
         {manualAccountList.map((acc, index) => {
           return <AccountRow account={acc} key={index} reviewSubscriptionFlag={reviewSubscriptionFlag} />;
         })}
@@ -208,13 +210,29 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const { mmToast } = useToast();
   const dispatch = useAuthDispatch();
   const [deleting, setDeleting] = useState<boolean>(false);
-  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } });
+  const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({
+    fastLinkURL: '',
+    token: { tokenType: 'AccessToken', tokenValue: '' },
+    config: { flow: '', configName: 'Aggregation', providerAccountId: 0 },
+  });
+  const fastlinkModal = useModal();
+  const [loading, setLoading] = useState(false);
+  const { fetchNewAccounts, loading: fetchingNewAccounts } = useAccounts();
+
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
-  const fastlinkModal = useModal();
 
-  const handleConnectAccountSuccess = () => {
+  const handleConnectAccountSuccess = async () => {
+    setLoading(true);
+    const { error } = await getRefreshedAccount({ dispatch });
+    await fetchNewAccounts();
+    setLoading(false);
+
+    if (error) {
+      mmToast('Error Occurred on Fetching user Details', { type: 'error' });
+    }
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
+    location.search = 'from=fastLink';
 
     return history.push(location);
   };
@@ -223,13 +241,13 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     const { data, error } = await getFastlinkUpdate(accId);
 
     if (error) {
-      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });;
+      return mmToast('Error Occurred to Get Fastlink', { type: 'error' });
     }
 
     const fastLinkOptions: FastLinkOptionsType = {
       fastLinkURL: data.fastLinkUrl,
       token: data.accessToken,
-      config: data.params
+      config: data.params,
     };
 
     setFastLinkOptions(fastLinkOptions);
@@ -242,7 +260,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   let accountsByStatus: AccountByStatus = {
     error: [],
     warning: [],
-    success: []
+    success: [],
   };
 
   for (let p_name in accountsByProvider) {
@@ -291,6 +309,10 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     return 'mm-account-overview__error';
   };
 
+  if (loading || fetchingNewAccounts) {
+    return <LoadingScreen />;
+  }
+
   return (
     <>
       <div className='card mm-setting-card'>
@@ -319,7 +341,11 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <span>Connection error</span>
                     </div>
                     <div className='col-6 mt-2 text-md-right'>
-                      <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={() => handleConnectAccount(group.accounts[0].id)}>
+                      <button
+                        type='button'
+                        className='btn btn-outline-primary mm-button btn-lg'
+                        onClick={() => handleConnectAccount(group.accounts[0].id)}
+                      >
                         Fix Connection
                       </button>
                     </div>
@@ -331,7 +357,11 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <span>Needs more info</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
-                      <button type='button' className='btn btn-outline-primary mm-button btn-lg' onClick={() => handleConnectAccount(group.accounts[0].id)}>
+                      <button
+                        type='button'
+                        className='btn btn-outline-primary mm-button btn-lg'
+                        onClick={() => handleConnectAccount(group.accounts[0].id)}
+                      >
                         Fix Connection
                       </button>
                     </div>
@@ -370,11 +400,16 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                   <div className='col-12 col-md-6'>
                     {!reviewSubscriptionFlag ? (
                       <div className='mm-account-overview__update-link mb-3 mb-md-0'>
-                        <span className='purple-links update-credentials' onClick={() => handleConnectAccount(group.accounts[0].id)}>Update Credentials</span>
+                        <span
+                          className='purple-links update-credentials'
+                          onClick={() => handleConnectAccount(group.accounts[0].id)}
+                        >
+                          Update Credentials
+                        </span>
                       </div>
                     ) : (
-                        ''
-                      )}
+                      ''
+                    )}
                   </div>
                   <div className='col-12 col-md-6 mt-2 text-md-right'>
                     <button
@@ -440,8 +475,8 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
           {deleting ? (
             <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true' />
           ) : (
-              <DeleteIcon className='ml-2 ml-md-3 trash-icon' onClick={() => deleteAccount(account.id)} />
-            )}
+            <DeleteIcon className='ml-2 ml-md-3 trash-icon' onClick={() => deleteAccount(account.id)} />
+          )}
         </div>
       </div>
     </div>
@@ -479,7 +514,7 @@ const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({
 }) => {
   const disable =
     availableManualAccounts === 'Unlimited' ||
-      (manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts)
+    (manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts)
       ? false
       : true;
   const connectedAccountDiff = accountList.length - parseInt(availableConnectedAccounts as string, 10);

@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import useToast from 'common/hooks/useToast';
-import { useAuthDispatch } from 'auth/auth.context';
-import { getRefreshedAccount } from 'auth/auth.service';
+import { logger } from 'common/logger.helper';
 import { Modal, ModalTypeEnum } from 'common/components/modal';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
@@ -18,35 +17,29 @@ interface Props {
 const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLinkOptions }) => {
   const initRef = useRef<any>();
   const { mmToast } = useToast();
-  const dispatch = useAuthDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
 
-  const onSuccess = async () => {
-    setLoading(true);
+  const onSuccess = async (args: any) => {
+    logger.log('fastlink onsuccess arguments', args);
     mmToast('Successfully Logged in with Yodlee', { type: 'success' });
-    const { error } = await getRefreshedAccount({ dispatch });
-    setLoading(false);
-
-    if (error) {
-      mmToast('Error Occurred on Fetching user Details', { type: 'error' });
-    }
 
     return handleSuccess();
   };
 
   const onError = (err: any) => {
+    logger.log('fastlink onerror log', err);
     const errorList = err
       ? Object.keys(err).map((ek, i) => (
-        <li key={i}>
-          {[ek]}:{err[ek]}
-        </li>
-      ))
+          <li key={i}>
+            {[ek]}:{err[ek]}
+          </li>
+        ))
       : null;
 
     return mmToast(<ul>{errorList}</ul>, { type: 'error', autoClose: false });
   };
 
   const onClose = async (args: any) => {
+    logger.log('fastlink onclose arguments', args);
     return fastLinkModal.close();
   };
 
@@ -71,10 +64,12 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   };
 
   return (
-    <Modal {...fastLinkModal.props} title='' size={'fastlink'} type={ModalTypeEnum.NO_HEADER} canBeClosed>
-      <div id='fastlinkContainer' />
-      {loading || !active ? <CircularSpinner /> : null}
-      <button ref={initRef} onClick={handleInit} className='hidden' />
+    <Modal {...fastLinkModal.props} title='' size={'sm'} canBeClosed loading={!active} type={ModalTypeEnum.NO_HEADER}>
+      <div className='fastlink-modal-container'>
+        <div id='fastlinkContainer' />
+        {!active ? <CircularSpinner /> : null}
+        <button ref={initRef} onClick={handleInit} className='hidden' />
+      </div>
     </Modal>
   );
 };

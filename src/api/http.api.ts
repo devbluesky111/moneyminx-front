@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+
 import appEnv from 'app/app.env';
 import { storage } from 'app/app.storage';
 import { STATUS_CODE } from 'app/app.status';
 import { refreshAccessToken } from 'api/request.api';
-import { withError, withData } from 'common/common-helper';
 import { appRouteConstants } from 'app/app-route.constant';
+import { withError, withData, wait } from 'common/common-helper';
 
 import { urls } from './api.url';
+import { logger } from 'common/logger.helper';
 
-const MAX_TRIES = 2;
+const MAX_TRIES = 7;
 const currentRetries: Record<string, number> = {};
 
 const axiosInstance = axios.create({
@@ -41,10 +43,33 @@ const onRefreshed = (token: string) => {
 };
 
 axiosInstance.interceptors.response.use(
-  (response: any): any => {
+  (response: AxiosResponse): any => {
+    const config = response.config;
+    const url = config.url;
+    const status = response.status;
+
+    logger.gp('Axios Response');
+    logger.log('Axios response ', response);
+    logger.log('Axios config', config);
+    logger.gpEnd();
+
+    const retry = async () => {
+      await wait(5000);
+
+      return axiosInstance(config);
+    };
+
+    if (urls.auth.ACCOUNT_REFRESH === url && STATUS_CODE.SERVER_ACCEPTED === status) {
+      logger.log('url', url);
+      currentRetries[url] = currentRetries[url] ? currentRetries[url] + 1 : 1;
+      if (currentRetries[url] <= MAX_TRIES) {
+        return retry();
+      }
+    }
+
     return withData(response.data);
   },
-  (error: any): any => {
+  (error: AxiosError): any => {
     if (error.message === STATUS_CODE.NETWORK_ERROR) {
       return withError(error.message);
     }
@@ -57,7 +82,7 @@ axiosInstance.interceptors.response.use(
 
     /**
      * IF the request is Account refresh and the server response is 500
-     * It will try for 2 times to get the response 200
+     * It will try for 4 times to get the response 200
      * If not it will return the error response
      */
 
@@ -146,7 +171,7 @@ export function put(url: string, data: any): any {
     },
   });
 }
-export function patch(url: string, data: any): any {
+export function patch(url: string, data?: any): any {
   return axiosInstance({
     method: 'patch',
     url,
