@@ -1,5 +1,5 @@
 import Zabo from 'zabo-sdk-js';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import appEnv from 'app/app.env';
@@ -43,21 +43,13 @@ export const ConnectAccountMainSection = () => {
   const { event } = useAnalytics();
   const { onboarded } = useAuthState();
   const manualAccountModal = useModal();
-  const [zabo, setZabo] = useState<Record<string, () => Record<string, any>>>({});
   const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({ fastLinkURL: '', token: { tokenType: 'AccessToken', tokenValue: '' }, config: { flow: '', configName: 'Aggregation', providerAccountId: 0 } })
   const [availableNumber, setAvailableNumber] = useState<number>(0);
   const [manualMax, setManualMax] = useState<boolean>(false);
   const upgradeAccountModal = useModal();
   const [autoLoading, setAutoLoading] = useState<boolean>(false);
   const [manualLoading, setManualLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    const initializeZabo = async () => {
-      const zaboConfig = await Zabo.init(config);
-      setZabo(zaboConfig);
-    };
-    initializeZabo();
-  }, []);
+  const [zaboLoading, setZaboLoading] = useState<boolean>(false);
 
   const fastlinkModal = useModal();
   const history = useHistory();
@@ -136,22 +128,27 @@ export const ConnectAccountMainSection = () => {
     return manualAccountModal.open();
   };
   // eslint-disable-next-line
-  const handleCryptoExchange = () => {
+  const handleCryptoExchange = async () => {
+    setZaboLoading(true);
+    const zaboConfig = await Zabo.init(config);
     event(events.cryptoExchange);
 
-    zabo
+    zaboConfig
       .connect()
       .onConnection((account: Record<string, string>) => {
         // Todo On Connection implementation
         // tslint:disable-next-line:no-console
         console.log('account connected:', account);
+        setZaboLoading(false);
       })
       .onError((errorOnConnection: Record<string, string>) => {
         // Todo OnError implementation
+        setZaboLoading(false);
       })
       .onEvent((eventName: Record<string, string>, metadata: Record<string, string>) => {
         // Todo On each event implementation
         // tslint:disable-next-line:no-console
+        setZaboLoading(false);
         console.info(`[EVENT] ${eventName}`, metadata);
       });
   };
@@ -220,10 +217,11 @@ export const ConnectAccountMainSection = () => {
                   message='Stay tuned, crypto accounts are almost ready.'
                 >
                   <button
-                    className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto'
+                    className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto d-flex align-items-center justify-content-center'
                     type='button'
-                  /*onClick={handleCryptoExchange}*/
+                    onClick={handleCryptoExchange}
                   >
+                    {zaboLoading && <span className='spinner-grow spinner-grow-sm mr-2' role='status' aria-hidden='true' />}
                     Add Crypto Exchanges
                   </button>
                 </MMToolTip>
