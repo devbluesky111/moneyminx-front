@@ -436,7 +436,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
             <Modal
               {...holdingsDetailsModal.props}
               title={holdingsDetails?.description || 'New Position'}
-              size={holdingsDetails ? 'xxl' : 'lg'}
+              size={holdingsDetails ? 'xxl' : 'xl'}
               canBeClosed
               onClose={() => {
                 holdingsDetailsModal.close();

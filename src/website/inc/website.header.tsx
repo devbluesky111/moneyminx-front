@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 import useSize from 'common/hooks/useSize';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
-import { ReactComponent as Beta } from 'assets/icons/beta.svg';
 import { ReactComponent as MoneyMinxLogoMobile } from 'assets/icons/money-minx-logo-mobile.svg';
 
 interface LeftMenuType {
@@ -44,7 +43,7 @@ const WebsiteHeader = () => {
               <div className='mm-navbar-logo d-flex justify-content-between d-block d-md-none'>
                 <div>
                   <MoneyMinxLogoMobile className='mr-3' />
-                  <Beta />
+                  <div className='badge badge-pill badge-primary mm-coming-soon'>Beta</div>
                 </div>
               </div>
               <ul className='navbar-nav mr-auto navbar-menu-list'>
