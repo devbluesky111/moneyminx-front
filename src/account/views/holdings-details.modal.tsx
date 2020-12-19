@@ -446,8 +446,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                 {holdingsDetails && (
                   <span className='description'>
                     {!holdingsDetails?.isManual
-                      ? "It's your account, do as you please."
-                      : 'To maintain integrity of the data with your institution you can only update a few of the fields.'}
+                      ? 'To maintain integrity of the data with your institution you can only update a few of the fields.'
+                      : 'With manual accounts, you can update whichever fields you need'}
                   </span>
                 )}
                 <div className='mm-manual-account-modal__title mt-3'>
