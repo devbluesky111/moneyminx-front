@@ -1,18 +1,18 @@
 import FacebookLogin from 'react-facebook-login';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useHistory, Link, useLocation } from 'react-router-dom';
 
+import env from 'app/app.env';
 import { Formik } from 'formik';
 import { isEmpty } from 'lodash';
-import env from 'app/app.env';
 import useToast from 'common/hooks/useToast';
 import { AuthLayout } from 'layouts/auth.layout';
+import LoadingScreen from 'common/loading-screen';
 import { useModal } from 'common/components/modal';
-import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { appRouteConstants } from 'app/app-route.constant';
 import { pricingDetailConstant } from 'common/common.constant';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-import { ReactComponent as LogoWhiteImg } from 'assets/icons/money-minx-white-logo.svg';
 import { EMAIL_IS_EMPTY, PWD_IS_EMPTY } from 'lang/en/validation.json';
 import { ReactComponent as HiddenIcon } from 'assets/icons/pass-hidden.svg';
 import { ReactComponent as VisibleIcon } from 'assets/icons/pass-visible.svg';
@@ -91,13 +91,10 @@ export const LoginMainSection = () => {
   };
 
   return (
-
     <div className='main-table-wrapper'>
-      {refreshLoading ?
-        <div className='refresh-loading'>
-          <LogoWhiteImg className='loading-logo' />
-          <MessageChange />
-        </div> :
+      {refreshLoading ? (
+        <LoadingScreen />
+      ) : (
         <div className=''>
           <div className='row login-wrapper'>
             <div className='guide-content'>
@@ -185,7 +182,8 @@ export const LoginMainSection = () => {
                           const subscriptionDetails = await getSubscription({ priceId: data.priceId });
                           mmToast('Sign in Success', { type: 'success' });
                           if (
-                            autoAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
+                            autoAccounts >=
+                              subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
                             manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
                           ) {
                             history.push(appRouteConstants.subscription.REVIEW);
@@ -193,8 +191,6 @@ export const LoginMainSection = () => {
                           else return history.push(appRouteConstants.auth.CONNECT_ACCOUNT);
                         } else return history.push(appRouteConstants.subscription.SUBSCRIPTION);
                       }
-
-                      // setRefreshLoading(false);
 
                       actions.setFieldError(
                         'password',
@@ -305,7 +301,7 @@ export const LoginMainSection = () => {
             </div>
           </div>
         </div>
-      }
+      )}
 
       <AssociateEmailModal
         source='login'
@@ -318,37 +314,3 @@ export const LoginMainSection = () => {
     </div>
   );
 };
-
-export const MessageChange = () => {
-  const messageArr = [
-    'Queue the suspenseful music...',
-    'I see you baby, loading that page...',
-    'I bet you wish this page would work work work work work.',
-    'Got your mind on your money and your money on your mind?',
-    'I like big bucks and I cannot lie.',
-    'Like Axl says, just a little patience. Mmm, yeahhh.',
-    'Whoa, we\'re half way there. Whoaaaaa living on a prayer...',
-    'I still haven\'t found what I\'m looking for...',
-  ];
-
-  const [showingMessage, setShowingMessage] = useState<string>('I like big bucks and I can not lie.');
-
-  const showMessage: any = () => {
-    const randomIndex = Math.floor(Math.random() * 8);
-    if (messageArr[randomIndex] === showingMessage) {
-      return showMessage();
-    }
-
-    setShowingMessage(messageArr[randomIndex]);
-  }
-
-  useEffect(() => {
-    setTimeout(showMessage, 2500);
-  })
-
-  return (
-    <span className='mt-5'>
-      {showingMessage}
-    </span>
-  );
-}

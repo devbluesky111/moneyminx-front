@@ -8,6 +8,7 @@ import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.s
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
 import ConnectAccountSteps from './inc/connect-steps';
+import { patchCompleteProfile } from 'api/request.api';
 import AccountSettingsSideBar from './account-settings-sidebar';
 
 const AccountSettings = () => {
@@ -20,6 +21,13 @@ const AccountSettings = () => {
   const action = params.get('action');
 
   const isFromNetworth = action === 'addMoreAccount';
+
+  const skipAccountSettings = async () => {
+    const { error } = await patchCompleteProfile();
+    if (!error) {
+      return navigateToNetworth();
+    }
+  };
 
   const navigateToNetworth = () => {
     return history.push('/net-worth?from=accountSettings');
@@ -78,7 +86,7 @@ const AccountSettings = () => {
         {hasOverlaySteps() ? (
           <ConnectAccountSteps
             isAccountSettings
-            onSkip={navigateToNetworth}
+            onSkip={skipAccountSettings}
             isCompleted={finish}
             onFinish={navigateToNetworth}
           />

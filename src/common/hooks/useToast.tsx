@@ -2,7 +2,7 @@ import { toast, ToastContent, ToastOptions } from 'react-toastify';
 
 import env from 'app/app.env';
 
-enum TEnv {
+export enum TEnv {
   DEV = 'development',
   PROD = 'production',
 }

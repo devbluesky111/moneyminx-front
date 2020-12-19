@@ -178,7 +178,6 @@ export const formater = (val: string) => {
 export const getUnique = (array: string[]) => {
   const uniqueArray = [];
 
-  // Loop through array values
   for (const element of array) {
     if (uniqueArray.indexOf(element) === -1) {
       uniqueArray.push(element);
@@ -186,4 +185,8 @@ export const getUnique = (array: string[]) => {
   }
 
   return uniqueArray;
+};
+
+export const wait = (milliseconds: number) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };

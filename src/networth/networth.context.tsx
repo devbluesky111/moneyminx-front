@@ -12,7 +12,7 @@ export const initialState: NetworthState = {
   fTimeInterval: undefined,
 
   accounts: undefined,
-  networth: undefined,
+  networth: [],
 
   fToggleInvestment: true,
   fToggleOther: true,

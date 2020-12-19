@@ -5,6 +5,7 @@ import React, { createRef, useCallback, useEffect, useState } from 'react';
 import { Dictionary } from 'lodash';
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
+import useSearchParam from 'auth/hooks/useSearchParam';
 import { fetchConnectionInfo } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { useAuthState, useAuthDispatch } from 'auth/auth.context';
@@ -27,16 +28,26 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
   const [clickEvent, setClickEvent] = useState<boolean>(false);
   const [currentAccount, setCurrentAccount] = useState<Account>();
   const [completedProviderName, setCompletedProviderName] = useState<string[]>([]);
-  const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>();
-  const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>();
+  const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>([]);
+  const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>({});
 
+  const from = useSearchParam('from');
+  const isFromFastlink = from === 'fastLink';
+
+  /**
+   * @description we will avoid the fetch connection info call
+   * @if from fastlink and if initial value
+   * i.e reload counter will be 0
+   */
   useEffect(() => {
-    const getUser = async () => {
-      await fetchConnectionInfo({ dispatch });
-    };
+    if (!isFromFastlink || reloadCounter) {
+      const getUser = async () => {
+        await fetchConnectionInfo({ dispatch });
+      };
 
-    getUser();
-  }, [dispatch, reloadCounter]);
+      getUser();
+    }
+  }, [dispatch, reloadCounter, isFromFastlink]);
 
   /**
    * if accounts
@@ -45,7 +56,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
    * set current provider accounts
    */
   useEffect(() => {
-    if (accounts) {
+    if (accounts?.length) {
       setCurrentAccount(accounts[0]);
       const accountsByProvider = groupByProviderName(accounts);
       setAccountsByProviderName(accountsByProvider);
@@ -106,7 +117,9 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
           return setCurrentProviderAccounts(accountsByProviderName[nextProviderName]);
         }
 
-        return setFinish?.();
+        if (currentProviderAccounts.length) {
+          return setFinish?.();
+        }
       }
     }
   }, [currentProviderAccounts, accountsByProviderName, clickEvent, setFinish]);
