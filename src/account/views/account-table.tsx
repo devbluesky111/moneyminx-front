@@ -15,7 +15,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
   const [holdingsDetails, setHoldingsDetails] = useState<any>();
 
   const holdingsDetailsModal = useModal();
-
+  console.log(holdingsData)
   useEffect(() => {
     setHoldings(holdingsData);
   }, [holdingsData]);
@@ -59,10 +59,10 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                     {holdings?.length > 0 && holdings.map((item, index) => (
                       <tr key={index} onClick={() => openEditPositionModal(item.id)} >
                         <td>{item.description}</td>
-                        <td className='hide-type'>{item.price ? currencySymbol : ''}{numberWithCommas(fNumber(item.price, 2))}</td>
+                        <td className='hide-type'>{item.price ? currencySymbol : ''}{item.price !== null ? numberWithCommas(fNumber(item.price, 2)) : ''}</td>
                         <td >{item.quantity}</td>
                         <td className='hide-type'>{item.symbol}</td>
-                        <td className='hide-type'>{item.costBasis ? currencySymbol : ''}{item.costBasis ? numberWithCommas(fNumber(item.costBasis, 2)) : 0}</td>
+                        <td className='hide-type'>{item.costBasis ? currencySymbol : ''}{item.costBasis !== null ? numberWithCommas(fNumber(item.costBasis, 2)) : ''}</td>
                         {item.intervalValues.map((ins: any, i: number) => (
                           <td key={i} className={[ins.type === `projection` && `projection`, gc(ins.interval)].join(' ')}>
                             <span className={gc(ins.interval)}>{ins.interval}</span>{ins.value ? currencySymbol : ''}{numberWithCommas(fNumber(ins.value, 2))}

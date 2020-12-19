@@ -58,8 +58,8 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Date</span>{item.date}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Activity Type</span>{formater(item.type)}</div>
                   <div className='col-4 col-md mm-activity-table__body--data d-none d-xl-block'>{item.description}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Amount</span>{currencySymbol}{(item.amount) ? `${numberWithCommas(fNumber(item.amount, 0))}` : 0}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Balance</span>{currencySymbol}{(item.balance) ? `${numberWithCommas(fNumber(item.balance, 0))}` : 0}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Amount</span>{currencySymbol}{item.amount !== null ? `${numberWithCommas(fNumber(item.amount, 0))}` : ''}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Balance</span>{currencySymbol}{item.balance !== null ? `${numberWithCommas(fNumber(item.balance, 0))}` : ''}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Income</span>{item.income ? 'Yes' : 'No'}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Cash Flow</span>{item.cashFlow ? 'Yes' : 'No'}</div>
                   <div className='col-4 col-md-1 mm-activity-table__body--data'>
