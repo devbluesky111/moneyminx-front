@@ -21,11 +21,23 @@ export const setLoginSuccess = (payload: ILoginResponse) => {
  * @param data
  * @description we will filter out to have fresh accounts by whether the account is being overridden or not.
  */
-export const setAccountSuccess = (data: Account[]) => {
+export const setFreshAccounts = (data: Account[]) => {
   const freshAccounts = data?.filter((acc) => !acc.accountDetails.overridden);
 
   return {
     type: auth.FETCH_ACCOUNT_SUCCESS,
     payload: { user: freshAccounts },
+  };
+};
+
+/**
+ * @param data
+ * @description This method will set all the achieved accounts since we might need to modify the content
+ * of existing accounts
+ */
+export const setAccountSuccess = (data: Account[]) => {
+  return {
+    type: auth.FETCH_ACCOUNT_SUCCESS,
+    payload: { user: data },
   };
 };
