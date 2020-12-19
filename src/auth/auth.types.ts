@@ -47,7 +47,7 @@ export interface ProviderAccount {
   providerAccountId: number;
   providerId: number;
   requestId: string;
-  status: ProviderAccountStatus
+  status: ProviderAccountStatus;
   updatedAt: string | Date;
 }
 
@@ -136,7 +136,7 @@ export interface AuthType {
   roles?: RoleEnum[];
   authState: AuthState;
   isSigningIn: boolean;
-  accounts?: Account[];
+  accounts: Account[];
   isAuthenticated: boolean;
   currentSubscription?: any;
   subscriptionDetail?: SubscriptionDetail;

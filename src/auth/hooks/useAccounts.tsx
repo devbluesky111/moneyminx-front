@@ -1,0 +1,34 @@
+import { useState } from 'react';
+
+import useToast from 'common/hooks/useToast';
+import { getNewAccounts } from 'api/request.api';
+import { useAuthDispatch } from 'auth/auth.context';
+import { setAccountSuccess } from 'auth/auth.actions';
+
+/**
+ * Each account related functions and data will reside here
+ * for now we will have single fetch new account method
+ */
+const useAccounts = () => {
+  const { mmToast } = useToast();
+  const dispatch = useAuthDispatch();
+  const [loading, setLoading] = useState(false);
+  const [accounts, setAccounts] = useState<Account[]>();
+
+  return {
+    fetchNewAccounts: async () => {
+      setLoading(true);
+      const { error, data } = await getNewAccounts();
+      setLoading(false);
+      if (error) {
+        return mmToast('Error occurred on fetching new Accounts', { type: 'error' });
+      }
+      dispatch(setAccountSuccess(data));
+      setAccounts(data);
+    },
+    loading,
+    accounts,
+  };
+};
+
+export default useAccounts;

@@ -1,7 +1,6 @@
 import { Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
 
 import { events } from '@mm/data/event-list';
 import useProfile from 'auth/hooks/useProfile';
@@ -29,6 +28,7 @@ import NetworthFilter from './inc/networth-filter';
 import NetworthBarGraph from './networth-bar-graph';
 import useAnalytics from '../../common/hooks/useAnalytics';
 import { Placeholder } from './inc/placeholder';
+import NetworthSkeleton from './inc/networth-skeleton';
 
 const Networth = () => {
   useProfile();
@@ -75,41 +75,8 @@ const Networth = () => {
     }
   }, [data]);
 
-  if (!networth || !accounts) {
-    return (
-      <NetworthLayout>
-        <section className='content-container'>
-          <div className='app-subheader-container px-4'>
-            <Skeleton width={200} height={50} count={1} />
-          </div>
-          <hr className='m-0' />
-          <div className='content-wrapper'>
-            <div className='container'>
-              <div className='row'>
-                <div className='col-12 dropdowns-container'>
-                  <div className='dflex-center mb-15'>
-                    <Skeleton width={265} height={50} count={3} />
-                  </div>
-                </div>
-              </div>
-              <div className='row mb-40'>
-                <div className='col-lg-9 mob-btm'>
-                  <Skeleton width={950} height={400} />
-                </div>
-                <div className='col-lg-3 mob-btm'>
-                  <Skeleton width={300} height={400} />
-                </div>
-              </div>
-              <div className='row mb-40'>
-                <div className='col-12'>
-                  <Skeleton width={1276} height={400} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </NetworthLayout>
-    );
+  if (!networth?.length || !accounts) {
+    return <NetworthSkeleton />;
   }
 
   if (loading && !loadCounter) {
@@ -168,10 +135,10 @@ const Networth = () => {
             <div className='row mb-40'>
               <div className='col-lg-9 mob-btm'>
                 <div className={['ct-box', Object.keys(accounts).length === 0 ? 'ct-box-placeholder' : ''].join(' ')}>
-                  {Object.keys(accounts).length !== 0 ?
+                  {Object.keys(accounts).length !== 0 ? (
                     <div className='graphbox'>
                       <ul>
-                        {(fCategories.length === 0 || fCategories.includes('Investment Assets')) &&
+                        {(fCategories.length === 0 || fCategories.includes('Investment Assets')) && (
                           <li className='inv-data'>
                             <span>Investment Assets</span>
                             <h3>
@@ -179,8 +146,8 @@ const Networth = () => {
                               {numberWithCommas(fNumber(currentInvestmentAsset, 0))}
                             </h3>
                           </li>
-                        }
-                        {(fCategories.length === 0 || fCategories.includes('Other Assets')) &&
+                        )}
+                        {(fCategories.length === 0 || fCategories.includes('Other Assets')) && (
                           <li className='other-data'>
                             <span>Other Assets</span>
                             <h3>
@@ -188,8 +155,8 @@ const Networth = () => {
                               {numberWithCommas(fNumber(currentOtherAssets, 0))}
                             </h3>
                           </li>
-                        }
-                        {(fCategories.length === 0 || fCategories.includes('Liabilities')) &&
+                        )}
+                        {(fCategories.length === 0 || fCategories.includes('Liabilities')) && (
                           <li className='lty-data'>
                             <span>Liabilities</span>
                             <h3>
@@ -197,8 +164,8 @@ const Networth = () => {
                               {numberWithCommas(fNumber(currentLiabilities, 0))}
                             </h3>
                           </li>
-                        }
-                        {(fCategories.length === 0 || fCategories.length === 3) &&
+                        )}
+                        {(fCategories.length === 0 || fCategories.length === 3) && (
                           <li className='nw-data'>
                             <span>Net Worth</span>
                             <h3>
@@ -206,17 +173,20 @@ const Networth = () => {
                               {numberWithCommas(fNumber(currentNetworth, 0))}
                             </h3>
                           </li>
-                        }
+                        )}
                       </ul>
                       <div className='chartbox'>
-                        <NetworthBarGraph networth={networth} fCategories={fCategories} currencySymbol={currencySymbol} />
+                        <NetworthBarGraph
+                          networth={networth}
+                          fCategories={fCategories}
+                          currencySymbol={currencySymbol}
+                        />
                       </div>
                     </div>
-                    :
+                  ) : (
                     <Placeholder type='chart' />
-                  }
+                  )}
                 </div>
-
               </div>
 
               <div className='col-lg-3 mob-btm'>
@@ -248,7 +218,7 @@ const Networth = () => {
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-b'>
-                    {Object.keys(accounts).includes('Investment Assets') ?
+                    {Object.keys(accounts).includes('Investment Assets') ? (
                       <div className='table-holder'>
                         <Table className='tb-responsive' id='table-investment-xls'>
                           <thead onClick={toggleInvestment}>
@@ -267,23 +237,29 @@ const Networth = () => {
                           </thead>
                           {fToggleInvestment ? (
                             <tbody>
-                              {investmentAssets?.map((iAsset, index) => {
-                                return (
-                                  <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
-                                    <td>{iAsset.accountName}</td>
-                                    <td className={`hide-type`}>{iAsset.accountType}</td>
-                                    {iAsset.balances.map((b, idx) => (
-                                      <td
-                                        key={`${index}-${idx}`}
-                                        className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
-                                      >
-                                        <span className={gc(b.interval)}>{b.interval}</span>
-                                        {currencySymbol}{numberWithCommas(fNumber(b.balance, 2))}
-                                      </td>
-                                    ))}
-                                  </tr>
-                                );
-                              })}
+                              {investmentAssets
+                                ? investmentAssets.map((iAsset, index) => {
+                                    return (
+                                      <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
+                                        <td>{iAsset.accountName}</td>
+                                        <td className={`hide-type`}>{iAsset.accountType}</td>
+                                        {iAsset.balances.map((b, idx) => (
+                                          <td
+                                            key={`${index}-${idx}`}
+                                            className={[b.type === `projection` && `projection`, gc(b.interval)].join(
+                                              ' '
+                                            )}
+                                          >
+                                            <span className={gc(b.interval)}>{b.interval}</span>
+                                            {currencySymbol}
+                                            {numberWithCommas(fNumber(b.balance, 2))}
+                                          </td>
+                                        ))}
+                                      </tr>
+                                    );
+                                  })
+                                : // show place holder here
+                                  null}
                             </tbody>
                           ) : null}
                           <tfoot className={'projection'}>
@@ -300,24 +276,28 @@ const Networth = () => {
                                   data-content=''
                                 >
                                   Total
-                              </Link>
+                                </Link>
                               </td>
                               <td className={[!fToggleInvestment ? 'd-hide' : '', `hide-type`].join(' ')}>{''}</td>
                               {networth?.map((nItem, idx) => (
                                 <td
                                   key={idx}
-                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
+                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
+                                    ' '
+                                  )}
                                 >
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}{numberWithCommas(fNumber(nItem.investmentAssets, 2))}
+                                  {currencySymbol}
+                                  {numberWithCommas(fNumber(nItem.investmentAssets, 2))}
                                 </td>
                               ))}
                             </tr>
                           </tfoot>
                         </Table>
-                      </div> :
+                      </div>
+                    ) : (
                       <Placeholder type='investment' />
-                    }
+                    )}
                   </div>
                 </div>
               </div>
@@ -326,7 +306,7 @@ const Networth = () => {
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-g'>
-                    {Object.keys(accounts).includes('Other Assets') ?
+                    {Object.keys(accounts).includes('Other Assets') ? (
                       <div className='table-holder'>
                         <Table className='tb-responsive' id='table-other-xls'>
                           <thead onClick={toggleOther}>
@@ -355,7 +335,8 @@ const Networth = () => {
                                         className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
                                       >
                                         <span className={gc(b.interval)}>{b.interval}</span>
-                                        {currencySymbol}{numberWithCommas(fNumber(b.balance, 2))}
+                                        {currencySymbol}
+                                        {numberWithCommas(fNumber(b.balance, 2))}
                                       </td>
                                     ))}
                                   </tr>
@@ -370,18 +351,22 @@ const Networth = () => {
                               {networth?.map((nItem, idx) => (
                                 <td
                                   key={idx}
-                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
+                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
+                                    ' '
+                                  )}
                                 >
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}{numberWithCommas(fNumber(nItem.otherAssets, 2))}
+                                  {currencySymbol}
+                                  {numberWithCommas(fNumber(nItem.otherAssets, 2))}
                                 </td>
                               ))}
                             </tr>
                           </tfoot>
                         </Table>
-                      </div> :
+                      </div>
+                    ) : (
                       <Placeholder type='other' />
-                    }
+                    )}
                   </div>
                 </div>
               </div>
@@ -390,7 +375,7 @@ const Networth = () => {
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-r'>
-                    {Object.keys(accounts).includes('Liabilities') ?
+                    {Object.keys(accounts).includes('Liabilities') ? (
                       <div className='table-holder'>
                         <Table className='tb-responsive' id='table-liabilities-xls'>
                           <thead onClick={toggleLiabilities}>
@@ -419,7 +404,8 @@ const Networth = () => {
                                         className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
                                       >
                                         <span className={gc(b.interval)}>{b.interval}</span>
-                                        {currencySymbol}{numberWithCommas(fNumber(b.balance, 2))}
+                                        {currencySymbol}
+                                        {numberWithCommas(fNumber(b.balance, 2))}
                                       </td>
                                     ))}
                                   </tr>
@@ -434,18 +420,22 @@ const Networth = () => {
                               {networth?.map((nItem, idx) => (
                                 <td
                                   key={idx}
-                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
+                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
+                                    ' '
+                                  )}
                                 >
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}{numberWithCommas(fNumber(nItem.liabilities, 2))}
+                                  {currencySymbol}
+                                  {numberWithCommas(fNumber(nItem.liabilities, 2))}
                                 </td>
                               ))}
                             </tr>
                           </tfoot>
                         </Table>
-                      </div> :
+                      </div>
+                    ) : (
                       <Placeholder type='liabilities' />
-                    }
+                    )}
                   </div>
                 </div>
               </div>
@@ -454,14 +444,15 @@ const Networth = () => {
               <div className='row mb-40'>
                 <div className='col-12'>
                   <div className='ct-box box-v'>
-                    {Object.keys(accounts).length !== 0 ?
-
+                    {Object.keys(accounts).length !== 0 ? (
                       <div className='table-holder'>
                         <Table className='tb-responsive' id='table-net-xls'>
                           <thead onClick={toggleNet}>
                             <tr>
                               <th>
-                                <span className={!fToggleNet ? 't-span text--primary' : 'text--primary'}>Net Worth</span>
+                                <span className={!fToggleNet ? 't-span text--primary' : 'text--primary'}>
+                                  Net Worth
+                                </span>
                               </th>
                               <th className='tab-hide'>{''}</th>
                               {networth?.map((nItem, idx) => (
@@ -484,7 +475,8 @@ const Networth = () => {
                                     )}
                                   >
                                     <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                    {currencySymbol}{numberWithCommas(fNumber(nItem.investmentAssets, 2))}
+                                    {currencySymbol}
+                                    {numberWithCommas(fNumber(nItem.investmentAssets, 2))}
                                   </td>
                                 ))}
                               </tr>
@@ -500,7 +492,8 @@ const Networth = () => {
                                     )}
                                   >
                                     <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                    {currencySymbol}{numberWithCommas(fNumber(nItem.otherAssets, 2))}
+                                    {currencySymbol}
+                                    {numberWithCommas(fNumber(nItem.otherAssets, 2))}
                                   </td>
                                 ))}
                               </tr>
@@ -516,7 +509,8 @@ const Networth = () => {
                                     )}
                                   >
                                     <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                    {currencySymbol}{numberWithCommas(fNumber(nItem.liabilities, 2))}
+                                    {currencySymbol}
+                                    {numberWithCommas(fNumber(nItem.liabilities, 2))}
                                   </td>
                                 ))}
                               </tr>
@@ -529,18 +523,22 @@ const Networth = () => {
                               {networth?.map((nItem, idx) => (
                                 <td
                                   key={idx}
-                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(' ')}
+                                  className={[nItem.type === `projection` && `projection`, gc(nItem.interval)].join(
+                                    ' '
+                                  )}
                                 >
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}{numberWithCommas(fNumber(nItem.networth || 0, 2))}
+                                  {currencySymbol}
+                                  {numberWithCommas(fNumber(nItem.networth || 0, 2))}
                                 </td>
                               ))}
                             </tr>
                           </tfoot>
                         </Table>
-                      </div> :
+                      </div>
+                    ) : (
                       <Placeholder type='networth' />
-                    }
+                    )}
                   </div>
                 </div>
               </div>
