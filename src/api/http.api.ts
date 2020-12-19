@@ -11,7 +11,7 @@ import { withError, withData, wait } from 'common/common-helper';
 import { urls } from './api.url';
 import { logger } from 'common/logger.helper';
 
-const MAX_TRIES = 4;
+const MAX_TRIES = 7;
 const currentRetries: Record<string, number> = {};
 
 const axiosInstance = axios.create({
@@ -54,7 +54,7 @@ axiosInstance.interceptors.response.use(
     logger.gpEnd();
 
     const retry = async () => {
-      await wait(2000);
+      await wait(5000);
 
       return axiosInstance(config);
     };
