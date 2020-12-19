@@ -30,11 +30,11 @@ import {
   AccountDialogBoxProps,
   SubscriptionConnectionWarningProps,
 } from 'setting/setting.type';
-import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
-import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
-import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { useModal } from 'common/components/modal';
 import useAnalytics from 'common/hooks/useAnalytics';
+import { FastLinkOptionsType } from 'yodlee/yodlee.type';
+import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
+import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 
 export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag = false }) => {
   const history = useHistory();
