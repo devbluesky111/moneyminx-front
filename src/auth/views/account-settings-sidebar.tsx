@@ -5,6 +5,7 @@ import React, { createRef, useCallback, useEffect, useState } from 'react';
 import { Dictionary } from 'lodash';
 import { Account } from 'auth/auth.types';
 import { groupByProviderName } from 'auth/auth.helper';
+import useSearchParam from 'auth/hooks/useSearchParam';
 import { fetchConnectionInfo } from 'auth/auth.service';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
 import { useAuthState, useAuthDispatch } from 'auth/auth.context';
@@ -30,13 +31,23 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
   const [currentProviderAccounts, setCurrentProviderAccounts] = useState<Account[]>([]);
   const [accountsByProviderName, setAccountsByProviderName] = useState<Dictionary<Account[]>>({});
 
-  useEffect(() => {
-    const getUser = async () => {
-      await fetchConnectionInfo({ dispatch });
-    };
+  const from = useSearchParam('from');
+  const isFromFastlink = from === 'fastLink';
 
-    getUser();
-  }, [dispatch, reloadCounter]);
+  /**
+   * @description we will avoid the fetch connection info call
+   * @if from fastlink and if initial value
+   * i.e reload counter will be 0
+   */
+  useEffect(() => {
+    if (!isFromFastlink || reloadCounter) {
+      const getUser = async () => {
+        await fetchConnectionInfo({ dispatch });
+      };
+
+      getUser();
+    }
+  }, [dispatch, reloadCounter, isFromFastlink]);
 
   /**
    * if accounts

@@ -138,6 +138,7 @@ const AccountDetail: React.FC = () => {
       return mmToast('Error occurred on fetching refreshed account', { type: 'error' });
     }
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
+    location.search = 'from=fastLink';
 
     return history.push(location);
   };
