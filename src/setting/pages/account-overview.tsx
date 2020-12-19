@@ -44,14 +44,15 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
   const { fetchingCurrentSubscription, currentSubscription } = useCurrentSubscription();
   const { fetchingSubscription, subscription } = useGetSubscription(currentSubscription?.priceId);
 
+  const accountLength = accounts.length;
   useEffect(() => {
-    if (!accounts.length) {
+    if (!accountLength) {
       const getUser = async () => {
         await fetchConnectionInfo({ dispatch });
       };
       getUser();
     }
-  }, [accounts, dispatch]);
+  }, [accountLength, dispatch]);
 
   const loading = fetchingCurrentSubscription || fetchingSubscription;
 

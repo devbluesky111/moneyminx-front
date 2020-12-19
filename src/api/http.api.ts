@@ -9,6 +9,7 @@ import { appRouteConstants } from 'app/app-route.constant';
 import { withError, withData, wait } from 'common/common-helper';
 
 import { urls } from './api.url';
+import { logger } from 'common/logger.helper';
 
 const MAX_TRIES = 4;
 const currentRetries: Record<string, number> = {};
@@ -47,6 +48,11 @@ axiosInstance.interceptors.response.use(
     const url = config.url;
     const status = response.status;
 
+    logger.gp('Axios Response');
+    logger.log('Axios response ', response);
+    logger.log('Axios config', config);
+    logger.gpEnd();
+
     const retry = async () => {
       await wait(2000);
 
@@ -54,6 +60,7 @@ axiosInstance.interceptors.response.use(
     };
 
     if (urls.auth.ACCOUNT_REFRESH === url && STATUS_CODE.SERVER_ACCEPTED === status) {
+      logger.log('url', url);
       currentRetries[url] = currentRetries[url] ? currentRetries[url] + 1 : 1;
       if (currentRetries[url] <= MAX_TRIES) {
         return retry();

@@ -16,12 +16,13 @@ export const logger = {
       return console.log(`___${msg}___`);
     }
   },
-  group(data: any[], msg?: string) {
+  gp(title?: string) {
     if (this.isDev()) {
-      console.group(msg);
-      data.forEach((el) => {
-        this.log('', el);
-      });
+      console.group(title);
+    }
+  },
+  gpEnd() {
+    if (this.isDev()) {
       console.groupEnd();
     }
   },
