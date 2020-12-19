@@ -7,6 +7,7 @@ import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
 import { logger } from 'common/logger.helper';
 import { AuthLayout } from 'layouts/auth.layout';
+import useAccounts from 'auth/hooks/useAccounts';
 import MMToolTip from 'common/components/tooltip';
 import LoadingScreen from 'common/loading-screen';
 import FastLinkModal from 'yodlee/fast-link.modal';
@@ -58,6 +59,7 @@ export const ConnectAccountMainSection = () => {
   const [manualLoading, setManualLoading] = useState<boolean>(false);
   const dispatch = useAuthDispatch();
   const [loading, setLoading] = useState(false);
+  const { loading: accountFetching, fetchNewAccounts } = useAccounts();
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -166,6 +168,7 @@ export const ConnectAccountMainSection = () => {
 
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
+    await fetchNewAccounts();
     setLoading(false);
 
     if (error) {
@@ -175,7 +178,7 @@ export const ConnectAccountMainSection = () => {
     return history.push(location);
   };
 
-  if (loading) {
+  if (loading || accountFetching) {
     return <LoadingScreen />;
   }
 

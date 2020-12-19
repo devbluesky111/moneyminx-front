@@ -29,6 +29,7 @@ import {
   AccountDialogBoxProps,
   SubscriptionConnectionWarningProps,
 } from 'setting/setting.type';
+import useAccounts from 'auth/hooks/useAccounts';
 import LoadingScreen from 'common/loading-screen';
 import { useModal } from 'common/components/modal';
 import useAnalytics from 'common/hooks/useAnalytics';
@@ -216,6 +217,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   });
   const fastlinkModal = useModal();
   const [loading, setLoading] = useState(false);
+  const { fetchNewAccounts, loading: fetchingNewAccounts } = useAccounts();
 
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
@@ -224,6 +226,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
+    await fetchNewAccounts();
     setLoading(false);
 
     if (error) {
@@ -305,7 +308,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     return 'mm-account-overview__error';
   };
 
-  if (loading) {
+  if (loading || fetchingNewAccounts) {
     return <LoadingScreen />;
   }
 

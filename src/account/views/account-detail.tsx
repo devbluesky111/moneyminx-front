@@ -11,6 +11,7 @@ import AppHeader from 'common/app.header';
 import AppSidebar from 'common/app.sidebar';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
+import useAccounts from 'auth/hooks/useAccounts';
 import MMToolTip from 'common/components/tooltip';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
@@ -84,6 +85,7 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
+  const { fetchNewAccounts } = useAccounts();
 
   useEffect(() => {
     const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
@@ -130,6 +132,7 @@ const AccountDetail: React.FC = () => {
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
+    await fetchNewAccounts();
     setLoading(false);
 
     if (error) {

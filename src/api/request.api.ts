@@ -231,3 +231,7 @@ export const postUploadChart = <D>(data: D): TApiResponse => {
 export const patchCompleteProfile = (): TApiResponse => {
   return http.patch(urls.auth.COMPLETE_PROFILE);
 };
+
+export const getNewAccounts = (): TApiResponse => {
+  return http.get(urls.auth.NEW_ACCOUNTS);
+};
