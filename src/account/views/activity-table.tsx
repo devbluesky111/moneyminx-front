@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { formater } from 'common/common-helper';
 import { useModal } from 'common/components/modal';
 import { getActivityDetails } from 'api/request.api';
+import { getDateFormattedString } from 'common/moment.helper';
 import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { ReactComponent as Edited } from 'assets/icons/icon-edit.svg';
@@ -67,7 +68,7 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
                   <div className='col-4 col-md mm-activity-table__body--data'>
                     {' '}
                     <span className='d-block d-md-none'>Date</span>
-                    {item.date}
+                    {getDateFormattedString(item.date)}
                   </div>
                   <div className='col-4 col-md mm-activity-table__body--data'>
                     {' '}

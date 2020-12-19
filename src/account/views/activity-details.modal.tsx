@@ -4,13 +4,14 @@ import React, { useEffect, useState } from 'react';
 
 import moment from 'moment';
 import { Formik } from 'formik';
+
 import useToast from 'common/hooks/useToast';
 import { Modal } from 'common/components/modal';
-import { getDateFormattedString } from 'common/moment.helper';
 import { ActivityDetailsModalProps } from 'account/account.type';
+import { numberWithCommas, fNumber } from 'common/number.helper';
 import { SelectInput } from 'common/components/input/select.input';
+import { getDateFormattedString, getMomentDate } from 'common/moment.helper';
 import { getActivityTypes, patchTransaction, postTransaction } from 'api/request.api';
-import { numberWithCommas, fNumber } from '../../common/number.helper';
 
 const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
   accountId,
@@ -43,7 +44,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
     <Formik
       enableReinitialize
       initialValues={{
-        date: activityDetails && activityDetails.date ? new Date(activityDetails.date) : new Date(),
+        date: activityDetails && activityDetails.date ? getMomentDate(activityDetails.date) : getMomentDate(),
         type: activityDetails?.type || '',
         description: activityDetails?.description || '',
         amount: activityDetails?.amount || 0,
