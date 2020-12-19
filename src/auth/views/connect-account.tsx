@@ -4,23 +4,24 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import appEnv from 'app/app.env';
 import useToast from 'common/hooks/useToast';
-import UpgradeAccountModal from 'common/upgrade-account.modal';
 import { events } from '@mm/data/event-list';
 import { logger } from 'common/logger.helper';
 import { AuthLayout } from 'layouts/auth.layout';
-import { getAccount, getCurrentSubscription, getFastlink, getSubscription } from 'api/request.api';
-import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
+import LoadingScreen from 'common/loading-screen';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
 import useAnalytics from 'common/hooks/useAnalytics';
+import { getRefreshedAccount } from 'auth/auth.service';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { appRouteConstants } from 'app/app-route.constant';
+import UpgradeAccountModal from 'common/upgrade-account.modal';
+import { pricingDetailConstant } from 'common/common.constant';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { ReactComponent as LogoImg } from 'assets/icons/logo.svg';
-// import { ReactComponent as ZillowIcon } from 'assets/images/signup/zillow.svg';
 import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.svg';
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
-import { pricingDetailConstant } from 'common/common.constant';
+import { getAccount, getCurrentSubscription, getFastlink, getSubscription } from 'api/request.api';
 
 import ConnectAccountSteps from './inc/connect-steps';
 import ManualAccountModal from './inc/manual-account.modal';
@@ -55,6 +56,8 @@ export const ConnectAccountMainSection = () => {
   const upgradeAccountModal = useModal();
   const [autoLoading, setAutoLoading] = useState<boolean>(false);
   const [manualLoading, setManualLoading] = useState<boolean>(false);
+  const dispatch = useAuthDispatch();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const initializeZabo = async () => {
@@ -157,12 +160,24 @@ export const ConnectAccountMainSection = () => {
       });
   };
 
-  const handleConnectAccountSuccess = () => {
+  const handleConnectAccountSuccess = async () => {
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
     logger.log('fastlink onsuccess location', location);
 
+    setLoading(true);
+    const { error } = await getRefreshedAccount({ dispatch });
+    setLoading(false);
+
+    if (error) {
+      mmToast('Error Occurred on Fetching user Details', { type: 'error' });
+    }
+
     return history.push(location);
   };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className='main-table-wrapper'>

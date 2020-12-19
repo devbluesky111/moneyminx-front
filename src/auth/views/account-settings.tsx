@@ -8,8 +8,8 @@ import { ReactComponent as LoginLockIcon } from 'assets/images/login/lock-icon.s
 import { ReactComponent as LoginShieldIcon } from 'assets/images/login/shield-icon.svg';
 
 import ConnectAccountSteps from './inc/connect-steps';
-import AccountSettingsSideBar from './account-settings-sidebar';
 import { patchCompleteProfile } from 'api/request.api';
+import AccountSettingsSideBar from './account-settings-sidebar';
 
 const AccountSettings = () => {
   const history = useHistory();

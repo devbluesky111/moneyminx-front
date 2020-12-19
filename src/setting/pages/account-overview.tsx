@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import CircularSpinner from 'common/components/spinner/circular-spinner';
-import DefaultAvatar from 'assets/icons/default-avatar.svg';
-import FastLinkModal from 'yodlee/fast-link.modal';
-import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
-import useGetSubscription from 'auth/hooks/useGetSubscription';
-import useToast from 'common/hooks/useToast';
 import { Account } from 'auth/auth.types';
+import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
-import { groupByProviderName } from 'auth/auth.helper';
-import { deleteAccounts, deleteAccountById, fetchConnectionInfo } from 'auth/auth.service';
-import { appRouteConstants } from 'app/app-route.constant';
-import { getRelativeDate } from 'common/moment.helper';
+import FastLinkModal from 'yodlee/fast-link.modal';
 import { getFastlinkUpdate } from 'api/request.api';
+import { groupByProviderName } from 'auth/auth.helper';
+import { getRelativeDate } from 'common/moment.helper';
+import { appRouteConstants } from 'app/app-route.constant';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
+import useGetSubscription from 'auth/hooks/useGetSubscription';
 import { pricingDetailConstant } from 'common/common.constant';
-import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-/*import { ReactComponent as Refresh } from 'assets/icons/refresh.svg';*/
-import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import { ReactComponent as IconEdit } from 'assets/icons/icon-edit.svg';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 import { ReactComponent as DefaultProviderLogo } from 'assets/icons/mm-default-provider.svg';
+import { deleteAccounts, deleteAccountById, fetchConnectionInfo, getRefreshedAccount } from 'auth/auth.service';
 
 import {
   AccountRowProps,
@@ -30,12 +29,13 @@ import {
   AccountDialogBoxProps,
   SubscriptionConnectionWarningProps,
 } from 'setting/setting.type';
+import LoadingScreen from 'common/loading-screen';
 import { useModal } from 'common/components/modal';
 import useAnalytics from 'common/hooks/useAnalytics';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
+import { Placeholder } from 'networth/views/inc/placeholder';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
-import { Placeholder } from '../../networth/views/inc/placeholder';
 
 export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag = false }) => {
   const history = useHistory();
@@ -214,12 +214,21 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     token: { tokenType: 'AccessToken', tokenValue: '' },
     config: { flow: '', configName: 'Aggregation', providerAccountId: 0 },
   });
+  const fastlinkModal = useModal();
+  const [loading, setLoading] = useState(false);
+
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
-  const fastlinkModal = useModal();
 
-  const handleConnectAccountSuccess = () => {
+  const handleConnectAccountSuccess = async () => {
     location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
+    setLoading(true);
+    const { error } = await getRefreshedAccount({ dispatch });
+    setLoading(false);
+
+    if (error) {
+      mmToast('Error Occurred on Fetching user Details', { type: 'error' });
+    }
 
     return history.push(location);
   };
@@ -295,6 +304,10 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     }
     return 'mm-account-overview__error';
   };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
