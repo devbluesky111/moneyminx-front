@@ -369,7 +369,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                 )}
 
                 <div className={['row pb-2 pt-1 align-items-center', status === 'error' ? 'pt-4' : ''].join(' ')}>
-                  <div className='col-10 col-md-6'>
+                  <div className='col-10 col-md-7'>
                     <div>
                       <img
                         src={group.accounts[0].providerLogo || DefaultAvatar}
@@ -383,7 +383,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                         <div className='col-2 col-md-1 order-md-2 text-right'>
                           <Refresh />
                         </div>*/}
-                  <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
+                  <div className='col-12 col-md-5 order-md-1 text-md-right pt-2 pt-md-0'>
                     <small className='text-gray'>
                       Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}
                     </small>

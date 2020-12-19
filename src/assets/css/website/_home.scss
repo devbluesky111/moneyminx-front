@@ -1205,10 +1205,14 @@ button.bg-primary:focus {
 
   h2 {
     color: $black;
-    font-size: 3.5rem;
+    font-size: 2.25rem;
     padding-bottom: 1.3rem;
     font-weight: 300;
     line-height: 106%;
+
+    @media (min-width: $md) {
+      font-size: 3.5rem;
+    }
   }
 
   a h2 {

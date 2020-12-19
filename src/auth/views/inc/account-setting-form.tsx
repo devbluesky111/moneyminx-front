@@ -153,6 +153,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           currency: currentFormFields?.currency || CurrencyOptions.USD,
           mmCategory: accountCategory || currentAccount?.category?.mmCategory || '',
           accountName: currentAccount?.accountName || '',
+          accountNumber: currentAccount?.accountNumber || '',
           city: currentFormFields?.city || '',
           state: currentFormFields?.state || '',
           mmAccountType: accountType || '',
@@ -177,7 +178,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           currentValuation: currentFormFields?.currentValuation || '',
           termForInvestment: currentFormFields?.termForInvestment || '',
           businessStartDate: getInitialDate('businessStartDate'),
-
           employerMatchLimit: currentFormFields?.employerMatchLimit || '',
           associatedMortgage: currentFormFields?.associatedMortgage || '',
           calculateReturnsOn: currentFormFields?.calculateReturnsOn || 'equity',
@@ -298,6 +298,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 name='accountName'
                 placeholder='Sapphire Credit Card'
               />
+              <div className='d-flex align-items-center justify-content-between'>
+                <p>Last 4 Account Number</p>
+                <p>x{values.accountNumber.slice(4)}</p>
+              </div>
               <div className='account-category'>
                 <span className='form-subheading'>
                   Account Category
