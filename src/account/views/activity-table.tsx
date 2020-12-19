@@ -78,10 +78,10 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
                   <div className='col-4 col-md mm-activity-table__body--data d-none d-xl-block'>{item.description}</div>
                   <div className='col-4 col-md mm-activity-table__body--data'> 
                     <span className='d-block d-md-none'>Amount</span>
-                    {currencySymbol}{item.amount !== null ? `${numberWithCommas(fNumber(item.amount, 0))}` : ''}
+                    {currencySymbol}{item.amount !== null ? `${numberWithCommas(fNumber(item.amount, 2))}` : ''}
                   </div>
                   <div className='col-4 col-md mm-activity-table__body--data'> 
-                    <span className='d-block d-md-none'>Balance</span>{currencySymbol}{item.balance !== null ? `${numberWithCommas(fNumber(item.balance, 0))}` : ''}
+                    <span className='d-block d-md-none'>Balance</span>{item.balance !== null ? `${currencySymbol}${numberWithCommas(fNumber(item.balance, 2))}` : ''}
                   </div>
                   <div className='col-4 col-md mm-activity-table__body--data'> 
                     <span className='d-block d-md-none'>Income</span>{item.income ? 'Yes' : 'No'}
