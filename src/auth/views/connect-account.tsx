@@ -27,8 +27,6 @@ import { getAccount, getCurrentSubscription, getFastlink, getSubscription } from
 
 import ConnectAccountSteps from './inc/connect-steps';
 import ManualAccountModal from './inc/manual-account.modal';
-import AppHeader from '../../common/app.header';
-import AppSidebar from '../../common/app.sidebar';
 
 const config = {
   clientId: appEnv.ZABO_CONFIGURATION.ZABO_CLIENT_ID,
