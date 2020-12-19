@@ -4,9 +4,22 @@ import moment from 'moment';
  *
  * @param inputDate
  * used just for parsing not calculation please
+ * @if the date is in invalid format then it might cause problem with parsing
  */
 export const getMonthYear = (inputDate?: any) => {
+  if (inputDate && hasMonthYear(inputDate)) {
+    return moment(inputDate, 'MMM YYYY').format('MMM YYYY');
+  }
+
   return moment(inputDate).format('MMM YYYY');
+};
+
+export const hasMonthYear = (input: any) => {
+  if (2 === input.toString().split(' ').length) {
+    return true;
+  }
+
+  return false;
 };
 
 export const parseDateFromString = (dateString: string) => {
@@ -15,8 +28,8 @@ export const parseDateFromString = (dateString: string) => {
 
     return qDate;
   }
-
   const myDate = moment(dateString, 'MMM YYYY').toDate();
+
   return myDate;
 };
 
@@ -50,7 +63,11 @@ export const getDateFormatedString = <T>(inputDate?: T) => moment(inputDate).for
 
 export const getUTC = <T>(inputDate?: T) => moment.utc(inputDate).toDate();
 
-export const getRelativeDate = (inputDate: string) => moment.utc(inputDate).fromNow();
+export const getRelativeDate = (inputDate: string) => {
+  const rDate = moment.utc(inputDate).fromNow();
+
+  return rDate;
+};
 
 export const getISOString = <T>(inputDate: T) => moment(inputDate).toISOString();
 
@@ -60,7 +77,10 @@ export const isBefore = <T, D>(inputDate: T, valDate?: D) => moment.utc(inputDat
 
 export const getDate = <T>(inputDate: T) => new Date(moment.utc(inputDate).format('yyyy-MM-DD')).toISOString();
 
-export const getQuarter = <T>(inputDate?: T) => moment.utc(inputDate).format('[Q]Q yyyy');
+export const getQuarter = <T>(inputDate?: T) => {
+  const qDate = moment.utc(inputDate).format('[Q]Q yyyy');
+  return qDate;
+};
 
 export const getYear = <T>(inputDate?: T) => moment.utc(inputDate).format('yyyy');
 
