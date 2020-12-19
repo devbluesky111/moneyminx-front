@@ -21,7 +21,7 @@ export const urls = {
     ASSOCIATE_LOGIN: '/facebook/associate',
     RESET_PASSWORD: '/profile/password/reset',
     LOAN_ACCOUNT: '/account/me/loan-accounts',
-    COMPLETE_PROFILE: '/account​/me​/complete',
+    COMPLETE_PROFILE: '/account/me/complete',
     ACCOUNT_REFRESH: '/account/me?refresh=true',
     FORGOT_PASSWORD: '/profile/password/forgot',
     ACCOUNT_HOLDINGS: '/account-details/holdings',

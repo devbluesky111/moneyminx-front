@@ -23,9 +23,10 @@ const AccountSettings = () => {
   const isFromNetworth = action === 'addMoreAccount';
 
   const skipAccountSettings = async () => {
-    await patchCompleteProfile();
-
-    return navigateToNetworth();
+    const { error } = await patchCompleteProfile();
+    if (!error) {
+      return navigateToNetworth();
+    }
   };
 
   const navigateToNetworth = () => {

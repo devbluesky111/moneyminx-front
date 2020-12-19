@@ -117,7 +117,9 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
           return setCurrentProviderAccounts(accountsByProviderName[nextProviderName]);
         }
 
-        return setFinish?.();
+        if (currentProviderAccounts.length) {
+          return setFinish?.();
+        }
       }
     }
   }, [currentProviderAccounts, accountsByProviderName, clickEvent, setFinish]);
