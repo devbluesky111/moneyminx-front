@@ -46,10 +46,10 @@ const ConnectAccount = () => {
     <AuthLayout>
       {onboarded ?
         <AppHeader
-          toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
-          toggleRightMenu={() => setOpenRightNav(!openRightNav)}
-          open={openRightNav}
-        /> : null}
+        toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
+        toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+        open={openRightNav}
+      /> : null}
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
       <ConnectAccountMainSection />
