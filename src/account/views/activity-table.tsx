@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
-import { fNumber, numberWithCommas } from 'common/number.helper';
 import { formater } from 'common/common-helper';
-import { getActivityDetails } from 'api/request.api';
 import { useModal } from 'common/components/modal';
+import { getActivityDetails } from 'api/request.api';
+import { getDateFormattedString } from 'common/moment.helper';
+import { ReactComponent as Info } from 'assets/icons/info.svg';
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import { ReactComponent as Edited } from 'assets/icons/icon-edit.svg';
 
 import ActivityDetailsModal from './activity-details.modal';
 import { AccountTransactionTableProps, AccountTransactionItem } from '../account.type';
-import { ReactComponent as Info } from '../../assets/icons/info.svg';
-// import { ReactComponent as Revert } from '../../assets/icons/revert.svg';
-import { ReactComponent as Edited } from '../../assets/icons/icon-edit.svg';
 
-export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transactionsData, openEditActivityModalFun, closeEditActivityModalFun, currencySymbol }) => {
-
+export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
+  transactionsData,
+  openEditActivityModalFun,
+  closeEditActivityModalFun,
+  currencySymbol,
+}) => {
   const [transactions, setTransactions] = useState<AccountTransactionItem[]>([]);
   const [activityDetails, setActivityDetails] = useState<AccountTransactionItem>();
 
@@ -33,7 +37,7 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
     await fetchActivityDetails(activityId.toString());
     activityDetailsModal.open();
     openEditActivityModalFun();
-  }
+  };
 
   return (
     <section>
@@ -49,19 +53,42 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
                 <div className='col-md mm-activity-table__head--data d-md-block'>Balance</div>
                 <div className='col-md mm-activity-table__head--data d-md-block'>Income</div>
                 <div className='col-md mm-activity-table__head--data d-md-block'>Cash Flow</div>
-                <div className='col-md-1 mm-activity-table__head--data d-md-block'><Info /></div>
+                <div className='col-md-1 mm-activity-table__head--data d-md-block'>
+                  <Info />
+                </div>
               </div>
             </div>
             <div className='mm-activity-table__body'>
               {transactions.map((item, index) => (
-                <div className='row no-gutters mm-activity-table__body--wrapper' key={index} onClick={() => openEditActivityModal(item.id)}>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Date</span>{item.date}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Activity Type</span>{formater(item.type)}</div>
+                <div
+                  className='row no-gutters mm-activity-table__body--wrapper'
+                  key={index}
+                  onClick={() => openEditActivityModal(item.id)}
+                >
+                  <div className='col-4 col-md mm-activity-table__body--data'>
+                    {' '}
+                    <span className='d-block d-md-none'>Date</span>
+                    {getDateFormattedString(item.date)}
+                  </div>
+                  <div className='col-4 col-md mm-activity-table__body--data'>
+                    {' '}
+                    <span className='d-block d-md-none'>Activity Type</span>
+                    {formater(item.type)}
+                  </div>
                   <div className='col-4 col-md mm-activity-table__body--data d-none d-xl-block'>{item.description}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Amount</span>{currencySymbol}{item.amount !== null ? `${numberWithCommas(fNumber(item.amount, 0))}` : ''}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Balance</span>{currencySymbol}{item.balance !== null ? `${numberWithCommas(fNumber(item.balance, 0))}` : ''}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Income</span>{item.income ? 'Yes' : 'No'}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> <span className='d-block d-md-none'>Cash Flow</span>{item.cashFlow ? 'Yes' : 'No'}</div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> 
+                    <span className='d-block d-md-none'>Amount</span>
+                    {currencySymbol}{item.amount !== null ? `${numberWithCommas(fNumber(item.amount, 0))}` : ''}
+                  </div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> 
+                    <span className='d-block d-md-none'>Balance</span>{currencySymbol}{item.balance !== null ? `${numberWithCommas(fNumber(item.balance, 0))}` : ''}
+                  </div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> 
+                    <span className='d-block d-md-none'>Income</span>{item.income ? 'Yes' : 'No'}
+                  </div>
+                  <div className='col-4 col-md mm-activity-table__body--data'> 
+                    <span className='d-block d-md-none'>Cash Flow</span>{item.cashFlow ? 'Yes' : 'No'}
+                  </div>
                   <div className='col-4 col-md-1 mm-activity-table__body--data'>
                     {item.updatedAt && <Edited className='mm-activity-table__body--data-edited d-none d-xl-inline' />}
                     {/* <Revert /> */}
@@ -71,8 +98,17 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({ transact
             </div>
           </div>
         </div>
-      ) : (<span className='no-data'>No transactions found</span>)}
-      {activityDetails && <ActivityDetailsModal activityDetailsModal={activityDetailsModal} activityDetails={activityDetails} closeEditActivityModal={closeEditActivityModalFun} currencySymbol={currencySymbol} />}
+      ) : (
+        <span className='no-data'>No transactions found</span>
+      )}
+      {activityDetails && (
+        <ActivityDetailsModal
+          activityDetailsModal={activityDetailsModal}
+          activityDetails={activityDetails}
+          closeEditActivityModal={closeEditActivityModalFun}
+          currencySymbol={currencySymbol}
+        />
+      )}
     </section>
   );
 };
