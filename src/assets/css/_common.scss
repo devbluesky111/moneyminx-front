@@ -109,6 +109,11 @@ textarea.form-control {
   &:disabled {
     opacity: 0.7;
   }
+  &.plus-btn {
+    height: 38px;
+    width: 80px;
+    font-size: 0.875rem;
+  }
 }
 .btn-danger {
 
