@@ -131,9 +131,9 @@ export const CreateNewPasswordMainSection = () => {
 
           <div className='bg-white credentials-wrapper'>
             <div className='credentials-content'>
-              <div className='logo-img-wrapper'>
+              <Link to='/' className='logo-img-wrapper'>
                 <LogoImg className='auth-logo' />
-              </div>
+              </Link>
               <h2>Create new Password</h2>
               <p>One last step. Enter a new password below and you should be good to go.</p>
               <Formik

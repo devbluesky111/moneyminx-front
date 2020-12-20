@@ -72,9 +72,9 @@ export const ForgotPasswordMainSection = () => {
 
           <div className='bg-white credentials-wrapper'>
             <div className='credentials-content'>
-              <div className='logo-img-wrapper'>
+              <Link to='/' className='logo-img-wrapper'>
                 <LogoImg className='auth-logo' />
-              </div>
+              </Link>
               <h2>Forgot Password?</h2>
               <p>Can’t log in? No worries, enter your email below and we will send you a password reset link.</p>
 

@@ -232,9 +232,9 @@ export const ConnectAccountMainSection = () => {
           </div>
           <div className='bg-white credentials-wrapper connect-wrap'>
             <div className='credentials-content connect-account'>
-              <div className='logo-img-wrapper'>
+              <Link to='/net-worth' className='logo-img-wrapper'>
                 <LogoImg className='auth-logo' />
-              </div>
+              </Link>
               <h2>Connect accounts</h2>
               <p>
                 We partnered with financial technology industry veterans, to facilitate aggregation of your accounts.

@@ -101,7 +101,6 @@ export const LoginMainSection = () => {
               <Link to='/'>
                 <LogoImg className='icon auth-logo' />
               </Link>
-
               <div className='auth-left-content'>
                 <h1>Three easy steps to get started with Money Minx</h1>
                 <ul>
@@ -130,9 +129,9 @@ export const LoginMainSection = () => {
 
             <div className='bg-white credentials-wrapper'>
               <div className='credentials-content'>
-                <div className='logo-img-wrapper'>
+                <Link to='/' className='logo-img-wrapper'>
                   <LogoImg className='auth-logo' />
-                </div>
+                </Link>
                 <h2>Welcome back</h2>
                 <p>Your accounts are ready for you. Hope you will reach your goals</p>
                 <div className={isLoggedOut ? 'session-expired' : 'session-expired hide-me'}>
