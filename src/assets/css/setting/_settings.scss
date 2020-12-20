@@ -158,8 +158,8 @@
     &:disabled {
       cursor: not-allowed;
       background: none;
-      color: $gray;
-      border: 1.5px solid $gray;
+      color: $grayText;
+      border: 1.5px solid $grayText;
     }
 
     @media (max-width: $md - 1) {
