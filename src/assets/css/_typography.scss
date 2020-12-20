@@ -33,6 +33,10 @@
     line-height: 1.4375rem;
     margin: auto;
   }
+
+  &.text-on-darkBG {
+    color: $purpleTextLight;
+  }
 }
 
 .highlighted-text-light {

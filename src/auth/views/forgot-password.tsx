@@ -101,7 +101,11 @@ export const ForgotPasswordMainSection = () => {
                     <form onSubmit={props.handleSubmit}>
                       <div className='align-items-start input-wrapper'>
                         <div className='email-wrap'>
+                          <label htmlFor='email-field' className='form-subheading'>
+                            Email address
+                          </label>
                           <input
+                            id='email-field'
                             type='text'
                             className='email'
                             name='email'
