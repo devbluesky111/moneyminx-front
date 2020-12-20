@@ -140,38 +140,38 @@ const Networth = () => {
                       <ul>
                         {(fCategories.length === 0 || fCategories.length === 3) && (
                           <li className='nw-data'>
-                            <span>Net Worth</span>
-                            <h3>
+                            <span className='graphbox-label'>Net Worth</span>
+                            <span className='graphbox-amount'>
                               {currencySymbol}
                               {numberWithCommas(fNumber(currentNetworth, 0))}
-                            </h3>
+                            </span>
                           </li>
                         )}
                         {(fCategories.length === 0 || fCategories.includes('Investment Assets')) && (
                           <li className='inv-data'>
-                            <span>Investment Assets</span>
-                            <h3>
+                            <span className='graphbox-label'>Investment Assets</span>
+                            <span className='graphbox-amount'>
                               {currencySymbol}
                               {numberWithCommas(fNumber(currentInvestmentAsset, 0))}
-                            </h3>
+                            </span>
                           </li>
                         )}
                         {(fCategories.length === 0 || fCategories.includes('Other Assets')) && (
                           <li className='other-data'>
-                            <span>Other Assets</span>
-                            <h3>
+                            <span className='graphbox-label'>Other Assets</span>
+                            <span className='graphbox-amount'>
                               {currencySymbol}
                               {numberWithCommas(fNumber(currentOtherAssets, 0))}
-                            </h3>
+                            </span>
                           </li>
                         )}
                         {(fCategories.length === 0 || fCategories.includes('Liabilities')) && (
                           <li className='lty-data'>
-                            <span>Liabilities</span>
-                            <h3>
+                            <span className='graphbox-label'>Liabilities</span>
+                            <span className='graphbox-amount'>
                               {currencySymbol}
                               {numberWithCommas(fNumber(currentLiabilities, 0))}
-                            </h3>
+                            </span>
                           </li>
                         )}
                       </ul>
@@ -192,9 +192,9 @@ const Networth = () => {
               <div className='col-lg-3 mob-btm'>
                 <div className='ct-box padd-20'>
                   <div className='measure-box'>
-                    <h2>
+                    <h1>
                       <img src={MeasureIcon} alt='Measure UP' /> Minx Measure-up
-                    </h2>
+                    </h1>
                     <div
                       className='bgbox'
                       style={{

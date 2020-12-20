@@ -37,7 +37,7 @@ textarea.form-control {
 }
 
 .link-gray {
-  color: $gray;
+  color: $grayText;
 
   &:hover {
     color: $darkGray;
@@ -170,7 +170,7 @@ textarea.form-control {
 
 .drop-box.dropdown {
   border-radius: 4px;
-  color: $gray;
+  color: $grayText;
 
   &:hover,
   &:focus,
