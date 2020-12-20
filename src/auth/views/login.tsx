@@ -274,11 +274,12 @@ export const LoginMainSection = () => {
 
                   <div className='facebook-login'>
                     <div className='social-login-options'>
-                      <span>Or, log in with:</span>
+                      <span id='social-logins'>Or, log in with:</span>
                       <div className='fb-icon-wrap'>
                         <FacebookLogin
                           authType='rerequest'
-                          arial-label='Login with Facebook'
+                          aria-label='Login with Facebook'
+                          aria-labelledby='social-logins'
                           textButton=''
                           fields='email'
                           isMobile={false}
