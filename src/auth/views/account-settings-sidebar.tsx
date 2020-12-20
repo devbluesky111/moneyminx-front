@@ -88,9 +88,9 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
         return setCurrentAccount(firstNonOverriddenAccount);
       }
 
-      if (curProviderAccounts) {
-        return setCurrentAccount(curProviderAccounts[0]);
-      }
+      // if (curProviderAccounts) {
+      //   return setCurrentAccount(curProviderAccounts[0]);
+      // }
     }
   }, [providerName, accountsByProviderName]);
 

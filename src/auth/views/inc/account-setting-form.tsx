@@ -3,10 +3,11 @@ import { Formik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import useToast from 'common/hooks/useToast';
 import { MMCategories } from 'auth/auth.enum';
+import { logger } from 'common/logger.helper';
 import { fNumber } from 'common/number.helper';
 import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
@@ -16,7 +17,9 @@ import { enumerateStr } from 'common/common-helper';
 import { StringKeyObject } from 'common/common.types';
 import useAccountType from 'auth/hooks/useAccountType';
 import useLoanAccount from 'auth/hooks/useLoanAccount';
+import useSearchParam from 'auth/hooks/useSearchParam';
 import useAccountFilter from 'auth/hooks/useAccountFilter';
+import { appRouteConstants } from 'app/app-route.constant';
 import { getMomentDate, getUTC } from 'common/moment.helper';
 import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 import { loginValidationSchema } from 'auth/auth.validation';
@@ -46,6 +49,7 @@ interface Props {
 
 const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, closeSidebar, isFromAccount }) => {
   const history = useHistory();
+  const location = useLocation();
   const { mmToast } = useToast();
   const { accounts } = useAuthState();
   const [accountType, setAccountType] = useState('');
@@ -60,6 +64,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
   const { accountFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
 
   const deleteAccountModal = useModal();
+
+  const from = useSearchParam('from');
+  const isFromFastlink = from === 'fastLink';
 
   /**
    * Set account type and account subtype
@@ -248,7 +255,16 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           return closeSidebar?.();
         } else {
           if (isLastAccount()) {
-            return history.push('/net-worth?from=accountSettings');
+            location.pathname = appRouteConstants.auth.NET_WORTH;
+            location.search = 'from=accountSettings';
+
+            location.state = {
+              isFromFastlink,
+            };
+
+            logger.log('Location here', location);
+
+            return history.push(location);
           }
 
           return handleReload?.();
