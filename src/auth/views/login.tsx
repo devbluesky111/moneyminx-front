@@ -216,7 +216,11 @@ export const LoginMainSection = () => {
                         <form onSubmit={props.handleSubmit}>
                           <div className='align-items-start input-wrapper'>
                             <div className='email-wrap'>
+                              <label htmlFor='email-field' className='form-subheading'>
+                                Email address
+                              </label>
                               <input
+                                id='email-field'
                                 type='email'
                                 className={emailClass}
                                 onChange={updateEmailAddress}
@@ -230,8 +234,12 @@ export const LoginMainSection = () => {
                           </div>
 
                           <div className='align-items-center'>
+                            <label htmlFor='password-field' className='form-subheading'>
+                              Password
+                            </label>
                             <div className='password-wrap'>
                               <input
+                                id='password-field'
                                 name='password'
                                 className={passClass}
                                 placeholder='Password'
@@ -266,10 +274,12 @@ export const LoginMainSection = () => {
 
                   <div className='facebook-login'>
                     <div className='social-login-options'>
-                      <span>Or, log in with:</span>
+                      <span id='social-logins'>Or, log in with:</span>
                       <div className='fb-icon-wrap'>
                         <FacebookLogin
                           authType='rerequest'
+                          aria-label='Login with Facebook'
+                          aria-labelledby='social-logins'
                           textButton=''
                           fields='email'
                           isMobile={false}
@@ -277,7 +287,7 @@ export const LoginMainSection = () => {
                           reAuthenticate={true}
                           callback={responseFacebook}
                           scope='public_profile,email'
-                          icon={<LoginFacebookIcon className='social-login-fb' />}
+                          icon={<LoginFacebookIcon className='social-login-fb' arial-label='Login with Facebook'/>}
                           appId={env.FACEBOOK_APP_ID || ''}
                           buttonStyle={{
                             background: 'transparent',

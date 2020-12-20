@@ -37,7 +37,7 @@ textarea.form-control {
 }
 
 .link-gray {
-  color: $gray;
+  color: $grayText;
 
   &:hover {
     color: $darkGray;
@@ -111,7 +111,7 @@ textarea.form-control {
   }
   &.plus-btn {
     height: 38px;
-    width: 80px;
+    width: 120px;
     font-size: 0.875rem;
   }
 }
@@ -170,7 +170,7 @@ textarea.form-control {
 
 .drop-box.dropdown {
   border-radius: 4px;
-  color: $gray;
+  color: $grayText;
 
   &:hover,
   &:focus,
@@ -516,7 +516,7 @@ hr {
   font-size: 0.6875rem;
   vertical-align: top;
   color: $purple;
-  background-color: $purpleOpacity20;
+  background-color: $purpleOpacity16;
   font-weight: 500;
   border-radius: 6px;
 
