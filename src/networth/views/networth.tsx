@@ -33,6 +33,7 @@ import NetworthSkeleton from './inc/networth-skeleton';
 import NetworthBarGraph from './networth-bar-graph';
 
 import useAnalytics from '../../common/hooks/useAnalytics';
+import AccountAddedModal from 'auth/views/inc/account-added-modal';
 
 interface IState {
   state: { isFromFastlink: boolean };
@@ -46,6 +47,7 @@ const Networth = () => {
   const { loading } = useNetworth();
   const connectionAlert = useAlert();
   const signupDoneModal = useModal();
+  const accountAddedModal = useModal();
   const { onboarded } = useAuthState();
   const { state }: IState = useLocation();
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
@@ -62,9 +64,9 @@ const Networth = () => {
   const [loadCounter, setCounter] = useState(0);
 
   const from = useSearchParam('from');
-  const isFromFastlink = state.isFromFastlink;
+  const isFromFastlink = state?.isFromFastlink;
 
-  useInitialModal(isFromFastlink, signupDoneModal);
+  useInitialModal(isFromFastlink, accountAddedModal);
   useInitialModal(from === 'accountSettings' && !onboarded, signupDoneModal);
   useInitialModal(true, connectionAlert);
 
@@ -549,6 +551,7 @@ const Networth = () => {
         {/*<ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />*/}
 
         <SignUpDoneModal signupModal={signupDoneModal} handleSuccess={gotoConnectAccount} />
+        <AccountAddedModal accountAddedModal={accountAddedModal} handleSuccess={gotoConnectAccount} />
       </section>
     </NetworthLayout>
   );

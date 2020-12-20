@@ -259,3 +259,25 @@ button.hidden {
 .fastlink-modal-container {
   min-height: 50px;
 }
+
+.account-added-modal {
+  h1 {
+    font-size: 32px;
+  }
+  .account-modal-img-wrapper {
+    width: 187px;
+    height: 35px;
+    position: relative;
+
+    img {
+      position: absolute;
+      left: -30%;
+      top: -70%;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .modal-btn-wrapper {
+    margin-top: 3.5rem !important;
+  }
+}
