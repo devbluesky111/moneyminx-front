@@ -85,7 +85,7 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
-  const { fetchNewAccounts } = useAccounts();
+  const { fetchLatestProviderAccounts } = useAccounts();
 
   useEffect(() => {
     const fetchAccountDetails = async (accountId: string, baseCurrency: boolean) => {
@@ -131,7 +131,7 @@ const AccountDetail: React.FC = () => {
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
-    await fetchNewAccounts();
+    await fetchLatestProviderAccounts();
     setLoading(false);
 
     if (error) {

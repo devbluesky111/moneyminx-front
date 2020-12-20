@@ -217,7 +217,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   });
   const fastlinkModal = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchNewAccounts, loading: fetchingNewAccounts } = useAccounts();
+  const { fetchLatestProviderAccounts, loading: fetchingNewAccounts } = useAccounts();
 
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
@@ -225,7 +225,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
-    await fetchNewAccounts();
+    await fetchLatestProviderAccounts();
     setLoading(false);
 
     if (error) {
