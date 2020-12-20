@@ -62,6 +62,7 @@ const AccountSettings = () => {
           open={openRightNav}
         /> : null}
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
+      <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
       <div className='main-table-wrapper'>
         <div>
           <div className='row login-wrapper'>
