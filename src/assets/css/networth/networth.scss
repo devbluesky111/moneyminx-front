@@ -1384,13 +1384,9 @@ a.upgrader-btn {
 
   h1 {
     font-weight: 500;
-    font-size: 1.25rem;
+    font-size: 1.25rem !important;
     color: $purple;
     margin-bottom: 1.25rem;
-
-    @media (min-width: 992px) and (max-width: 1118px) {
-      font-size: 1rem;
-    }
 
     img {
       max-width: 20px;
@@ -1557,29 +1553,45 @@ a.upgrader-btn {
 .graphbox ul li + li {
   margin-top: 22px;
 }
-.graphbox ul li {
-  margin-left: -20px;
-  padding-left: 20px;
-}
 .graphbox ul li.inv-data {
   color: $blue;
   border-left: 2px solid $blue;
+  margin-left: 1px;
+  padding-left: 18px;
+
+  @media (min-width: $med) {
+    margin-left: -20px;
+  }
 }
 .graphbox ul li.other-data {
   color: $cyanText;
   border-left: 2px solid $cyanText;
+  margin-left: -15px;
+  padding-left: 18px;
+
+  @media (min-width: $med) {
+    margin-left: -20px;
+  }
 }
 .graphbox ul li.lty-data {
   color: $red;
   border-left: 2px solid $red;
+  margin-left: 1px;
+  padding-left: 18px;
+
+  @media (min-width: $med) {
+    margin-left: -20px;
+  }
 }
 .graphbox ul li.nw-data {
   color: $white;
   padding: 10px 20px;
   background: $purple;
+  margin-left: -15px;
+  padding-left: 18px;
 
-  h3 {
-    font-weight: 300;
+  @media (min-width: $med) {
+    margin-left: -20px;
   }
 }
 
