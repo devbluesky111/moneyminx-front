@@ -270,7 +270,11 @@ export const SignupMainSection = () => {
                       <form onSubmit={props.handleSubmit}>
                         <div className='input-wrapper'>
                           <div className='email-wrap'>
+                            <label htmlFor='email-field' className='form-subheading'>
+                              Email address
+                            </label>
                             <input
+                              id='email-field'
                               type='email'
                               className='email'
                               onChange={props.handleChange}
@@ -283,8 +287,12 @@ export const SignupMainSection = () => {
                           {props.errors.email && <div className='mt-2 feedback'>{props.errors.email}</div>}
                         </div>
                         <div className='align-items-center'>
+                          <label htmlFor='password-field' className='form-subheading'>
+                            Password
+                          </label>
                           <div className='password-wrap'>
                             <input
+                              id='password-field'
                               type={visible ? 'text' : 'password'}
                               className='password'
                               onChange={props.handleChange}

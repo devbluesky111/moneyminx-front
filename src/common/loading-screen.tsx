@@ -32,7 +32,7 @@ export const MessageChange = () => {
   const [showingMessage, setShowingMessage] = useState<string>('I like big bucks and I cannot lie.');
 
   const showMessage: any = () => {
-    const randomIndex = Math.floor(Math.random() * 8);
+    const randomIndex = Math.floor(Math.random() * 7);
     if (messageArr[randomIndex] === showingMessage) {
       return showMessage();
     }
@@ -41,7 +41,7 @@ export const MessageChange = () => {
   };
 
   useEffect(() => {
-    setTimeout(showMessage, 2500);
+    setTimeout(showMessage, 3000);
   });
 
   return <span className='mt-5'>{showingMessage}</span>;

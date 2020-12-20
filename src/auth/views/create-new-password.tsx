@@ -175,6 +175,9 @@ export const CreateNewPasswordMainSection = () => {
                     <div className='form-wrap'>
                       <form onSubmit={props.handleSubmit}>
                         <div className='input-wrapper'>
+                          <label htmlFor='password' className='form-subheading'>
+                            New Password
+                          </label>
                           <div className='password-wrap'>
                             <input
                               type={visible.password ? 'text' : 'password'}
@@ -201,8 +204,12 @@ export const CreateNewPasswordMainSection = () => {
                           )}
                         </div>
                         <div className='input-wrapper'>
+                          <label htmlFor='confirm-password' className='form-subheading'>
+                            Confirm Password
+                          </label>
                           <div className='password-wrap confirm'>
                             <input
+                              id='confirm-password'
                               type={visible.confirmPassword ? 'text' : 'password'}
                               className='password'
                               name='confirmPassword'

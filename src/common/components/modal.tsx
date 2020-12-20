@@ -65,9 +65,9 @@ const Modal: React.FC<Props> = ({
         <div className={`modal-content ${loading ? 'loading' : ''}`.trim()} style={{ backgroundColor: bgColor }}>
           {type === ModalTypeEnum.NO_HEADER ? null : (
             <div className='modal-header'>
-              <h5 className='modal-title' style={{ color: bgColor ? 'white' : 'inherit' }}>
+              <span className='modal-title' style={{ color: bgColor ? 'white' : 'inherit' }}>
                 {title}
-              </h5>
+              </span>
               {canBeClosed && (
                 <div onClick={() => onClose()} className='close' role='button'>
                   <AiOutlineClose className='modal-close' style={{ color: bgColor ? 'white' : 'inherit' }} />
