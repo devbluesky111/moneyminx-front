@@ -1594,7 +1594,22 @@ a.upgrader-btn {
     margin-left: -20px;
   }
 }
+.account-ct-box {
+  .graphbox ul li.inv-data {
+    margin-left: -20px;
+    padding-left: 18px;
 
+    @media (min-width: $med) {
+      margin-left: -20px;
+    }
+  }
+  .graphbox ul li.other-data {
+    margin-left: -20px;
+  }
+  .graphbox ul li.lty-data {
+    margin-left: -20px;
+  }
+}
 .responsive-container {
   overflow: hidden;
   width: 100%;
