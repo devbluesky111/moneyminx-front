@@ -85,7 +85,11 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
       const firstNonOverriddenAccount = curProviderAccounts?.find((acc) => acc.accountDetails?.overridden !== true);
 
       if (firstNonOverriddenAccount) {
-        setCurrentAccount(firstNonOverriddenAccount);
+        return setCurrentAccount(firstNonOverriddenAccount);
+      }
+
+      if (curProviderAccounts) {
+        return setCurrentAccount(curProviderAccounts[0]);
       }
     }
   }, [providerName, accountsByProviderName]);
