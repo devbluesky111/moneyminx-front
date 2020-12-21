@@ -135,8 +135,6 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                   </div>
                   <div className='allocation-content'>
                     <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center mm-allocation-overview__block-chart-overview'>
-                      <AllocationChartSVG className='mm-allocation-overview__block--chart' />
-                      <AllocationLegendSVG className='mm-allocation-overview__block--legend' />
                       {((Object.keys(allocations).length === 0) && chartData.length === 0) ?
                         <div className='mm-allocation-overview__block-element text-center'>
                           <div className='mm-allocation-overview__block-element--middle'>
@@ -179,7 +177,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                       role='button'
                                     />
                                     <span onClick={() => toggleAllocation(allocationKey)}
-                                          role='button'>
+                                      role='button'>
                                       {allocationKey}
                                     </span>
                                   </td>

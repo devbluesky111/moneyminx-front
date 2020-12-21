@@ -23,8 +23,6 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as Share } from 'assets/images/allocation/share.svg';
 import { ReactComponent as Calendar } from 'assets/images/allocation/calendar.svg';
 import { ReactComponent as SettingsIcon } from 'assets/images/allocation/settings.svg';
-import { ReactComponent as AllocationChartSVG } from 'assets/images/allocation/allocation-chart.svg';
-import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/allocation-legend.svg';
 
 import AllocationLegend from './allocation-legend';
 import RestrictedChartView from './restricted-chart-view';
@@ -137,8 +135,6 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
       ) : (
           <div className='allocation-content'>
             <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center mm-allocation-overview__block-chart-overview'>
-              <AllocationChartSVG className='mm-allocation-overview__block--chart' />
-              <AllocationLegendSVG className='mm-allocation-overview__block--legend' />
               {((Object.keys(allocations).length === 0) && chartData.length === 0) ?
                 <div className='mm-allocation-overview__block-element text-center'>
                   <div className='mm-allocation-overview__block-element--middle'>
