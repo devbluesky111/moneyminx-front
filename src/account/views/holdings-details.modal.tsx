@@ -450,7 +450,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                       : 'With manual accounts, you can update whichever fields you need'}
                   </span>
                 )}
-                <div className='mm-manual-account-modal__title mt-3'>
+                <div className='mm-holdings-details-modal__title mt-3'>
                   <Tabs defaultActiveKey='details' transition={false} id='holdings-details-modal'>
                     <Tab eventKey='details' title='Details'>
                       {holdingsDetails ? (
@@ -550,10 +550,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   values.grantDate ||
                                   values.spread ||
                                   values.strikePrice) && (
-                                  <div className='row mt-1'>
-                                    <div className='col-sm key'>Options and Stock Options</div>
-                                  </div>
-                                )}
+                                    <div className='row mt-1'>
+                                      <div className='col-sm key'>Options and Stock Options</div>
+                                    </div>
+                                  )}
                                 {values.optionType !== 'unknown' && values.optionType && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Option Type</div>
@@ -644,10 +644,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   values.accruedInterest ||
                                   values.accruedIncome ||
                                   values.contractQuantity) && (
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm key'>CDs, Bonds and Loans</div>
-                                  </div>
-                                )}
+                                    <div className='row mt-2 align-items-center'>
+                                      <div className='col-sm key'>CDs, Bonds and Loans</div>
+                                    </div>
+                                  )}
                                 {values.couponRate && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Coupon</div>
@@ -698,443 +698,440 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               </div>
                             </div>
                           ) : (
-                            <div className='row mt-4'>
-                              <div className='col-sm'>
-                                <div className='row mt-1'>
-                                  <div className='col-sm key'>General Details</div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Description</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        name='description'
-                                        value={values.description}
-                                      />
+                              <div className='row mt-4'>
+                                <div className='col-sm'>
+                                  <div className='row mt-1'>
+                                    <div className='col-sm key'>General Details</div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Description</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          name='description'
+                                          value={values.description}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Holding Type</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <HoldingTypeSelectInput
+                                          args={holdingTypes}
+                                          onChange={handleSelectChange}
+                                          value={values.holdingType}
+                                          name='holdingType'
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Price</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='price'
+                                          value={values.price}
+                                        />
+                                        <span className='input-add-on'>{currencySymbol}</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Quantity</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='quantity'
+                                          value={values.quantity}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Cost</div>
+                                    <div className='col-sm '>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='costBasis'
+                                          value={values.costBasis}
+                                        />
+                                        <span className='input-add-on'>{currencySymbol}</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>CUSIP</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          name='cusipNumber'
+                                          value={values.cusipNumber}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>ISIN</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control onChange={handleChange} name='isin' value={values.isin} />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>SEDOL</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control onChange={handleChange} name='sedol' value={values.sedol} />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Short?</div>
+                                    <div className='col-sm mt-2'>
+                                      <div className='radio-custom'>
+                                        <input
+                                          type='radio'
+                                          value='yes'
+                                          onChange={handleIsShortChange}
+                                          name='isShort'
+                                          checked={values.isShort === 'yes' || values.isShort === true}
+                                          aria-checked={!!values.isShort}
+                                        />
+                                        <label>Yes</label>
+                                        <input
+                                          onChange={handleIsShortChange}
+                                          type='radio'
+                                          value='no'
+                                          name='isShort'
+                                          checked={values.isShort === 'no' || values.isShort === false}
+                                          aria-checked={!!values.isShort}
+                                        />
+                                        <label>No</label>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Holding Type</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <HoldingTypeSelectInput
-                                        args={holdingTypes}
-                                        onChange={handleSelectChange}
-                                        value={values.holdingType}
-                                        name='holdingType'
-                                        single={true}
-                                      />
+                                <div className='col-sm'>
+                                  <div className='row mt-1'>
+                                    <div className='col-sm key'>Options and Stock Options</div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Option Type</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <SelectInput
+                                          args={['Call', 'Put']}
+                                          onChange={handleSelectChange}
+                                          value={values.optionType}
+                                          name='optionType'
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Price</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='price'
-                                        value={values.price}
-                                      />
-                                      <span className='input-add-on'>{currencySymbol}</span>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Vested Quantity</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='vestedQuantity'
+                                          value={values.vestedQuantity}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Quantity</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='quantity'
-                                        value={values.quantity}
-                                      />
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Vested Shares Exercisable</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='vestedSharesExercisable'
+                                          value={values.vestedSharesExercisable}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Cost</div>
-                                  <div className='col-sm '>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='costBasis'
-                                        value={values.costBasis}
-                                      />
-                                      <span className='input-add-on'>{currencySymbol}</span>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Vested Value</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='vestedValue'
+                                          value={values.vestedValue}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>CUSIP</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        name='cusipNumber'
-                                        value={values.cusipNumber}
-                                      />
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Vested Date</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <ReactDatePicker
+                                          name='vestedDate'
+                                          selected={values.vestedDate ? new Date(values.vestedDate) : null}
+                                          onChange={(val: Date) => {
+                                            setFieldValue('vestedDate', moment(val).toISOString());
+                                          }}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>ISIN</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control onChange={handleChange} name='isin' value={values.isin} />
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Unvested Quantity</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='unvestedQuantity'
+                                          value={values.unvestedQuantity}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>SEDOL</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control onChange={handleChange} name='sedol' value={values.sedol} />
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Unvested Value</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='unvestedValue'
+                                          value={values.unvestedValue}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Short?</div>
-                                  <div className='col-sm mt-2'>
-                                    <div className='radio-custom'>
-                                      <input
-                                        type='radio'
-                                        value='yes'
-                                        onChange={handleIsShortChange}
-                                        name='isShort'
-                                        checked={values.isShort === 'yes' || values.isShort === true}
-                                        aria-checked={!!values.isShort}
-                                      />
-                                      <label>Yes</label>
-                                      <input
-                                        onChange={handleIsShortChange}
-                                        type='radio'
-                                        value='no'
-                                        name='isShort'
-                                        checked={values.isShort === 'no' || values.isShort === false}
-                                        aria-checked={!!values.isShort}
-                                      />
-                                      <label>No</label>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Exercised Quantity</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='exercisedQuantity'
+                                          value={values.exercisedQuantity}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              </div>
-                              <div className='col-sm'>
-                                <div className='row mt-1'>
-                                  <div className='col-sm key'>Options and Stock Options</div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Option Type</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <SelectInput
-                                        args={['Call', 'Put']}
-                                        onChange={handleSelectChange}
-                                        value={values.optionType}
-                                        name='optionType'
-                                        single={true}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Vested Quantity</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='vestedQuantity'
-                                        value={values.vestedQuantity}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Vested Shares Exercisable</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='vestedSharesExercisable'
-                                        value={values.vestedSharesExercisable}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Vested Value</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='vestedValue'
-                                        value={values.vestedValue}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Vested Date</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Expiration Date</div>
+                                    <div className='col-sm'>
                                       <ReactDatePicker
-                                        name='vestedDate'
-                                        selected={values.vestedDate ? new Date(values.vestedDate) : null}
+                                        name='expirationDate'
+                                        selected={values.expirationDate ? new Date(values.expirationDate) : null}
                                         onChange={(val: Date) => {
-                                          setFieldValue('vestedDate', moment(val).toISOString());
+                                          setFieldValue('expirationDate', moment(val).toISOString());
                                         }}
                                       />
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Unvested Quantity</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='unvestedQuantity'
-                                        value={values.unvestedQuantity}
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Grant Date</div>
+                                    <div className='col-sm'>
+                                      <ReactDatePicker
+                                        name='grantDate'
+                                        selected={values.grantDate ? new Date(values.grantDate) : null}
+                                        onChange={(val: Date) => {
+                                          setFieldValue('grantDate', moment(val).toISOString());
+                                        }}
                                       />
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Unvested Value</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='unvestedValue'
-                                        value={values.unvestedValue}
-                                      />
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Strike Price</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='strikePrice'
+                                          value={values.strikePrice}
+                                        />
+                                        <span className='input-add-on'>{currencySymbol}</span>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Exercised Quantity</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='exercisedQuantity'
-                                        value={values.exercisedQuantity}
+                                <div className='col-sm'>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm key'>CDs, Bonds and Loans</div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Coupon</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='couponRate'
+                                          value={values.couponRate}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Interest Rate</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='interestRate'
+                                          value={values.interestRate}
+                                        />
+                                        <span className='input-add-on'>%</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Maturity Date</div>
+                                    <div className='col-sm'>
+                                      <ReactDatePicker
+                                        name='maturityDate'
+                                        selected={values.maturityDate ? new Date(values.maturityDate) : null}
+                                        onChange={(val: Date) => {
+                                          setFieldValue('maturityDate', moment(val).toISOString());
+                                        }}
                                       />
                                     </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Expiration Date</div>
-                                  <div className='col-sm'>
-                                    <ReactDatePicker
-                                      name='expirationDate'
-                                      selected={values.expirationDate ? new Date(values.expirationDate) : null}
-                                      onChange={(val: Date) => {
-                                        setFieldValue('expirationDate', moment(val).toISOString());
-                                      }}
-                                    />
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Term</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control onChange={handleChange} name='term' value={values.term} />
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Grant Date</div>
-                                  <div className='col-sm'>
-                                    <ReactDatePicker
-                                      name='grantDate'
-                                      selected={values.grantDate ? new Date(values.grantDate) : null}
-                                      onChange={(val: Date) => {
-                                        setFieldValue('grantDate', moment(val).toISOString());
-                                      }}
-                                    />
+                                  <div className='row mt-5'>
+                                    <div className='col-sm key'>Futures and Commodities</div>
                                   </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Strike Price</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='strikePrice'
-                                        value={values.strikePrice}
-                                      />
-                                      <span className='input-add-on'>{currencySymbol}</span>
+                                  <div className='row mt-2 align-items-center'>
+                                    <div className='col-sm'>Contract Quantity</div>
+                                    <div className='col-sm'>
+                                      <div className='form-field-group'>
+                                        <Form.Control
+                                          onChange={handleChange}
+                                          type='number'
+                                          name='contractQuantity'
+                                          value={values.contractQuantity}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div className='col-sm'>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm key'>CDs, Bonds and Loans</div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Coupon</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='couponRate'
-                                        value={values.couponRate}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Interest Rate</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='interestRate'
-                                        value={values.interestRate}
-                                      />
-                                      <span className='input-add-on'>%</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Maturity Date</div>
-                                  <div className='col-sm'>
-                                    <ReactDatePicker
-                                      name='maturityDate'
-                                      selected={values.maturityDate ? new Date(values.maturityDate) : null}
-                                      onChange={(val: Date) => {
-                                        setFieldValue('maturityDate', moment(val).toISOString());
-                                      }}
-                                    />
-                                  </div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Term</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control onChange={handleChange} name='term' value={values.term} />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className='row mt-5'>
-                                  <div className='col-sm key'>Futures and Commodities</div>
-                                </div>
-                                <div className='row mt-2 align-items-center'>
-                                  <div className='col-sm'>Contract Quantity</div>
-                                  <div className='col-sm'>
-                                    <div className='form-field-group'>
-                                      <Form.Control
-                                        onChange={handleChange}
-                                        type='number'
-                                        name='contractQuantity'
-                                        value={values.contractQuantity}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
+                            )}
                         </>
                       ) : (
-                        <div className='row mt-4'>
-                          <div className='col-sm'>
-                            <div className='row mt-1'>
-                              <div className='col-sm key'>General Details</div>
-                            </div>
-                            <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Name</div>
-                              <div className='col-sm-6'>
-                                <div className='form-field-group'>
-                                  <Form.Control onChange={handleChange} name='description' value={values.description} />
+                          <div className='row mt-4'>
+                            <div className='col-sm'>
+                              <div className='row mt-1'>
+                                <div className='col-sm key'>General Details</div>
+                              </div>
+                              <div className='row mt-2 align-items-center'>
+                                <div className='col-sm-3'>Name</div>
+                                <div className='col-sm-6'>
+                                  <div className='form-field-group'>
+                                    <Form.Control onChange={handleChange} name='description' value={values.description} />
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Type</div>
-                              <div className='col-sm-6'>
-                                <div className='form-field-group'>
-                                  <SelectInput
-                                    args={holdingTypes}
-                                    onChange={handleSelectChange}
-                                    value={values.holdingType}
-                                    name='holdingType'
-                                    single={true}
-                                  />
+                              <div className='row mt-2 align-items-center'>
+                                <div className='col-sm-3'>Type</div>
+                                <div className='col-sm-6'>
+                                  <div className='form-field-group'>
+                                    <SelectInput
+                                      args={holdingTypes}
+                                      onChange={handleSelectChange}
+                                      value={values.holdingType}
+                                      name='holdingType'
+                                    />
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Quantity</div>
-                              <div className='col-sm-6'>
-                                <div className='form-field-group'>
-                                  <Form.Control
-                                    onChange={handleChange}
-                                    type='number'
-                                    name='quantity'
-                                    value={values.quantity}
-                                  />
+                              <div className='row mt-2 align-items-center'>
+                                <div className='col-sm-3'>Quantity</div>
+                                <div className='col-sm-6'>
+                                  <div className='form-field-group'>
+                                    <Form.Control
+                                      onChange={handleChange}
+                                      type='number'
+                                      name='quantity'
+                                      value={values.quantity}
+                                    />
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Price per Unit</div>
-                              <div className='col-sm-6'>
-                                <div className='form-field-group'>
-                                  <Form.Control
-                                    onChange={handleChange}
-                                    type='number'
-                                    name='price'
-                                    value={values.price}
-                                  />
-                                  <span className='input-add-on'>{currencySymbol}</span>
+                              <div className='row mt-2 align-items-center'>
+                                <div className='col-sm-3'>Price per Unit</div>
+                                <div className='col-sm-6'>
+                                  <div className='form-field-group'>
+                                    <Form.Control
+                                      onChange={handleChange}
+                                      type='number'
+                                      name='price'
+                                      value={values.price}
+                                    />
+                                    <span className='input-add-on'>{currencySymbol}</span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className='row mt-2 align-items-center'>
-                              <div className='col-sm-3'>Cost per Unit</div>
-                              <div className='col-sm-6'>
-                                <div className='form-field-group'>
-                                  <Form.Control
-                                    onChange={handleChange}
-                                    type='number'
-                                    name='costBasis'
-                                    value={values.costBasis}
-                                  />
-                                  <span className='input-add-on'>{currencySymbol}</span>
-                                </div>
-                              </div>
-
-                              <div className='row m-y-6 align-items-center'>
-                                <div className='col-sm-3'>Market Value</div>
-                                <div className='col-sm-6'>{currencySymbol}{numberWithCommas(fNumber(values.price * values.quantity, 2))}</div>
-                              </div>
-                              <div className='row m-t-7 align-items-center'>
-                                <div className='col-sm-3'>Gain / loss</div>
-                                <div
-                                  className={[
-                                    'col-sm-6',
-                                    (values.price - values.costBasis) * values.quantity >= 0
-                                      ? 'text-green'
-                                      : 'text-danger',
-                                  ].join(' ')}
-                                >
-                                  {currencySymbol}{numberWithCommas(fNumber((values.price - values.costBasis) * values.quantity, 2))}
+                              <div className='row mt-2 align-items-center'>
+                                <div className='col-sm-3'>Cost per Unit</div>
+                                <div className='col-sm-6'>
+                                  <div className='form-field-group'>
+                                    <Form.Control
+                                      onChange={handleChange}
+                                      type='number'
+                                      name='costBasis'
+                                      value={values.costBasis}
+                                    />
+                                    <span className='input-add-on'>{currencySymbol}</span>
+                                  </div>
                                 </div>
 
+                                <div className='row m-y-6 align-items-center'>
+                                  <div className='col-sm-3'>Market Value</div>
+                                  <div className='col-sm-6'>{currencySymbol}{numberWithCommas(fNumber(values.price * values.quantity, 2))}</div>
+                                </div>
+                                <div className='row m-t-7 align-items-center'>
+                                  <div className='col-sm-3'>Gain / loss</div>
+                                  <div
+                                    className={[
+                                      'col-sm-6',
+                                      (values.price - values.costBasis) * values.quantity >= 0
+                                        ? 'text-green'
+                                        : 'text-danger',
+                                    ].join(' ')}
+                                  >
+                                    {currencySymbol}{numberWithCommas(fNumber((values.price - values.costBasis) * values.quantity, 2))}
+                                  </div>
+
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      )}
+                        )}
                     </Tab>
                     <Tab eventKey='monthlyValues' title='Monthly Values' className='monthly-values-sub-tabs'>
                       <Tabs defaultActiveKey={years?.[0]} id='mothly-value-sub-tab' className='mt-3'>
@@ -1152,102 +1149,102 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm key'>January</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Jan ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Jan ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                     <div className='col-sm key'>February</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Feb ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Feb ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center'>
                                     <div className='col-sm key'>March</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Mar ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Mar ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                     <div className='col-sm key'>April</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Apr ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Apr ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center'>
                                     <div className='col-sm key'>May</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `May ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `May ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `May ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                     <div className='col-sm key'>June</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Jun ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Jun ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                 </div>
@@ -1260,531 +1257,531 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm key'>July</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Jul ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Jul ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                     <div className='col-sm key'>August</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Aug ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Aug ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center'>
                                     <div className='col-sm key'>September</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Sep ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Sep ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                     <div className='col-sm key'>October</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Oct ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Oct ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center'>
                                     <div className='col-sm key'>November</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Nov ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Nov ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                   <div className='row pt-2 pb-2 align-items-center liner-gradient'>
                                     <div className='col-sm key'>December</div>
                                     <div className='col-sm'>
                                       {values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Dec ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              {currencySymbol} {i.value}
-                                            </div>
-                                          ))
-                                      ) : (
-                                        <span>-</span>
-                                      )}
+                                        0 ? (
+                                          values.originalValues
+                                            .filter((i: any) => i.interval === `Dec ${item}`)
+                                            .map((i: any, k: number) => (
+                                              <div className='form-field-group' key={k}>
+                                                {currencySymbol} {i.value}
+                                              </div>
+                                            ))
+                                        ) : (
+                                          <span>-</span>
+                                        )}
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             ) : (
-                              <div className='row mt-4'>
-                                <div className='col-sm'>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className='col-sm'>Month</div>
-                                    <div className='col-sm'>Amount</div>
-                                  </div>
+                                <div className='row mt-4'>
+                                  <div className='col-sm'>
+                                    <div className='row pt-2 pb-2 align-items-center'>
+                                      <div className='col-sm'>Month</div>
+                                      <div className='col-sm'>Amount</div>
+                                    </div>
 
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Jan ${item}`)].join(' ')}>January</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Jan ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
+                                    <div className='row pt-2 pb-2 align-items-center'>
+                                      <div className={[`col-sm key`, gc(`Jan ${item}`)].join(' ')}>January</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Jan ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Jan ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
                                               <Form.Control
-                                                onChange={handleMonthlyChange}
+                                                onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
                                                 type='number'
-                                                id={`Jan ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
+                                                defaultValue={0}
+                                                disabled={new Date(`Jan ${item}`) > new Date()}
                                               />
                                               <span className='input-add-on'>{currencySymbol}</span>
                                             </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Jan ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
+                                    </div>
+                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                      <div className={[`col-sm key`, gc(`Feb ${item}`)].join(' ')}>February</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Feb ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Feb ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
+                                              <Form.Control
+                                                onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
+                                                type='number'
+                                                defaultValue={0}
+                                                disabled={new Date(`Feb ${item}`) > new Date()}
+                                              />
+                                              <span className='input-add-on'>{currencySymbol}</span>
+                                            </div>
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
+                                    </div>
+                                    <div className='row pt-2 pb-2 align-items-center'>
+                                      <div className={[`col-sm key`, gc(`Mar ${item}`)].join(' ')}>March</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Mar ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Mar ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
+                                              <Form.Control
+                                                onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
+                                                type='number'
+                                                defaultValue={0}
+                                                disabled={new Date(`Mar ${item}`) > new Date()}
+                                              />
+                                              <span className='input-add-on'>{currencySymbol}</span>
+                                            </div>
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
+                                    </div>
+                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                      <div className={[`col-sm key`, gc(`Apr ${item}`)].join(' ')}>April</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Apr ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Apr ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
+                                              <Form.Control
+                                                onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
+                                                type='number'
+                                                defaultValue={0}
+                                                disabled={new Date(`Apr ${item}`) > new Date()}
+                                              />
+                                              <span className='input-add-on'>{currencySymbol}</span>
+                                            </div>
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
+                                    </div>
+                                    <div className='row pt-2 pb-2 align-items-center'>
+                                      <div className={[`col-sm key`, gc(`May ${item}`)].join(' ')}>May</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `May ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `May ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`May ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
+                                              <Form.Control
+                                                onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
+                                                type='number'
+                                                defaultValue={0}
+                                                disabled={new Date(`May ${item}`) > new Date()}
+                                              />
+                                              <span className='input-add-on'>{currencySymbol}</span>
+                                            </div>
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
+                                    </div>
+                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                      <div className={[`col-sm key`, gc(`Jun ${item}`)].join(' ')}>June</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Jun ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Jun ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
+                                              <Form.Control
+                                                onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
+                                                type='number'
+                                                defaultValue={0}
+                                                disabled={new Date(`Jun ${item}`) > new Date()}
+                                              />
+                                              <span className='input-add-on'>{currencySymbol}</span>
+                                            </div>
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
                                     </div>
                                   </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Feb ${item}`)].join(' ')}>February</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Feb ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              <Form.Control
-                                                onChange={handleMonthlyChange}
-                                                type='number'
-                                                id={`Feb ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
-                                            </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Feb ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
+                                  <div className='col-sm'>
+                                    <div className='row pt-2 pb-2 align-items-center'>
+                                      <div className='col-sm'>Month</div>
+                                      <div className='col-sm'>Amount</div>
                                     </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Mar ${item}`)].join(' ')}>March</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Mar ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
+                                    <div className='row pt-2 pb-2 align-items-center'>
+                                      <div className={[`col-sm key`, gc(`Jul ${item}`)].join(' ')}>July</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Jul ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Jul ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
                                               <Form.Control
-                                                onChange={handleMonthlyChange}
+                                                onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
                                                 type='number'
-                                                id={`Mar ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
+                                                defaultValue={0}
+                                                disabled={new Date(`Jul ${item}`) > new Date()}
                                               />
                                               <span className='input-add-on'>{currencySymbol}</span>
                                             </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Mar ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Apr ${item}`)].join(' ')}>April</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Apr ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
+                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                      <div className={[`col-sm key`, gc(`Aug ${item}`)].join(' ')}>August</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Aug ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Aug ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
                                               <Form.Control
-                                                onChange={handleMonthlyChange}
+                                                onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
                                                 type='number'
-                                                id={`Apr ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
+                                                defaultValue={0}
+                                                disabled={new Date(`Aug ${item}`) > new Date()}
                                               />
                                               <span className='input-add-on'>{currencySymbol}</span>
                                             </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Apr ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`May ${item}`)].join(' ')}>May</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `May ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `May ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
+                                    <div className='row pt-2 pb-2 align-items-center'>
+                                      <div className={[`col-sm key`, gc(`Sep ${item}`)].join(' ')}>September</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Sep ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Sep ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
                                               <Form.Control
-                                                onChange={handleMonthlyChange}
+                                                onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
                                                 type='number'
-                                                id={`May ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
+                                                defaultValue={0}
+                                                disabled={new Date(`Sep ${item}`) > new Date()}
                                               />
                                               <span className='input-add-on'>{currencySymbol}</span>
                                             </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`May ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Jun ${item}`)].join(' ')}>June</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Jun ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
+                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                      <div className={[`col-sm key`, gc(`Oct ${item}`)].join(' ')}>October</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Oct ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Oct ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
                                               <Form.Control
-                                                onChange={handleMonthlyChange}
+                                                onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
                                                 type='number'
-                                                id={`Jun ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
+                                                defaultValue={0}
+                                                disabled={new Date(`Oct ${item}`) > new Date()}
                                               />
                                               <span className='input-add-on'>{currencySymbol}</span>
                                             </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Jun ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
+                                    </div>
+                                    <div className='row pt-2 pb-2 align-items-center'>
+                                      <div className={[`col-sm key`, gc(`Nov ${item}`)].join(' ')}>November</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Nov ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Nov ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
+                                              <Form.Control
+                                                onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
+                                                type='number'
+                                                defaultValue={0}
+                                                disabled={new Date(`Nov ${item}`) > new Date()}
+                                              />
+                                              <span className='input-add-on'>{currencySymbol}</span>
+                                            </div>
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
+                                    </div>
+                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
+                                      <div className={[`col-sm key`, gc(`Dec ${item}`)].join(' ')}>December</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `Dec ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  <Form.Control
+                                                    onChange={handleMonthlyChange}
+                                                    type='number'
+                                                    id={`Dec ${item}`}
+                                                    value={i.value}
+                                                    disabled={i.type === 'projection'}
+                                                  />
+                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                </div>
+                                              ))
+                                          ) : !holdingsDetails ? (
+                                            <div className='form-field-group'>
+                                              <Form.Control
+                                                onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
+                                                type='number'
+                                                defaultValue={0}
+                                                disabled={new Date(`Dec ${item}`) > new Date()}
+                                              />
+                                              <span className='input-add-on'>{currencySymbol}</span>
+                                            </div>
+                                          ) : (
+                                              <DisabledInput currencySymbol={currencySymbol} />
+                                            )}
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                                <div className='col-sm'>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className='col-sm'>Month</div>
-                                    <div className='col-sm'>Amount</div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Jul ${item}`)].join(' ')}>July</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Jul ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              <Form.Control
-                                                onChange={handleMonthlyChange}
-                                                type='number'
-                                                id={`Jul ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
-                                            </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Jul ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Aug ${item}`)].join(' ')}>August</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Aug ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              <Form.Control
-                                                onChange={handleMonthlyChange}
-                                                type='number'
-                                                id={`Aug ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
-                                            </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Aug ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Sep ${item}`)].join(' ')}>September</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Sep ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              <Form.Control
-                                                onChange={handleMonthlyChange}
-                                                type='number'
-                                                id={`Sep ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
-                                            </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Sep ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Oct ${item}`)].join(' ')}>October</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Oct ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              <Form.Control
-                                                onChange={handleMonthlyChange}
-                                                type='number'
-                                                id={`Oct ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
-                                            </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Oct ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Nov ${item}`)].join(' ')}>November</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Nov ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              <Form.Control
-                                                onChange={handleMonthlyChange}
-                                                type='number'
-                                                id={`Nov ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
-                                            </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Nov ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Dec ${item}`)].join(' ')}>December</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length >
-                                      0 ? (
-                                        values.originalValues
-                                          .filter((i: any) => i.interval === `Dec ${item}`)
-                                          .map((i: any, k: number) => (
-                                            <div className='form-field-group' key={k}>
-                                              <Form.Control
-                                                onChange={handleMonthlyChange}
-                                                type='number'
-                                                id={`Dec ${item}`}
-                                                value={i.value}
-                                                disabled={i.type === 'projection'}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
-                                            </div>
-                                          ))
-                                      ) : !holdingsDetails ? (
-                                        <div className='form-field-group'>
-                                          <Form.Control
-                                            onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
-                                            type='number'
-                                            defaultValue={0}
-                                            disabled={new Date(`Dec ${item}`) > new Date()}
-                                          />
-                                          <span className='input-add-on'>{currencySymbol}</span>
-                                        </div>
-                                      ) : (
-                                        <DisabledInput currencySymbol={currencySymbol} />
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
+                              )}
                           </Tab>
                         ))}
                         <Tab title=''></Tab>
@@ -2058,10 +2055,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                           <span className='ml-1'>Saving...</span>
                         </>
                       ) : (
-                        <>
-                          Save<span className='hide-sm ml-1'>Changes</span>
-                        </>
-                      )}
+                          <>
+                            Save<span className='hide-sm ml-1'>Changes</span>
+                          </>
+                        )}
                     </button>
                   </div>
                 </div>
