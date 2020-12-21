@@ -187,7 +187,9 @@ button.hidden {
   border-radius: 4px;
 }
 .signup-done-modal-logo {
-  margin-bottom: 32px;
+  margin-bottom: 20px;
+  max-height: 40px;
+  display: flex;
 }
 .modal-wrapper.signup-modal h4 {
   font-size: 2rem;

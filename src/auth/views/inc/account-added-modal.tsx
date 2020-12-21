@@ -18,12 +18,11 @@ const AccountAddedModal: React.FC<Props> = ({ accountAddedModal, handleSuccess }
   }
 
   return (
-    <Modal {...accountAddedModal.props} title='' size='lg' onSuccess={handleSuccess} canBeClosed>
-      <div className='modal-wrapper signup-modal account-added-modal'>
-        <div className='account-modal-img-wrapper'>
+    <Modal {...accountAddedModal.props} title='Account Added!' size='lg' onSuccess={handleSuccess} canBeClosed>
+      <div className='modal-wrapper signup-modal'>
+        <div className='signup-done-modal-logo'>
           <img src={account.providerLogo} alt={`${account.accountName}`} />
         </div>
-        <h1>Account Added!</h1>
         <p>
           Money Minx works best when you add all of your accounts so you see your full financial picture. Do you want to
           add more accounts now?
