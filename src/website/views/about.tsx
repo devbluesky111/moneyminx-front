@@ -52,7 +52,7 @@ export const AboutTopSection = () => {
             </p>
             </div>
             <Link to='/signup'>
-              <button className='mm-btn-animate mm-btn-primary'>Getting Started</button>
+              <button className='mm-btn-animate mm-btn-primary'>Get Started</button>
             </Link>
             <p className='info-text'>No credit card needed.</p>
           </div>
