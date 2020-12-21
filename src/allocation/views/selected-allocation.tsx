@@ -112,7 +112,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
               dateFormat='MM/yyyy'
               showMonthYearPicker
               minDate={lastAvailableDate}
-              maxDate={new Date()}
+              maxDate={getNextMonth(new Date())}
               onChange={(val: Date) => {
                 if (validateDate(val)) {
                   setDate(getLastDateOfMonth(val));
