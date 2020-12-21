@@ -311,7 +311,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   };
 
   if (loading || fetchingNewAccounts) {
-    return <LoadingScreen />;
+    return <LoadingScreen onAccountFetching />;
   }
 
   return (
