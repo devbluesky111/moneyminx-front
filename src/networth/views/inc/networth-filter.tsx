@@ -248,6 +248,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
                     type='text'
                     className={['month_year', fc('fFromDate')].join(' ')}
                     value={fFromDate ? getMonthYear(fFromDate) : getMonthYear(fromDate)}
+                    aria-label='From Date Filter'
                     readOnly
                   />
                 </div>
@@ -273,6 +274,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
                     type='text'
                     className={['month_year', fc('fToDate')].join(' ')}
                     value={getMonthYear(fToDate)}
+                    aria-label='To Date Filter'
                     readOnly
                   />
                 </div>
