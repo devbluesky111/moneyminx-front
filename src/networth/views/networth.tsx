@@ -10,38 +10,45 @@ import { useAlert } from 'common/components/alert';
 import { useModal } from 'common/components/modal';
 import useSettings from 'setting/hooks/useSettings';
 import useNetworth from 'networth/hooks/useNetworth';
+import useAnalytics from 'common/hooks/useAnalytics';
 import NetworthLayout from 'networth/networth.layout';
 import { isCurrent, gc } from 'common/interval-parser';
+import useSearchParam from 'auth/hooks/useSearchParam';
 import { AccountCategory } from 'networth/networth.enum';
+import useInitialModal from 'auth/hooks/useInitialModal';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getCurrencySymbol } from 'common/currency-helper';
 import MeasureIcon from 'assets/images/networth/measure.svg';
 import BlurChart from 'assets/images/networth/chart-blur.png';
 import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
 import { fNumber, numberWithCommas } from 'common/number.helper';
+import AccountAddedModal from 'auth/views/inc/account-added-modal';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
 import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
 
 import NetworthHead from './inc/networth-head';
+import { Placeholder } from './inc/placeholder';
 import NetworthFilter from './inc/networth-filter';
 import NetworthBarGraph from './networth-bar-graph';
-import useAnalytics from '../../common/hooks/useAnalytics';
-import { Placeholder } from './inc/placeholder';
 import NetworthSkeleton from './inc/networth-skeleton';
+
+interface IState {
+  state: { isFromFastlink: boolean };
+}
 
 const Networth = () => {
   useProfile();
   const history = useHistory();
-  const location = useLocation();
   const { data } = useSettings();
-  const [currencySymbol, setCurrencySymbol] = useState<string>('');
+  const { event } = useAnalytics();
+  const { loading } = useNetworth();
   const connectionAlert = useAlert();
   const signupDoneModal = useModal();
-  const { event } = useAnalytics();
-
-  const { loading } = useNetworth();
+  const accountAddedModal = useModal();
   const { onboarded } = useAuthState();
+  const { state }: IState = useLocation();
+  const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const {
     accounts,
     networth,
@@ -54,20 +61,13 @@ const Networth = () => {
   const dispatch = useNetworthDispatch();
   const [loadCounter, setCounter] = useState(0);
 
-  const params = new URLSearchParams(location.search);
-  const from = params.get('from');
+  const from = useSearchParam('from');
+  const isFromFastlink = state?.isFromFastlink;
+  const isSignupModal = !isFromFastlink && from === 'accountSettings' && onboarded !== undefined && onboarded === false;
 
-  useEffect(() => {
-    if (from === 'accountSettings' && !onboarded) {
-      signupDoneModal.open();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [from]);
-
-  useEffect(() => {
-    connectionAlert.open();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useInitialModal(true, connectionAlert);
+  useInitialModal(isFromFastlink, accountAddedModal);
+  useInitialModal(isSignupModal, signupDoneModal);
 
   useEffect(() => {
     if (data) {
@@ -550,6 +550,7 @@ const Networth = () => {
         {/*<ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />*/}
 
         <SignUpDoneModal signupModal={signupDoneModal} handleSuccess={gotoConnectAccount} />
+        <AccountAddedModal accountAddedModal={accountAddedModal} handleSuccess={gotoConnectAccount} />
       </section>
     </NetworthLayout>
   );
