@@ -21,10 +21,10 @@ import { ClassificationsSelectInput } from './classifications.select.input';
 import { HoldingTypeSelectInput } from './holding-type-select.input';
 
 export const foramtHoldingType = (str: string) => {
-  if (['CD', 'ETF', 'ETN'].includes(str)) {
+  if (['CD', 'ETF', 'ETN', 'REMIC'].includes(str)) {
     return str;
   }
-  if (['cd', 'etf', 'etn'].includes(str)) {
+  if (['cd', 'etf', 'etn', 'remic'].includes(str)) {
     return str.toUpperCase();
   }
   if (!str) {

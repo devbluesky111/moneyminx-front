@@ -14,7 +14,7 @@ export const HoldingTypeSelectInput: React.FC<HoldingTypeSelectInputProps> = ({ 
   const [show, setShow] = useState(false);
 
   for (let i = 0; i < args.length; i++) {
-    if (args[i] === 'CD' || args[i] === 'ETF' || args[i] === 'ETN') {
+    if (args[i] === 'CD' || args[i] === 'ETF' || args[i] === 'ETN' || args[i] === 'REMIC') {
       args[i] = args[i].toLowerCase();
     }
   }
