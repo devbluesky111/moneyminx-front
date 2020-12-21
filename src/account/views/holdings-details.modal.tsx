@@ -1060,7 +1060,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='col-sm-3'>Type</div>
                                 <div className='col-sm-6'>
                                   <div className='form-field-group'>
-                                    <SelectInput
+                                    <HoldingTypeSelectInput
                                       args={holdingTypes}
                                       onChange={handleSelectChange}
                                       value={values.holdingType}
@@ -1109,24 +1109,20 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <span className='input-add-on'>{currencySymbol}</span>
                                   </div>
                                 </div>
-
-                                <div className='row m-y-6 align-items-center'>
-                                  <div className='col-sm-3'>Market Value</div>
-                                  <div className='col-sm-6'>{currencySymbol}{numberWithCommas(fNumber(values.price * values.quantity, 2))}</div>
-                                </div>
-                                <div className='row m-t-7 align-items-center'>
-                                  <div className='col-sm-3'>Gain / loss</div>
-                                  <div
-                                    className={[
-                                      'col-sm-6',
-                                      (values.price - values.costBasis) * values.quantity >= 0
-                                        ? 'text-green'
-                                        : 'text-danger',
-                                    ].join(' ')}
-                                  >
-                                    {currencySymbol}{numberWithCommas(fNumber((values.price - values.costBasis) * values.quantity, 2))}
-                                  </div>
-
+                              </div>
+                              <div className='row my-4 align-items-center'>
+                                <div className='col-sm'>Market Value</div>
+                                <div className='col-sm'>{currencySymbol}{numberWithCommas(fNumber(values.price * values.quantity, 2))}</div>
+                                <div className='col-sm'>Gain / loss</div>
+                                <div
+                                  className={[
+                                    'col-sm',
+                                    (values.price - values.costBasis) * values.quantity >= 0
+                                      ? 'text-green'
+                                      : 'text-danger',
+                                  ].join(' ')}
+                                >
+                                  {currencySymbol}{numberWithCommas(fNumber((values.price - values.costBasis) * values.quantity, 2))}
                                 </div>
                               </div>
                             </div>
