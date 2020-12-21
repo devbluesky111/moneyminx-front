@@ -118,11 +118,25 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     if (holdingsDetails) {
       Object.keys(holdingsDetails?.classifications).forEach((key: any) => {
         const value = (holdingsDetails?.classifications as any)[key];
+        let defaultClassificationExist = false;
         for (let i = 0; i < value.length; i++) {
           if (value[i].classificationValue === 'Unclassified') {
             value.splice(i, 1);
             i--;
           }
+          if (value[i] && value[i].classificationValue === '') {
+            defaultClassificationExist = true;
+          }
+        }
+        if (!defaultClassificationExist) {
+          value.push({
+            accountId: holdingsDetails?.accountId,
+            allocation: 0,
+            classificationType: key,
+            classificationValue: '',
+            positionId: holdingsDetails?.id,
+            yodleeId: null,
+          })
         }
       });
     }
@@ -227,19 +241,20 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         //     return;
         // }
 
-        let possible = true;
-
         let _classifications: any[] = [];
         Object.keys(values.originalClassifications).forEach((key: any) => {
           const value = (values.originalClassifications as any)[key];
-          value.forEach((element: any) => {
-            if (!element.classificationValue) {
-              alert('Please select type or remove it!');
-              possible = false;
-              return;
+          for (let i = 0; i < value.length; i++) {
+            if (!value[i].classificationValue) {
+              value.splice(i, 1);
+              i--;
             }
-            _classifications.push(element);
-          });
+          }
+          for (let i = 0; i < value.length; i++) {
+            if (value[i]) {
+              _classifications.push(value[i]);
+            }
+          }
 
           let allocation = 0;
           switch (key) {
@@ -265,10 +280,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
             yodleeId: null,
           });
         });
-
-        if (!possible) {
-          return;
-        }
 
         let _values: any[] = [];
 
@@ -375,14 +386,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
         const addNewClassification = (tabName: string) => {
           let _classifications = values.originalClassifications;
-          let sum = 0;
-          for (let i = 0; i < values.originalClassifications[`${tabName}`].length; i++) {
-            sum += values.originalClassifications[`${tabName}`][i].allocation;
-          }
+          // let sum = 0;
+          // for (let i = 0; i < values.originalClassifications[`${tabName}`].length; i++) {
+          //   sum += values.originalClassifications[`${tabName}`][i].allocation;
+          // }
 
           _classifications[`${tabName}`].push({
             accountId: holdingsDetails?.accountId,
-            allocation: sum > 100 ? 0 : 100 - sum,
+            // allocation: sum > 100 ? 0 : 100 - sum,
+            allocation: 0,
             classificationType: `${tabName}`,
             classificationValue: '',
             positionId: holdingsDetails?.id,
