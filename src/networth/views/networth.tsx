@@ -63,7 +63,7 @@ const Networth = () => {
 
   const from = useSearchParam('from');
   const isFromFastlink = state?.isFromFastlink;
-  const isSignupModal = from === 'accountSettings' && onboarded !== undefined && onboarded === false;
+  const isSignupModal = !isFromFastlink && from === 'accountSettings' && onboarded !== undefined && onboarded === false;
 
   useInitialModal(true, connectionAlert);
   useInitialModal(isFromFastlink, accountAddedModal);
