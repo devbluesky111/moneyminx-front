@@ -304,7 +304,7 @@ const AccountDetail: React.FC = () => {
                   <SettingsGear className='float-left mr-2 settings-gear-button' onClick={() => setAccSetting(true)} />
                   <ul>
                     <li>{AccountDetails?.accountName}</li>
-                    <li>x{AccountDetails?.accountNumber.slice(4) || '----'}</li>
+                    {AccountDetails?.accountNumber? <li>{AccountDetails?.accountNumber.slice(4)}</li> : null}
                     <li>{AccountDetails?.category?.mmCategory}</li>
                     <li>{AccountDetails?.category?.mmAccountType}</li>
                     {AccountDetails?.category?.mmAccountSubType && (
