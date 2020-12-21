@@ -468,35 +468,35 @@ const AccountDetail: React.FC = () => {
                   <ul>
                     {AccountDetails?.category?.mmCategory === 'Investment Assets' && (
                       <li className='inv-data'>
-                        <span>Value</span>
-                        <h3>
+                        <span className='graphbox-label'>Value</span>
+                        <span className='graphbox-amount'>
                           {currencySymbol}
                           {curAccountHoldingsItem?.[0]?.value
                             ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
                             : 0}
-                        </h3>
+                        </span>
                       </li>
                     )}
                     {AccountDetails?.category?.mmCategory === 'Other Assets' && (
                       <li className='other-data'>
-                        <span>Value</span>
-                        <h3>
+                        <span className='graphbox-label'>Value</span>
+                        <span className='graphbox-amount'>
                           {currencySymbol}
                           {curAccountHoldingsItem?.[0].value
                             ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
                             : 0}
-                        </h3>
+                        </span>
                       </li>
                     )}
                     {AccountDetails?.category?.mmCategory === 'Liabilities' && (
                       <li className='lty-data'>
-                        <span>Value</span>
-                        <h3>
+                        <span className='graphbox-label'>Value</span>
+                        <span className='graphbox-amount'>
                           {currencySymbol}
                           {curAccountHoldingsItem?.[0].value
                             ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
                             : 0}
-                        </h3>
+                        </span>
                       </li>
                     )}
                   </ul>

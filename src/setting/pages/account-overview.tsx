@@ -177,7 +177,8 @@ export const ManualAccounts: React.FC<ManualAccountProps> = ({
           <div className='col-12 col-md-6' />
           <div className='col-12 col-md-6 text-md-right'>
             <button
-              className='btn text-danger mm-button__flat mm-account-overview__delete-link '
+              className='btn text-danger mm-button__flat mm-account-overview__delete-link'
+              aria-label='Delete Manual Account'
               onClick={() => {
                 removeAccounts(manualAccountList);
               }}
@@ -384,7 +385,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                           <Refresh />
                         </div>*/}
                   <div className='col-12 col-md-5 order-md-1 text-md-right pt-2 pt-md-0'>
-                    <small className='text-gray'>
+                    <small className='text--grayText'>
                       Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}
                     </small>
                   </div>
@@ -468,7 +469,7 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
       <div className='col-3 col-md-2'>
         <div className='float-right'>
           {!reviewSubscriptionFlag ? (
-            <Link to={`/account-details/${account.id}`}>
+            <Link to={`/account-details/${account.id}`} aria-label='Edit Account'>
               <IconEdit className='edit-icon' />
             </Link>
           ) : null}

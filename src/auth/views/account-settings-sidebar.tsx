@@ -162,9 +162,9 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
       )}
 
       <div className='credentials-content'>
-        <div className='logo-img-wrapper'>
+        <Link to='/net-worth' className='logo-img-wrapper'>
           <LogoImg className='auth-logo' />
-        </div>
+        </Link>
         {selectedAccount ? (
           selectedAccount.isManual ? (
             <div className='top-content-wrap'>
