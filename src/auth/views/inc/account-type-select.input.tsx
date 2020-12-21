@@ -1,30 +1,12 @@
+import { getValue } from 'common/account-type.helper';
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
-
-import { formater } from 'common/common-helper';
 
 interface AccountTypeSelectInputProps {
   args: any[];
   onChange: (e: React.ChangeEvent<any>) => void;
   value: string;
   name: string;
-}
-
-const getValue = (val: string) => {
-  let fVal = formater(val);
-  switch (fVal) {
-    case 'Fsa': fVal = 'FSA'; break;
-    case 'Ppf': fVal = 'PPF'; break;
-    case 'Cd': fVal = 'CD'; break;
-  }
-  if (fVal.includes(' Isa')) {
-    fVal = fVal.replace(' Isa', ' ISA');
-  }
-  if (fVal.includes(' Ira')) {
-    fVal = fVal.replace(' Ira', ' IRA');
-  }
-
-  return fVal;
 }
 
 export const AccountTypeSelectInput: React.FC<AccountTypeSelectInputProps> = ({ name, args, onChange, value }) => {
