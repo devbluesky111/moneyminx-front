@@ -10,6 +10,7 @@ import { CurrencyOptions } from 'auth/enum/currency-options';
 import { enumerateStr } from 'common/common-helper';
 import { getConnectionInfo, getManualAccountType, postManualAccount } from 'api/request.api';
 import { SelectInput } from 'common/components/input/select.input';
+import { AccountTypeSelectInput } from './account-type-select.input';
 
 interface SettingModalProps {
   manualAccountModal: ModalType;
@@ -53,7 +54,6 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
     values.nickname = values.accountName;
     const { data: res, error: err } = await postManualAccount(values);
     if (!err) {
-      console.log(res);
       await getConnectionInfo();
       setValues(initialValues);
       setLoading(false);
@@ -118,12 +118,11 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
             <div className='row-set'>
               <Form.Group controlId='ManualAccountForm.AccountType' className='child'>
                 <Form.Label className='form-subheading'>Account Type</Form.Label>
-                <SelectInput
+                <AccountTypeSelectInput
                   args={AccountTypes}
                   onChange={handleChange}
                   value={values.yodleeAccountType}
                   name='yodleeAccountType'
-                  format={true}
                 />
               </Form.Group>
               <Form.Group controlId='ManualAccountForm.AccountNumber' className='child'>
