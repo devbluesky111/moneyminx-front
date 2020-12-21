@@ -167,7 +167,11 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
                             onClick={() => toggleAllocation(allocationKey)}
                             role='button'
                           />
-                          <span role='button'>{allocationKey}</span>
+                          <span
+                            onClick={() => toggleAllocation(allocationKey)}
+                            role='button'>
+                            {allocationKey}
+                          </span>
                         </td>
                       </tr>
                     </tbody>

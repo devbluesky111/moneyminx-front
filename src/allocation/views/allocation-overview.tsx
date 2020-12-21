@@ -23,7 +23,7 @@ import { ReactComponent as AllocationChartSVG } from 'assets/images/allocation/a
 import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/allocation-legend.svg';
 
 import AllocationLegend from './allocation-legend';
-import { SelectedAllocations } from './selected-allocation';
+import { SelectedAllocations } from './previous-allocation';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
   const chartShareModal = useModal();
@@ -167,7 +167,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                                       onClick={() => toggleAllocation(allocationKey)}
                                       role='button'
                                     />
-                                    <span onClick={() => fieldChangeModal.open()} role='button'>
+                                    <span onClick={() => toggleAllocation(allocationKey)}
+                                          role='button'>
                                       {allocationKey}
                                     </span>
                                   </td>
