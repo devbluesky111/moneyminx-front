@@ -195,7 +195,7 @@ export const ConnectAccountMainSection = () => {
   };
 
   if (loading || accountFetching) {
-    return <LoadingScreen />;
+    return <LoadingScreen onAccountFetching />;
   }
 
   return (
