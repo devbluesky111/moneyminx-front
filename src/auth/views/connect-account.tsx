@@ -40,16 +40,17 @@ const ConnectAccount = () => {
 
   const closeRightNav = () => {
     setOpenRightNav(false);
-  }
+  };
 
   return (
     <AuthLayout>
-      {onboarded ?
+      {onboarded ? (
         <AppHeader
-        toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
-        toggleRightMenu={() => setOpenRightNav(!openRightNav)}
-        open={openRightNav}
-      /> : null}
+          toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
+          toggleRightMenu={() => setOpenRightNav(!openRightNav)}
+          open={openRightNav}
+        />
+      ) : null}
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-slider-bg-overlay' onClick={closeRightNav} />
       <ConnectAccountMainSection />
@@ -76,7 +77,7 @@ export const ConnectAccountMainSection = () => {
   const [availableNumber, setAvailableNumber] = useState<number>(0);
   const [manualLoading, setManualLoading] = useState<boolean>(false);
   const [zaboLoading, setZaboLoading] = useState<boolean>(false);
-  const { loading: accountFetching, fetchNewAccounts } = useAccounts();
+  const { loading: accountFetching, fetchLatestProviderAccounts } = useAccounts();
 
   const fastlinkModal = useModal();
   const history = useHistory();
@@ -179,7 +180,7 @@ export const ConnectAccountMainSection = () => {
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
     const { error, data } = await getRefreshedAccount({ dispatch });
-    await fetchNewAccounts();
+    await fetchLatestProviderAccounts();
     if (data) {
       setLoading(false);
     }
@@ -202,9 +203,11 @@ export const ConnectAccountMainSection = () => {
       <div>
         <div className='row login-wrapper'>
           <div className='guide-content'>
-            {!onboarded ? <Link to='/net-worth'>
-              <LogoImg className='icon auth-logo' />
-            </Link> : null}
+            {!onboarded ? (
+              <Link to='/net-worth'>
+                <LogoImg className='icon auth-logo' />
+              </Link>
+            ) : null}
             <div className='auth-left-content'>
               <h1>Three easy steps to get started with Money Minx</h1>
               <ul>
@@ -257,7 +260,9 @@ export const ConnectAccountMainSection = () => {
                     type='button'
                     onClick={handleCryptoExchange}
                   >
-                    {zaboLoading && <span className='spinner-grow spinner-grow-sm mr-2' role='status' aria-hidden='true' />}
+                    {zaboLoading && (
+                      <span className='spinner-grow spinner-grow-sm mr-2' role='status' aria-hidden='true' />
+                    )}
                     Add Crypto Exchanges
                   </button>
                 </MMToolTip>
