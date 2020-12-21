@@ -136,12 +136,25 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                     </div>
                   </div>
                   <div className='allocation-content'>
-                    <div
-                      className='text-center text-md-left d-xl-block d-md-flex align-items-md-center p-b-4 allocation-page-chart-wrapper'
-                      id='current-allocation-pie-chart'
-                    >
-                      <MMPieChart chartData={chartData} currencySymbol={currencySymbol} />
-                      <AllocationLegend chartData={chartData} currencySymbol={currencySymbol} />
+                    <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center mm-allocation-overview__block-chart-overview'>
+                      <AllocationChartSVG className='mm-allocation-overview__block--chart' />
+                      <AllocationLegendSVG className='mm-allocation-overview__block--legend' />
+                      {((Object.keys(allocations).length === 0) && chartData.length === 0) ?
+                        <div className='mm-allocation-overview__block-element text-center'>
+                          <div className='mm-allocation-overview__block-element--middle'>
+                            <div className='d-inline-flex align-items-center'>
+                              <div className='mm-allocation-overview__block-element--text ml-2'>No enough data</div>
+                            </div>
+                            <p>Historical charts will become available once your cross a month end.</p>
+                          </div>
+                        </div> :
+                        <div
+                          className='text-center text-md-left d-xl-block d-md-flex align-items-md-center p-b-4 allocation-page-chart-wrapper'
+                          id='current-allocation-pie-chart'
+                        >
+                          <MMPieChart chartData={chartData} currencySymbol={currencySymbol} />
+                          <AllocationLegend chartData={chartData} currencySymbol={currencySymbol} />
+                        </div>}
                     </div>
                     <div className='mm-allocation-overview__table'>
                       <table>
