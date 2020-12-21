@@ -34,6 +34,7 @@ import { ReactComponent as CheckCircle } from 'assets/images/account/check-circl
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { getAccountDetails, getAccountHoldings, getAccountActivity, getFastlinkUpdate } from 'api/request.api';
 import { getDate, getMonthYear, getQuarter, getRelativeDate, getYear, parseDateFromString } from 'common/moment.helper';
+import { Placeholder } from 'networth/views/inc/placeholder';
 
 import AccountTable from './account-table';
 import ActivityTable from './activity-table';
@@ -463,8 +464,9 @@ const AccountDetail: React.FC = () => {
                 </div>
               </div>
 
-              <div className='account-ct-box mb-40'>
-                <div className='graphbox'>
+                <div className={['account-ct-box mb-40', curAccountHoldingsItem?.[0].value === 0 ? 'ct-box-placeholder' : ''].join(' ')}>
+                  {curAccountHoldingsItem?.[0].value !== 0 ? (
+                  <div className='graphbox'>
                   <ul>
                     {AccountDetails?.category?.mmCategory === 'Investment Assets' && (
                       <li className='inv-data'>
@@ -511,6 +513,9 @@ const AccountDetail: React.FC = () => {
                     )}
                   </div>
                 </div>
+                  ) : (
+                    <Placeholder type='acctDetail'/>
+                  )}
               </div>
 
               <div className='d-flex justify-content-between flex-wrap'>
