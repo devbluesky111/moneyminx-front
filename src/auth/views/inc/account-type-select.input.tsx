@@ -1,30 +1,20 @@
+import { getValue } from 'common/account-type.helper';
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 
-interface ClassificationsSelectInputProps {
+interface AccountTypeSelectInputProps {
   args: any[];
   onChange: (e: React.ChangeEvent<any>) => void;
   value: string;
-  id: string;
-  tabName: string;
-  classifications: any
+  name: string;
 }
 
-export const ClassificationsSelectInput: React.FC<ClassificationsSelectInputProps> = ({ args, onChange, value, id, tabName, classifications }) => {
+export const AccountTypeSelectInput: React.FC<AccountTypeSelectInputProps> = ({ name, args, onChange, value }) => {
   const [show, setShow] = useState(false);
-
-  const checkDisabled = (tabName: string, element: string) => {
-    for (let i = 0; i < classifications[`${tabName}`].length; i++) {
-      if (classifications[`${tabName}`][i].classificationValue === element) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   return (
     <Dropdown className='drop-box dropdown-select-input' onToggle={(nextShow) => setShow(nextShow)} show={show}>
-      <Dropdown.Toggle className='dropdown-toggle'>{value}</Dropdown.Toggle>
+      <Dropdown.Toggle className='dropdown-toggle'>{getValue(value)}</Dropdown.Toggle>
       <Dropdown.Menu className='mm-dropdown-menu'>
         <ul className='checkbox-list single'>
           {args.sort()?.map((val, index) => {
@@ -32,6 +22,7 @@ export const ClassificationsSelectInput: React.FC<ClassificationsSelectInputProp
               <li key={index}>
                 <label>
                   <input
+                    name={name}
                     type='checkbox'
                     aria-describedby={val}
                     value={val}
@@ -41,10 +32,8 @@ export const ClassificationsSelectInput: React.FC<ClassificationsSelectInputProp
                       onChange(e);
                       setShow(false);
                     }}
-                    id={id}
-                    disabled={checkDisabled(tabName, val)}
                   />
-                  <span>{val}</span>
+                  <span>{getValue(val)}</span>
                 </label>
               </li>
             );

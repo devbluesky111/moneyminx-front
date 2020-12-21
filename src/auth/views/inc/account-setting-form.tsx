@@ -353,7 +353,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleAccountChange}
                       value={values.mmAccountType}
                       name='mmAccountType'
-                      single={true}
                     />
                   </li>
 
@@ -365,7 +364,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                         onChange={handleSubAccountChange}
                         value={values.mmAccountSubType}
                         name='mmAccountSubType'
-                        single={true}
                       />
                     </div>
                   </li>
@@ -376,7 +374,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleSelectChange}
                       value={values.currency}
                       name='currency'
-                      single={true}
                     />
                   </li>
 
@@ -387,7 +384,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleSelectChange}
                       value={values.liquidity}
                       name='liquidity'
-                      single={true}
                     />
                   </li>
                 </ul>
