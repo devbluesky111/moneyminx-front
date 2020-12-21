@@ -27,7 +27,7 @@ export const ClassificationsSelectInput: React.FC<ClassificationsSelectInputProp
       <Dropdown.Toggle className='dropdown-toggle'>{value}</Dropdown.Toggle>
       <Dropdown.Menu className='mm-dropdown-menu'>
         <ul className='checkbox-list single'>
-          {args?.map((val, index) => {
+          {args.sort()?.map((val, index) => {
             return (
               <li key={index}>
                 <label>
