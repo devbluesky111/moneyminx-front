@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import useSettings from 'setting/hooks/useSettings';
 import SettingModal from 'allocation/modal/setting-modal';
 import ChartShareModal from 'allocation/modal/chart-share-modal';
-import FieldChangeModal from 'allocation/modal/field-change-modal';
 import SelectAccountModal from 'allocation/modal/select-account.modal';
 import { shortId } from 'common/common-helper';
 import { useModal } from 'common/components/modal';
@@ -27,7 +26,6 @@ import { SelectedAllocations } from './previous-allocation';
 
 const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
   const chartShareModal = useModal();
-  const fieldChangeModal = useModal();
   const chartSettingModal = useModal();
   const selectAccountModal = useModal();
   const { data } = useSettings();
@@ -263,7 +261,6 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
             chartComponent={<MMPieChart chartData={chartData} currencySymbol={currencySymbol} share />}
             chartLegendComponent={<AllocationLegend chartData={chartData} currencySymbol={currencySymbol} sharing />}
           />
-          <FieldChangeModal fieldChangeModal={fieldChangeModal} />
           <SelectAccountModal selectAccountModal={selectAccountModal} multiAccounts={multiAccounts} />
         </section >
       </div >
