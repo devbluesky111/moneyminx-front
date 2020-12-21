@@ -115,7 +115,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
           <form onSubmit={props.handleSubmit}>
             <Modal
               {...activityDetailsModal.props}
-              title={activityDetails?.description || 'New Activity'}
+              title={activityDetails ? 'Edit Activity' : 'New Activity'}
               size='md'
               canBeClosed
               onClose={() => activityDetailsModal.close()}
