@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 
 import { foramtHoldingType } from 'account/views/holdings-details.modal';
+import { HoldingsTypeUpperOptions } from 'account/enum/holdings-type-upper-options';
+import { enumerateStr } from 'common/common-helper';
 
 interface HoldingTypeSelectInputProps {
   args: any[];
@@ -14,7 +16,7 @@ export const HoldingTypeSelectInput: React.FC<HoldingTypeSelectInputProps> = ({ 
   const [show, setShow] = useState(false);
 
   for (let i = 0; i < args.length; i++) {
-    if (args[i] === 'CD' || args[i] === 'ETF' || args[i] === 'ETN' || args[i] === 'REMIC') {
+    if (enumerateStr(HoldingsTypeUpperOptions).includes(args[i])) {
       args[i] = args[i].toLowerCase();
     }
   }

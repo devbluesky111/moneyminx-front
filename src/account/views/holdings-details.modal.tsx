@@ -11,7 +11,7 @@ import { CurrencyOptions } from 'auth/enum/currency-options';
 import { getDateFormattedString } from 'common/moment.helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { SelectInput } from 'common/components/input/select.input';
-import { formater, getUnique } from 'common/common-helper';
+import { enumerateStr, formater, getUnique } from 'common/common-helper';
 import { DisabledInputProps, HoldingsDetailsModalProps } from 'account/account.type';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
 import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
@@ -19,12 +19,13 @@ import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 
 import { ClassificationsSelectInput } from './classifications.select.input';
 import { HoldingTypeSelectInput } from './holding-type-select.input';
+import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum/holdings-type-upper-options';
 
 export const foramtHoldingType = (str: string) => {
-  if (['CD', 'ETF', 'ETN', 'REMIC'].includes(str)) {
+  if (enumerateStr(HoldingsTypeUpperOptions).includes(str)) {
     return str;
   }
-  if (['cd', 'etf', 'etn', 'remic'].includes(str)) {
+  if (enumerateStr(HoldingsTypeLowerOptions).includes(str)) {
     return str.toUpperCase();
   }
   if (!str) {
