@@ -4,7 +4,6 @@ import ReactDatePicker from 'react-datepicker';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useModal } from 'common/components/modal';
 import {
-  isAfter,
   isBefore,
   getNextMonth,
   getPreviousMonth,
@@ -69,9 +68,6 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
   };
 
   const validateDate = (_date: Date) => {
-    if (isAfter(_date)) {
-      return false;
-    }
 
     if (getNumberOfChartHistory() && isBefore(_date, getMonthSubtracted(getNumberOfChartHistory()))) {
       setIsDateValid(false);
@@ -101,9 +97,9 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
       <div className='allocation-card-top'>
         <div className='mm-allocation-overview__block--date'>
           <div className='selected-date-string'>
-            <span className='arrow-left' role='button' onClick={setPreviousMonth} />
+            {(lastAvailableDate && (new Date(date) > new Date(lastAvailableDate))) && <span className='arrow-left' role='button' onClick={setPreviousMonth} />}
             {getMonthYear(date || undefined)}
-            <span className='arrow-right' role='button' onClick={setNextMonth} />
+            {(new Date(date) < new Date()) && <span className='arrow-right' role='button' onClick={setNextMonth} />}
           </div>
           <span className='float-right mm-tooltip'>
             <ReactDatePicker
