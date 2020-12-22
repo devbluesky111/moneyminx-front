@@ -28,6 +28,7 @@ interface Props {
   type?: ModalTypeEnum;
   bgColor?: string;
   loading?: boolean;
+  yoddle?: boolean;
 }
 
 export interface ModalType {
@@ -50,11 +51,13 @@ const Modal: React.FC<Props> = ({
   size = 'md',
   backdrop = true,
   canBeClosed = false,
+  yoddle = false,
 }) => {
   const classNames = `${backdrop ? 'modal mm-modal-backdrop' : 'modal'} modal-${open ? 'show' : 'hide'}`;
   const modalClasses = `modal-dialog modal-dialog-centered modal-${size}`;
   const clickOutsideModalHandler = (event: any) => {
-    if (event?.target?.className === 'modal mm-modal-backdrop modal-show') {
+
+    if (!yoddle && event?.target?.className === 'modal mm-modal-backdrop modal-show') {
       onClose();
     }
   };
