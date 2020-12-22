@@ -8,10 +8,9 @@ interface ClassificationsSelectInputProps {
   id: string;
   tabName: string;
   classifications: any;
-  countryClick?: () => void;
 }
 
-export const ClassificationsSelectInput: React.FC<ClassificationsSelectInputProps> = ({ args, onChange, value, id, tabName, classifications, countryClick }) => {
+export const ClassificationsSelectInput: React.FC<ClassificationsSelectInputProps> = ({ args, onChange, value, id, tabName, classifications }) => {
   const [show, setShow] = useState(false);
 
   const checkDisabled = (tabName: string, element: string) => {
@@ -24,7 +23,7 @@ export const ClassificationsSelectInput: React.FC<ClassificationsSelectInputProp
   }
 
   return (
-    <Dropdown className='drop-box dropdown-select-input' onToggle={(nextShow) => { setShow(nextShow); countryClick?.() }} show={show}>
+    <Dropdown className='drop-box dropdown-select-input' onToggle={(nextShow) => setShow(nextShow)} show={show}>
       <Dropdown.Toggle className='dropdown-toggle'>{value}</Dropdown.Toggle>
       <Dropdown.Menu className='mm-dropdown-menu'>
         <ul className='checkbox-list single'>

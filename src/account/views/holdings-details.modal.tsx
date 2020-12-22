@@ -58,7 +58,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   const [classificationForTypes, setClassificationForTypes] = useState<string[]>([]);
   const [classificationForAssetClass, setClassificationForAssetClass] = useState<string[]>([]);
   const [classificationForCountry, setClassificationForCountry] = useState<string[]>([]);
-  const [originalClassificationForCountry, setOriginalClassificationForCountry] = useState<string[]>([]);
   const [classificationForRisk, setClassificationForRisk] = useState<string[]>([]);
   const [holdingTypes, setHoldingTypes] = useState<string[]>([]);
   const [unClassifiedTypeValue, setUnClassifiedTypeValue] = useState<number>(0);
@@ -89,7 +88,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
             break;
           case 'Country':
             setClassificationForCountry(data);
-            setOriginalClassificationForCountry(data);
             break;
           case 'Risk':
             setClassificationForRisk(data);
@@ -153,19 +151,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   } else {
     const cYear = new Date().getFullYear();
     yearsArr = [(cYear - 2).toString(), (cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()];
-  }
-
-  const keyboardEvents = (event: React.KeyboardEvent<any>) => {
-    event.persist();
-    if (event.key.length === 1 && event.key.toUpperCase() >= "A" && event.key.toUpperCase() <= "Z") {
-      let _classificationForCountry = [];
-      for (let i = 0; i < originalClassificationForCountry.length; i++) {
-        if (originalClassificationForCountry[i][0] === event.key.toUpperCase()) {
-          _classificationForCountry.push(originalClassificationForCountry[i])
-        }
-      }
-      setClassificationForCountry(_classificationForCountry);
-    }
   }
 
   return (
@@ -1967,7 +1952,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               {values.originalClassifications.Country.map((item: any, index: number) => (
                                 <div className='row pt-2 pb-2 align-items-center' key={index}>
                                   <div className='col-sm'>
-                                    <div className='form-field-group' onKeyPress={keyboardEvents}>
+                                    <div className='form-field-group'>
                                       <ClassificationsSelectInput
                                         args={classificationForCountry}
                                         onChange={(e) => handleClassificationsValueChange('Country', e)}
@@ -1975,7 +1960,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         id={item.classificationValue}
                                         tabName='Country'
                                         classifications={values.originalClassifications}
-                                        countryClick={() => setClassificationForCountry(originalClassificationForCountry)}
                                       />
                                     </div>
                                   </div>
