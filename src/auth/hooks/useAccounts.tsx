@@ -3,7 +3,7 @@ import { useState } from 'react';
 import useToast from 'common/hooks/useToast';
 import { useAuthDispatch } from 'auth/auth.context';
 import { setAccountSuccess } from 'auth/auth.actions';
-import { getLatestProviderAccounts, getNewAccounts } from 'api/request.api';
+import { getAccount, getLatestProviderAccounts, getNewAccounts } from 'api/request.api';
 
 /**
  * Each account related functions and data will reside here
@@ -32,6 +32,16 @@ const useAccounts = () => {
       setLoading(false);
       if (error) {
         return mmToast('Error occurred on fetching latest provider accounts', { type: 'error' });
+      }
+      dispatch(setAccountSuccess(data));
+      setAccounts(data);
+    },
+    fetchAccounts: async () => {
+      setLoading(true);
+      const { error, data } = await getAccount();
+      setLoading(false);
+      if (error) {
+        return mmToast('Error occurred on fetching Account', { type: 'error' });
       }
       dispatch(setAccountSuccess(data));
       setAccounts(data);

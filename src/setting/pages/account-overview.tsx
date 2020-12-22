@@ -1,26 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import { Account } from 'auth/auth.types';
-import useToast from 'common/hooks/useToast';
-import { events } from '@mm/data/event-list';
-import FastLinkModal from 'yodlee/fast-link.modal';
-import { getFastlinkUpdate } from 'api/request.api';
-import { groupByProviderName } from 'auth/auth.helper';
-import { getRelativeDate } from 'common/moment.helper';
-import { appRouteConstants } from 'app/app-route.constant';
-import DefaultAvatar from 'assets/icons/default-avatar.svg';
-import useGetSubscription from 'auth/hooks/useGetSubscription';
-import { pricingDetailConstant } from 'common/common.constant';
-import { fNumber, numberWithCommas } from 'common/number.helper';
-import { useAuthDispatch, useAuthState } from 'auth/auth.context';
-import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
-import { ReactComponent as IconEdit } from 'assets/icons/icon-edit.svg';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
-import { ReactComponent as DefaultProviderLogo } from 'assets/icons/mm-default-provider.svg';
-import { deleteAccounts, deleteAccountById, fetchConnectionInfo, getRefreshedAccount } from 'auth/auth.service';
-
 import {
   AccountRowProps,
   AccountCardProps,
@@ -29,14 +9,34 @@ import {
   AccountDialogBoxProps,
   SubscriptionConnectionWarningProps,
 } from 'setting/setting.type';
+import { Account } from 'auth/auth.types';
+import useToast from 'common/hooks/useToast';
+import { events } from '@mm/data/event-list';
+import { STATUS_CODE } from 'app/app.status';
 import useAccounts from 'auth/hooks/useAccounts';
 import LoadingScreen from 'common/loading-screen';
+import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
+import { getFastlinkUpdate } from 'api/request.api';
 import useAnalytics from 'common/hooks/useAnalytics';
+import { groupByProviderName } from 'auth/auth.helper';
+import { getRelativeDate } from 'common/moment.helper';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
+import { appRouteConstants } from 'app/app-route.constant';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import { Placeholder } from 'networth/views/inc/placeholder';
+import useGetSubscription from 'auth/hooks/useGetSubscription';
+import { pricingDetailConstant } from 'common/common.constant';
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
+import { ReactComponent as IconEdit } from 'assets/icons/icon-edit.svg';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
+import { ReactComponent as DefaultProviderLogo } from 'assets/icons/mm-default-provider.svg';
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
+import { deleteAccounts, deleteAccountById, fetchConnectionInfo, getRefreshedAccount } from 'auth/auth.service';
 
 export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscriptionFlag = false }) => {
   const history = useHistory();
@@ -218,7 +218,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   });
   const fastlinkModal = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchLatestProviderAccounts, loading: fetchingNewAccounts } = useAccounts();
+  const { fetchLatestProviderAccounts, fetchAccounts, loading: fetchingNewAccounts } = useAccounts();
 
   const needUpgrade = accountList.length >= availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
@@ -226,6 +226,12 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
+    if (STATUS_CODE.SERVER_ACCEPTED === error?.code) {
+      await fetchAccounts();
+      setLoading(false);
+
+      return history.push(appRouteConstants.auth.NET_WORTH);
+    }
     await fetchLatestProviderAccounts();
     setLoading(false);
 
@@ -245,20 +251,20 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
       return mmToast('Error Occurred to Get Fastlink', { type: 'error' });
     }
 
-    const fastLinkOptions: FastLinkOptionsType = {
+    const fLinkOptions: FastLinkOptionsType = {
       fastLinkURL: data.fastLinkUrl,
       token: data.accessToken,
       config: data.params,
     };
 
-    setFastLinkOptions(fastLinkOptions);
+    setFastLinkOptions(fLinkOptions);
 
     event(events.connectAccount);
 
     return fastlinkModal.open();
   };
 
-  let accountsByStatus: AccountByStatus = {
+  const accountsByStatus: AccountByStatus = {
     error: [],
     warning: [],
     success: [],
@@ -404,6 +410,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                         <span
                           className='purple-links update-credentials'
                           onClick={() => handleConnectAccount(group.accounts[0].id)}
+                          role='button'
                         >
                           Update Credentials
                         </span>
