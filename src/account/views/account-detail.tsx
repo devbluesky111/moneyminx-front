@@ -464,8 +464,8 @@ const AccountDetail: React.FC = () => {
                 </div>
               </div>
 
-                <div className={['account-ct-box mb-40', curAccountHoldingsItem?.[0].value === 0 ? 'ct-box-placeholder' : ''].join(' ')}>
-                  {curAccountHoldingsItem?.[0].value !== 0 ? (
+                <div className={['account-ct-box mb-40', AccountHoldings?.holdings.length === 0 ? 'ct-box-placeholder' : ''].join(' ')}>
+                  {AccountHoldings?.holdings.length !== 0 ? (
                   <div className='graphbox'>
                   <ul>
                     {AccountDetails?.category?.mmCategory === 'Investment Assets' && (
