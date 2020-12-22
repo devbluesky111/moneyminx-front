@@ -11,6 +11,7 @@ interface ClassificationsSelectInputProps {
 }
 
 export const ClassificationsSelectInput: React.FC<ClassificationsSelectInputProps> = ({ args, onChange, value, id, tabName, classifications }) => {
+  console.log(classifications)
   const [show, setShow] = useState(false);
 
   const checkDisabled = (tabName: string, element: string) => {
