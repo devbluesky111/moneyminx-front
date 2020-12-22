@@ -6,7 +6,7 @@
     left: 43%;
 
     @media(max-width: $desk) {
-      left: 32%;
+      left: 36%;
     }
   }
 
@@ -883,4 +883,13 @@
 
 .radio-custom input:checked + label::after {
   opacity: 1;
+}
+
+.delete-account-modal .modal.mm-modal-backdrop.modal-show{
+  @media(min-width: $med) {
+    width: 530px;
+  }
+  @media(min-width: $md) {
+    width: 665px;
+  }
 }

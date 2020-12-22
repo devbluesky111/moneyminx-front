@@ -48,7 +48,7 @@ axiosInstance.interceptors.response.use(
     const status = response.status;
 
     const retry = async () => {
-      await wait(5000);
+      await wait(10000);
 
       return axiosInstance(config);
     };
