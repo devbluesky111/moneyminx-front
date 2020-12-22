@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios, { AxiosError, AxiosResponse } from 'axios';
-
 import appEnv from 'app/app.env';
 import { storage } from 'app/app.storage';
 import { STATUS_CODE } from 'app/app.status';
 import { refreshAccessToken } from 'api/request.api';
 import { appRouteConstants } from 'app/app-route.constant';
 import { withError, withData, wait } from 'common/common-helper';
-
-import { urls } from './api.url';
 import { logger } from 'common/logger.helper';
 
-const MAX_TRIES = 7;
+import { urls } from './api.url';
+
+const MAX_TRIES = 10;
 const currentRetries: Record<string, number> = {};
 
 const axiosInstance = axios.create({
@@ -49,7 +48,7 @@ axiosInstance.interceptors.response.use(
     const status = response.status;
 
     const retry = async () => {
-      await wait(5000);
+      await wait(10000);
 
       return axiosInstance(config);
     };
