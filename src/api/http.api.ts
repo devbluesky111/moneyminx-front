@@ -2,7 +2,6 @@
 import appEnv from 'app/app.env';
 import { storage } from 'app/app.storage';
 import { STATUS_CODE } from 'app/app.status';
-import { logger } from 'common/logger.helper';
 import { refreshAccessToken } from 'api/request.api';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { appRouteConstants } from 'app/app-route.constant';
@@ -10,7 +9,7 @@ import { withError, withData, wait } from 'common/common-helper';
 
 import { urls } from './api.url';
 
-const MAX_TRIES = 2;
+const MAX_TRIES = 10;
 const currentRetries: Record<string, number> = {};
 
 const axiosInstance = axios.create({
