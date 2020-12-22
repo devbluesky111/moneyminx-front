@@ -314,12 +314,12 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 name='accountName'
                 placeholder='Sapphire Credit Card'
               />
-                {values.accountNumber?
-                  <div className='d-flex align-items-center justify-content-between'>
-                    <p>Last 4 Account Number</p>
-                    <p>{values.accountNumber.slice(4)}</p>
-                  </div>
-                  : null}
+              {values.accountNumber ?
+                <div className='d-flex align-items-center justify-content-between'>
+                  <p>Last 4 Account Number</p>
+                  <p>{values.accountNumber.slice(4)}</p>
+                </div>
+                : null}
               <div className='account-category'>
                 <span className='form-subheading'>
                   Account Category
@@ -386,6 +386,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       onChange={handleSelectChange}
                       value={values.liquidity}
                       name='liquidity'
+                      sort={false}
                     />
                   </li>
                 </ul>

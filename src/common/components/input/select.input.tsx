@@ -24,11 +24,12 @@ interface SelectInputProps {
   value: string;
   name: string;
   format?: boolean;
+  sort?: boolean;
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, value, format }) => {
+export const SelectInput: React.FC<SelectInputProps> = ({ name, args, onChange, value, format, sort = true }) => {
   const [show, setShow] = useState(false);
-  if (args) {
+  if (sort && args) {
     args.sort();
   }
   return (
