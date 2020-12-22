@@ -109,6 +109,10 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth, fCategori
     };
   });
 
+  const hasCategoryFiltered = (key: string) => {
+    return fCategories.length === 0 || fCategories.includes(key);
+  };
+
   return (
     <div className='responsive-container'>
       <ResponsiveContainer width='100%' height='100%'>
@@ -163,13 +167,13 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth, fCategori
           {(fCategories.length === 0 || fCategories.length === 3) && (
             <Area dataKey='networth' type='monotone' stroke='#534cea' strokeOpacity='0' fill='url(#colorUv)' />
           )}
-          {(fCategories.length === 0 || fCategories.includes('Investment Assets')) && (
+          {hasCategoryFiltered('Investment Assets') && (
             <Bar dataKey='investmentAssets' barSize={10} fill={BarChartColors.BLUE} radius={[2, 2, 0, 0]} />
           )}
-          {(fCategories.length === 0 || fCategories.includes('Other Assets')) && (
+          {hasCategoryFiltered('Other Assets') && (
             <Bar dataKey='otherAssets' barSize={10} fill={BarChartColors.CYAN} radius={[2, 2, 0, 0]} />
           )}
-          {(fCategories.length === 0 || fCategories.includes('Liabilities')) && (
+          {hasCategoryFiltered('Liabilities') && (
             <Bar dataKey='liabilities' barSize={10} fill={BarChartColors.RED} radius={[2, 2, 0, 0]} />
           )}
         </ComposedChart>
