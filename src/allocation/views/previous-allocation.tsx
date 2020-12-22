@@ -4,7 +4,6 @@ import ReactDatePicker from 'react-datepicker';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useModal } from 'common/components/modal';
 import {
-  isAfter,
   isBefore,
   getNextMonth,
   getPreviousMonth,
@@ -32,7 +31,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
   const { subscriptionDetail } = useAuthState();
   const [hidden, setHidden] = useState<string[]>(['']);
   const [isDateValid, setIsDateValid] = useState<boolean>(true);
-  const [date, setDate] = useState<Date>(getLastDateOfMonth(getPreviousMonth()));
+  const [date, setDate] = useState<Date>(getPreviousMonth());
   const { allocations, allocationChartData: chartData, lastAvailableDate } = useAllocation(filter, date);
 
   const chartShareModal = useModal();
@@ -67,9 +66,6 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
   };
 
   const validateDate = (_date: Date) => {
-    if (isAfter(_date)) {
-      return false;
-    }
 
     if (getNumberOfChartHistory() && isBefore(_date, getMonthSubtracted(getNumberOfChartHistory()))) {
       setIsDateValid(false);
@@ -99,9 +95,9 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
       <div className='allocation-card-top'>
         <div className='mm-allocation-overview__block--date'>
           <div className='selected-date-string'>
-            <span className='arrow-left' role='button' onClick={setPreviousMonth} />
+            {(lastAvailableDate && (new Date(date) > getLastDateOfMonth(lastAvailableDate))) && <span className='arrow-left' role='button' onClick={setPreviousMonth} />}
             {getMonthYear(date || undefined)}
-            <span className='arrow-right' role='button' onClick={setNextMonth} />
+            {(getLastDateOfMonth(new Date(date)) < new Date()) && <span className='arrow-right' role='button' onClick={setNextMonth} />}
           </div>
           <span className='float-right mm-tooltip'>
             <ReactDatePicker
@@ -109,11 +105,11 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
               customInput={<Calendar />}
               dateFormat='MM/yyyy'
               showMonthYearPicker
-              minDate={lastAvailableDate}
+              minDate={getPreviousMonth(lastAvailableDate)}
               maxDate={new Date()}
               onChange={(val: Date) => {
                 if (validateDate(val)) {
-                  setDate(getLastDateOfMonth(val));
+                  setDate(val);
                 }
               }}
             />
@@ -137,94 +133,102 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
       {!isDateValid ? (
         <RestrictedChartView noOfMonth={getNumberOfChartHistory()} />
       ) : (
-        <div className='allocation-content'>
-          <div
-            className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center allocation-page-chart-wrapper p-b-4'
-            id='selected-allocation-pie-chart'
-          >
-            <MMPieChart chartData={chartData} currencySymbol={currencySymbol} />
-            <AllocationLegend chartData={chartData} currencySymbol={currencySymbol} />
-          </div>
-          <div className='mm-allocation-overview__table'>
-            <table>
-              <thead>
-                <tr>
-                  <th className='mm-allocation-overview__table--head'>Position</th>
-                  <th className='mm-allocation-overview__table--head'>Allocation</th>
-                  <th className='mm-allocation-overview__table--head'>Value</th>
-                </tr>
-              </thead>
-              {Object.keys(allocations).map((allocationKey, index) => {
-                const allocation = allocations[allocationKey];
+          <div className='allocation-content'>
+            <div className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center mm-allocation-overview__block-chart-overview'>
+              {((Object.keys(allocations).length === 0) && chartData.length === 0) ?
+                <div className='mm-allocation-overview__block-element text-center'>
+                  <div className='mm-allocation-overview__block-element--middle'>
+                    <div className='d-inline-flex align-items-center'>
+                      <div className='mm-allocation-overview__block-element--text ml-2'>No enough data</div>
+                    </div>
+                    <p>Historical charts will become available once your cross a month end.</p>
+                  </div>
+                </div> :
+                <div
+                  className='text-center text-md-left d-xl-block d-md-flex align-items-md-center justify-content-md-center allocation-page-chart-wrapper p-b-4'
+                  id='selected-allocation-pie-chart'
+                >
+                  <MMPieChart chartData={chartData} currencySymbol={currencySymbol} />
+                  <AllocationLegend chartData={chartData} currencySymbol={currencySymbol} />
+                </div>}
+            </div>
 
-                return (
-                  <React.Fragment key={index}>
-                    <tbody>
-                      <tr>
-                        <td className='mm-allocation-overview__table--title'>
-                          <span
-                            className={isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''}
-                            onClick={() => toggleAllocation(allocationKey)}
-                            role='button'
-                          />
-                          <span
-                            onClick={() => toggleAllocation(allocationKey)}
-                            role='button'>
-                            {allocationKey}
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                    <tbody className={isHidden(allocationKey) ? 'hide-me' : ''}>
-                      {allocation?.map((al, index) => {
-                        return (
-                          <React.Fragment key={shortId + index}>
-                            <tr
-                              className='mm-allocation-overview__table--data-row-mobile'
-                              onClick={() => gotoDetailPage(al.description)}
-                            >
-                              <td>
-                                <span className='mt-2 mb-0'>{al.description}</span>
-                              </td>
-                            </tr>
-                            <tr
-                              className='mm-allocation-overview__table--data-row'
-                              onClick={() => gotoDetailPage(al.description)}
-                            >
-                              <td>{al.description}</td>
-                              <td>
-                                <span className='d-block'>Allocation</span>
-                                {fNumber(al.per, 2)}%
-                              </td>
-                              <td>
-                                <span className='d-block'>Value</span>
-                                {al.allocationValue
-                                  ? `${currencySymbol}${numberWithCommas(fNumber(al.allocationValue, 0))}`
-                                  : 0}
-                              </td>
-                            </tr>
-                          </React.Fragment>
-                        );
-                      })}
-                    </tbody>
-                    <tbody>
-                      <tr className='mm-allocation-overview__table--footer'>
-                        <td>Total</td>
-                        <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
-                        <td>
-                          {currencySymbol}
-                          {numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 0))}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </React.Fragment>
-                );
-              })}
-            </table>
+            <div className='mm-allocation-overview__table'>
+              <table>
+                <thead>
+                  <tr>
+                    <th className='mm-allocation-overview__table--head'>Position</th>
+                    <th className='mm-allocation-overview__table--head'>Allocation</th>
+                    <th className='mm-allocation-overview__table--head'>Value</th>
+                  </tr>
+                </thead>
+                {Object.keys(allocations).map((allocationKey, index) => {
+                  const allocation = allocations[allocationKey];
 
+                  return (
+                    <React.Fragment key={index}>
+                      <tbody>
+                        <tr>
+                          <td className='mm-allocation-overview__table--title'>
+                            <span
+                              className={isHidden(allocationKey) ? 'mm-allocation-overview__table--title-collapse' : ''}
+                              onClick={() => toggleAllocation(allocationKey)}
+                              role='button'
+                            />
+                            <span role='button'>{allocationKey}</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody className={isHidden(allocationKey) ? 'hide-me' : ''}>
+                        {allocation?.map((al, index) => {
+                          return (
+                            <React.Fragment key={shortId + index}>
+                              <tr
+                                className='mm-allocation-overview__table--data-row-mobile'
+                                onClick={() => gotoDetailPage(al.description)}
+                              >
+                                <td>
+                                  <span className='mt-2 mb-0'>{al.description}</span>
+                                </td>
+                              </tr>
+                              <tr
+                                className='mm-allocation-overview__table--data-row'
+                                onClick={() => gotoDetailPage(al.description)}
+                              >
+                                <td>{al.description}</td>
+                                <td>
+                                  <span className='d-block'>Allocation</span>
+                                  {fNumber(al.per, 2)}%
+                              </td>
+                                <td>
+                                  <span className='d-block'>Value</span>
+                                  {al.allocationValue
+                                    ? `${currencySymbol}${numberWithCommas(fNumber(al.allocationValue, 0))}`
+                                    : 0}
+                                </td>
+                              </tr>
+                            </React.Fragment>
+                          );
+                        })}
+                      </tbody>
+                      <tbody>
+                        <tr className='mm-allocation-overview__table--footer'>
+                          <td>Total</td>
+                          <td>{fNumber(getTotal(allocationKey)?.per || 0, 2)}%</td>
+                          <td>
+                            {currencySymbol}
+                            {numberWithCommas(fNumber(getTotal(allocationKey)?.total || 0, 0))}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </React.Fragment>
+                  );
+                })}
+              </table>
+
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       <SettingModal settingModal={chartSettingModal} />
       <ChartShareModal
