@@ -1003,7 +1003,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 </div>
               </div>
             </form>
-            <DeleteAccountModal deleteAccountModal={deleteAccountModal} deleteAccountById={deleteAccountById} />
+            <div className='delete-account-modal'>
+              <DeleteAccountModal deleteAccountModal={deleteAccountModal} deleteAccountById={deleteAccountById} />
+            </div>
           </>
         );
       }}
