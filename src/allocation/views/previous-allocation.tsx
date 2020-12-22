@@ -31,7 +31,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
   const { subscriptionDetail } = useAuthState();
   const [hidden, setHidden] = useState<string[]>(['']);
   const [isDateValid, setIsDateValid] = useState<boolean>(true);
-  const [date, setDate] = useState<Date>(getLastDateOfMonth(getPreviousMonth()));
+  const [date, setDate] = useState<Date>(getPreviousMonth());
   const { allocations, allocationChartData: chartData, lastAvailableDate } = useAllocation(filter, date);
 
   const chartShareModal = useModal();
@@ -97,7 +97,7 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
           <div className='selected-date-string'>
             {(lastAvailableDate && (new Date(date) > getLastDateOfMonth(lastAvailableDate))) && <span className='arrow-left' role='button' onClick={setPreviousMonth} />}
             {getMonthYear(date || undefined)}
-            {(new Date(date) < new Date()) && <span className='arrow-right' role='button' onClick={setNextMonth} />}
+            {(getLastDateOfMonth(new Date(date)) < new Date()) && <span className='arrow-right' role='button' onClick={setNextMonth} />}
           </div>
           <span className='float-right mm-tooltip'>
             <ReactDatePicker
@@ -105,11 +105,11 @@ export const SelectedAllocations: React.FC<SelectedAllocationProps> = ({ filter,
               customInput={<Calendar />}
               dateFormat='MM/yyyy'
               showMonthYearPicker
-              minDate={lastAvailableDate}
-              maxDate={getNextMonth(new Date())}
+              minDate={getPreviousMonth(lastAvailableDate)}
+              maxDate={new Date()}
               onChange={(val: Date) => {
                 if (validateDate(val)) {
-                  setDate(getLastDateOfMonth(val));
+                  setDate(val);
                 }
               }}
             />
