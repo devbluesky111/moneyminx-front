@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios, { AxiosError, AxiosResponse } from 'axios';
-
 import appEnv from 'app/app.env';
 import { storage } from 'app/app.storage';
 import { STATUS_CODE } from 'app/app.status';
+import { logger } from 'common/logger.helper';
 import { refreshAccessToken } from 'api/request.api';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { appRouteConstants } from 'app/app-route.constant';
 import { withError, withData, wait } from 'common/common-helper';
 
 import { urls } from './api.url';
-import { logger } from 'common/logger.helper';
 
-const MAX_TRIES = 7;
+const MAX_TRIES = 2;
 const currentRetries: Record<string, number> = {};
 
 const axiosInstance = axios.create({
@@ -54,12 +53,20 @@ axiosInstance.interceptors.response.use(
       return axiosInstance(config);
     };
 
+    const fallBackCall = () => {
+      config.url = urls.auth.ACCOUNTS;
+
+      return axiosInstance(config);
+    };
+
+    logger.log('url', url);
     if (urls.auth.ACCOUNT_REFRESH === url && STATUS_CODE.SERVER_ACCEPTED === status) {
-      logger.log('url', url);
       currentRetries[url] = currentRetries[url] ? currentRetries[url] + 1 : 1;
       if (currentRetries[url] <= MAX_TRIES) {
         return retry();
       }
+
+      return fallBackCall();
     }
 
     return withData(response.data);
