@@ -53,20 +53,16 @@ axiosInstance.interceptors.response.use(
       return axiosInstance(config);
     };
 
-    const fallBackCall = () => {
-      config.url = urls.auth.ACCOUNTS;
-
-      return axiosInstance(config);
-    };
-
-    logger.log('url', url);
     if (urls.auth.ACCOUNT_REFRESH === url && STATUS_CODE.SERVER_ACCEPTED === status) {
       currentRetries[url] = currentRetries[url] ? currentRetries[url] + 1 : 1;
       if (currentRetries[url] <= MAX_TRIES) {
         return retry();
       }
 
-      return fallBackCall();
+      return withError({
+        message: 'Still getting 202',
+        code: STATUS_CODE.SERVER_ACCEPTED,
+      });
     }
 
     return withData(response.data);
