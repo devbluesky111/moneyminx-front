@@ -114,7 +114,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   useEffect(() => {
     let _years = [];
     for (let i = 0; i < holdingsDetails?.intervalValues.length; i++) {
-      (holdingsDetails?.intervalValues)[i].date = new Date((holdingsDetails?.intervalValues)[i]['interval']);
+      // (holdingsDetails?.intervalValues)[i].date = new Date((holdingsDetails?.intervalValues)[i]['interval']);
       _years.push(holdingsDetails?.intervalValues[i].interval.split(' ')[1]);
     }
     if (holdingsDetails) {
@@ -298,9 +298,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
         let _values: any[] = [];
 
-        values.originalValues.forEach((element: any) => {
-          _values.push(element);
-        });
+        for (let i = 0; i < values.originalValues.length; i++) {
+          values.originalValues[i].date = new Date(values.originalValues[i]['interval']);
+          _values.push(values.originalValues[i]);
+        }
 
         let data = {};
 
