@@ -70,7 +70,7 @@ const WebsiteHeader = () => {
                   </Link>
                 </li>
                 <li className={navClass('login')}>
-                  <Link className='mm-nav-link' to='login' role='menuitem'>
+                  <Link className='mm-nav-link' to='/login' role='menuitem'>
                     Log In
                   </Link>
                 </li>
