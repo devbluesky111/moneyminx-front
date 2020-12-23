@@ -1,5 +1,6 @@
 import { AlertType } from 'common/components/alert';
 import { AccountCategory, NetworthActionEnum, TimeIntervalEnum } from 'networth/networth.enum';
+import { Account } from 'auth/auth.types';
 
 export interface ConnectionAlertProps {
   message: string;
@@ -30,6 +31,7 @@ export interface AccountItem {
 export interface NetworthType {
   networth: NetworthItem[];
   accounts: Record<AccountCategory, AccountItem[]>;
+  accountWithIssues: Account[];
 }
 
 export interface NetworthParam {
@@ -55,6 +57,7 @@ export interface NetworthState {
 
   networth?: NetworthItem[];
   accounts?: Record<AccountCategory, AccountItem[]>;
+  accountWithIssues?: Account[];
 
   fToggleInvestment?: boolean;
   fToggleOther?: boolean;

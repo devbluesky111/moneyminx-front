@@ -736,6 +736,10 @@
     }
     .content-section {
         text-align: right;
+        &:not(:last-child) {
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba($gray, 0.2);
+        }
     }
     .processing {
         font-weight: 500;
