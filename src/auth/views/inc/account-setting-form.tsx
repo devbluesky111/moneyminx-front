@@ -926,7 +926,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
                   {/* <div className={isFromAccount ? '' : 'hidden'}>
                     <span className='form-subheading'>Closed Account</span>
-
                     <div className='estimate-annual-block__checkbox'>
                       <label className='custom-checkbox'>
                         <input type='checkbox' name='closeAccount' aria-checked={false} value='closeAccount' />
