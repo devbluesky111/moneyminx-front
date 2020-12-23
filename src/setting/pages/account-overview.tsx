@@ -79,6 +79,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
     }
     mmToast('Kindly remove accounts first.', { type: 'error' });
   };
+  console.log(connectedAccounts)
 
   return (
     <section className='mm-account-overview'>
@@ -416,8 +417,8 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                         </span>
                       </div>
                     ) : (
-                      ''
-                    )}
+                        ''
+                      )}
                   </div>
                   <div className='col-12 col-md-6 mt-2 text-md-right'>
                     <button
@@ -483,8 +484,8 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
           {deleting ? (
             <span className='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true' />
           ) : (
-            <DeleteIcon className='ml-2 ml-md-3 trash-icon' onClick={() => deleteAccount(account.id)} />
-          )}
+              <DeleteIcon className='ml-2 ml-md-3 trash-icon' onClick={() => deleteAccount(account.id)} />
+            )}
         </div>
       </div>
     </div>
@@ -522,7 +523,7 @@ const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({
 }) => {
   const disable =
     availableManualAccounts === 'Unlimited' ||
-    (manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts)
+      (manualAccountList.length <= availableManualAccounts && accountList.length <= availableConnectedAccounts)
       ? false
       : true;
   const connectedAccountDiff = accountList.length - parseInt(availableConnectedAccounts as string, 10);
