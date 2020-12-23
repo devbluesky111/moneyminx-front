@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { Account } from 'auth/auth.types';
 import { getAllocations } from 'api/request.api';
 import { getUTCString } from 'common/moment.helper';
 import { AllocationsFilter } from 'allocation/allocation.enum';
@@ -11,6 +12,7 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDa
   const [allocations, setAllocations] = useState<Allocations>();
   const [lastAvailableDate, setLastAvailableDate] = useState<Date>();
   const [allocationChartData, setAllocationChartData] = useState<ChartData>();
+  const [accountWithIssues, setAccountWithIssues] = useState<Account[]>([]);
 
   useEffect(() => {
     const fetchAllocations = async () => {
@@ -36,6 +38,10 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDa
           setAllocationChartData(data?.chartData);
         }
 
+        if (data?.accountWithIssues) {
+          setAccountWithIssues(data?.accountWithIssues);
+        }
+
         return data;
       }
 
@@ -45,7 +51,7 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDa
     fetchAllocations();
   }, [filter, forDate]);
 
-  return { fetching, error, allocations, allocationChartData, lastAvailableDate };
+  return { fetching, error, allocations, allocationChartData, lastAvailableDate, accountWithIssues };
 };
 
 export default useAllocation;

@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import useSettings from 'setting/hooks/useSettings';
 import SettingModal from 'allocation/modal/setting-modal';
 import ChartShareModal from 'allocation/modal/chart-share-modal';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import SelectAccountModal from 'allocation/modal/select-account.modal';
 import { shortId } from 'common/common-helper';
 import { useModal } from 'common/components/modal';
@@ -24,7 +25,7 @@ import { ReactComponent as AllocationLegendSVG } from 'assets/images/allocation/
 import AllocationLegend from './allocation-legend';
 import { SelectedAllocations } from './previous-allocation';
 
-const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter }) => {
+const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, chartData, filter, accountWithIssues }) => {
   const chartShareModal = useModal();
   const chartSettingModal = useModal();
   const selectAccountModal = useModal();
@@ -33,6 +34,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const [hidden, setHidden] = useState<string[]>(['']);
   const [multiAccounts, setMutiAccounts] = useState<Account[]>([]);
+  const [processingCollapse, setProcessingCollapse] = useState<boolean>(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -109,18 +111,43 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                   role='button'
                 >
                   Previous Allocation
-            </div>
+                </div>
                 <div
                   className={getSectionTitleClass(AllocationSectionEnum.SIMILAR_ALLOCATION)}
                   onClick={() => changeAllocationSection(AllocationSectionEnum.SIMILAR_ALLOCATION)}
                   role='button'
                 >
                   Similar Allocation
-            </div>
+              </div>
               </div>
               <div className='mm-allocation-overview__line' />
             </div>
-
+            {accountWithIssues.length > 0 &&
+              <div className='card mm-setting-card mt-0 processing-card'>
+                <div className='title-section'>
+                  <span className={['processing', processingCollapse ? 'processing-collapse' : ''].join(' ')} onClick={() => setProcessingCollapse(!processingCollapse)}>Processing</span>
+                  <span className='desc'>These accounts are still processing and will be ready soon</span>
+                </div>
+                <div className={processingCollapse ? 'd-none' : ''}>
+                  {accountWithIssues.map((item, index) => (
+                    <div key={index} className='content-section my-3'>
+                      <div className='d-flex flex-direction-row justify-content-between'>
+                        <img
+                          src={item.providerLogo || DefaultAvatar}
+                          className='mr-3 mr-md-4 accounts-provider-logo my-1'
+                          alt={`${item.providerName} logo`}
+                        />
+                        <div className='provider-name my-1'>{item.providerName}</div>
+                      </div>
+                      <div className='d-flex flex-direction-row justify-content-between'>
+                        <div className='individual my-1 mr-3'>Individual savings account</div>
+                        <div className='join my-1'>Join investment account</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            }
             <div className='row'>
               <div className={getSectionClass(AllocationSectionEnum.MY_ALLOCATION)}>
                 <div className='mm-allocation-overview__block d-lg-block'>

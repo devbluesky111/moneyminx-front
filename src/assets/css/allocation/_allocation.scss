@@ -847,3 +847,86 @@
     }
   }
 }
+
+.processing-card {
+  border-left: 3px solid $yellow;
+
+  .title-section {
+    display: flex;
+    flex-direction: column;
+
+    @media(min-width: $md) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .content-section {
+    display: flex;
+    flex-direction: column;
+
+    @media(min-width: $desk) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
+  .processing {
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 25px;
+    color: $black;
+    cursor: pointer;
+
+    &:after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border: 1.5px solid #969eac;
+      border-top: 0;
+      border-left: 0;
+      position: absolute;
+      transform: rotate(45deg);
+      display: inline-block;
+      vertical-align: 3px;
+      left: 15px;
+      margin-top: 8px;
+      transition: 0.3s all;
+    }
+
+    &.processing-collapse:after {
+      margin-top: 12px !important;
+      transform: rotate(-135deg) !important;
+    }
+  }
+
+  .desc {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 20px;
+    color: $gray;
+  }
+
+  .provider-name {
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 23px;
+    color: $darkGray;
+  }
+
+  .individual { 
+    font-size: 1rem;
+    line-height: 19px;
+    color: $darkGray;
+  }
+
+  .join {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 20px;
+    color: $purple;
+    cursor: pointer;
+  }
+}
