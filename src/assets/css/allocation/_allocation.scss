@@ -763,7 +763,7 @@
             transform: rotate(-135deg) !important;
         }
     }
-    .desc {
+    <<<<<<< HEAD .desc {
         font-weight: 600;
         font-size: 1rem;
         line-height: 20px;
@@ -781,3 +781,27 @@
         color: $darkGray;
     }
 }
+
+=======
+}
+.desc {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 20px;
+    color: $gray;
+}
+.provider-name {
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 23px;
+    color: $darkGray;
+}
+.account-name {
+    font-size: 1rem;
+    line-height: 19px;
+    color: $darkGray;
+    text-align: right;
+}
+
+}
+>>>>>>>d260123689c1987d095c6f791c2885915bf53347
