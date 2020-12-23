@@ -27,19 +27,19 @@ const useAllocation = (filter: AllocationsFilter = AllocationsFilter.TYPE, forDa
 
       if (!err) {
         if (data?.allocations) {
-          setAllocations(data?.allocations);
+          setAllocations(data.allocations);
         }
 
         if (data?.lastAvailableDate) {
-          setLastAvailableDate(new Date(data?.lastAvailableDate));
+          setLastAvailableDate(new Date(data.lastAvailableDate));
         }
 
         if (data?.chartData) {
-          setAllocationChartData(data?.chartData);
+          setAllocationChartData(data.chartData);
         }
 
         if (data?.accountWithIssues) {
-          setAccountWithIssues(data?.accountWithIssues);
+          setAccountWithIssues(data.accountWithIssues);
         }
 
         return data;

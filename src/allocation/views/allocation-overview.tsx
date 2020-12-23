@@ -11,6 +11,7 @@ import { useModal } from 'common/components/modal';
 import { getStringDate, getMonthYear } from 'common/moment.helper';
 import { MMPieChart } from 'common/components/pie-chart';
 import { getCurrencySymbol } from 'common/currency-helper';
+import { groupByProviderName } from 'auth/auth.helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { Account } from 'auth/auth.types';
 import { AllocationSectionEnum } from 'allocation/allocation.enum';
@@ -91,6 +92,8 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
     }
   }
 
+  const accountsByProvider = groupByProviderName(accountWithIssues);
+
   return (
     <div className='content-wrapper'>
       <div className='container'>
@@ -129,20 +132,21 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                   <span className='desc'>These accounts are still processing and will be ready soon</span>
                 </div>
                 <div className={processingCollapse ? 'd-none' : ''}>
-                  {accountWithIssues.map((item, index) => (
+                  {Object.entries(accountsByProvider).map(([providerName, accounts], index) => (
                     <div key={index} className='content-section my-3'>
                       <div className='d-flex flex-direction-row justify-content-between'>
                         <img
-                          src={item.providerLogo || DefaultAvatar}
+                          src={accounts[0].providerLogo || DefaultAvatar}
                           className='mr-3 mr-md-4 accounts-provider-logo my-1'
-                          alt={`${item.providerName} logo`}
+                          alt={`${providerName} logo`}
                         />
-                        <div className='provider-name my-1'>{item.providerName}</div>
+                        <div className='provider-name my-1'>{providerName}</div>
                       </div>
-                      <div className='d-flex flex-direction-row justify-content-between'>
-                        <div className='individual my-1 mr-3'>Individual savings account</div>
-                        <div className='join my-1'>Join investment account</div>
-                      </div>
+                      {accounts.map((item, key) => (
+                        <div key={key}>
+                          <div className='account-name my-1'>{item.accountName}</div>
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
