@@ -144,7 +144,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                       </div>
                       {accounts.map((item, key) => (
                         <div key={key}>
-                          <div className='account-name my-1'>{item.accountName}</div>
+                          <div className='account-name m-b-2'>{item.accountName}</div>
                         </div>
                       ))}
                     </div>
