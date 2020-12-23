@@ -139,10 +139,7 @@ const AllocationOverview: React.FC<AllocationOverviewProps> = ({ allocations, ch
                         />
                         <div className='provider-name my-1'>{item.providerName}</div>
                       </div>
-                      <div className='d-flex flex-direction-row justify-content-between'>
-                        <div className='individual my-1 mr-3'>Individual savings account</div>
-                        <div className='join my-1'>Join investment account</div>
-                      </div>
+                      <div className='account-name my-1 mr-3'>{item.accountName}</div>
                     </div>
                   ))}
                 </div>
