@@ -19,7 +19,6 @@ const Allocation: React.FC<AllocationProps> = () => {
 
   const [filter, setFilter] = useState(AllocationsFilter.TYPE);
   const { fetching, allocations, allocationChartData, accountWithIssues } = useAllocation(filter);
-  console.log(accountWithIssues)
 
   if (!allocations || !allocationChartData) {
     return (
