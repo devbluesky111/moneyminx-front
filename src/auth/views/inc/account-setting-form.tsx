@@ -30,7 +30,7 @@ import { initialMortgage } from 'auth/data/account-settings.data';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
-import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';
+/*import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';*/
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
@@ -353,7 +353,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       name='mmAccountType'
                     />
                   </li>
-
                   <li className={hasAccountSubType ? '' : 'hidden'}>
                     <div className='account-list-content'>
                       <span className='form-subheading'>Account Subtype</span>
@@ -374,7 +373,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       name='currency'
                     />
                   </li>
-
                   <li className={hc('liquidity')}>
                     <span className='form-subheading'>Liquidity</span>
                     <SelectInput
@@ -441,7 +439,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       step='any'
                     />
                   </li>
-
                   <li className={hc('principalBalance')}>
                     <span className='form-subheading'>Loan Balance</span>
                     <Form.Control
@@ -587,7 +584,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
               <div className='account-type'>
                 <ul className='account-type-list'>
-                  <li className={`w-100 ${hc('streetAddress')}`}>
+                  <li className={`w-100 form-divider ${hc('streetAddress')}`}>
                     <span className='form-subheading'>Street Address</span>
                     <input
                       type='text'
@@ -800,10 +797,49 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 </ul>
               </div>
 
+              {/* associate mortgage and loan  */}
+              <div className='account-type'>
+                <ul className='account-type-list'>
+                  {/* Current value */}
+                  <li className={`${hc('useZestimate')}`}>
+                    <span className='form-subheading'>Current Value</span>
+                    <div className='align-items-start'>
+                      <div className='flex-column'>
+                        <Form.Control
+                          onChange={handleChange}
+                          type='number'
+                          name='ownEstimate'
+                          value={values.ownEstimate}
+                          step='any'
+                        />
+                      </div>
+                    </div>
+                  </li>
+                  <li className={`${hc('associatedMortgage')}`}>
+                    <span className='form-subheading'>Associated Mortgage</span>
+                    <MortgageDropdown
+                      mortgageList={dMortgageAccounts}
+                      name='associatedMortgage'
+                      onChange={handleMortgageChange}
+                      value={values.associatedMortgage}
+                    />
+                  </li>
+                </ul>
+              </div>
+              {/* associate mortgage and loan  ends */}
+
+              {/* calculate equity */}
+              <div className={`${hc('calculatedEquity')}`}>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <p>Calculated Equity</p>
+                  <p>{fNumber(+values.ownEstimate - +values.principalBalance, 2)}</p>
+                </div>
+              </div>
+
+              {/* Estimated annual returns */}
               <div className={`estimated-annual-return ${hc('estimatedAnnualReturns')}`}>
                 <span className='form-subheading'>Estimated annual returns</span>
                 <span className='sub-label'>This will be used to show projections on your charts.</span>
-
                 <div className='form-field-group single-field'>
                   <Form.Control
                     onChange={handleChange}
@@ -819,7 +855,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
 
               {/* Estimated principal paydown */}
               <div className={`estimated-annual-return ${hc('estimatedAnnualPrincipalReduction')}`}>
-                <span className='form-subheading'>Estimated principal paydown</span>
+                <span className='form-subheading'>Estimated balance reduction</span>
                 <span className='sub-label'>This will be used to show projections on your charts.</span>
 
                 <div className='form-field-group single-field'>
@@ -835,81 +871,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 </div>
               </div>
 
-              {/* Current value */}
-              <div className={`form-divider ${hc('useZestimate')}`}>
-                <span className='form-subheading'>Current Value</span>
-                <div className='d-flex align-items-start'>
-                  <div className='w-50 mr-2 d-flex flex-column'>
-                    <div className='form-check ml-0 pl-0 mt-4 mb-5'>
-                      <input
-                        value='yes'
-                        type='radio'
-                        name='useZestimate'
-                        aria-checked={false}
-                        className='form-check-input ml-0'
-                        onChange={handleChange}
-                        checked={values.useZestimate === 'yes' || values.useZestimate === true}
-                      />
-                      <label className='form-check-label ml-4' htmlFor='useZestimate'>
-                        Use Zestimate® for home value
-                      </label>
-                    </div>
-                    <ZillowImage />
-                  </div>
-                  <div className='w-50 mr-2 d-flex flex-column'>
-                    <div className='form-check ml-0 pl-0 mt-4 mb-5'>
-                      <input
-                        value='no'
-                        type='radio'
-                        name='useZestimate'
-                        aria-checked={values.useZestimate === 'no' || values.useZestimate === false}
-                        className='form-check-input ml-0'
-                        onChange={handleChange}
-                        checked={values.useZestimate === 'no' || values.useZestimate === false}
-                      />
-                      <label className='form-check-label ml-4' htmlFor='useZestimate'>
-                        Use my own estimate
-                      </label>
-                    </div>
-                    <Form.Control
-                      onChange={handleChange}
-                      type='number'
-                      name='ownEstimate'
-                      value={values.ownEstimate}
-                      step='any'
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* current value ends */}
-
-              {/* associate mortgage and loan  */}
-              <div className='account-type'>
-                <ul className='account-type-list'>
-                  <li className={`mt-5 ${hc('associatedMortgage')}`}>
-                    <span className='form-subheading'>Associated Mortgage</span>
-                    <MortgageDropdown
-                      mortgageList={dMortgageAccounts}
-                      name='associatedMortgage'
-                      onChange={handleMortgageChange}
-                      value={values.associatedMortgage}
-                    />
-                  </li>
-                </ul>
-              </div>
-
-              {/* associate mortgage and loan  ends */}
-
-              {/* calculate equity */}
-              <div className={`form-divider ${hc('calculatedEquity')}`}>
-                <div className='d-flex align-items-center justify-content-between'>
-                  <p>Calculated Equity</p>
-                  <p>{fNumber(+values.ownEstimate - +values.principalBalance, 2)}</p>
-                </div>
-              </div>
-
-              <div className={`form-row mt-0 ${hc('calculateReturnsOn')}`}>
+              {/* Real Estate returns preference */}
+              <div className={`form-row mt-5 ${hc('calculateReturnsOn')}`}>
                 <span className='form-subheading'>How do you prefer to calculate real estate returns?</span>
                 <MMToolTip
                   placement='top'

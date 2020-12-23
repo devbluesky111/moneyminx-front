@@ -1,12 +1,13 @@
 export const accountFetchingMessageArray = [
-  `We've connected to your account!`,
-  `We are now downloading your balances.`,
-  `Looking into your transaction activity.`,
-  `Doing a few checks.`,
-  `Getting ready for the big reveal`,
-  `Here we go`,
-  `Sorry this is taking long`,
-  `We want to make sure everything looks good`,
+  `We've connected to your account and now pulling your balances together into your dashboard.`,
+  `This can take several minutes to process. Thanks for your patience!`,
+  `You might want to get a cup of tea...`,
+  `Doing a few checks...`,
+  `Getting ready for the big reveal...`,
+  `Almost there...`,
+  `Ensuring everything works perfectly.`,
+  `No, nothing froze, this just takes a long time.`,
+  `Sitting on the dock of the bay, wasting time...`,
 ];
 
 export const authenticatingMessageArray = [
