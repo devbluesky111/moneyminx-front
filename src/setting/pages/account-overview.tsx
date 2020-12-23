@@ -79,7 +79,6 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
     }
     mmToast('Kindly remove accounts first.', { type: 'error' });
   };
-  console.log(connectedAccounts)
 
   return (
     <section className='mm-account-overview'>
