@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios, { AxiosError, AxiosResponse } from 'axios';
 import appEnv from 'app/app.env';
 import { storage } from 'app/app.storage';
 import { STATUS_CODE } from 'app/app.status';
 import { refreshAccessToken } from 'api/request.api';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { appRouteConstants } from 'app/app-route.constant';
 import { withError, withData, wait } from 'common/common-helper';
-import { logger } from 'common/logger.helper';
 
 import { urls } from './api.url';
 
@@ -54,11 +53,15 @@ axiosInstance.interceptors.response.use(
     };
 
     if (urls.auth.ACCOUNT_REFRESH === url && STATUS_CODE.SERVER_ACCEPTED === status) {
-      logger.log('url', url);
       currentRetries[url] = currentRetries[url] ? currentRetries[url] + 1 : 1;
       if (currentRetries[url] <= MAX_TRIES) {
         return retry();
       }
+
+      return withError({
+        message: 'Still getting 202',
+        code: STATUS_CODE.SERVER_ACCEPTED,
+      });
     }
 
     return withData(response.data);
