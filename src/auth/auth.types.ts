@@ -185,3 +185,12 @@ export interface Mortgage {
 }
 
 export type MortgageList = Mortgage[];
+
+export interface LoanAccount {
+  accountName: string;
+  balance: number;
+  id: number;
+}
+
+export type loanAccounts = LoanAccount[];
+

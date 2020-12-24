@@ -1,35 +1,36 @@
 import Form from 'react-bootstrap/Form';
+import moment from 'moment';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import moment from 'moment';
-import { Formik } from 'formik';
-import useToast from 'common/hooks/useToast';
-import { MMCategories } from 'auth/auth.enum';
-import { fNumber } from 'common/number.helper';
-import { useAuthState } from 'auth/auth.context';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import MMToolTip from 'common/components/tooltip';
-import { makeFormFields } from 'auth/auth.helper';
-import { useModal } from 'common/components/modal';
-import { enumerateStr } from 'common/common-helper';
-import { StringKeyObject } from 'common/common.types';
+import useToast from 'common/hooks/useToast';
 import useAccountType from 'auth/hooks/useAccountType';
 import useLoanAccount from 'auth/hooks/useLoanAccount';
 import useSearchParam from 'auth/hooks/useSearchParam';
 import useAccountFilter from 'auth/hooks/useAccountFilter';
+import useAccountSubtype from 'auth/hooks/useAccountSubtype';
+import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
+
+import { Formik } from 'formik';
+import { MMCategories } from 'auth/auth.enum';
+import { fNumber } from 'common/number.helper';
+import { useAuthState } from 'auth/auth.context';
+import { makeFormFields } from 'auth/auth.helper';
+import { useModal } from 'common/components/modal';
+import { enumerateStr } from 'common/common-helper';
+import { StringKeyObject } from 'common/common.types';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getMomentDate, getUTC } from 'common/moment.helper';
-import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 import { loginValidationSchema } from 'auth/auth.validation';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { deleteAccount, patchAccount } from 'api/request.api';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
-import { Account, Mortgage, MortgageList } from 'auth/auth.types';
+import { Account, LoanAccount, Mortgage, MortgageList } from 'auth/auth.types';
 import { initialMortgage } from 'auth/data/account-settings.data';
-import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 /*import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';*/
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
@@ -37,6 +38,7 @@ import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estat
 
 import MortgageDropdown from './mortgage-dropdown';
 import DeleteAccountModal from './delete-account.modal';
+import AssociatedLoanDropdown from './associated-loan-dropdown';
 
 interface Props {
   currentAccount?: Account;
@@ -295,6 +297,14 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
             ...values,
             associatedMortgage: mortgage.accountName,
             principalBalance: mortgage.balance,
+          });
+        };
+
+        const handleAssociatedLoanChange = (e: React.ChangeEvent<any>, loanAccount: LoanAccount) => {
+          e.preventDefault();
+          setValues({
+            ...values,
+            associatedLoan: loanAccount.id
           });
         };
 
@@ -557,24 +567,12 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                   </li>
                   <li className={`${hc('associatedLoan')}`}>
                     <span className='form-subheading'>Associated Loan</span>
-                    <Form.Control
-                      as='select'
-                      onChange={handleChange}
+                    <AssociatedLoanDropdown
+                      loanAccounts={loanAccounts}
                       name='associatedLoan'
+                      onChange={handleAssociatedLoanChange}
                       value={values.associatedLoan}
-                    >
-                      {loanAccounts?.map((loanAccount, index) => {
-                        return (
-                          <option
-                            key={index}
-                            value={loanAccount.accountName}
-                            aria-selected={values.associatedLoan === loanAccount}
-                          >
-                            {loanAccount.accountName}
-                          </option>
-                        );
-                      })}
-                    </Form.Control>
+                    />
                   </li>
                 </ul>
               </div>
