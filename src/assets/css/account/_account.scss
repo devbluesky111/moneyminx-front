@@ -248,14 +248,7 @@
                 &--data {
                     padding-top: 1rem;
                     padding-bottom: 1.25rem;
-                    &:first-child {
-                        padding-left: 1.25rem;
-                    }
-                    @media(max-width: $md) {
-                        &:nth-child(5) {
-                            padding-left: 1.25rem;
-                        }
-                    }
+
                     &:last-child {
                         display: none;
                         text-align: right;
