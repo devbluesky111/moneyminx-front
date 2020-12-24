@@ -66,6 +66,7 @@ export interface Account {
   balancesFetchedAt: string;
   currency: string;
   providerAccount: ProviderAccount;
+  syncError: boolean;
 }
 
 export interface ProfileDetails {
