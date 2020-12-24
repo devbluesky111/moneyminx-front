@@ -88,7 +88,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
   }, [manualAccountModal]);
 
   useEffect(() => {
-    if (!values.mmCategory || !values.mmAccountType || !values.mmAccountSubType || !values.accountName || !values.balance || !values.currency) {
+    if (!values.mmCategory || !values.mmAccountType || !values.accountName || !values.balance || !values.currency) {
       return setDisabled(true);
     }
     return setDisabled(false);
