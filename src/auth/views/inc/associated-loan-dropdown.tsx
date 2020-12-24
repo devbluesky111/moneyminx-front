@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 
-import { LoanAccount, loanAccounts } from 'auth/auth.types';
+import { loanAccounts } from 'auth/auth.types';
 
 interface LoanAccountDropdownProps {
-  onChange: (e: React.ChangeEvent<any>, loanAccount: LoanAccount) => void;
+  onChange: (e: React.ChangeEvent<any>, id: any) => void;
   value: number;
   loanAccounts: loanAccounts;
   name: string;
@@ -26,6 +26,22 @@ const AssociatedLoanDropdown = (props: LoanAccountDropdownProps) => {
       <Dropdown.Toggle className='dropdown-toggle'>{accountName}</Dropdown.Toggle>
       <Dropdown.Menu className='mm-dropdown-menu'>
         <ul className='checkbox-list single'>
+          <li>
+            <label>
+              <input
+                name={name}
+                type='checkbox'
+                aria-describedby=''
+                aria-checked={!value}
+                checked={!value}
+                onChange={(e) => {
+                  onChange(e, null);
+                  setShow(false);
+                }}
+              />
+              <span></span>
+            </label>
+          </li>
           {loanAccounts?.map((loanAccount, index) => {
             return (
               <li key={index}>
@@ -34,11 +50,10 @@ const AssociatedLoanDropdown = (props: LoanAccountDropdownProps) => {
                     name={name}
                     type='checkbox'
                     aria-describedby={loanAccount.accountName}
-                    value={loanAccount.id}
                     aria-checked={loanAccount.id === value}
                     checked={loanAccount.id === value}
                     onChange={(e) => {
-                      onChange(e, loanAccount);
+                      onChange(e, loanAccount.id);
                       setShow(false);
                     }}
                   />

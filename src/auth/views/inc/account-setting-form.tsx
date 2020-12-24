@@ -28,7 +28,7 @@ import { loginValidationSchema } from 'auth/auth.validation';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { deleteAccount, patchAccount } from 'api/request.api';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
-import { Account, LoanAccount, Mortgage, MortgageList } from 'auth/auth.types';
+import { Account, Mortgage, MortgageList } from 'auth/auth.types';
 import { initialMortgage } from 'auth/data/account-settings.data';
 import { SelectInput } from 'common/components/input/select.input';
 /*import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';*/
@@ -300,11 +300,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           });
         };
 
-        const handleAssociatedLoanChange = (e: React.ChangeEvent<any>, loanAccount: LoanAccount) => {
+        const handleAssociatedLoanChange = (e: React.ChangeEvent<any>, id: any) => {
           e.preventDefault();
           setValues({
             ...values,
-            associatedLoan: loanAccount.id
+            associatedLoan: id
           });
         };
 
@@ -565,7 +565,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       step='any'
                     />
                   </li>
-                  <li className={`${hc('associatedLoan')}`}>
+                  <li>
                     <span className='form-subheading'>Associated Loan</span>
                     <AssociatedLoanDropdown
                       loanAccounts={loanAccounts}
