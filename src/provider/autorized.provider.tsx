@@ -1,26 +1,32 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
-import { Children } from 'common/common.types';
 import LoadingScreen from 'common/loading-screen';
+import useSubscriptionValidation from 'auth/hooks/useSubscriptionValidation';
+import { logger } from 'common/logger.helper';
 
-const AuthorizedStateContext = createContext<boolean>(false);
+const AuthorizedProvider: React.FC = ({ children }) => {
+  const { accessibleRoutes } = useSubscriptionValidation();
 
-function AuthorizedProvider({ children }: Children) {
-  const [authorized, setAuthorized] = useState(false);
+  const hasRoutes = accessibleRoutes.filter(Boolean).length;
+  const hasAllAccess = accessibleRoutes.includes('all');
+  const [accessibleRoute] = accessibleRoutes;
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setAuthorized(true);
-    }, 3000);
+  logger.log('Accessible routes', accessibleRoutes);
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!authorized) {
+  if (!hasRoutes) {
     return <LoadingScreen />;
   }
 
-  return <AuthorizedStateContext.Provider value={authorized}>{children}</AuthorizedStateContext.Provider>;
-}
+  if (hasAllAccess) {
+    return <>{children}</>;
+  }
+
+  if (accessibleRoute) {
+    return <Redirect to={accessibleRoute} />;
+  }
+
+  return <LoadingScreen />;
+};
 
 export default AuthorizedProvider;

@@ -24,7 +24,7 @@ import {
 } from 'website/views';
 import { ForgotPassword } from 'auth/views';
 import NetworthRoute from 'networth/networth.route';
-import AuthorizedRoute from 'routes/authorized.route';
+// import AuthorizedRoute from 'routes/authorized.route';
 import AllocationRoute from 'allocation/allocation.route';
 
 import {
@@ -107,7 +107,7 @@ function AppRoute() {
         <Route exact path={RESET_PASSWORD} component={ResetPassword} />
         <Route exact path={CONNECT_ACCOUNT} component={ConnectAccount} />
         <Route exact path={ACCOUNT_SETTING} component={AccountSetting} />
-        <AuthorizedRoute exact path={NET_WORTH} component={NetworthRoute} />
+        <Route exact path={NET_WORTH} component={NetworthRoute} />
         <Route exact path={'/404'} component={NotFound} />
         <Redirect to='/404' />
       </Switch>

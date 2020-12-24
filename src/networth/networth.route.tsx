@@ -1,12 +1,16 @@
 import React from 'react';
 
+import AuthorizedProvider from 'provider/autorized.provider';
+
 import Networth from './views/networth';
 import { NetworthProvider } from './networth.context';
 
 const NetworthRoute = () => {
   return (
     <NetworthProvider>
-      <Networth />
+      <AuthorizedProvider>
+        <Networth />
+      </AuthorizedProvider>
     </NetworthProvider>
   );
 };

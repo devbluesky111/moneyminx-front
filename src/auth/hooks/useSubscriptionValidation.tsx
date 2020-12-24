@@ -9,7 +9,7 @@ import { logger } from 'common/logger.helper';
 
 const useSubscriptionValidation = () => {
   const { currentSubscription, subscriptionDetail, onboarded, accounts } = useAuthState();
-  const [accessibleRoutes, setAccessibleRoutes] = useState(['all']);
+  const [accessibleRoutes, setAccessibleRoutes] = useState(['']);
 
   const subStatus = currentSubscription?.subscriptionStatus;
 
