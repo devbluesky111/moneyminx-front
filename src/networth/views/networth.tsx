@@ -275,7 +275,7 @@ const Networth = () => {
                                 ? investmentAssets.map((iAsset, index) => {
                                   return (
                                     <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
-                                      <td>{iAsset.accountName}</td>
+                                      <td><span>{iAsset.accountName}</span></td>
                                       <td className={`hide-type`}>{iAsset.accountType}</td>
                                       {iAsset.balances.map((b, idx) => (
                                         <td
