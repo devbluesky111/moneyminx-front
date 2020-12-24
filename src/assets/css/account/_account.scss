@@ -123,7 +123,7 @@
         margin: 0;
         padding: 0.75rem 0.25rem 0.75rem 0.25rem;
         min-height: 48px;
-        max-width: 864px;
+        max-width: 880px;
       }
 
       li {
@@ -272,10 +272,6 @@
           padding-bottom: 1.563rem;
           display: none;
 
-          &:first-child {
-            padding-left: 1.25rem;
-          }
-
           &:last-child {
             text-align: right;
             padding-right: 1.25rem;
@@ -291,16 +287,6 @@
         &--data {
           padding-top: 1rem;
           padding-bottom: 1.25rem;
-
-          &:first-child {
-            padding-left: 1.25rem;
-          }
-
-          @media(max-width: $md) {
-            &:nth-child(5){
-              padding-left: 1.25rem;
-            }
-          }
 
           &:last-child {
             display: none;

@@ -1154,6 +1154,10 @@ a.upgrader-btn {
 .table-holder .table tfoot td:first-child {
   font-weight: 600;
   color: $black;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 400px;
 }
 .table-holder .table.account tbody td:first-child {
   min-width: 282px;

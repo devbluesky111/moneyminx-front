@@ -97,6 +97,8 @@ export interface AccountHolingsTableProps {
 
 export interface AccountTransactionItem {
   accountId: number;
+  quantity: number;
+  price: number;
   amount: number;
   amountCurrency: string;
   balance: any;
