@@ -13,6 +13,7 @@ export const initialState: NetworthState = {
 
   accounts: undefined,
   networth: [],
+  accountWithIssues: [],
 
   fToggleInvestment: true,
   fToggleOther: true,

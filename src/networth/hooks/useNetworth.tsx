@@ -67,7 +67,7 @@ const useNetworth = () => {
     fetchNetworth();
   }, [accountType, timeInterval, category, fromDate, dispatch, toDate, accountId]);
 
-  return { loading, error, accounts: response?.accounts, networth: response?.networth };
+  return { loading, error, accounts: response?.accounts, networth: response?.networth, accountWithIssues: response?.accountWithIssues };
 };
 
 export default useNetworth;
