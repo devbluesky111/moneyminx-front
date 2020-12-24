@@ -1247,8 +1247,12 @@ a.upgrader-btn {
 
 .table-holder .table tbody td:first-child,
 .table-holder .table tfoot td:first-child {
-    font-weight: 600;
-    color: $black;
+  font-weight: 600;
+  color: $black;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 400px;
 }
 
 .table-holder .table.account tbody td:first-child {

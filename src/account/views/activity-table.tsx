@@ -19,11 +19,21 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
 }) => {
   const [transactions, setTransactions] = useState<AccountTransactionItem[]>([]);
   const [activityDetails, setActivityDetails] = useState<AccountTransactionItem>();
+  const [priceHeader, setPriceHeader] = useState<boolean>(false);
+  const [quantityHeader, setQuantityHeader] = useState<boolean>(false);
 
   const activityDetailsModal = useModal();
 
   useEffect(() => {
     setTransactions(transactionsData);
+    for (let item of transactionsData) {
+      if (item.price !== null) {
+        setPriceHeader(true);
+      }
+      if (item.quantity !== null) {
+        setQuantityHeader(true);
+      }
+    }
   }, [transactionsData]);
 
   const fetchActivityDetails = async (activityId: string) => {
@@ -48,7 +58,9 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
               <div className='row no-gutters'>
                 <div className='col-md mm-activity-table__head--data d-md-block'>Date</div>
                 <div className='col-md mm-activity-table__head--data d-md-block'>Activity Type</div>
-                <div className='col-md mm-activity-table__head--data d-xl-block'>Description </div>
+                <div className='col-md mm-activity-table__head--data d-md-block'>Description </div>
+                {quantityHeader && <div className='col-md mm-activity-table__head--data d-md-block'>Quantity</div>}
+                {priceHeader && <div className='col-md mm-activity-table__head--data d-md-block'>Price</div>}
                 <div className='col-md mm-activity-table__head--data d-md-block'>Amount</div>
                 <div className='col-md mm-activity-table__head--data d-md-block'>Balance</div>
                 <div className='col-md mm-activity-table__head--data d-md-block'>Income</div>
@@ -71,12 +83,22 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
                     {getDateFormattedString(item.date)}
                   </div>
                   <div className='col-4 col-md mm-activity-table__body--data'>
-                    {' '}
                     <span className='d-block d-md-none'>Activity Type</span>
                     {formater(item.type)}
                   </div>
-                  <div className='col-4 col-md mm-activity-table__body--data d-none d-xl-block'>{item.description}</div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> 
+                  <div className='col-4 col-md mm-activity-table__body--data d-xl-block'>
+                    <span className='d-block d-md-none'>Description</span>
+                    {item.description}</div>
+
+                    {priceHeader && <div className='col-4 col-md mm-activity-table__body--data'>
+                      <span className='d-block d-md-none'>Price</span>
+                        {item.price ? currencySymbol : ''}{item.price !== null ? numberWithCommas(fNumber(item.price, 2)) : ''}</div>}
+
+                    {quantityHeader && <div className='col-4 col-md mm-activity-table__body--data'>
+                      <span className='d-block d-md-none'>Quantity</span>
+                      {item.quantity}</div>}
+
+                  <div className='col-4 col-md mm-activity-table__body--data'>
                     <span className='d-block d-md-none'>Amount</span>
                     {currencySymbol}{item.amount !== null ? `${numberWithCommas(fNumber(item.amount, 2))}` : ''}
                   </div>
