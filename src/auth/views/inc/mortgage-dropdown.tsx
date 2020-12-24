@@ -18,7 +18,7 @@ const MortgageDropdown = (props: MortgageDropdownProps) => {
     <Dropdown className='drop-box dropdown-select-input' onToggle={(nextShow) => setShow(nextShow)} show={show}>
       <Dropdown.Toggle className='dropdown-toggle'>{value}</Dropdown.Toggle>
       <Dropdown.Menu className='mm-dropdown-menu'>
-        <ul className='checkbox-list'>
+        <ul className='checkbox-list single'>
           {mortgageList?.map((mortgage, index) => {
             return (
               <li key={index}>
