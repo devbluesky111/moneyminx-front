@@ -661,7 +661,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 </div>
 
                 {/* If employerMatchContribution is no hide this field */}
-                {!values.employerMatchContribution ? (
+                {(values.employerMatchContribution === true || values.employerMatchContribution === 'yes') ? (
                   <div className={`input-wrap flex-box ${hc('employerMatch')}`}>
                     <div className='left-input'>
                       <p>
@@ -683,7 +683,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                   </div>
                 ) : null}
 
-                {!values.employerMatchContribution ? (
+                {(values.employerMatchContribution === true || values.employerMatchContribution === 'yes') ? (
                   <div className={`input-wrap flex-box ${hc('employerMatchLimitIn')} ${hc('employerMatchLimit')}`}>
                     <div className='left-input employer-match'>
                       <p>
