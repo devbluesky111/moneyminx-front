@@ -22,13 +22,12 @@ interface SettingModalProps {
 }
 
 const initialValues = {
-  mmCategory: '',
+  mmCategory: 'Other Assets',
   mmAccountType: '',
   mmAccountSubType: '',
   accountName: '',
-  nickname: '',
   balance: '',
-  currency: '',
+  currency: 'USD',
 };
 
 const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal }) => {
@@ -66,7 +65,6 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
 
   const handleSubmit = async () => {
     setLoading(true);
-    values.nickname = values.accountName;
     const { data: res, error: err } = await postManualAccount(values);
     if (!err) {
       await getConnectionInfo();
@@ -139,7 +137,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
               <Form.Label className='form-subheading'>Account Name</Form.Label>
               <Form.Control
                 type='text'
-                placeholder='Sapphire Credit Card'
+                placeholder='Lego Collection'
                 onChange={handleChange}
                 name='accountName'
                 value={values.accountName}
@@ -167,11 +165,11 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
             </div>
             <div className='row-set'>
               <Form.Group controlId='ManualAccountForm.CurrentBalance' className='child'>
-                <Form.Label className='form-subheading'>Current Balance</Form.Label>
+                <Form.Label className='form-subheading'>Current Value</Form.Label>
                 <Form.Control
                   name='balance'
                   type='number'
-                  placeholder='43233.32'
+                  placeholder='100.00'
                   onChange={handleChange}
                   value={values.balance}
                   required
