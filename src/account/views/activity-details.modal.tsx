@@ -47,12 +47,14 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
         date: activityDetails && activityDetails.date ? getMomentDate(activityDetails.date) : getMomentDate(),
         type: activityDetails?.type || '',
         description: activityDetails?.description || '',
+        quantity: activityDetails?.quantity || '',
+        price: activityDetails?.price || '',
         amount: activityDetails?.amount || 0,
         balance: activityDetails?.balance || 0,
         income: activityDetails?.income || false,
         cashFlow: activityDetails?.cashFlow || false,
         isIgnored: activityDetails?.isIgnored || false,
-        accountId: accountId,
+        accountId,
       }}
       onSubmit={async (values: any, actions: any) => {
         const activityId = activityDetails?.id;
