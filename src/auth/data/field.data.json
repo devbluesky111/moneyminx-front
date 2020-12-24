@@ -29,6 +29,8 @@
     "country",
     "useZestimate",
     "ownEstimate",
+    "estimatedMonthlyIncome",
+    "estimatedMonthlyExpenses",
     "associatedMortgage",
     "principalBalance",
     "calculatedEquity",

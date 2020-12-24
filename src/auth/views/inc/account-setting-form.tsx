@@ -16,7 +16,7 @@ import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 
 import { Formik } from 'formik';
 import { MMCategories } from 'auth/auth.enum';
-import { fNumber } from 'common/number.helper';
+import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useAuthState } from 'auth/auth.context';
 import { makeFormFields } from 'auth/auth.helper';
 import { useModal } from 'common/components/modal';
@@ -187,6 +187,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           businessStartDate: getInitialDate('businessStartDate'),
           employerMatchLimit: currentFormFields?.employerMatchLimit || '',
           associatedMortgage: currentFormFields?.associatedMortgage || '',
+          estimatedMonthlyIncome: currentFormFields?.estimatedMonthlyIncome || '',
+          estimatedMonthlyExpenses: currentFormFields?.estimatedMonthlyExpenses || '',
           calculateReturnsOn: currentFormFields?.calculateReturnsOn || 'equity',
           postMoneyValuation: currentFormFields?.postMoneyValuation || '',
           currentMarketValue: currentFormFields?.currentMarketValue || '',
@@ -800,6 +802,36 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
               {/* associate mortgage and loan  */}
               <div className='account-type'>
                 <ul className='account-type-list'>
+                  <li className={hc('estimatedMonthlyIncome')}>
+                    <span className='form-subheading'>Estimated Monthly Income</span>
+                    <Form.Control
+                      onChange={handleChange}
+                      type='number'
+                      name='estimatedMonthlyIncome'
+                      value={values.estimatedMonthlyIncome}
+                      step='any'
+                    />
+                  </li>
+                  <li className={hc('estimatedMonthlyExpenses')}>
+                    <span className='form-subheading'>Estimated Monthly Expenses</span>
+                    <Form.Control
+                      onChange={handleChange}
+                      type='number'
+                      name='estimatedMonthlyExpenses'
+                      value={values.estimatedMonthlyExpenses}
+                      step='any'
+                    />
+                  </li>
+                  <li className={`${hc('associatedMortgage')}`}>
+                    <span className='form-subheading'>Associated Mortgage</span>
+                    <MortgageDropdown
+                      mortgageList={dMortgageAccounts}
+                      name='associatedMortgage'
+                      onChange={handleMortgageChange}
+                      value={values.associatedMortgage}
+                    />
+                  </li>
+
                   {/* Current value */}
                   <li className={`${hc('useZestimate')}`}>
                     <span className='form-subheading'>Current Value</span>
@@ -815,15 +847,6 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       </div>
                     </div>
                   </li>
-                  <li className={`${hc('associatedMortgage')}`}>
-                    <span className='form-subheading'>Associated Mortgage</span>
-                    <MortgageDropdown
-                      mortgageList={dMortgageAccounts}
-                      name='associatedMortgage'
-                      onChange={handleMortgageChange}
-                      value={values.associatedMortgage}
-                    />
-                  </li>
                 </ul>
               </div>
               {/* associate mortgage and loan  ends */}
@@ -832,7 +855,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
               <div className={`${hc('calculatedEquity')}`}>
                 <div className='d-flex align-items-center justify-content-between'>
                   <p>Calculated Equity</p>
-                  <p>{fNumber(+values.ownEstimate - +values.principalBalance, 2)}</p>
+                  <p>{numberWithCommas(fNumber(+values.ownEstimate - +values.principalBalance, 2))}</p>
                 </div>
               </div>
 
