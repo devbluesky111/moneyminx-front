@@ -2,7 +2,7 @@ import Form from 'react-bootstrap/Form';
 import moment from 'moment';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import MMToolTip from 'common/components/tooltip';
@@ -345,7 +345,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                         role='button'
                         key={idx}
                       >
-                        <Link to='#'>{cat}</Link>
+                        <span>{cat}</span>
                       </li>
                     );
                   })}
