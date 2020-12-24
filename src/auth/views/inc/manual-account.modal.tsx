@@ -2,39 +2,50 @@ import Form from 'react-bootstrap/Form';
 import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
-import { storage } from 'app/app.storage';
+import MMToolTip from 'common/components/tooltip';
 import useToast from 'common/hooks/useToast';
 import { appRouteConstants } from 'app/app-route.constant';
 import { Modal, ModalType } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { enumerateStr } from 'common/common-helper';
-import { getConnectionInfo, getManualAccountType, postManualAccount } from 'api/request.api';
+import { getConnectionInfo, postManualAccount } from 'api/request.api';
 import { SelectInput } from 'common/components/input/select.input';
 import { AccountTypeSelectInput } from './account-type-select.input';
+import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
+import { MMCategories } from 'auth/auth.enum';
+import { storage } from 'app/app.storage';
+import useAccountType from 'auth/hooks/useAccountType';
+import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 
 interface SettingModalProps {
   manualAccountModal: ModalType;
 }
 
 const initialValues = {
-  yodleeAccountType: '',
+  mmCategory: '',
+  mmAccountType: '',
+  mmAccountSubType: '',
   accountName: '',
   nickname: '',
   balance: '',
-  accountNumber: '',
   currency: '',
 };
 
 const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal }) => {
   const history = useHistory();
   const { mmToast } = useToast();
-  const curArr = enumerateStr(CurrencyOptions);
   const [values, setValues] = useState(initialValues);
-  const [AccountTypes, setAccountTypes] = useState([]);
+  const { data: accountTypes } = useAccountType();
+  const { subType: accountSubTypes } = useAccountSubtype(values.mmAccountType);
+  const curArr = enumerateStr(CurrencyOptions);
   const [loading, setLoading] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
 
   const handleChange = (e: React.ChangeEvent<any>) => {
+    if (e.target.name === 'mmAccountType') {
+      return setValues({ ...values, [e.target.name]: e.target.value, mmAccountSubType: '' });
+    }
+
     if (e.target.name === 'balance') {
       let _float = parseFloat(e.target.value);
 
@@ -43,6 +54,10 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
 
     return setValues({ ...values, [e.target.name]: e.target.value });
   };
+
+  const setAccountCategory = (cat: string) => {
+    return setValues({ ...values, mmCategory: cat });
+  }
 
   const handleCancel = () => {
     manualAccountModal.close();
@@ -68,23 +83,12 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
     mmToast(' Add Failed', { type: 'error' });
   };
 
-  const fetchAccountTypes = async () => {
-    const { data, error } = await getManualAccountType();
-    if (!error) {
-      setAccountTypes(data);
-    }
-  };
-
-  useEffect(() => {
-    fetchAccountTypes();
-  }, []);
-
   useEffect(() => {
     setValues(initialValues);
   }, [manualAccountModal]);
 
   useEffect(() => {
-    if (!values.yodleeAccountType || !values.accountName || !values.balance || !values.currency) {
+    if (!values.mmCategory || !values.mmAccountType || !values.mmAccountSubType || !values.accountName || !values.balance || !values.currency) {
       return setDisabled(true);
     }
     return setDisabled(false);
@@ -105,6 +109,32 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
         </span>
         <div className='mm-manual-account-modal__title mt-3'>
           <Form className='mm-form'>
+            <div className='account-category'>
+              <span className='form-subheading'>
+                Account Category
+                  <MMToolTip
+                  placement='top'
+                  message='Investment Assets are accounts you track as investments and may consider adding or reducing to your position, Other Assets are worth money but you do not trade them such as your checking account or primary residence, Liabilities are things you owe like loans, mortgages and credit cards.'
+                >
+                  <InfoIcon />
+                </MMToolTip>
+              </span>
+              <ul className='category-list'>
+                {enumerateStr(MMCategories).map((cat: string, idx: number) => {
+                  return (
+                    <li
+                      className={values.mmCategory === cat ? 'active' : ''}
+                      onClick={() => setAccountCategory(cat)}
+                      role='button'
+                      key={idx}
+                    >
+                      <span>{cat}</span>
+                    </li>
+                  );
+                })}
+                <div className='border-bg-slider' />
+              </ul>
+            </div>
             <Form.Group controlId='ManualAccountForm.AccountName' className='child'>
               <Form.Label className='form-subheading'>Account Name</Form.Label>
               <Form.Control
@@ -119,21 +149,19 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
               <Form.Group controlId='ManualAccountForm.AccountType' className='child'>
                 <Form.Label className='form-subheading'>Account Type</Form.Label>
                 <AccountTypeSelectInput
-                  args={AccountTypes}
+                  args={accountTypes}
                   onChange={handleChange}
-                  value={values.yodleeAccountType}
-                  name='yodleeAccountType'
+                  value={values.mmAccountType}
+                  name='mmAccountType'
                 />
               </Form.Group>
-              <Form.Group controlId='ManualAccountForm.AccountNumber' className='child'>
-                <Form.Label className='form-subheading'>Account Number</Form.Label>
-                <Form.Control
-                  name='accountNumber'
-                  type='number'
-                  placeholder='45432'
+              <Form.Group controlId='ManualAccountForm.AccountSubtype' className='child'>
+                <Form.Label className='form-subheading'>Account Subtype</Form.Label>
+                <AccountTypeSelectInput
+                  args={accountSubTypes}
                   onChange={handleChange}
-                  value={values.accountNumber}
-                  required
+                  value={values.mmAccountSubType}
+                  name='mmAccountSubType'
                 />
               </Form.Group>
             </div>
