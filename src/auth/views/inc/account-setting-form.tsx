@@ -565,7 +565,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       step='any'
                     />
                   </li>
-                  <li>
+                  <li className={`${hc('associatedLoan')}`}>
                     <span className='form-subheading'>Associated Loan</span>
                     <AssociatedLoanDropdown
                       loanAccounts={loanAccounts}
