@@ -40,7 +40,7 @@ export const PlanOverview = () => {
     return <CircularSpinner />;
   }
 
-  const isCurrentPlan = (priceId: string) => currentSubscription.priceId === priceId;
+  const isCurrentPlan = (priceId: string) => currentSubscription?.priceId === priceId;
   const ac = (priceId: string) => {
     if (currentSubscription?.subscriptionStatus !== 'trialing' && isCurrentPlan(priceId)) {
       return 'mm-plan-overview__plan-btn--current';
@@ -218,8 +218,8 @@ export const PlanOverview = () => {
                       {currentSubscription?.subscriptionStatus === 'trialing'
                         ? 'Choose Plan'
                         : isCurrentPlan(pt.priceId)
-                          ? 'Current Plan'
-                          : 'Change Plan'}
+                        ? 'Current Plan'
+                        : 'Change Plan'}
                     </button>
                   </div>
                 </div>

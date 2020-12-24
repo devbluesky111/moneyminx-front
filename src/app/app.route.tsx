@@ -7,11 +7,27 @@ import AuthRoute from 'auth/auth.route';
 import NotFound from 'website/views/not-found';
 import WebsiteRoute from 'website/website.route';
 import AccountRoute from 'account/account.route';
-import { NetworthProvider } from 'networth/networth.context';
-import { Home, TermNService, Notice, Privacy, About, Pricing, Security, FeaturesNetWorth, FeaturesAllocations, FeaturesCryptos, FeaturesSyncedManual, FeaturesTransactionHistory, FeaturesMulticurrency } from 'website/views';
+import {
+  Home,
+  About,
+  Notice,
+  Privacy,
+  Pricing,
+  Security,
+  TermNService,
+  FeaturesCryptos,
+  FeaturesNetWorth,
+  FeaturesAllocations,
+  FeaturesSyncedManual,
+  FeaturesMulticurrency,
+  FeaturesTransactionHistory,
+} from 'website/views';
+import { ForgotPassword } from 'auth/views';
+import NetworthRoute from 'networth/networth.route';
+import AuthorizedRoute from 'routes/authorized.route';
+import AllocationRoute from 'allocation/allocation.route';
 
 import {
-  Networth,
   TokenExpired,
   ResetPassword,
   StripeSuccess,
@@ -19,17 +35,21 @@ import {
   AccountSetting,
   ConnectAccount,
   Subscription,
-  SubscriptionReview
+  SubscriptionReview,
 } from './app.view';
-
 import { appRouteConstants } from './app-route.constant';
-import AllocationRoute from 'allocation/allocation.route';
-import { ForgotPassword } from 'auth/views';
 
 const {
   home,
   web: { SECURITY },
-  features: { FEATURES_NET_WORTH, FEATURES_ALLOCATIONS, FEATURES_CRYPTOS, FEATURES_SYNCED_MANUAL, FEATURES_MULTICURRENCY, FEATURES_TRANSACTION_HISTORY },
+  features: {
+    FEATURES_NET_WORTH,
+    FEATURES_ALLOCATIONS,
+    FEATURES_CRYPTOS,
+    FEATURES_SYNCED_MANUAL,
+    FEATURES_MULTICURRENCY,
+    FEATURES_TRANSACTION_HISTORY,
+  },
   account: { ACCOUNT },
   settings: { SETTINGS },
   subscription: { SUBSCRIPTION, REVIEW },
@@ -87,11 +107,7 @@ function AppRoute() {
         <Route exact path={RESET_PASSWORD} component={ResetPassword} />
         <Route exact path={CONNECT_ACCOUNT} component={ConnectAccount} />
         <Route exact path={ACCOUNT_SETTING} component={AccountSetting} />
-        <Route exact path={NET_WORTH}>
-          <NetworthProvider>
-            <Networth />
-          </NetworthProvider>
-        </Route>
+        <AuthorizedRoute exact path={NET_WORTH} component={NetworthRoute} />
         <Route exact path={'/404'} component={NotFound} />
         <Redirect to='/404' />
       </Switch>
