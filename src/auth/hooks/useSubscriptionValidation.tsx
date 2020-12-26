@@ -1,14 +1,18 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 import { isEmpty } from 'lodash';
-import { Account } from 'auth/auth.types';
-import { useAuthState } from 'auth/auth.context';
 import { appRouteConstants } from 'app/app-route.constant';
+import { Account, SubscriptionDetail } from 'auth/auth.types';
 import { pricingDetailConstant } from 'common/common.constant';
 import { StripeSubscriptionStatus } from 'setting/setting.enum';
+import { useAuthDispatch, useAuthState } from 'auth/auth.context';
+import { getCurrentSubscription, getSubscription } from 'api/request.api';
+import { setCurSubscription, setSubscriptionDetail } from 'auth/auth.actions';
 
 const useSubscriptionValidation = () => {
   const { currentSubscription, subscriptionDetail, onboarded, accounts } = useAuthState();
+  const dispatch = useAuthDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
   const [accessibleRoute, setAccessibleRoutes] = useState('');
 
   const subStatus = currentSubscription?.subscriptionStatus;
@@ -45,6 +49,37 @@ const useSubscriptionValidation = () => {
 
   const isPlanExceeds = checkPlanExceeds();
 
+  const hasSubscriptionDetail = !isEmpty(subscriptionDetail);
+  const hasCurrentSubscription = !isEmpty(currentSubscription);
+
+  /**
+   * Get current subscription @if current subscription not available
+   * Get subscription detail @if subscription detail is not available
+   */
+  useEffect(() => {
+    (async () => {
+      let priceId: string = '';
+      if (!hasCurrentSubscription) {
+        setLoading(true);
+        const { data, error } = await getCurrentSubscription();
+        setLoading(false);
+        if (!error || data) {
+          priceId = data?.priceId;
+          dispatch(setCurSubscription(data));
+        }
+      }
+      if (!hasSubscriptionDetail && priceId) {
+        setLoading(true);
+        const { data, error } = await getSubscription({ priceId });
+        setLoading(false);
+        if (!error || data) {
+          const subDetail: SubscriptionDetail = data;
+          dispatch(setSubscriptionDetail(subDetail));
+        }
+      }
+    })();
+  }, [hasCurrentSubscription, hasSubscriptionDetail, dispatch]);
+
   useLayoutEffect(() => {
     let route: string = '';
     (() => {
@@ -78,6 +113,7 @@ const useSubscriptionValidation = () => {
   }, [isPlanExpired, isPlanExist, onboarded, isPlanExceeds, hasAllValues]);
 
   return {
+    loading,
     accessibleRoute,
   };
 };

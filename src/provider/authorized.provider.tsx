@@ -5,11 +5,11 @@ import LoadingScreen from 'common/loading-screen';
 import useSubscriptionValidation from 'auth/hooks/useSubscriptionValidation';
 
 const AuthorizedProvider: React.FC = ({ children }) => {
-  const { accessibleRoute } = useSubscriptionValidation();
+  const { accessibleRoute, loading } = useSubscriptionValidation();
 
   const hasAllAccess = accessibleRoute === 'all';
 
-  if (!accessibleRoute) {
+  if (!accessibleRoute || loading) {
     return <LoadingScreen />;
   }
 
