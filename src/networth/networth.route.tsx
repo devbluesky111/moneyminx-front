@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AuthorizedProvider from 'provider/autorized.provider';
+import AuthorizedProvider from 'provider/authorized.provider';
 
 import Networth from './views/networth';
 import { NetworthProvider } from './networth.context';

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import LoadingScreen from 'common/loading-screen';
@@ -59,7 +58,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
   const loading = fetchingCurrentSubscription || fetchingSubscription;
 
   if (loading || !accounts.length) {
-    return <CircularSpinner />;
+    return <LoadingScreen />;
   }
 
   const manualAccounts = accounts.filter((acc) => acc.isManual);

@@ -16,7 +16,7 @@ const PrivateRoute = ({ component: Component, ...rest }: any) => {
         ) : (
           <Redirect
             to={{
-              pathname: appRouteConstants.auth.LOGIN,
+              pathname: appRouteConstants.auth.LOGIN + '?expired=true',
               state: { from: props.location },
             }}
           />

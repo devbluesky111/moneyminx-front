@@ -5,9 +5,9 @@ import { logger } from 'common/logger.helper';
 import useSubscriptionValidation from 'auth/hooks/useSubscriptionValidation';
 
 const AuthorizedRoute = ({ component: Component, ...rest }: any) => {
-  const { accessibleRoutes } = useSubscriptionValidation();
+  const { accessibleRoute } = useSubscriptionValidation();
 
-  logger.log('Accessible Routes', accessibleRoutes);
+  logger.log('Accessible Routes', accessibleRoute);
 
   return (
     <Route
@@ -15,8 +15,8 @@ const AuthorizedRoute = ({ component: Component, ...rest }: any) => {
       render={(props) => {
         logger.log('props here', props);
 
-        const allAllowed = accessibleRoutes.includes('all');
-        const [allowed] = accessibleRoutes;
+        const allAllowed = accessibleRoute.includes('all');
+        const [allowed] = accessibleRoute;
 
         return allAllowed ? (
           <Component {...props} />
