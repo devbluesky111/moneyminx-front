@@ -125,7 +125,7 @@ export const HomeNetWorthSection = () => {
                 <h2>Net Worth Calculator</h2>
               </a>
               <p>
-                Stay up-to-date with your assets and liabilities. Track your wealth by using our Net Worth Calculator.
+                Stay up-to-date with your assets and liabilities. Track your wealth with our Net Worth Calculator.
               </p>
             </div>
           <div className='col-lg-7 feature-image'>
