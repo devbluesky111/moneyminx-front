@@ -33,8 +33,8 @@ const useCurrentSubscription = () => {
   }, [dispatch, hasCurrentSubscription]);
 
   return {
-    currentSubscription,
-    fetchingCurrentSubscription: state === ERequestStatus.INITIAL || state === ERequestStatus.PROCESSING,
+    currentSubscription: curSubscription || currentSubscription,
+    fetchingCurrentSubscription: state === ERequestStatus.PROCESSING,
     currentSubError: state === ERequestStatus.WITH_ERROR ? 'Error on fetching current subscription' : null,
   };
 };

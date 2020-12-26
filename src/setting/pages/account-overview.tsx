@@ -57,21 +57,21 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({ reviewSubscrip
 
   const loading = fetchingCurrentSubscription || fetchingSubscription;
 
-  if (loading || !accounts.length) {
+  if (loading || !accountLength) {
     return <LoadingScreen />;
   }
 
   const manualAccounts = accounts.filter((acc) => acc.isManual);
   const connectedAccounts = accounts.filter((acc) => !acc.isManual);
 
-  const numberOfConnectedAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || 0;
-  const numberOfManualAccounts = subscription?.details?.[pricingDetailConstant.MANUAL_ACCOUNT] || 0;
+  const numberOfConnectedAccounts = subscription?.details?.[pricingDetailConstant.CONNECTED_ACCOUNT] || '0';
+  const numberOfManualAccounts = subscription?.details?.[pricingDetailConstant.MANUAL_ACCOUNT] || '0';
 
   const verifyAccountNumbers = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
     if (
       numberOfConnectedAccounts === 'Unlimited' ||
-      (manualAccounts.length <= numberOfManualAccounts && connectedAccounts.length <= numberOfConnectedAccounts)
+      (manualAccounts.length <= +numberOfManualAccounts && connectedAccounts.length <= +numberOfConnectedAccounts)
     ) {
       history.push(appRouteConstants.networth.NET_WORTH);
       return;
@@ -219,7 +219,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const [loading, setLoading] = useState(false);
   const { fetchLatestProviderAccounts, fetchAccounts, loading: fetchingNewAccounts } = useAccounts();
 
-  const needUpgrade = accountList.length >= availableAccounts;
+  const needUpgrade = accountList.length >= +availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
 
   const handleConnectAccountSuccess = async () => {
@@ -531,9 +531,7 @@ const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({
     <div className='action-overlay'>
       <div className='subscription-bottom-text'>
         <div className='subs-content one'>
-          <a
-            href='/subscription'
-          >
+          <a href='/subscription'>
             <span className='btn-change-plan'>
               <BackArrow /> <span className='hide-sm'>Change Plan</span>
             </span>

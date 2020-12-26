@@ -42,7 +42,7 @@ const useGetSubscription = (priceId?: string) => {
   return {
     subError: error,
     fetchingSubscription: loading,
-    subscriptionDetail: subscription,
+    subscriptionDetail: subscriptionDetail || subscription,
   };
 };
 
