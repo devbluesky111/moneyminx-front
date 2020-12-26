@@ -83,7 +83,7 @@ const useSubscriptionValidation = () => {
   useLayoutEffect(() => {
     let route: string = '';
     (() => {
-      if (hasAllValues) {
+      if (hasAllValues && !loading) {
         if (isPlanExpired) {
           route = appRouteConstants.subscription.SUBSCRIPTION;
           return route;
@@ -110,7 +110,7 @@ const useSubscriptionValidation = () => {
     })();
 
     setAccessibleRoutes(route);
-  }, [isPlanExpired, isPlanExist, onboarded, isPlanExceeds, hasAllValues]);
+  }, [isPlanExpired, isPlanExist, onboarded, isPlanExceeds, hasAllValues, loading]);
 
   return {
     loading,
