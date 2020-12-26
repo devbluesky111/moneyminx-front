@@ -32,7 +32,7 @@ import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { ReactComponent as IconEdit } from 'assets/icons/icon-edit.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
-import { ReactComponent as BackIcon } from 'assets/images/subscription/back-btn.svg';
+import { ReactComponent as BackArrow } from 'assets/images/subscription/back-arrow.svg';
 import { ReactComponent as DefaultProviderLogo } from 'assets/icons/mm-default-provider.svg';
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 import { deleteAccounts, deleteAccountById, fetchConnectionInfo, getRefreshedAccount } from 'auth/auth.service';
@@ -532,20 +532,17 @@ const AccountDialogBox: React.FC<AccountDialogBoxProps> = ({
       <div className='subscription-bottom-text'>
         <div className='subs-content one'>
           <a
-            href='link12'
-            onClick={(event) => {
-              verifyAccountNumbers(event);
-            }}
+            href='/subscription'
           >
-            <span className='back-btn'>
-              <BackIcon />
+            <span className='btn-change-plan'>
+              <BackArrow /> <span className='hide-sm'>Change Plan</span>
             </span>
           </a>
         </div>
         <div className='subs-content three'>
           <p>
-            You need to delete {connectedAccountDiff > 0 ? connectedAccountDiff : 0} connected accounts and{' '}
-            {manualAccountDiff > 0 ? manualAccountDiff : 0} manual accounts to be able to use this plan.
+            Remove {connectedAccountDiff > 0 ? connectedAccountDiff : 0} connected accounts and{' '}
+            {manualAccountDiff > 0 ? manualAccountDiff : 0} manual accounts to keep current plan.
           </p>
         </div>
         <div className='subs-content four'>
