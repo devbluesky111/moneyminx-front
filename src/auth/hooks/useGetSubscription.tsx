@@ -6,19 +6,22 @@ import { SubscriptionDetail } from 'auth/auth.types';
 import { setSubscriptionDetail } from 'auth/auth.actions';
 import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 
+/**
+ * @description this is used for getting subscription for given priceId;
+ * @param priceId
+ */
 const useGetSubscription = (priceId?: string) => {
   const dispatch = useAuthDispatch();
   const { subscriptionDetail } = useAuthState();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [subscription, setSubscription] = useState<SubscriptionDetail>();
-  const [subscriptions, setSubscriptions] = useState<SubscriptionDetail[]>();
 
   const hasSubscriptionDetail = !isEmpty(subscriptionDetail);
 
   useEffect(() => {
     (async () => {
-      if (hasSubscriptionDetail) {
+      if (hasSubscriptionDetail || !priceId) {
         return;
       }
 
@@ -29,25 +32,16 @@ const useGetSubscription = (priceId?: string) => {
         return setError(apiError);
       }
 
-      if (priceId) {
-        const sDetail: SubscriptionDetail = data;
-        setSubscription(sDetail);
+      const sDetail: SubscriptionDetail = data;
+      setSubscription(sDetail);
 
-        return dispatch(setSubscriptionDetail(sDetail));
-      }
-
-      setSubscriptions(data);
-      const [subDetail]: SubscriptionDetail[] = data;
-      setSubscription(subDetail);
-
-      return dispatch(setSubscriptionDetail(subDetail));
+      return dispatch(setSubscriptionDetail(sDetail));
     })();
   }, [dispatch, priceId, hasSubscriptionDetail]);
 
   return {
     subError: error,
     fetchingSubscription: loading,
-    subscription: subscriptions,
     subscriptionDetail: subscription,
   };
 };
