@@ -61,7 +61,7 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
                           <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
                             <div className='pr-1'>
                               <h5>{account.accountName}</h5>
-                              <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                              <span>{account.balancesFetchedAt !== null ?  getRelativeDate(account.balancesFetchedAt) : ''}</span>
                             </div>
                             <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
                           </Link>
@@ -81,7 +81,7 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
                           <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
                             <div>
                               <h5>{account.accountName}</h5>
-                              <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                              <span>{account.balancesFetchedAt !== null ?  getRelativeDate(account.balancesFetchedAt) : ''}</span>
                             </div>
                             <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
                           </Link>
@@ -100,7 +100,7 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
                         <Link to={`/account-details/${account.id}`} onClick={() => clickElement(dropdownToggle)}>
                           <div className='pr-1'>
                             <h5>{account.accountName}</h5>
-                            <span>{getRelativeDate(account.balancesFetchedAt)}</span>
+                            <span>{account.balancesFetchedAt !== null ?  getRelativeDate(account.balancesFetchedAt) : ''}</span>
                           </div>
                           <div>{getCurrencySymbol(account.currency)}{numberWithCommas(fNumber(account.balance, 2))}</div>
                         </Link>
