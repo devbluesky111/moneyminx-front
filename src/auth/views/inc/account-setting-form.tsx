@@ -1,43 +1,43 @@
 import Form from 'react-bootstrap/Form';
-import moment from 'moment';
 import ReactDatePicker from 'react-datepicker';
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import CircularSpinner from 'common/components/spinner/circular-spinner';
-import MMToolTip from 'common/components/tooltip';
-import useToast from 'common/hooks/useToast';
-import useAccountType from 'auth/hooks/useAccountType';
-import useLoanAccount from 'auth/hooks/useLoanAccount';
-import useSearchParam from 'auth/hooks/useSearchParam';
-import useAccountFilter from 'auth/hooks/useAccountFilter';
-import useAccountSubtype from 'auth/hooks/useAccountSubtype';
-import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
-
+import moment from 'moment';
 import { Formik } from 'formik';
+import useToast from 'common/hooks/useToast';
 import { MMCategories } from 'auth/auth.enum';
-import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useAuthState } from 'auth/auth.context';
+import MMToolTip from 'common/components/tooltip';
 import { makeFormFields } from 'auth/auth.helper';
 import { useModal } from 'common/components/modal';
 import { enumerateStr } from 'common/common-helper';
 import { StringKeyObject } from 'common/common.types';
+import useAccountType from 'auth/hooks/useAccountType';
+import useLoanAccount from 'auth/hooks/useLoanAccount';
+import useSearchParam from 'auth/hooks/useSearchParam';
+import useAccountFilter from 'auth/hooks/useAccountFilter';
 import { appRouteConstants } from 'app/app-route.constant';
+import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 import { getMomentDate, getUTC } from 'common/moment.helper';
 import { loginValidationSchema } from 'auth/auth.validation';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { deleteAccount, patchAccount } from 'api/request.api';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
-import { Account, Mortgage, MortgageList } from 'auth/auth.types';
-import { initialMortgage } from 'auth/data/account-settings.data';
+import { fNumber, numberWithCommas } from 'common/number.helper';
+import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
-/*import { ReactComponent as ZillowImage } from 'assets/images/zillow.svg';*/
+import useRealEstateAccounts from 'auth/hooks/useRealEstateAccounts';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
+import { initialAccount, initialMortgage } from 'auth/data/account-settings.data';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
+import { Account, IRealEstateAccount, Mortgage, MortgageList } from 'auth/auth.types';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
 
 import MortgageDropdown from './mortgage-dropdown';
 import DeleteAccountModal from './delete-account.modal';
+import RealEstateDropdown from './real-estate-dropdown';
 import AssociatedLoanDropdown from './associated-loan-dropdown';
 
 interface Props {
@@ -56,11 +56,14 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
   const [accountSubtype, setAccountSubtype] = useState('');
   const [accountCategory, setAccountCategory] = useState<string>('');
 
-  const { loading: fetchingAccountType, data: accountTypes, error } = useAccountType();
-  const { subType: accountSubTypes, error: subTypeError } = useAccountSubtype(accountType);
+  const isManual = currentAccount?.isManual;
+
+  const { loading: fetchingAccountType, data: accountTypes, error } = useAccountType(isManual);
+  const { subType: accountSubTypes, error: subTypeError } = useAccountSubtype(accountType, isManual);
 
   const { fetchingLoanAccount, loanAccounts, loanAccountError } = useLoanAccount();
   const { fetchingMortgage, mortgageAccounts, mortgageError } = useAssociateMortgage();
+  const { fetchingRealEstateAccounts, realEstateAccounts, realEstateError } = useRealEstateAccounts();
   const { accountFilters, error: filterError } = useAccountFilter(accountType, accountSubtype);
 
   const deleteAccountModal = useModal();
@@ -98,9 +101,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
     }
   }, [currentAccount]);
 
-  const hasError = error || subTypeError || filterError || mortgageError || loanAccountError;
+  const hasError = error || subTypeError || filterError || mortgageError || loanAccountError || realEstateError;
 
-  const isLoading = fetchingAccountType || fetchingMortgage || fetchingLoanAccount;
+  const isLoading = fetchingAccountType || fetchingMortgage || fetchingLoanAccount || fetchingRealEstateAccounts;
 
   if (hasError) {
     mmToast('Error occurred', { type: 'error' });
@@ -123,6 +126,10 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
   const dMortgageAccounts: MortgageList = mortgageAccounts?.length
     ? [initialMortgage, ...mortgageAccounts]
     : [initialMortgage];
+
+  const dRealEstateAccounts: IRealEstateAccount[] = realEstateAccounts?.length
+    ? [initialAccount, ...realEstateAccounts]
+    : [initialAccount];
 
   const isLastAccount = (): boolean => {
     if (accounts && currentAccount) {
@@ -178,6 +185,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           streetAddress: currentFormFields?.streetAddress || '',
           amountInvested: currentFormFields?.amountInvested || '',
           associatedLoan: currentFormFields?.associatedLoan || '',
+          associatedRealEstate: currentFormFields?.associatedRealEstate || '',
           originationDate: getInitialDate('originationDate'),
           originalBalance: currentFormFields?.originalBalance || '',
           paymentsPerYear: currentFormFields?.paymentsPerYear || '',
@@ -290,7 +298,12 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         };
 
         const handleSelectChange = (e: React.ChangeEvent<any>) => {
-          setValues({ ...values, [e.target.name]: e.target.value });
+          const name: string = e.target.name;
+          let value = e.target.value;
+          const numberFields: string[] = ['associatedRealEstate'];
+          value = numberFields.includes(name) ? +value : value;
+
+          return setValues({ ...values, [name]: value });
         };
 
         const handleMortgageChange = (e: React.ChangeEvent<any>, mortgage: Mortgage) => {
@@ -306,7 +319,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           e.preventDefault();
           setValues({
             ...values,
-            associatedLoan: id
+            associatedLoan: id,
           });
         };
 
@@ -469,6 +482,15 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       name='paymentsPerYear'
                       value={values.paymentsPerYear}
                       step='any'
+                    />
+                  </li>
+                  <li className={hc('associatedRealEstate')}>
+                    <span className='form-subheading'>Associated Real Estate</span>
+                    <RealEstateDropdown
+                      name='associatedRealEstate'
+                      value={values.associatedRealEstate}
+                      onChange={handleSelectChange}
+                      realEstateAccounts={dRealEstateAccounts}
                     />
                   </li>
                 </ul>
@@ -663,7 +685,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                 </div>
 
                 {/* If employerMatchContribution is no hide this field */}
-                {(values.employerMatchContribution === true || values.employerMatchContribution === 'yes') ? (
+                {values.employerMatchContribution === true || values.employerMatchContribution === 'yes' ? (
                   <div className={`input-wrap flex-box ${hc('employerMatch')}`}>
                     <div className='left-input'>
                       <p>
@@ -685,7 +707,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                   </div>
                 ) : null}
 
-                {(values.employerMatchContribution === true || values.employerMatchContribution === 'yes') ? (
+                {values.employerMatchContribution === true || values.employerMatchContribution === 'yes' ? (
                   <div className={`input-wrap flex-box ${hc('employerMatchLimitIn')} ${hc('employerMatchLimit')}`}>
                     <div className='left-input employer-match'>
                       <p>
@@ -728,44 +750,44 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       </div>
                     </div>
                   </div>
-                ) : null }
+                ) : null}
 
-                {(values.employerMatchContribution === true || values.employerMatchContribution === 'yes') ? (
-                <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
-                  <div className='left-input'>
-                    <p>
-                      <span className='form-subheading'>
-                        Include employer match in performance?
-                        <MMToolTip message='Some investors think employer match should be counted as income so they do not include it as performance returns, some believe should be counted as a return. The choice is yours'>
-                          <InfoIcon className='sm-hide' />
-                        </MMToolTip>
-                      </span>
-                    </p>
-                  </div>
-                  <div className='right-input radio'>
-                    <div className='yes-no-radios'>
-                      <input
-                        type='radio'
-                        value='yes'
-                        onChange={handleChange}
-                        name='includeEmployerMatch'
-                        checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
-                        aria-checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
-                      />
-                      <label>Yes</label>
-                      <input
-                        type='radio'
-                        value='no'
-                        onChange={handleChange}
-                        name='includeEmployerMatch'
-                        checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
-                        aria-checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
-                      />
-                      <label>No</label>
+                {values.employerMatchContribution === true || values.employerMatchContribution === 'yes' ? (
+                  <div className={`input-wrap performance flex-box ${hc('includeEmployerMatch')}`}>
+                    <div className='left-input'>
+                      <p>
+                        <span className='form-subheading'>
+                          Include employer match in performance?
+                          <MMToolTip message='Some investors think employer match should be counted as income so they do not include it as performance returns, some believe should be counted as a return. The choice is yours'>
+                            <InfoIcon className='sm-hide' />
+                          </MMToolTip>
+                        </span>
+                      </p>
+                    </div>
+                    <div className='right-input radio'>
+                      <div className='yes-no-radios'>
+                        <input
+                          type='radio'
+                          value='yes'
+                          onChange={handleChange}
+                          name='includeEmployerMatch'
+                          checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
+                          aria-checked={values.includeEmployerMatch === 'yes' || values.includeEmployerMatch === true}
+                        />
+                        <label>Yes</label>
+                        <input
+                          type='radio'
+                          value='no'
+                          onChange={handleChange}
+                          name='includeEmployerMatch'
+                          checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
+                          aria-checked={values.includeEmployerMatch === 'no' || values.includeEmployerMatch === false}
+                        />
+                        <label>No</label>
+                      </div>
                     </div>
                   </div>
-                </div>
-                ) : null }
+                ) : null}
               </div>
 
               <div className={`form-divider ${hc('separateLoanBalance')}`}>

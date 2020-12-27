@@ -208,3 +208,8 @@ export interface LoanAccount {
 
 export type loanAccounts = LoanAccount[];
 
+export interface IRealEstateAccount {
+  id: number | string;
+  balance: number | string;
+  accountName: string;
+}
