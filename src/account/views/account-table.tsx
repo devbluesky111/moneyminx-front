@@ -21,7 +21,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
   const holdingsDetailsModal = useModal();
   useEffect(() => {
     setHoldings(holdingsData);
-    for (let item of holdingsData) {
+    for (const item of holdingsData) {
       if (item.price !== null) {
         setPriceHeader(true);
       }
@@ -61,8 +61,8 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                   <thead>
                     <tr>
                       <th className='s-hide'>Holdings</th>
-                      {priceHeader && <th className='hide-type'>Price</th>}
-                      {quantityHeader && <th>Quantity</th>}
+                      {priceHeader && <th>Price</th>}
+                      {quantityHeader && <th className='hide-type'>Quantity</th>}
                       {symbolHeader && <th className='hide-type'>Symbol</th>}
                       {costBasisHeader && <th className='hide-type'>Cost</th>}
                       {holdings?.[0]?.intervalValues.map((item: any, idx: number) => (
@@ -76,8 +76,8 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                     {holdings?.length > 0 && holdings.map((item, index) => (
                       <tr key={index} onClick={() => openEditPositionModal(item.id)} >
                         <td>{item.description}</td>
-                        {priceHeader && <td className='hide-type'>{item.price ? currencySymbol : ''}{item.price !== null ? numberWithCommas(fNumber(item.price, 2)) : ''}</td>}
-                        {quantityHeader && <td ><span>Quantity</span>{item.quantity}</td>}
+                        {priceHeader && <td><span>Price</span>{item.price ? currencySymbol : ''}{item.price !== null ? numberWithCommas(fNumber(item.price, 2)) : ''}</td>}
+                        {quantityHeader && <td className='hide-type'><span>Quantity</span>{item.quantity}</td>}
                         {symbolHeader && <td className='hide-type'>{item.symbol}</td>}
                         {costBasisHeader && <td className='hide-type'>{item.costBasis ? currencySymbol : ''}{item.costBasis !== null ? numberWithCommas(fNumber(item.costBasis, 2)) : ''}</td>}
                         {item.intervalValues.map((ins: any, i: number) => (
