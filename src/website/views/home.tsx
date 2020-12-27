@@ -92,7 +92,7 @@ export const HomeTestimonials = () => {
               <p>I am most looking forward to seeing the fancy charts telling me where my money is at!</p>
             </div>
             <img className='testimonial-user' src={Joe} alt='Joe Magnotti'/>
-            <div className='testimonial-name'>Joe Magnotti <span>Empire Flippers</span></div>
+            <div className='testimonial-name'>Joe M. <span>Empire Flippers</span></div>
           </div>
           <div className='testimonial-block'>
             <Quotes className='testimonial-quote'/>
@@ -100,7 +100,7 @@ export const HomeTestimonials = () => {
               <p>I am most excited to see the accumulated value of my portfolio with a future forecast.</p>
             </div>
             <img className='testimonial-user' src={Faraz} alt='Faraz Sharafi'/>
-            <div className='testimonial-name'>Faraz Sharafi <span>Intuit</span></div>
+            <div className='testimonial-name'>Faraz S. <span>Intuit</span></div>
           </div>
           <div className='testimonial-block'>
             <Quotes className='testimonial-quote'/>
@@ -108,7 +108,7 @@ export const HomeTestimonials = () => {
               <p>I am looking forward to learning about my income projections based on my dividend portfolio.</p>
             </div>
             <img className='testimonial-user' src={Zahid} alt='Zahid Lilani'/>
-            <div className='testimonial-name'>Zahid Lilani <span>Dividend.fun</span></div>
+            <div className='testimonial-name'>Zahid L. <span>Dividend.fun</span></div>
           </div>
         </div>
       </div>
