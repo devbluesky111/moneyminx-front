@@ -66,3 +66,11 @@
 .text-warning {
   color: $yellow !important;
 }
+.gray-links {
+  color: $darkGray;
+
+  &:hover {
+    color: $darkGray;
+    text-decoration: underline !important;
+  }
+}
