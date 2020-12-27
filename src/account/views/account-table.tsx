@@ -77,7 +77,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                       <tr key={index} onClick={() => openEditPositionModal(item.id)} >
                         <td>{item.description}</td>
                         {priceHeader && <td className='hide-type'>{item.price ? currencySymbol : ''}{item.price !== null ? numberWithCommas(fNumber(item.price, 2)) : ''}</td>}
-                        {quantityHeader && <td >{item.quantity}</td>}
+                        {quantityHeader && <td ><span>Quantity</span>{item.quantity}</td>}
                         {symbolHeader && <td className='hide-type'>{item.symbol}</td>}
                         {costBasisHeader && <td className='hide-type'>{item.costBasis ? currencySymbol : ''}{item.costBasis !== null ? numberWithCommas(fNumber(item.costBasis, 2)) : ''}</td>}
                         {item.intervalValues.map((ins: any, i: number) => (

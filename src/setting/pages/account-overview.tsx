@@ -343,7 +343,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
               <div className={['card mm-setting-card', getStatusClassName(status)].join(' ')}>
                 {status === 'error' && (
                   <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
-                    <div className='col-6 text-danger pl-3'>
+                    <div className='col-6 text-danger'>
                       <span>Connection error</span>
                     </div>
                     <div className='col-6 mt-2 text-md-right'>
@@ -469,7 +469,9 @@ export const AccountRow: React.FC<AccountRowProps> = ({ account, reviewSubscript
             <input type='checkbox' className='mm-switch-input' id={`mc3-${account.id}`} name='Switch' />
             <label className='mm-switch' htmlFor={`mc3-${account.id}`}></label>
           </span>*/}
-        {account.accountName} {account.accountNumber ? ` (${account.accountNumber.slice(-4)})` : null}
+        <Link className='gray-links' to={`/account-details/${account.id}`} aria-label='Account Details'>
+          {account.accountName} {account.accountNumber ? ` (${account.accountNumber.slice(-4)})` : null}
+        </Link>
       </div>
       <div className='col-3 col-md-2'>${numberWithCommas(fNumber(account.balance, 2))}</div>
       <div className='col-3 col-md-2'>

@@ -34,17 +34,20 @@ export const FeaturesNetWorthTopSection = () => {
             <h1>Net Worth Calculator</h1>
             <div className='p-b-10'>
               <p className='text'>
-                Money Minx allows you to track all of your assets and liabilities in one place to help you track your
-                net worth. We are still in Beta but already support over 21,000 institutions worldwide so you can
-                automatically track your accounts.{' '}
+                Money Minx lets you track all of your assets and liabilities in one place so you have a quick and easy way to
+                monitor your net worth and progress toward your financial goal.
               </p>
               <p className='text'>
-                We are currently working on allowing you to automatically track your cryptos, precious metals like gold,
-                currencies, real estate and more.{' '}
+                We are currently in Beta and already support over 21,000 institutions worldwide. That makes it easy for you to
+                connect your accounts and automatically track your balances.
               </p>
               <p className='text'>
-                You can also use our manual accounts feature to track anything you want by adding accounts, positions
-                and transactions on your own..
+                Our next priority is building support to help you track your cryptos, precious metals, currencies, real estate
+                and more. This is in the works and will be available soon.
+              </p>
+              <p className='text'>
+                If you don't want to connect your accounts for automatic updating, you can always use our manual accounts
+                feature to track anything you want. Simply add accounts, positions and transactions on your own.
               </p>
             </div>
             <Link to='/signup'>
