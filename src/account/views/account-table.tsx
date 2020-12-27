@@ -9,8 +9,7 @@ import { useModal } from 'common/components/modal';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountHolingsTableProps, AccountHoldingItem } from '../account.type';
 
-export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData, openEditPositionModalFun, closeEditPositionModalFun, currencySymbol }) => {
-
+export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData, openEditPositionModalFun, closeEditPositionModalFun, currencySymbol, accountDetails }) => {
   const [holdings, setHoldings] = useState<AccountHoldingItem[]>([]);
   const [holdingsDetails, setHoldingsDetails] = useState<any>();
   const [priceHeader, setPriceHeader] = useState<boolean>(false);
