@@ -300,7 +300,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
         const handleSelectChange = (e: React.ChangeEvent<any>) => {
           const name: string = e.target.name;
           let value = e.target.value;
-          const numberFields: string[] = ['associatedRealEstate'];
+          const numberFields: string[] = ['associatedRealEstate', 'associatedMortgage', 'associatedLoan'];
           value = numberFields.includes(name) ? +value : value;
 
           return setValues({ ...values, [name]: value });
