@@ -66,9 +66,7 @@ export const FeaturesNetWorthTopSection = () => {
               <span className='logo-icon'>
                 <AboutWealthFrontIcon />
               </span>
-              <span className='company-name'>
-                Wealthfront
-              </span>
+              <span className='company-name'>Wealthfront</span>
               <ul className='account-list'>
                 <li>
                   <span className='switch-icon'>
@@ -85,9 +83,9 @@ export const FeaturesNetWorthTopSection = () => {
               </ul>
             </div>
             <div className='account-wrap bg-white border small-box'>
-                <span className='logo-icon'>
-                  <img alt='Peer Street' src={PeerStreetLogo} />
-                </span>
+              <span className='logo-icon'>
+                <img alt='Peer Street' src={PeerStreetLogo} />
+              </span>
               <span className='company-name'>Peer Street</span>
               <ul className='account-list'>
                 <li>
@@ -114,18 +112,18 @@ export const FeaturesNetWorthTopSection = () => {
 export const FeaturesNetWorthNetWorthSection = () => {
   return (
     <section className='feature-section feature-section-reversed'>
-        <div className='row'>
-          <div className='col-lg-7 feature-image'>
-            <img src={LiquidNetWorth} alt='Calculate liquid net worth'/>
-          </div>
-          <div className='col-lg-5 feature-content'>
-              <h2>Liquid Net Worth</h2>
-              <p>
-                Classify your assets into investment assets and other assets, set liquidity levels and always know what your current liquid
-                net worth is.
-              </p>
-          </div>
+      <div className='row'>
+        <div className='col-lg-7 feature-image'>
+          <img src={LiquidNetWorth} alt='Calculate liquid net worth' />
         </div>
+        <div className='col-lg-5 feature-content'>
+          <h2>Liquid Net Worth</h2>
+          <p>
+            Classify your assets into investment assets and other assets, set liquidity levels and always know what your
+            current liquid net worth is.
+          </p>
+        </div>
+      </div>
     </section>
   );
 };
@@ -136,11 +134,12 @@ export const FeaturesNetWorthProjections = () => {
         <div className='col-lg-5 feature-content'>
           <h2>Future Net Worth</h2>
           <p>
-            Money Minx will use the data your provide and estimated returns to give you a sense of what your net worth will look like into the future.
+            Money Minx will use the data your provide and estimated returns to give you a sense of what your net worth
+            will look like into the future.
           </p>
         </div>
         <div className='col-lg-7 feature-image'>
-          <img src={HomeNetWorthProjections} alt='Calculate future projection'/>
+          <img src={HomeNetWorthProjections} alt='Calculate future projection' />
         </div>
       </div>
     </section>

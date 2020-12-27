@@ -96,16 +96,16 @@ export const ExpiredLinkMainSection = () => {
                   <div className='form-wrap'>
                     <form onSubmit={props.handleSubmit}>
                       <div className='align-items-start input-wrapper'>
-                      <div className='email-wrap'>
-                      <input
-                        className='email'
-                        type='email'
-                        name='email'
-                        value={props.values.email}
-                        placeholder='Your Email'
-                        onChange={props.handleChange}
-                      />
-                      </div>
+                        <div className='email-wrap'>
+                          <input
+                            className='email'
+                            type='email'
+                            name='email'
+                            value={props.values.email}
+                            placeholder='Your Email'
+                            onChange={props.handleChange}
+                          />
+                        </div>
                         {props.errors.email && <div className='ml-2 mt-1 mt-md-3 feedback'>{props.errors.email}</div>}
                       </div>
                       <button className='mm-btn-animate mm-btn-primary m-b-5' disabled={props.isSubmitting}>

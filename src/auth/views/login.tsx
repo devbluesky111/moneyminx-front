@@ -197,9 +197,9 @@ export const LoginMainSection = () => {
                           const subscriptionDetails = await getSubscription({ priceId: data.priceId });
                           mmToast('Sign in Success', { type: 'success' });
                           if (
-                            autoAccounts >=
-                              subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
-                            manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
+                            +autoAccounts >
+                              +subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
+                            +manualAccounts > +subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
                           ) {
                             history.push(appRouteConstants.subscription.REVIEW);
                           } else if (!onboarded) return history.push(appRouteConstants.networth.NET_WORTH);
