@@ -594,6 +594,7 @@ const AccountDetail: React.FC = () => {
                         holdingsData={AccountHoldings?.holdings}
                         openEditPositionModalFun={() => setEditPositonModalOpen(true)}
                         closeEditPositionModalFun={() => setEditPositonModalOpen(false)}
+                        accountDetails={AccountDetails}
                         currencySymbol={currencySymbol}
                       />
                     )}
