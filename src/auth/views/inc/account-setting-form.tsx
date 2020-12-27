@@ -310,7 +310,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           e.preventDefault();
           setValues({
             ...values,
-            associatedMortgage: mortgage.accountName,
+            associatedMortgage: +mortgage.id,
             principalBalance: mortgage.balance,
           });
         };
@@ -319,7 +319,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           e.preventDefault();
           setValues({
             ...values,
-            associatedLoan: id,
+            associatedLoan: +id,
           });
         };
 

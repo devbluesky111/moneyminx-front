@@ -193,6 +193,7 @@ export interface DeleteAccountPayload {
 }
 
 export interface Mortgage {
+  id: number | string;
   accountName: string;
   balance: number;
   principalBalance: number;
