@@ -60,7 +60,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                   <thead>
                     <tr>
                       <th className='s-hide'>Holdings</th>
-                      {priceHeader && <th>Price</th>}
+                      {priceHeader && <th>{accountDetails?.category.mmCategory === 'Investment Assets' ? 'Price' : 'Balance'}</th>}
                       {quantityHeader && <th className='hide-type'>Quantity</th>}
                       {symbolHeader && <th className='hide-type'>Symbol</th>}
                       {costBasisHeader && <th className='hide-type'>Cost</th>}
@@ -75,7 +75,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                     {holdings?.length > 0 && holdings.map((item, index) => (
                       <tr key={index} onClick={() => openEditPositionModal(item.id)} >
                         <td>{item.description}</td>
-                        {priceHeader && <td><span>Price</span>{item.price ? currencySymbol : ''}{item.price !== null ? numberWithCommas(fNumber(item.price, 2)) : ''}</td>}
+                        {priceHeader && <td><span>{accountDetails?.category.mmCategory === 'Investment Assets' ? 'Price' : 'Balance'}</span>{item.price ? currencySymbol : ''}{item.price !== null ? numberWithCommas(fNumber(item.price, 2)) : ''}</td>}
                         {quantityHeader && <td className='hide-type'><span>Quantity</span>{item.quantity}</td>}
                         {symbolHeader && <td className='hide-type'>{item.symbol}</td>}
                         {costBasisHeader && <td className='hide-type'>{item.costBasis ? currencySymbol : ''}{item.costBasis !== null ? numberWithCommas(fNumber(item.costBasis, 2)) : ''}</td>}
