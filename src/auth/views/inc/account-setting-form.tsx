@@ -21,7 +21,6 @@ import { appRouteConstants } from 'app/app-route.constant';
 import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 import { getMomentDate, getUTC } from 'common/moment.helper';
 import { loginValidationSchema } from 'auth/auth.validation';
-import { CurrencyOptions } from 'auth/enum/currency-options';
 import { deleteAccount, patchAccount } from 'api/request.api';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import { fNumber, numberWithCommas } from 'common/number.helper';
@@ -30,6 +29,7 @@ import { SelectInput } from 'common/components/input/select.input';
 import useRealEstateAccounts from 'auth/hooks/useRealEstateAccounts';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
+import { CurrencyOptions, CurrencySymbols } from 'auth/enum/currency-options';
 import { initialAccount, initialMortgage } from 'auth/data/account-settings.data';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
 import { Account, IRealEstateAccount, Mortgage, MortgageList } from 'auth/auth.types';
@@ -721,7 +721,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                             checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
                             aria-checked={values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT}
                           />
-                          <label>$</label>
+                          <label>{CurrencySymbols[values.currency] || '$'}</label>
                           <input
                             type='radio'
                             onChange={handleChange}
@@ -745,7 +745,9 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                           step='any'
                         />
                         <span className='input-add-on'>
-                          {values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT ? '$' : '%'}
+                          {values.employerMatchLimitIn === EmployerMatchLimitOptions.AMOUNT
+                            ? CurrencySymbols[values.currency] || '$'
+                            : '%'}
                         </span>
                       </div>
                     </div>
