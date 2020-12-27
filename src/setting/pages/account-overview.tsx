@@ -343,7 +343,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
               <div className={['card mm-setting-card', getStatusClassName(status)].join(' ')}>
                 {status === 'error' && (
                   <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
-                    <div className='col-6 text-danger pl-3'>
+                    <div className='col-6 text-danger'>
                       <span>Connection error</span>
                     </div>
                     <div className='col-6 mt-2 text-md-right'>
