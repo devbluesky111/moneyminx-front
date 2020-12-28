@@ -447,7 +447,7 @@ const AccountDetail: React.FC = () => {
                                         onMouseLeave={() => setPopup(false)}
                                       >
                                         <NeedsInfo />
-                                        <span className='needsInfo'>Needs Attention</span>
+                                        <span className='needsInfo'>Attention</span>
                                         {popup && (
                                           <Popup
                                             AccountDetails={AccountDetails}
@@ -462,7 +462,7 @@ const AccountDetail: React.FC = () => {
                                         onMouseLeave={() => setPopup(false)}
                                       >
                                         <NotLinked />
-                                        <span className='attention'>Attention</span>
+                                        <span className='attention'>Error</span>
                                         {popup && (
                                           <Popup
                                             AccountDetails={AccountDetails}

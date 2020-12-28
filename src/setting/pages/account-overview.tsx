@@ -277,10 +277,14 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
       status === 'LOGIN_IN_PROGRESS' ||
       status === 'IN_PROGRESS' ||
       status === 'PARTIAL_SUCCESS' ||
-      status === 'SUCCESS' && nextUpdateScheduled >= moment().toISOString()
+      (status === 'SUCCESS' && nextUpdateScheduled >= moment().toISOString())
     ) {
       accountsByStatus.success.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
-    } else if (status === 'USER_INPUT_REQUIRED' || nextUpdateScheduled < moment().toISOString()) {
+    } else if (
+      status === 'USER_INPUT_REQUIRED' ||
+      (status === 'SUCCESS' && nextUpdateScheduled < moment().toISOString()) ||
+      (status === 'SUCCESS' && nextUpdateScheduled === null)
+    ) {
       accountsByStatus.warning.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else {
       accountsByStatus.error.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
@@ -346,7 +350,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                 {status === 'error' && (
                   <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
                     <div className='col-6 text-danger'>
-                      <span>Connection error</span>
+                      <span>Connection Error</span>
                     </div>
                     <div className='col-6 mt-2 text-md-right'>
                       <button
@@ -361,7 +365,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                 )}
                 {status === 'warning' && (
                   <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
-                    <div className='col-12 col-md-6 text-warning pl-3'>
+                    <div className='col-12 col-md-6 text-warning'>
                       <span>Needs Attention</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>

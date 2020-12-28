@@ -58,13 +58,12 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
         <Dropdown className='drop-box' >
           <Dropdown.Toggle className='dropdown-toggle my-accounts' ref={dropdownToggle}>My Accounts</Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu'>
-            {(errorAccounts.length > 0 || warningAccounts.length > 0) &&
-              <div className='dropdown-head'>
-                <h4>Needs Attention</h4>
-              </div>}
             <div className='dropdown-box'>
               {errorAccounts.length > 0 &&
                 <div>
+                  <div className='dropdown-head'>
+                    <h4>Connection Error</h4>
+                  </div>
                   <ul className='error'>
                     {errorAccounts.map((account: Account, index: number) => {
                       return (
@@ -85,6 +84,9 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
               }
               {warningAccounts.length > 0 &&
                 <div>
+                  <div className='dropdown-head'>
+                    <h4 className='attention'>Needs Attention</h4>
+                  </div>
                   <ul className='warning'>
                     {warningAccounts.map((account: Account, index: number) => {
                       return (
