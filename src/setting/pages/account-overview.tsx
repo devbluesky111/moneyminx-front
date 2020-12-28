@@ -360,7 +360,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                 {status === 'warning' && (
                   <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
                     <div className='col-12 col-md-6 text-warning pl-3'>
-                      <span>Needs more info</span>
+                      <span>Needs Attention</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
                       <button
