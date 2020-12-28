@@ -44,6 +44,7 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
+import moment from 'moment';
 
 const AccountDetail: React.FC = () => {
   const location = useLocation();
@@ -435,12 +436,16 @@ const AccountDetail: React.FC = () => {
                                   {AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' ||
                                     AccountDetails?.providerAccount?.status === 'IN_PROGRESS' ||
                                     AccountDetails?.providerAccount?.status === 'PARTIAL_SUCCESS' ||
-                                    AccountDetails?.providerAccount?.status === 'SUCCESS' ? (
+                                  (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset[0].nextUpdateScheduled >= moment().toISOString()) ? (
                                       <>
                                         <CheckCircleGreen />
                                         <span className='good'>Good</span>
                                       </>
-                                    ) : AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED' ? (
+                                    ) :
+                                    AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED' ||
+                                  (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset[0].nextUpdateScheduled < moment().toISOString()) ||
+                                  (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset[0].nextUpdateScheduled === null)
+                                    ? (
                                       <div
                                         className='attention-section'
                                         onMouseEnter={() => setPopup(true)}
