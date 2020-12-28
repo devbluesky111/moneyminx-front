@@ -30,6 +30,7 @@ export const MessageChange = ({ onAccountFetching = false }: IMessageChange) => 
   const initialMessage = onAccountFetching ? accountFetchingMessageArray[0] : authenticatingMessageArray[0];
 
   const [showingMessage, setShowingMessage] = useState<string>(initialMessage);
+  const [index, setIndex] = useState(0);
 
   const showMessage: any = () => {
     const randomIndex = Math.floor(Math.random() * 7);
@@ -40,8 +41,23 @@ export const MessageChange = ({ onAccountFetching = false }: IMessageChange) => 
     setShowingMessage(messageArr[randomIndex]);
   };
 
+  const showAccountFetchingMessage = () => {
+    setShowingMessage(messageArr[index + 1]);
+    if (index >= messageArr.length - 2) {
+      return setIndex(0);
+    }
+    setIndex((i) => i + 1);
+  };
+
   useEffect(() => {
-    setTimeout(showMessage, 3000);
+    const timer = setTimeout(() => {
+      if (onAccountFetching) {
+        showAccountFetchingMessage();
+      } else {
+        showMessage();
+      }
+    }, 3000);
+    return () => clearTimeout(timer);
   });
 
   return <span className='mt-5'>{showingMessage}</span>;

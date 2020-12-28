@@ -1,6 +1,6 @@
 import FacebookLogin from 'react-facebook-login';
-import React, { ChangeEvent, useState } from 'react';
-import { useHistory, Link, useLocation } from 'react-router-dom';
+import React, { ChangeEvent, useState, useEffect } from 'react';
+import { useHistory, Link, useLocation, Redirect } from 'react-router-dom';
 
 import env from 'app/app.env';
 import { Formik } from 'formik';
@@ -34,6 +34,11 @@ const Login = () => {
 };
 
 export default Login;
+interface IFrom {
+  from: {
+    pathname: string;
+  };
+}
 
 export const LoginMainSection = () => {
   const history = useHistory();
@@ -42,16 +47,27 @@ export const LoginMainSection = () => {
   const associateModal = useModal();
   const dispatch = useAuthDispatch();
   const emailNeededModal = useModal();
-  const { onboarded } = useAuthState();
+  const location = useLocation<IFrom>();
+  const { onboarded, isAuthenticated } = useAuthState();
   const [fbToken, setFBToken] = useState<string>('');
   const [associateMessage, setAssociateMessage] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [refreshLoading, setRefreshLoading] = useState<boolean>(false);
+  const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
   const visibilityIcon = passwordVisible ? <VisibleIcon /> : <HiddenIcon />;
+  const { from }: { from: { pathname: string } } = location.state || { from: { pathname: '/net-worth' } };
 
   const isExpired = search.includes('?expired=true');
   const isLoggedOut = search.includes('?action=logout');
+
+  useEffect(() => {
+    setRedirectToReferrer(isAuthenticated);
+  }, [isAuthenticated]);
+
+  if (redirectToReferrer) {
+    return <Redirect to={from} />;
+  }
 
   const responseFacebook = async (response: any) => {
     if (response.accessToken) {
@@ -104,9 +120,9 @@ export const LoginMainSection = () => {
               <div className='auth-left-content'>
                 <h1>Three easy steps to get started with Money Minx</h1>
                 <ul>
-                  <li>Find your accounts</li>
-                  <li>Connect it securely to Money Minx</li>
-                  <li>Let Money Minx do the rest</li>
+                  <li>Find your accounts.</li>
+                  <li>Connect securely to Money Minx.</li>
+                  <li>Let Money Minx do the rest.</li>
                 </ul>
                 <div className='guide-bottom'>
                   <h2>Serious about security</h2>
@@ -181,9 +197,9 @@ export const LoginMainSection = () => {
                           const subscriptionDetails = await getSubscription({ priceId: data.priceId });
                           mmToast('Sign in Success', { type: 'success' });
                           if (
-                            autoAccounts >=
-                              subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
-                            manualAccounts >= subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
+                            +autoAccounts >
+                              +subscriptionDetails?.data?.details[pricingDetailConstant.CONNECTED_ACCOUNT] ||
+                            +manualAccounts > +subscriptionDetails?.data?.details[pricingDetailConstant.MANUAL_ACCOUNT]
                           ) {
                             history.push(appRouteConstants.subscription.REVIEW);
                           } else if (!onboarded) return history.push(appRouteConstants.networth.NET_WORTH);
@@ -286,7 +302,7 @@ export const LoginMainSection = () => {
                           reAuthenticate={true}
                           callback={responseFacebook}
                           scope='public_profile,email'
-                          icon={<LoginFacebookIcon className='social-login-fb' arial-label='Login with Facebook'/>}
+                          icon={<LoginFacebookIcon className='social-login-fb' arial-label='Login with Facebook' />}
                           appId={env.FACEBOOK_APP_ID || ''}
                           buttonStyle={{
                             background: 'transparent',

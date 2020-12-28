@@ -93,10 +93,13 @@ export interface AccountHolingsTableProps {
   openEditPositionModalFun: () => void;
   closeEditPositionModalFun: () => void;
   currencySymbol: string;
+  accountDetails?: Account;
 }
 
 export interface AccountTransactionItem {
   accountId: number;
+  quantity: number;
+  price: number;
   amount: number;
   amountCurrency: string;
   balance: any;

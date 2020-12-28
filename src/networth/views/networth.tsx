@@ -2,28 +2,29 @@ import { Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import { events } from '@mm/data/event-list';
-import useProfile from 'auth/hooks/useProfile';
+import AccountAddedModal from 'auth/views/inc/account-added-modal';
+import BlurChart from 'assets/images/networth/chart-blur.png';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import GALink from 'common/components/ga-link';
+import MeasureIcon from 'assets/images/networth/measure.svg';
+import NetworthLayout from 'networth/networth.layout';
+import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
+import useProfile from 'auth/hooks/useProfile';
+import useSearchParam from 'auth/hooks/useSearchParam';
+import useSettings from 'setting/hooks/useSettings';
+import useInitialModal from 'auth/hooks/useInitialModal';
+import useNetworth from 'networth/hooks/useNetworth';
+import useAnalytics from 'common/hooks/useAnalytics';
+import { events } from '@mm/data/event-list';
 import { useAuthState } from 'auth/auth.context';
 import { useAlert } from 'common/components/alert';
 import { useModal } from 'common/components/modal';
-import useSettings from 'setting/hooks/useSettings';
-import useNetworth from 'networth/hooks/useNetworth';
-import useAnalytics from 'common/hooks/useAnalytics';
-import NetworthLayout from 'networth/networth.layout';
 import { isCurrent, gc } from 'common/interval-parser';
-import useSearchParam from 'auth/hooks/useSearchParam';
 import { AccountCategory } from 'networth/networth.enum';
-import useInitialModal from 'auth/hooks/useInitialModal';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getCurrencySymbol } from 'common/currency-helper';
-import MeasureIcon from 'assets/images/networth/measure.svg';
-import BlurChart from 'assets/images/networth/chart-blur.png';
-import SignUpDoneModal from 'auth/views/inc/signup-done.modal';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import AccountAddedModal from 'auth/views/inc/account-added-modal';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { useNetworthState, useNetworthDispatch } from 'networth/networth.context';
 import { setToggleInvestment, setToggleOther, setToggleLiabilities, setToggleNet } from 'networth/networth.actions';
 
@@ -32,6 +33,7 @@ import { Placeholder } from './inc/placeholder';
 import NetworthFilter from './inc/networth-filter';
 import NetworthBarGraph from './networth-bar-graph';
 import NetworthSkeleton from './inc/networth-skeleton';
+import { groupByProviderName } from 'auth/auth.helper';
 
 interface IState {
   state: { isFromFastlink: boolean };
@@ -50,6 +52,7 @@ const Networth = () => {
   const { state }: IState = useLocation();
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
   const {
+    accountWithIssues,
     accounts,
     networth,
     fToggleNet,
@@ -58,6 +61,10 @@ const Networth = () => {
     fToggleInvestment,
     fToggleLiabilities,
   } = useNetworthState();
+
+  const accountsByProvider = accountWithIssues ? groupByProviderName(accountWithIssues) : {};
+  const [processingCollapse, setProcessingCollapse] = useState<boolean>(false);
+
   const dispatch = useNetworthDispatch();
   const [loadCounter, setCounter] = useState(0);
 
@@ -144,7 +151,7 @@ const Networth = () => {
                             <span className='graphbox-amount'>
                               {currencySymbol}
                               {numberWithCommas(fNumber(currentNetworth, 0))}
-                              </span>
+                            </span>
                           </li>
                         )}
                         {(fCategories.length === 0 || fCategories.includes('Investment Assets')) && (
@@ -184,8 +191,8 @@ const Networth = () => {
                       </div>
                     </div>
                   ) : (
-                    <Placeholder type='chart' />
-                  )}
+                      <Placeholder type='chart' />
+                    )}
                 </div>
               </div>
 
@@ -214,6 +221,33 @@ const Networth = () => {
                 </div>
               </div>
             </div>
+            {accountWithIssues && accountWithIssues.length > 0 &&
+              <div className='card mm-setting-card mt-0 processing-card'>
+                <div className='title-section'>
+                  <span className={['processing', processingCollapse ? 'processing-collapse' : ''].join(' ')} onClick={() => setProcessingCollapse(!processingCollapse)}>Processing</span>
+                  <span className='desc'>These accounts are still processing and will be ready soon</span>
+                </div>
+                <div className={processingCollapse ? 'd-none' : ''}>
+                  {Object.entries(accountsByProvider).map(([providerName, accounts], index) => (
+                    <div key={index} className='content-section my-3'>
+                      <div className='d-flex flex-direction-row justify-content-between'>
+                        <img
+                          src={accounts[0].providerLogo || DefaultAvatar}
+                          className='mr-3 mr-md-4 accounts-provider-logo my-1'
+                          alt={`${providerName} logo`}
+                        />
+                        <div className='provider-name my-1'>{providerName}</div>
+                      </div>
+                      {accounts.map((item, key) => (
+                        <div key={key}>
+                          <div className='account-name m-b-2'>{item.accountName}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            }
             {(fCategories.length === 0 || fCategories.includes('Investment Assets')) && (
               <div className='row mb-40'>
                 <div className='col-12'>
@@ -239,27 +273,27 @@ const Networth = () => {
                             <tbody>
                               {investmentAssets
                                 ? investmentAssets.map((iAsset, index) => {
-                                    return (
-                                      <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
-                                        <td>{iAsset.accountName}</td>
-                                        <td className={`hide-type`}>{iAsset.accountType}</td>
-                                        {iAsset.balances.map((b, idx) => (
-                                          <td
-                                            key={`${index}-${idx}`}
-                                            className={[b.type === `projection` && `projection`, gc(b.interval)].join(
-                                              ' '
-                                            )}
-                                          >
-                                            <span className={gc(b.interval)}>{b.interval}</span>
-                                            {currencySymbol}
-                                            {numberWithCommas(fNumber(b.balance, 2))}
-                                          </td>
-                                        ))}
-                                      </tr>
-                                    );
-                                  })
+                                  return (
+                                    <tr key={index} onClick={() => handleAccountDetail(iAsset.accountId)}>
+                                      <td><span>{iAsset.accountName}</span></td>
+                                      <td className={`hide-type`}>{iAsset.accountType}</td>
+                                      {iAsset.balances.map((b, idx) => (
+                                        <td
+                                          key={`${index}-${idx}`}
+                                          className={[b.type === `projection` && `projection`, gc(b.interval)].join(
+                                            ' '
+                                          )}
+                                        >
+                                          <span className={gc(b.interval)}>{b.interval}</span>
+                                          {currencySymbol}
+                                          {numberWithCommas(fNumber(b.balance, 2))}
+                                        </td>
+                                      ))}
+                                    </tr>
+                                  );
+                                })
                                 : // show place holder here
-                                  null}
+                                null}
                             </tbody>
                           ) : null}
                           <tfoot className={'projection'}>
@@ -296,8 +330,8 @@ const Networth = () => {
                         </Table>
                       </div>
                     ) : (
-                      <Placeholder type='investment' />
-                    )}
+                        <Placeholder type='investment' />
+                      )}
                   </div>
                 </div>
               </div>
@@ -327,7 +361,7 @@ const Networth = () => {
                               {otherAssets?.map((oAsset, index) => {
                                 return (
                                   <tr key={index} onClick={() => handleAccountDetail(oAsset.accountId)}>
-                                    <td>{oAsset.accountName}</td>
+                                    <td><span>{oAsset.accountName}</span></td>
                                     <td className={`hide-type`}>{oAsset.accountType}</td>
                                     {oAsset.balances.map((b, idx) => (
                                       <td
@@ -365,8 +399,8 @@ const Networth = () => {
                         </Table>
                       </div>
                     ) : (
-                      <Placeholder type='other' />
-                    )}
+                        <Placeholder type='other' />
+                      )}
                   </div>
                 </div>
               </div>
@@ -396,7 +430,7 @@ const Networth = () => {
                               {liabilities?.map((liability, index) => {
                                 return (
                                   <tr key={index} onClick={() => handleAccountDetail(liability.accountId)}>
-                                    <td>{liability.accountName}</td>
+                                    <td><span>{liability.accountName}</span></td>
                                     <td className={`hide-type`}>{liability.accountType}</td>
                                     {liability.balances.map((b, idx) => (
                                       <td
@@ -434,8 +468,8 @@ const Networth = () => {
                         </Table>
                       </div>
                     ) : (
-                      <Placeholder type='liabilities' />
-                    )}
+                        <Placeholder type='liabilities' />
+                      )}
                   </div>
                 </div>
               </div>
@@ -537,8 +571,8 @@ const Networth = () => {
                         </Table>
                       </div>
                     ) : (
-                      <Placeholder type='networth' />
-                    )}
+                        <Placeholder type='networth' />
+                      )}
                   </div>
                 </div>
               </div>

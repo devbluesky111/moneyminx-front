@@ -46,7 +46,7 @@ export const patchChangePassword = <T>(payload: T): TApiResponse => {
   return http.patch(urls.auth.UPDATE_PASSWORD, payload);
 };
 
-export const getSubscription = <P>(params?: P) => {
+export const getSubscription = <P>(params?: P): TApiResponse => {
   return http.get(urls.subscription.SUB, params);
 };
 
@@ -54,7 +54,7 @@ export const postSubscriptionCheckout = <T>(payload: T): TApiResponse => {
   return http.post(urls.subscription.STRIPE_CHECKOUT, payload);
 };
 
-export const getCurrentSubscription = () => {
+export const getCurrentSubscription = (): TApiResponse => {
   return http.get(urls.subscription.CURRENT_SUB);
 };
 
@@ -98,8 +98,8 @@ export const getAccountCategory = (): TApiResponse => {
   return http.get(urls.auth.ACCOUNT_CATEGORY);
 };
 
-export const getAccountType = (): TApiResponse => {
-  return http.get(urls.auth.ACCOUNT_TYPE);
+export const getAccountType = <P>(param?: P): TApiResponse => {
+  return http.get(urls.auth.ACCOUNT_TYPE, param);
 };
 
 export const getManualAccountType = (): TApiResponse => {
@@ -110,8 +110,11 @@ export const postManualAccount = <T>(payload: T): TApiResponse => {
   return http.post(urls.auth.MANUAL_ACCOUNT, payload);
 };
 
-export const getAccountSubType = (accountType: string): TApiResponse => {
-  return http.get(urls.auth.ACCOUNT_SUBTYPE.replace(':accountType', accountType));
+export const getAccountSubType = (accountType: string, isManual: boolean): TApiResponse => {
+  let url = urls.auth.ACCOUNT_SUBTYPE.replace(':accountType', accountType);
+  url = isManual ? url + '&manual=true' : url;
+
+  return http.get(url);
 };
 
 export const getAssociateMortgage = (): TApiResponse => {
@@ -238,4 +241,8 @@ export const getNewAccounts = (): TApiResponse => {
 
 export const getLatestProviderAccounts = (): TApiResponse => {
   return http.get(urls.auth.LATEST_PROVIDER_ACCOUNTS);
+};
+
+export const getRealEstateAccounts = (): TApiResponse => {
+  return http.get(urls.auth.REAL_ESTATE_ACCOUNTS);
 };
