@@ -125,7 +125,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
   return (
     <div className='row'>
       <div className='col-12 dropdowns-container'>
-        <div className='dflex-center mb-15'>
+        <div className='dflex-center justify-space-between flex-wrap-custom mb-15'>
           {hasFiltered() ? (
             <button className='btn btn-outline-danger clear-filter' onClick={clearNetworthFilter}>
               Clear Filters
@@ -229,7 +229,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
           // since filter date will be current timezone string
           // no need to parse this to utc for setting up simply date must work
         }
-        <div className='dflex-center mb-15'>
+        <div className='dflex-center justify-space-between flex-wrap-custom mb-15'>
           <ReactDatePicker
             selected={fFromDate ? new Date(fFromDate) : fromDate}
             onChange={(date) => onChange('start', date)}
@@ -239,7 +239,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
             showMonthYearPicker
             minDate={new Date('1900-01-01')}
             maxDate={new Date()}
-            className='m-l-3'
+            className='ml-md-3'
             // selectsRange
             customInput={
               <div className='drop-box'>
@@ -265,7 +265,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
             showMonthYearPicker
             minDate={fFromDate ? new Date(fFromDate) : null}
             maxDate={new Date()}
-            className='m-l-1'
+            className='mr-md-3'
             // selectsRange
             customInput={
               <div className='drop-box'>
@@ -281,7 +281,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
               </div>
             }
           />
-          <Dropdown className='drop-box m-l-2'>
+          <Dropdown className='drop-box'>
             <Dropdown.Toggle variant='' className={fc('fTimeInterval')}>
               {fTimeInterval || 'Monthly'}
             </Dropdown.Toggle>
