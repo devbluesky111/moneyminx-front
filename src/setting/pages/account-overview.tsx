@@ -4,6 +4,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import LoadingScreen from 'common/loading-screen';
+import moment from 'moment';
 import useToast from 'common/hooks/useToast';
 import useAccounts from 'auth/hooks/useAccounts';
 import useAnalytics from 'common/hooks/useAnalytics';
@@ -271,14 +272,15 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
 
   for (let p_name in accountsByProvider) {
     let status = accountsByProvider[p_name][0].providerAccount?.status;
+    const nextUpdateScheduled = accountsByProvider[p_name][0].providerAccount?.dataset[0].nextUpdateScheduled;
     if (
       status === 'LOGIN_IN_PROGRESS' ||
       status === 'IN_PROGRESS' ||
       status === 'PARTIAL_SUCCESS' ||
-      status === 'SUCCESS'
+      status === 'SUCCESS' && nextUpdateScheduled >= moment().toISOString()
     ) {
       accountsByStatus.success.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
-    } else if (status === 'USER_INPUT_REQUIRED') {
+    } else if (status === 'USER_INPUT_REQUIRED' || nextUpdateScheduled < moment().toISOString()) {
       accountsByStatus.warning.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else {
       accountsByStatus.error.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
