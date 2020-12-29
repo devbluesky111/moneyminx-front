@@ -705,7 +705,7 @@
         position: absolute;
         border-radius: 4px;
         background-color: $pink;
-        box-shadow: 0px 4px 8px rgba($red, 0.3);
+        box-shadow: 0 4px 8px rgba($red, 0.3);
         &::after {
             top: 50%;
             content: '';
