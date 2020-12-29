@@ -77,11 +77,6 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
       mmToast('Add Success', { type: 'success' });
       manualAccountModal.close();
 
-      if (onboarded) {
-        storage.set('isNew', 'true');
-        return history.push(appRouteConstants.auth.ACCOUNT_SETTING);
-      }
-
       return handleSuccess();
     }
 
