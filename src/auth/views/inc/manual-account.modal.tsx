@@ -79,7 +79,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
 
       if (onboarded) {
         storage.set('isNew', 'true');
-        return history.push(appRouteConstants.account.ACCOUNT.replace(':accountId', res.id));
+        return history.push(appRouteConstants.auth.ACCOUNT_SETTING);
       }
 
       return handleSuccess();
