@@ -85,6 +85,10 @@ const useSubscriptionValidation = () => {
   useLayoutEffect(() => {
     let route: string = '';
     (() => {
+      if (!hasAllValues && !onboarded) {
+        route = appRouteConstants.auth.CONNECT_ACCOUNT
+      }
+
       if (hasAllValues && !loading) {
         if (isPlanExpired) {
           route = appRouteConstants.subscription.SUBSCRIPTION;
