@@ -9,6 +9,7 @@ import { getAccountWithProvider } from 'api/request.api';
 import { fNumber, numberWithCommas } from './number.helper';
 import { getRelativeDate } from './moment.helper';
 import { getCurrencySymbol } from './currency-helper';
+import moment from 'moment';
 
 export interface AppSubHeaderProps {
   AccountDetails?: Account;
@@ -25,9 +26,19 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
     const fetchCurrentAccount = async () => {
       const { data, error } = await getAccountWithProvider();
       if (!error) {
-        const successAccounts = data.filter((acc: Account) => (acc.isManual || acc.providerAccount.status === 'LOGIN_IN_PROGRESS' || acc.providerAccount.status === 'IN_PROGRESS' || acc.providerAccount.status === 'PARTIAL_SUCCESS' || acc.providerAccount.status === 'SUCCESS'));
-        const warningAccounts = data.filter((acc: Account) => (!acc.isManual && acc.providerAccount.status === 'USER_INPUT_REQUIRED'));
-        const errorAccounts = data.filter((acc: Account) => (!acc.isManual && (acc.providerAccount.status === 'FAILED' || !acc.providerAccount.status)));
+        const successAccounts = data.filter((acc: Account) => (
+          acc.isManual ||
+          acc.providerAccount.status === 'LOGIN_IN_PROGRESS' ||
+          acc.providerAccount.status === 'IN_PROGRESS' ||
+          acc.providerAccount.status === 'PARTIAL_SUCCESS' ||
+          (acc.providerAccount.status === 'SUCCESS' && acc.providerAccount.dataset?.[0]?.nextUpdateScheduled >= moment().toISOString())));
+        const warningAccounts = data.filter((acc: Account) => (
+          (!acc.isManual && acc.providerAccount.status === 'USER_INPUT_REQUIRED') ||
+            (!acc.isManual && acc.providerAccount.status === 'SUCCESS' && acc.providerAccount.dataset?.[0]?.nextUpdateScheduled < moment().toISOString())
+        ));
+        const errorAccounts = data.filter((acc: Account) => (
+          !acc.isManual &&
+          (acc.providerAccount.status === 'FAILED' || !acc.providerAccount.status)));
         setSuccessAccounts(successAccounts);
         setWarningAccounts(warningAccounts);
         setErrorAccounts(errorAccounts);
@@ -47,13 +58,12 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
         <Dropdown className='drop-box' >
           <Dropdown.Toggle className='dropdown-toggle my-accounts' ref={dropdownToggle}>My Accounts</Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu'>
-            {(errorAccounts.length > 0 || warningAccounts.length > 0) &&
-              <div className='dropdown-head'>
-                <h4>Needs Attention</h4>
-              </div>}
             <div className='dropdown-box'>
               {errorAccounts.length > 0 &&
                 <div>
+                  <div className='dropdown-head'>
+                    <h4>Connection Error</h4>
+                  </div>
                   <ul className='error'>
                     {errorAccounts.map((account: Account, index: number) => {
                       return (
@@ -74,6 +84,9 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
               }
               {warningAccounts.length > 0 &&
                 <div>
+                  <div className='dropdown-head'>
+                    <h4 className='attention'>Needs Attention</h4>
+                  </div>
                   <ul className='warning'>
                     {warningAccounts.map((account: Account, index: number) => {
                       return (
