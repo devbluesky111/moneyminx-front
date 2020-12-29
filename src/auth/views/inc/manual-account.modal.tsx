@@ -20,6 +20,7 @@ import { AccountTypeSelectInput } from './account-type-select.input';
 
 interface SettingModalProps {
   manualAccountModal: ModalType;
+  handleSuccess: () => void;
 }
 
 const initialValues = {
@@ -31,7 +32,7 @@ const initialValues = {
   currency: 'USD',
 };
 
-const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal }) => {
+const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, handleSuccess }) => {
   const history = useHistory();
   const { mmToast } = useToast();
   const curArr = enumerateStr(CurrencyOptions);
@@ -73,8 +74,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal })
       setLoading(false);
       mmToast('Add Success', { type: 'success' });
       manualAccountModal.close();
-      storage.set('isNew', 'true');
-      return history.push(appRouteConstants.account.ACCOUNT.replace(':accountId', res.id));
+      return handleSuccess();
     }
 
     setLoading(false);
