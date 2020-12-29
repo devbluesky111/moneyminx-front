@@ -114,7 +114,7 @@ const useSubscriptionValidation = () => {
     })();
 
     setAccessibleRoutes(route);
-  }, [isPlanExpired, isPlanExist, onboarded, isPlanExceeds, hasAllValues, loading]);
+  }, [isPlanExpired, isPlanExist, onboarded, isPlanExceeds, hasAllValues, loading, from]);
 
   return {
     loading,
