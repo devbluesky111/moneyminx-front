@@ -1,15 +1,11 @@
 import Form from 'react-bootstrap/Form';
-import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
-import { storage } from 'app/app.storage';
 import useToast from 'common/hooks/useToast';
 import { MMCategories } from 'auth/auth.enum';
-import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
 import { enumerateStr } from 'common/common-helper';
 import useAccountType from 'auth/hooks/useAccountType';
-import { appRouteConstants } from 'app/app-route.constant';
 import { Modal, ModalType } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import useAccountSubtype from 'auth/hooks/useAccountSubtype';
@@ -34,9 +30,7 @@ const initialValues = {
 };
 
 const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, handleSuccess }) => {
-  const history = useHistory();
   const { mmToast } = useToast();
-  const { onboarded } = useAuthState();
   const curArr = enumerateStr(CurrencyOptions);
   const [values, setValues] = useState(initialValues);
   const { data: accountTypes } = useAccountType(true);
@@ -69,7 +63,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
 
   const handleSubmit = async () => {
     setLoading(true);
-    const { data: res, error: err } = await postManualAccount(values);
+    const { error: err } = await postManualAccount(values);
     if (!err) {
       await getConnectionInfo();
       setValues(initialValues);
