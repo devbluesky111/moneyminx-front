@@ -443,8 +443,8 @@ const AccountDetail: React.FC = () => {
                                       </>
                                     ) :
                                     AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED' ||
-                                  (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset[0].nextUpdateScheduled < moment().toISOString()) ||
-                                  (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset[0].nextUpdateScheduled === null)
+                                  (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled < moment().toISOString()) ||
+                                  (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled === null)
                                     ? (
                                       <div
                                         className='attention-section'

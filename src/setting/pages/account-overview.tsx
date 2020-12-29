@@ -272,7 +272,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
 
   for (let p_name in accountsByProvider) {
     let status = accountsByProvider[p_name][0].providerAccount?.status;
-    const nextUpdateScheduled = accountsByProvider[p_name][0].providerAccount?.dataset[0].nextUpdateScheduled;
+    const nextUpdateScheduled = accountsByProvider[p_name][0].providerAccount?.dataset?.[0]?.nextUpdateScheduled;
     if (
       status === 'LOGIN_IN_PROGRESS' ||
       status === 'IN_PROGRESS' ||
