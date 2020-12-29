@@ -372,7 +372,6 @@ const AccountDetail: React.FC = () => {
                           showMonthYearPicker
                           minDate={fromDate ? new Date(fromDate) : null}
                           maxDate={new Date()}
-                          className='m-l-1'
                           // selectsRange
                           customInput={
                             <div className='drop-box'>
