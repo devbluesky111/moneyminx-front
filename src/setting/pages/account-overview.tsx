@@ -4,6 +4,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import LoadingScreen from 'common/loading-screen';
+import moment from 'moment';
 import useToast from 'common/hooks/useToast';
 import useAccounts from 'auth/hooks/useAccounts';
 import useAnalytics from 'common/hooks/useAnalytics';
@@ -271,14 +272,19 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
 
   for (let p_name in accountsByProvider) {
     let status = accountsByProvider[p_name][0].providerAccount?.status;
+    const nextUpdateScheduled = accountsByProvider[p_name][0].providerAccount?.dataset?.[0]?.nextUpdateScheduled;
     if (
       status === 'LOGIN_IN_PROGRESS' ||
       status === 'IN_PROGRESS' ||
       status === 'PARTIAL_SUCCESS' ||
-      status === 'SUCCESS'
+      (status === 'SUCCESS' && nextUpdateScheduled >= moment().toISOString())
     ) {
       accountsByStatus.success.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
-    } else if (status === 'USER_INPUT_REQUIRED') {
+    } else if (
+      status === 'USER_INPUT_REQUIRED' ||
+      (status === 'SUCCESS' && nextUpdateScheduled < moment().toISOString()) ||
+      (status === 'SUCCESS' && nextUpdateScheduled === null)
+    ) {
       accountsByStatus.warning.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else {
       accountsByStatus.error.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
@@ -344,7 +350,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                 {status === 'error' && (
                   <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
                     <div className='col-6 text-danger'>
-                      <span>Connection error</span>
+                      <span>Connection Error</span>
                     </div>
                     <div className='col-6 mt-2 text-md-right'>
                       <button
@@ -359,8 +365,8 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                 )}
                 {status === 'warning' && (
                   <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
-                    <div className='col-12 col-md-6 text-warning pl-3'>
-                      <span>Needs more info</span>
+                    <div className='col-12 col-md-6 text-warning'>
+                      <span>Needs Attention</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
                       <button
