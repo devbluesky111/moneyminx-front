@@ -97,6 +97,8 @@ const useSubscriptionValidation = () => {
           }
         }
 
+        // todo: fix this as visited net-worth for the first time sets onboarded to true.
+        // also onboarded is only detected after first logout as is in JWT. The registration based session becomes corrupted due to this.
         if (isPlanExist && onboarded && !isPlanExceeds) {
           route = 'all';
 
