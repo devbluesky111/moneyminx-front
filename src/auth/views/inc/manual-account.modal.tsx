@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { storage } from 'app/app.storage';
 import useToast from 'common/hooks/useToast';
 import { MMCategories } from 'auth/auth.enum';
+import { useAuthState } from 'auth/auth.context';
 import MMToolTip from 'common/components/tooltip';
 import { enumerateStr } from 'common/common-helper';
 import useAccountType from 'auth/hooks/useAccountType';
@@ -35,6 +36,7 @@ const initialValues = {
 const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, handleSuccess }) => {
   const history = useHistory();
   const { mmToast } = useToast();
+  const { onboarded } = useAuthState();
   const curArr = enumerateStr(CurrencyOptions);
   const [values, setValues] = useState(initialValues);
   const { data: accountTypes } = useAccountType(true);
@@ -74,6 +76,12 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
       setLoading(false);
       mmToast('Add Success', { type: 'success' });
       manualAccountModal.close();
+
+      if (onboarded) {
+        storage.set('isNew', 'true');
+        return history.push(appRouteConstants.account.ACCOUNT.replace(':accountId', res.id));
+      }
+
       return handleSuccess();
     }
 
