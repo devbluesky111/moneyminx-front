@@ -8,10 +8,12 @@ import { StripeSubscriptionStatus } from 'setting/setting.enum';
 import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { getCurrentSubscription, getSubscription } from 'api/request.api';
 import { setCurSubscription, setSubscriptionDetail } from 'auth/auth.actions';
+import useSearchParam from 'auth/hooks/useSearchParam';
 
 const useSubscriptionValidation = () => {
   const { currentSubscription, subscriptionDetail, onboarded, accounts } = useAuthState();
   const dispatch = useAuthDispatch();
+  const from = useSearchParam('from');
   const [loading, setLoading] = useState<boolean>(false);
   const [accessibleRoute, setAccessibleRoutes] = useState('');
 
@@ -97,7 +99,9 @@ const useSubscriptionValidation = () => {
           }
         }
 
-        if (isPlanExist && onboarded && !isPlanExceeds) {
+        // todo: fix this as visited net-worth for the first time sets onboarded to true.
+        // also onboarded is only detected after first logout as is in JWT. The registration based session becomes corrupted due to this.
+        if (isPlanExist && (onboarded || from === 'accountSettings') && !isPlanExceeds) {
           route = 'all';
 
           return route;
@@ -110,7 +114,7 @@ const useSubscriptionValidation = () => {
     })();
 
     setAccessibleRoutes(route);
-  }, [isPlanExpired, isPlanExist, onboarded, isPlanExceeds, hasAllValues, loading]);
+  }, [isPlanExpired, isPlanExist, onboarded, isPlanExceeds, hasAllValues, loading, from]);
 
   return {
     loading,

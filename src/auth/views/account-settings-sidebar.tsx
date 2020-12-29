@@ -208,7 +208,9 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
                           className={getProviderClass(pName)}
                         >
                           <Link to='#'>
-                            {account.providerLogo ? <img src={account.providerLogo} alt={pName} /> : pName}
+                            {account.providerName ?
+                              account.providerLogo ? <img src={account.providerLogo} alt={pName} /> : pName
+                            : <LogoImg className='auth-logo' />}
                           </Link>
                         </li>
                       );
@@ -230,7 +232,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
           <AccountSettingForm
             currentAccount={selectedAccount ? selectedAccount : currentAccount}
             handleReload={() => setReloadCounter((c) => c + 1)}
-            isFromAccount={selectedAccount ? true : false}
+            isFromAccount={!!selectedAccount}
             closeSidebar={closeSidebar}
           />
 

@@ -309,7 +309,7 @@ export const ConnectAccountMainSection = () => {
           </div>
         </div>
       </div>
-      <ManualAccountModal manualAccountModal={manualAccountModal} />
+      <ManualAccountModal manualAccountModal={manualAccountModal} handleSuccess={handleConnectAccountSuccess} />
       {!onboarded ? <ConnectAccountSteps isConnectAccount /> : null}
       <FastLinkModal
         fastLinkModal={fastlinkModal}
