@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Modal } from 'common/components/modal';
 import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 import { ReactComponent as SignupModalLogo } from 'assets/images/signup/signup-modal-logo.svg';
+
 import { setLoginSuccess } from '../../auth.actions';
 
 interface Props {
@@ -16,11 +17,13 @@ const SignUpDoneModal: React.FC<Props> = ({ signupModal, handleSuccess }) => {
   const { expires, token } = useAuthState();
 
   useEffect(() => {
-    dispatch(setLoginSuccess({
-      expires: expires!,
-      token: token!,
-      onboarded: true
-    }));
+    dispatch(
+      setLoginSuccess({
+        expires: expires!,
+        token: token!,
+        onboarded: true,
+      })
+    );
   }, [dispatch, expires, token]);
 
   return (
