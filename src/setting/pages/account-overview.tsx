@@ -265,13 +265,13 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
       status === 'LOGIN_IN_PROGRESS' ||
       status === 'IN_PROGRESS' ||
       status === 'PARTIAL_SUCCESS' ||
-      (status === 'SUCCESS' && nextUpdateScheduled >= moment().toISOString())
+      (status === 'SUCCESS' && nextUpdateScheduled >= moment().toISOString()) ||
+      (status === 'SUCCESS' && nextUpdateScheduled === null)
     ) {
       accountsByStatus.success.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else if (
       status === 'USER_INPUT_REQUIRED' ||
-      (status === 'SUCCESS' && nextUpdateScheduled < moment().toISOString()) ||
-      (status === 'SUCCESS' && nextUpdateScheduled === null)
+      (status === 'SUCCESS' && nextUpdateScheduled < moment().toISOString())
     ) {
       accountsByStatus.warning.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else {
