@@ -118,7 +118,7 @@ export const HomeTestimonials = () => {
 export const HomeNetWorthSection = () => {
   return (
     <section className='feature-section feature-text-left'>
-      <span className='highlighted-text p-b-9'>A few of our many features</span>
+      <span className='highlighted-text p-b-9'>Highlighted Features</span>
         <div className='row'>
           <div className='col-lg-5 feature-content'>
               <a href='/features/net-worth'>
@@ -239,7 +239,7 @@ export const HomeComingSoonSection = () => {
   return (
     <section>
       <div className='mm-home-feature-section'>
-        <div className='highlighted-text p-b-12 text-on-darkBG'>And Much More Coming Soon!</div>
+        <div className='highlighted-text p-b-12 text-on-darkBG'>More Features Coming Soon</div>
         <div className='row mm-home-feature-wrapper'>
           <div className='col-12 col-md-6 col-xl-4'>
             <div className='feature-content'>

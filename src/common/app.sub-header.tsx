@@ -55,7 +55,7 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
     <div className='left-box d-flex align-items-center float-lg-left'>
       <button className='mm-btn-primary mm-btn-animate plus-btn' onClick={() => history.push(appRouteConstants.auth.CONNECT_ACCOUNT)}>Add Account</button>
       <div className='myaccount-drop'>
-        <Dropdown className='drop-box' >
+        <Dropdown className='m-l-4'>
           <Dropdown.Toggle className='dropdown-toggle my-accounts' ref={dropdownToggle}>My Accounts</Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu'>
             <div className='dropdown-box'>

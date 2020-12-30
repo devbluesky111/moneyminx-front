@@ -20,7 +20,6 @@
   color: $purple;
   text-transform: uppercase;
   font-weight: 700;
-  margin-left: 15px;
   display: block;
 
   @media (min-width: $sm) {
@@ -36,6 +35,7 @@
 
   &.text-on-darkBG {
     color: $purpleTextLight;
+    text-align: center;
   }
 }
 
