@@ -198,7 +198,7 @@ const AccountDetail: React.FC = () => {
   const isCurrent = (interval: string) =>
     getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
 
-  let curAccountHoldingsItem = undefined;
+  let curAccountHoldingsItem;
   if (AccountHoldings?.charts) {
     curAccountHoldingsItem = AccountHoldings?.charts.filter((accountChartItem: AccountChartItem) =>
       isCurrent(accountChartItem.interval)
@@ -524,8 +524,8 @@ const AccountDetail: React.FC = () => {
                         <div className='chartbox'>
                           {AccountHoldings && curAccountHoldingsItem && (
                             <AccountBarGraph
-                              data={AccountHoldings?.charts}
-                              curInterval={curAccountHoldingsItem?.[0]?.interval}
+                              data={AccountHoldings.charts}
+                              curInterval={curAccountHoldingsItem[0]?.interval}
                               currencySymbol={currencySymbol}
                               mmCategory={AccountDetails?.category?.mmCategory}
                             />
@@ -581,7 +581,7 @@ const AccountDetail: React.FC = () => {
                   </div>
                   {AccountHoldings && tableType === 'holdings' && (
                     <AccountTable
-                      holdingsData={AccountHoldings?.holdings}
+                      holdingsData={AccountHoldings.holdings}
                       openEditPositionModalFun={() => setEditPositonModalOpen(true)}
                       closeEditPositionModalFun={() => setEditPositonModalOpen(false)}
                       accountDetails={AccountDetails}
@@ -605,7 +605,7 @@ const AccountDetail: React.FC = () => {
                       </div>
                       {AccountActivity && (
                         <ActivityTable
-                          transactionsData={AccountActivity?.transactions}
+                          transactionsData={AccountActivity.transactions}
                           openEditActivityModalFun={() => setEditActivityModalOpen(true)}
                           closeEditActivityModalFun={() => setEditActivityModalOpen(false)}
                           currencySymbol={currencySymbol}
