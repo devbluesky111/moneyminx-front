@@ -40,7 +40,7 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
    * i.e reload counter will be 0
    */
   useEffect(() => {
-    if (!isFromFastlink || reloadCounter) {
+    if (!isFromFastlink && reloadCounter) {
       const getUser = async () => {
         await fetchConnectionInfo({ dispatch });
       };
@@ -208,9 +208,15 @@ const AccountSettingsSideBar: React.FC<Props> = ({ setFinish, closeSidebar, sele
                           className={getProviderClass(pName)}
                         >
                           <Link to='#'>
-                            {account.providerName ?
-                              account.providerLogo ? <img src={account.providerLogo} alt={pName} /> : pName
-                            : <LogoImg className='auth-logo' />}
+                            {account.providerName ? (
+                              account.providerLogo ? (
+                                <img src={account.providerLogo} alt={pName} />
+                              ) : (
+                                pName
+                              )
+                            ) : (
+                              <LogoImg className='auth-logo' />
+                            )}
                           </Link>
                         </li>
                       );
