@@ -421,7 +421,9 @@ const AccountDetail: React.FC = () => {
                               AccountDetails?.providerAccount?.status === 'PARTIAL_SUCCESS' ||
                               (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
                                 AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled >=
-                                  moment().toISOString()) ? (
+                                  moment().toISOString()) ||
+                              (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
+                                AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled === null) ? (
                                 <>
                                   <CheckCircleGreen />
                                   <span className='good'>Good</span>
@@ -429,9 +431,7 @@ const AccountDetail: React.FC = () => {
                               ) : AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED' ||
                                 (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
                                   AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled <
-                                    moment().toISOString()) ||
-                                (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
-                                  AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled === null) ? (
+                                    moment().toISOString()) ? (
                                 <div
                                   className='attention-section'
                                   onMouseEnter={() => setPopup(true)}
