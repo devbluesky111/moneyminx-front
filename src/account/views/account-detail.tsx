@@ -12,8 +12,6 @@ import AppHeader from 'common/app.header';
 import AppSidebar from 'common/app.sidebar';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
-import { STATUS_CODE } from 'app/app.status';
-import useAccounts from 'auth/hooks/useAccounts';
 import MMToolTip from 'common/components/tooltip';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
@@ -47,7 +45,6 @@ import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
 
 const AccountDetail: React.FC = () => {
-  const location = useLocation();
   const history = useHistory();
   const { event } = useAnalytics();
 
@@ -88,7 +85,6 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
-  const { fetchLatestProviderAccounts, fetchAccounts } = useAccounts();
 
   useEffect(() => {
     const fetchAccountDetails = async (accId: string, bCurrency: boolean) => {
@@ -134,23 +130,12 @@ const AccountDetail: React.FC = () => {
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
-    if (STATUS_CODE.SERVER_ACCEPTED === error?.code) {
-      await fetchAccounts();
-      setLoading(false);
 
-      return history.push(appRouteConstants.auth.NET_WORTH);
-    }
-    await fetchLatestProviderAccounts();
     setLoading(false);
 
     if (error) {
       return mmToast('Error occurred on fetching refreshed account', { type: 'error' });
     }
-
-    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
-    location.search = 'from=fastLink';
-
-    return history.push(location);
   };
 
   const handleConnectAccount = async (accId: number) => {

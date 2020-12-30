@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import FastLinkModal from 'yodlee/fast-link.modal';
@@ -20,7 +20,6 @@ import {
 } from 'setting/setting.type';
 import { Account } from 'auth/auth.types';
 import { events } from '@mm/data/event-list';
-import { STATUS_CODE } from 'app/app.status';
 import { useModal } from 'common/components/modal';
 import { getFastlinkUpdate } from 'api/request.api';
 import { groupByProviderName } from 'auth/auth.helper';
@@ -205,7 +204,6 @@ export interface AccountByStatus {
 }
 
 export const AccountCard: React.FC<AccountCardProps> = ({ accountList, availableAccounts, reviewSubscriptionFlag }) => {
-  const location = useLocation();
   const history = useHistory();
   const { event } = useAnalytics();
   const { mmToast } = useToast();
@@ -218,7 +216,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   });
   const fastlinkModal = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchLatestProviderAccounts, fetchAccounts, loading: fetchingNewAccounts } = useAccounts();
+  const { loading: fetchingNewAccounts } = useAccounts();
 
   const needUpgrade = accountList.length >= +availableAccounts;
   const accountsByProvider = groupByProviderName(accountList);
@@ -226,22 +224,12 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
     const { error } = await getRefreshedAccount({ dispatch });
-    if (STATUS_CODE.SERVER_ACCEPTED === error?.code) {
-      await fetchAccounts();
-      setLoading(false);
 
-      return history.push(appRouteConstants.auth.NET_WORTH);
-    }
-    await fetchLatestProviderAccounts();
     setLoading(false);
 
     if (error) {
       mmToast('Error Occurred on Fetching user Details', { type: 'error' });
     }
-    location.pathname = appRouteConstants.auth.ACCOUNT_SETTING;
-    location.search = 'from=fastLink';
-
-    return history.push(location);
   };
 
   const handleConnectAccount = async (accId: number) => {
@@ -271,7 +259,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   };
 
   for (let p_name in accountsByProvider) {
-    let status = accountsByProvider[p_name][0].providerAccount?.status;
+    const status = accountsByProvider[p_name][0].providerAccount?.status;
     const nextUpdateScheduled = accountsByProvider[p_name][0].providerAccount?.dataset?.[0]?.nextUpdateScheduled;
     if (
       status === 'LOGIN_IN_PROGRESS' ||
