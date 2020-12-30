@@ -21,7 +21,7 @@ import { appRouteConstants } from 'app/app-route.constant';
 import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 import { getMomentDate, getUTC } from 'common/moment.helper';
 import { loginValidationSchema } from 'auth/auth.validation';
-import { deleteAccount, patchAccount } from 'api/request.api';
+import { deleteAccount, patchAccount, patchCompleteProfile } from 'api/request.api';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
@@ -265,6 +265,11 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
           return closeSidebar?.();
         } else {
           if (isLastAccount()) {
+            const { error: err } = await patchCompleteProfile();
+            if (err) {
+              return mmToast('Error on complete patch profile', { type: 'error' });
+            }
+
             location.pathname = appRouteConstants.auth.NET_WORTH;
             location.search = 'from=accountSettings';
 
