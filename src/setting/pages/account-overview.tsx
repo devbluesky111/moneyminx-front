@@ -30,6 +30,7 @@ import { Placeholder } from 'networth/views/inc/placeholder';
 import { pricingDetailConstant } from 'common/common.constant';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { useAuthDispatch, useAuthState } from 'auth/auth.context';
+import { ReactComponent as Refresh } from 'assets/icons/refresh.svg'
 import { ReactComponent as IconEdit } from 'assets/icons/icon-edit.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 import { ReactComponent as BackArrow } from 'assets/images/subscription/back-arrow.svg';
@@ -369,7 +370,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                 )}
 
                 <div className={['row pb-2 pt-1 align-items-center', status === 'error' ? 'pt-4' : ''].join(' ')}>
-                  <div className='col-10 col-md-7'>
+                  <div className='col-10 col-md-6'>
                     <div>
                       <img
                         src={group.accounts[0].providerLogo || DefaultAvatar}
@@ -379,10 +380,9 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <span className='mm-account-overview__block-title'>{group.provider_name}</span>
                     </div>
                   </div>
-                  {/* TODO Refresh single account when API is ready
-                        <div className='col-2 col-md-1 order-md-2 text-right'>
-                          <Refresh />
-                        </div>*/}
+                  <div className='col-2 col-md-1 order-md-2 text-right'>
+                    <Refresh className='refresh-icon'/>
+                  </div>
                   <div className='col-12 col-md-5 order-md-1 text-md-right pt-2 pt-md-0'>
                     <small className='text--grayText'>
                       Last updated {getRelativeDate(accountList[0].balancesFetchedAt)}
