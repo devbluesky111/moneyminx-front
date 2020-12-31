@@ -225,7 +225,7 @@ const Networth = () => {
               <div className='card mm-setting-card mt-0 processing-card'>
                 <div className='title-section'>
                   <span className={['processing', processingCollapse ? 'processing-collapse' : ''].join(' ')} onClick={() => setProcessingCollapse(!processingCollapse)}>Processing</span>
-                  <span className='desc'>These accounts are still processing and will be ready soon</span>
+                  <span className='desc'>These accounts may need your attention</span>
                 </div>
                 <div className={processingCollapse ? 'd-none' : ''}>
                   {Object.entries(accountsByProvider).map(([providerName, accounts], index) => (
