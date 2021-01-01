@@ -104,9 +104,7 @@
             }
         }
         &--info {
-            @media(min-width: 992px) {
-                margin-right: 0.5rem
-            }
+
             ul {
                 background: $darkBlueOpacity03;
                 border: 1px solid $grayOpacity24;
@@ -119,7 +117,6 @@
                 margin: 0;
                 padding: 0.75rem 0.25rem 0.75rem 0.25rem;
                 min-height: 48px;
-                max-width: 880px;
             }
             li {
                 border-right: 1px solid $grayOpacity20;
