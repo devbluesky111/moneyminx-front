@@ -139,8 +139,8 @@ const AccountDetail: React.FC = () => {
     }
   };
 
-  const handleConnectAccount = async (accId: number) => {
-    const { data, error } = await getFastlinkUpdate(accId);
+  const handleConnectAccount = async (accId: number, update: boolean, refresh: boolean) => {
+    const { data, error } = await getFastlinkUpdate(accId, update, refresh);
 
     if (error) {
       return mmToast('Error Occurred to Get Fastlink', { type: 'error' });
@@ -297,7 +297,7 @@ const AccountDetail: React.FC = () => {
               <div className='mm-account__selection mb-3'>
                 <div className='mm-account__selection--info'>
                   <SettingsGear className='float-left mr-2 settings-gear-button' onClick={() => setAccSetting(true)} />
-                  <RefreshButton className='float-left mr-2 refresh-button' onClick={() => setAccSetting(true)} />
+                  <RefreshButton className='float-left mr-2 refresh-button' onClick={() => handleConnectAccount(Number(accountId), false, true)} />
                   <ul>
                     <li>{AccountDetails?.accountName}</li>
                     {AccountDetails?.accountNumber ? <li>{AccountDetails?.accountNumber.slice(4)}</li> : null}
@@ -444,7 +444,7 @@ const AccountDetail: React.FC = () => {
                                   {popup && (
                                     <Popup
                                       AccountDetails={AccountDetails}
-                                      handleConnectAccount={() => handleConnectAccount(AccountDetails.id)}
+                                      handleConnectAccount={() => handleConnectAccount(AccountDetails.id, true, false)}
                                     />
                                   )}
                                 </div>
@@ -459,7 +459,7 @@ const AccountDetail: React.FC = () => {
                                   {popup && (
                                     <Popup
                                       AccountDetails={AccountDetails}
-                                      handleConnectAccount={() => handleConnectAccount(AccountDetails.id)}
+                                      handleConnectAccount={() => handleConnectAccount(AccountDetails.id, true, false)}
                                     />
                                   )}
                                 </div>

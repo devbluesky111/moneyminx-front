@@ -233,8 +233,8 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     }
   };
 
-  const handleConnectAccount = async (accId: number) => {
-    const { data, error } = await getFastlinkUpdate(accId);
+  const handleConnectAccount = async (accId: number, update: boolean, refresh: boolean) => {
+    const { data, error } = await getFastlinkUpdate(accId, update, refresh);
 
     if (error) {
       return mmToast('Error Occurred to Get Fastlink', { type: 'error' });
@@ -345,7 +345,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <button
                         type='button'
                         className='btn btn-outline-primary mm-button btn-lg'
-                        onClick={() => handleConnectAccount(group.accounts[0].id)}
+                        onClick={() => handleConnectAccount(group.accounts[0].id, true, false)}
                       >
                         Fix Connection
                       </button>
@@ -361,7 +361,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <button
                         type='button'
                         className='btn btn-outline-primary mm-button btn-lg'
-                        onClick={() => handleConnectAccount(group.accounts[0].id)}
+                        onClick={() => handleConnectAccount(group.accounts[0].id, true, false)}
                       >
                         Fix Connection
                       </button>
@@ -381,7 +381,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                     </div>
                   </div>
                   <div className='col-2 col-md-1 order-md-2 text-right'>
-                    <Refresh className='refresh-icon'/>
+                    <Refresh className='refresh-icon' onClick={() => handleConnectAccount(group.accounts[0].id, false, true)}/>
                   </div>
                   <div className='col-12 col-md-5 order-md-1 text-md-right pt-2 pt-md-0'>
                     <small className='text--grayText'>
@@ -402,7 +402,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <div className='mm-account-overview__update-link mb-3 mb-md-0'>
                         <span
                           className='purple-links update-credentials'
-                          onClick={() => handleConnectAccount(group.accounts[0].id)}
+                          onClick={() => handleConnectAccount(group.accounts[0].id, true, false)}
                           role='button'
                         >
                           Update Credentials
