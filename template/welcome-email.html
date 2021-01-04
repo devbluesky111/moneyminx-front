@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Welcome to Money Minx</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;700&ampdisplay=swap" rel="stylesheet" />
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <style>
+    :root {
+      color-scheme: light;
+      supported-color-schemes: light;
+    }
+    table {
+      border-spacing: 0;
+      font-family: 'Mulish', sans-serif, Arial;
+    }
+    .outer-table {
+      max-width: 720px;
+      background-color: #fafbfd;
+      margin: 0 auto;
+      padding: 20px 10px;
+      overflow: hidden;
+    }
+    .hero,
+    .why-table,
+    .header-table,
+    .security-trust-table {
+      border-spacing: 0;
+      margin-left: 60px;
+      margin-right: 60px;
+    }
+    .why-table {
+      padding-top: 30px;
+    }
+    .wrapper {
+      width: 100%;
+      padding: 1rem 4rem;
+    }
+    tr {
+      width: 100%;
+    }
+
+    td {
+      padding: 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
+    hr {
+      color: #969EAC;
+      opacity: 24%;
+    }
+    .col-2 {
+      width: 360px;
+      max-width:50% !important;
+    }
+    .security-col {
+      padding-right: 40px;
+    }
+    .col-3 {
+      padding: 1rem;
+      width: 240px;
+      max-width:33.33% !important;
+      vertical-align:top;
+    }
+    .benefits {
+      vertical-align: top;
+      padding-top: 45px;
+    }
+    .text-right {
+      text-align: end;
+    }
+    .link {
+      color: #534cea;
+    }
+    .title {
+      font-size: 1.75rem;
+      line-height: 2.375rem;
+      padding-top: 2rem;
+      font-weight: 300;
+    }
+    .text {
+      max-width:100%;
+      word-break:break-word;
+      padding-top: 1rem;
+      color: #697588;
+      font-weight: 300;
+      line-height: 150%;
+    }
+    .text-digit {
+      font-size: 1.5rem;
+      color: #434a55;
+      font-weight: 300;
+    }
+    .text-cyan {
+      color: #29cfd6;
+      font-size: 0.875rem;
+    }
+    .text-blue {
+      color: #235ee7;
+      font-size: 0.875rem;
+    }
+    .text-red {
+      color: #d3365f;
+      font-size: 0.875rem;
+    }
+    .text-purple {
+      color: #534cea;
+      font-size: 0.875rem;
+    }
+    .btn-primary {
+      width: 160px;
+      height: 48px;
+      color: #ffffff;
+      padding: 16px 40px;
+      line-height: 48px;
+      border-radius: 4px;
+      background-color: #534cea;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .img-desc {
+      padding-top: 1rem;
+      display: block;
+      color: #697588;
+    }
+    .sec-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #434a55;
+      line-height: 1.5625rem;
+    }
+    .sec-text {
+      color: #697588;
+      text-align: left;
+      font-weight: 300;
+    }
+    .footer-table {
+      background-color: #697588;
+      margin-top: 30px;
+      padding: 40px 60px 60px 40px;
+      color: #ffffff;
+    }
+    .text-right {
+      margin-left: 1rem;
+    }
+    .footer-text {
+      font-size: 0.875rem;
+      line-height: 150%;
+      font-weight: 300;
+    }
+    ul {
+      list-style-type: none;
+    }
+    li {
+      float: left;
+    }
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 16px;
+      text-decoration: none;
+    }
+    .social-icon {
+      padding-right: 30px;
+    }
+
+    .rounded-icon {
+      border-radius: 50%;
+      border: 0.0937rem solid #534CEA;
+      box-sizing: border-box;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .get-started-data{
+      padding: 2rem 4rem;
+
+    }
+    .text-error {
+      color: #ec5555;
+      padding-left: 12rem;
+      font-size: 1.25rem;
+      line-height: 1.5625rem;
+    }
+    .quick-response-title {
+      padding: 1rem 4rem;
+      color: #697588;
+      font-size: 1rem;
+      line-height: 150%;
+    }
+    .horizontal-line {
+      margin-top: 60px;
+      margin-bottom: 30px;
+    }
+    @media only screen and (max-width: 600px) {
+      .col-2 {
+        width: 100%;
+        display: inline-block;
+        text-align: left;
+      }
+      .text-right {
+        width: 300px;
+        display: table-cell;
+        text-align: right;
+      }
+    }
+
+    @media only screen and (max-width: 375px) {
+
+      .outer-table{
+        overflow:hidden;
+      }
+
+      .hero,
+      .why-table,
+      .header-table,
+      .security-trust-table {
+        border-spacing: 0;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      .footer-table{
+        padding: 40px 20px 60px 20px
+      }
+
+      .text-right {
+        width:130px;
+        max-width:50% !important;
+        display: table-cell;
+        margin-left: 4rem;
+      }
+      .col-2{
+        width: 100% !important;
+        display:inline;
+      }
+
+      .col-3 {
+        width:250px;
+        max-width:100% !important;
+        display:block;
+        text-align: left;
+      }
+      .copy {
+        padding-top: 1rem;
+        display: block;
+      }
+      .links {
+        padding-top: 1rem;
+        display: block;
+      }
+      .sec-text{
+        width: 100%;
+        display:inline-block;
+      }
+      .img-col-3{
+        display:inline;
+        width:100%;
+        height: 100px;
+      }
+      .get-started-data{
+        padding: 2rem 0.5rem;
+
+      }
+      .text-error {
+        display: block;
+        color: #ec5555;
+        padding-left: 0;
+        font-size: 1rem;
+        line-height: 20px;
+      }
+      .quick-response-title {
+        padding: 1rem 0.5rem;
+      }
+      .wrapper {
+        width: 100%;
+        padding: 0.5rem 0.5rem;
+      }
+      .inner-wrapper {
+        width: 100%;
+        text-align: left;
+        padding: 0.5rem;
+        display: block;
+      }
+      .d-table-row {
+        display: table-row;
+        height: 130px;
+      }
+      .d-table-cell {
+        display: table-cell;
+        vertical-align: inherit;
+      }
+      .benefits a {
+        padding-right: 28px;
+      }
+    }
+  </style>
+</head>
+<body style="margin:0; padding: 0;">
+<table class="outer-table" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+      <table class="header-table">
+        <tr>
+          <td class="col-2">
+            <a href="https://app.moneyminx.com" target="_blank">
+              <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/19f99b8d-f061-40a4-8cfe-3d773c60b7da/330x105.png" width="110" alt="Money Minx Logo" />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table class="hero">
+        <tr>
+          <td class="title">Welcome aboard!</td>
+        </tr>
+        <tr>
+          <td class="text">
+            Thank you for signing up for Money Minx! My name is Jessica. I'm a co-founder and personal investor but you can think of me as your personal Money Minx assistant, here to guide you through your trial.
+          </td>
+        </tr>
+        <tr>
+          <td class="text">
+            Hopefully you’ve had a chance to login and explore Money Minx already. If you haven’t, no worries. An easy first step is to complete your profile and sync a few of your investment accounts. This will give you your first view of your accounts in one place - which sets you up to see your net worth calculation and view your balances in different ways (to get insights on your goals and progress).
+
+          </td>
+        </tr>
+        <tr>
+          <td class="text">
+            If you have any questions you can reply to my emails or send me a note at <a href="mailto:hello@moneyminx.com?Subject=Money%20Minx%20Question">hello@moneyminx.com</a>. We warmly welcome feedback as we are working to build the most robust and helpful tools for diversified investors that want to do things on their own terms. That said, I’ll be happy to assist you!
+
+          </td>
+        </tr>
+        <tr>
+          <td class="text">
+            Best,<br>
+            Jessica and The Money Minx Team
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 2rem 0;">
+            <a href="https://app.moneyminx.com" class="btn-primary">Get Started</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table class="why-table">
+        <tr>
+          <td colspan="3">
+            <h5 class="sec-title">Investors are using Money Minx to:</h5>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-3 benefits d-table-row">
+            <a class="d-table-cell" href="https://app.moneyminx.com">
+              <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/de901416-9e0a-4b96-bff6-913a765522ce/300x300.png" width="100" alt="Skip monthly spreadsheet update" />
+            </a>
+            <span class="img-desc d-table-cell">Skip monthly spreadsheet update</span>
+          </td>
+          <td class="col-3 benefits d-table-row">
+            <a class="d-table-cell" href="https://app.moneyminx.com">
+              <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/32adac8c-bbb2-4599-aa04-bbf576ac05f4/300x300.png" width="100" alt="Visualize data" />
+            </a>
+            <span class="img-desc d-table-cell">Visualize their data in awesome charts, graphs and tools.</span>
+          </td>
+          <td class="col-3 benefits d-table-row">
+            <a class="d-table-cell" href="https://app.moneyminx.com">
+              <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/fd502ed7-c8b8-4cb8-968d-70a5b5641f7e/300x300.png" width="100" alt="Check and balance" />
+            </a>
+            <span class="img-desc d-table-cell">See where they are doing good or where they are falling short.</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <hr class="horizontal-line" />
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table class="security-trust-table">
+        <tr>
+
+          <td class="col-2 security-col">
+            <h5 class="sec-title">Serious about security</h5>
+            <table style="width:100%">
+              <tr>
+                <td style="width:50px;">
+                  <a href="https://app.moneyminx.com">
+                        <span class="rounded-icon">
+                        <img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/a48759d3-5d4e-42d8-a701-f4fb5c55f1b7/72x72.png" width="24" height="24" alt="Security" />
+                        </span>
+                  </a>
+                </td>
+                <td>&nbsp;&nbsp;</td>
+                <td>
+                  <span class="sec-text">The security of your information is our top priority</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+
+          <td class="col-2">
+            <h5 class="sec-title">Trusted by investors</h5>
+            <table style="width:100%">
+              <tr>
+                <td style="width:50px;">
+                  <a href="https://app.moneyminx.com">
+                    <span class="rounded-icon"><img src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/3e8b494f-efcc-4ef8-85ef-5cc68395972b/72x74.png" width="24" height="24" alt="Trusted" /></span>
+                  </a>
+                </td>
+                <td>&nbsp;&nbsp;</td>
+                <td>
+                  <span class="sec-text">Investors from all over the world are using Money Minx</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <!--get started row-->
+  <tr>
+    <td class="get-started-data">
+      <a href="https://app.moneyminx.com" class="btn-primary">Get Started</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+  </tr>
+</table>
+<!--Footer-->
+<table class="footer-table">
+  <tr>
+    <td class="footer-text" colspan="2">
+      <p>
+        Money Minx is a financial publisher that does not offer any personal financial advice or advocate the
+        purchase or sale of any security or investment for any specific individual. Members should be aware
+        that investment markets have inherent risks, and past performance does not assure future results.
+        Money Minx has advertising relationships with some of the offers listed on this website.
+      </p>
+      <p>
+        Money Minx does not attempt to take a reasonable and good faith approach to maintaining objectivity
+        towards providing referrals that are in the best interest of readers. Money Minx strives to keep its
+        information accurate and up to date.
+      </p>
+    </td>
+  </tr>
+  <tr style="padding-top: 1rem;">
+    <td style="padding-top: 1rem;" class="copy">© 2020-2021 Money Minx. All Rights Reserved.</td>
+    <td style="padding-top: 2rem;" class="links">
+      <table>
+        <tr>
+          <td>
+            <a href="https://www.facebook.com/moneyminx" target="_blank"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/57eacddb-3451-4078-98a3-ccfe817194d3/62x62.png" width="22" alt="Facebook Link"
+            /></a>
+          </td>
+          <td>
+            <a href="https://twitter.com/moneyminxapp" target="_blank"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/4e024626-9a2e-41a6-92a2-74eebdcb22fb/62x60.png" width="22" alt="Twitter Link"
+            /></a>
+          </td>
+          <td>
+            <a href="https://instagram.com/moneyminxapp" target="_blank"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/63bcdb83-31f4-4071-b716-521c728071fd/62x62.png" width="22" alt="Instagram Link"
+            /></a>
+          </td>
+          <td>
+            <a href="https://linkedin.com/company/moneyminx" target="_blank"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/a50bfb51-a507-44bd-9a16-ef74583950c7/62x60.png" width="22" alt="Linkedin Link"
+            /></a>
+          </td>
+          <td>
+            <a href="https://www.youtube.com/channel/UCmWuUaetlK3fABjglo9cEaQ" target="_blank"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/3aeff7ee-bb6b-4dfa-92ec-96903e78b0ce/62x60.png" width="22" alt="Youtube Link"
+            /></a>
+          </td>
+          <td>
+            <a href="https://www.pinterest.com/moneyminx/" target="_blank"
+            ><img class="social-icon" src="http://cdn.mcauto-images-production.sendgrid.net/6a5998a60b8f24e4/0b22ad09-8a19-493e-8f4f-a0c994429c89/60x62.png" width="22" alt="Pinterest Link"
+            /></a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
