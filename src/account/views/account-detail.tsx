@@ -657,10 +657,7 @@ const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount }) =
     <div className='popup'>
       <span className='pb-2'>Connection Status</span>
       <span className='pb-2'>
-        Last updated{' '}
-        {AccountDetails?.providerAccount?.updatedAt
-          ? getRelativeDate(AccountDetails?.providerAccount?.updatedAt.toString())
-          : getRelativeDate(AccountDetails?.providerAccount?.createdAt.toString())}
+        Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0].lastUpdated.toString())}
       </span>
       <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
       <button type='button' className='mm-btn-animate mm-btn-primary' onClick={handleConnectAccount}>
