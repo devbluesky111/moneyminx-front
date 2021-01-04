@@ -1,9 +1,9 @@
 on:
   push:
     branches:
-      - dev
+      - master
 
-name: Deploy to Moneyminx Dev S3
+name: Deploy to Moneyminx Prod S3
 
 jobs:
   deploy:
