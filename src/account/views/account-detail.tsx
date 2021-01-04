@@ -31,7 +31,6 @@ import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { ReactComponent as NotLinked } from 'assets/images/account/Not Linked.svg';
 import { ReactComponent as NeedsInfo } from 'assets/images/account/Needs Info.svg';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
-import { ReactComponent as RefreshButton } from 'assets/icons/icon-refresh.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { getAccountDetails, getAccountHoldings, getAccountActivity, getFastlinkUpdate } from 'api/request.api';
@@ -297,7 +296,6 @@ const AccountDetail: React.FC = () => {
               <div className='mm-account__selection mb-3'>
                 <div className='mm-account__selection--info'>
                   <SettingsGear className='float-left mr-2 settings-gear-button' onClick={() => setAccSetting(true)} />
-                  <RefreshButton className='float-left mr-2 refresh-button' onClick={() => handleConnectAccount(Number(accountId), false, true)} />
                   <ul>
                     <li>{AccountDetails?.accountName}</li>
                     {AccountDetails?.accountNumber ? <li>{AccountDetails?.accountNumber.slice(4)}</li> : null}
