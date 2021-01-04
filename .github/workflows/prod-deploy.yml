@@ -1,9 +1,9 @@
 on:
   push:
     branches:
-      - master
+      - dev
 
-name: Deploy to Moneyminx Prod S3
+name: Deploy to Moneyminx Dev S3
 
 jobs:
   deploy:
@@ -20,11 +20,12 @@ jobs:
           node-version: '12'
           check-latest: true
 
-      - name: Yarn and build
+      - name: Yarn
         run: |
           yarn
 
-      - run: |
+      - name: Build
+        run: |
           cp .env.prod .env
           yarn build --prod
 
@@ -34,4 +35,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: Upload to s3
         run: aws s3 sync build s3://mm-prod-frontend
