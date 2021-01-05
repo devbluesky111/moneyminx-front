@@ -5,22 +5,18 @@ import React, { Suspense, useEffect } from 'react';
 import env from 'app/app.env';
 import history from 'app/app.history';
 import useCrisp from 'common/hooks/useCrisp';
-import useProfile from 'auth/hooks/useProfile';
 import { auth } from 'auth/auth-context.types';
 import useAnalytics from 'common/hooks/useAnalytics';
-import useConnectionInfo from 'common/hooks/useConnectionInfo';
 import { useAuthDispatch, useAuthState } from 'auth/auth.context';
 
 import './app.i18n';
-import AppRoute from './app.route';
+import MainRoute from './main.route';
 import { storage } from './app.storage';
 import { StorageKey } from './app.types';
 
 export default function Main() {
-  useProfile();
-  useAnalytics();
-  useConnectionInfo();
   useCrisp();
+  useAnalytics();
   const dispatch = useAuthDispatch();
   const { user } = useAuthState();
 
@@ -50,7 +46,7 @@ export default function Main() {
     <Router history={history}>
       <Suspense fallback='....'>
         <div className='app-wrapper'>
-          <AppRoute />
+          <MainRoute />
         </div>
       </Suspense>
     </Router>
