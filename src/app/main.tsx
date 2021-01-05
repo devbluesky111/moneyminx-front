@@ -1,25 +1,20 @@
 import { Router } from 'react-router-dom';
-import React, { Suspense, useEffect } from 'react';
 import ReactPixel from 'react-facebook-pixel';
-
-import './app.i18n';
+import React, { Suspense, useEffect } from 'react';
 
 import env from 'app/app.env';
 import history from 'app/app.history';
-import useProfile from 'auth/hooks/useProfile';
 import { auth } from 'auth/auth-context.types';
 import { useAuthDispatch } from 'auth/auth.context';
 import useAnalytics from 'common/hooks/useAnalytics';
-import useConnectionInfo from 'common/hooks/useConnectionInfo';
 
-import AppRoute from './app.route';
+import './app.i18n';
+import MainRoute from './main.route';
 import { storage } from './app.storage';
 import { StorageKey } from './app.types';
 
 export default function Main() {
-  useProfile();
   useAnalytics();
-  useConnectionInfo();
   const dispatch = useAuthDispatch();
 
   useEffect(() => {
@@ -40,7 +35,7 @@ export default function Main() {
     <Router history={history}>
       <Suspense fallback='....'>
         <div className='app-wrapper'>
-          <AppRoute />
+          <MainRoute />
         </div>
       </Suspense>
     </Router>
