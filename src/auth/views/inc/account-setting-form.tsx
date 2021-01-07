@@ -21,17 +21,18 @@ import { appRouteConstants } from 'app/app-route.constant';
 import useAccountSubtype from 'auth/hooks/useAccountSubtype';
 import { getMomentDate, getUTC } from 'common/moment.helper';
 import { loginValidationSchema } from 'auth/auth.validation';
-import { deleteAccount, patchAccount, patchCompleteProfile } from 'api/request.api';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
 import useRealEstateAccounts from 'auth/hooks/useRealEstateAccounts';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { CurrencyOptions, CurrencySymbols } from 'auth/enum/currency-options';
 import { initialAccount, initialMortgage } from 'auth/data/account-settings.data';
 import { EmployerMatchLimitOptions } from 'auth/enum/employer-match-limit-options';
+import { deleteAccount, patchAccount, patchCompleteProfile } from 'api/request.api';
 import { Account, IRealEstateAccount, Mortgage, MortgageList } from 'auth/auth.types';
 import { CalculateRealEstateReturnOptions } from 'auth/enum/calculate-real-estate-return-options';
 
@@ -55,6 +56,7 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
   const [accountType, setAccountType] = useState('');
   const [accountSubtype, setAccountSubtype] = useState('');
   const [accountCategory, setAccountCategory] = useState<string>('');
+  const { currentSubscription } = useCurrentSubscription();
 
   const isManual = currentAccount?.isManual;
 
@@ -393,14 +395,25 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                       />
                     </div>
                   </li>
+                  {/*Currency Dropdown*/}
                   <li className='currency-select'>
                     <span className='form-subheading'>Currency</span>
-                    <SelectInput
-                      args={enumerateStr(CurrencyOptions)}
-                      onChange={handleSelectChange}
-                      value={values.currency}
-                      name='currency'
-                    />
+                    {currentSubscription &&
+                    (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') ? (
+                      <span className='mm-form-field-read'>{values.currency}</span>
+                    ) : (
+                      <SelectInput
+                        args={enumerateStr(CurrencyOptions)}
+                        onChange={handleSelectChange}
+                        value={values.currency}
+                        name='currency'
+                      />
+                    )}
+                    {currentSubscription && (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') && (
+                      <label className='mm-form-field-error text--pink'>
+                        Your plan only supports USD. To enable multi currency support upgrade your plan.
+                      </label>
+                    )}
                   </li>
                   <li className={hc('liquidity')}>
                     <span className='form-subheading'>Liquidity</span>

@@ -9,6 +9,7 @@ import useAccountType from 'auth/hooks/useAccountType';
 import { Modal, ModalType } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import useAccountSubtype from 'auth/hooks/useAccountSubtype';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
 import { SelectInput } from 'common/components/input/select.input';
 import { getConnectionInfo, postManualAccount } from 'api/request.api';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
@@ -37,6 +38,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
   const [loading, setLoading] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
   const { subType: accountSubTypes } = useAccountSubtype(values.mmAccountType, true);
+  const { currentSubscription } = useCurrentSubscription();
 
   const handleChange = (e: React.ChangeEvent<any>) => {
     if (e.target.name === 'mmAccountType') {
@@ -44,7 +46,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
     }
 
     if (e.target.name === 'balance') {
-      let _float = parseFloat(e.target.value);
+      const _float = parseFloat(e.target.value);
 
       return setValues({ ...values, [e.target.name]: _float });
     }
@@ -172,7 +174,22 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
               </Form.Group>
               <Form.Group controlId='ManualAccountForm.Currency' className='child'>
                 <Form.Label className='form-subheading'>Currency</Form.Label>
-                <SelectInput args={curArr} onChange={handleChange} value={values.currency} name='currency' />
+                {currentSubscription &&
+                (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') ? (
+                  <span className='mm-form-field-read'>{values.currency}</span>
+                ) : (
+                  <SelectInput
+                    args={curArr}
+                    onChange={handleChange}
+                    value={values.currency}
+                    name='currency'
+                  />
+                )}
+                {currentSubscription && (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') && (
+                  <label className='mm-form-field-error text--pink'>
+                    Your plan only supports USD. To enable multi currency support upgrade your plan.
+                  </label>
+                )}
               </Form.Group>
             </div>
           </Form>
