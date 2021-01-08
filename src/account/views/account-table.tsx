@@ -81,7 +81,9 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                         {costBasisHeader && <td className='hide-type'>{item.costBasis ? currencySymbol : ''}{item.costBasis !== null ? numberWithCommas(fNumber(item.costBasis, 2)) : ''}</td>}
                         {item.intervalValues.map((ins: any, i: number) => (
                           <td key={i} className={[ins.type === `projection` && `projection`, gc(ins.interval)].join(' ')}>
-                            <span className={gc(ins.interval)}>{ins.interval}</span>{ins.value ? currencySymbol : ''}{numberWithCommas(fNumber(ins.value, 2))}
+                            <span className={gc(ins.interval)}>{ins.interval}</span>
+                            {ins.value !== null ? currencySymbol : ''}
+                            {ins.value !== null ? numberWithCommas(fNumber(ins.value, 2)) : '--'}
                           </td>
                         ))}
                       </tr>
