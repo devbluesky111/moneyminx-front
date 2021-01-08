@@ -33,10 +33,8 @@ export const isCurrent = (interval: string) =>
   getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
 
 export const gc = (interval: string) => {
-  if (interval) {
-    if (isCurrent(interval)) {
+  if (interval === 'Today') {
       return 'current-m';
-    }
   }
   // return 'tab-hide';
   return '';
