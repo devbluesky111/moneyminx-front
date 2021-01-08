@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import ReactDatePicker from 'react-datepicker';
+import React, { useEffect, useState } from 'react';
+import { Formik } from 'formik';
 import { Tabs, Tab, Form } from 'react-bootstrap';
 
-import moment from 'moment';
-import { Formik } from 'formik';
-import { gc } from 'common/interval-parser';
 import useToast from 'common/hooks/useToast';
+import { gc } from 'common/interval-parser';
 import { Modal } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { getDateFormattedString, parseDateFromString } from 'common/moment.helper';
@@ -146,11 +146,11 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
   // new position
   let yearsArr: any[] = [];
+  const cYear = new Date().getFullYear();
   if (holdingsDetails) {
-    yearsArr = years;
+    yearsArr = [...years, ...[(cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()].filter(a => !years.includes(a))];
   } else {
-    const cYear = new Date().getFullYear();
-    yearsArr = [(cYear - 2).toString(), (cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()];
+    yearsArr = [(cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()];
   }
 
   return (
@@ -1144,7 +1144,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                         )}
                     </Tab>
                     <Tab eventKey='monthlyValues' title='Monthly Values' className='monthly-values-sub-tabs'>
-                      <Tabs defaultActiveKey={years?.[0]} id='mothly-value-sub-tab' className='mt-3'>
+                      <Tabs defaultActiveKey={new Date().getFullYear()} id='mothly-value-sub-tab' className='mt-3'>
                         {yearsArr?.map((item, index) => (
                           <Tab eventKey={item} title={item} key={index}>
                             {holdingsDetails && !holdingsDetails?.isManual ? (
@@ -1389,7 +1389,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Jan ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1423,7 +1423,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Feb ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1457,7 +1457,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Mar ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1491,7 +1491,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Apr ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1525,7 +1525,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`May ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1559,7 +1559,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Jun ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1599,7 +1599,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Jul ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1633,7 +1633,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Aug ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1667,7 +1667,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Sep ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1701,7 +1701,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Oct ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1735,7 +1735,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Nov ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
@@ -1769,7 +1769,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     type='number'
                                                     id={`Dec ${item}`}
                                                     value={i.value}
-                                                    disabled={i.type === 'projection'}
+                                                    disabled={i.type === 'projection' && gc(i.interval) !== 'current-m'}
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </div>
