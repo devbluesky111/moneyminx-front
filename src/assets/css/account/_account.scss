@@ -556,26 +556,26 @@
             color: $purple;
             border: 1.5px solid $white;
         }
-        #mothly-value-sub-tab-tab-null {
+        #monthly-value-sub-tab-tab-null {
             border: 1.5px solid $primary;
             border-radius: 4px;
             width: 133.61px;
             height: 48px;
             position: absolute;
         }
-        .nav-tabs a:first-child.active~#mothly-value-sub-tab-tab-null {
+        .nav-tabs a:first-child.active~#monthly-value-sub-tab-tab-null {
             transform: translateX(0);
             transition: transform 0.2s ease-in-out;
         }
-        .nav-tabs a:nth-child(2).active~#mothly-value-sub-tab-tab-null {
+        .nav-tabs a:nth-child(2).active~#monthly-value-sub-tab-tab-null {
             transform: translateX(133.61px);
             transition: transform 0.2s ease-in-out;
         }
-        .nav-tabs a:nth-child(3).active~#mothly-value-sub-tab-tab-null {
+        .nav-tabs a:nth-child(3).active~#monthly-value-sub-tab-tab-null {
             transform: translateX(267.22px);
             transition: transform 0.2s ease-in-out;
         }
-        .nav-tabs a:nth-child(4).active~#mothly-value-sub-tab-tab-null {
+        .nav-tabs a:nth-child(4).active~#monthly-value-sub-tab-tab-null {
             transform: translateX(400.83px);
             transition: transform 0.2s ease-in-out;
         }

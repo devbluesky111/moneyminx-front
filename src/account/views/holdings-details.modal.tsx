@@ -21,7 +21,7 @@ import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum
 import { ClassificationsSelectInput } from './classifications.select.input';
 import { HoldingTypeSelectInput } from './holding-type-select.input';
 
-export const foramtHoldingType = (str: string) => {
+export const forAmtHoldingType = (str: string) => {
   if (enumerateStr(HoldingsTypeUpperOptions).includes(str)) {
     return str;
   }
@@ -473,7 +473,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 {values.holdingType && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Holding Type</div>
-                                    <div className='col-sm'>{foramtHoldingType(values.holdingType)}</div>
+                                    <div className='col-sm'>{forAmtHoldingType(values.holdingType)}</div>
                                   </div>
                                 )}
                                 {values.securityType && (
@@ -609,7 +609,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 )}
                                 {values.exercisedQuantity && (
                                   <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Excercised Quantity</div>
+                                    <div className='col-sm'>Exercised Quantity</div>
                                     <div className='col-sm'>{values.exercisedQuantity}</div>
                                   </div>
                                 )}
@@ -1135,7 +1135,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                         )}
                     </Tab>
                     <Tab eventKey='monthlyValues' title='Monthly Values' className='monthly-values-sub-tabs'>
-                      <Tabs defaultActiveKey={new Date().getFullYear()} id='mothly-value-sub-tab' className='mt-3'>
+                      <Tabs defaultActiveKey={new Date().getFullYear()} id='monthly-value-sub-tab' className='mt-3'>
                         {yearsArr?.map((item, index) => (
                           <Tab eventKey={item} title={item} key={index}>
                             {holdingsDetails && !holdingsDetails?.isManual ? (
@@ -1851,7 +1851,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                             </div>
                           </div>
                         </Tab>
-                        <Tab eventKey='assetclass' title='Asset Class'>
+                        <Tab eventKey='assetClass' title='Asset Class'>
                           <div className='row mt-4'>
                             <div className='col-sm'>
                               <div className='row pt-2 pb-2 align-items-center classification-total'>
