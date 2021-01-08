@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import ReactDatePicker from 'react-datepicker';
-import { Formik } from 'formik';
 import { Tabs, Tab, Form } from 'react-bootstrap';
 
-import useToast from 'common/hooks/useToast';
+import moment from 'moment';
+import { Formik } from 'formik';
 import { gc } from 'common/interval-parser';
+import useToast from 'common/hooks/useToast';
 import { Modal } from 'common/components/modal';
 import { CurrencyOptions } from 'auth/enum/currency-options';
-import { getDateFormattedString, parseDateFromString } from 'common/moment.helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { SelectInput } from 'common/components/input/select.input';
 import { enumerateStr, formater, getUnique } from 'common/common-helper';
+import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
+import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
+import { getDateFormattedString, parseDateFromString } from 'common/moment.helper';
 import { DisabledInputProps, HoldingsDetailsModalProps } from 'account/account.type';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
-import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
-import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
+import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum/holdings-type-upper-options';
 
 import { ClassificationsSelectInput } from './classifications.select.input';
 import { HoldingTypeSelectInput } from './holding-type-select.input';
-import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum/holdings-type-upper-options';
 
 export const foramtHoldingType = (str: string) => {
   if (enumerateStr(HoldingsTypeUpperOptions).includes(str)) {
@@ -71,10 +71,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   };
 
   const fetchClassification = async () => {
-    let filters = ['Type', 'Asset Class', 'Country', 'Risk'];
+    const filters = ['Type', 'Asset Class', 'Country', 'Risk'];
     for (let i = 0; i < filters.length; i++) {
       const { data, error } = await getClassification(filters[i]);
-      let index = data.indexOf('Unclassified');
+      const index = data.indexOf('Unclassified');
       if (index !== -1) {
         data.splice(index, 1);
       }
@@ -110,7 +110,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   }, []);
 
   useEffect(() => {
-    let _years = [];
+    const _years = [];
     for (let i = 0; i < holdingsDetails?.intervalValues.length; i++) {
       _years.push(holdingsDetails?.intervalValues[i].interval.split(' ')[1]);
     }
@@ -140,8 +140,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
       });
     }
 
-    let unique_years = getUnique(_years);
-    setYears(unique_years);
+    const uniqueYears = getUnique(_years);
+    setYears(uniqueYears);
   }, [holdingsDetails, holdingsDetailsModal]);
 
   // new position
@@ -236,11 +236,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
       onSubmit={async (values: any, actions: any) => {
         const positionId = holdingsDetails?.id;
 
-        // if (!positionId) {
-        //     return;
-        // }
-
-        let _classifications: any[] = [];
+        const _classifications: any[] = [];
         Object.keys(values.originalClassifications).forEach((key: any) => {
           const value = (values.originalClassifications as any)[key];
           for (let i = 0; i < value.length; i++) {
@@ -280,10 +276,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
           });
         });
 
-        let _values: any[] = [];
+        const _values: any[] = [];
 
         for (let i = 0; i < values.originalValues.length; i++) {
-          let _originalValue = values.originalValues[i];
+          const _originalValue = values.originalValues[i];
           _originalValue['date'] = parseDateFromString(values.originalValues[i]['interval']);
           _values.push(_originalValue);
         }
@@ -340,7 +336,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         };
 
         const handleMonthlyChange = (e: React.ChangeEvent<any>) => {
-          let _values = values.originalValues;
+          const _values = values.originalValues;
           for (let i = 0; i < _values.length; i++) {
             if (_values[i].interval === e.target.id) {
               _values[i].value = parseFloat(e.target.value);
@@ -350,7 +346,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         };
 
         const handleMonthlyNewChange = (value: string, e: any) => {
-          let _values = values.originalValues;
+          const _values = values.originalValues;
           let existStatus = false;
           for (let i = 0; i < _values.length; i++) {
             if (_values[i].interval === value) {
@@ -365,7 +361,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         };
 
         const handleClassificationsAllocationChange = (tabName: string, e: any) => {
-          let _classifications = values.originalClassifications;
+          const _classifications = values.originalClassifications;
           for (let i = 0; i < _classifications[`${tabName}`].length; i++) {
             if (_classifications[`${tabName}`][i].classificationValue === e.target.id) {
               _classifications[`${tabName}`][i].allocation = parseFloat(e.target.value);
@@ -375,7 +371,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         };
 
         const handleClassificationsValueChange = (tabName: string, e: any) => {
-          let _classifications = values.originalClassifications;
+          const _classifications = values.originalClassifications;
           for (let i = 0; i < _classifications[`${tabName}`].length; i++) {
             if (_classifications[`${tabName}`][i].classificationValue === e.target.id) {
               _classifications[`${tabName}`][i].classificationValue = e.target.value;
@@ -386,15 +382,10 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         };
 
         const addNewClassification = (tabName: string) => {
-          let _classifications = values.originalClassifications;
-          // let sum = 0;
-          // for (let i = 0; i < values.originalClassifications[`${tabName}`].length; i++) {
-          //   sum += values.originalClassifications[`${tabName}`][i].allocation;
-          // }
+          const _classifications = values.originalClassifications;
 
           _classifications[`${tabName}`].push({
             accountId: holdingsDetails?.accountId,
-            // allocation: sum > 100 ? 0 : 100 - sum,
             allocation: 0,
             classificationType: `${tabName}`,
             classificationValue: '',
@@ -405,7 +396,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         };
 
         const deleteClassification = (tabName: string, item: any) => {
-          let _classifications = values.originalClassifications;
+          const _classifications = values.originalClassifications;
           for (let i = 0; i < _classifications[`${tabName}`].length; i++) {
             if (_classifications[`${tabName}`][i].classificationValue === item.classificationValue) {
               _classifications[`${tabName}`].splice(i, 1);
@@ -415,12 +406,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         };
 
         const handleIsShortChange = (e: React.ChangeEvent<any>) => {
-          const isShort = e.target.value === 'yes' ? true : false;
+          const isShort = e.target.value === 'yes';
           setValues({ ...values, isShort: isShort });
         };
 
         const getUnclassifiedRest = (tabName: string) => {
-          let _classifications = values.originalClassifications;
+          const _classifications = values.originalClassifications;
 
           let sum = 0;
           for (let i = 0; i < _classifications[`${tabName}`].length; i++) {
@@ -1794,7 +1785,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               )}
                           </Tab>
                         ))}
-                        <Tab title=''></Tab>
+                        <Tab title=''/>
                       </Tabs>
                     </Tab>
                     <Tab eventKey='classifications' title='Classifications' className='classifications-sub-tabs'>
@@ -2046,7 +2037,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                             </div>
                           </div>
                         </Tab>
-                        <Tab title=''></Tab>
+                        <Tab title=''/>
                       </Tabs>
                     </Tab>
                   </Tabs>
