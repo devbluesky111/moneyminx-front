@@ -183,7 +183,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                 autoComplete='off'
               />
               {accountNameError &&
-                <div className="err-msg">
+                <div className='err-msg'>
                   Account Name is a required field
               </div>}
             </Form.Group>
@@ -197,7 +197,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                   name='mmAccountType'
                 />
                 {accountTypeError &&
-                  <div className="err-msg">
+                  <div className='err-msg'>
                     Account Type is a required field
                   </div>}
               </Form.Group>
@@ -224,7 +224,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                   required
                 />
                 {balanceError &&
-                  <div className="err-msg">
+                  <div className='err-msg'>
                     Current Value is a required field
                   </div>}
               </Form.Group>
