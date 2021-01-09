@@ -293,8 +293,10 @@ const Networth = () => {
                                             )}
                                           >
                                             <span className={gc(b.interval)}>{b.interval}</span>
-                                            {currencySymbol}
-                                            {numberWithCommas(fNumber(b.balance, 2))}
+                                            {b.balance || b.balance === 0 ? currencySymbol : ''}
+                                            {b.balance || b.balance === 0
+                                              ? numberWithCommas(fNumber(b.balance, 2))
+                                              : '--'}
                                           </td>
                                         ))}
                                       </tr>
@@ -329,8 +331,10 @@ const Networth = () => {
                                   )}
                                 >
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}
-                                  {numberWithCommas(fNumber(nItem.investmentAssets, 2))}
+                                  {nItem.investmentAssets || nItem.investmentAssets === 0 ? currencySymbol : ''}
+                                  {nItem.investmentAssets || nItem.investmentAssets === 0
+                                    ? numberWithCommas(fNumber(nItem.investmentAssets, 2))
+                                    : '--'}
                                 </td>
                               ))}
                             </tr>
@@ -379,8 +383,8 @@ const Networth = () => {
                                         className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
                                       >
                                         <span className={gc(b.interval)}>{b.interval}</span>
-                                        {currencySymbol}
-                                        {numberWithCommas(fNumber(b.balance, 2))}
+                                        {b.balance || b.balance === 0 ? currencySymbol : ''}
+                                        {b.balance || b.balance === 0 ? numberWithCommas(fNumber(b.balance, 2)) : '--'}
                                       </td>
                                     ))}
                                   </tr>
@@ -400,8 +404,10 @@ const Networth = () => {
                                   )}
                                 >
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}
-                                  {numberWithCommas(fNumber(nItem.otherAssets, 2))}
+                                  {nItem.otherAssets || nItem.otherAssets === 0 ? currencySymbol : ''}
+                                  {nItem.otherAssets || nItem.otherAssets === 0
+                                    ? numberWithCommas(fNumber(nItem.otherAssets, 2))
+                                    : '--'}
                                 </td>
                               ))}
                             </tr>
@@ -450,8 +456,8 @@ const Networth = () => {
                                         className={[b.type === `projection` && `projection`, gc(b.interval)].join(' ')}
                                       >
                                         <span className={gc(b.interval)}>{b.interval}</span>
-                                        {currencySymbol}
-                                        {numberWithCommas(fNumber(b.balance, 2))}
+                                        {b.balance || b.balance === 0 ? currencySymbol : ''}
+                                        {b.balance || b.balance === 0 ? numberWithCommas(fNumber(b.balance, 2)) : '--'}
                                       </td>
                                     ))}
                                   </tr>
@@ -471,8 +477,10 @@ const Networth = () => {
                                   )}
                                 >
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}
-                                  {numberWithCommas(fNumber(nItem.liabilities, 2))}
+                                  {nItem.liabilities || nItem.liabilities === 0 ? currencySymbol : ''}
+                                  {nItem.liabilities || nItem.liabilities === 0
+                                    ? numberWithCommas(fNumber(nItem.liabilities, 2))
+                                    : '--'}
                                 </td>
                               ))}
                             </tr>
@@ -521,8 +529,10 @@ const Networth = () => {
                                     )}
                                   >
                                     <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                    {currencySymbol}
-                                    {numberWithCommas(fNumber(nItem.investmentAssets, 2))}
+                                    {nItem.investmentAssets || nItem.investmentAssets === 0 ? currencySymbol : ''}
+                                    {nItem.investmentAssets || nItem.investmentAssets === 0
+                                      ? numberWithCommas(fNumber(nItem.investmentAssets, 2))
+                                      : '--'}
                                   </td>
                                 ))}
                               </tr>
@@ -538,8 +548,10 @@ const Networth = () => {
                                     )}
                                   >
                                     <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                    {currencySymbol}
-                                    {numberWithCommas(fNumber(nItem.otherAssets, 2))}
+                                    {nItem.otherAssets || nItem.otherAssets === 0 ? currencySymbol : ''}
+                                    {nItem.otherAssets || nItem.otherAssets === 0
+                                      ? numberWithCommas(fNumber(nItem.otherAssets, 2))
+                                      : '--'}
                                   </td>
                                 ))}
                               </tr>
@@ -555,8 +567,10 @@ const Networth = () => {
                                     )}
                                   >
                                     <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                    {currencySymbol}
-                                    {numberWithCommas(fNumber(nItem.liabilities, 2))}
+                                    {nItem.liabilities || nItem.liabilities === 0 ? currencySymbol : ''}
+                                    {nItem.liabilities || nItem.liabilities === 0
+                                      ? numberWithCommas(fNumber(nItem.liabilities, 2))
+                                      : '--'}
                                   </td>
                                 ))}
                               </tr>
@@ -574,8 +588,10 @@ const Networth = () => {
                                   )}
                                 >
                                   <span className={gc(nItem.interval)}>{nItem.interval}</span>
-                                  {currencySymbol}
-                                  {numberWithCommas(fNumber(nItem.networth || 0, 2))}
+                                  {nItem.networth || nItem.networth === 0 ? currencySymbol : ''}
+                                  {nItem.networth || nItem.networth === 0
+                                    ? numberWithCommas(fNumber(nItem.networth, 2))
+                                    : '--'}
                                 </td>
                               ))}
                             </tr>
@@ -591,9 +607,6 @@ const Networth = () => {
             )}
           </div>
         </div>
-
-        {/*Todo show an alert when connections are broken with count of broken connections*/}
-        {/*<ConnectionAlert connectionAlert={connectionAlert} message='2 connections need attention' />*/}
 
         <SignUpDoneModal signupModal={signupDoneModal} handleSuccess={gotoConnectAccount} />
         <AccountAddedModal accountAddedModal={accountAddedModal} handleSuccess={gotoConnectAccount} />
