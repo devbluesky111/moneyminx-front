@@ -5,6 +5,7 @@ import { AccountCategory } from 'networth/networth.enum';
 import { AccountBarGraphProps } from 'account/account.type';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { formatter, getInterval } from 'common/bar-graph-helper';
+import BarGraphCustomTick from 'common/components/chart/bargraph-custom-tick';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceArea } from 'recharts';
 
 const CustomTooltip = (props: any) => {
@@ -114,7 +115,7 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
             dataKey='interval'
             tickSize={0}
             tickMargin={10}
-            tick={{ fontSize: 14 }}
+            tick={<BarGraphCustomTick />}
             stroke='#969eac'
             axisLine={{ stroke: 'transparent' }}
           />
