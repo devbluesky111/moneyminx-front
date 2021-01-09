@@ -569,7 +569,8 @@ select {
 
 .dropdown-select-input {
   .checkbox-list {
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     max-height: 500px;
     margin-bottom: 0;
     li {
