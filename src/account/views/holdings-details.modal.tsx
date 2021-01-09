@@ -21,7 +21,7 @@ import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum
 import { ClassificationsSelectInput } from './classifications.select.input';
 import { HoldingTypeSelectInput } from './holding-type-select.input';
 
-export const forAmtHoldingType = (str: string) => {
+export const formatHoldingTypeAmount = (str: string) => {
   if (enumerateStr(HoldingsTypeUpperOptions).includes(str)) {
     return str;
   }
@@ -475,7 +475,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 {values.holdingType && (
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Holding Type</div>
-                                    <div className='col-sm'>{forAmtHoldingType(values.holdingType)}</div>
+                                    <div className='col-sm'>{formatHoldingTypeAmount(values.holdingType)}</div>
                                   </div>
                                 )}
                                 {values.securityType && (
