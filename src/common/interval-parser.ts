@@ -30,12 +30,6 @@ export const parseAccountDetails = (accDetails: Record<AccountCategory, AccountI
 };
 
 export const isCurrent = (interval: string) =>
-  getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+  interval === 'Today' || getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
 
-export const gc = (interval: string) => {
-  if (interval === 'Today') {
-    return 'current-m';
-  }
-  // return 'tab-hide';
-  return '';
-};
+export const gc = (interval: string) => (interval === 'Today' ? 'current-m' : '');
