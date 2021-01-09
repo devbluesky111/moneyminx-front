@@ -16,10 +16,10 @@ import { DisabledInputProps, HoldingsDetailsModalProps } from 'account/account.t
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
 import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
+import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum/holdings-type-upper-options';
 
 import { ClassificationsSelectInput } from './classifications.select.input';
 import { HoldingTypeSelectInput } from './holding-type-select.input';
-import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum/holdings-type-upper-options';
 
 export const foramtHoldingType = (str: string) => {
   if (enumerateStr(HoldingsTypeUpperOptions).includes(str)) {

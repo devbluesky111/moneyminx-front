@@ -22,6 +22,7 @@ import { useAlert } from 'common/components/alert';
 import { useModal } from 'common/components/modal';
 import { isCurrent, gc } from 'common/interval-parser';
 import { AccountCategory } from 'networth/networth.enum';
+import { groupByProviderName } from 'auth/auth.helper';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
@@ -33,7 +34,6 @@ import { Placeholder } from './inc/placeholder';
 import NetworthFilter from './inc/networth-filter';
 import NetworthBarGraph from './networth-bar-graph';
 import NetworthSkeleton from './inc/networth-skeleton';
-import { groupByProviderName } from 'auth/auth.helper';
 
 interface IState {
   state: { isFromFastlink: boolean };
