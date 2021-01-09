@@ -33,3 +33,13 @@ export const isCurrent = (interval: string) =>
   interval === 'Today' || getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
 
 export const gc = (interval: string) => (interval === 'Today' ? 'current-m' : '');
+
+export const parseIntervalText = (txt: string) => {
+  if (txt === 'Today') {
+    return txt;
+  }
+
+  const [month, year] = txt.split(' ');
+
+  return `${month} ${year?.slice(2)}`;
+};

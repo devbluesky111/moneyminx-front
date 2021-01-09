@@ -146,7 +146,8 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth, fCategori
           <XAxis
             dataKey='interval'
             tickSize={0}
-            tickMargin={10}
+            tickMargin={0}
+            minTickGap={0}
             tick={<BarGraphCustomTick />}
             stroke='#969eac'
             axisLine={{ stroke: 'transparent' }}
