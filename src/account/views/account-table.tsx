@@ -82,8 +82,8 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
                         {item.intervalValues.map((ins: any, i: number) => (
                           <td key={i} className={[ins.type === `projection` && `projection`, gc(ins.interval)].join(' ')}>
                             <span className={gc(ins.interval)}>{ins.interval}</span>
-                            {ins.value !== null ? currencySymbol : ''}
-                            {ins.value !== null ? numberWithCommas(fNumber(ins.value, 2)) : '--'}
+                            {ins.value || ins.value === 0 ? currencySymbol : ''}
+                            {ins.value || ins.value === 0 ? numberWithCommas(fNumber(ins.value, 2)) : '--'}
                           </td>
                         ))}
                       </tr>
