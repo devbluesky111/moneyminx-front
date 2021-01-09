@@ -4,7 +4,7 @@ import validation from 'lang/en/validation.json';
 const { REQUIRED_FIELD, INVALID_EMAIL, INVALID_PASSWORD, PASSWORD_ERROR, PASSWORD_MATCH } = validation;
 
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d+)(?=.*[~`@$!^%*#?&()_|:;"'<,>./{[}\]=+-])[A-Za-z\d~`@$!^%*#?&()_|:;"'<,>./{[}\]=+-]{8,}$/;
-const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex = /^[a-zA-Z0-9.+-_]+@[a-zA-Z0-9.+-_]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 export const loginValidationSchema = Yup.object({
   email: Yup.string().matches(emailRegex, INVALID_EMAIL),
