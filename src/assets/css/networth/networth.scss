@@ -1311,7 +1311,7 @@ a.upgrader-btn {
     }
 }
 
-.table-holder .table tbody tr:first-child td:nth-last-of-type(3).projection:before {
+.table-holder .table tbody tr:first-child td:nth-last-of-type(4).projection:before {
     content: '';
     width: 8px;
     height: 8px;
@@ -1321,6 +1321,11 @@ a.upgrader-btn {
     top: -4px;
     left: -4px;
     background: $lightBg;
+}
+
+.table-holder .table tbody td:nth-last-of-type(4).projection,
+.table-holder .table tfoot td:nth-last-of-type(4).projection {
+    background: linear-gradient(90deg, $purpleOpacity05 0%, $purpleOpacity04 100%);
 }
 
 .table-holder .table tbody td:nth-last-of-type(3).projection,
@@ -1335,7 +1340,7 @@ a.upgrader-btn {
 
 .table-holder .table tbody td:nth-last-of-type(1).projection,
 .table-holder .table tfoot td:nth-last-of-type(1).projection {
-    background: linear-gradient(90deg, $purpleOpacity02 0%, $purpleOpacity00 100%);
+  background: linear-gradient(90deg, $purpleOpacity02 0%, $purpleOpacity01 100%);
 }
 
 .warning-pop {
