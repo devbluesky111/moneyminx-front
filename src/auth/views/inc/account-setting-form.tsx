@@ -1,33 +1,33 @@
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
+import moment from 'moment';
 import React, { useState, useEffect } from 'react';
+import { Formik } from 'formik';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import moment from 'moment';
-import { Formik } from 'formik';
-import useToast from 'common/hooks/useToast';
-import { MMCategories } from 'auth/auth.enum';
-import { useAuthState } from 'auth/auth.context';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import MMToolTip from 'common/components/tooltip';
-import { makeFormFields } from 'auth/auth.helper';
-import { useModal } from 'common/components/modal';
-import { enumerateStr } from 'common/common-helper';
-import { StringKeyObject } from 'common/common.types';
+import useToast from 'common/hooks/useToast';
 import useAccountType from 'auth/hooks/useAccountType';
 import useLoanAccount from 'auth/hooks/useLoanAccount';
 import useSearchParam from 'auth/hooks/useSearchParam';
 import useAccountFilter from 'auth/hooks/useAccountFilter';
-import { appRouteConstants } from 'app/app-route.constant';
 import useAccountSubtype from 'auth/hooks/useAccountSubtype';
+import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
+import useRealEstateAccounts from 'auth/hooks/useRealEstateAccounts';
+import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
+import { MMCategories } from 'auth/auth.enum';
+import { useAuthState } from 'auth/auth.context';
+import { makeFormFields } from 'auth/auth.helper';
+import { useModal } from 'common/components/modal';
+import { enumerateStr } from 'common/common-helper';
+import { StringKeyObject } from 'common/common.types';
+import { appRouteConstants } from 'app/app-route.constant';
 import { getMomentDate, getUTC } from 'common/moment.helper';
 import { loginValidationSchema } from 'auth/auth.validation';
 import { LiquidityOptions } from 'auth/enum/liquidity-options';
 import { fNumber, numberWithCommas } from 'common/number.helper';
-import useAssociateMortgage from 'auth/hooks/useAssociateMortgage';
 import { SelectInput } from 'common/components/input/select.input';
-import useRealEstateAccounts from 'auth/hooks/useRealEstateAccounts';
-import useCurrentSubscription from 'auth/hooks/useCurrentSubscription';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { CurrencyOptions, CurrencySymbols } from 'auth/enum/currency-options';
 import { initialAccount, initialMortgage } from 'auth/data/account-settings.data';
@@ -88,20 +88,20 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
    * Set First sub type of the account subtypes array
    * Each time account subtypes changes
    */
-  useEffect(() => {
-    if (accountSubTypes?.length) {
-      return setAccountSubtype(accountSubTypes[0]);
-    }
-  }, [accountSubTypes]);
+  // useEffect(() => {
+  //   if (accountSubTypes?.length) {
+  //     return setAccountSubtype(accountSubTypes[0]);
+  //   }
+  // }, [accountSubTypes]);
 
   /**
    * Set account subtype for the first time
    */
-  useEffect(() => {
-    if (currentAccount?.category?.mmAccountSubType) {
-      return setAccountSubtype(currentAccount.category.mmAccountSubType);
-    }
-  }, [currentAccount]);
+  // useEffect(() => {
+  //   if (currentAccount?.category?.mmAccountSubType) {
+  //     return setAccountSubtype(currentAccount.category.mmAccountSubType);
+  //   }
+  // }, [currentAccount]);
 
   const hasError = error || subTypeError || filterError || mortgageError || loanAccountError || realEstateError;
 
@@ -399,16 +399,16 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                   <li className='currency-select'>
                     <span className='form-subheading'>Currency</span>
                     {currentSubscription &&
-                    (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') ? (
-                      <span className='mm-form-field-read'>{values.currency}</span>
-                    ) : (
-                      <SelectInput
-                        args={enumerateStr(CurrencyOptions)}
-                        onChange={handleSelectChange}
-                        value={values.currency}
-                        name='currency'
-                      />
-                    )}
+                      (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') ? (
+                        <span className='mm-form-field-read'>{values.currency}</span>
+                      ) : (
+                        <SelectInput
+                          args={enumerateStr(CurrencyOptions)}
+                          onChange={handleSelectChange}
+                          value={values.currency}
+                          name='currency'
+                        />
+                      )}
                     {currentSubscription && (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') && (
                       <label className='mm-form-field-error text--pink'>
                         Your plan only supports USD. To enable multi currency support upgrade your plan.
