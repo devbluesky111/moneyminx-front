@@ -3,7 +3,7 @@ import validation from 'lang/en/validation.json';
 
 const { REQUIRED_FIELD, INVALID_EMAIL, INVALID_PASSWORD, PASSWORD_ERROR, PASSWORD_MATCH } = validation;
 
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d+)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d+)(?=.*[~`@$!^%*#?&()_|:;"'<,>./{[}\]=+-])[A-Za-z\d~`@$!^%*#?&()_|:;"'<,>./{[}\]=+-]{8,}$/;
 
 export const loginValidationSchema = Yup.object({
   email: Yup.string().email(INVALID_EMAIL),
