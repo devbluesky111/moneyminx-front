@@ -162,7 +162,7 @@ const NetworthFilter = (props: NetworthFilterProps) => {
             <Dropdown.Toggle variant='' className={fc('fAccounts')}>
               All Accounts
             </Dropdown.Toggle>
-            <Dropdown.Menu className='mm-dropdown-menu'>
+            <Dropdown.Menu className='mm-dropdown-menu dd-my-accounts'>
               <div className='dropdown-box'>
                 <ul className='success'>
                   {currentAccount.map((account, index) => {
