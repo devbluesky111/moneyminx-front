@@ -59,6 +59,8 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
     }
   }
 
+  const firstProjection = data.find((datum) => datum.type === 'projection');
+
   const dataWithAbsoluteValues = data.map((accountChartItem) => {
     return {
       ...accountChartItem,
@@ -131,7 +133,7 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
             tickFormatter={(tick) => formatter(tick, currencySymbol)}
             domain={['auto', _interval * 4]}
           />
-          <ReferenceArea x1={curInterval} y1={0} label={renderCustomRALabel} fill='url(#colorPr)' />
+          <ReferenceArea x1={firstProjection?.interval} y1={0} label={renderCustomRALabel} fill='url(#colorPr)' />
           <Tooltip separator='' cursor={false} content={<CustomTooltip currencySymbol={currencySymbol} />} />
           <Bar dataKey='value' barSize={10} fill={getBarColor(mmCategory)} radius={[2, 2, 0, 0]} />
         </ComposedChart>
