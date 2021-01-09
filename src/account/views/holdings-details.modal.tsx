@@ -335,7 +335,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     >
       {(props) => {
         const { values, handleChange, setValues, setFieldValue } = props;
-        console.log(values.originalValues)
 
         const handleSelectChange = (e: React.ChangeEvent<any>) => {
           setValues({ ...values, [e.target.name]: e.target.value });
