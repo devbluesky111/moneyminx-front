@@ -59,7 +59,7 @@ export const SignupMainSection = () => {
 
   const reg1 = /^.{8,}$/;
   const reg2 = /(^.*\d+.*$)/;
-  const reg3 = /(^.*[@$!%*#?&].*$)/;
+  const reg3 = /(^.*[~`@$!^%*#?&()_|:;"'<,>./{[}\]=+-].*$)/;
   const reg4 = /(^.*[A-Z].*$)/;
 
   const visibilityIcon = visible ? <VisibleIcon /> : <HiddenIcon />;
@@ -319,8 +319,8 @@ export const SignupMainSection = () => {
                                 <Link to={appRouteConstants.auth.FORGOT_PASSWORD}> recover your password?</Link>
                               </span>
                             ) : (
-                              props.errors.password
-                            )}
+                                props.errors.password
+                              )}
                           </div>
                         )}
 
