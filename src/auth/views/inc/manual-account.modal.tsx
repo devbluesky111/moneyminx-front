@@ -21,12 +21,21 @@ interface SettingModalProps {
   handleSuccess: () => void;
 }
 
-const initialValues = {
+export interface ValuesType {
+  mmCategory: string;
+  mmAccountType: string
+  mmAccountSubType: string,
+  accountName: string,
+  balance: any,
+  currency: string,
+}
+
+const initialValues: ValuesType = {
   mmCategory: 'Other Assets',
   mmAccountType: '',
   mmAccountSubType: '',
   accountName: '',
-  balance: 0,
+  balance: null,
   currency: 'USD',
 };
 
