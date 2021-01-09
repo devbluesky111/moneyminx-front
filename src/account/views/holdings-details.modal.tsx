@@ -112,8 +112,11 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   useEffect(() => {
     const _years = [];
     for (let i = 0; i < holdingsDetails?.intervalValues.length; i++) {
-      _years.push(holdingsDetails?.intervalValues[i].interval.split(' ')[1]);
+      if (holdingsDetails?.intervalValues[i].interval.split(' ')[1]) {
+        _years.push(holdingsDetails?.intervalValues[i].interval.split(' ')[1]);
+      }
     }
+
     if (holdingsDetails) {
       Object.keys(holdingsDetails?.classifications).forEach((key: any) => {
         const value = (holdingsDetails?.classifications as any)[key];
@@ -332,6 +335,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     >
       {(props) => {
         const { values, handleChange, setValues, setFieldValue } = props;
+        console.log(values.originalValues)
 
         const handleSelectChange = (e: React.ChangeEvent<any>) => {
           setValues({ ...values, [e.target.name]: e.target.value });
