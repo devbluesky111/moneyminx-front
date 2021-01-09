@@ -7,7 +7,7 @@ import { parseString } from './moment.helper';
 export const parseInterval = (obj: Record<string, any>, isQuarter: boolean = false): Record<string, any> => {
   return {
     ...obj,
-    interval: parseString(obj.interval, isQuarter),
+    interval: obj.interval === 'Today' ? obj.interval : parseString(obj.interval, isQuarter),
   };
 };
 
@@ -34,7 +34,7 @@ export const isCurrent = (interval: string) =>
 
 export const gc = (interval: string) => {
   if (interval === 'Today') {
-      return 'current-m';
+    return 'current-m';
   }
   // return 'tab-hide';
   return '';
