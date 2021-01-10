@@ -1,10 +1,10 @@
 import Form from 'react-bootstrap/Form';
 import ReactDatePicker from 'react-datepicker';
-import moment from 'moment';
 import React, { useState, useEffect } from 'react';
-import { Formik } from 'formik';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import moment from 'moment';
+import { Formik } from 'formik';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import MMToolTip from 'common/components/tooltip';
 import useToast from 'common/hooks/useToast';
@@ -918,8 +918,8 @@ const AccountSettingForm: React.FC<Props> = ({ currentAccount, handleReload, clo
                   <Form.Control
                     onChange={handleChange}
                     type='number'
-                    name='estimatedAnnualPrincipalReduction'
-                    value={values.estimatedAnnualPrincipalReduction}
+                    name='estimatedAnnualReturns'
+                    value={values.estimatedAnnualReturns}
                     step='any'
                   />
                   <span className='input-add-on'>%</span>
