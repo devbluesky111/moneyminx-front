@@ -28,8 +28,9 @@ export const hasInterval = (input: any) => {
 
 export const parseDateFromString = (dateString: string) => {
   if (dateString === 'Today') {
-    return new Date();
+    return moment().toDate();
   }
+
   if (dateString.toString().includes('Q')) {
     const qDate = moment(dateString, 'Q YYYY').toDate();
 

@@ -33,8 +33,8 @@ import { ReactComponent as NeedsInfo } from 'assets/images/account/Needs Info.sv
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
+import { getDate, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
 import { getAccountDetails, getAccountHoldings, getAccountActivity, getFastlinkUpdate } from 'api/request.api';
-import { getDate, getMonthYear, getQuarter, getRelativeDate, getYear, parseDateFromString } from 'common/moment.helper';
 
 import AccountTable from './account-table';
 import ActivityTable from './activity-table';
@@ -195,8 +195,7 @@ const AccountDetail: React.FC = () => {
     }
   };
 
-  const isCurrent = (interval: string) =>
-    getMonthYear() === interval || getYear() === interval || getQuarter() === interval;
+  const isCurrent = (interval: string) => interval === 'Today';
 
   let curAccountHoldingsItem;
   if (AccountHoldings?.charts) {
