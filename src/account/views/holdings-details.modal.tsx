@@ -152,7 +152,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   let yearsArr: any[] = [];
   const cYear = new Date().getFullYear();
   if (holdingsDetails) {
-    yearsArr = [...years, ...[(cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()].filter(a => !years.includes(a))];
+    yearsArr = years;
   } else {
     yearsArr = [(cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()];
   }
