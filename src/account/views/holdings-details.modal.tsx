@@ -70,16 +70,16 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     holdingsDetailsModal.close();
   };
 
-  const fetchClassification = async () => {
+  const fetchClassification = () => {
     const filters = ['Type', 'Asset Class', 'Country', 'Risk'];
-    for (let i = 0; i < filters.length; i++) {
-      const { data, error } = await getClassification(filters[i]);
+    filters.map(async (filter) => {
+      const { data, error } = await getClassification(filter);
       const index = data.indexOf('Unclassified');
       if (index !== -1) {
         data.splice(index, 1);
       }
       if (!error) {
-        switch (filters[i]) {
+        switch (filter) {
           case 'Type':
             setClassificationForTypes(data);
             break;
@@ -94,7 +94,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
             break;
         }
       }
-    }
+    })
   };
 
   const fetchHoldingTypes = async () => {
