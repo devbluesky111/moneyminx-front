@@ -1409,13 +1409,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Jan ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Jan ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1450,13 +1452,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Feb ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Feb ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1491,13 +1495,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Mar ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Mar ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1532,13 +1538,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Apr ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Apr ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1573,13 +1581,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`May ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`May ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1614,13 +1624,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Jun ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Jun ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1661,13 +1673,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Jul ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Jul ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1702,13 +1716,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Aug ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Aug ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1743,13 +1759,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Sep ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Sep ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1784,13 +1802,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Oct ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Oct ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1825,13 +1845,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Nov ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Nov ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
@@ -1850,15 +1872,17 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
                                                     i.value
                                                   ) : (
-                                                      <Form.Control
-                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                        type='number'
-                                                        step={0.01}
-                                                        id={`Dec ${item}`}
-                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                      />
+                                                      <>
+                                                        <Form.Control
+                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                          type='number'
+                                                          step={0.01}
+                                                          id={`Dec ${item}`}
+                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                        />
+                                                        <span className='input-add-on'>{currencySymbol}</span>
+                                                      </>
                                                     )}
-                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
@@ -1866,13 +1890,15 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               {new Date(`Dec ${item}`) > new Date() ? (
                                                 <>--</>
                                               ) : (
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
-                                                    type='number'
-                                                    defaultValue={0}
-                                                  />
+                                                  <>
+                                                    <Form.Control
+                                                      onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
+                                                      type='number'
+                                                      defaultValue={0}
+                                                    />
+                                                    <span className='input-add-on'>{currencySymbol}</span>
+                                                  </>
                                                 )}
-                                              <span className={['input-add-on', (new Date(`Dec ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
                                               <span>--</span>
