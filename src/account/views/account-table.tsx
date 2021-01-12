@@ -36,6 +36,12 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({ holdingsData,
     }
   }, [holdingsData]);
 
+  useEffect(() => {
+    if (holdings.length > 0) {
+      fetchHolingsDetails(holdings[0].id.toString())
+    }
+  }, [holdings])
+
   const fetchHolingsDetails = async (positionId: string) => {
     const { data, error } = await getHoldingsDetails(positionId);
     if (!error) {
