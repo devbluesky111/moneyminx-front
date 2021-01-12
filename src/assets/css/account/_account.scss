@@ -397,6 +397,9 @@
         &:active {
             border: 1px solid $gray;
         }
+        &:disabled {
+            -webkit-text-fill-color: #969eac;
+        }
     }
     .drop-box .dropdown-toggle {
         width: 100%;
