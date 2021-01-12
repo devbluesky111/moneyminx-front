@@ -42,7 +42,7 @@ export const formatHoldingTypeAmount = (str: string) => {
 const DisabledInput: React.FC<DisabledInputProps> = ({ currencySymbol }) => {
   return (
     <div className='form-field-group'>
-      <Form.Control type='number' disabled />
+      <Form.Control type='number' value='' disabled />
       <span className='input-add-on'>{currencySymbol}</span>
     </div>
   );
@@ -523,7 +523,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         onChange={handleChange}
                                         type='number'
                                         name='costBasis'
-                                        value={values.costBasis}
+                                        value={values.costBasis || ''}
                                       />
                                       <span className='input-add-on'>{currencySymbol}</span>
                                     </div>
@@ -727,7 +727,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         <Form.Control
                                           onChange={handleChange}
                                           name='description'
-                                          value={values.description}
+                                          value={values.description || ''}
                                         />
                                       </div>
                                     </div>
@@ -753,7 +753,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='price'
-                                          value={values.price}
+                                          value={values.price || ''}
                                         />
                                         <span className='input-add-on'>{currencySymbol}</span>
                                       </div>
@@ -767,7 +767,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='quantity'
-                                          value={values.quantity}
+                                          value={values.quantity || ''}
                                         />
                                       </div>
                                     </div>
@@ -780,7 +780,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='costBasis'
-                                          value={values.costBasis}
+                                          value={values.costBasis || ''}
                                         />
                                         <span className='input-add-on'>{currencySymbol}</span>
                                       </div>
@@ -793,7 +793,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         <Form.Control
                                           onChange={handleChange}
                                           name='cusipNumber'
-                                          value={values.cusipNumber}
+                                          value={values.cusipNumber || ''}
                                         />
                                       </div>
                                     </div>
@@ -802,7 +802,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>ISIN</div>
                                     <div className='col-sm'>
                                       <div className='form-field-group'>
-                                        <Form.Control onChange={handleChange} name='isin' value={values.isin} />
+                                        <Form.Control onChange={handleChange} name='isin' value={values.isin || ''} />
                                       </div>
                                     </div>
                                   </div>
@@ -810,7 +810,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>SEDOL</div>
                                     <div className='col-sm'>
                                       <div className='form-field-group'>
-                                        <Form.Control onChange={handleChange} name='sedol' value={values.sedol} />
+                                        <Form.Control onChange={handleChange} name='sedol' value={values.sedol || ''} />
                                       </div>
                                     </div>
                                   </div>
@@ -865,7 +865,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='vestedQuantity'
-                                          value={values.vestedQuantity}
+                                          value={values.vestedQuantity || ''}
                                         />
                                       </div>
                                     </div>
@@ -878,7 +878,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='vestedSharesExercisable'
-                                          value={values.vestedSharesExercisable}
+                                          value={values.vestedSharesExercisable || ''}
                                         />
                                       </div>
                                     </div>
@@ -891,7 +891,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='vestedValue'
-                                          value={values.vestedValue}
+                                          value={values.vestedValue || ''}
                                         />
                                       </div>
                                     </div>
@@ -918,7 +918,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='unvestedQuantity'
-                                          value={values.unvestedQuantity}
+                                          value={values.unvestedQuantity || ''}
                                         />
                                       </div>
                                     </div>
@@ -931,7 +931,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='unvestedValue'
-                                          value={values.unvestedValue}
+                                          value={values.unvestedValue || ''}
                                         />
                                       </div>
                                     </div>
@@ -944,7 +944,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='exercisedQuantity'
-                                          value={values.exercisedQuantity}
+                                          value={values.exercisedQuantity || ''}
                                         />
                                       </div>
                                     </div>
@@ -981,7 +981,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='strikePrice'
-                                          value={values.strikePrice}
+                                          value={values.strikePrice || ''}
                                         />
                                         <span className='input-add-on'>{currencySymbol}</span>
                                       </div>
@@ -1000,7 +1000,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='couponRate'
-                                          value={values.couponRate}
+                                          value={values.couponRate || ''}
                                         />
                                       </div>
                                     </div>
@@ -1013,7 +1013,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='interestRate'
-                                          value={values.interestRate}
+                                          value={values.interestRate || ''}
                                         />
                                         <span className='input-add-on'>%</span>
                                       </div>
@@ -1035,7 +1035,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm'>Term</div>
                                     <div className='col-sm'>
                                       <div className='form-field-group'>
-                                        <Form.Control onChange={handleChange} name='term' value={values.term} />
+                                        <Form.Control onChange={handleChange} name='term' value={values.term || ''} />
                                       </div>
                                     </div>
                                   </div>
@@ -1050,7 +1050,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleChange}
                                           type='number'
                                           name='contractQuantity'
-                                          value={values.contractQuantity}
+                                          value={values.contractQuantity || ''}
                                         />
                                       </div>
                                     </div>
@@ -1069,7 +1069,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 <div className='col-sm-3'>Name</div>
                                 <div className='col-sm-6'>
                                   <div className='form-field-group'>
-                                    <Form.Control onChange={handleChange} name='description' value={values.description} />
+                                    <Form.Control onChange={handleChange} name='description' value={values.description || ''} />
                                   </div>
                                 </div>
                               </div>
@@ -1094,7 +1094,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                       onChange={handleChange}
                                       type='number'
                                       name='quantity'
-                                      value={values.quantity}
+                                      value={values.quantity || ''}
                                     />
                                   </div>
                                 </div>
@@ -1107,7 +1107,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                       onChange={handleChange}
                                       type='number'
                                       name='price'
-                                      value={values.price}
+                                      value={values.price || ''}
                                     />
                                     <span className='input-add-on'>{currencySymbol}</span>
                                   </div>
@@ -1121,7 +1121,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                       onChange={handleChange}
                                       type='number'
                                       name='costBasis'
-                                      value={values.costBasis}
+                                      value={values.costBasis || ''}
                                     />
                                     <span className='input-add-on'>{currencySymbol}</span>
                                   </div>
@@ -1874,7 +1874,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         onChange={(e) => handleClassificationsAllocationChange('Type', e)}
                                         type='number'
                                         value={item.allocation}
-                                        id={item.classificationValue}
+                                        id={item.classificationValue || ''}
                                       />
                                       <span className='input-add-on'>%</span>
                                     </div>
@@ -1935,7 +1935,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         onChange={(e) => handleClassificationsAllocationChange('Asset Class', e)}
                                         type='number'
                                         value={item.allocation}
-                                        id={item.classificationValue}
+                                        id={item.classificationValue || ''}
                                       />
                                       <span className='input-add-on'>%</span>
                                     </div>
@@ -1996,7 +1996,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         onChange={(e) => handleClassificationsAllocationChange('Country', e)}
                                         type='number'
                                         value={item.allocation}
-                                        id={item.classificationValue}
+                                        id={item.classificationValue || ''}
                                       />
                                       <span className='input-add-on'>%</span>
                                     </div>
@@ -2057,7 +2057,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         onChange={(e) => handleClassificationsAllocationChange('Risk', e)}
                                         type='number'
                                         value={item.allocation}
-                                        id={item.classificationValue}
+                                        id={item.classificationValue || ''}
                                       />
                                       <span className='input-add-on'>%</span>
                                     </div>
