@@ -19,11 +19,11 @@
             padding-right: 60px;
         }
     }
-  .account-setting-form {
-    @media (min-width: $desk) {
-      max-width: 600px;
+    .account-setting-form {
+        @media (min-width: $desk) {
+            max-width: 600px;
+        }
     }
-  }
 }
 
 .credentials-wrapper li {
@@ -92,8 +92,7 @@ ul.bank-list {
 .form-heading .nav {
     overflow-x: auto;
     flex-wrap: nowrap;
-
-  li {
+    li {
         white-space: nowrap;
     }
 }
@@ -411,7 +410,6 @@ ul.bank-list {
     width: 100%;
     height: 48px;
     margin-top: 20px;
-
     &::placeholder {
         color: $placeholder;
     }
@@ -969,6 +967,9 @@ span.next-icon {
     font-size: 0.875rem;
     line-height: 1.125rem;
     color: $gray;
+    &.diff-padding {
+        padding: 3px 5px 0 0;
+    }
 }
 
 .connections-account-name {

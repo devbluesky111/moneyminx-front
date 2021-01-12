@@ -471,6 +471,9 @@
     .row {
         font-size: 1rem;
     }
+    .row.pt-2.pb-2 {
+        height: 64px;
+    }
     .key {
         font-weight: 600;
         color: $darkGray;

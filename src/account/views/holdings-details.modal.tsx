@@ -14,7 +14,7 @@ import { enumerateStr, formater, getUnique } from 'common/common-helper';
 import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
 import { getDateFormattedString, parseDateFromString } from 'common/moment.helper';
-import { DisabledInputProps, HoldingsDetailsModalProps } from 'account/account.type';
+import { HoldingsDetailsModalProps } from 'account/account.type';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
 
 import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum/holdings-type-upper-options';
@@ -37,15 +37,6 @@ export const formatHoldingTypeAmount = (str: string) => {
   const newStr = str?.[0].toUpperCase() + str.slice(1);
   const strArr = newStr.split(/(?=[A-Z])/);
   return strArr?.join(' ');
-};
-
-const DisabledInput: React.FC<DisabledInputProps> = ({ currencySymbol }) => {
-  return (
-    <div className='form-field-group'>
-      <Form.Control type='number' value='' disabled />
-      <span className='input-add-on'>{currencySymbol}</span>
-    </div>
-  );
 };
 
 const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
@@ -1172,7 +1163,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1190,7 +1181,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1208,7 +1199,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1226,7 +1217,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1244,7 +1235,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1262,7 +1253,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1286,7 +1277,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1304,7 +1295,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1322,7 +1313,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1340,7 +1331,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1358,7 +1349,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1376,7 +1367,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               </div>
                                             ))
                                         ) : (
-                                          <span>-</span>
+                                          <span>--</span>
                                         )}
                                     </div>
                                   </div>
@@ -1399,29 +1390,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Jan ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Jan ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Jan ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Jan ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Jan ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Jan ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1434,29 +1431,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Feb ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Feb ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Feb ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Feb ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Feb ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Feb ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1469,29 +1472,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Mar ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Mar ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Mar ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Mar ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Mar ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Mar ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1504,29 +1513,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Apr ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Apr ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Apr ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Apr ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Apr ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Apr ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1539,29 +1554,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `May ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`May ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`May ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`May ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`May ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`May ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1574,29 +1595,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Jun ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Jun ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Jun ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Jun ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Jun ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Jun ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1615,29 +1642,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Jul ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Jul ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Jul ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Jul ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Jul ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Jul ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1650,29 +1683,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Aug ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Aug ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Aug ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Aug ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Aug ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Aug ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1685,29 +1724,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Sep ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Sep ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Sep ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Sep ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Sep ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Sep ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1720,29 +1765,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Oct ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Oct ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Oct ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Oct ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Oct ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Oct ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1755,29 +1806,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Nov ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Nov ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Nov ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Nov ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Nov ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Nov ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
@@ -1790,29 +1847,35 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .filter((i: any) => i.interval === `Dec ${item}`)
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
-                                                  <Form.Control
-                                                    onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                    type='number'
-                                                    step={0.01}
-                                                    id={`Dec ${item}`}
-                                                    value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                    disabled={i.type === 'projection' && !isCurrent(i.interval)}
-                                                  />
-                                                  <span className='input-add-on'>{currencySymbol}</span>
+                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                    i.value
+                                                  ) : (
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                        type='number'
+                                                        step={0.01}
+                                                        id={`Dec ${item}`}
+                                                        value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                      />
+                                                    )}
+                                                  <span className={['input-add-on', (i.type === 'projection' && !isCurrent(i.interval)) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                                 </div>
                                               ))
                                           ) : !holdingsDetails ? (
                                             <div className='form-field-group'>
-                                              <Form.Control
-                                                onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
-                                                type='number'
-                                                defaultValue={0}
-                                                disabled={new Date(`Dec ${item}`) > new Date()}
-                                              />
-                                              <span className='input-add-on'>{currencySymbol}</span>
+                                              {new Date(`Dec ${item}`) > new Date() ? (
+                                                <>--</>
+                                              ) : (
+                                                  <Form.Control
+                                                    onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
+                                                    type='number'
+                                                    defaultValue={0}
+                                                  />
+                                                )}
+                                              <span className={['input-add-on', (new Date(`Dec ${item}`) > new Date()) ? 'diff-padding' : ''].join(' ')}>{currencySymbol}</span>
                                             </div>
                                           ) : (
-                                              <DisabledInput currencySymbol={currencySymbol} />
+                                              <span>--</span>
                                             )}
                                       </div>
                                     </div>
