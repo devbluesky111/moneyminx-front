@@ -4,23 +4,22 @@ import { Tabs, Tab, Form } from 'react-bootstrap';
 
 import moment from 'moment';
 import { Formik } from 'formik';
-import { isCurrent } from 'common/interval-parser';
 import useToast from 'common/hooks/useToast';
 import { Modal } from 'common/components/modal';
+import { isCurrent } from 'common/interval-parser';
 import { CurrencyOptions } from 'auth/enum/currency-options';
+import { HoldingsDetailsModalProps } from 'account/account.type';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { SelectInput } from 'common/components/input/select.input';
 import { enumerateStr, formater, getUnique } from 'common/common-helper';
 import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
 import { getDateFormattedString, parseDateFromString } from 'common/moment.helper';
-import { HoldingsDetailsModalProps } from 'account/account.type';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
-
 import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum/holdings-type-upper-options';
 
-import { ClassificationsSelectInput } from './classifications.select.input';
 import { HoldingTypeSelectInput } from './holding-type-select.input';
+import { ClassificationsSelectInput } from './classifications.select.input';
 
 export const gc = (interval: string) => (isCurrent(interval) ? 'current-m' : '');
 
@@ -1391,7 +1390,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1436,7 +1435,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1481,7 +1480,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1526,7 +1525,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1571,7 +1570,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1616,7 +1615,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1667,7 +1666,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1712,7 +1711,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1757,7 +1756,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1802,7 +1801,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1847,7 +1846,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
@@ -1892,7 +1891,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {i.value}</>
+                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
                                                   ) : (
                                                       <>
                                                         <Form.Control
