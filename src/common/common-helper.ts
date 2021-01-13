@@ -3,6 +3,7 @@ import { groupBy } from 'lodash';
 import { ApiResponse } from 'api/api.types';
 
 import { StringKeyObject } from './common.types';
+import { fNumber } from './number.helper';
 
 const toString = Object.prototype.toString;
 
@@ -189,4 +190,12 @@ export const getUnique = (array: string[]) => {
 
 export const wait = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
+export const parseAmount = <T extends string | number>(amount: T, symbol = '$') => {
+  if (amount || amount === 0) {
+    return symbol + fNumber(amount, 2);
+  }
+
+  return '--';
 };

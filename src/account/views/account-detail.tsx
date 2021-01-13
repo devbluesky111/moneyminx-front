@@ -34,22 +34,16 @@ import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { getDate, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
-import {
-  getAccountDetails,
-  getAccountHoldings,
-  getAccountActivity,
-  getFastlinkUpdate,
-  getNetworth,
-} from 'api/request.api';
+import { getAccountDetails, getAccountHoldings, getAccountActivity, getFastlinkUpdate } from 'api/request.api';
 
 import AccountTable from './account-table';
+import BalanceTable from './balance-table';
 import ActivityTable from './activity-table';
 import AccountBarGraph from './account-bar-graph';
 import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
-import { NetworthItem } from 'networth/networth.type';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -92,8 +86,6 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
-
-  const [balance, setBalance] = useState<NetworthItem[]>();
 
   useEffect(() => {
     const fetchAccountDetails = async (accId: string, bCurrency: boolean) => {
@@ -140,21 +132,6 @@ const AccountDetail: React.FC = () => {
       setCurrencySymbol(getCurrencySymbol(AccountDetails.currency));
     }
   }, [AccountDetails]);
-
-  /**
-   * Get networth item for the balance tab
-   */
-  useEffect(() => {
-    (async () => {
-      if (tableType === 'balance') {
-        const { error, data } = await getNetworth({ accountId });
-        setFilterLoading(false);
-        if (!error) {
-          setBalance(data);
-        }
-      }
-    })();
-  }, [tableType, accountId]);
 
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
@@ -628,6 +605,8 @@ const AccountDetail: React.FC = () => {
                       currencySymbol={currencySymbol}
                     />
                   )}
+
+                  {tableType === 'balance' ? <BalanceTable /> : null}
 
                   {tableType === 'activity' && (
                     <div className='mm-account-activity-block'>
