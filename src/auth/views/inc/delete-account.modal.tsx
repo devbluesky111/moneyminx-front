@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Modal, ModalType } from 'common/components/modal';
 
 interface Props {

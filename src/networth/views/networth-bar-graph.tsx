@@ -82,7 +82,7 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth, fCategori
 
   let max = 0;
   for (let i = 0; i < networth.length; i++) {
-    let values = Object.values(networth[i]);
+    const values = Object.values(networth[i]);
     for (let j = 1; j < values.length - 1; j++) {
       if (values[j] > max) {
         max = values[j];
@@ -90,7 +90,7 @@ const NetworthBarGraph: React.FC<NetworthBarGraphProps> = ({ networth, fCategori
     }
   }
 
-  let first_projection = undefined;
+  let first_projection;
   for (let i = 0; i < networth.length; i++) {
     if (networth[i].type === 'projection') {
       first_projection = networth[i].interval;

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ReactComponent as CircleIcon } from 'assets/images/signup/circle-icon.svg';
 interface StepProps {
   isConnectAccount?: boolean;

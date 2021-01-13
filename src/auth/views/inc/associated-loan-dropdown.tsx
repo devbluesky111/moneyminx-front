@@ -39,7 +39,7 @@ const AssociatedLoanDropdown = (props: LoanAccountDropdownProps) => {
                   setShow(false);
                 }}
               />
-              <span></span>
+              <span/>
             </label>
           </li>
           {loanAccounts?.map((loanAccount, index) => {

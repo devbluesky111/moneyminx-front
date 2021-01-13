@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ReactComponent as Spinner } from 'assets/icons/spinner.svg';
 
 function CircularSpinner() {

@@ -26,7 +26,7 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
 
   useEffect(() => {
     setTransactions(transactionsData);
-    for (let item of transactionsData) {
+    for (const item of transactionsData) {
       if (item.price !== null) {
         setPriceHeader(true);
       }

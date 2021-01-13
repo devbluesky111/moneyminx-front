@@ -1,6 +1,7 @@
 // tslint:disable: no-console
 
 import env from 'app/app.env';
+
 import { TEnv } from './hooks/useToast';
 
 export const logger = {

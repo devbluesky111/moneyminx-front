@@ -258,7 +258,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     success: [],
   };
 
-  for (let p_name in accountsByProvider) {
+  for (const p_name in accountsByProvider) {
     const status = accountsByProvider[p_name][0].providerAccount?.status;
     const nextUpdateScheduled = accountsByProvider[p_name][0].providerAccount?.dataset?.[0]?.nextUpdateScheduled;
     if (
