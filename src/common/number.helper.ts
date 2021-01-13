@@ -8,9 +8,9 @@ export const fNumber = (num: number | string, digits: any | 2) => {
   }
   if (num) {
     return num.toFixed(digits);
-  } else {
-    return 0;
   }
+
+  return '0';
 };
 
 export const numberWithCommas = (num: number | string) => {

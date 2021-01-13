@@ -3,7 +3,7 @@ import { groupBy } from 'lodash';
 import { ApiResponse } from 'api/api.types';
 
 import { StringKeyObject } from './common.types';
-import { fNumber } from './number.helper';
+import { fNumber, numberWithCommas } from './number.helper';
 
 const toString = Object.prototype.toString;
 
@@ -194,7 +194,7 @@ export const wait = (milliseconds: number) => {
 
 export const parseAmount = <T extends string | number | null>(amount: T, symbol = '$') => {
   if (amount || amount === 0) {
-    return symbol + fNumber(+amount, 2);
+    return symbol + numberWithCommas(fNumber(+amount, 2));
   }
 
   return '--';
