@@ -280,6 +280,7 @@ export const ConnectAccountMainSection = () => {
                         className='connect-account-btn mm-btn-primary mm-btn-animate mm-btn-crypto d-flex align-items-center justify-content-center'
                         type='button'
                         onClick={handleCryptoExchange}
+                        disabled
                       >
                         {zaboLoading && (
                           <span className='spinner-grow spinner-grow-sm mr-2' role='status' aria-hidden='true' />
