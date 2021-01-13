@@ -61,4 +61,7 @@ export const urls = {
     UPLOAD_CHART: '/allocations/upload-chart',
     HOLDING_TYPES: '/allocations/holding-types',
   },
+  account: {
+    BALANCES: '/account-details/balances',
+  },
 };

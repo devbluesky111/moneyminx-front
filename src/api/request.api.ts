@@ -250,3 +250,7 @@ export const getLatestProviderAccounts = (): TApiResponse => {
 export const getRealEstateAccounts = (): TApiResponse => {
   return http.get(urls.auth.REAL_ESTATE_ACCOUNTS);
 };
+
+export const getAccountDetailBalances = <P>(params?: P): TApiResponse => {
+  return http.get(urls.account.BALANCES, params);
+};

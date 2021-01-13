@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/esm/Table';
 
 import { gc } from 'common/interval-parser';
 import { parseAmount } from 'common/common-helper';
-import balances from '__mocks__/balances.mock.json';
+import { getAccountDetailBalances } from 'api/request.api';
+import { IBalanceData, IBalanceTable } from 'account/account.type';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
-const BalanceTable = () => {
+const BalanceTable: React.FC<IBalanceTable> = ({ accountId, currencySymbol }) => {
+  const [balanceData, setBalanceData] = useState<IBalanceData>();
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await getAccountDetailBalances({ accountId });
+      if (!error) {
+        setBalanceData(data);
+      }
+    })();
+  }, [accountId]);
+
+  if (!balanceData) {
+    return <CircularSpinner />;
+  }
+
+  const balances = balanceData.balances;
+
   return (
     <section>
       <div className='row mb-40'>
@@ -25,10 +44,10 @@ const BalanceTable = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Name</td>
+                    <td>{balanceData.accountName}</td>
                     {balances.map((balanceObj, index) => (
                       <td key={index} className={gc(balanceObj.interval)}>
-                        {parseAmount(balanceObj.balance)}
+                        {parseAmount(balanceObj.balance, currencySymbol)}
                       </td>
                     ))}
                   </tr>

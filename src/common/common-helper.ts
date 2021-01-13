@@ -192,9 +192,9 @@ export const wait = (milliseconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
-export const parseAmount = <T extends string | number>(amount: T, symbol = '$') => {
+export const parseAmount = <T extends string | number | null>(amount: T, symbol = '$') => {
   if (amount || amount === 0) {
-    return symbol + fNumber(amount, 2);
+    return symbol + fNumber(+amount, 2);
   }
 
   return '--';
