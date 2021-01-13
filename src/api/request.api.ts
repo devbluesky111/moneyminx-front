@@ -67,7 +67,11 @@ export const getFastlink = () => {
 };
 
 export const getFastlinkUpdate = (accountId: number, update: boolean, refresh: boolean) => {
-  return http.get(urls.yodlee.FAST_LINK_UPDATE.replace(':accountId', accountId.toString()).replace(':update', update.toString()).replace(':refresh', refresh.toString()));
+  return http.get(
+    urls.yodlee.FAST_LINK_UPDATE.replace(':accountId', accountId.toString())
+      .replace(':update', update.toString())
+      .replace(':refresh', refresh.toString())
+  );
 };
 
 export const getAccountRefresh = () => {
@@ -211,7 +215,7 @@ export const deleteAccount = (id: string): TApiResponse => {
   return http.remove(urls.auth.PATCH_ACCOUNT.replace(':id', id));
 };
 
-export const getNetworth = <P>(params?: P) => {
+export const getNetworth = <P>(params?: P): TApiResponse => {
   return http.get(urls.networth.NETWORTH, params);
 };
 

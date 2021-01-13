@@ -34,7 +34,13 @@ import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { getDate, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
-import { getAccountDetails, getAccountHoldings, getAccountActivity, getFastlinkUpdate } from 'api/request.api';
+import {
+  getAccountDetails,
+  getAccountHoldings,
+  getAccountActivity,
+  getFastlinkUpdate,
+  getNetworth,
+} from 'api/request.api';
 
 import AccountTable from './account-table';
 import ActivityTable from './activity-table';
@@ -43,6 +49,7 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
+import { NetworthItem } from 'networth/networth.type';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -86,6 +93,8 @@ const AccountDetail: React.FC = () => {
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
 
+  const [balance, setBalance] = useState<NetworthItem[]>();
+
   useEffect(() => {
     const fetchAccountDetails = async (accId: string, bCurrency: boolean) => {
       const { data, error } = await getAccountDetails(accId, bCurrency);
@@ -98,13 +107,18 @@ const AccountDetail: React.FC = () => {
     };
 
     fetchAccountDetails(accountId, baseCurrency);
+
     if (
       (fromDate === undefined && toDate === undefined) ||
       (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))
     ) {
       setFilterLoading(true);
-      if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval, baseCurrency);
-      if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval, baseCurrency);
+      if (tableType === 'holdings') {
+        fetchAccountHoldings(accountId, fromDate, toDate, timeInterval, baseCurrency);
+      }
+      if (tableType === 'activity') {
+        fetchAccountActivity(accountId, fromDate, toDate, timeInterval, baseCurrency);
+      }
     }
   }, [
     toDate,
@@ -126,6 +140,21 @@ const AccountDetail: React.FC = () => {
       setCurrencySymbol(getCurrencySymbol(AccountDetails.currency));
     }
   }, [AccountDetails]);
+
+  /**
+   * Get networth item for the balance tab
+   */
+  useEffect(() => {
+    (async () => {
+      if (tableType === 'balance') {
+        const { error, data } = await getNetworth({ accountId });
+        setFilterLoading(false);
+        if (!error) {
+          setBalance(data);
+        }
+      }
+    })();
+  }, [tableType, accountId]);
 
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
@@ -544,11 +573,11 @@ const AccountDetail: React.FC = () => {
                       <input
                         type='radio'
                         id='mm-account-balance'
-                        value='balances'
+                        value='balance'
                         name='mm-radio-holding-activity'
                         aria-checked='true'
-                        checked={tableType === 'balances' ? true : false}
-                        onChange={(e) => setTableType('balances')}
+                        checked={tableType === 'balance' ? true : false}
+                        onChange={(e) => setTableType('balance')}
                       />
                       <label className='labels' htmlFor='mm-account-balance'>
                         Balance

@@ -1,0 +1,32 @@
+[
+  {
+    "balance": -495.85,
+    "interval": "Sep 2020",
+    "type": "actual"
+  },
+  {
+    "balance": -898.65,
+    "interval": "Oct 2020",
+    "type": "actual"
+  },
+  {
+    "balance": -567.84,
+    "interval": "Nov 2020",
+    "type": "actual"
+  },
+  {
+    "balance": -155.62,
+    "interval": "Dec 2020",
+    "type": "actual"
+  },
+  {
+    "balance": -342.31,
+    "interval": "Today",
+    "type": "actual"
+  },
+  {
+    "balance": -342.31,
+    "interval": "Jan 2021",
+    "type": "projection"
+  }
+]
