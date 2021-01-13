@@ -111,6 +111,9 @@ const AccountDetail: React.FC = () => {
       if (tableType === 'activity') {
         fetchAccountActivity(accountId, fromDate, toDate, timeInterval, baseCurrency);
       }
+      if (tableType === 'balance') {
+        setFilterLoading(false);
+      }
     }
   }, [
     toDate,

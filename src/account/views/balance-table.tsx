@@ -1,6 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/esm/Table';
 
+import { gc } from 'common/interval-parser';
 import { parseAmount } from 'common/common-helper';
 import balances from '__mocks__/balances.mock.json';
 
@@ -16,7 +17,9 @@ const BalanceTable = () => {
                   <tr>
                     <th className='s-hide'>Description</th>
                     {balances.map((balance, index) => (
-                      <th key={index}>{balance.interval}</th>
+                      <th key={index} className={gc(balance.interval)}>
+                        {balance.interval}
+                      </th>
                     ))}
                   </tr>
                 </thead>
@@ -24,7 +27,9 @@ const BalanceTable = () => {
                   <tr>
                     <td>Name</td>
                     {balances.map((balanceObj, index) => (
-                      <td key={index}>{parseAmount(balanceObj.balance)}</td>
+                      <td key={index} className={gc(balanceObj.interval)}>
+                        {parseAmount(balanceObj.balance)}
+                      </td>
                     ))}
                   </tr>
                 </tbody>
