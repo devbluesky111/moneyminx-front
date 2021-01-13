@@ -34,7 +34,13 @@ import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { getDate, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
-import { getAccountDetails, getAccountHoldings, getAccountActivity, getFastlinkUpdate } from 'api/request.api';
+import {
+  getAccountDetails,
+  getAccountHoldings,
+  getAccountActivity,
+  getFastlinkUpdate,
+  getAccountDetailBalances,
+} from 'api/request.api';
 
 import AccountTable from './account-table';
 import BalanceTable from './balance-table';
@@ -43,7 +49,7 @@ import AccountBarGraph from './account-bar-graph';
 import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
-import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
+import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -57,7 +63,7 @@ const AccountDetail: React.FC = () => {
   const [fromDate, setFromDate] = useState<string>();
   const [toDate, setToDate] = useState<string>();
   const [timeInterval, setTimeInterval] = useState<string>('Monthly');
-  const [tableType, setTableType] = useState<string>('holdings');
+  const [tableType, setTableType] = useState<string>('balance');
   const [dateFromFilterOn, setDateFromFilterOn] = useState<boolean>(false);
   const [dateToFilterOn, setDateToFilterOn] = useState<boolean>(false);
   const [intervalFilterOn, setIntervalFilterOn] = useState<boolean>(false);
@@ -77,6 +83,7 @@ const AccountDetail: React.FC = () => {
     token: { tokenType: 'AccessToken', tokenValue: '' },
     config: { flow: '', configName: 'Aggregation', providerAccountId: 0 },
   });
+  const [balanceData, setBalanceData] = useState<IBalanceData>();
 
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
@@ -113,6 +120,7 @@ const AccountDetail: React.FC = () => {
       }
       if (tableType === 'balance') {
         setFilterLoading(false);
+        setLoading(false);
       }
     }
   }, [
@@ -135,6 +143,25 @@ const AccountDetail: React.FC = () => {
       setCurrencySymbol(getCurrencySymbol(AccountDetails.currency));
     }
   }, [AccountDetails]);
+
+  /**
+   * Get Balances if balance tab is selected
+   *
+   */
+
+  useEffect(() => {
+    (async () => {
+      if (tableType !== 'balance') {
+        return false;
+      }
+      setLoading(true);
+      const { data, error } = await getAccountDetailBalances({ accountId });
+      setLoading(false);
+      if (!error) {
+        setBalanceData(data);
+      }
+    })();
+  }, [accountId, tableType]);
 
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
@@ -529,15 +556,27 @@ const AccountDetail: React.FC = () => {
                             </li>
                           )}
                         </ul>
+                        {
+                          // FIXME: this must be different for all types
+                          // currently we are having it for balance and holding
+                        }
                         <div className='chartbox'>
-                          {AccountHoldings && curAccountHoldingsItem && (
+                          {AccountHoldings && curAccountHoldingsItem && tableType !== 'balance' ? (
                             <AccountBarGraph
                               data={AccountHoldings.charts}
                               curInterval={curAccountHoldingsItem[0]?.interval}
                               currencySymbol={currencySymbol}
                               mmCategory={AccountDetails?.category?.mmCategory}
                             />
-                          )}
+                          ) : null}
+                          {tableType === 'balance' && balanceData?.balances ? (
+                            <AccountBarGraph
+                              data={balanceData.balances.map((b) => ({ ...b, value: b.balance || 0 }))}
+                              curInterval=''
+                              currencySymbol={currencySymbol}
+                              mmCategory={AccountDetails?.category?.mmCategory}
+                            />
+                          ) : null}
                         </div>
                       </div>
                     ) : (
@@ -610,7 +649,7 @@ const AccountDetail: React.FC = () => {
                   )}
 
                   {tableType === 'balance' ? (
-                    <BalanceTable accountId={accountId} currencySymbol={currencySymbol} />
+                    <BalanceTable balanceData={balanceData} currencySymbol={currencySymbol} />
                   ) : null}
 
                   {tableType === 'activity' && (

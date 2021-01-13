@@ -157,7 +157,7 @@ export interface Classifications {
 }
 
 export interface IBalanceTable {
-  accountId: number | string;
+  balanceData?: IBalanceData;
   currencySymbol: string;
 }
 

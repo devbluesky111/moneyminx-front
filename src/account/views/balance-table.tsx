@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Table from 'react-bootstrap/esm/Table';
 
 import { gc } from 'common/interval-parser';
 import { parseAmount } from 'common/common-helper';
-import { getAccountDetailBalances } from 'api/request.api';
-import { IBalanceData, IBalanceTable } from 'account/account.type';
+import { IBalanceTable } from 'account/account.type';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 
-const BalanceTable: React.FC<IBalanceTable> = ({ accountId, currencySymbol }) => {
-  const [balanceData, setBalanceData] = useState<IBalanceData>();
-
-  useEffect(() => {
-    (async () => {
-      const { data, error } = await getAccountDetailBalances({ accountId });
-      if (!error) {
-        setBalanceData(data);
-      }
-    })();
-  }, [accountId]);
-
+const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol }) => {
   if (!balanceData) {
     return <CircularSpinner />;
   }
