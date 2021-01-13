@@ -1,7 +1,7 @@
-import queryString from 'query-string';
 import React, { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import queryString from 'query-string';
 import useToast from 'common/hooks/useToast';
 import { useAuthState } from 'auth/auth.context';
 import { useModal } from 'common/components/modal';

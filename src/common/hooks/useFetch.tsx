@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useState, useEffect, useCallback } from 'react';
+
 import { ApiResponse } from 'app/app.types';
 
 const useFetch = (cb: any, dep: any) => {

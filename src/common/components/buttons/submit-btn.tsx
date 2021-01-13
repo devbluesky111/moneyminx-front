@@ -1,6 +1,8 @@
 import React from 'react';
-import { ButtonProps } from '../component.type';
+
 import { ReactComponent as Spinner } from 'assets/icons/spinner.svg';
+
+import { ButtonProps } from '../component.type';
 
 const SubmitButton: React.FC<ButtonProps> = ({ disabled = false, loading = false, text }) => {
   return (

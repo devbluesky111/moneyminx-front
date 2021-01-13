@@ -1,6 +1,7 @@
-import { getValue } from 'common/account-type.helper';
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
+
+import { getValue } from 'common/account-type.helper';
 
 interface AccountTypeSelectInputProps {
   args: any[];

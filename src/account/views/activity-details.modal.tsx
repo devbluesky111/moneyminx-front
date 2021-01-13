@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 
 import moment from 'moment';
 import { Formik } from 'formik';
-
 import useToast from 'common/hooks/useToast';
 import { Modal } from 'common/components/modal';
 import { ActivityDetailsModalProps } from 'account/account.type';

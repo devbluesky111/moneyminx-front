@@ -1,5 +1,6 @@
-import { AccountTypeLowerOptions, AccountTypeUpperOptions } from "auth/enum/account-type-upper-options";
-import { formater } from "./common-helper";
+import { AccountTypeLowerOptions, AccountTypeUpperOptions } from 'auth/enum/account-type-upper-options';
+
+import { formater } from './common-helper';
 
 export const getValue = (val: string) => {
     let fVal = formater(val);
