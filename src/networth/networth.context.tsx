@@ -1,5 +1,7 @@
-import { handleStringArrayToggle } from 'common/common-helper';
 import React, { createContext } from 'react';
+
+import { handleStringArrayToggle } from 'common/common-helper';
+
 import { NetworthActionEnum } from './networth.enum';
 import { NetworthDispatch, NetworthState, NetworthProviderProps, Action } from './networth.type';
 

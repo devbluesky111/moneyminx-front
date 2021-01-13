@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { TableProps } from './component.type';
 
 const Table: React.FC<TableProps> = ({ headerEl, bodyEl }) => {

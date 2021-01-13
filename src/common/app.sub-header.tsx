@@ -5,11 +5,11 @@ import { Link, useHistory } from 'react-router-dom';
 import { Account } from 'auth/auth.types';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getAccountWithProvider } from 'api/request.api';
+import moment from 'moment';
 
 import { fNumber, numberWithCommas } from './number.helper';
 import { getRelativeDate } from './moment.helper';
 import { getCurrencySymbol } from './currency-helper';
-import moment from 'moment';
 
 export interface AppSubHeaderProps {
   AccountDetails?: Account;

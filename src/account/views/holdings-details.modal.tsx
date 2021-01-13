@@ -227,7 +227,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         originalValues: holdingsDetails?.intervalValues || [
           { date: new Date(), interval: new Date().toLocaleString('default', { month: 'short' }), value: 0 },
         ],
-        accountId: accountId,
+        accountId,
       }}
       onSubmit={async (values: any, actions: any) => {
         const positionId = holdingsDetails?.id;
@@ -264,7 +264,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
           }
           _classifications.push({
             accountId: holdingsDetails?.accountId,
-            allocation: allocation,
+            allocation,
             classificationType: key,
             classificationValue: 'Unclassified',
             positionId: holdingsDetails?.id,
@@ -276,7 +276,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
         for (let i = 0; i < values.originalValues.length; i++) {
           const _originalValue = values.originalValues[i];
-          _originalValue['date'] = parseDateFromString(values.originalValues[i]['interval']);
+          _originalValue.date = parseDateFromString(values.originalValues[i].interval);
           if (_originalValue.value) {
             _values.push(_originalValue);
           }
@@ -409,7 +409,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
         const handleIsShortChange = (e: React.ChangeEvent<any>) => {
           const isShort = e.target.value === 'yes';
-          setValues({ ...values, isShort: isShort });
+          setValues({ ...values, isShort });
         };
 
         const getUnclassifiedRest = (tabName: string) => {

@@ -1,7 +1,7 @@
 import Form from 'react-bootstrap/Form';
 import React, { useEffect, useState } from 'react';
-
 import { FormControl } from 'react-bootstrap';
+
 import { Modal, ModalType } from 'common/components/modal';
 import { patchAllocationChartSettings } from 'api/request.api';
 import { useAllocationDispatch } from 'allocation/allocation.context';

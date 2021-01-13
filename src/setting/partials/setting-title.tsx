@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { SettingTitleProps, SettingPageEnum } from 'setting/setting.type';
 
 export const SettingTitleSection: React.FC<SettingTitleProps> = ({ handlePageSelect, pageTitle }) => {

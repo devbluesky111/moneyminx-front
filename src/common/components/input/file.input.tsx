@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { InputType } from '../component.type';
 
 const FileInput: React.FC<InputType> = ({

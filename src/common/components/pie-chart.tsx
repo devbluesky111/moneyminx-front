@@ -1,6 +1,6 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import useSize from 'common/hooks/useSize';
 import { BreakPoint } from 'app/app.constant';
 import { ellipseText } from 'common/common-helper';
