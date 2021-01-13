@@ -146,9 +146,8 @@ const AccountDetail: React.FC = () => {
 
   /**
    * Get Balances if balance tab is selected
-   *
+   * @if !balance return
    */
-
   useEffect(() => {
     (async () => {
       if (tableType !== 'balance') {
@@ -233,7 +232,8 @@ const AccountDetail: React.FC = () => {
 
   const isCurrent = (interval: string) => interval === 'Today';
 
-  let curAccountHoldingsItem;
+  let curAccountHoldingsItem: AccountChartItem[] = [];
+
   if (AccountHoldings?.charts) {
     curAccountHoldingsItem = AccountHoldings?.charts.filter((accountChartItem: AccountChartItem) =>
       isCurrent(accountChartItem.interval)
@@ -282,6 +282,34 @@ const AccountDetail: React.FC = () => {
 
   const closeRightNav = () => {
     setOpenRightNav(false);
+  };
+
+  const renderCharItem = (chartData: AccountChartItem[]) => {
+    return (
+      <AccountBarGraph
+        data={chartData}
+        curInterval=''
+        currencySymbol={currencySymbol}
+        mmCategory={AccountDetails?.category?.mmCategory}
+      />
+    );
+  };
+
+  const renderChart = () => {
+    return (
+      <div className='chartbox'>
+        {AccountHoldings && AccountHoldings.charts && tableType !== 'holdings'
+          ? renderCharItem(AccountHoldings.charts)
+          : null}
+        {AccountActivity && AccountActivity.charts && tableType === 'activity'
+          ? renderCharItem(AccountActivity.charts)
+          : null}
+
+        {tableType === 'balance' && balanceData?.balances
+          ? renderCharItem(balanceData.balances.map((b) => ({ ...b, value: b.balance || 0 })))
+          : null}
+      </div>
+    );
   };
 
   return (
@@ -538,8 +566,8 @@ const AccountDetail: React.FC = () => {
                               <span className='graphbox-label'>Value</span>
                               <span className='graphbox-amount'>
                                 {currencySymbol}
-                                {curAccountHoldingsItem?.[0].value
-                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
+                                {curAccountHoldingsItem?.[0]?.value
+                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
                                   : 0}
                               </span>
                             </li>
@@ -549,8 +577,8 @@ const AccountDetail: React.FC = () => {
                               <span className='graphbox-label'>Value</span>
                               <span className='graphbox-amount'>
                                 {currencySymbol}
-                                {curAccountHoldingsItem?.[0].value
-                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
+                                {curAccountHoldingsItem?.[0]?.value
+                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
                                   : 0}
                               </span>
                             </li>
@@ -560,24 +588,7 @@ const AccountDetail: React.FC = () => {
                           // FIXME: this must be different for all types
                           // currently we are having it for balance and holding
                         }
-                        <div className='chartbox'>
-                          {AccountHoldings && curAccountHoldingsItem && tableType !== 'balance' ? (
-                            <AccountBarGraph
-                              data={AccountHoldings.charts}
-                              curInterval={curAccountHoldingsItem[0]?.interval}
-                              currencySymbol={currencySymbol}
-                              mmCategory={AccountDetails?.category?.mmCategory}
-                            />
-                          ) : null}
-                          {tableType === 'balance' && balanceData?.balances ? (
-                            <AccountBarGraph
-                              data={balanceData.balances.map((b) => ({ ...b, value: b.balance || 0 }))}
-                              curInterval=''
-                              currencySymbol={currencySymbol}
-                              mmCategory={AccountDetails?.category?.mmCategory}
-                            />
-                          ) : null}
-                        </div>
+                        {renderChart()}
                       </div>
                     ) : (
                       <Placeholder type='acctDetail' />
