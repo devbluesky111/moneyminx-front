@@ -15,18 +15,18 @@ import { events } from '@mm/data/event-list';
 import MMToolTip from 'common/components/tooltip';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
-import { enumerateStr } from 'common/common-helper';
 import { useAuthDispatch } from 'auth/auth.context';
 import useAnalytics from 'common/hooks/useAnalytics';
 import { getRefreshedAccount } from 'auth/auth.service';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
+import { EAccountType } from 'account/enum/account-type';
 import { TimeIntervalEnum } from 'networth/networth.enum';
+import { ETableType } from 'account/enum/table-type.enum';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { Placeholder } from 'networth/views/inc/placeholder';
-import { fNumber, numberWithCommas } from 'common/number.helper';
+import { enumerateStr, parseAmount } from 'common/common-helper';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { ReactComponent as NotLinked } from 'assets/images/account/Not Linked.svg';
 import { ReactComponent as NeedsInfo } from 'assets/images/account/Needs Info.svg';
@@ -34,15 +34,23 @@ import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { getDate, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
-import { getAccountDetails, getAccountHoldings, getAccountActivity, getFastlinkUpdate } from 'api/request.api';
+import {
+  getAccountDetails,
+  getAccountHoldings,
+  getAccountActivity,
+  getFastlinkUpdate,
+  getAccountDetailBalances,
+} from 'api/request.api';
 
 import AccountTable from './account-table';
+import BalanceTable from './balance-table';
 import ActivityTable from './activity-table';
 import AccountBarGraph from './account-bar-graph';
 import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
-import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps } from '../account.type';
+import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
+import ChartSkeleton from './chart-skeleton';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -56,7 +64,7 @@ const AccountDetail: React.FC = () => {
   const [fromDate, setFromDate] = useState<string>();
   const [toDate, setToDate] = useState<string>();
   const [timeInterval, setTimeInterval] = useState<string>('Monthly');
-  const [tableType, setTableType] = useState<string>('holdings');
+  const [tableType, setTableType] = useState<string>('balance');
   const [dateFromFilterOn, setDateFromFilterOn] = useState<boolean>(false);
   const [dateToFilterOn, setDateToFilterOn] = useState<boolean>(false);
   const [intervalFilterOn, setIntervalFilterOn] = useState<boolean>(false);
@@ -76,6 +84,7 @@ const AccountDetail: React.FC = () => {
     token: { tokenType: 'AccessToken', tokenValue: '' },
     config: { flow: '', configName: 'Aggregation', providerAccountId: 0 },
   });
+  const [balanceData, setBalanceData] = useState<IBalanceData>();
 
   const { pathname } = useLocation();
   const accountId = pathname.split('/')[2];
@@ -98,13 +107,22 @@ const AccountDetail: React.FC = () => {
     };
 
     fetchAccountDetails(accountId, baseCurrency);
+
     if (
       (fromDate === undefined && toDate === undefined) ||
       (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))
     ) {
       setFilterLoading(true);
-      if (tableType === 'holdings') fetchAccountHoldings(accountId, fromDate, toDate, timeInterval, baseCurrency);
-      if (tableType === 'activity') fetchAccountActivity(accountId, fromDate, toDate, timeInterval, baseCurrency);
+      if (tableType === 'holdings') {
+        fetchAccountHoldings(accountId, fromDate, toDate, timeInterval, baseCurrency);
+      }
+      if (tableType === 'activity') {
+        fetchAccountActivity(accountId, fromDate, toDate, timeInterval, baseCurrency);
+      }
+      if (tableType === 'balance') {
+        setFilterLoading(false);
+        setLoading(false);
+      }
     }
   }, [
     toDate,
@@ -126,6 +144,24 @@ const AccountDetail: React.FC = () => {
       setCurrencySymbol(getCurrencySymbol(AccountDetails.currency));
     }
   }, [AccountDetails]);
+
+  /**
+   * Get Balances if balance tab is selected
+   * @if !balance return
+   */
+  useEffect(() => {
+    (async () => {
+      if (tableType !== 'balance') {
+        return false;
+      }
+      setFilterLoading(true);
+      const { data, error } = await getAccountDetailBalances({ accountId });
+      setFilterLoading(false);
+      if (!error) {
+        setBalanceData(data);
+      }
+    })();
+  }, [accountId, tableType]);
 
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
@@ -195,15 +231,6 @@ const AccountDetail: React.FC = () => {
     }
   };
 
-  const isCurrent = (interval: string) => interval === 'Today';
-
-  let curAccountHoldingsItem;
-  if (AccountHoldings?.charts) {
-    curAccountHoldingsItem = AccountHoldings?.charts.filter((accountChartItem: AccountChartItem) =>
-      isCurrent(accountChartItem.interval)
-    );
-  }
-
   const onChange = (option: string, date: any) => {
     if (option === 'start') {
       setDateFromFilterOn(true);
@@ -247,6 +274,72 @@ const AccountDetail: React.FC = () => {
   const closeRightNav = () => {
     setOpenRightNav(false);
   };
+
+  const renderCharItem = (chartData: AccountChartItem[]) => {
+    return (
+      <AccountBarGraph
+        data={chartData}
+        curInterval=''
+        currencySymbol={currencySymbol}
+        mmCategory={AccountDetails?.category?.mmCategory}
+      />
+    );
+  };
+
+  const renderChart = () => {
+    const hasHoldingChart = AccountHoldings && AccountHoldings.charts && tableType === 'holdings';
+    const hasActivityChart = AccountActivity && AccountActivity.charts && tableType === 'activity';
+    const hasBalanceChart = tableType === 'balance' && balanceData?.balances;
+
+    const hasEitherChart = hasHoldingChart || hasActivityChart || hasBalanceChart;
+
+    if (!hasEitherChart || filterloading) {
+      return <ChartSkeleton />;
+    }
+
+    return (
+      <div className='chartbox'>
+        {AccountHoldings && AccountHoldings.charts && tableType === 'holdings'
+          ? renderCharItem(AccountHoldings.charts)
+          : null}
+
+        {AccountActivity && AccountActivity.charts && tableType === 'activity'
+          ? renderCharItem(AccountActivity.charts.map((b: any) => ({ ...b, value: b.balance || 0 })))
+          : null}
+
+        {tableType === 'balance' && balanceData?.balances
+          ? renderCharItem(balanceData.balances.map((b) => ({ ...b, value: b.balance || 0 })))
+          : null}
+      </div>
+    );
+  };
+
+  const isLiabilities = AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES;
+
+  const renderChartAmount = () => {
+    if (tableType === ETableType.HOLDINGS) {
+      const curHoldingValue = AccountHoldings?.charts.find((accountHolding) => accountHolding.interval === 'Today')
+        ?.value;
+
+      return parseAmount(curHoldingValue || 0, currencySymbol);
+    }
+    if (tableType === ETableType.BALANCE) {
+      const curBalanceAmount = balanceData?.balances?.find((balance) => balance.interval === 'Today')?.balance;
+
+      return parseAmount(curBalanceAmount || 0, currencySymbol);
+    }
+    if (tableType === ETableType.ACTIVITY) {
+      const curAccountValue = (AccountActivity?.charts as any)?.find(
+        (accountActivity: any) => accountActivity.interval === 'Today'
+      )?.balance;
+
+      return parseAmount(curAccountValue || 0, currencySymbol);
+    }
+    return parseAmount(0, currencySymbol);
+  };
+
+  const hasChartData =
+    AccountHoldings?.charts?.length || AccountActivity?.charts?.length || balanceData?.balances?.length;
 
   return (
     <div className='mm-setting'>
@@ -398,7 +491,6 @@ const AccountDetail: React.FC = () => {
                           </ul>
                         </Dropdown.Menu>
                       </Dropdown>
-                      {filterloading && <CircularSpinner />}
                     </div>
                     <div className='mm-account__selection--type'>
                       {AccountDetails?.syncError ? (
@@ -483,53 +575,31 @@ const AccountDetail: React.FC = () => {
                   <Placeholder type='syncError' />
                 ) : (
                   <>
-                    {AccountHoldings?.holdings.length !== 0 ? (
+                    {hasChartData ? (
                       <div className='graphbox'>
                         <ul>
-                          {AccountDetails?.category?.mmCategory === 'Investment Assets' && (
+                          {AccountDetails?.category?.mmCategory === EAccountType.INVESTMENT_ASSETS && (
                             <li className='inv-data'>
                               <span className='graphbox-label'>Value</span>
-                              <span className='graphbox-amount'>
-                                {currencySymbol}
-                                {curAccountHoldingsItem?.[0]?.value
-                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
-                                  : 0}
-                              </span>
+                              <span className='graphbox-amount'>{renderChartAmount()}</span>
                             </li>
                           )}
-                          {AccountDetails?.category?.mmCategory === 'Other Assets' && (
+                          {AccountDetails?.category?.mmCategory === EAccountType.OTHER_ASSETS && (
                             <li className='other-data'>
                               <span className='graphbox-label'>Value</span>
-                              <span className='graphbox-amount'>
-                                {currencySymbol}
-                                {curAccountHoldingsItem?.[0].value
-                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
-                                  : 0}
-                              </span>
+                              <span className='graphbox-amount'>{renderChartAmount()}</span>
                             </li>
                           )}
-                          {AccountDetails?.category?.mmCategory === 'Liabilities' && (
+
+                          {AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES && (
                             <li className='lty-data'>
                               <span className='graphbox-label'>Value</span>
-                              <span className='graphbox-amount'>
-                                {currencySymbol}
-                                {curAccountHoldingsItem?.[0].value
-                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0].value, 0))
-                                  : 0}
-                              </span>
+                              <span className='graphbox-amount'>{renderChartAmount()}</span>
                             </li>
                           )}
                         </ul>
-                        <div className='chartbox'>
-                          {AccountHoldings && curAccountHoldingsItem && (
-                            <AccountBarGraph
-                              data={AccountHoldings.charts}
-                              curInterval={curAccountHoldingsItem[0]?.interval}
-                              currencySymbol={currencySymbol}
-                              mmCategory={AccountDetails?.category?.mmCategory}
-                            />
-                          )}
-                        </div>
+
+                        {renderChart()}
                       </div>
                     ) : (
                       <Placeholder type='acctDetail' />
@@ -544,27 +614,32 @@ const AccountDetail: React.FC = () => {
                       <input
                         type='radio'
                         id='mm-account-balance'
-                        value='balances'
+                        value='balance'
                         name='mm-radio-holding-activity'
                         aria-checked='true'
-                        checked={tableType === 'balances' ? true : false}
-                        onChange={(e) => setTableType('balances')}
+                        checked={tableType === 'balance' ? true : false}
+                        onChange={(e) => setTableType('balance')}
                       />
                       <label className='labels' htmlFor='mm-account-balance'>
                         Balance
                       </label>
-                      <input
-                        type='radio'
-                        id='mm-account-holding'
-                        value='holdings'
-                        name='mm-radio-holding-activity'
-                        aria-checked='true'
-                        checked={tableType === 'holdings' ? true : false}
-                        onChange={(e) => setTableType('holdings')}
-                      />
-                      <label className='labels' htmlFor='mm-account-holding'>
-                        Holdings
-                      </label>
+                      {!isLiabilities ? (
+                        <>
+                          <input
+                            type='radio'
+                            id='mm-account-holding'
+                            value='holdings'
+                            name='mm-radio-holding-activity'
+                            aria-checked='true'
+                            checked={tableType === 'holdings' ? true : false}
+                            onChange={(e) => setTableType('holdings')}
+                          />
+                          <label className='labels' htmlFor='mm-account-holding'>
+                            Holdings
+                          </label>
+                        </>
+                      ) : null}
+
                       <input
                         type='radio'
                         id='mm-account-activity'
@@ -573,6 +648,7 @@ const AccountDetail: React.FC = () => {
                         aria-checked='false'
                         checked={tableType === 'activity' ? true : false}
                         onChange={(e) => setTableType('activity')}
+                        className={isLiabilities ? 'second' : ''}
                       />
                       <label className='labels' htmlFor='mm-account-activity'>
                         Activity
@@ -599,6 +675,10 @@ const AccountDetail: React.FC = () => {
                       currencySymbol={currencySymbol}
                     />
                   )}
+
+                  {tableType === 'balance' ? (
+                    <BalanceTable balanceData={balanceData} currencySymbol={currencySymbol} />
+                  ) : null}
 
                   {tableType === 'activity' && (
                     <div className='mm-account-activity-block'>

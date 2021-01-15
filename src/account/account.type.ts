@@ -155,3 +155,20 @@ export interface Classifications {
   Risk: ClassificationItem[];
   Type: ClassificationItem[];
 }
+
+export interface IBalanceTable {
+  balanceData?: IBalanceData;
+  currencySymbol: string;
+}
+
+export interface IBalance {
+  interval: string;
+  balance: number | null;
+  type: string;
+}
+
+export interface IBalanceData {
+  currency: string;
+  accountName: string;
+  balances: IBalance[];
+}
