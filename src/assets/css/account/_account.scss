@@ -74,7 +74,8 @@
       }
     }
   }
-  #mm-account-balance:checked:not(.liabilities) ~ .mm-radio-bg {
+
+  #mm-account-balance:checked ~ .mm-radio-bg {
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
   }

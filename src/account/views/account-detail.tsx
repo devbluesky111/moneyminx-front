@@ -15,15 +15,17 @@ import { events } from '@mm/data/event-list';
 import MMToolTip from 'common/components/tooltip';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
-import { enumerateStr } from 'common/common-helper';
 import { useAuthDispatch } from 'auth/auth.context';
 import useAnalytics from 'common/hooks/useAnalytics';
 import { getRefreshedAccount } from 'auth/auth.service';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
+import { EAccountType } from 'account/enum/account-type';
 import { TimeIntervalEnum } from 'networth/networth.enum';
+import { ETableType } from 'account/enum/table-type.enum';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { Placeholder } from 'networth/views/inc/placeholder';
+import { enumerateStr, parseAmount } from 'common/common-helper';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
@@ -50,7 +52,6 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
-import { EAccountType } from 'account/enum/account-type';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -316,6 +317,31 @@ const AccountDetail: React.FC = () => {
 
   const isLiabilities = AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES;
 
+  const renderChartAmount = () => {
+    if (tableType === ETableType.HOLDINGS) {
+      const curHoldingValue = AccountHoldings?.charts.find((accountHolding) => accountHolding.interval === 'Today')
+        ?.value;
+
+      return parseAmount(curHoldingValue || 0, currencySymbol);
+    }
+    if (tableType === ETableType.BALANCE) {
+      const curBalanceAmount = balanceData?.balances?.find((balance) => balance.interval === 'Today')?.balance;
+
+      return parseAmount(curBalanceAmount || 0, currencySymbol);
+    }
+    if (tableType === ETableType.ACTIVITY) {
+      const curAccountValue = (AccountActivity?.charts as any)?.find(
+        (accountActivity: any) => accountActivity.interval === 'Today'
+      )?.balance;
+
+      return parseAmount(curAccountValue || 0, currencySymbol);
+    }
+    return parseAmount(0, currencySymbol);
+  };
+
+  const hasChartData =
+    AccountHoldings?.charts?.length || AccountActivity?.charts?.length || balanceData?.balances?.length;
+
   return (
     <div className='mm-setting'>
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
@@ -551,31 +577,22 @@ const AccountDetail: React.FC = () => {
                   <Placeholder type='syncError' />
                 ) : (
                   <>
-                    {AccountHoldings?.holdings.length !== 0 ? (
+                    {hasChartData ? (
                       <div className='graphbox'>
                         <ul>
                           {AccountDetails?.category?.mmCategory === 'Investment Assets' && (
                             <li className='inv-data'>
                               <span className='graphbox-label'>Value</span>
-                              <span className='graphbox-amount'>
-                                {currencySymbol}
-                                {curAccountHoldingsItem?.[0]?.value
-                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
-                                  : 0}
-                              </span>
+                              <span className='graphbox-amount'>{renderChartAmount()}</span>
                             </li>
                           )}
                           {AccountDetails?.category?.mmCategory === 'Other Assets' && (
                             <li className='other-data'>
                               <span className='graphbox-label'>Value</span>
-                              <span className='graphbox-amount'>
-                                {currencySymbol}
-                                {curAccountHoldingsItem?.[0]?.value
-                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
-                                  : 0}
-                              </span>
+                              <span className='graphbox-amount'>{renderChartAmount()}</span>
                             </li>
                           )}
+
                           {AccountDetails?.category?.mmCategory === 'Liabilities' && (
                             <li className='lty-data'>
                               <span className='graphbox-label'>Value</span>
