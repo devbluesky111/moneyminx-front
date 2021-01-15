@@ -26,7 +26,6 @@ import { appRouteConstants } from 'app/app-route.constant';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { Placeholder } from 'networth/views/inc/placeholder';
 import { enumerateStr, parseAmount } from 'common/common-helper';
-import { fNumber, numberWithCommas } from 'common/number.helper';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
@@ -231,16 +230,6 @@ const AccountDetail: React.FC = () => {
       setFilterLoading(false);
     }
   };
-
-  const isCurrent = (interval: string) => interval === 'Today';
-
-  let curAccountHoldingsItem: AccountChartItem[] = [];
-
-  if (AccountHoldings?.charts) {
-    curAccountHoldingsItem = AccountHoldings?.charts.filter((accountChartItem: AccountChartItem) =>
-      isCurrent(accountChartItem.interval)
-    );
-  }
 
   const onChange = (option: string, date: any) => {
     if (option === 'start') {
@@ -580,28 +569,23 @@ const AccountDetail: React.FC = () => {
                     {hasChartData ? (
                       <div className='graphbox'>
                         <ul>
-                          {AccountDetails?.category?.mmCategory === 'Investment Assets' && (
+                          {AccountDetails?.category?.mmCategory === EAccountType.INVESTMENT_ASSETS && (
                             <li className='inv-data'>
                               <span className='graphbox-label'>Value</span>
                               <span className='graphbox-amount'>{renderChartAmount()}</span>
                             </li>
                           )}
-                          {AccountDetails?.category?.mmCategory === 'Other Assets' && (
+                          {AccountDetails?.category?.mmCategory === EAccountType.OTHER_ASSETS && (
                             <li className='other-data'>
                               <span className='graphbox-label'>Value</span>
                               <span className='graphbox-amount'>{renderChartAmount()}</span>
                             </li>
                           )}
 
-                          {AccountDetails?.category?.mmCategory === 'Liabilities' && (
+                          {AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES && (
                             <li className='lty-data'>
                               <span className='graphbox-label'>Value</span>
-                              <span className='graphbox-amount'>
-                                {currencySymbol}
-                                {curAccountHoldingsItem?.[0]?.value
-                                  ? numberWithCommas(fNumber(curAccountHoldingsItem?.[0]?.value, 0))
-                                  : 0}
-                              </span>
+                              <span className='graphbox-amount'>{renderChartAmount()}</span>
                             </li>
                           )}
                         </ul>
