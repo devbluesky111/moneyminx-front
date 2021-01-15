@@ -27,7 +27,6 @@ import { getCurrencySymbol } from 'common/currency-helper';
 import { Placeholder } from 'networth/views/inc/placeholder';
 import { enumerateStr, parseAmount } from 'common/common-helper';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import { ReactComponent as NotLinked } from 'assets/images/account/Not Linked.svg';
 import { ReactComponent as NeedsInfo } from 'assets/images/account/Needs Info.svg';
@@ -294,7 +293,7 @@ const AccountDetail: React.FC = () => {
 
     const hasEitherChart = hasHoldingChart || hasActivityChart || hasBalanceChart;
 
-    if (!hasEitherChart) {
+    if (!hasEitherChart || filterloading) {
       return <ChartSkeleton />;
     }
 
@@ -492,7 +491,6 @@ const AccountDetail: React.FC = () => {
                           </ul>
                         </Dropdown.Menu>
                       </Dropdown>
-                      {filterloading && <CircularSpinner />}
                     </div>
                     <div className='mm-account__selection--type'>
                       {AccountDetails?.syncError ? (
