@@ -51,6 +51,7 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
+import ChartSkeleton from './chart-skeleton';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -287,6 +288,16 @@ const AccountDetail: React.FC = () => {
   };
 
   const renderChart = () => {
+    const hasHoldingChart = AccountHoldings && AccountHoldings.charts && tableType === 'holdings';
+    const hasActivityChart = AccountActivity && AccountActivity.charts && tableType === 'activity';
+    const hasBalanceChart = tableType === 'balance' && balanceData?.balances;
+
+    const hasEitherChart = hasHoldingChart || hasActivityChart || hasBalanceChart;
+
+    if (!hasEitherChart) {
+      return <ChartSkeleton />;
+    }
+
     return (
       <div className='chartbox'>
         {AccountHoldings && AccountHoldings.charts && tableType === 'holdings'

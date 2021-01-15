@@ -823,3 +823,16 @@
     width: 665px;
   }
 }
+
+.account-chart-skeleton-wrapper {
+  width: 100%;
+  height: 306px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  justify-content: space-around;
+
+  span {
+    margin: 0 30px;
+  }
+}
