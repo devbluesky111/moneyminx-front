@@ -153,9 +153,9 @@ const AccountDetail: React.FC = () => {
       if (tableType !== 'balance') {
         return false;
       }
-      setLoading(true);
+      setFilterLoading(true);
       const { data, error } = await getAccountDetailBalances({ accountId });
-      setLoading(false);
+      setFilterLoading(false);
       if (!error) {
         setBalanceData(data);
       }
@@ -298,11 +298,12 @@ const AccountDetail: React.FC = () => {
   const renderChart = () => {
     return (
       <div className='chartbox'>
-        {AccountHoldings && AccountHoldings.charts && tableType !== 'holdings'
+        {AccountHoldings && AccountHoldings.charts && tableType === 'holdings'
           ? renderCharItem(AccountHoldings.charts)
           : null}
+
         {AccountActivity && AccountActivity.charts && tableType === 'activity'
-          ? renderCharItem(AccountActivity.charts)
+          ? renderCharItem(AccountActivity.charts.map((b: any) => ({ ...b, value: b.balance || 0 })))
           : null}
 
         {tableType === 'balance' && balanceData?.balances
@@ -584,10 +585,7 @@ const AccountDetail: React.FC = () => {
                             </li>
                           )}
                         </ul>
-                        {
-                          // FIXME: this must be different for all types
-                          // currently we are having it for balance and holding
-                        }
+
                         {renderChart()}
                       </div>
                     ) : (
