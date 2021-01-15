@@ -244,7 +244,7 @@ export const SettingOverview: React.FC<SettingOverviewProps> = ({ changeTab }) =
             message={
               cancelSubscriptionError
                 ? 'Your subscription could not be cancelled. Please contact us for support.'
-                : `Your subscription is now cancelled. You can continue using Money Minx until ${moment('01-01-1970')
+                : `Your subscription is now cancelled. You can continue using Money Minx until ${moment('1970-01-01T00:00:00Z')
                   .add(cancelAtDate, 'days')
                   .format('MM/DD/YY')}.`
             }

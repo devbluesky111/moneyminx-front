@@ -13,7 +13,7 @@ interface Props {
 const SubscriptionCancelModal: React.FC<Props> = ({ subscriptionCancelModal, subscriptionEnd , handleCancelSubscriptionConfirmation}) => {
 
   const subscriptionEndDate = subscriptionEnd ? subscriptionEnd / 86400: 0;
-  const endingDate = subscriptionEndDate ? moment('01-01-1970').add(subscriptionEndDate, 'days').format('MM/DD/YY') : 'xx/xx/xx';
+  const endingDate = subscriptionEndDate ? moment('1970-01-01T00:00:00Z').add(subscriptionEndDate, 'days').format('MM/DD/YY') : 'xx/xx/xx';
 
   return (
     <Modal {...subscriptionCancelModal.props} title='Sorry to see you go' size='md' canBeClosed>
