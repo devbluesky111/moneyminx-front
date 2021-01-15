@@ -198,8 +198,6 @@ const AccountDetail: React.FC = () => {
     dToggle.current?.click();
   };
 
-  console.log('_____________AccountDetails__________', AccountDetails);
-
   const fetchAccountHoldings = async (
     accountId: string,
     fromDate: any,
