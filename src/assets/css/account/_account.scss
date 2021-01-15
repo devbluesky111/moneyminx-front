@@ -74,7 +74,7 @@
       }
     }
   }
-  #mm-account-balance:checked ~ .mm-radio-bg {
+  #mm-account-balance:checked:not(.liabilities) ~ .mm-radio-bg {
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
   }
@@ -83,13 +83,20 @@
     transition: transform 0.2s ease-in-out;
   }
   #mm-account-activity:checked ~ .mm-radio-bg {
+    transform: translateX(138px);
+    transition: transform 0.2s ease-in-out;
+  }
+  #mm-account-activity:checked:not(.second) ~ .mm-radio-bg {
     transform: translateX(276px);
     transition: transform 0.2s ease-in-out;
   }
+
   #mm-account-holding:checked + label,
+  #mm-account-balance:checked + label,
   #mm-account-activity:checked + label {
     color: $primary;
   }
+
   &__selection {
     @media (max-width: 1350px) {
       display: flex;

@@ -50,6 +50,7 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
+import { EAccountType } from 'account/enum/account-type';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -197,6 +198,8 @@ const AccountDetail: React.FC = () => {
     dToggle.current?.click();
   };
 
+  console.log('_____________AccountDetails__________', AccountDetails);
+
   const fetchAccountHoldings = async (
     accountId: string,
     fromDate: any,
@@ -312,6 +315,8 @@ const AccountDetail: React.FC = () => {
       </div>
     );
   };
+
+  const isLiabilities = AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES;
 
   return (
     <div className='mm-setting'>
@@ -610,18 +615,23 @@ const AccountDetail: React.FC = () => {
                       <label className='labels' htmlFor='mm-account-balance'>
                         Balance
                       </label>
-                      <input
-                        type='radio'
-                        id='mm-account-holding'
-                        value='holdings'
-                        name='mm-radio-holding-activity'
-                        aria-checked='true'
-                        checked={tableType === 'holdings' ? true : false}
-                        onChange={(e) => setTableType('holdings')}
-                      />
-                      <label className='labels' htmlFor='mm-account-holding'>
-                        Holdings
-                      </label>
+                      {!isLiabilities ? (
+                        <>
+                          <input
+                            type='radio'
+                            id='mm-account-holding'
+                            value='holdings'
+                            name='mm-radio-holding-activity'
+                            aria-checked='true'
+                            checked={tableType === 'holdings' ? true : false}
+                            onChange={(e) => setTableType('holdings')}
+                          />
+                          <label className='labels' htmlFor='mm-account-holding'>
+                            Holdings
+                          </label>
+                        </>
+                      ) : null}
+
                       <input
                         type='radio'
                         id='mm-account-activity'
@@ -630,6 +640,7 @@ const AccountDetail: React.FC = () => {
                         aria-checked='false'
                         checked={tableType === 'activity' ? true : false}
                         onChange={(e) => setTableType('activity')}
+                        className={isLiabilities ? 'second' : ''}
                       />
                       <label className='labels' htmlFor='mm-account-activity'>
                         Activity
