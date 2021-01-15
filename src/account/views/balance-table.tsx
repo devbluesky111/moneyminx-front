@@ -1,14 +1,14 @@
 import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 import Table from 'react-bootstrap/esm/Table';
 
 import { gc } from 'common/interval-parser';
 import { parseAmount } from 'common/common-helper';
 import { IBalanceTable } from 'account/account.type';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol }) => {
   if (!balanceData) {
-    return <CircularSpinner />;
+    return <Skeleton width={1232} height={250} />;
   }
 
   const balances = balanceData.balances;
