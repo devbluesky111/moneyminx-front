@@ -533,7 +533,7 @@ const AccountDetail: React.FC = () => {
                                   {popup && (
                                     <Popup
                                       AccountDetails={AccountDetails}
-                                      handleConnectAccount={() => handleConnectAccount(AccountDetails.id, true, false)}
+                                      handleConnectAccount={() => handleConnectAccount(AccountDetails.id, false, true)}
                                     />
                                   )}
                                 </div>

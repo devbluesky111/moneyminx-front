@@ -360,7 +360,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <button
                         type='button'
                         className='btn btn-outline-primary mm-button btn-lg'
-                        onClick={() => handleConnectAccount(group.accounts[0].id, true, false)}
+                        onClick={() => handleConnectAccount(group.accounts[0].id, false, true)}
                       >
                         Fix Connection
                       </button>
