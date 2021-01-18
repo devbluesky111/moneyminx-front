@@ -42,12 +42,6 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({
     }
   }, [holdingsData]);
 
-  useEffect(() => {
-    if (holdings.length > 0) {
-      fetchHolingsDetails(holdings[0].id.toString());
-    }
-  }, [holdings]);
-
   const fetchHolingsDetails = async (positionId: string) => {
     const { data, error } = await getHoldingsDetails(positionId);
     if (!error) {
@@ -131,8 +125,8 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({
           </div>
         </div>
       ) : (
-        <span className='no-data'>No holdings found</span>
-      )}
+          <span className='no-data'>No holdings found</span>
+        )}
       {holdingsDetails && (
         <HoldingsDetailsModal
           holdingsDetailsModal={holdingsDetailsModal}

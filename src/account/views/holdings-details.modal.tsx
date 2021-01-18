@@ -14,7 +14,7 @@ import { SelectInput } from 'common/components/input/select.input';
 import { enumerateStr, formater, getUnique } from 'common/common-helper';
 import { ReactComponent as DeleteIcon } from 'assets/icons/icon-delete.svg';
 import { ReactComponent as AddNewIcon } from 'assets/images/account/AddNew.svg';
-import { getDateFormattedString, parseDateFromString } from 'common/moment.helper';
+import { getDateFormattedString, getMonthYear, parseDateFromString } from 'common/moment.helper';
 import { getClassification, getHoldingTypes, patchPosition, postPosition } from 'api/request.api';
 import { HoldingsTypeUpperOptions, HoldingsTypeLowerOptions } from 'account/enum/holdings-type-upper-options';
 
@@ -149,6 +149,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     yearsArr = [(cYear - 1).toString(), cYear.toString(), (cYear + 1).toString()];
   }
 
+  const getAmount = (values: any, i: any) => {
+    let today_value = values.originalValues.filter((ii: any) => ii.interval === 'Today')[0];
+    let today_amount = today_value?.price * today_value?.quantity;
+    return isCurrent(i.interval) && today_amount ? numberWithCommas(fNumber(today_amount, 2)) : numberWithCommas(fNumber(i.price * i.quantity, 2));
+  }
+
   return (
     <Formik
       enableReinitialize
@@ -225,7 +231,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
           ],
         },
         originalValues: holdingsDetails?.intervalValues || [
-          { date: new Date(), interval: new Date().toLocaleString('default', { month: 'short' }), value: 0 },
+          { date: new Date(), interval: 'Today', value: null, price: null, quantity: 1 },
+          { date: new Date(), interval: getMonthYear(new Date()), value: null, price: null, quantity: 1 },
         ],
         accountId,
       }}
@@ -277,6 +284,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
         for (let i = 0; i < values.originalValues.length; i++) {
           const _originalValue = values.originalValues[i];
           _originalValue.date = parseDateFromString(values.originalValues[i].interval);
+          _originalValue.value = values.originalValues[i].price * values.originalValues[i].quantity;
           if (_originalValue.value) {
             _values.push(_originalValue);
           }
@@ -333,31 +341,60 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
           setValues({ ...values, [e.target.name]: e.target.value });
         };
 
-        const handleMonthlyChange = (e: React.ChangeEvent<any>, interval: string) => {
+        const handleMonthlyPriceChange = (e: React.ChangeEvent<any>, interval: string) => {
           const _values = values.originalValues;
           for (let i = 0; i < _values.length; i++) {
             if (isCurrent(interval) && _values[i].interval === 'Today') {
-              _values[i].value = parseFloat(e.target.value);
+              _values[i].price = parseFloat(e.target.value);
               break;
             }
             if (_values[i].interval === e.target.id) {
-              _values[i].value = parseFloat(e.target.value);
+              _values[i].price = parseFloat(e.target.value);
             }
           }
           setValues({ ...values, originalValues: _values });
         };
 
-        const handleMonthlyNewChange = (value: string, e: any) => {
+        const handleMonthlyNewPriceChange = (value: string, e: any) => {
           const _values = values.originalValues;
           let existStatus = false;
           for (let i = 0; i < _values.length; i++) {
             if (_values[i].interval === value) {
               existStatus = true;
-              _values[i].value = parseFloat(e.target.value);
+              _values[i].price = parseFloat(e.target.value);
             }
           }
           if (!existStatus) {
-            _values.push({ date: new Date(value), value: e.target.value, interval: value });
+            _values.push({ date: new Date(value), price: parseFloat(e.target.value), quantity: 1, interval: value });
+          }
+          setValues({ ...values, originalValues: _values });
+        };
+
+        const handleMonthlyQuantityChange = (e: React.ChangeEvent<any>, interval: string) => {
+          const _values = values.originalValues;
+          for (let i = 0; i < _values.length; i++) {
+            if (isCurrent(interval) && _values[i].interval === 'Today') {
+              _values[i].quantity = parseFloat(e.target.value);
+              break;
+            }
+            if (_values[i].interval === e.target.id) {
+              _values[i].quantity = parseFloat(e.target.value);
+            }
+          }
+          setValues({ ...values, originalValues: _values });
+        };
+
+        const handleMonthlyNewQuantityChange = (value: string, e: any) => {
+          const _values = values.originalValues;
+          let existStatus = false;
+          for (let i = 0; i < _values.length; i++) {
+            if (_values[i].interval === value) {
+              existStatus = true;
+              _values[i].quantity = parseFloat(e.target.value);
+            }
+          }
+          if (!existStatus) {
+            _values.push({ date: new Date(value), quantity: e.target.value, interval: value });
           }
           setValues({ ...values, originalValues: _values });
         };
@@ -443,7 +480,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
             <Modal
               {...holdingsDetailsModal.props}
               title={holdingsDetails?.description || 'New Position'}
-              size={holdingsDetails ? 'xxl' : 'xl'}
+              size='xxl'
               canBeClosed
               onClose={() => {
                 holdingsDetailsModal.close();
@@ -1140,236 +1177,143 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                       <Tabs defaultActiveKey={new Date().getFullYear()} id='monthly-value-sub-tab' className='mt-3' style={{ maxWidth: yearsArr.length >= 4 ? '536.5px' : '403.5px' }}>
                         {yearsArr?.map((item, index) => (
                           <Tab eventKey={item} title={item} key={index}>
-                            {holdingsDetails && !holdingsDetails?.isManual ? (
+                            {holdingsDetails && (!holdingsDetails?.isManual || (holdingsDetails?.isManual && holdingsDetails.mmHoldingType.includes('GENERATED'))) ? (
                               <div className='row mt-4'>
                                 <div className='col-sm'>
                                   <div className='row pt-2 pb-2 align-items-center'>
                                     <div className='col-sm table-heading'>Month</div>
+                                    <div className='col-sm table-heading'>Price</div>
+                                    <div className='col-sm table-heading'>Quantity</div>
                                     <div className='col-sm table-heading'>Amount</div>
                                   </div>
-
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Jan ${item}`)].join(' ')}>January</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Jan ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
+                                  {['January', 'Febrary', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
+                                    <div className={['row pt-2 pb-2 align-items-center', monIndex % 2 === 1 ? 'liner-gradient' : ''].join(' ')} key={monIndex}>
+                                      <div className={[`col-sm key`, gc(`${monItem.substr(0, 3)} ${item}`)].join(' ')}>{monItem}</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  { isCurrent(i.interval) ? (
+                                                    values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0] ?
+                                                      currencySymbol + numberWithCommas(fNumber(values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price, 2)) :
+                                                      '--'
+                                                  ) : (
+                                                      i.price || i.price === 0 ? currencySymbol + numberWithCommas(fNumber(i.price, 2)) : '--'
+                                                    )}
+                                                </div>
+                                              ))
+                                          ) : (
+                                            <span>--</span>
+                                          )}
+                                      </div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  { isCurrent(i.interval) ? (
+                                                    values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0] ?
+                                                      values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0].quantity :
+                                                      '--'
+                                                  ) : (
+                                                      i.quantity || '--'
+                                                    )}
+                                                </div>
+                                              ))
+                                          ) : (
+                                            <span>--</span>
+                                          )}
+                                      </div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  {i.value ? currencySymbol : ''}
+                                                  {i.type === 'projection' ? i.value : i.price && i.quantity ? numberWithCommas(fNumber(i.price * i.quantity, 2)) : '--'}
+                                                </div>
+                                              ))
+                                          ) : (
+                                            <span>--</span>
+                                          )}
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Feb ${item}`)].join(' ')}>February</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Feb ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Mar ${item}`)].join(' ')}>March</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Mar ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Apr ${item}`)].join(' ')}>April</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Apr ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`May ${item}`)].join(' ')}>May</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `May ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `May ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Jun ${item}`)].join(' ')}>June</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Jun ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
+                                  ))}
                                 </div>
                                 <div className='col-sm'>
                                   <div className='row pt-2 pb-2 align-items-center'>
                                     <div className='col-sm table-heading'>Month</div>
+                                    <div className='col-sm table-heading'>Price</div>
+                                    <div className='col-sm table-heading'>Quantity</div>
                                     <div className='col-sm table-heading'>Amount</div>
                                   </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Jul ${item}`)].join(' ')}>July</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Jul ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
+                                  {['July', 'August', 'September', 'Octorber', 'November', 'December'].map((monItem, monIndex) => (
+                                    <div className={['row pt-2 pb-2 align-items-center', monIndex % 2 === 1 ? 'liner-gradient' : ''].join(' ')} key={monIndex}>
+                                      <div className={[`col-sm key`, gc(`${monItem.substr(0, 3)} ${item}`)].join(' ')}>{monItem}</div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  { isCurrent(i.interval) ? (
+                                                    values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0] ?
+                                                      currencySymbol + numberWithCommas(fNumber(values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price, 2)) :
+                                                      '--'
+                                                  ) : (
+                                                      i.price || i.price === 0 ? currencySymbol + numberWithCommas(fNumber(i.price, 2)) : '--'
+                                                    )}
+                                                </div>
+                                              ))
+                                          ) : (
+                                            <span>--</span>
+                                          )}
+                                      </div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  { isCurrent(i.interval) ? (
+                                                    values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0] ?
+                                                      values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0].quantity :
+                                                      '--'
+                                                  ) : (
+                                                      i.quantity || '--'
+                                                    )}
+                                                </div>
+                                              ))
+                                          ) : (
+                                            <span>--</span>
+                                          )}
+                                      </div>
+                                      <div className='col-sm'>
+                                        {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                          0 ? (
+                                            values.originalValues
+                                              .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                              .map((i: any, k: number) => (
+                                                <div className='form-field-group' key={k}>
+                                                  {i.value ? currencySymbol : ''}
+                                                  {i.type === 'projection' ? i.value : i.price && i.quantity ? numberWithCommas(fNumber(i.price * i.quantity, 2)) : '--'}
+                                                </div>
+                                              ))
+                                          ) : (
+                                            <span>--</span>
+                                          )}
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Aug ${item}`)].join(' ')}>August</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Aug ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Sep ${item}`)].join(' ')}>September</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Sep ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Oct ${item}`)].join(' ')}>October</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Oct ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center'>
-                                    <div className={[`col-sm key`, gc(`Nov ${item}`)].join(' ')}>November</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Nov ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
-                                  <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                    <div className={[`col-sm key`, gc(`Dec ${item}`)].join(' ')}>December</div>
-                                    <div className='col-sm'>
-                                      {values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length >
-                                        0 ? (
-                                          values.originalValues
-                                            .filter((i: any) => i.interval === `Dec ${item}`)
-                                            .map((i: any, k: number) => (
-                                              <div className='form-field-group' key={k}>
-                                                {i.value || i.value === 0 ? currencySymbol : ''}
-                                                {i.value || i.value === 0 ? numberWithCommas(fNumber(i.value, 2)) : '--'}
-                                              </div>
-                                            ))
-                                        ) : (
-                                          <span>--</span>
-                                        )}
-                                    </div>
-                                  </div>
+                                  ))}
                                 </div>
                               </div>
                             ) : (
@@ -1377,555 +1321,210 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   <div className='col-sm'>
                                     <div className='row pt-2 pb-2 align-items-center'>
                                       <div className='col-sm'>Month</div>
+                                      <div className='col-sm'>Price</div>
+                                      <div className='col-sm'>Quantity</div>
                                       <div className='col-sm'>Amount</div>
                                     </div>
-
-                                    <div className='row pt-2 pb-2 align-items-center'>
-                                      <div className={[`col-sm key`, gc(`Jan ${item}`)].join(' ')}>January</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Jan ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Jan ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
+                                    {['January', 'Febrary', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
+                                      <div className={['row pt-2 pb-2 align-items-center', monIndex % 2 === 1 ? 'liner-gradient' : ''].join(' ')} key={monIndex}>
+                                        <div className={[`col-sm key`, gc(`${monItem.substr(0, 3)} ${item}`)].join(' ')}>{monItem}</div>
+                                        <div className='col-sm'>
+                                          {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                            0 ? (
+                                              values.originalValues
+                                                .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                                .map((i: any, k: number) => (
+                                                  <div className='form-field-group' key={k}>
+                                                    {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                      <>{currencySymbol} {numberWithCommas(fNumber(i.price, 2))}</>
+                                                    ) : (
+                                                        <>
+                                                          <Form.Control
+                                                            onChange={(e) => handleMonthlyPriceChange(e, i.interval)}
+                                                            type='number'
+                                                            step={0.01}
+                                                            id={`${monItem.substr(0, 3)} ${item}`}
+                                                            value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price : i.price || ''}
+                                                          />
+                                                          <span className='input-add-on'>{currencySymbol}</span>
+                                                        </>
+                                                      )}
+                                                  </div>
+                                                ))
+                                            ) : !holdingsDetails ? (
+                                              <div className='form-field-group'>
+                                                {new Date(`${monItem.substr(0, 3)} ${item}`) > new Date() ? (
+                                                  <>--</>
+                                                ) : (
+                                                    <>
+                                                      <Form.Control
+                                                        onChange={(e) => { isCurrent(`${monItem.substr(0, 3)} ${item}`) ? handleMonthlyNewPriceChange('Today', e) : handleMonthlyNewPriceChange(`${monItem.substr(0, 3)} ${item}`, e) }}
+                                                        type='number'
+                                                      />
+                                                      <span className='input-add-on'>{currencySymbol}</span>
+                                                    </>
+                                                  )}
+                                              </div>
+                                            ) : (
+                                                <span>--</span>
+                                              )}
+                                        </div>
+                                        <div className='col-sm'>
+                                          {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                            0 ? (
+                                              values.originalValues
+                                                .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                                .map((i: any, k: number) => (
+                                                  <div className='form-field-group' key={k}>
+                                                    {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                      i.quantity
+                                                    ) : (
                                                         <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                          onChange={(e) => handleMonthlyQuantityChange(e, i.interval)}
                                                           type='number'
                                                           step={0.01}
-                                                          id={`Jan ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                          id={`${monItem.substr(0, 3)} ${item}`}
+                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.quantity : i.quantity || ''}
                                                         />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Jan ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
+                                                      )}
+                                                  </div>
+                                                ))
+                                            ) : !holdingsDetails ? (
+                                              <div className='form-field-group'>
+                                                {new Date(`${monItem.substr(0, 3)} ${item}`) > new Date() ? (
+                                                  <>--</>
+                                                ) : (
                                                     <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Jan ${item}`, e)}
+                                                      onChange={(e) => handleMonthlyNewQuantityChange(`${monItem.substr(0, 3)} ${item}`, e)}
                                                       type='number'
-                                                      defaultValue={0}
+                                                      defaultValue={1}
                                                     />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
+                                                  )}
+                                              </div>
+                                            ) : (
+                                                <span>--</span>
+                                              )}
+                                        </div>
+                                        <div className='col-sm'>
+                                          {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                            0 ? (
+                                              values.originalValues
+                                                .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                                .map((i: any, k: number) => (
+                                                  <div className='form-field-group' key={k}>
+                                                    {currencySymbol} {getAmount(values, i)}
+                                                  </div>
+                                                ))
+                                            ) : (
                                               <span>--</span>
                                             )}
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                      <div className={[`col-sm key`, gc(`Feb ${item}`)].join(' ')}>February</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Feb ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Feb ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`Feb ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Feb ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Feb ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center'>
-                                      <div className={[`col-sm key`, gc(`Mar ${item}`)].join(' ')}>March</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Mar ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Mar ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`Mar ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Mar ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Mar ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                      <div className={[`col-sm key`, gc(`Apr ${item}`)].join(' ')}>April</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Apr ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Apr ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`Apr ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Apr ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Apr ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center'>
-                                      <div className={[`col-sm key`, gc(`May ${item}`)].join(' ')}>May</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `May ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `May ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`May ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`May ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`May ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                      <div className={[`col-sm key`, gc(`Jun ${item}`)].join(' ')}>June</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Jun ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Jun ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`Jun ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Jun ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Jun ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
+                                    ))}
                                   </div>
                                   <div className='col-sm'>
                                     <div className='row pt-2 pb-2 align-items-center'>
                                       <div className='col-sm'>Month</div>
+                                      <div className='col-sm'>Price</div>
+                                      <div className='col-sm'>Quantity</div>
                                       <div className='col-sm'>Amount</div>
                                     </div>
-                                    <div className='row pt-2 pb-2 align-items-center'>
-                                      <div className={[`col-sm key`, gc(`Jul ${item}`)].join(' ')}>July</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Jul ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Jul ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
+                                    {['July', 'August', 'September', 'Octorber', 'November', 'December'].map((monItem, monIndex) => (
+                                      <div className={['row pt-2 pb-2 align-items-center', monIndex % 2 === 1 ? 'liner-gradient' : ''].join(' ')} key={monIndex}>
+                                        <div className={[`col-sm key`, gc(`${monItem.substr(0, 3)} ${item}`)].join(' ')}>{monItem}</div>
+                                        <div className='col-sm'>
+                                          {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                            0 ? (
+                                              values.originalValues
+                                                .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                                .map((i: any, k: number) => (
+                                                  <div className='form-field-group' key={k}>
+                                                    {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                      <>{currencySymbol} {numberWithCommas(fNumber(i.price, 2))}</>
+                                                    ) : (
+                                                        <>
+                                                          <Form.Control
+                                                            onChange={(e) => handleMonthlyPriceChange(e, i.interval)}
+                                                            type='number'
+                                                            step={0.01}
+                                                            id={`${monItem.substr(0, 3)} ${item}`}
+                                                            value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price : i.price || ''}
+                                                          />
+                                                          <span className='input-add-on'>{currencySymbol}</span>
+                                                        </>
+                                                      )}
+                                                  </div>
+                                                ))
+                                            ) : !holdingsDetails ? (
+                                              <div className='form-field-group'>
+                                                {new Date(`${monItem.substr(0, 3)} ${item}`) > new Date() ? (
+                                                  <>--</>
+                                                ) : (
+                                                    <>
+                                                      <Form.Control
+                                                        onChange={(e) => handleMonthlyNewPriceChange(`${monItem.substr(0, 3)} ${item}`, e)}
+                                                        type='number'
+                                                      />
+                                                      <span className='input-add-on'>{currencySymbol}</span>
+                                                    </>
+                                                  )}
+                                              </div>
+                                            ) : (
+                                                <span>--</span>
+                                              )}
+                                        </div>
+                                        <div className='col-sm'>
+                                          {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                            0 ? (
+                                              values.originalValues
+                                                .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                                .map((i: any, k: number) => (
+                                                  <div className='form-field-group' key={k}>
+                                                    {(i.type === 'projection' && !isCurrent(i.interval)) ? (
+                                                      i.quantity
+                                                    ) : (
                                                         <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
+                                                          onChange={(e) => handleMonthlyQuantityChange(e, i.interval)}
                                                           type='number'
                                                           step={0.01}
-                                                          id={`Jul ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
+                                                          id={`${monItem.substr(0, 3)} ${item}`}
+                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.quantity : i.quantity || ''}
                                                         />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Jul ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
+                                                      )}
+                                                  </div>
+                                                ))
+                                            ) : !holdingsDetails ? (
+                                              <div className='form-field-group'>
+                                                {new Date(`${monItem.substr(0, 3)} ${item}`) > new Date() ? (
+                                                  <>--</>
+                                                ) : (
                                                     <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Jul ${item}`, e)}
+                                                      onChange={(e) => handleMonthlyNewQuantityChange(`${monItem.substr(0, 3)} ${item}`, e)}
                                                       type='number'
-                                                      defaultValue={0}
+                                                      defaultValue={1}
                                                     />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
+                                                  )}
+                                              </div>
+                                            ) : (
+                                                <span>--</span>
+                                              )}
+                                        </div>
+                                        <div className='col-sm'>
+                                          {values.originalValues.filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`).length >
+                                            0 ? (
+                                              values.originalValues
+                                                .filter((i: any) => i.interval === `${monItem.substr(0, 3)} ${item}`)
+                                                .map((i: any, k: number) => (
+                                                  <div className='form-field-group' key={k}>
+                                                    {currencySymbol} {getAmount(values, i)}
+                                                  </div>
+                                                ))
+                                            ) : (
                                               <span>--</span>
                                             )}
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                      <div className={[`col-sm key`, gc(`Aug ${item}`)].join(' ')}>August</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Aug ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Aug ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`Aug ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Aug ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Aug ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center'>
-                                      <div className={[`col-sm key`, gc(`Sep ${item}`)].join(' ')}>September</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Sep ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Sep ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`Sep ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Sep ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Sep ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                      <div className={[`col-sm key`, gc(`Oct ${item}`)].join(' ')}>October</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Oct ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Oct ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`Oct ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Oct ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Oct ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center'>
-                                      <div className={[`col-sm key`, gc(`Nov ${item}`)].join(' ')}>November</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Nov ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Nov ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`Nov ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Nov ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Nov ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
-                                    <div className='row pt-2 pb-2 align-items-center liner-gradient'>
-                                      <div className={[`col-sm key`, gc(`Dec ${item}`)].join(' ')}>December</div>
-                                      <div className='col-sm'>
-                                        {values.originalValues.filter((i: any) => i.interval === `Dec ${item}`).length >
-                                          0 ? (
-                                            values.originalValues
-                                              .filter((i: any) => i.interval === `Dec ${item}`)
-                                              .map((i: any, k: number) => (
-                                                <div className='form-field-group' key={k}>
-                                                  {(i.type === 'projection' && !isCurrent(i.interval)) ? (
-                                                    <>{currencySymbol} {numberWithCommas(fNumber(i.value,2))}</>
-                                                  ) : (
-                                                      <>
-                                                        <Form.Control
-                                                          onChange={(e) => handleMonthlyChange(e, i.interval)}
-                                                          type='number'
-                                                          step={0.01}
-                                                          id={`Dec ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')[0].value : i.value || ''}
-                                                        />
-                                                        <span className='input-add-on'>{currencySymbol}</span>
-                                                      </>
-                                                    )}
-                                                </div>
-                                              ))
-                                          ) : !holdingsDetails ? (
-                                            <div className='form-field-group'>
-                                              {new Date(`Dec ${item}`) > new Date() ? (
-                                                <>--</>
-                                              ) : (
-                                                  <>
-                                                    <Form.Control
-                                                      onChange={(e) => handleMonthlyNewChange(`Dec ${item}`, e)}
-                                                      type='number'
-                                                      defaultValue={0}
-                                                    />
-                                                    <span className='input-add-on'>{currencySymbol}</span>
-                                                  </>
-                                                )}
-                                            </div>
-                                          ) : (
-                                              <span>--</span>
-                                            )}
-                                      </div>
-                                    </div>
+                                    ))}
                                   </div>
                                 </div>
                               )}
