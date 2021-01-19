@@ -836,3 +836,69 @@
     margin: 0 30px;
   }
 }
+
+// Connection Issue Area
+
+.connection-issue-container {
+  height: 62px;
+  background-color: $darkBg;
+  border-radius: 0 0 6px 6px;
+  color: $white;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 8px;
+  &.error {
+    border-bottom: 4px solid $redAlert;
+  }
+  &.warning {
+    border-bottom: 4px solid $yellow;
+    .warning-icon-svg, {
+      fill: $yellow;
+    }
+    .warning-icon-dot-svg {
+      stroke: $yellow;
+    }
+  }
+  .connection-issue-left {
+    display: flex;
+    padding-left: 20px;
+  }
+  .connection-status-icon {
+    padding-right: 28px;
+    padding-top: 8px;
+  }
+  .connection-label-container {
+    padding-right: 40px;
+    border-right: 1px solid $whiteOpacity20;
+  }
+  .label {
+    font-size: 1.25rem;
+    line-height: 150%;
+    display: flex;
+  }
+  .time {
+    font-size: 0.625rem;
+    line-height: 0.8125rem;
+    display: flex;
+    letter-spacing: 0.02em;
+  }
+  .connection-error-msg {
+    max-width: 220px;
+    padding-left: 40px;
+    margin: auto;
+
+    span {
+      font-size: 0.75rem;
+      line-height: 0.9375rem;
+      display: flex;
+      letter-spacing: 0.02em;
+    }
+  }
+  .connection-issue-right {
+    padding-right: 20px;
+    button {
+      height: 40px;
+    }
+  }
+}

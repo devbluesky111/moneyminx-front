@@ -33,6 +33,7 @@ import { ReactComponent as NeedsInfo } from 'assets/images/account/Needs Info.sv
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
 import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
+import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
 import { getDate, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
 import {
   getAccountDetails,
@@ -352,6 +353,25 @@ const AccountDetail: React.FC = () => {
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
       />
+      <div className='connection-issue-container warning'>
+        <div className='connection-issue-left'>
+          <span className='connection-status-icon'>
+            <SubscriptionWarning />
+          </span>
+          <div className='connection-label-container'>
+            <span className='label'>Connection Lost</span>
+            <span className='time'>Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}</span>
+          </div>
+          <div className='connection-error-msg'>
+            <span>Reauthorize your connection to continue syncing your account</span>
+          </div>
+        </div>
+        <div className='connection-issue-right'>
+          <button type='button' className='mm-btn-animate mm-btn-white'>
+            Fix Connection
+          </button>
+        </div>
+      </div>
       {!loading && AccountDetails && (
         <AccountSubNavigation
           AccountDetails={AccountDetails}

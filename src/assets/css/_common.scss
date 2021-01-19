@@ -117,7 +117,6 @@ textarea.form-control {
   }
 }
 .btn-danger {
-
   &:hover{
     box-shadow: 2px 4px 8px $pinterestRedGlow;
     background-color: $redAlert;
@@ -129,7 +128,6 @@ textarea.form-control {
   border: 1.5px solid $white;
   box-sizing: border-box;
   border-radius: 4px;
-
   &:hover {
     background: $lightBg;
     color: $purple;
@@ -138,13 +136,21 @@ textarea.form-control {
   &:disabled {
     opacity: 0.7;
   }
-
   &[disabled]:hover {
     box-shadow: none;
     cursor: not-allowed;
   }
 }
+.mm-btn-white {
+  color: $purple;
+  background: $white;
+  font-size: 0.875rem;
 
+  &:hover {
+    color: $white;
+    background: $purple;
+  }
+}
 .mm-btn-crypto {
   background: $pinkAlert;
   display: inline !important;
