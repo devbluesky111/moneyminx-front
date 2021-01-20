@@ -393,7 +393,9 @@ const AccountDetail: React.FC = () => {
         </div>
         {getProviderStatus !== 'ATTENTION_WAIT' ?
           <div className='connection-issue-right'>
-          <button type='button' className='mm-btn-animate mm-btn-white'>
+
+           {/* Shrijan - button that needs onClick method*/}
+            <button type='button' className='mm-btn-animate mm-btn-white'>
             Fix Connection
           </button>
         </div>
@@ -414,6 +416,7 @@ const AccountDetail: React.FC = () => {
               </div>
             </div>
             <div className='connection-issue-right'>
+              {/* Shrijan - button that needs onClick method*/}
               <button type='button' className='mm-btn-animate mm-btn-white'>
                 Fix Connection
               </button>
@@ -587,6 +590,9 @@ const AccountDetail: React.FC = () => {
                                 >
                                   <NeedsInfo />
                                   <span className='needsInfo'>Attention</span>
+
+                                  {/*Shrijan this is giving an error, I do not know why*/}
+
                                   {popup && (
                                     <Popup
                                       AccountDetails={AccountDetails}
