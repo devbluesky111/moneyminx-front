@@ -342,6 +342,28 @@ const AccountDetail: React.FC = () => {
   const hasChartData =
     AccountHoldings?.charts?.length || AccountActivity?.charts?.length || balanceData?.balances?.length;
 
+  let getProviderStatus;
+    if (
+      (AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' && AccountDetails?.providerAccount?.dataset?.[0]?.updateEligibility !== 'DISALLOW_UPDATE') ||
+       AccountDetails?.providerAccount?.status === 'IN_PROGRESS' ||
+       AccountDetails?.providerAccount?.status === 'PARTIAL_SUCCESS' ||
+      (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled >= moment().toISOString()) ||
+      (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled === null)
+    ) {
+      getProviderStatus = 'GOOD';
+    } else if ((AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' && AccountDetails?.providerAccount?.dataset?.[0]?.updateEligibility === 'DISALLOW_UPDATE')) {
+      getProviderStatus = 'ATTENTION_WAIT';
+    }
+    else if (AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED' ||
+      (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled < moment().toISOString()) ){
+      getProviderStatus = 'ATTENTION';
+    } else if (AccountDetails?.providerAccount?.dataset?.[0]?.additionalStatus === 'INCORRECT_CREDENTIALS') {
+      getProviderStatus = 'ERROR_NEW_CREDENTIALS';
+    }
+    else {
+      getProviderStatus = 'ERROR';
+    }
+
   return (
     <div className='mm-setting'>
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
@@ -353,7 +375,8 @@ const AccountDetail: React.FC = () => {
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
       />
-      <div className='connection-issue-container warning'>
+      {getProviderStatus === 'ATTENTION'|| 'ATTENTION_WAIT'?
+      (<div className='connection-issue-container warning'>
         <div className='connection-issue-left'>
           <span className='connection-status-icon'>
             <SubscriptionWarning />
@@ -363,15 +386,39 @@ const AccountDetail: React.FC = () => {
             <span className='time'>Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}</span>
           </div>
           <div className='connection-error-msg'>
-            <span>Reauthorize your connection to continue syncing your account</span>
+            {getProviderStatus === 'ATTENTION_WAIT' ?
+              <span>For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.</span>
+              : <span>This account requires additional security information in order to complete updating your account.</span>}
           </div>
         </div>
-        <div className='connection-issue-right'>
+        {getProviderStatus !== 'ATTENTION_WAIT' ?
+          <div className='connection-issue-right'>
           <button type='button' className='mm-btn-animate mm-btn-white'>
             Fix Connection
           </button>
         </div>
-      </div>
+          : null}
+      </div>) : getProviderStatus === 'ERROR' || 'ERROR_NEW_CREDENTIALS' ?
+          (<div className='connection-issue-container error'>
+            <div className='connection-issue-left'>
+          <span className='connection-status-icon'>
+            <SubscriptionWarning />
+          </span>
+              <div className='connection-label-container'>
+                <span className='label'>Connection Lost</span>
+                <span className='time'>Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}</span>
+              </div>
+              <div className='connection-error-msg'>
+                {getProviderStatus === 'ERROR_NEW_CREDENTIALS' ? <span>Please update your account credentials</span> :
+                <span>Reauthorize your connection to continue syncing your account</span>}
+              </div>
+            </div>
+            <div className='connection-issue-right'>
+              <button type='button' className='mm-btn-animate mm-btn-white'>
+                Fix Connection
+              </button>
+            </div>
+          </div>) : null}
       {!loading && AccountDetails && (
         <AccountSubNavigation
           AccountDetails={AccountDetails}
@@ -527,22 +574,12 @@ const AccountDetail: React.FC = () => {
                             </>
                           ) : (
                             <>
-                              {AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' ||
-                              AccountDetails?.providerAccount?.status === 'IN_PROGRESS' ||
-                              AccountDetails?.providerAccount?.status === 'PARTIAL_SUCCESS' ||
-                              (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
-                                AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled >=
-                                  moment().toISOString()) ||
-                              (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
-                                AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled === null) ? (
+                              {getProviderStatus === 'GOOD' ? (
                                 <>
                                   <CheckCircleGreen />
                                   <span className='good'>Good</span>
                                 </>
-                              ) : AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED' ||
-                                (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
-                                  AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled <
-                                    moment().toISOString()) ? (
+                              ) : getProviderStatus === 'ATTENTION' || 'ATTENTION_WAIT' ? (
                                 <div
                                   className='attention-section'
                                   onMouseEnter={() => setPopup(true)}
@@ -583,7 +620,6 @@ const AccountDetail: React.FC = () => {
                   </div>
                 </div>
               </div>
-
               <div
                 className={[
                   'account-ct-box mb-40',
@@ -763,17 +799,20 @@ export interface PopupProps {
   handleConnectAccount: () => void;
 }
 
-const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount }) => {
+const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount, getProviderStatus }) => {
   return (
     <div className='popup'>
       <span className='pb-2'>Connection Status</span>
       <span className='pb-2'>
         Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
       </span>
-      <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
+      {getProviderStatus === 'ATTENTION_WAIT' ?
+        <span className='pt-2 pb-3'>For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.</span> :
+      <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>}
+      {getProviderStatus !== 'ATTENTION_WAIT' ?
       <button type='button' className='mm-btn-animate mm-btn-primary' onClick={handleConnectAccount}>
         Fix Connection
-      </button>
+      </button> : null}
     </div>
   );
 };
