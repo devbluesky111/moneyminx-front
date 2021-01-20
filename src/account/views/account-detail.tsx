@@ -52,6 +52,7 @@ import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
 import ChartSkeleton from './chart-skeleton';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -342,27 +343,34 @@ const AccountDetail: React.FC = () => {
   const hasChartData =
     AccountHoldings?.charts?.length || AccountActivity?.charts?.length || balanceData?.balances?.length;
 
-  let getProviderStatus;
-    if (
-      (AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' && AccountDetails?.providerAccount?.dataset?.[0]?.updateEligibility !== 'DISALLOW_UPDATE') ||
-       AccountDetails?.providerAccount?.status === 'IN_PROGRESS' ||
-       AccountDetails?.providerAccount?.status === 'PARTIAL_SUCCESS' ||
-      (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled >= moment().toISOString()) ||
-      (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled === null)
-    ) {
-      getProviderStatus = 'GOOD';
-    } else if ((AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' && AccountDetails?.providerAccount?.dataset?.[0]?.updateEligibility === 'DISALLOW_UPDATE')) {
-      getProviderStatus = 'ATTENTION_WAIT';
-    }
-    else if (AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED' ||
-      (AccountDetails?.providerAccount?.status === 'SUCCESS' && AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled < moment().toISOString()) ){
-      getProviderStatus = 'ATTENTION';
-    } else if (AccountDetails?.providerAccount?.dataset?.[0]?.additionalStatus === 'INCORRECT_CREDENTIALS') {
-      getProviderStatus = 'ERROR_NEW_CREDENTIALS';
-    }
-    else {
-      getProviderStatus = 'ERROR';
-    }
+  let providerStatus;
+  if (
+    (AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' &&
+      AccountDetails?.providerAccount?.dataset?.[0]?.updateEligibility !== 'DISALLOW_UPDATE') ||
+    AccountDetails?.providerAccount?.status === 'IN_PROGRESS' ||
+    AccountDetails?.providerAccount?.status === 'PARTIAL_SUCCESS' ||
+    (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
+      AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled >= moment().toISOString()) ||
+    (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
+      AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled === null)
+  ) {
+    providerStatus = 'GOOD';
+  } else if (
+    AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' &&
+    AccountDetails?.providerAccount?.dataset?.[0]?.updateEligibility === 'DISALLOW_UPDATE'
+  ) {
+    providerStatus = 'ATTENTION_WAIT';
+  } else if (
+    AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED' ||
+    (AccountDetails?.providerAccount?.status === 'SUCCESS' &&
+      AccountDetails?.providerAccount?.dataset?.[0]?.nextUpdateScheduled < moment().toISOString())
+  ) {
+    providerStatus = 'ATTENTION';
+  } else if (AccountDetails?.providerAccount?.dataset?.[0]?.additionalStatus === 'INCORRECT_CREDENTIALS') {
+    providerStatus = 'ERROR_NEW_CREDENTIALS';
+  } else {
+    providerStatus = 'ERROR';
+  }
 
   return (
     <div className='mm-setting'>
@@ -375,53 +383,73 @@ const AccountDetail: React.FC = () => {
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
       />
-      {getProviderStatus === 'ATTENTION'|| 'ATTENTION_WAIT'?
-      (<div className='connection-issue-container warning'>
-        <div className='connection-issue-left'>
-          <span className='connection-status-icon'>
-            <SubscriptionWarning />
-          </span>
-          <div className='connection-label-container'>
-            <span className='label'>Connection Lost</span>
-            <span className='time'>Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}</span>
-          </div>
-          <div className='connection-error-msg'>
-            {getProviderStatus === 'ATTENTION_WAIT' ?
-              <span>For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.</span>
-              : <span>This account requires additional security information in order to complete updating your account.</span>}
-          </div>
-        </div>
-        {getProviderStatus !== 'ATTENTION_WAIT' ?
-          <div className='connection-issue-right'>
-
-           {/* Shrijan - button that needs onClick method*/}
-            <button type='button' className='mm-btn-animate mm-btn-white'>
-            Fix Connection
-          </button>
-        </div>
-          : null}
-      </div>) : getProviderStatus === 'ERROR' || 'ERROR_NEW_CREDENTIALS' ?
-          (<div className='connection-issue-container error'>
-            <div className='connection-issue-left'>
-          <span className='connection-status-icon'>
-            <SubscriptionWarning />
-          </span>
-              <div className='connection-label-container'>
-                <span className='label'>Connection Lost</span>
-                <span className='time'>Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}</span>
-              </div>
-              <div className='connection-error-msg'>
-                {getProviderStatus === 'ERROR_NEW_CREDENTIALS' ? <span>Please update your account credentials</span> :
-                <span>Reauthorize your connection to continue syncing your account</span>}
-              </div>
+      {providerStatus === 'ATTENTION' || 'ATTENTION_WAIT' ? (
+        <div className='connection-issue-container warning'>
+          <div className='connection-issue-left'>
+            <span className='connection-status-icon'>
+              <SubscriptionWarning />
+            </span>
+            <div className='connection-label-container'>
+              <span className='label'>Connection Lost</span>
+              <span className='time'>
+                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
+              </span>
             </div>
+            <div className='connection-error-msg'>
+              {providerStatus === 'ATTENTION_WAIT' ? (
+                <span>
+                  For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.
+                </span>
+              ) : (
+                <span>
+                  This account requires additional security information in order to complete updating your account.
+                </span>
+              )}
+            </div>
+          </div>
+          {providerStatus !== 'ATTENTION_WAIT' ? (
             <div className='connection-issue-right'>
-              {/* Shrijan - button that needs onClick method*/}
-              <button type='button' className='mm-btn-animate mm-btn-white'>
+              <button
+                type='button'
+                className='mm-btn-animate mm-btn-white'
+                onClick={() => handleConnectAccount(AccountDetails?.id || 0, false, true)}
+              >
                 Fix Connection
               </button>
             </div>
-          </div>) : null}
+          ) : null}
+        </div>
+      ) : providerStatus === 'ERROR' || 'ERROR_NEW_CREDENTIALS' ? (
+        <div className='connection-issue-container error'>
+          <div className='connection-issue-left'>
+            <span className='connection-status-icon'>
+              <SubscriptionWarning />
+            </span>
+            <div className='connection-label-container'>
+              <span className='label'>Connection Lost</span>
+              <span className='time'>
+                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
+              </span>
+            </div>
+            <div className='connection-error-msg'>
+              {providerStatus === 'ERROR_NEW_CREDENTIALS' ? (
+                <span>Please update your account credentials</span>
+              ) : (
+                <span>Reauthorize your connection to continue syncing your account</span>
+              )}
+            </div>
+          </div>
+          <div className='connection-issue-right'>
+            <button
+              type='button'
+              className='mm-btn-animate mm-btn-white'
+              onClick={() => handleConnectAccount(AccountDetails?.id || 0, true, false)}
+            >
+              Fix Connection
+            </button>
+          </div>
+        </div>
+      ) : null}
       {!loading && AccountDetails && (
         <AccountSubNavigation
           AccountDetails={AccountDetails}
@@ -577,12 +605,12 @@ const AccountDetail: React.FC = () => {
                             </>
                           ) : (
                             <>
-                              {getProviderStatus === 'GOOD' ? (
+                              {providerStatus === 'GOOD' ? (
                                 <>
                                   <CheckCircleGreen />
                                   <span className='good'>Good</span>
                                 </>
-                              ) : getProviderStatus === 'ATTENTION' || 'ATTENTION_WAIT' ? (
+                              ) : providerStatus === 'ATTENTION' || 'ATTENTION_WAIT' ? (
                                 <div
                                   className='attention-section'
                                   onMouseEnter={() => setPopup(true)}
@@ -591,12 +619,13 @@ const AccountDetail: React.FC = () => {
                                   <NeedsInfo />
                                   <span className='needsInfo'>Attention</span>
 
-                                  {/*Shrijan this is giving an error, I do not know why*/}
-
                                   {popup && (
                                     <Popup
                                       AccountDetails={AccountDetails}
-                                      handleConnectAccount={() => handleConnectAccount(AccountDetails.id, false, true)}
+                                      handleConnectAccount={() =>
+                                        handleConnectAccount(AccountDetails?.id || 0, false, true)
+                                      }
+                                      providerStatus={providerStatus}
                                     />
                                   )}
                                 </div>
@@ -612,6 +641,7 @@ const AccountDetail: React.FC = () => {
                                     <Popup
                                       AccountDetails={AccountDetails}
                                       handleConnectAccount={() => handleConnectAccount(AccountDetails.id, true, false)}
+                                      providerStatus={providerStatus}
                                     />
                                   )}
                                 </div>
@@ -801,24 +831,34 @@ const AccountDetail: React.FC = () => {
 export default AccountDetail;
 
 export interface PopupProps {
-  AccountDetails: Account;
+  AccountDetails?: Account;
   handleConnectAccount: () => void;
+  providerStatus: string;
 }
 
-const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount, getProviderStatus }) => {
+const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount, providerStatus }) => {
+  if (!AccountDetails) {
+    return <CircularSpinner />;
+  }
+
   return (
     <div className='popup'>
       <span className='pb-2'>Connection Status</span>
       <span className='pb-2'>
-        Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
+        Last updated {getRelativeDate(AccountDetails.providerAccount?.dataset[0]?.lastUpdated.toString())}
       </span>
-      {getProviderStatus === 'ATTENTION_WAIT' ?
-        <span className='pt-2 pb-3'>For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.</span> :
-      <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>}
-      {getProviderStatus !== 'ATTENTION_WAIT' ?
-      <button type='button' className='mm-btn-animate mm-btn-primary' onClick={handleConnectAccount}>
-        Fix Connection
-      </button> : null}
+      {providerStatus === 'ATTENTION_WAIT' ? (
+        <span className='pt-2 pb-3'>
+          For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.
+        </span>
+      ) : (
+        <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
+      )}
+      {providerStatus !== 'ATTENTION_WAIT' ? (
+        <button type='button' className='mm-btn-animate mm-btn-primary' onClick={handleConnectAccount}>
+          Fix Connection
+        </button>
+      ) : null}
     </div>
   );
 };
