@@ -355,7 +355,7 @@ const AccountDetail: React.FC = () => {
     providerStatus = 'GOOD';
   } else if (
     AccountDetails?.providerAccount?.status === 'USER_INPUT_REQUIRED' ||
-    AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' && AccountDetails?.providerAccount?.dataset?.[0]?.updateEligibility === 'DISALLOW_UPDATE'
+    (AccountDetails?.providerAccount?.status === 'LOGIN_IN_PROGRESS' && AccountDetails?.providerAccount?.dataset?.[0]?.updateEligibility === 'DISALLOW_UPDATE')
   ) {
     providerStatus = 'ATTENTION_WAIT';
   } else if (
