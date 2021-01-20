@@ -266,22 +266,21 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
     const updateEligibility = accountsByProvider[p_name][0].providerAccount?.dataset?.[0]?.updateEligibility;
     if (
       (status === 'LOGIN_IN_PROGRESS' && updateEligibility !== 'DISALLOW_UPDATE') ||
-      status === 'IN_PROGRESS' ||
-      status === 'PARTIAL_SUCCESS' ||
+      status === 'IN_PROGRESS' || status === 'PARTIAL_SUCCESS' ||
       (status === 'SUCCESS' && nextUpdateScheduled >= moment().toISOString()) ||
       (status === 'SUCCESS' && nextUpdateScheduled === null)
     ) {
       accountsByStatus.success.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else if (
+      status === 'USER_INPUT_REQUIRED' ||
       (status === 'LOGIN_IN_PROGRESS' && updateEligibility === 'DISALLOW_UPDATE')
     ) {
       accountsByStatus.warning_wait.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else if (
-      status === 'USER_INPUT_REQUIRED' ||
       (status === 'SUCCESS' && nextUpdateScheduled < moment().toISOString())
     ) {
       accountsByStatus.warning.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
-    }else {
+    } else {
       accountsByStatus.error.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     }
   }
@@ -310,7 +309,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const getStatusClassName = (status: string) => {
     if (status === 'success') {
       return 'mm-account-overview__connected';
-    } else if (status === 'warning' || 'warning_wait') {
+    } else if (status === 'warning' || status === 'warning_wait') {
       return 'mm-account-overview__info';
     }
     return 'mm-account-overview__error';
@@ -364,7 +363,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <span>Needs Attention</span>
                     </div>
                     <div className='col-12 col-md-6 mt-2 text-md-right'>
-                      <span>For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.</span>
+                      <span className='no-update'>For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.</span>
                     </div>
                   </div>
                 )}
