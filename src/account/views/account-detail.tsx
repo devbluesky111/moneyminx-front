@@ -381,25 +381,20 @@ const AccountDetail: React.FC = () => {
       />
       {providerStatus === 'ERROR' || providerStatus === 'ERROR_NEW_CREDENTIALS'? (
         <div className='connection-issue-container error'>
-          <div className='connection-issue-left'>
-            <span className='connection-status-icon'>
+          <span className='connection-status-icon'>
               <SubscriptionWarning />
             </span>
+          <div className='connection-issue-left'>
             <div className='connection-label-container'>
               <span className='label'>Connection Lost</span>
-              <span className='time'>
-                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
-              </span>
+              <span className='time'>Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}</span>
             </div>
             <div className='connection-error-msg'>
               {providerStatus === 'ERROR_NEW_CREDENTIALS' ? (
-                <span>Please update your account credentials</span>
-              ) : (
-                <span>Reauthorize your connection to continue syncing your account</span>
+                <span>Please update your account credentials</span>) : (<span>Reauthorize your connection to continue syncing your account</span>
               )}
             </div>
-          </div>
-          <div className='connection-issue-right'>
+            <div>
             <button
               type='button'
               className='mm-btn-animate mm-btn-white'
@@ -407,34 +402,31 @@ const AccountDetail: React.FC = () => {
             >
               Fix Connection
             </button>
+            </div>
           </div>
         </div>
+
       ) : providerStatus === 'ATTENTION' || providerStatus === 'ATTENTION_WAIT'  ? (
         <div className='connection-issue-container warning'>
-          <div className='connection-issue-left'>
             <span className='connection-status-icon'>
               <SubscriptionWarning />
             </span>
-            <div className='connection-label-container'>
+          <div className='connection-issue-left'>
+          <div className='connection-label-container'>
               <span className='label'>Refresh Connection</span>
-              <span className='time'>
-                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
-              </span>
+              <span className='time'>Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}</span>
             </div>
             <div className='connection-error-msg'>
               {providerStatus === 'ATTENTION_WAIT' ? (
-                <span>
-                  For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.
-                </span>
+                <span>For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.</span>
               ) : (
                 <span>
-                  This account requires additional security information in order to complete updating your account.
+                  Additional security information required to complete updating your account.
                 </span>
               )}
-            </div>
           </div>
           {providerStatus !== 'ATTENTION_WAIT' ? (
-            <div className='connection-issue-right'>
+            <div>
               <button
                 type='button'
                 className='mm-btn-animate mm-btn-white'
@@ -444,6 +436,7 @@ const AccountDetail: React.FC = () => {
               </button>
             </div>
           ) : null}
+        </div>
         </div>
       ) : null}
       {!loading && AccountDetails && (
