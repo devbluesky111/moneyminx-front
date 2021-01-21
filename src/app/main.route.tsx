@@ -22,12 +22,12 @@ import {
 import { ForgotPassword } from 'auth/views';
 
 import AppRoute from './app.route';
-import { TokenExpired } from './app.view';
+import { ResetPassword, TokenExpired } from './app.view';
 import { appRouteConstants } from './app-route.constant';
 
 const {
   home,
-  web: { SECURITY },
+  web: { SECURITY, ABOUT, TERMS, NOTICES, PRIVACY, PRICING },
   features: {
     FEATURES_CRYPTOS,
     FEATURES_NET_WORTH,
@@ -36,7 +36,7 @@ const {
     FEATURES_MULTICURRENCY,
     FEATURES_TRANSACTION_HISTORY,
   },
-  auth: { DEF, LOGIN, SIGNUP, FORGOT_PASSWORD, TOKEN_EXPIRED },
+  auth: { DEF, LOGIN, SIGNUP, FORGOT_PASSWORD, TOKEN_EXPIRED, RESET_PASSWORD },
 } = appRouteConstants;
 
 function MainRoute() {
@@ -55,16 +55,17 @@ function MainRoute() {
           <AuthRoute />
         </Route>
 
-        <Route exact path={'/about'} component={About} />
+        <Route exact path={ABOUT} component={About} />
         <Route exact path={LOGIN} component={Login} />
         <Route exact path={SIGNUP} component={Signup} />
-        <Route exact path={'/notices'} component={Notice} />
-        <Route exact path={'/privacy'} component={Privacy} />
-        <Route exact path={'/pricing'} component={Pricing} />
-        <Route exact path={'/terms'} component={TermNService} />
+        <Route exact path={NOTICES} component={Notice} />
+        <Route exact path={PRIVACY} component={Privacy} />
+        <Route exact path={PRICING} component={Pricing} />
+        <Route exact path={TERMS} component={TermNService} />
         <Route exact path={SECURITY} component={Security} />
         <Route exact path={FORGOT_PASSWORD} component={ForgotPassword} />
         <Route exact path={TOKEN_EXPIRED} component={TokenExpired} />
+        <Route exact path={RESET_PASSWORD} component={ResetPassword} />
 
         <Route exact path={FEATURES_CRYPTOS} component={FeaturesCryptos} />
         <Route exact path={FEATURES_NET_WORTH} component={FeaturesNetWorth} />

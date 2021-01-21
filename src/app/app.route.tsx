@@ -10,12 +10,11 @@ import AllocationRoute from 'allocation/allocation.route';
 import useConnectionInfo from 'common/hooks/useConnectionInfo';
 
 import {
-  ResetPassword,
+  Subscription,
   StripeSuccess,
   StripeFailure,
   AccountSetting,
   ConnectAccount,
-  Subscription,
   SubscriptionReview,
 } from './app.view';
 import PrivateRoute from './app.private-route';
@@ -24,11 +23,11 @@ import { appRouteConstants } from './app-route.constant';
 const {
   account: { ACCOUNT },
   settings: { SETTINGS },
-  subscription: { SUBSCRIPTION, REVIEW },
   networth: { NET_WORTH },
   allocation: { ALLOCATION },
+  subscription: { SUBSCRIPTION, REVIEW },
   misc: { STRIPE_FAILURE, STRIPE_SUCCESS },
-  auth: { RESET_PASSWORD, CONNECT_ACCOUNT, ACCOUNT_SETTING },
+  auth: { CONNECT_ACCOUNT, ACCOUNT_SETTING },
 } = appRouteConstants;
 
 function AppRoute() {
@@ -51,7 +50,6 @@ function AppRoute() {
         <PrivateRoute exact path={REVIEW} component={SubscriptionReview} />
         <PrivateRoute exact path={STRIPE_SUCCESS} component={StripeSuccess} />
         <PrivateRoute exact path={STRIPE_FAILURE} component={StripeFailure} />
-        <PrivateRoute exact path={RESET_PASSWORD} component={ResetPassword} />
         <PrivateRoute exact path={CONNECT_ACCOUNT} component={ConnectAccount} />
         <PrivateRoute exact path={ACCOUNT_SETTING} component={AccountSetting} />
         <PrivateRoute exact path={NET_WORTH} component={NetworthRoute} />

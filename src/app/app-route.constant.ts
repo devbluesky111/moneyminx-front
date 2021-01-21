@@ -27,6 +27,11 @@ export const appRouteConstants = {
   },
 
   web: {
+    ABOUT: '/about',
+    TERMS: '/terms',
+    NOTICES: '/notices',
+    PRIVACY: '/privacy',
+    PRICING: '/pricing',
     SECURITY: '/security',
   },
 
