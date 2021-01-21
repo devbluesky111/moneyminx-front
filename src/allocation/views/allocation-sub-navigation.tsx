@@ -8,7 +8,7 @@ export const AllocationSubNavigation: React.FC<AllocationSubNavigationProps> = (
   return (
     <section className='content-container mm-allocation-sub-navigation d-lg-flex px-4'>
       <div className='mt-2 mt-lg-3'>
-        <AppSubHeader/>
+        <AppSubHeader />
       </div>
       <div className='app-subheader-container mm-allocation-sub-header'>
         <div className='mm-plan-radios mm-allocation-radios middle-box d-inline-flex'>
