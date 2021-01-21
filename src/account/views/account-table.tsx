@@ -96,7 +96,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({
                           {quantityHeader && (
                             <td className='hide-type'>
                               <span>Quantity</span>
-                              {item.quantity}
+                              {numberWithCommas(fNumber(item.quantity,2))}
                             </td>
                           )}
                           {symbolHeader && <td className='hide-type'>{item.symbol}</td>}

@@ -1144,7 +1144,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                       <Tabs defaultActiveKey={new Date().getFullYear()} id='monthly-value-sub-tab' className='mt-3' style={{ maxWidth: yearsArr.length >= 4 ? '536.5px' : '403.5px' }}>
                         {yearsArr?.map((item, index) => (
                           <Tab eventKey={item} title={item} key={index}>
-                            {holdingsDetails && (!holdingsDetails?.isManual || (holdingsDetails?.isManual && holdingsDetails.mmHoldingType.includes('GENERATED'))) ? (
+                            {holdingsDetails && (!holdingsDetails?.isManual) ? (
                               <div className='row mt-4'>
                                 <div className='col-sm'>
                                   <div className='row pt-2 pb-2 align-items-center'>
