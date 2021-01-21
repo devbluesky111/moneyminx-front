@@ -200,6 +200,7 @@ export interface AccountsByProvider {
 export interface AccountByStatus {
   success: AccountsByProvider[];
   warning: AccountsByProvider[];
+  warning_wait: AccountsByProvider[];
   error: AccountsByProvider[];
 }
 
@@ -255,22 +256,27 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const accountsByStatus: AccountByStatus = {
     error: [],
     warning: [],
+    warning_wait: [],
     success: [],
   };
 
   for (const p_name in accountsByProvider) {
     const status = accountsByProvider[p_name][0].providerAccount?.status;
     const nextUpdateScheduled = accountsByProvider[p_name][0].providerAccount?.dataset?.[0]?.nextUpdateScheduled;
+    const updateEligibility = accountsByProvider[p_name][0].providerAccount?.dataset?.[0]?.updateEligibility;
     if (
-      status === 'LOGIN_IN_PROGRESS' ||
-      status === 'IN_PROGRESS' ||
-      status === 'PARTIAL_SUCCESS' ||
+      (status === 'LOGIN_IN_PROGRESS' && updateEligibility !== 'DISALLOW_UPDATE') ||
+      status === 'IN_PROGRESS' || status === 'PARTIAL_SUCCESS' ||
       (status === 'SUCCESS' && nextUpdateScheduled >= moment().toISOString()) ||
       (status === 'SUCCESS' && nextUpdateScheduled === null)
     ) {
       accountsByStatus.success.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
     } else if (
       status === 'USER_INPUT_REQUIRED' ||
+      (status === 'LOGIN_IN_PROGRESS' && updateEligibility === 'DISALLOW_UPDATE')
+    ) {
+      accountsByStatus.warning_wait.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
+    } else if (
       (status === 'SUCCESS' && nextUpdateScheduled < moment().toISOString())
     ) {
       accountsByStatus.warning.push({ provider_name: p_name, accounts: accountsByProvider[p_name] });
@@ -303,7 +309,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
   const getStatusClassName = (status: string) => {
     if (status === 'success') {
       return 'mm-account-overview__connected';
-    } else if (status === 'warning') {
+    } else if (status === 'warning' || status === 'warning_wait') {
       return 'mm-account-overview__info';
     }
     return 'mm-account-overview__error';
@@ -351,6 +357,16 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                     </div>
                   </div>
                 )}
+                {status === 'warning_wait' && (
+                  <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
+                    <div className='col-12 col-md-6 text-warning'>
+                      <span>Needs Attention</span>
+                    </div>
+                    <div className='col-12 col-md-6 mt-2 text-md-right'>
+                      <span className='no-update'>For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.</span>
+                    </div>
+                  </div>
+                )}
                 {status === 'warning' && (
                   <div className='row pb-3 align-items-center no-gutters fix-connection-sec'>
                     <div className='col-12 col-md-6 text-warning'>
@@ -360,7 +376,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                       <button
                         type='button'
                         className='btn btn-outline-primary mm-button btn-lg'
-                        onClick={() => handleConnectAccount(group.accounts[0].id, true, false)}
+                        onClick={() => handleConnectAccount(group.accounts[0].id, false, true)}
                       >
                         Fix Connection
                       </button>

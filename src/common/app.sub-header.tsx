@@ -28,7 +28,7 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
       if (!error) {
         const successAccounts = data.filter((acc: Account) => (
           acc.isManual ||
-          acc.providerAccount.status === 'LOGIN_IN_PROGRESS' ||
+          (acc.providerAccount.status === 'LOGIN_IN_PROGRESS' && acc.providerAccount?.dataset?.[0]?.updateEligibility !== 'DISALLOW_UPDATE') ||
           acc.providerAccount.status === 'IN_PROGRESS' ||
           acc.providerAccount.status === 'PARTIAL_SUCCESS' ||
           (acc.providerAccount.status === 'SUCCESS' && acc.providerAccount.dataset?.[0]?.nextUpdateScheduled >= moment().toISOString()) ||
@@ -36,7 +36,8 @@ const AppSubHeader: React.FC<AppSubHeaderProps> = ({ AccountDetails }) => {
         ));
         const warningAccounts = data.filter((acc: Account) => (
           (!acc.isManual && acc.providerAccount.status === 'USER_INPUT_REQUIRED') ||
-            (!acc.isManual && acc.providerAccount.status === 'SUCCESS' && acc.providerAccount.dataset?.[0]?.nextUpdateScheduled < moment().toISOString())
+          (!acc.isManual && acc.providerAccount.status === 'LOGIN_IN_PROGRESS' && acc.providerAccount?.dataset?.[0]?.updateEligibility === 'DISALLOW_UPDATE') ||
+          (!acc.isManual && acc.providerAccount.status === 'SUCCESS' && acc.providerAccount.dataset?.[0]?.nextUpdateScheduled < moment().toISOString())
         ));
         const errorAccounts = data.filter((acc: Account) => (
           !acc.isManual &&
