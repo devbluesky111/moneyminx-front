@@ -1353,7 +1353,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                             type='number'
                                                             step={0.01}
                                                             id={`${monItem.substr(0, 3)} ${item}`}
-                                                            value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price : i.price || ''}
+                                                            value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price || '' : i.price || ''}
                                                           />
                                                           <span className='input-add-on'>{currencySymbol}</span>
                                                         </>
@@ -1393,7 +1393,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                           type='number'
                                                           step={0.01}
                                                           id={`${monItem.substr(0, 3)} ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.quantity : i.quantity || ''}
+                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.quantity || '' : i.quantity || ''}
                                                         />
                                                       )}
                                                   </div>
@@ -1457,7 +1457,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                             type='number'
                                                             step={0.01}
                                                             id={`${monItem.substr(0, 3)} ${item}`}
-                                                            value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price : i.price || ''}
+                                                            value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price || '' : i.price || ''}
                                                           />
                                                           <span className='input-add-on'>{currencySymbol}</span>
                                                         </>
@@ -1497,7 +1497,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                           type='number'
                                                           step={0.01}
                                                           id={`${monItem.substr(0, 3)} ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.quantity : i.quantity || ''}
+                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.quantity || '' : i.quantity || ''}
                                                         />
                                                       )}
                                                   </div>
