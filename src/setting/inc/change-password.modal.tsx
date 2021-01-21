@@ -25,7 +25,7 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
 
   const reg1 = /^.{8,}$/;
   const reg2 = /(^.*\d+.*$)/;
-  const reg3 = /(^.*[@$!%*#?&].*$)/;
+  const reg3 = /(^.*[~`!@#$%^&*()_+\-={[}\]|\\:;"'<,>.?/].*$)/;
   const reg4 = /(^.*[A-Z].*$)/;
 
   const isVisible = (field: string) => visible[field];
@@ -116,7 +116,7 @@ const ChangePasswordModal: React.FC<ChangePasswordProps> = ({ changePasswordModa
                 <div className='input-wrap'>
                   <input
                     type={isVisible('oldPassword') ? 'text' : 'password'}
-                    className='password'
+                    className='password pr-40'
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
                     value={props.values.oldPassword}
