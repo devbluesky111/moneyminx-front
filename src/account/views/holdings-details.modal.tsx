@@ -1364,7 +1364,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     <Form.Control
                                                       onChange={(e) => handleMonthlyNewQuantityChange(`${monItem.substr(0, 3)} ${item}`, e)}
                                                       type='number'
-                                                      defaultValue={1}
                                                     />
                                                   )}
                                               </div>
@@ -1468,7 +1467,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     <Form.Control
                                                       onChange={(e) => handleMonthlyNewQuantityChange(`${monItem.substr(0, 3)} ${item}`, e)}
                                                       type='number'
-                                                      defaultValue={1}
                                                     />
                                                   )}
                                               </div>
