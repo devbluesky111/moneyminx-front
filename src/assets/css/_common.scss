@@ -588,3 +588,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 input[type="number"] {
   -moz-appearance: textfield !important;
 }
+
+.no-hover {
+  pointer-events: none;
+}

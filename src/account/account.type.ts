@@ -11,6 +11,8 @@ export interface AccountChartItem {
   interval: string;
   type: string;
   value: number;
+  price?: number;
+  quantity?: number;
 }
 
 export interface AccountBarGraphProps {

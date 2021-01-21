@@ -31,7 +31,7 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol }) 
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr className='no-hover'>
                     <td>{balanceData.accountName}</td>
                     {balances.map((balanceObj, index) => (
                       <td key={index} className={gc(balanceObj.interval)}>
