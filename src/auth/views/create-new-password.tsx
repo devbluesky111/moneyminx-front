@@ -60,7 +60,7 @@ export const CreateNewPasswordMainSection = () => {
 
   const reg1 = /^.{8,}$/;
   const reg2 = /(^.*\d+.*$)/;
-  const reg3 = /(^.*[@$!%*#?&].*$)/;
+  const reg3 = /(^.*[~`!@#$%^&*()_+\-={[}\]|\\:;"'<,>.?/].*$)/;
   const reg4 = /(^.*[A-Z].*$)/;
 
   const getValidationText = () => {
