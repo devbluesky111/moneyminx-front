@@ -164,8 +164,6 @@ export const changePassword = async ({ dispatch, payload }: ChangePasswordServic
 
   if (error) {
     dispatch({ type: auth.SIGN_OUT_FAILURE });
-  } else {
-    dispatch({ type: auth.SIGN_OUT_SUCCESS });
   }
 
   return { data, error };
