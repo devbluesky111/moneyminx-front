@@ -399,7 +399,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({ accountList, available
                   </div>
                   <div className='col-12 col-md-6 order-md-1 text-md-right pt-2 pt-md-0'>
                     <small className='text--grayText'>
-                      Last updated {getRelativeDate(group.accounts[0]?.providerAccount?.dataset[0].lastUpdated)}
+                      Last updated {getRelativeDate(group.accounts[0]?.providerAccount?.dataset[0]?.lastUpdated)}
                     </small>
                   </div>
                 </div>
