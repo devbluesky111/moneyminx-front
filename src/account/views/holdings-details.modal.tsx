@@ -1123,34 +1123,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                 </div>
                               </div>
                               <div className='row mt-2 align-items-center'>
-                                <div className='col-sm-3'>Quantity</div>
-                                <div className='col-sm-6'>
-                                  <div className='form-field-group'>
-                                    <Form.Control
-                                      onChange={handleChange}
-                                      type='number'
-                                      name='quantity'
-                                      value={values.quantity || ''}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div className='row mt-2 align-items-center'>
-                                <div className='col-sm-3'>Price per Unit</div>
-                                <div className='col-sm-6'>
-                                  <div className='form-field-group'>
-                                    <Form.Control
-                                      onChange={handleChange}
-                                      type='number'
-                                      name='price'
-                                      value={values.price || ''}
-                                    />
-                                    <span className='input-add-on'>{currencySymbol}</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className='row mt-2 align-items-center'>
-                                <div className='col-sm-3'>Cost per Unit</div>
+                                <div className='col-sm-3'>Cost</div>
                                 <div className='col-sm-6'>
                                   <div className='form-field-group'>
                                     <Form.Control
@@ -1161,21 +1134,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     />
                                     <span className='input-add-on'>{currencySymbol}</span>
                                   </div>
-                                </div>
-                              </div>
-                              <div className='row my-4 align-items-center'>
-                                <div className='col-sm'>Market Value</div>
-                                <div className='col-sm'>{currencySymbol}{numberWithCommas(fNumber(values.price * values.quantity, 2))}</div>
-                                <div className='col-sm'>Gain / loss</div>
-                                <div
-                                  className={[
-                                    'col-sm',
-                                    (values.price - values.costBasis) * values.quantity >= 0
-                                      ? 'text-green'
-                                      : 'text-danger',
-                                  ].join(' ')}
-                                >
-                                  {currencySymbol}{numberWithCommas(fNumber((values.price - values.costBasis) * values.quantity, 2))}
                                 </div>
                               </div>
                             </div>
