@@ -9,6 +9,7 @@ import { Modal } from 'common/components/modal';
 import { isCurrent } from 'common/interval-parser';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { HoldingsDetailsModalProps } from 'account/account.type';
+import { HoldingsModalTabs } from 'account/account.enum';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { SelectInput } from 'common/components/input/select.input';
 import { enumerateStr, formater, getUnique } from 'common/common-helper';
@@ -57,6 +58,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   const [unClassifiedAssetClassValue, setUnClassifiedAssetClassValue] = useState<number>(0);
   const [unClassifiedCountryValue, setUnClassifiedCountryValue] = useState<number>(0);
   const [unClassifiedRiskValue, setUnClassifiedRiskValue] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState<string>(HoldingsModalTabs.DETAILS);
   const { mmToast } = useToast();
 
   const handleCancel = () => {
@@ -150,17 +152,24 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   }
 
   const getAmount = (values: any, i: any, currencySymbol: string) => {
-    if (i.type === 'projection') {
-      return i.value ? currencySymbol + i.value : '--';
-    }
-    let today_value = values.originalValues.filter((ii: any) => ii.interval === 'Today')[0];
-    let today_amount = today_value?.price * today_value?.quantity;
-    let amount = isCurrent(i.interval) && today_amount ? numberWithCommas(fNumber(today_amount, 2)) : numberWithCommas(fNumber(i.price * i.quantity, 2));
-    console.log(amount);
+
+    const todayValue = values.originalValues.filter((ii: any) => ii.interval === 'Today')[0];
+    const todayAmount = todayValue?.price * todayValue?.quantity;
+    const amount = isCurrent(i.interval) && todayAmount ? numberWithCommas(fNumber(todayAmount, 2)) : numberWithCommas(fNumber(i.price * i.quantity, 2));
+
     if (amount !== '0') {
       return currencySymbol + amount;
     }
+
+    if (i.type === 'projection') {
+      return i.value ? currencySymbol + i.value : '--';
+    }
+
     return '--';
+  }
+
+  const tabsControl = (tabKey: string) => {
+    setActiveTab(tabKey);
   }
 
   return (
@@ -344,7 +353,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     >
       {(props) => {
         const { values, handleChange, setValues, setFieldValue } = props;
-        console.log(values.originalValues)
 
         const handleSelectChange = (e: React.ChangeEvent<any>) => {
           setValues({ ...values, [e.target.name]: e.target.value });
@@ -374,7 +382,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
             }
           }
           if (!existStatus) {
-            _values.push({ date: new Date(value), price: parseFloat(e.target.value), quantity: 1, interval: value });
+            _values.push({ date: new Date(value), price: parseFloat(e.target.value), interval: value });
           }
           setValues({ ...values, originalValues: _values });
         };
@@ -504,7 +512,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                   </span>
                 )}
                 <div className='mm-holdings-details-modal__title mt-3'>
-                  <Tabs defaultActiveKey='details' transition={false} id='holdings-details-modal'>
+                  <Tabs transition={false} id='holdings-details-modal' activeKey={activeTab} onSelect={(e) => tabsControl(e ? e : '')}>
                     <Tab eventKey='details' title='Details'>
                       {holdingsDetails ? (
                         <>
@@ -528,21 +536,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                   <div className='row mt-2 align-items-center'>
                                     <div className='col-sm'>Security Type</div>
                                     <div className='col-sm'>{formater(values.securityType)}</div>
-                                  </div>
-                                )}
-                                {values.price !== null && (
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Price</div>
-                                    <div className='col-sm'>
-                                      {currencySymbol}
-                                      {values.price}
-                                    </div>
-                                  </div>
-                                )}
-                                {values.quantity !== null && (
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Quantity</div>
-                                    <div className='col-sm'>{values.quantity}</div>
                                   </div>
                                 )}
                                 {values.symbol !== null && (
@@ -777,33 +770,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                           onChange={handleSelectChange}
                                           value={values.holdingType}
                                           name='holdingType'
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Price</div>
-                                    <div className='col-sm'>
-                                      <div className='form-field-group'>
-                                        <Form.Control
-                                          onChange={handleChange}
-                                          type='number'
-                                          name='price'
-                                          value={values.price || ''}
-                                        />
-                                        <span className='input-add-on'>{currencySymbol}</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className='row mt-2 align-items-center'>
-                                    <div className='col-sm'>Quantity</div>
-                                    <div className='col-sm'>
-                                      <div className='form-field-group'>
-                                        <Form.Control
-                                          onChange={handleChange}
-                                          type='number'
-                                          name='quantity'
-                                          value={values.quantity || ''}
                                         />
                                       </div>
                                     </div>
@@ -1139,6 +1105,16 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                             </div>
                           </div>
                         )}
+                      <div className='action-wrapper mt-3'>
+                        <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel} type='button'>
+                          Cancel
+                        </button>
+                        <button
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl(HoldingsModalTabs.MONTHLYVALUES)} type='button'
+                        >
+                          Next
+                        </button>
+                      </div>
                     </Tab>
                     <Tab eventKey='monthlyValues' title='Monthly Values' className='monthly-values-sub-tabs'>
                       <Tabs defaultActiveKey={new Date().getFullYear()} id='monthly-value-sub-tab' className='mt-3' style={{ maxWidth: yearsArr.length >= 4 ? '536.5px' : '403.5px' }}>
@@ -1153,7 +1129,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm table-heading'>Quantity</div>
                                     <div className='col-sm table-heading'>Amount</div>
                                   </div>
-                                  {['January', 'Febrary', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
+                                  {['January', 'February', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
                                     <div className={['row pt-2 pb-2 align-items-center', monIndex % 2 === 1 ? 'liner-gradient' : ''].join(' ')} key={monIndex}>
                                       <div className={[`col-sm key`, gc(`${monItem.substr(0, 3)} ${item}`)].join(' ')}>{monItem}</div>
                                       <div className='col-sm'>
@@ -1292,7 +1268,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                       <div className='col-sm'>Quantity</div>
                                       <div className='col-sm'>Amount</div>
                                     </div>
-                                    {['January', 'Febrary', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
+                                    {['January', 'February', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
                                       <div className={['row pt-2 pb-2 align-items-center', monIndex % 2 === 1 ? 'liner-gradient' : ''].join(' ')} key={monIndex}>
                                         <div className={[`col-sm key`, gc(`${monItem.substr(0, 3)} ${item}`)].join(' ')}>{monItem}</div>
                                         <div className='col-sm'>
@@ -1497,6 +1473,18 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                         ))}
                         <Tab title='' />
                       </Tabs>
+                      <div className='action-wrapper mt-3'>
+                        <button
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl(HoldingsModalTabs.DETAILS)} type='button'
+                        >
+                          Back
+                        </button>
+                        <button
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl(HoldingsModalTabs.CLASSIFICATIONS)} type='button'
+                        >
+                          Next
+                        </button>
+                      </div>
                     </Tab>
                     <Tab eventKey='classifications' title='Classifications' className='classifications-sub-tabs'>
                       <Tabs defaultActiveKey='type' id='classifications-sub-tab' className='mt-3'>
@@ -1749,29 +1737,32 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                         </Tab>
                         <Tab title='' />
                       </Tabs>
+                      <div className='action-wrapper mt-3'>
+                        <button
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl(HoldingsModalTabs.MONTHLYVALUES)} type='button'
+                        >
+                          Back
+                        </button>
+                        <button
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center'
+                          type='submit'
+                          disabled={getUnclassifiedRest('Type') < 0}
+                        >
+                          {loading ? (
+                            <>
+                              <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />
+                              <span className='ml-1'>Saving...</span>
+                            </>
+                          ) : (
+                              <>
+                                Save<span className='hide-sm ml-1'>Position</span>
+                              </>
+                            )}
+                        </button>
+                      </div>
                     </Tab>
                   </Tabs>
-                  <div className='action-wrapper mt-3'>
-                    <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel} type='button'>
-                      Cancel
-                    </button>
-                    <button
-                      className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center'
-                      type='submit'
-                      disabled={getUnclassifiedRest('Type') < 0}
-                    >
-                      {loading ? (
-                        <>
-                          <span className='spinner-grow spinner-grow-sm' role='status' aria-hidden='true' />
-                          <span className='ml-1'>Saving...</span>
-                        </>
-                      ) : (
-                          <>
-                            Save<span className='hide-sm ml-1'>Changes</span>
-                          </>
-                        )}
-                    </button>
-                  </div>
+
                 </div>
               </div>
             </Modal>
