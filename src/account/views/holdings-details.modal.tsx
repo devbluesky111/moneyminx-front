@@ -512,7 +512,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                   </span>
                 )}
                 <div className='mm-holdings-details-modal__title mt-3'>
-                  <Tabs transition={false} id='holdings-details-modal' activeKey={activeTab}>
+                  <Tabs transition={false} id='holdings-details-modal' activeKey={activeTab} onSelect={(e) => tabsControl(e ? e : '')}>
                     <Tab eventKey='details' title='Details'>
                       {holdingsDetails ? (
                         <>
