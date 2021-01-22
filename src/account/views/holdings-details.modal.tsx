@@ -9,6 +9,7 @@ import { Modal } from 'common/components/modal';
 import { isCurrent } from 'common/interval-parser';
 import { CurrencyOptions } from 'auth/enum/currency-options';
 import { HoldingsDetailsModalProps } from 'account/account.type';
+import { HoldingsModalTabs } from 'account/account.enum';
 import { fNumber, numberWithCommas } from 'common/number.helper';
 import { SelectInput } from 'common/components/input/select.input';
 import { enumerateStr, formater, getUnique } from 'common/common-helper';
@@ -57,7 +58,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   const [unClassifiedAssetClassValue, setUnClassifiedAssetClassValue] = useState<number>(0);
   const [unClassifiedCountryValue, setUnClassifiedCountryValue] = useState<number>(0);
   const [unClassifiedRiskValue, setUnClassifiedRiskValue] = useState<number>(0);
-  const [activeTab, setActiveTab] = useState<string>('details');
+  const [activeTab, setActiveTab] = useState<string>(HoldingsModalTabs.DETAILS);
   const { mmToast } = useToast();
 
   const handleCancel = () => {
@@ -167,8 +168,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     return '--';
   }
 
-  const tabsControl = (id: string) => {
-    setActiveTab(id);
+  const tabsControl = (tabKey: string) => {
+    setActiveTab(tabKey);
   }
 
   return (
@@ -1109,7 +1110,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                           Cancel
                         </button>
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('monthlyValues')} type='button'
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl(HoldingsModalTabs.MONTHLYVALUES)} type='button'
                         >
                           Next
                         </button>
@@ -1474,12 +1475,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                       </Tabs>
                       <div className='action-wrapper mt-3'>
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('details')} type='button'
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl(HoldingsModalTabs.DETAILS)} type='button'
                         >
                           Back
                         </button>
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('classifications')} type='button'
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl(HoldingsModalTabs.CLASSIFICATIONS)} type='button'
                         >
                           Next
                         </button>
@@ -1738,7 +1739,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                       </Tabs>
                       <div className='action-wrapper mt-3'>
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('monthlyValues')} type='button'
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl(HoldingsModalTabs.MONTHLYVALUES)} type='button'
                         >
                           Back
                         </button>
