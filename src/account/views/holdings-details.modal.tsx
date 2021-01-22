@@ -152,9 +152,9 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
   const getAmount = (values: any, i: any, currencySymbol: string) => {
 
-    let today_value = values.originalValues.filter((ii: any) => ii.interval === 'Today')[0];
-    let today_amount = today_value?.price * today_value?.quantity;
-    let amount = isCurrent(i.interval) && today_amount ? numberWithCommas(fNumber(today_amount, 2)) : numberWithCommas(fNumber(i.price * i.quantity, 2));
+    const todayValue = values.originalValues.filter((ii: any) => ii.interval === 'Today')[0];
+    const todayAmount = todayValue?.price * todayValue?.quantity;
+    const amount = isCurrent(i.interval) && todayAmount ? numberWithCommas(fNumber(todayAmount, 2)) : numberWithCommas(fNumber(i.price * i.quantity, 2));
 
     if (amount !== '0') {
       return currencySymbol + amount;
@@ -352,7 +352,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     >
       {(props) => {
         const { values, handleChange, setValues, setFieldValue } = props;
-        console.log(values.originalValues)
 
         const handleSelectChange = (e: React.ChangeEvent<any>) => {
           setValues({ ...values, [e.target.name]: e.target.value });
@@ -1129,7 +1128,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     <div className='col-sm table-heading'>Quantity</div>
                                     <div className='col-sm table-heading'>Amount</div>
                                   </div>
-                                  {['January', 'Febrary', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
+                                  {['January', 'February', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
                                     <div className={['row pt-2 pb-2 align-items-center', monIndex % 2 === 1 ? 'liner-gradient' : ''].join(' ')} key={monIndex}>
                                       <div className={[`col-sm key`, gc(`${monItem.substr(0, 3)} ${item}`)].join(' ')}>{monItem}</div>
                                       <div className='col-sm'>
@@ -1268,7 +1267,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                       <div className='col-sm'>Quantity</div>
                                       <div className='col-sm'>Amount</div>
                                     </div>
-                                    {['January', 'Febrary', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
+                                    {['January', 'February', 'March', 'April', 'May', 'June'].map((monItem, monIndex) => (
                                       <div className={['row pt-2 pb-2 align-items-center', monIndex % 2 === 1 ? 'liner-gradient' : ''].join(' ')} key={monIndex}>
                                         <div className={[`col-sm key`, gc(`${monItem.substr(0, 3)} ${item}`)].join(' ')}>{monItem}</div>
                                         <div className='col-sm'>
