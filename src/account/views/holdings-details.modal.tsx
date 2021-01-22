@@ -57,6 +57,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   const [unClassifiedAssetClassValue, setUnClassifiedAssetClassValue] = useState<number>(0);
   const [unClassifiedCountryValue, setUnClassifiedCountryValue] = useState<number>(0);
   const [unClassifiedRiskValue, setUnClassifiedRiskValue] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState<string>('details');
   const { mmToast } = useToast();
 
   const handleCancel = () => {
@@ -167,11 +168,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
   }
 
   const tabsControl = (id: string) => {
-    const elements = document.querySelectorAll(`#${id}`);
-    for (let i = 0; i < elements.length; i++) {
-      const element = elements[i] as HTMLElement;
-      element.click();
-    }
+    setActiveTab(id);
   }
 
   return (
@@ -515,7 +512,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                   </span>
                 )}
                 <div className='mm-holdings-details-modal__title mt-3'>
-                  <Tabs defaultActiveKey='details' transition={false} id='holdings-details-modal'>
+                  <Tabs transition={false} id='holdings-details-modal' activeKey={activeTab}>
                     <Tab eventKey='details' title='Details'>
                       {holdingsDetails ? (
                         <>
@@ -1113,7 +1110,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                           Cancel
                         </button>
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('holdings-details-modal-tab-monthlyValues')} type='button'
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('monthlyValues')} type='button'
                         >
                           Next
                         </button>
@@ -1478,12 +1475,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                       </Tabs>
                       <div className='action-wrapper mt-3'>
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('holdings-details-modal-tab-details')} type='button'
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('details')} type='button'
                         >
                           Back
                         </button>
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('holdings-details-modal-tab-classifications')} type='button'
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('classifications')} type='button'
                         >
                           Next
                         </button>
@@ -1742,7 +1739,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                       </Tabs>
                       <div className='action-wrapper mt-3'>
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('holdings-details-modal-tab-monthlyValues')} type='button'
+                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center' onClick={() => tabsControl('monthlyValues')} type='button'
                         >
                           Back
                         </button>
