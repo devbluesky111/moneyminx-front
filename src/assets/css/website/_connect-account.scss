@@ -299,16 +299,17 @@ span.zillow-img {
 }
 
 .add-account-card {
-    box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
-    border-radius: 6px;
-    margin-top: 1.5rem;
-    background: $white;
-    margin-bottom: 0.75rem;
-    border: none;
-    position: relative;
-    display: inline-block;
-    min-width: 0;
-    word-wrap: break-word;
+  box-shadow: 0 2px 8px $whiteFadeShadow, inset 0px -1px 0px $whiteInsetShadow;
+  border-radius: 6px;
+  margin-top: 1.5rem;
+  background: $white;
+  margin-bottom: 0.75rem;
+  border: none;
+  position: relative;
+  display: inline-block;
+  min-width: 0;
+  word-wrap: break-word;
+  max-width: 630px;
     &.small {
         max-width: 100%;
         @media (min-width: $sm) {
