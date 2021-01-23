@@ -153,7 +153,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
   const getAmount = (values: any, i: any, currencySymbol: string) => {
 
-    const todayValue = values.originalValues.filter((ii: any) => ii.interval === 'Today')[0];
+    const todayValue = values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')[0];
     const todayAmount = todayValue?.price * todayValue?.quantity;
     const amount = isCurrent(i.interval) && todayAmount ? numberWithCommas(fNumber(todayAmount, 2)) : numberWithCommas(fNumber(i.price * i.quantity, 2));
 
@@ -1140,8 +1140,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   { isCurrent(i.interval) ? (
-                                                    values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0] ?
-                                                      currencySymbol + numberWithCommas(fNumber(values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price, 2)) :
+                                                    values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0] ?
+                                                      currencySymbol + numberWithCommas(fNumber(values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0]?.price, 2)) :
                                                       '--'
                                                   ) : (
                                                       i.price ? currencySymbol + numberWithCommas(fNumber(i.price, 2)) : '--'
@@ -1160,8 +1160,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   { isCurrent(i.interval) ? (
-                                                    values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0] ?
-                                                      values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0].quantity :
+                                                    values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0] ?
+                                                      values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0].quantity :
                                                       '--'
                                                   ) : (
                                                       i.quantity || '--'
@@ -1208,8 +1208,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   { isCurrent(i.interval) ? (
-                                                    values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0] ?
-                                                      currencySymbol + numberWithCommas(fNumber(values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price, 2)) :
+                                                    values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0] ?
+                                                      currencySymbol + numberWithCommas(fNumber(values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0]?.price, 2)) :
                                                       '--'
                                                   ) : (
                                                       i.price ? currencySymbol + numberWithCommas(fNumber(i.price, 2)) : '--'
@@ -1228,8 +1228,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                               .map((i: any, k: number) => (
                                                 <div className='form-field-group' key={k}>
                                                   { isCurrent(i.interval) ? (
-                                                    values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0] ?
-                                                      values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0].quantity :
+                                                    values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0] ?
+                                                      values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0].quantity :
                                                       '--'
                                                   ) : (
                                                       i.quantity || '--'
@@ -1287,7 +1287,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                             type='number'
                                                             step={0.01}
                                                             id={`${monItem.substr(0, 3)} ${item}`}
-                                                            value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price || '' : i.price || ''}
+                                                            value={isCurrent(i.interval) ? values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0]?.price || '' : i.price || ''}
                                                           />
                                                           <span className='input-add-on'>{currencySymbol}</span>
                                                         </>
@@ -1327,7 +1327,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                           type='number'
                                                           step={0.01}
                                                           id={`${monItem.substr(0, 3)} ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.quantity || '' : i.quantity || ''}
+                                                          value={isCurrent(i.interval) ? values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0]?.quantity || '' : i.quantity || ''}
                                                         />
                                                       )}
                                                   </div>
@@ -1390,7 +1390,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                             type='number'
                                                             step={0.01}
                                                             id={`${monItem.substr(0, 3)} ${item}`}
-                                                            value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.price || '' : i.price || ''}
+                                                            value={isCurrent(i.interval) ? values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0]?.price || '' : i.price || ''}
                                                           />
                                                           <span className='input-add-on'>{currencySymbol}</span>
                                                         </>
@@ -1430,7 +1430,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                           type='number'
                                                           step={0.01}
                                                           id={`${monItem.substr(0, 3)} ${item}`}
-                                                          value={isCurrent(i.interval) ? values.originalValues.filter((ii: any) => ii.interval === 'Today')?.[0]?.quantity || '' : i.quantity || ''}
+                                                          value={isCurrent(i.interval) ? values.originalValues.filter((monthlyValue: any) => monthlyValue.interval === 'Today')?.[0]?.quantity || '' : i.quantity || ''}
                                                         />
                                                       )}
                                                   </div>
