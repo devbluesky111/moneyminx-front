@@ -78,20 +78,22 @@ export interface AccountHolingsProps {
 }
 
 export interface HoldingsDetailsModalProps {
-  holdingsDetailsModal: ModalType;
-  holdingsDetails?: any;
   accountId?: number;
+  holdingsDetails?: any;
+  currencySymbol: string;
+  handleRefresh: () => void;
+  holdingsDetailsModal: ModalType;
   closeNewPositionModal?: () => void;
   closeEditPositionModal?: () => void;
-  currencySymbol: string;
 }
 
 export interface AccountHolingsTableProps {
+  currencySymbol: string;
+  accountDetails?: Account;
+  handleRefresh: () => void;
   holdingsData: AccountHoldingItem[];
   openEditPositionModalFun: () => void;
   closeEditPositionModalFun: () => void;
-  currencySymbol: string;
-  accountDetails?: Account;
 }
 
 export interface AccountTransactionItem {
@@ -117,19 +119,21 @@ export interface AccountTransactionItem {
 }
 
 export interface ActivityDetailsModalProps {
-  activityDetailsModal: ModalType;
-  activityDetails?: AccountTransactionItem;
   accountId?: number;
   currencySymbol: string;
+  handleRefresh: () => void;
+  activityDetailsModal: ModalType;
   closeNewActivityModal?: () => void;
   closeEditActivityModal?: () => void;
+  activityDetails?: AccountTransactionItem;
 }
 
 export interface AccountTransactionTableProps {
-  transactionsData: AccountTransactionItem[];
+  currencySymbol: string;
+  handleRefresh: () => void;
   openEditActivityModalFun: () => void;
   closeEditActivityModalFun: () => void;
-  currencySymbol: string;
+  transactionsData: AccountTransactionItem[];
 }
 
 export interface AccountTransactionsProps {

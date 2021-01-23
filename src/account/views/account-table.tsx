@@ -15,6 +15,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({
   closeEditPositionModalFun,
   currencySymbol,
   accountDetails,
+  handleRefresh,
 }) => {
   const [holdings, setHoldings] = useState<AccountHoldingItem[]>([]);
   const [holdingsDetails, setHoldingsDetails] = useState<any>();
@@ -96,7 +97,7 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({
                           {quantityHeader && (
                             <td className='hide-type'>
                               <span>Quantity</span>
-                              {numberWithCommas(fNumber(item.quantity,2))}
+                              {numberWithCommas(fNumber(item.quantity, 2))}
                             </td>
                           )}
                           {symbolHeader && <td className='hide-type'>{item.symbol}</td>}
@@ -125,14 +126,15 @@ export const AccountTable: React.FC<AccountHolingsTableProps> = ({
           </div>
         </div>
       ) : (
-          <span className='no-data'>No holdings found</span>
-        )}
+        <span className='no-data'>No holdings found</span>
+      )}
       {holdingsDetails && (
         <HoldingsDetailsModal
           holdingsDetailsModal={holdingsDetailsModal}
           holdingsDetails={holdingsDetails}
           closeEditPositionModal={closeEditPositionModalFun}
           currencySymbol={currencySymbol}
+          handleRefresh={handleRefresh}
         />
       )}
     </section>

@@ -254,3 +254,11 @@ export const getRealEstateAccounts = (): TApiResponse => {
 export const getAccountDetailBalances = <P>(params?: P): TApiResponse => {
   return http.get(urls.account.BALANCES, params);
 };
+
+export const deleteHoldingByPosition = (positionId: string): TApiResponse => {
+  return http.remove(urls.auth.ACCOUNT_HOLDINGS + `/${positionId}`);
+};
+
+export const deleteActivityTransaction = (transactionId: string): TApiResponse => {
+  return http.remove(urls.auth.ACCOUNT_ACTIVITY + `/${transactionId}`);
+};

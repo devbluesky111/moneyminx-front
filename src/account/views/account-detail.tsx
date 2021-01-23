@@ -96,6 +96,7 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
+  const [refreshCounter, setRefreshCounter] = useState(0);
 
   useEffect(() => {
     const fetchAccountDetails = async (accId: string, bCurrency: boolean) => {
@@ -135,6 +136,7 @@ const AccountDetail: React.FC = () => {
     accSetting,
     timeInterval,
     baseCurrency,
+    refreshCounter,
     newPositonModalOpen,
     editPositonModalOpen,
     newActivityModalOpen,
@@ -164,6 +166,8 @@ const AccountDetail: React.FC = () => {
       }
     })();
   }, [accountId, tableType, baseCurrency]);
+
+  const handleRefresh = () => setRefreshCounter((c) => c + 1);
 
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
@@ -763,6 +767,7 @@ const AccountDetail: React.FC = () => {
                       closeEditPositionModalFun={() => setEditPositonModalOpen(false)}
                       accountDetails={AccountDetails}
                       currencySymbol={currencySymbol}
+                      handleRefresh={handleRefresh}
                     />
                   )}
 
@@ -790,6 +795,7 @@ const AccountDetail: React.FC = () => {
                           openEditActivityModalFun={() => setEditActivityModalOpen(true)}
                           closeEditActivityModalFun={() => setEditActivityModalOpen(false)}
                           currencySymbol={currencySymbol}
+                          handleRefresh={handleRefresh}
                         />
                       )}
                     </div>
@@ -800,6 +806,7 @@ const AccountDetail: React.FC = () => {
                       accountId={AccountDetails?.id}
                       closeNewPositionModal={() => setNewPositonModalOpen(false)}
                       currencySymbol={currencySymbol}
+                      handleRefresh={handleRefresh}
                     />
                   )}
                   {newActivityModalOpen && (
@@ -808,6 +815,7 @@ const AccountDetail: React.FC = () => {
                       accountId={AccountDetails?.id}
                       closeNewActivityModal={() => setNewActivityModalOpen(false)}
                       currencySymbol={currencySymbol}
+                      handleRefresh={handleRefresh}
                     />
                   )}
                 </>
