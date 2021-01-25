@@ -519,8 +519,9 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                   <Tabs
                     transition={false}
                     id='holdings-details-modal'
-                    activeKey={activeTab}
-                    onSelect={(e) => tabsControl(e ? e : '')}
+                    // activeKey={activeTab}
+                    // onSelect={(e) => tabsControl(e ? e : '')}
+                    defaultActiveKey='details'
                   >
                     <Tab eventKey='details' title='Details'>
                       {holdingsDetails ? (
