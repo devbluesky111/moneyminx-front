@@ -53,6 +53,8 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
+import { useAppState } from 'app/app.context';
+import LoadingScreen from 'common/loading-screen';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -96,6 +98,7 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
+  const { fastLinkLoading } = useAppState();
 
   useEffect(() => {
     const fetchAccountDetails = async (accId: string, bCurrency: boolean) => {
@@ -372,6 +375,10 @@ const AccountDetail: React.FC = () => {
     providerStatus = 'ERROR_NEW_CREDENTIALS';
   } else {
     providerStatus = 'ERROR';
+  }
+
+  if (fastLinkLoading) {
+    return <LoadingScreen onAccountFetching />;
   }
 
   return (
