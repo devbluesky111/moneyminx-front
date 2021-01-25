@@ -12,6 +12,7 @@ import AppSidebar from 'common/app.sidebar';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
 import MMToolTip from 'common/components/tooltip';
+import LoadingScreen from 'common/loading-screen';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
@@ -53,8 +54,6 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
-import { useAppState } from 'app/app.context';
-import LoadingScreen from 'common/loading-screen';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -98,7 +97,7 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
-  const { fastLinkLoading } = useAppState();
+  const [fastlinkLoading, setFastlinkLoading] = useState(false);
 
   useEffect(() => {
     const fetchAccountDetails = async (accId: string, bCurrency: boolean) => {
@@ -171,9 +170,12 @@ const AccountDetail: React.FC = () => {
 
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
+    setFastlinkLoading(true);
+
     const { error } = await getRefreshedAccount({ dispatch });
 
     setLoading(false);
+    setFastlinkLoading(false);
 
     if (error) {
       return mmToast('Error occurred on fetching refreshed account', { type: 'error' });
@@ -377,7 +379,7 @@ const AccountDetail: React.FC = () => {
     providerStatus = 'ERROR';
   }
 
-  if (fastLinkLoading) {
+  if (fastlinkLoading) {
     return <LoadingScreen onAccountFetching />;
   }
 
