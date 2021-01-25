@@ -1,4 +1,3 @@
-import Skeleton from 'react-loading-skeleton';
 import ReactDatePicker from 'react-datepicker';
 import { Button, Dropdown } from 'react-bootstrap';
 import React, { useState, useRef, useEffect } from 'react';
@@ -27,13 +26,15 @@ import { getCurrencySymbol } from 'common/currency-helper';
 import { Placeholder } from 'networth/views/inc/placeholder';
 import { enumerateStr, parseAmount } from 'common/common-helper';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
+import AccountDetailSkeleton from 'account/components/account-detail-skeleton';
 import { ReactComponent as NotLinked } from 'assets/images/account/Not Linked.svg';
 import { ReactComponent as NeedsInfo } from 'assets/images/account/Needs Info.svg';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
-import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
+import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { getDate, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
 import {
   getAccountDetails,
@@ -46,13 +47,12 @@ import {
 import AccountTable from './account-table';
 import BalanceTable from './balance-table';
 import ActivityTable from './activity-table';
+import ChartSkeleton from './chart-skeleton';
 import AccountBarGraph from './account-bar-graph';
 import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
-import ChartSkeleton from './chart-skeleton';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -460,24 +460,7 @@ const AccountDetail: React.FC = () => {
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-slider-bg-overlay' onClick={closeRightNav} role='button' />
       {loading ? (
-        <div className='content-wrapper'>
-          <div className='container'>
-            <div className='mm-account'>
-              <div className='mm-account__selection mb-3'>
-                <Skeleton width={200} height={50} count={1} />
-              </div>
-              <div className='mb-40'>
-                <Skeleton width={1232} height={450} />
-              </div>
-              <div className='d-flex justify-content-between flex-wrap'>
-                <div className='mm-plan-radios mb-4'>
-                  <Skeleton width={200} height={50} count={1} />
-                </div>
-              </div>
-              <Skeleton width={1232} height={250} />
-            </div>
-          </div>
-        </div>
+        <AccountDetailSkeleton />
       ) : (
         <div className='content-wrapper'>
           <div className='container'>
