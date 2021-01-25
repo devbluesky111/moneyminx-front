@@ -16,6 +16,7 @@ import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import useAnalytics from 'common/hooks/useAnalytics';
+import Popup from 'account/components/account-popup';
 import { getRefreshedAccount } from 'auth/auth.service';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { EAccountType } from 'account/enum/account-type';
@@ -26,7 +27,6 @@ import { getCurrencySymbol } from 'common/currency-helper';
 import { Placeholder } from 'networth/views/inc/placeholder';
 import { enumerateStr, parseAmount } from 'common/common-helper';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
 import AccountDetailSkeleton from 'account/components/account-detail-skeleton';
 import { ReactComponent as NotLinked } from 'assets/images/account/Not Linked.svg';
@@ -159,6 +159,7 @@ const AccountDetail: React.FC = () => {
       setFilterLoading(true);
       const { data, error } = await getAccountDetailBalances({ accountId, baseCurrency });
       setFilterLoading(false);
+
       if (!error) {
         setBalanceData(data);
       }
@@ -810,36 +811,3 @@ const AccountDetail: React.FC = () => {
 };
 
 export default AccountDetail;
-
-export interface PopupProps {
-  AccountDetails?: Account;
-  handleConnectAccount: () => void;
-  providerStatus: string;
-}
-
-const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount, providerStatus }) => {
-  if (!AccountDetails) {
-    return <CircularSpinner />;
-  }
-
-  return (
-    <div className='popup'>
-      <span className='pb-2'>Connection Status</span>
-      <span className='pb-2'>
-        Last updated {getRelativeDate(AccountDetails.providerAccount?.dataset[0]?.lastUpdated.toString())}
-      </span>
-      {providerStatus === 'ATTENTION_WAIT' ? (
-        <span className='pt-2 pb-3'>
-          For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.
-        </span>
-      ) : (
-        <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
-      )}
-      {providerStatus !== 'ATTENTION_WAIT' ? (
-        <button type='button' className='mm-btn-animate mm-btn-primary' onClick={handleConnectAccount}>
-          Fix Connection
-        </button>
-      ) : null}
-    </div>
-  );
-};
