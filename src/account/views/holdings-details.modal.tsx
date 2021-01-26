@@ -178,7 +178,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
   return (
     <Formik
-      enableReinitialize
       initialValues={{
         holdingType: holdingsDetails?.holdingType || '',
         securityType: holdingsDetails?.securityType || '',
@@ -519,9 +518,8 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                   <Tabs
                     transition={false}
                     id='holdings-details-modal'
-                    // activeKey={activeTab}
-                    // onSelect={(e) => tabsControl(e ? e : '')}
-                    defaultActiveKey='details'
+                    activeKey={activeTab}
+                    onSelect={(k) => tabsControl(k ? k : '')}
                   >
                     <Tab eventKey='details' title='Details'>
                       {holdingsDetails ? (
