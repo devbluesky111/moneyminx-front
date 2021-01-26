@@ -16,6 +16,7 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
   openEditActivityModalFun,
   closeEditActivityModalFun,
   currencySymbol,
+  handleRefresh,
 }) => {
   const [transactions, setTransactions] = useState<AccountTransactionItem[]>([]);
   const [activityDetails, setActivityDetails] = useState<AccountTransactionItem>();
@@ -88,28 +89,40 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
                   </div>
                   <div className='col-4 col-md mm-activity-table__body--data d-xl-block'>
                     <span className='d-block d-md-none'>Description</span>
-                    {item.description}</div>
+                    {item.description}
+                  </div>
 
-                    {priceHeader && <div className='col-4 col-md mm-activity-table__body--data'>
+                  {priceHeader && (
+                    <div className='col-4 col-md mm-activity-table__body--data'>
                       <span className='d-block d-md-none'>Price</span>
-                        {item.price ? currencySymbol : ''}{item.price !== null ? numberWithCommas(fNumber(item.price, 2)) : ''}</div>}
+                      {item.price ? currencySymbol : ''}
+                      {item.price !== null ? numberWithCommas(fNumber(item.price, 2)) : ''}
+                    </div>
+                  )}
 
-                    {quantityHeader && <div className='col-4 col-md mm-activity-table__body--data'>
+                  {quantityHeader && (
+                    <div className='col-4 col-md mm-activity-table__body--data'>
                       <span className='d-block d-md-none'>Quantity</span>
-                      {item.quantity}</div>}
+                      {item.quantity}
+                    </div>
+                  )}
 
                   <div className='col-4 col-md mm-activity-table__body--data'>
                     <span className='d-block d-md-none'>Amount</span>
-                    {currencySymbol}{item.amount !== null ? `${numberWithCommas(fNumber(item.amount, 2))}` : ''}
+                    {currencySymbol}
+                    {item.amount !== null ? `${numberWithCommas(fNumber(item.amount, 2))}` : ''}
                   </div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> 
-                    <span className='d-block d-md-none'>Balance</span>{item.balance !== null ? `${currencySymbol}${numberWithCommas(fNumber(item.balance, 2))}` : ''}
+                  <div className='col-4 col-md mm-activity-table__body--data'>
+                    <span className='d-block d-md-none'>Balance</span>
+                    {item.balance !== null ? `${currencySymbol}${numberWithCommas(fNumber(item.balance, 2))}` : ''}
                   </div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> 
-                    <span className='d-block d-md-none'>Income</span>{item.income ? 'Yes' : 'No'}
+                  <div className='col-4 col-md mm-activity-table__body--data'>
+                    <span className='d-block d-md-none'>Income</span>
+                    {item.income ? 'Yes' : 'No'}
                   </div>
-                  <div className='col-4 col-md mm-activity-table__body--data'> 
-                    <span className='d-block d-md-none'>Cash Flow</span>{item.cashFlow ? 'Yes' : 'No'}
+                  <div className='col-4 col-md mm-activity-table__body--data'>
+                    <span className='d-block d-md-none'>Cash Flow</span>
+                    {item.cashFlow ? 'Yes' : 'No'}
                   </div>
                   <div className='col-4 col-md-1 mm-activity-table__body--data'>
                     {item.updatedAt && <Edited className='mm-activity-table__body--data-edited d-none d-xl-inline' />}
@@ -129,6 +142,7 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
           activityDetails={activityDetails}
           closeEditActivityModal={closeEditActivityModalFun}
           currencySymbol={currencySymbol}
+          handleRefresh={handleRefresh}
         />
       )}
     </section>
