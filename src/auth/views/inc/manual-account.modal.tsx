@@ -233,23 +233,23 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                 <InfoIcon />
               </MMToolTip>
               <div className='right-input radio'>
-                <input
+                {/*<input
                   type='radio'
                   value='yes'
                   onChange={}
                   name=''
                   checked={}
                   aria-checked={}
-                />
+                />*/}
                 <label>Yes</label>
-                <input
+                {/*<input
                   onChange={}
                   value='no'
                   type='radio'
                   name=''
                   checked={}
                   aria-checked={}
-                />
+                />*/}
                 <label>No</label>
               </div>
             </div>
