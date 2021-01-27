@@ -66,7 +66,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
     }
 
     if (e.target.name === 'hasHoldings') {
-      const radioVal = e.target.value === 'true' ? true : false;
+      const radioVal = e.target.value === 'true';
 
       return setValues({ ...values, [e.target.name]: radioVal });
     }
