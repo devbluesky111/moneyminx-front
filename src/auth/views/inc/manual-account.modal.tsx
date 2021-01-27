@@ -223,13 +223,35 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
               }
             </div>
             <div className='row-set'>
-              Does this account have holdings?
+              <p>
+                <span className='form-subheading'>Does this account have holdings?</span>
+              </p>
               <MMToolTip
                 placement='top'
                 message='Answer no if you want to manage the balance of this account at the account level. Yes if you want to manage the balance at each position held in this account.'
               >
                 <InfoIcon />
               </MMToolTip>
+              <div className='right-input radio'>
+                <input
+                  type='radio'
+                  value='yes'
+                  onChange={}
+                  name=''
+                  checked={}
+                  aria-checked={}
+                />
+                <label>Yes</label>
+                <input
+                  onChange={}
+                  value='no'
+                  type='radio'
+                  name=''
+                  checked={}
+                  aria-checked={}
+                />
+                <label>No</label>
+              </div>
             </div>
             <div className='row-set'>
               <Form.Group controlId='ManualAccountForm.CurrentBalance' className='child'>
