@@ -42,6 +42,7 @@ import {
   getFastlinkUpdate,
   getAccountDetailBalances,
 } from 'api/request.api';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import AccountTable from './account-table';
 import BalanceTable from './balance-table';
@@ -52,7 +53,6 @@ import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
 import ChartSkeleton from './chart-skeleton';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -320,7 +320,14 @@ const AccountDetail: React.FC = () => {
     );
   };
 
-  const isLiabilities = AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES;
+  const showHoldings = () => {
+    if (AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES) {
+      return false
+    } else if (AccountDetails?.hasHoldings === false) {
+      return false
+    }
+      return true;
+  }
 
   const renderChartAmount = () => {
     if (tableType === ETableType.HOLDINGS) {
@@ -711,13 +718,13 @@ const AccountDetail: React.FC = () => {
                         value='balance'
                         name='mm-radio-holding-activity'
                         aria-checked='true'
-                        checked={tableType === 'balance' ? true : false}
+                        checked={tableType === 'balance'}
                         onChange={(e) => setTableType('balance')}
                       />
                       <label className='labels' htmlFor='mm-account-balance'>
                         Balance
                       </label>
-                      {!isLiabilities ? (
+                      {showHoldings() ? (
                         <>
                           <input
                             type='radio'
@@ -740,9 +747,9 @@ const AccountDetail: React.FC = () => {
                         value='activity'
                         name='mm-radio-holding-activity'
                         aria-checked='false'
-                        checked={tableType === 'activity' ? true : false}
+                        checked={tableType === 'activity'}
                         onChange={(e) => setTableType('activity')}
-                        className={isLiabilities ? 'second' : ''}
+                        className={!showHoldings() ? 'second' : ''}
                       />
                       <label className='labels' htmlFor='mm-account-activity'>
                         Activity
