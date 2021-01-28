@@ -53,6 +53,7 @@ import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
 import ChartSkeleton from './chart-skeleton';
+import { logger } from 'common/logger.helper';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -295,13 +296,17 @@ const AccountDetail: React.FC = () => {
   const renderChart = () => {
     const hasHoldingChart = AccountHoldings && AccountHoldings.charts && tableType === 'holdings';
     const hasActivityChart = AccountActivity && AccountActivity.charts && tableType === 'activity';
-    const hasBalanceChart = tableType === 'balance' && balanceData?.balances;
+    const hasBalanceChart = balanceData?.balances?.length && tableType === 'balance';
 
     const hasEitherChart = hasHoldingChart || hasActivityChart || hasBalanceChart;
 
     if (!hasEitherChart || filterloading) {
       return <ChartSkeleton />;
     }
+
+    logger.log('hasBalanceChart', hasBalanceChart);
+    logger.log('Balance Data', balanceData);
+    logger.log('balances', balanceData?.balances);
 
     return (
       <div className='chartbox'>
@@ -321,13 +326,15 @@ const AccountDetail: React.FC = () => {
   };
 
   const showHoldings = () => {
-    if (AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES) {
-      return false
-    } else if (AccountDetails?.hasHoldings === false) {
-      return false
+    const isLiability = AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES;
+    const hasNoHolding = AccountDetails?.hasHoldings === false;
+
+    if (isLiability || hasNoHolding) {
+      return false;
     }
-      return true;
-  }
+
+    return true;
+  };
 
   const renderChartAmount = () => {
     if (tableType === ETableType.HOLDINGS) {
