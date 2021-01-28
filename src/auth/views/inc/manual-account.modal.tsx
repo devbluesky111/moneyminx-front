@@ -28,6 +28,7 @@ export interface ValuesType {
   accountName: string,
   balance: any,
   currency: string,
+  hasHoldings: boolean
 }
 
 const initialValues: ValuesType = {
@@ -35,8 +36,9 @@ const initialValues: ValuesType = {
   mmAccountType: '',
   mmAccountSubType: '',
   accountName: '',
-  balance: null,
+  balance: '',
   currency: 'USD',
+  hasHoldings: false
 };
 
 const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, handleSuccess }) => {
@@ -61,6 +63,12 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
       const _float = parseFloat(e.target.value);
 
       return setValues({ ...values, [e.target.name]: _float });
+    }
+
+    if (e.target.name === 'hasHoldings') {
+      const radioVal = e.target.value === 'true' ? true : false;
+
+      return setValues({ ...values, [e.target.name]: radioVal });
     }
 
     return setValues({ ...values, [e.target.name]: e.target.value });
@@ -111,7 +119,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
       setAccountTypeError(true);
       valid = false;
     }
-    if (!values.balance && values.balance !== 0) {
+    if (!values.hasHoldings && !values.balance && values.balance !== 0) {
       setBalanceError(true);
       valid = false;
     }
@@ -223,50 +231,63 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
               }
             </div>
             <div className='row-set'>
-              <p>
-                <span className='form-subheading'>Does this account have holdings?</span>
-              </p>
-              <MMToolTip
-                placement='top'
-                message='Answer no if you want to manage the balance of this account at the account level. Yes if you want to manage the balance at each position held in this account.'
-              >
-                <InfoIcon />
-              </MMToolTip>
-              <div className='right-input radio'>
-                {/*<input
-                  type='radio'
-                  value='yes'
-                  onChange={}
-                  name=''
-                  checked={}
-                  aria-checked={}
-                />*/}
-                <label>Yes</label>
-                {/*<input
-                  onChange={}
-                  value='no'
-                  type='radio'
-                  name=''
-                  checked={}
-                  aria-checked={}
-                />*/}
-                <label>No</label>
-              </div>
+              <Form.Group controlId='ManualAccountForm.hasHoldings' className='child'>
+                <Form.Label className='form-subheading'>Does this account have holdings?</Form.Label>
+                <MMToolTip
+                  placement='top'
+                  message='Answer no if you want to manage the balance of this account at the account level. Yes if you want to manage the balance at each position held in this account.'
+                >
+                  <InfoIcon />
+                </MMToolTip>
+              </Form.Group>
+              <Form.Group controlId='ManualAccountForm.hasHoldings' className='child'>
+                <div className='mm-radio-block'>
+                  <label className='mm-radio ml-5 float-right'>
+                    <input
+                      type='radio'
+                      name='hasHoldings'
+                      value='false'
+                      checked={!values.hasHoldings}
+                      aria-checked={!values.hasHoldings}
+                      onChange={handleChange}
+                    />
+                    <span className='mm-checkmark' />
+                    <span style={{fontSize:'14px', position:'absolute', top:'3px'}} >No </span>
+                  </label>
+                  <label className='mm-radio mr-4 float-right'>
+                    <input
+                      type='radio'
+                      name='hasHoldings'
+                      value='true'
+                      checked={values.hasHoldings}
+                      aria-checked={values.hasHoldings}
+                      onChange={handleChange}
+                    />
+                    <span className='mm-checkmark' />
+                    <span style={{fontSize:'14px', position:'absolute', top:'3px'}} >Yes</span>
+                  </label>
+                </div>
+              </Form.Group>
             </div>
             <div className='row-set'>
               <Form.Group controlId='ManualAccountForm.CurrentBalance' className='child'>
-                <Form.Label className='form-subheading'>Current Value</Form.Label>
-                <Form.Control
-                  name='balance'
-                  type='number'
-                  onChange={handleChange}
-                  value={values.balance}
-                  required
-                />
-                {balanceError &&
-                  <div className='mt-2 feedback'>
-                    Current Value is a required field
-                  </div>}
+                {values.hasHoldings? (<></>)
+                  :
+                  (<>
+                      <Form.Label className='form-subheading'>Current Value</Form.Label>
+                      <Form.Control
+                        name='balance'
+                        type='number'
+                        onChange={handleChange}
+                        value={values.balance}
+                        required
+                      />
+                      {balanceError &&
+                      <div className='mt-2 feedback'>
+                        Current Value is a required field
+                      </div>}
+                    </>)
+                }
               </Form.Group>
               <Form.Group controlId='ManualAccountForm.Currency' className='child'>
                 <Form.Label className='form-subheading'>Currency</Form.Label>
