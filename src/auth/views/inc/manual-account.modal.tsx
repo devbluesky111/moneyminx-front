@@ -252,7 +252,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                       onChange={handleChange}
                     />
                     <span className='mm-checkmark' />
-                    <span style={{fontSize:'14px', position:'absolute', top:'3px'}} >No &nbsp;&nbsp;&nbsp;</span>
+                    <span style={{fontSize:'14px', position:'absolute', top:'3px'}} >No</span>
                   </label>
                   <label className='mm-radio mr-4 float-right'>
                     <input
