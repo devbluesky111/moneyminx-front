@@ -69,6 +69,7 @@ export interface Account {
   currency: string;
   providerAccount: ProviderAccount;
   syncError: boolean;
+  hasHoldings: boolean;
 }
 
 export interface ProfileDetails {
