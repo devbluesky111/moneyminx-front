@@ -1,4 +1,3 @@
-import Skeleton from 'react-loading-skeleton';
 import ReactDatePicker from 'react-datepicker';
 import { Button, Dropdown } from 'react-bootstrap';
 import React, { useState, useRef, useEffect } from 'react';
@@ -13,10 +12,12 @@ import AppSidebar from 'common/app.sidebar';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
 import MMToolTip from 'common/components/tooltip';
+import LoadingScreen from 'common/loading-screen';
 import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import useAnalytics from 'common/hooks/useAnalytics';
+import Popup from 'account/components/account-popup';
 import { getRefreshedAccount } from 'auth/auth.service';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { EAccountType } from 'account/enum/account-type';
@@ -28,12 +29,13 @@ import { Placeholder } from 'networth/views/inc/placeholder';
 import { enumerateStr, parseAmount } from 'common/common-helper';
 import AccountSettingsSideBar from 'auth/views/account-settings-sidebar';
 import { ReactComponent as InfoIcon } from 'assets/images/signup/info.svg';
+import AccountDetailSkeleton from 'account/components/account-detail-skeleton';
 import { ReactComponent as NotLinked } from 'assets/images/account/Not Linked.svg';
 import { ReactComponent as NeedsInfo } from 'assets/images/account/Needs Info.svg';
 import { ReactComponent as SettingsGear } from 'assets/icons/icon-settings-gear.svg';
 import { ReactComponent as CheckCircle } from 'assets/images/account/check-circle.svg';
-import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { ReactComponent as SubscriptionWarning } from 'assets/images/subscription/warning.svg';
+import { ReactComponent as CheckCircleGreen } from 'assets/images/account/check-circle-green.svg';
 import { getDate, getMonthYear, getRelativeDate, parseDateFromString } from 'common/moment.helper';
 import {
   getAccountDetails,
@@ -42,17 +44,16 @@ import {
   getFastlinkUpdate,
   getAccountDetailBalances,
 } from 'api/request.api';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 
 import AccountTable from './account-table';
 import BalanceTable from './balance-table';
 import ActivityTable from './activity-table';
+import ChartSkeleton from './chart-skeleton';
 import AccountBarGraph from './account-bar-graph';
 import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
-import ChartSkeleton from './chart-skeleton';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -96,6 +97,7 @@ const AccountDetail: React.FC = () => {
   const dropdownToggle = useRef(null);
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
+  const [fastlinkLoading, setFastlinkLoading] = useState(false);
   const [refreshCounter, setRefreshCounter] = useState(0);
 
   useEffect(() => {
@@ -161,6 +163,7 @@ const AccountDetail: React.FC = () => {
       setFilterLoading(true);
       const { data, error } = await getAccountDetailBalances({ accountId, baseCurrency });
       setFilterLoading(false);
+
       if (!error) {
         setBalanceData(data);
       }
@@ -171,9 +174,12 @@ const AccountDetail: React.FC = () => {
 
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
+    setFastlinkLoading(true);
+
     const { error } = await getRefreshedAccount({ dispatch });
 
     setLoading(false);
+    setFastlinkLoading(false);
 
     if (error) {
       return mmToast('Error occurred on fetching refreshed account', { type: 'error' });
@@ -322,12 +328,12 @@ const AccountDetail: React.FC = () => {
 
   const showHoldings = () => {
     if (AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES) {
-      return false
+      return false;
     } else if (AccountDetails?.hasHoldings === false) {
-      return false
+      return false;
     }
-      return true;
-  }
+    return true;
+  };
 
   const renderChartAmount = () => {
     if (tableType === ETableType.HOLDINGS) {
@@ -382,6 +388,10 @@ const AccountDetail: React.FC = () => {
     providerStatus = 'ERROR_NEW_CREDENTIALS';
   } else {
     providerStatus = 'ERROR';
+  }
+
+  if (fastlinkLoading) {
+    return <LoadingScreen onAccountFetching />;
   }
 
   return (
@@ -471,24 +481,7 @@ const AccountDetail: React.FC = () => {
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-slider-bg-overlay' onClick={closeRightNav} role='button' />
       {loading ? (
-        <div className='content-wrapper'>
-          <div className='container'>
-            <div className='mm-account'>
-              <div className='mm-account__selection mb-3'>
-                <Skeleton width={200} height={50} count={1} />
-              </div>
-              <div className='mb-40'>
-                <Skeleton width={1232} height={450} />
-              </div>
-              <div className='d-flex justify-content-between flex-wrap'>
-                <div className='mm-plan-radios mb-4'>
-                  <Skeleton width={200} height={50} count={1} />
-                </div>
-              </div>
-              <Skeleton width={1232} height={250} />
-            </div>
-          </div>
-        </div>
+        <AccountDetailSkeleton />
       ) : (
         <div className='content-wrapper'>
           <div className='container'>
@@ -842,36 +835,3 @@ const AccountDetail: React.FC = () => {
 };
 
 export default AccountDetail;
-
-export interface PopupProps {
-  AccountDetails?: Account;
-  handleConnectAccount: () => void;
-  providerStatus: string;
-}
-
-const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount, providerStatus }) => {
-  if (!AccountDetails) {
-    return <CircularSpinner />;
-  }
-
-  return (
-    <div className='popup'>
-      <span className='pb-2'>Connection Status</span>
-      <span className='pb-2'>
-        Last updated {getRelativeDate(AccountDetails.providerAccount?.dataset[0]?.lastUpdated.toString())}
-      </span>
-      {providerStatus === 'ATTENTION_WAIT' ? (
-        <span className='pt-2 pb-3'>
-          For security reasons, your account cannot be refreshed at this time. Please try again in 15 minutes.
-        </span>
-      ) : (
-        <span className='pt-2 pb-3'>Reauthorize your connection to continue syncing your account</span>
-      )}
-      {providerStatus !== 'ATTENTION_WAIT' ? (
-        <button type='button' className='mm-btn-animate mm-btn-primary' onClick={handleConnectAccount}>
-          Fix Connection
-        </button>
-      ) : null}
-    </div>
-  );
-};
