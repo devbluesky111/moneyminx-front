@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { BarChartColors } from 'common/color';
 import { AccountCategory } from 'networth/networth.enum';
@@ -61,12 +61,23 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
 
   const firstProjection = data.find((datum) => datum.type === 'projection');
 
-  const dataWithAbsoluteValues = data.map((accountChartItem) => {
-    return {
-      ...accountChartItem,
-      value: Math.abs(+accountChartItem.value),
-    };
-  });
+  // const dataWithAbsoluteValues = data.map((accountChartItem) => {
+  //   return {
+  //     ...accountChartItem,
+  //     value: Math.abs(+accountChartItem.value),
+  //   };
+  // });
+
+  const dataWithAbsoluteValues = useMemo(
+    () =>
+      data.map((accountChartItem) => {
+        return {
+          ...accountChartItem,
+          value: Math.abs(+accountChartItem.value),
+        };
+      }),
+    [data]
+  );
 
   let _interval = getInterval(max);
   if (max > _interval * 3.5) {
@@ -83,6 +94,14 @@ const AccountBarGraph: React.FC<AccountBarGraphProps> = ({ data, curInterval, cu
 
     return BarChartColors.RED;
   };
+
+  console.group('Chart data');
+  console.log('Chart data', dataWithAbsoluteValues);
+  console.log('max', max);
+  console.log('interval', _interval);
+  console.groupEnd();
+
+  console.count('Render');
 
   return (
     <div className='account-responsive-container'>

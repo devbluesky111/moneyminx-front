@@ -23,12 +23,12 @@ interface SettingModalProps {
 
 export interface ValuesType {
   mmCategory: string;
-  mmAccountType: string
-  mmAccountSubType: string,
-  accountName: string,
-  balance: any,
-  currency: string,
-  hasHoldings: boolean
+  mmAccountType: string;
+  mmAccountSubType: string;
+  accountName: string;
+  balance: any;
+  currency: string;
+  hasHoldings: boolean;
 }
 
 const initialValues: ValuesType = {
@@ -38,7 +38,7 @@ const initialValues: ValuesType = {
   accountName: '',
   balance: '',
   currency: 'USD',
-  hasHoldings: false
+  hasHoldings: false,
 };
 
 const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, handleSuccess }) => {
@@ -73,7 +73,6 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
 
     return setValues({ ...values, [e.target.name]: e.target.value });
   };
-
 
   useEffect(() => {
     if (submitted) {
@@ -111,21 +110,30 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
   const handleSubmit = async () => {
     setSubmitted(true);
     let valid = true;
+
     if (!values.accountName) {
       setAccountNameError(true);
       valid = false;
     }
+
     if (!values.mmAccountType) {
       setAccountTypeError(true);
       valid = false;
     }
+
     if (!values.hasHoldings && !values.balance && values.balance !== 0) {
       setBalanceError(true);
       valid = false;
     }
+
+    if (values.hasHoldings && !values.balance) {
+      values.balance = null;
+    }
+
     if (!valid) {
       return;
     }
+
     setLoading(true);
     const { error: err } = await postManualAccount(values);
     if (!err) {
@@ -199,10 +207,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                 value={values.accountName}
                 autoComplete='off'
               />
-              {accountNameError &&
-                <div className='mt-2 feedback'>
-                  Account Name is a required field
-              </div>}
+              {accountNameError && <div className='mt-2 feedback'>Account Name is a required field</div>}
             </Form.Group>
             <div className='row-set'>
               <Form.Group controlId='ManualAccountForm.AccountType' className='child'>
@@ -213,12 +218,9 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                   value={values.mmAccountType}
                   name='mmAccountType'
                 />
-                {accountTypeError &&
-                  <div className='mt-2 feedback'>
-                    Account Type is a required field
-                  </div>}
+                {accountTypeError && <div className='mt-2 feedback'>Account Type is a required field</div>}
               </Form.Group>
-              {accountSubTypes.length > 1 &&
+              {accountSubTypes.length > 1 && (
                 <Form.Group controlId='ManualAccountForm.AccountSubtype' className='child'>
                   <Form.Label className='form-subheading'>Account Subtype</Form.Label>
                   <AccountTypeSelectInput
@@ -228,7 +230,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                     name='mmAccountSubType'
                   />
                 </Form.Group>
-              }
+              )}
             </div>
             <div className='row-set'>
               <Form.Group controlId='ManualAccountForm.hasHoldings' className='child'>
@@ -252,7 +254,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                       onChange={handleChange}
                     />
                     <span className='mm-checkmark' />
-                    <span style={{fontSize:'14px', position:'absolute', top:'3px'}} >No</span>
+                    <span style={{ fontSize: '14px', position: 'absolute', top: '3px' }}>No</span>
                   </label>
                   <label className='mm-radio mr-4 float-right'>
                     <input
@@ -264,47 +266,35 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                       onChange={handleChange}
                     />
                     <span className='mm-checkmark' />
-                    <span style={{fontSize:'14px', position:'absolute', top:'3px'}} >Yes</span>
+                    <span style={{ fontSize: '14px', position: 'absolute', top: '3px' }}>Yes</span>
                   </label>
                 </div>
               </Form.Group>
             </div>
             <div className='row-set'>
-                {values.hasHoldings? (<></>)
-                  :
-                  (<Form.Group controlId='ManualAccountForm.CurrentBalance' className='child'>
-                      <Form.Label className='form-subheading'>Current Value</Form.Label>
-                      <Form.Control
-                        name='balance'
-                        type='number'
-                        onChange={handleChange}
-                        value={values.balance}
-                        required
-                      />
-                      {balanceError &&
-                      <div className='mt-2 feedback'>
-                        Current Value is a required field
-                      </div>}
-                  </Form.Group>)
-                }
+              {values.hasHoldings ? (
+                <></>
+              ) : (
+                <Form.Group controlId='ManualAccountForm.CurrentBalance' className='child'>
+                  <Form.Label className='form-subheading'>Current Value</Form.Label>
+                  <Form.Control name='balance' type='number' onChange={handleChange} value={values.balance} required />
+                  {balanceError && <div className='mt-2 feedback'>Current Value is a required field</div>}
+                </Form.Group>
+              )}
               <Form.Group controlId='ManualAccountForm.Currency' className='child'>
                 <Form.Label className='form-subheading'>Currency</Form.Label>
                 {currentSubscription &&
-                  (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') ? (
-                    <span className='mm-form-field-read'>{values.currency}</span>
-                  ) : (
-                    <SelectInput
-                      args={curArr}
-                      onChange={handleChange}
-                      value={values.currency}
-                      name='currency'
-                    />
-                  )}
-                {currentSubscription && (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') && (
-                  <label className='mm-form-field-error text--pink'>
-                    Your plan only supports USD. To enable multi currency support upgrade your plan.
-                  </label>
+                (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') ? (
+                  <span className='mm-form-field-read'>{values.currency}</span>
+                ) : (
+                  <SelectInput args={curArr} onChange={handleChange} value={values.currency} name='currency' />
                 )}
+                {currentSubscription &&
+                  (currentSubscription.name === 'Green' || currentSubscription.name === 'Plus') && (
+                    <label className='mm-form-field-error text--pink'>
+                      Your plan only supports USD. To enable multi currency support upgrade your plan.
+                    </label>
+                  )}
               </Form.Group>
             </div>
           </Form>
@@ -322,10 +312,10 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                   <span className='ml-1'>Adding...</span>
                 </>
               ) : (
-                  <>
-                    Add<span className='hide-sm ml-1'>Account</span>
-                  </>
-                )}
+                <>
+                  Add<span className='hide-sm ml-1'>Account</span>
+                </>
+              )}
             </button>
           </div>
         </div>
