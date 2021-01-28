@@ -242,7 +242,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
               </Form.Group>
               <Form.Group controlId='ManualAccountForm.hasHoldings' className='child'>
                 <div className='mm-radio-block'>
-                  <label className='mm-radio ml-5 float-right'>
+                  <label className='mm-radio ml-5 mr-4 float-right'>
                     <input
                       type='radio'
                       name='hasHoldings'
@@ -252,7 +252,7 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                       onChange={handleChange}
                     />
                     <span className='mm-checkmark' />
-                    <span style={{fontSize:'14px', position:'absolute', top:'3px'}} >No </span>
+                    <span style={{fontSize:'14px', position:'absolute', top:'3px'}} >No &nbsp;&nbsp;&nbsp;</span>
                   </label>
                   <label className='mm-radio mr-4 float-right'>
                     <input
@@ -270,10 +270,9 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
               </Form.Group>
             </div>
             <div className='row-set'>
-              <Form.Group controlId='ManualAccountForm.CurrentBalance' className='child'>
                 {values.hasHoldings? (<></>)
                   :
-                  (<>
+                  (<Form.Group controlId='ManualAccountForm.CurrentBalance' className='child'>
                       <Form.Label className='form-subheading'>Current Value</Form.Label>
                       <Form.Control
                         name='balance'
@@ -286,9 +285,8 @@ const ManualAccountModal: React.FC<SettingModalProps> = ({ manualAccountModal, h
                       <div className='mt-2 feedback'>
                         Current Value is a required field
                       </div>}
-                    </>)
+                  </Form.Group>)
                 }
-              </Form.Group>
               <Form.Group controlId='ManualAccountForm.Currency' className='child'>
                 <Form.Label className='form-subheading'>Currency</Form.Label>
                 {currentSubscription &&
