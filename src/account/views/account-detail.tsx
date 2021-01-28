@@ -54,6 +54,7 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
+import { isNumber } from 'common/number.helper';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -299,8 +300,14 @@ const AccountDetail: React.FC = () => {
   };
 
   const renderChart = () => {
-    const hasHoldingChart = AccountHoldings && AccountHoldings.charts?.length && tableType === 'holdings';
-    const hasActivityChart = AccountActivity && AccountActivity.charts?.length && tableType === 'activity';
+    const hasHoldingChart =
+      AccountHoldings && AccountHoldings.charts?.length && AccountHoldings.holdings.length && tableType === 'holdings';
+    const hasActivityChart =
+      AccountActivity &&
+      AccountActivity.charts?.length &&
+      AccountActivity.transactions?.length &&
+      tableType === 'activity';
+
     const hasBalanceChart = balanceData?.balances?.length && tableType === 'balance';
 
     const hasEitherChart = hasHoldingChart || hasActivityChart || hasBalanceChart;
@@ -322,7 +329,10 @@ const AccountDetail: React.FC = () => {
     }
 
     if (hasBalanceChart) {
-      const balanceChartItem = balanceData!.balances.map((b) => ({ ...b, value: b.balance || 0 }));
+      const balanceChartItem = balanceData!.balances.map((b) => ({
+        ...b,
+        value: isNumber(b.balance) ? +b.balance + 1 : 0,
+      }));
 
       return <div className='chartbox'>{renderCharItem(balanceChartItem)}</div>;
     }
