@@ -333,12 +333,7 @@ const AccountDetail: React.FC = () => {
   const showHoldings = () => {
     const hasNoHolding = AccountDetails?.hasHoldings === false;
     const isLiability = AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES;
-
-    if (isLiability || hasNoHolding) {
-      return false;
-    }
-
-    return true;
+    return !(isLiability || hasNoHolding);
   };
 
   const renderChartAmount = () => {
