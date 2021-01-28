@@ -178,6 +178,7 @@ const AccountDetail: React.FC = () => {
 
     const { error } = await getRefreshedAccount({ dispatch });
 
+    handleRefresh();
     setLoading(false);
     setFastlinkLoading(false);
 
