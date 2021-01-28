@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react';
 
 import useToast from 'common/hooks/useToast';
 import { logger } from 'common/logger.helper';
+import { useDispatch } from 'app/app.context';
 import { Modal, ModalTypeEnum } from 'common/components/modal';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { resetFastlinkLoading, setFastlinkLoading } from 'app/app.actions';
 
 import useYodlee from './useYodlee';
 import { FastLinkOptionsType } from './yodlee.type';
@@ -17,17 +19,22 @@ interface Props {
 const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLinkOptions }) => {
   const initRef = useRef<any>();
   const { mmToast } = useToast();
+  const dispatch = useDispatch();
 
   const onSuccess = async (args: any) => {
     logger.log('fastlink onsuccess arguments', args);
+
     mmToast('Successfully Logged in with Yodlee', { type: 'success' });
     handleSuccess();
+    dispatch(resetFastlinkLoading());
 
     return fastLinkModal.close();
   };
 
   const onError = (err: any) => {
     logger.log('fastlink onerror log', err);
+    dispatch(resetFastlinkLoading());
+
     const errorList = err
       ? Object.keys(err).map((ek, i) => (
           <li key={i}>
@@ -41,6 +48,8 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
 
   const onClose = async (args: any) => {
     logger.log('fastlink onclose arguments', args);
+    dispatch(resetFastlinkLoading());
+
     return fastLinkModal.close();
   };
 
@@ -61,6 +70,8 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
   }, [fastLinkURL, active, fastLinkOptions]);
 
   const handleInit = () => {
+    dispatch(setFastlinkLoading());
+
     init({ tokenValue: token, tokenType: 'AccessToken' });
   };
 
@@ -68,7 +79,7 @@ const FastLinkModal: React.FC<Props> = ({ fastLinkModal, handleSuccess, fastLink
     <Modal
       {...fastLinkModal.props}
       title=''
-      size={'fastlink'}
+      size='fastlink'
       canBeClosed
       loading={!active}
       type={ModalTypeEnum.NO_HEADER}
