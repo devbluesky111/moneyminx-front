@@ -494,7 +494,7 @@
     display: flex;
     justify-content: flex-start;
     padding-top: 1rem;
-    button:nth-child(2) {
+    button:last-child {
       margin-left: 1rem;
     }
     button {
@@ -723,7 +723,7 @@
         border: 1px solid $lightBg;
       }
     }
-    button:nth-child(2) {
+    button:last-child {
       margin-left: 1rem;
     }
     button {
@@ -864,7 +864,7 @@
   }
   &.warning {
     border-bottom: 4px solid $yellow;
-    .warning-icon-svg, {
+    .warning-icon-svg {
       fill: $yellow;
     }
     .warning-icon-dot-svg {

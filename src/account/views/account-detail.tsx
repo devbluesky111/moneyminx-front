@@ -98,6 +98,7 @@ const AccountDetail: React.FC = () => {
   const holdingsDetailsModal = useModal();
   const activityDetailsModal = useModal();
   const [fastlinkLoading, setFastlinkLoading] = useState(false);
+  const [refreshCounter, setRefreshCounter] = useState(0);
 
   useEffect(() => {
     const fetchAccountDetails = async (accId: string, bCurrency: boolean) => {
@@ -137,6 +138,7 @@ const AccountDetail: React.FC = () => {
     accSetting,
     timeInterval,
     baseCurrency,
+    refreshCounter,
     newPositonModalOpen,
     editPositonModalOpen,
     newActivityModalOpen,
@@ -167,6 +169,8 @@ const AccountDetail: React.FC = () => {
       }
     })();
   }, [accountId, tableType, baseCurrency]);
+
+  const handleRefresh = () => setRefreshCounter((c) => c + 1);
 
   const handleConnectAccountSuccess = async () => {
     setLoading(true);
@@ -322,7 +326,14 @@ const AccountDetail: React.FC = () => {
     );
   };
 
-  const isLiabilities = AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES;
+  const showHoldings = () => {
+    if (AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES) {
+      return false;
+    } else if (AccountDetails?.hasHoldings === false) {
+      return false;
+    }
+    return true;
+  };
 
   const renderChartAmount = () => {
     if (tableType === ETableType.HOLDINGS) {
@@ -700,13 +711,13 @@ const AccountDetail: React.FC = () => {
                         value='balance'
                         name='mm-radio-holding-activity'
                         aria-checked='true'
-                        checked={tableType === 'balance' ? true : false}
+                        checked={tableType === 'balance'}
                         onChange={(e) => setTableType('balance')}
                       />
                       <label className='labels' htmlFor='mm-account-balance'>
                         Balance
                       </label>
-                      {!isLiabilities ? (
+                      {showHoldings() ? (
                         <>
                           <input
                             type='radio'
@@ -729,9 +740,9 @@ const AccountDetail: React.FC = () => {
                         value='activity'
                         name='mm-radio-holding-activity'
                         aria-checked='false'
-                        checked={tableType === 'activity' ? true : false}
+                        checked={tableType === 'activity'}
                         onChange={(e) => setTableType('activity')}
-                        className={isLiabilities ? 'second' : ''}
+                        className={!showHoldings() ? 'second' : ''}
                       />
                       <label className='labels' htmlFor='mm-account-activity'>
                         Activity
@@ -756,6 +767,7 @@ const AccountDetail: React.FC = () => {
                       closeEditPositionModalFun={() => setEditPositonModalOpen(false)}
                       accountDetails={AccountDetails}
                       currencySymbol={currencySymbol}
+                      handleRefresh={handleRefresh}
                     />
                   )}
 
@@ -783,6 +795,7 @@ const AccountDetail: React.FC = () => {
                           openEditActivityModalFun={() => setEditActivityModalOpen(true)}
                           closeEditActivityModalFun={() => setEditActivityModalOpen(false)}
                           currencySymbol={currencySymbol}
+                          handleRefresh={handleRefresh}
                         />
                       )}
                     </div>
@@ -793,6 +806,7 @@ const AccountDetail: React.FC = () => {
                       accountId={AccountDetails?.id}
                       closeNewPositionModal={() => setNewPositonModalOpen(false)}
                       currencySymbol={currencySymbol}
+                      handleRefresh={handleRefresh}
                     />
                   )}
                   {newActivityModalOpen && (
@@ -801,6 +815,7 @@ const AccountDetail: React.FC = () => {
                       accountId={AccountDetails?.id}
                       closeNewActivityModal={() => setNewActivityModalOpen(false)}
                       currencySymbol={currencySymbol}
+                      handleRefresh={handleRefresh}
                     />
                   )}
                 </>

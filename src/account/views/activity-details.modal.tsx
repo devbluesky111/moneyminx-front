@@ -11,9 +11,11 @@ import { numberWithCommas, fNumber } from 'common/number.helper';
 import { SelectInput } from 'common/components/input/select.input';
 import { getDateFormattedString, getMomentDate } from 'common/moment.helper';
 import { getActivityTypes, patchTransaction, postTransaction } from 'api/request.api';
+import DeleteActivity from 'account/components/delete-activity';
 
 const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
   accountId,
+  handleRefresh,
   currencySymbol,
   activityDetails,
   activityDetailsModal,
@@ -108,10 +110,6 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
           setValues({ ...values, [e.target.name]: value });
         };
 
-        const toggleFormCheck = (name: string) => {
-          setFieldValue(name, !(values as any)[name]);
-        };
-
         return (
           <form onSubmit={props.handleSubmit}>
             <Modal
@@ -185,88 +183,83 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                       </div>
                     </>
                   ) : (
-                      <>
-                        <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Date</div>
-                          <div className='col-sm'>
-                            <ReactDatePicker
-                              name='date'
-                              selected={values.date ? new Date(values.date) : null}
-                              onChange={(val: Date) => {
-                                setFieldValue('date', moment(val).toISOString());
-                              }}
-                            />
-                          </div>
+                    <>
+                      <div className='row mt-2 align-items-center'>
+                        <div className='col-sm'>Date</div>
+                        <div className='col-sm'>
+                          <ReactDatePicker
+                            name='date'
+                            selected={values.date ? new Date(values.date) : null}
+                            onChange={(val: Date) => {
+                              setFieldValue('date', moment(val).toISOString());
+                            }}
+                          />
                         </div>
-                        <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Type</div>
-                          <div className='col-sm'>
-                            <SelectInput
-                              args={activityTypes}
-                              onChange={handleSelectChange}
-                              value={values.type}
-                              name='type'
-                              format={true}
-                            />
-                          </div>
+                      </div>
+                      <div className='row mt-2 align-items-center'>
+                        <div className='col-sm'>Type</div>
+                        <div className='col-sm'>
+                          <SelectInput
+                            args={activityTypes}
+                            onChange={handleSelectChange}
+                            value={values.type}
+                            name='type'
+                            format={true}
+                          />
                         </div>
-                        <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Description</div>
-                          <div className='col-sm'>
-                            <Form.Control onChange={handleChange} name='description' value={values.description} />
-                          </div>
+                      </div>
+                      <div className='row mt-2 align-items-center'>
+                        <div className='col-sm'>Description</div>
+                        <div className='col-sm'>
+                          <Form.Control onChange={handleChange} name='description' value={values.description} />
                         </div>
-                        <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Amount</div>
-                          <div className='col-sm'>
-                            <Form.Control onChange={handleChange} type='number' name='amount' value={values.amount} />
-                          </div>
+                      </div>
+                      <div className='row mt-2 align-items-center'>
+                        <div className='col-sm'>Amount</div>
+                        <div className='col-sm'>
+                          <Form.Control onChange={handleChange} type='number' name='amount' value={values.amount} />
                         </div>
-                        <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Balance</div>
-                          <div className='col-sm'>
-                            <Form.Control onChange={handleChange} type='number' name='balance' value={values.balance} />
-                          </div>
+                      </div>
+                      <div className='row mt-2 align-items-center'>
+                        <div className='col-sm'>Balance</div>
+                        <div className='col-sm'>
+                          <Form.Control onChange={handleChange} type='number' name='balance' value={values.balance} />
                         </div>
-                        <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Income</div>
-                          <div className='col-sm'>
-                            <SelectInput
-                              args={['Yes', 'No']}
-                              onChange={handleYesNoChange}
-                              value={values.income ? 'Yes' : 'No'}
-                              name='income'
-                            />
-                          </div>
+                      </div>
+                      <div className='row mt-2 align-items-center'>
+                        <div className='col-sm'>Income</div>
+                        <div className='col-sm'>
+                          <SelectInput
+                            args={['Yes', 'No']}
+                            onChange={handleYesNoChange}
+                            value={values.income ? 'Yes' : 'No'}
+                            name='income'
+                          />
                         </div>
-                        <div className='row mt-2 align-items-center'>
-                          <div className='col-sm'>Cash Flow</div>
-                          <div className='col-sm'>
-                            <SelectInput
-                              args={['Yes', 'No']}
-                              onChange={handleYesNoChange}
-                              value={values.cashFlow ? 'Yes' : 'No'}
-                              name='cashFlow'
-                            />
-                          </div>
+                      </div>
+                      <div className='row mt-2 align-items-center'>
+                        <div className='col-sm'>Cash Flow</div>
+                        <div className='col-sm'>
+                          <SelectInput
+                            args={['Yes', 'No']}
+                            onChange={handleYesNoChange}
+                            value={values.cashFlow ? 'Yes' : 'No'}
+                            name='cashFlow'
+                          />
                         </div>
-                      </>
-                    )}
+                      </div>
+                    </>
+                  )}
                   <div className='action-wrapper mt-3 form-wrap'>
-                    <span className='checkbox-item'>
-                      <label className='check-box'>
-                        Ignore this transaction
-                        <input
-                          type='checkbox'
-                          name='isIgnored'
-                          value='false'
-                          checked={values.isIgnored}
-                          onChange={() => toggleFormCheck('isIgnored')}
-                          aria-checked={values.isIgnored}
-                        />
-                        <span className='geekmark' />
-                      </label>
-                    </span>
+                    {activityDetails?.isManual ? (
+                      <DeleteActivity
+                        activityId={activityDetails.id}
+                        onDelete={() => {
+                          handleRefresh();
+                          activityDetailsModal.close();
+                        }}
+                      />
+                    ) : null}
                     <button
                       className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center'
                       type='submit'
@@ -277,10 +270,10 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                           <span className='ml-1'>Saving...</span>
                         </>
                       ) : (
-                          <>
-                            Save<span className='hide-sm ml-1'>Changes</span>
-                          </>
-                        )}
+                        <>
+                          Save<span className='hide-sm ml-1'>Changes</span>
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
