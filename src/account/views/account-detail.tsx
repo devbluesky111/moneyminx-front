@@ -53,7 +53,6 @@ import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
 import ChartSkeleton from './chart-skeleton';
-import { logger } from 'common/logger.helper';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -294,8 +293,8 @@ const AccountDetail: React.FC = () => {
   };
 
   const renderChart = () => {
-    const hasHoldingChart = AccountHoldings && AccountHoldings.charts && tableType === 'holdings';
-    const hasActivityChart = AccountActivity && AccountActivity.charts && tableType === 'activity';
+    const hasHoldingChart = AccountHoldings && AccountHoldings.charts?.length && tableType === 'holdings';
+    const hasActivityChart = AccountActivity && AccountActivity.charts?.length && tableType === 'activity';
     const hasBalanceChart = balanceData?.balances?.length && tableType === 'balance';
 
     const hasEitherChart = hasHoldingChart || hasActivityChart || hasBalanceChart;
@@ -304,30 +303,30 @@ const AccountDetail: React.FC = () => {
       return <ChartSkeleton />;
     }
 
-    logger.log('hasBalanceChart', hasBalanceChart);
-    logger.log('Balance Data', balanceData);
-    logger.log('balances', balanceData?.balances);
+    if (hasHoldingChart) {
+      const holdingChartData = AccountHoldings?.charts!;
 
-    return (
-      <div className='chartbox'>
-        {AccountHoldings && AccountHoldings.charts && tableType === 'holdings'
-          ? renderCharItem(AccountHoldings.charts)
-          : null}
+      return <div className='chartbox'>{renderCharItem(holdingChartData)}</div>;
+    }
 
-        {AccountActivity && AccountActivity.charts && tableType === 'activity'
-          ? renderCharItem(AccountActivity.charts.map((b: any) => ({ ...b, value: b.balance || 0 })))
-          : null}
+    if (hasActivityChart) {
+      const activityChartData = AccountActivity!.charts.map((b: any) => ({ ...b, value: b.balance || 0 }));
 
-        {tableType === 'balance' && balanceData?.balances
-          ? renderCharItem(balanceData.balances.map((b) => ({ ...b, value: b.balance || 0 })))
-          : null}
-      </div>
-    );
+      return <div className='chartbox'>{renderCharItem(activityChartData)}</div>;
+    }
+
+    if (hasBalanceChart) {
+      const balanceChartItem = balanceData!.balances.map((b) => ({ ...b, value: b.balance || 0 }));
+
+      return <div className='chartbox'>{renderCharItem(balanceChartItem)}</div>;
+    }
+
+    return <ChartSkeleton />;
   };
 
   const showHoldings = () => {
-    const isLiability = AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES;
     const hasNoHolding = AccountDetails?.hasHoldings === false;
+    const isLiability = AccountDetails?.category?.mmCategory === EAccountType.LIABILITIES;
 
     if (isLiability || hasNoHolding) {
       return false;
