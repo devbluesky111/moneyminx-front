@@ -7,8 +7,12 @@ import { parseAmount } from 'common/common-helper';
 import { IBalanceTable } from 'account/account.type';
 import { logger } from 'common/logger.helper';
 import classNames from 'common/classes.helper';
+import { useModal } from 'common/components/modal';
+import AccountBalanceModal from 'account/components/account-balance-modal';
 
 const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, account }) => {
+  const accountBalanceModal = useModal();
+
   if (!balanceData) {
     return <Skeleton width={1232} height={250} />;
   }
@@ -38,7 +42,7 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, ac
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className={rowClasses}>
+                  <tr className={rowClasses} onClick={accountBalanceModal.open}>
                     <td>{balanceData.accountName}</td>
                     {balances.map((balanceObj, index) => (
                       <td key={index} className={gc(balanceObj.interval)}>
@@ -52,6 +56,7 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, ac
           </div>
         </div>
       </div>
+      <AccountBalanceModal accountBalanceModal={accountBalanceModal} />
     </section>
   );
 };
