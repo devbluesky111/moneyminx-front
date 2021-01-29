@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import FormControl from 'react-bootstrap/esm/FormControl';
 
 import { Formik } from 'formik';
 import { Account } from 'auth/auth.types';
@@ -11,6 +12,13 @@ import { dateToString, parseDateFromString, getPreviousYearFirstDate } from 'com
 interface IAccountBalanceModal {
   accountBalanceModal: ModalType;
   account?: Account;
+}
+
+interface IBalanceForm {
+  balances: {
+    date: string;
+    balance: number;
+  }[];
 }
 
 const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceModal, account }) => {
@@ -55,7 +63,39 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
         onSubmit={() => {}}
       >
         {(props) => {
-          return <div>form here</div>;
+          const { values, setValues } = props;
+
+          const handleBalanceChange = (e: React.ChangeEvent<any>) => {
+            const name = e.target.name;
+            const value = e.target.value;
+            const balanceValues = values.balances;
+
+            const filteredBalances = balanceValues.map((b) => {
+              if (b.date === name) {
+                return {
+                  ...b,
+                  balance: +value,
+                };
+              }
+              return b;
+            });
+
+            setValues({ ...values, balances: filteredBalances });
+          };
+
+          const inputCollection = values.balances.map((balance, index) => {
+            return (
+              <FormControl
+                key={index}
+                type='number'
+                name={balance.date}
+                onChange={handleBalanceChange}
+                value={(values.balances as any)[balance.date]}
+              />
+            );
+          });
+
+          return <div>{inputCollection}</div>;
         }}
       </Formik>
     );
