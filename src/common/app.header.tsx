@@ -39,23 +39,25 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, 
     <header>
       <nav className='navbar navbar-expand-lg money-minx-header'>
         <div className='container'>
-          <button
-            className={['navbar-toggler', !isToggleLeft ? 'collapsed' : ''].join(' ')}
-            type='button'
-            data-toggle='collapse'
-            data-target='#headerMenu'
-            aria-expanded='false'
-            onClick={leftClick}
-          >
-            <span className='navbar-toggler-icon' />
-          </button>
-          <Link to='/net-worth' className='navbar-brand'>
+          <div className='d-flex'>
+            <button
+              className={['navbar-toggler', !isToggleLeft ? 'collapsed' : ''].join(' ')}
+              type='button'
+              data-toggle='collapse'
+              data-target='#headerMenu'
+              aria-expanded='false'
+              onClick={leftClick}
+            >
+              <span className='navbar-toggler-icon' />
+            </button>
+            <Link to='/net-worth' className='navbar-brand'>
             {width >= BreakPoint.MD ? (
               <img src={Logo} alt='Money Minx Logo' className='mm-app-nav-logo' />
             ) : (
               <img src={LogoIcon} alt='Money Minx Icon' className='mm-app-nav-icon' />
             )}
           </Link>
+          </div>
           <div className='headtab'>
             <Link to='/net-worth' className={navClass('net-worth')}>
               Net Worth
