@@ -163,7 +163,7 @@ export const HomeMulticurrencySection = () => {
               <h2>Multi Currency</h2>
             </a>
             <p>
-              Money Minx is built with the international investor in mind. Choose a home base currency, convert and view your accounts in any currency.
+              Money Minx is built with the international investor in mind. Choose a home base currency, convert and view your accounts in multiple currencies.
             </p>
           </div>
           <div className='col-lg-7 feature-image'>
