@@ -87,6 +87,7 @@ const AppSidebar: React.FC<NetworthSidebarProps> = ({ openLeft, openRight }) => 
           <Link to='/allocation' className={sidebarClass('allocation')}>
             Allocation
           </Link>
+          <a href='https://www.moneyminx.com/community' target='_blank' rel='noopener noreferrer'>Community</a>
         </div>
       </aside>
     </>
