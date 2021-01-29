@@ -63,6 +63,9 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, 
             <Link to='/allocation' className={navClass('allocation')}>
               Allocation
             </Link>
+            <a href='https://www.moneyminx.com/community' className={navClass('community')} target='_blank' rel='noopener noreferrer'>
+              Community
+            </a>
           </div>
           <div className='head-right'>
             {currentSubscription?.subscriptionStatus === 'trialing' ||

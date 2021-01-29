@@ -56,6 +56,10 @@
 }
 
 .red-links {
+  color: $redText;
+  font-weight: 500;
+  font-size: 1rem;
+
   &:hover {
     border-bottom: 1.5px solid $redText;
     transition-duration: 0s;

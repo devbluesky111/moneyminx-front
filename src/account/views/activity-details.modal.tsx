@@ -26,6 +26,10 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
   const [activityTypes, setActivityTypes] = useState<string[]>([]);
   const { mmToast } = useToast();
 
+  const handleCancel = () => {
+    activityDetailsModal.close();
+  };
+
   const fetchActivityTypes = async () => {
     const { data, error } = await getActivityTypes();
     if (!error) {
@@ -115,7 +119,7 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
             <Modal
               {...activityDetailsModal.props}
               title={activityDetails ? 'Edit Activity' : 'New Activity'}
-              size='md'
+              size='mdx'
               canBeClosed
               onClose={() => activityDetailsModal.close()}
             >
@@ -260,6 +264,9 @@ const ActivityDetailsModal: React.FC<ActivityDetailsModalProps> = ({
                         }}
                       />
                     ) : null}
+                    <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel} type='button'>
+                      Cancel
+                    </button>
                     <button
                       className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center'
                       type='submit'
