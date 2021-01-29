@@ -19,7 +19,7 @@ const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount, pro
     <div className='popup'>
       <span className='pb-2'>Connection Status</span>
       <span className='pb-2'>
-        Last updated {getRelativeDate(AccountDetails.providerAccount?.dataset[0]?.lastUpdated.toString())}
+        Last updated {getRelativeDate(AccountDetails.providerAccount?.dataset?.[0]?.lastUpdated?.toString())}
       </span>
       {providerStatus === 'ATTENTION_WAIT' ? (
         <span className='pt-2 pb-3'>
