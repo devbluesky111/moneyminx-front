@@ -36,6 +36,7 @@ export const parseDateFromString = (dateString: string) => {
 
     return qDate;
   }
+
   const myDate = moment(dateString, 'MMM YYYY').toDate();
 
   return myDate;
@@ -126,6 +127,11 @@ export const getMonthSubtracted = (month: number) => moment.utc().subtract(month
  */
 export const getLastDateOfMonth = (date: Date) => moment(date).endOf('month').toDate();
 
-export const getUTCString = (data?: Date) => moment.utc(data).toISOString();
+export const getUTCString = (date?: Date) => moment.utc(date).toISOString();
 
 export const getMomentDate = (str?: string) => moment(str).toDate();
+
+export const getPreviousYearFirstDate = (year: number) =>
+  moment.utc().subtract(year, 'year').startOf('year').toISOString();
+
+export const dateToString = (date: Date) => moment(date).format('YYYY-MM-DDTHH:mm:ss');

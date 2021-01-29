@@ -56,7 +56,7 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, ac
           </div>
         </div>
       </div>
-      <AccountBalanceModal accountBalanceModal={accountBalanceModal} />
+      <AccountBalanceModal accountBalanceModal={accountBalanceModal} account={account} />
     </section>
   );
 };

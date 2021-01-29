@@ -11,6 +11,8 @@ import AppHeader from 'common/app.header';
 import AppSidebar from 'common/app.sidebar';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
+import { logger } from 'common/logger.helper';
+import { isNumber } from 'common/number.helper';
 import MMToolTip from 'common/components/tooltip';
 import LoadingScreen from 'common/loading-screen';
 import FastLinkModal from 'yodlee/fast-link.modal';
@@ -54,8 +56,6 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
-import { isNumber } from 'common/number.helper';
-import { logger } from 'common/logger.helper';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -162,6 +162,7 @@ const AccountDetail: React.FC = () => {
       if (tableType !== 'balance') {
         return false;
       }
+
       setFilterLoading(true);
       const { data, error } = await getAccountDetailBalances({ accountId, baseCurrency });
       setFilterLoading(false);
