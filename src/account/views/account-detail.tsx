@@ -426,7 +426,8 @@ const AccountDetail: React.FC = () => {
             <div className='connection-label-container'>
               <span className='label'>Connection Lost</span>
               <span className='time'>
-                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString())}
+                {AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString() !==null ?
+                  'Last updated ' + getRelativeDate(AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString()) : 'Not yet updated'}
               </span>
             </div>
             <div className='connection-error-msg'>
@@ -456,7 +457,8 @@ const AccountDetail: React.FC = () => {
             <div className='connection-label-container'>
               <span className='label'>Refresh Connection</span>
               <span className='time'>
-                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString())}
+                {AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString() !==null ?
+                  'Last updated ' + getRelativeDate(AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString()) : 'Not yet updated'}
               </span>
             </div>
             <div className='connection-error-msg'>
