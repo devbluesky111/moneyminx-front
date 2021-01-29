@@ -5,13 +5,20 @@ import Table from 'react-bootstrap/esm/Table';
 import { gc } from 'common/interval-parser';
 import { parseAmount } from 'common/common-helper';
 import { IBalanceTable } from 'account/account.type';
+import { logger } from 'common/logger.helper';
+import classNames from 'common/classes.helper';
 
-const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol }) => {
+const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, account }) => {
   if (!balanceData) {
     return <Skeleton width={1232} height={250} />;
   }
 
   const balances = balanceData.balances;
+  const hasHoldings = account?.hasHoldings;
+
+  logger.log('balances', balanceData);
+
+  const rowClasses = classNames(hasHoldings ? '' : 'no-hover');
 
   return (
     <section>
@@ -19,7 +26,7 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol }) 
         <div className='col-12'>
           <div className='ct-box'>
             <div className='table-holder'>
-              <Table className='tb-responsive account' id='table-account-xls'>
+              <Table className='tb-responsive account'>
                 <thead>
                   <tr>
                     <th className='s-hide'>Description</th>
@@ -31,7 +38,7 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol }) 
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className='no-hover'>
+                  <tr className={rowClasses}>
                     <td>{balanceData.accountName}</td>
                     {balances.map((balanceObj, index) => (
                       <td key={index} className={gc(balanceObj.interval)}>

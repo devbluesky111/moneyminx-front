@@ -1,5 +1,5 @@
-import { ModalType } from 'common/components/modal';
 import { Account } from 'auth/auth.types';
+import { ModalType } from 'common/components/modal';
 
 export interface AccountSubNavigationProps {
   AccountDetails: Account;
@@ -165,6 +165,7 @@ export interface Classifications {
 export interface IBalanceTable {
   balanceData?: IBalanceData;
   currencySymbol: string;
+  account?: Account;
 }
 
 export interface IBalance {

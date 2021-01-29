@@ -55,6 +55,7 @@ import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
 import { isNumber } from 'common/number.helper';
+import { logger } from 'common/logger.helper';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -405,6 +406,8 @@ const AccountDetail: React.FC = () => {
   if (fastlinkLoading) {
     return <LoadingScreen onAccountFetching />;
   }
+
+  logger.log('Account details', AccountDetails);
 
   return (
     <div className='mm-setting'>
@@ -784,7 +787,7 @@ const AccountDetail: React.FC = () => {
                   )}
 
                   {tableType === 'balance' ? (
-                    <BalanceTable balanceData={balanceData} currencySymbol={currencySymbol} />
+                    <BalanceTable balanceData={balanceData} currencySymbol={currencySymbol} account={AccountDetails} />
                   ) : null}
 
                   {tableType === 'activity' && (
