@@ -5,7 +5,10 @@
 
   .nav-item {
     padding: 0 0.5rem;
-    font-size: 1.125rem;
+    font-size: 1rem;
+    @media (min-width: $bs-lg) {
+      font-size: 1.125rem;
+    }
 
     .nav-link {
       color: $darkGray;
@@ -243,12 +246,11 @@
 }
 
 .navbar-brand svg {
-
-  @media screen and (max-width: $md) {
+  width: 100px;
+  @media screen and (min-width: $sm) {
     width: 118px;
   }
-
-  @media screen and (max-width: $sm) {
+  @media screen and (min-width: $md) {
     width: 106px;
   }
 }

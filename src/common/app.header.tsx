@@ -39,7 +39,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, 
     <header>
       <nav className='navbar navbar-expand-lg money-minx-header'>
         <div className='container'>
-          <div className='d-flex'>
+          <div className='head-right'>
+            <div className='d-flex'>
             <button
               className={['navbar-toggler', !isToggleLeft ? 'collapsed' : ''].join(' ')}
               type='button'
@@ -58,7 +59,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, 
             )}
           </Link>
           </div>
-          <div className='headtab'>
+            <div className='headtab'>
             <Link to='/net-worth' className={navClass('net-worth')}>
               Net Worth
             </Link>
@@ -68,6 +69,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, 
             <a href='https://www.moneyminx.com/community' className={navClass('community')} target='_blank' rel='noopener noreferrer'>
               Community
             </a>
+          </div>
           </div>
           <div className='head-right'>
             {currentSubscription?.subscriptionStatus === 'trialing' ||
