@@ -420,6 +420,7 @@ const AccountDetail: React.FC = () => {
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
+        shadow={true}
       />
       {providerStatus === 'ERROR' || providerStatus === 'ERROR_NEW_CREDENTIALS' ? (
         <div className='connection-issue-container error'>

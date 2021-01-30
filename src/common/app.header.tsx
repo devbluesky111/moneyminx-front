@@ -20,8 +20,9 @@ interface AppHeaderProps {
   toggleLeftMenu: () => void;
   toggleRightMenu: () => void;
   open: boolean;
+  shadow: boolean;
 }
-const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, open }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, open, shadow }) => {
   const { user } = useAuthState();
   const { pathname } = useLocation();
   const { width } = useSize();
@@ -37,7 +38,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, 
   };
   return (
     <header>
-      <nav className='navbar navbar-expand-lg money-minx-header'>
+      <nav className={shadow ? 'navbar navbar-expand-lg money-minx-header mm-shadow' : 'navbar navbar-expand-lg money-minx-header'}>
         <div className='container'>
           <div className='head-right'>
             <div className='d-flex'>
