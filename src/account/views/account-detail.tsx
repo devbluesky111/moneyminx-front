@@ -410,6 +410,8 @@ const AccountDetail: React.FC = () => {
     AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString() !==null ?
     'Last updated ' + getRelativeDate(AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString()) : 'Not yet updated';
 
+  const providerStatusIssue = providerStatus === 'ERROR' || providerStatus === 'ERROR_NEW_CREDENTIALS' ||providerStatus === 'ATTENTION' || providerStatus === 'ATTENTION_WAIT';
+
   return (
     <div className='mm-setting'>
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-670px' }}>
@@ -420,7 +422,7 @@ const AccountDetail: React.FC = () => {
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
-        shadow={true}
+        shadow={!providerStatusIssue}
       />
       {providerStatus === 'ERROR' || providerStatus === 'ERROR_NEW_CREDENTIALS' ? (
         <div className='connection-issue-container error'>

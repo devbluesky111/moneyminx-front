@@ -189,15 +189,18 @@ button:focus {
 /** =============================== **/
 
 .money-minx-header {
-    background: $white;
+  background: $white;
+  border-radius: 0 0 6px 6px;
+  padding: 0;
+  align-items: inherit;
+  height: 60px;
+  position: relative;
+  z-index: 999;
+  flex-wrap: nowrap;
+
+  &.mm-shadow {
     box-shadow: 0 2px 8px $whiteShadow, inset 0px -1px 0px $whiteInsetShadow;
-    border-radius: 0 0 6px 6px;
-    padding: 0;
-    align-items: inherit;
-    height: 60px;
-    position: relative;
-    z-index: 999;
-    flex-wrap: nowrap;
+  }
 }
 
 .money-minx-header.menu-fixed {
