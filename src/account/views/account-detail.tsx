@@ -412,7 +412,7 @@ const AccountDetail: React.FC = () => {
 
   return (
     <div className='mm-setting'>
-      <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
+      <aside className='setting-aside' style={{ left: accSetting ? '0' : '-670px' }}>
         <AccountSettingsSideBar closeSidebar={closeSidebar} selectedAccount={AccountDetails} />
       </aside>
       {accSetting && <div className='backdrop' onClick={closeSidebar} role='button' />}
