@@ -189,7 +189,7 @@ export const SecurityInvestmentSection = () => {
               </p>
               <p className='text p-b-10'>
                 For questions or concerns about security, please{' '}
-                <a href='mailto:hello@moneyminx.com?subject=Money Minx Security' target='_blank' rel='noopener noreferrer'>
+                <a href='mailto:hello@moneyminx.com?subject=Money Minx Security' >
                   Contact us
                 </a>
                 .

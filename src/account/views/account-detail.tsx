@@ -11,6 +11,7 @@ import AppHeader from 'common/app.header';
 import AppSidebar from 'common/app.sidebar';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
+import { isNumber } from 'common/number.helper';
 import MMToolTip from 'common/components/tooltip';
 import LoadingScreen from 'common/loading-screen';
 import FastLinkModal from 'yodlee/fast-link.modal';
@@ -54,7 +55,6 @@ import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
 import HoldingsDetailsModal from './holdings-details.modal';
 import { AccountChartItem, AccountHolingsProps, AccountTransactionsProps, IBalanceData } from '../account.type';
-import { isNumber } from 'common/number.helper';
 
 const AccountDetail: React.FC = () => {
   const history = useHistory();
@@ -406,6 +406,10 @@ const AccountDetail: React.FC = () => {
     return <LoadingScreen onAccountFetching />;
   }
 
+  const providerLastUpdated =
+    AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString() !==null ?
+    'Last updated ' + getRelativeDate(AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString()) : 'Not yet updated';
+
   return (
     <div className='mm-setting'>
       <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
@@ -426,7 +430,7 @@ const AccountDetail: React.FC = () => {
             <div className='connection-label-container'>
               <span className='label'>Connection Lost</span>
               <span className='time'>
-                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
+                {providerLastUpdated}
               </span>
             </div>
             <div className='connection-error-msg'>
@@ -456,7 +460,7 @@ const AccountDetail: React.FC = () => {
             <div className='connection-label-container'>
               <span className='label'>Refresh Connection</span>
               <span className='time'>
-                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
+                {providerLastUpdated}
               </span>
             </div>
             <div className='connection-error-msg'>

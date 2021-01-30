@@ -17,7 +17,8 @@ const FooterList = () => {
         <div className='wf-list-wrapper py-2'>
           <span className='footer-feature-title'>Resources</span>
           <div className='wf-list-items'>
-            <span className='footer-feature'><a className='text-white' href='/blog'>Blog</a></span>
+            <span className='footer-feature'><a className='text-white' href='https://www.moneyminx.com/community' target='_blank' rel='noopener noreferrer'>Community</a></span>
+            <span className='footer-feature'><a className='text-white' href='https://www.moneyminx.com/blog' target='_blank' rel='noopener noreferrer'>Blog</a></span>
             <span className='footer-feature'><a className='text-white' href='/security'>Security</a></span>
           </div>
         </div>

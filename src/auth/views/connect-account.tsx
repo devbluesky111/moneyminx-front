@@ -243,9 +243,11 @@ export const ConnectAccountMainSection = () => {
           </div>
           <div className='bg-white credentials-wrapper connect-wrap'>
             <div className='credentials-content connect-account'>
-              <Link to='/net-worth' className='logo-img-wrapper'>
-                <LogoImg className='auth-logo' />
-              </Link>
+              {!onboarded ? (
+                <Link to='/net-worth' className='logo-img-wrapper'>
+                  <LogoImg className='auth-logo' />
+                </Link>
+              ) : null}
               <h2>Add an account</h2>
               <p>
                 Money Minx is your place to track everything. Add your accounts, credit cards, investments, collectables, real estate and more. Get started by clicking on one of the buttons below.

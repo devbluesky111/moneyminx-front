@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import useToast from 'common/hooks/useToast';
 import { useModal } from 'common/components/modal';
@@ -57,9 +58,9 @@ const DeleteHoldingPosition = (holdingDetailsProps: IDeleteHoldingPosition) => {
   if (isDeletable) {
     return (
       <>
-        <button className='mm-btn-animate text-danger' onClick={deleteByPosition} type='button'>
+        <Link className='red-links p-t-3 m-r-4' to='#' onClick={deleteByPosition}>
           Delete Position
-        </button>
+        </Link>
         <DeleteConfirmationModal
           deleteConfirmationModal={deleteConfirmationModal}
           onSuccess={handleDeleteByPosition}

@@ -328,7 +328,7 @@ export const SignupMainSection = () => {
                           <span className='checkbox-item'>
                             <label className='check-box'>
                               I accept the{' '}
-                              <a href='/terms' target='_blank' className='purple-links'>
+                              <a href='/terms' className='purple-links'>
                                 Terms of Service
                               </a>
                               <input
