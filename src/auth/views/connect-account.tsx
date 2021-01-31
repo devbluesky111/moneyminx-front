@@ -51,6 +51,7 @@ const ConnectAccount = () => {
           toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
           toggleRightMenu={() => setOpenRightNav(!openRightNav)}
           open={openRightNav}
+          shadow={true}
         />
       ) : null}
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
