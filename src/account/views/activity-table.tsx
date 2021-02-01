@@ -77,6 +77,7 @@ export const ActivityTable: React.FC<AccountTransactionTableProps> = ({
                   className='row no-gutters mm-activity-table__body--wrapper'
                   key={index}
                   onClick={() => openEditActivityModal(item.id)}
+                  role='grid'
                 >
                   <div className='col-4 col-md mm-activity-table__body--data'>
                     {' '}
