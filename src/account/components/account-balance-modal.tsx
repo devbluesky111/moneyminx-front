@@ -121,19 +121,22 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
               .map((balanceItem, index) => {
                 if (index >= from && index < to) {
                   return (
-                    <div className='form-row' key={balanceItem.date}>
-                      <Label sm='8'>{getFullMonth(balanceItem.date)}</Label>
-                      <Col sm='4'>
+                    <li className='form-row' key={balanceItem.date}>
+                      <Label sm='7'>{getFullMonth(balanceItem.date)}</Label>
+                      <Col sm='5'>
                         <FormControl
                           disabled={isFuture(balanceItem.date)}
                           type='number'
-                          step='0.1'
+                          step='0.01'
                           name={balanceItem.date}
                           onChange={handleBalanceChange}
                           value={getFieldValue(balanceItem.date)}
                         />
+                        { !isFuture(balanceItem.date) ?
+                          <span className='input-add-on'>$</span>
+                          : null }
                       </Col>
-                    </div>
+                    </li>
                   );
                 }
 
@@ -162,20 +165,22 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
           const renderFormElements = () => {
             return (
               <div className='form-elements-wrapper'>
-                <div>{renderMonthElements(0, 6)}</div>
-                <div>{renderMonthElements(6, 12)}</div>
+                <ul className='modal-form-row'>{renderMonthElements(0, 6)}</ul>
+                <ul className='modal-form-row'>{renderMonthElements(6, 12)}</ul>
               </div>
             );
           };
 
           const renderTabContent = () => {
             return (
-              <Tabs
-                defaultActiveKey={new Date().getFullYear()}
-                id='monthly-value-sub-tab'
-                className='mt-3'
-                style={{ maxWidth: tabTitles.length >= 4 ? '536.5px' : '403.5px' }}
-              >
+              <div className='balance-modal-wrapper'>
+                <span className='description'>Enter the monthly balance of this account</span>
+                <Tabs
+                  defaultActiveKey={new Date().getFullYear()}
+                  id='monthly-value-sub-tab'
+                  className='mt-3'
+                  style={{ maxWidth: tabTitles.length >= 4 ? '536.5px' : '403.5px' }}
+                >
                 {tabTitles.map((title, index) => {
                   return (
                     <Tab eventKey={title} title={title} key={title} onEnter={() => changeCurrentYear(title)}>
@@ -184,6 +189,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
                   );
                 })}
               </Tabs>
+              </div>
             );
           };
 
@@ -199,7 +205,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
   };
 
   return (
-    <Modal {...accountBalanceModal.props} title='Account Balance Modal' canBeClosed>
+    <Modal {...accountBalanceModal.props} title='Monthly Balances' size='mdx' canBeClosed>
       {renderModalContent()}
     </Modal>
   );

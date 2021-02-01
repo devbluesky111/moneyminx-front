@@ -930,27 +930,65 @@
 .balance-modal-form {
   &__action-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-top: 2rem;
   }
+  button:last-child {
+    margin-left: 1rem;
+  }
 }
-
+.balance-modal-wrapper {
+  .description {
+    font-size: 1rem;
+    line-height: 150%;
+    color: $grayText;
+  }
+  .form-control {
+    height: 44px;
+    font-size: 0.875rem;
+    border: 1px solid $grayOpacity24;
+    padding: 0 20px;
+    &:focus,
+    &:active {
+      border: 1px solid $gray;
+    }
+    &:disabled {
+      -webkit-text-fill-color: #969eac;
+    }
+  }
+}
 .yearly-form-wrapper {
   .form-elements-wrapper {
+    margin-top: 20px;
     display: flex;
     .form-row {
       @extend .form-row;
       align-items: center;
       justify-content: space-between;
-      margin: 1rem;
+
+      .input-add-on {
+        padding-top: 12px;
+      }
 
       .form-control {
         @extend .form-control;
         &:disabled {
           border: 0;
-          background: $white;
+          background: none;
         }
       }
     }
   }
 }
+.modal-form-row {
+  li {
+    width: 100%;
+    padding: 8px 12px;
+  }
+  li:nth-child(odd) {
+    background: linear-gradient(90deg, #534cea0a 0%, #534cea08 100%);
+  }
+}
+
+
+
