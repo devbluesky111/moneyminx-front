@@ -7,8 +7,8 @@ import { IBalanceData } from 'account/account.type';
 import { Modal, ModalType } from 'common/components/modal';
 import { getAccountDetailBalances } from 'api/request.api';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { getYear, groupBalanceByYear } from 'account/account.helper';
 import { dateToString, parseDateFromString, getPreviousYearFirstDate } from 'common/moment.helper';
-import { groupBalanceByYear } from 'account/account.helper';
 
 interface IAccountBalanceModal {
   accountBalanceModal: ModalType;
@@ -43,7 +43,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
   const balances = balanceData?.balances;
   const formBalances: TFormBalances = balances?.map((balanceItem) => ({
     date: dateToString(parseDateFromString(balanceItem.interval)),
-    balance: balanceItem.balance,
+    balance: balanceItem.balance || 0,
   }));
 
   const renderModalContent = () => {
@@ -92,28 +92,41 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
             return setFieldValue('currentYear', yearTitle);
           };
 
-          const inputCollection = values.balances.map((balance, index) => {
-            return (
-              <FormControl
-                key={index}
-                type='number'
-                name={balance.date}
-                onChange={handleBalanceChange}
-                value={(values.balances as any)[balance.date]}
-              />
-            );
-          });
+          const getFieldValue = (key: string) => {
+            return values.balances.find((bal) => bal.date === key)?.balance || 0;
+          };
+
+          const inputCollection = values.balances
+            .filter((balance) => getYear(balance.date) === values.currentYear)
+            .map((balance, index) => {
+              return (
+                <React.Fragment key={index}>
+                  {balance.date}
+                  <FormControl
+                    type='number'
+                    step='0.1'
+                    name={balance.date}
+                    onChange={handleBalanceChange}
+                    value={getFieldValue(balance.date)}
+                  />
+                </React.Fragment>
+              );
+            });
+
+          const renderTabTitle = () => {
+            return tabTitles.map((title) => {
+              return (
+                <span key={title} onClick={() => changeCurrentYear(title)} role='button'>
+                  {title}
+                </span>
+              );
+            });
+          };
 
           return (
             <div>
-              {tabTitles.map((title) => {
-                return (
-                  <span key={title} onClick={() => changeCurrentYear(title)} role='button'>
-                    {title}
-                  </span>
-                );
-              })}
-
+              {renderTabTitle()}
+              <br />
               {inputCollection}
             </div>
           );
