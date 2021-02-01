@@ -100,7 +100,7 @@ const AccountDetail: React.FC = () => {
   const activityDetailsModal = useModal();
   const [fastlinkLoading, setFastlinkLoading] = useState(false);
   const [refreshCounter, setRefreshCounter] = useState(0);
-
+// start
   useEffect(() => {
     const fetchAccountDetails = async (accId: string, bCurrency: boolean) => {
       const { data, error } = await getAccountDetails(accId, bCurrency);
