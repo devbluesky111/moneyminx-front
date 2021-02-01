@@ -430,7 +430,7 @@
   .description {
     font-size: 1rem;
     line-height: 150%;
-    color: $gray;
+    color: $grayText;
   }
   &__title {
     font-weight: normal;
@@ -472,13 +472,12 @@
     border-color: $white;
     border-bottom: 1.5px solid $purple;
   }
-  a {
-    color: $gray;
-  }
+
   .nav-link,
   .mm-nav-link {
     padding: 0.5rem 0;
     margin-right: 6.25rem;
+    color: $grayText;
   }
   .row {
     font-size: 1rem;
@@ -845,7 +844,8 @@
   color: $white;
   display: flex;
   width: 100%;
-  padding: 8px;
+  padding: 13px 8px 8px 8px;
+  margin-top: -5px;
   .connection-issue-left {
     margin-bottom: 4px;
     width: 94%;

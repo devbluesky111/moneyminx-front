@@ -47,12 +47,16 @@ const WebsiteHeader = () => {
                 </div>
               </div>
               <ul className='navbar-nav mr-auto navbar-menu-list' role='menubar'>
+                <li className={navClass('community')}>
+                  <a className='mm-nav-link' href='https://www.moneyminx.com/community' role='menuitem' target='_blank' rel='noopener noreferrer'>
+                    Community
+                  </a>
+                </li>
                 <li className={navClass('pricing')}>
                   <Link className='mm-nav-link' to='/pricing' role='menuitem'>
                     Pricing
                   </Link>
                 </li>
-
                 <li className={navClass('blog')}>
                   <a
                     className='mm-nav-link'

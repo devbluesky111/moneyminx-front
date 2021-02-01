@@ -5,6 +5,7 @@
         right: 50px;
         cursor: pointer;
         color: $gray;
+      z-index: 1;
         &:hover {
             color: $darkGray;
         }

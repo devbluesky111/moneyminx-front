@@ -1126,7 +1126,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                           }}
                         />
                         <button className='btn-outline-primary mm-btn-animate' onClick={handleCancel} type='button'>
-                          Cancel
+                          Back
                         </button>
                         <button
                           className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center'
@@ -1639,7 +1639,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                           }}
                         />
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center'
+                          className='btn-outline-primary mm-btn-animate d-flex align-items-center justify-content-center'
                           onClick={() => tabsControl(HoldingsModalTabs.DETAILS)}
                           type='button'
                         >
@@ -1914,7 +1914,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                           }}
                         />
                         <button
-                          className='mm-btn-animate mm-btn-primary d-flex align-items-center justify-content-center'
+                          className='btn-outline-primary mm-btn-animate d-flex align-items-center justify-content-center'
                           onClick={() => tabsControl(HoldingsModalTabs.MONTHLYVALUES)}
                           type='button'
                         >
@@ -1932,7 +1932,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                             </>
                           ) : (
                             <>
-                              Save<span className='hide-sm ml-1'>Position</span>
+                              Next
                             </>
                           )}
                         </button>

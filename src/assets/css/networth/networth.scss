@@ -189,15 +189,18 @@ button:focus {
 /** =============================== **/
 
 .money-minx-header {
-    background: $white;
+  background: $white;
+  border-radius: 0 0 6px 6px;
+  padding: 0;
+  align-items: inherit;
+  height: 60px;
+  position: relative;
+  z-index: 999;
+  flex-wrap: nowrap;
+
+  &.mm-shadow {
     box-shadow: 0 2px 8px $whiteShadow, inset 0px -1px 0px $whiteInsetShadow;
-    border-radius: 0 0 6px 6px;
-    padding: 0;
-    align-items: inherit;
-    height: 60px;
-    position: relative;
-    z-index: 999;
-    flex-wrap: nowrap;
+  }
 }
 
 .money-minx-header.menu-fixed {
@@ -215,9 +218,10 @@ button:focus {
 }
 
 .money-minx-header .navbar-brand {
-    margin-right: auto;
+  margin-top: 4px;
+  margin-right: auto;
     @media (min-width: $md) {
-        margin-right: 0;
+      margin-right: 0;
     }
 }
 
@@ -229,16 +233,14 @@ button:focus {
 }
 
 .money-minx-header .headtab {
-    margin: 0;
-    margin-right: auto;
-    display: none;
-    height: 100%;
-    max-height: 58px;
-    @media (min-width: $md) {
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-    }
+  margin-left: 60px;
+  display: none;
+  height: 100%;
+  @media (min-width: $header) {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  }
 }
 
 .money-minx-header .navbar-brand+.headtab {
@@ -332,7 +334,7 @@ a.upgrader-btn {
 
 .upgrader-btn+.badge-box {
     margin-left: 0;
-    @media (min-width: $med) {
+    @media (min-width: $bs-lg) {
         margin-left: 20px;
     }
 }
@@ -511,8 +513,7 @@ a.upgrader-btn {
     width: 100%;
     max-width: 280px;
     margin: 0;
-    left: inherit;
-  background: $white;
+    background: $white;
     box-shadow: 0 2px 8px $whiteShadow, inset 0px -1px 0px $whiteInsetShadow;
     border-radius: 6px 0 0 6px;
     padding: 25px 0;
@@ -1907,16 +1908,17 @@ ul.charttool li.nw-data:before {
 }
 
 .navbar-toggler {
-    background: none;
-    width: 22px;
-    height: 14px;
-    border: 0;
-    padding: 0 !important;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    z-index: 2;
-    margin-right: 20px;
+  background: none;
+  width: 22px;
+  height: 14px;
+  border: 0;
+  padding: 0 !important;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  z-index: 2;
+  margin-top: 22px;
+  margin-right: 20px;
 }
 
 .navbar-toggler:focus {
@@ -2262,7 +2264,7 @@ footer p {
         margin-left: 40px;
     }
     .headtab a+a {
-        margin-left: 20px;
+        margin-left: 40px;
     }
 }
 

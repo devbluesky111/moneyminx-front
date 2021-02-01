@@ -64,6 +64,7 @@ const Settings: React.FC<SettingsProps> = () => {
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
+        shadow={true}
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-slider-bg-overlay' onClick={closeRightNav} role='button' />

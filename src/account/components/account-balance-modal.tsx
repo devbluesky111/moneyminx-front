@@ -141,16 +141,6 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
               });
           };
 
-          const renderTabTitle = () => {
-            return tabTitles.map((title) => {
-              return (
-                <span key={title} onClick={() => changeCurrentYear(title)} role='button'>
-                  {title}
-                </span>
-              );
-            });
-          };
-
           const renderFormActions = () => {
             return (
               <div className='balance-modal-form__action-wrapper'>
@@ -199,8 +189,6 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
 
           return (
             <form className='balance-modal-form' onSubmit={handleSubmit}>
-              {renderTabTitle()}
-              <br />
               {renderTabContent()}
               {renderFormActions()}
             </form>

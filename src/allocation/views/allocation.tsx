@@ -27,6 +27,7 @@ const Allocation: React.FC<AllocationProps> = () => {
           toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
           toggleRightMenu={() => setOpenRightNav(!openRightNav)}
           open={openRightNav}
+          shadow={true}
         />
         <div className='app-subheader-container px-4'>
           <Skeleton width={200} height={50} count={1} />
@@ -73,6 +74,7 @@ const Allocation: React.FC<AllocationProps> = () => {
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
+        shadow={true}
       />
       <AppSidebar openLeft={openLeftNav} openRight={openRightNav} />
       <div className='mm-slider-bg-overlay' onClick={closeRightNav} />

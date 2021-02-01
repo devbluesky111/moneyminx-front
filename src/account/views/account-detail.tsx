@@ -11,7 +11,6 @@ import AppHeader from 'common/app.header';
 import AppSidebar from 'common/app.sidebar';
 import useToast from 'common/hooks/useToast';
 import { events } from '@mm/data/event-list';
-import { logger } from 'common/logger.helper';
 import { isNumber } from 'common/number.helper';
 import MMToolTip from 'common/components/tooltip';
 import LoadingScreen from 'common/loading-screen';
@@ -408,11 +407,20 @@ const AccountDetail: React.FC = () => {
     return <LoadingScreen onAccountFetching />;
   }
 
-  logger.log('Account details', AccountDetails);
+  const providerLastUpdated =
+    AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString() !== null
+      ? 'Last updated ' + getRelativeDate(AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString())
+      : 'Not yet updated';
+
+  const providerStatusIssue =
+    providerStatus === 'ERROR' ||
+    providerStatus === 'ERROR_NEW_CREDENTIALS' ||
+    providerStatus === 'ATTENTION' ||
+    providerStatus === 'ATTENTION_WAIT';
 
   return (
     <div className='mm-setting'>
-      <aside className='setting-aside' style={{ left: accSetting ? '0' : '-665px' }}>
+      <aside className='setting-aside' style={{ left: accSetting ? '0' : '-670px' }}>
         <AccountSettingsSideBar closeSidebar={closeSidebar} selectedAccount={AccountDetails} />
       </aside>
       {accSetting && <div className='backdrop' onClick={closeSidebar} role='button' />}
@@ -420,6 +428,7 @@ const AccountDetail: React.FC = () => {
         toggleLeftMenu={() => setOpenLeftNav(!openLeftNav)}
         toggleRightMenu={() => setOpenRightNav(!openRightNav)}
         open={openRightNav}
+        shadow={!providerStatusIssue}
       />
       {providerStatus === 'ERROR' || providerStatus === 'ERROR_NEW_CREDENTIALS' ? (
         <div className='connection-issue-container error'>
@@ -429,9 +438,7 @@ const AccountDetail: React.FC = () => {
           <div className='connection-issue-left'>
             <div className='connection-label-container'>
               <span className='label'>Connection Lost</span>
-              <span className='time'>
-                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
-              </span>
+              <span className='time'>{providerLastUpdated}</span>
             </div>
             <div className='connection-error-msg'>
               {providerStatus === 'ERROR_NEW_CREDENTIALS' ? (
@@ -459,9 +466,7 @@ const AccountDetail: React.FC = () => {
           <div className='connection-issue-left'>
             <div className='connection-label-container'>
               <span className='label'>Refresh Connection</span>
-              <span className='time'>
-                Last updated {getRelativeDate(AccountDetails?.providerAccount?.dataset[0]?.lastUpdated.toString())}
-              </span>
+              <span className='time'>{providerLastUpdated}</span>
             </div>
             <div className='connection-error-msg'>
               {providerStatus === 'ATTENTION_WAIT' ? (

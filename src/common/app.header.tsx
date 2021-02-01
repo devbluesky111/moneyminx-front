@@ -20,8 +20,9 @@ interface AppHeaderProps {
   toggleLeftMenu: () => void;
   toggleRightMenu: () => void;
   open: boolean;
+  shadow: boolean;
 }
-const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, open }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, open, shadow }) => {
   const { user } = useAuthState();
   const { pathname } = useLocation();
   const { width } = useSize();
@@ -37,32 +38,39 @@ const AppHeader: React.FC<AppHeaderProps> = ({ toggleLeftMenu, toggleRightMenu, 
   };
   return (
     <header>
-      <nav className='navbar navbar-expand-lg money-minx-header'>
+      <nav className={shadow ? 'navbar navbar-expand-lg money-minx-header mm-shadow' : 'navbar navbar-expand-lg money-minx-header'}>
         <div className='container'>
-          <button
-            className={['navbar-toggler', !isToggleLeft ? 'collapsed' : ''].join(' ')}
-            type='button'
-            data-toggle='collapse'
-            data-target='#headerMenu'
-            aria-expanded='false'
-            onClick={leftClick}
-          >
-            <span className='navbar-toggler-icon' />
-          </button>
-          <Link to='/net-worth' className='navbar-brand'>
+          <div className='head-right'>
+            <div className='d-flex'>
+            <button
+              className={['navbar-toggler', !isToggleLeft ? 'collapsed' : ''].join(' ')}
+              type='button'
+              data-toggle='collapse'
+              data-target='#headerMenu'
+              aria-expanded='false'
+              onClick={leftClick}
+            >
+              <span className='navbar-toggler-icon' />
+            </button>
+            <Link to='/net-worth' className='navbar-brand'>
             {width >= BreakPoint.MD ? (
               <img src={Logo} alt='Money Minx Logo' className='mm-app-nav-logo' />
             ) : (
               <img src={LogoIcon} alt='Money Minx Icon' className='mm-app-nav-icon' />
             )}
           </Link>
-          <div className='headtab'>
+          </div>
+            <div className='headtab'>
             <Link to='/net-worth' className={navClass('net-worth')}>
               Net Worth
             </Link>
             <Link to='/allocation' className={navClass('allocation')}>
               Allocation
             </Link>
+            <a href='https://www.moneyminx.com/community' className={navClass('community')} target='_blank' rel='noopener noreferrer'>
+              Community
+            </a>
+          </div>
           </div>
           <div className='head-right'>
             {currentSubscription?.subscriptionStatus === 'trialing' ||

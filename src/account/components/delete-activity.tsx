@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import useToast from 'common/hooks/useToast';
 import { useModal } from 'common/components/modal';
@@ -54,9 +55,9 @@ const DeleteActivity = (props: IDeleteActivity) => {
 
   return (
     <>
-      <button className='mm-btn-animate text-danger' onClick={deleteConfirmationModal.open} type='button'>
+      <Link className='red-links p-t-3 m-r-4' to='#' onClick={deleteConfirmationModal.open}>
         Delete Activity
-      </button>
+      </Link>
       <DeleteConfirmationModal
         deleteConfirmationModal={deleteConfirmationModal}
         onSuccess={handleDeleteActivity}
