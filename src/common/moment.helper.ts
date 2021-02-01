@@ -135,3 +135,7 @@ export const getPreviousYearFirstDate = (year: number) =>
   moment.utc().subtract(year, 'year').startOf('year').toISOString();
 
 export const dateToString = (date: Date) => moment(date).format('YYYY-MM-DDTHH:mm:ss');
+
+export const getFullMonth = (date: string) => moment(date).format('MMMM');
+
+export const isFuture = (date: string) => moment(date).isAfter();

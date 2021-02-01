@@ -1,14 +1,25 @@
+import Tab from 'react-bootstrap/esm/Tab';
+import Col from 'react-bootstrap/esm/Col';
+import Tabs from 'react-bootstrap/esm/Tabs';
+import Label from 'react-bootstrap/esm/FormLabel';
 import React, { useEffect, useState } from 'react';
 import FormControl from 'react-bootstrap/esm/FormControl';
 
 import { Formik } from 'formik';
 import { Account } from 'auth/auth.types';
+import useToast from 'common/hooks/useToast';
 import { IBalanceData } from 'account/account.type';
 import { Modal, ModalType } from 'common/components/modal';
-import { getAccountDetailBalances } from 'api/request.api';
-import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { getYear, groupBalanceByYear } from 'account/account.helper';
-import { dateToString, parseDateFromString, getPreviousYearFirstDate } from 'common/moment.helper';
+import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { getAccountDetailBalances, putBalanceAccountDetails } from 'api/request.api';
+import {
+  isFuture,
+  dateToString,
+  getFullMonth,
+  parseDateFromString,
+  getPreviousYearFirstDate,
+} from 'common/moment.helper';
 
 interface IAccountBalanceModal {
   accountBalanceModal: ModalType;
@@ -26,6 +37,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
   const [loading, setLoading] = useState(false);
   const [balanceData, setBalanceData] = useState<IBalanceData>();
   const accountId = account?.id;
+  const { mmToast } = useToast();
 
   useEffect(() => {
     (async () => {
@@ -51,11 +63,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
       return <CircularSpinner />;
     }
 
-    // filter and make data for three different years
     const yearGroupedBalances = groupBalanceByYear(formBalances);
-    // formik initialize (done)
-    // create tab and render form fields based on the year
-    // on-tab change do not reinitialize the data
 
     const tabTitles = Object.keys(yearGroupedBalances);
 
@@ -63,12 +71,23 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
       <Formik
         initialValues={{
           balances: formBalances,
-          currentYear: tabTitles[0] || '',
+          currentYear: new Date().getFullYear().toString() || '',
         }}
-        onSubmit={() => {}}
+        onSubmit={async (values, actions) => {
+          setLoading(true);
+          const { error } = await putBalanceAccountDetails(`${accountId}`, { balances: values.balances });
+          setLoading(false);
+          actions.setSubmitting(false);
+
+          if (error) {
+            return mmToast('Error occurred on updating balance account', { type: 'error' });
+          }
+
+          return accountBalanceModal.close();
+        }}
       >
         {(props) => {
-          const { values, setValues, setFieldValue } = props;
+          const { values, setValues, setFieldValue, handleSubmit } = props;
 
           const handleBalanceChange = (e: React.ChangeEvent<any>) => {
             const name = e.target.name;
@@ -96,22 +115,31 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
             return values.balances.find((bal) => bal.date === key)?.balance || 0;
           };
 
-          const inputCollection = values.balances
-            .filter((balance) => getYear(balance.date) === values.currentYear)
-            .map((balance, index) => {
-              return (
-                <React.Fragment key={index}>
-                  {balance.date}
-                  <FormControl
-                    type='number'
-                    step='0.1'
-                    name={balance.date}
-                    onChange={handleBalanceChange}
-                    value={getFieldValue(balance.date)}
-                  />
-                </React.Fragment>
-              );
-            });
+          const renderMonthElements = (from = 0, to = 6) => {
+            return values.balances
+              .filter((balance) => getYear(balance.date) === values.currentYear)
+              .map((balanceItem, index) => {
+                if (index >= from && index < to) {
+                  return (
+                    <div className='form-row' key={balanceItem.date}>
+                      <Label sm='8'>{getFullMonth(balanceItem.date)}</Label>
+                      <Col sm='4'>
+                        <FormControl
+                          disabled={isFuture(balanceItem.date)}
+                          type='number'
+                          step='0.1'
+                          name={balanceItem.date}
+                          onChange={handleBalanceChange}
+                          value={getFieldValue(balanceItem.date)}
+                        />
+                      </Col>
+                    </div>
+                  );
+                }
+
+                return null;
+              });
+          };
 
           const renderTabTitle = () => {
             return tabTitles.map((title) => {
@@ -123,12 +151,59 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
             });
           };
 
+          const renderFormActions = () => {
+            return (
+              <div className='balance-modal-form__action-wrapper'>
+                <button
+                  className='mm-btn-animate btn-outline-primary'
+                  type='button'
+                  onClick={accountBalanceModal.close}
+                  disabled={props.isSubmitting}
+                >
+                  Cancel
+                </button>
+                <button className='mm-btn-primary mm-btn-animate' type='submit' disabled={props.isSubmitting}>
+                  Save Changes
+                </button>
+              </div>
+            );
+          };
+
+          const renderFormElements = () => {
+            return (
+              <div className='form-elements-wrapper'>
+                <div>{renderMonthElements(0, 6)}</div>
+                <div>{renderMonthElements(6, 12)}</div>
+              </div>
+            );
+          };
+
+          const renderTabContent = () => {
+            return (
+              <Tabs
+                defaultActiveKey={new Date().getFullYear()}
+                id='monthly-value-sub-tab'
+                className='mt-3'
+                style={{ maxWidth: tabTitles.length >= 4 ? '536.5px' : '403.5px' }}
+              >
+                {tabTitles.map((title, index) => {
+                  return (
+                    <Tab eventKey={title} title={title} key={title} onEnter={() => changeCurrentYear(title)}>
+                      <div className='yearly-form-wrapper'>{renderFormElements()}</div>
+                    </Tab>
+                  );
+                })}
+              </Tabs>
+            );
+          };
+
           return (
-            <div>
+            <form className='balance-modal-form' onSubmit={handleSubmit}>
               {renderTabTitle()}
               <br />
-              {inputCollection}
-            </div>
+              {renderTabContent()}
+              {renderFormActions()}
+            </form>
           );
         }}
       </Formik>
