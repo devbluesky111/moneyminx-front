@@ -8,18 +8,19 @@ import { Modal, ModalType } from 'common/components/modal';
 import { getAccountDetailBalances } from 'api/request.api';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { dateToString, parseDateFromString, getPreviousYearFirstDate } from 'common/moment.helper';
+import { groupBalanceByYear } from 'account/account.helper';
 
 interface IAccountBalanceModal {
   accountBalanceModal: ModalType;
   account?: Account;
 }
 
-interface IBalanceForm {
-  balances: {
-    date: string;
-    balance: number;
-  }[];
+export interface IFormBalance {
+  date: string;
+  balance: number | null;
 }
+
+export type TFormBalances = IFormBalance[] | undefined;
 
 const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceModal, account }) => {
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
   }, [accountId]);
 
   const balances = balanceData?.balances;
-  const formBalances = balances?.map((balanceItem) => ({
+  const formBalances: TFormBalances = balances?.map((balanceItem) => ({
     date: dateToString(parseDateFromString(balanceItem.interval)),
     balance: balanceItem.balance,
   }));
@@ -51,19 +52,23 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
     }
 
     // filter and make data for three different years
-    // formik initialize
+    const yearGroupedBalances = groupBalanceByYear(formBalances);
+    // formik initialize (done)
     // create tab and render form fields based on the year
     // on-tab change do not reinitialize the data
+
+    const tabTitles = Object.keys(yearGroupedBalances);
 
     return (
       <Formik
         initialValues={{
           balances: formBalances,
+          currentYear: tabTitles[0] || '',
         }}
         onSubmit={() => {}}
       >
         {(props) => {
-          const { values, setValues } = props;
+          const { values, setValues, setFieldValue } = props;
 
           const handleBalanceChange = (e: React.ChangeEvent<any>) => {
             const name = e.target.name;
@@ -83,6 +88,10 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
             setValues({ ...values, balances: filteredBalances });
           };
 
+          const changeCurrentYear = (yearTitle: string) => {
+            return setFieldValue('currentYear', yearTitle);
+          };
+
           const inputCollection = values.balances.map((balance, index) => {
             return (
               <FormControl
@@ -95,7 +104,19 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
             );
           });
 
-          return <div>{inputCollection}</div>;
+          return (
+            <div>
+              {tabTitles.map((title) => {
+                return (
+                  <span key={title} onClick={() => changeCurrentYear(title)} role='button'>
+                    {title}
+                  </span>
+                );
+              })}
+
+              {inputCollection}
+            </div>
+          );
         }}
       </Formik>
     );
@@ -104,7 +125,6 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
   return (
     <Modal {...accountBalanceModal.props} title='Account Balance Modal' canBeClosed>
       {renderModalContent()}
-      Account detail Modal
     </Modal>
   );
 };
