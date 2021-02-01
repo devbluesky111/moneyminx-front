@@ -22,7 +22,7 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, ac
 
   logger.log('balances', balanceData);
 
-  const rowClasses = classNames(hasHoldings ? '' : 'no-hover');
+  const rowClasses = classNames(hasHoldings ? 'no-hover' : '');
 
   return (
     <section>
