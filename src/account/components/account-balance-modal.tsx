@@ -206,7 +206,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
                 <span className='description'>Enter the monthly balance of this account</span>
                 <Tabs
                   defaultActiveKey={new Date().getFullYear()}
-                  id='monthly-value-sub-tab'
+                  id='yearly-balance'
                   className='mt-3'
                   style={{ maxWidth: tabTitles.length >= 4 ? '536.5px' : '403.5px' }}
                 >
@@ -217,6 +217,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
                       </Tab>
                     );
                   })}
+                  <Tab title='' />
                 </Tabs>
               </div>
             );
