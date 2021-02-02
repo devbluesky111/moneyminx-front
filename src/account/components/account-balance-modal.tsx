@@ -45,6 +45,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
   accountBalanceModal,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [refreshCounter, setRefreshCounter] = useState(0);
   const [balanceData, setBalanceData] = useState<IBalanceData>();
   const accountId = account?.id;
   const { mmToast } = useToast();
@@ -60,7 +61,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
         setBalanceData(data);
       }
     })();
-  }, [accountId]);
+  }, [accountId, refreshCounter]);
 
   const getFormattedDate = (interval: string): Date => {
     const parsedDate = parseDateFromString(interval);
@@ -103,6 +104,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
             return mmToast('Error occurred on updating balance account', { type: 'error' });
           }
 
+          setRefreshCounter((c) => c + 1);
           onSuccess();
 
           return accountBalanceModal.close();
