@@ -180,3 +180,16 @@ export interface IBalanceData {
   accountName: string;
   balances: IBalance[];
 }
+
+export interface IAccountBalanceModal {
+  account?: Account;
+  accountBalanceModal: ModalType;
+  onSuccess: () => void;
+}
+
+export interface IFormBalance {
+  date: string;
+  balance: number | null;
+}
+
+export type TFormBalances = IFormBalance[] | undefined;

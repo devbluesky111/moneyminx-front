@@ -6,15 +6,14 @@ import React, { useEffect, useState } from 'react';
 import FormControl from 'react-bootstrap/esm/FormControl';
 
 import { Formik } from 'formik';
-import { Account } from 'auth/auth.types';
 import useToast from 'common/hooks/useToast';
-import { IBalanceData } from 'account/account.type';
+import { Modal } from 'common/components/modal';
 import { numberWithCommas } from 'common/number.helper';
-import { Modal, ModalType } from 'common/components/modal';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { getYear, groupBalanceByYear } from 'account/account.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { getAccountDetailBalances, putBalanceAccountDetails } from 'api/request.api';
+import { IAccountBalanceModal, IBalanceData, TFormBalances } from 'account/account.type';
 import {
   isToday,
   isFuture,
@@ -24,19 +23,6 @@ import {
   parseDateFromString,
   getPreviousYearFirstDate,
 } from 'common/moment.helper';
-
-interface IAccountBalanceModal {
-  account?: Account;
-  accountBalanceModal: ModalType;
-  onSuccess: () => void;
-}
-
-export interface IFormBalance {
-  date: string;
-  balance: number | null;
-}
-
-export type TFormBalances = IFormBalance[] | undefined;
 
 const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ account, onSuccess, accountBalanceModal }) => {
   const [loading, setLoading] = useState(false);
