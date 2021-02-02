@@ -11,6 +11,7 @@ import useToast from 'common/hooks/useToast';
 import { IBalanceData } from 'account/account.type';
 import { numberWithCommas } from 'common/number.helper';
 import { Modal, ModalType } from 'common/components/modal';
+import { getCurrencySymbol } from 'common/currency-helper';
 import { getYear, groupBalanceByYear } from 'account/account.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { getAccountDetailBalances, putBalanceAccountDetails } from 'api/request.api';
@@ -26,7 +27,6 @@ import {
 
 interface IAccountBalanceModal {
   account?: Account;
-  currencySymbol: string;
   accountBalanceModal: ModalType;
   onSuccess: () => void;
 }
@@ -38,20 +38,20 @@ export interface IFormBalance {
 
 export type TFormBalances = IFormBalance[] | undefined;
 
-const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
-  account,
-  onSuccess,
-  currencySymbol,
-  accountBalanceModal,
-}) => {
+const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ account, onSuccess, accountBalanceModal }) => {
   const [loading, setLoading] = useState(false);
   const [refreshCounter, setRefreshCounter] = useState(0);
   const [balanceData, setBalanceData] = useState<IBalanceData>();
   const accountId = account?.id;
   const { mmToast } = useToast();
+  const currencySymbol = getCurrencySymbol(balanceData?.currency || '$');
+  const isOpen = accountBalanceModal.props.open === true;
 
   useEffect(() => {
     (async () => {
+      if (!isOpen) {
+        return isOpen;
+      }
       setLoading(true);
       const fromDate = getPreviousYearFirstDate(2);
       const { data, error } = await getAccountDetailBalances({ accountId, fromDate });
@@ -61,7 +61,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
         setBalanceData(data);
       }
     })();
-  }, [accountId, refreshCounter]);
+  }, [accountId, refreshCounter, isOpen]);
 
   const getFormattedDate = (interval: string): Date => {
     const parsedDate = parseDateFromString(interval);
@@ -150,7 +150,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
                       <Col sm='5'>
                         {isFuture(balanceItem.date) ? (
                           <>
-                            <span className='input-add-on left'>{currencySymbol || '$'}</span>
+                            <span className='input-add-on left'>{currencySymbol}</span>
                             <span>{numberWithCommas(+balanceItem.balance! || 0)}</span>
                           </>
                         ) : (
@@ -163,9 +163,7 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
                             value={getFieldValue(balanceItem.date)}
                           />
                         )}
-                        {!isFuture(balanceItem.date) ? (
-                          <span className='input-add-on'>{currencySymbol || '$'}</span>
-                        ) : null}
+                        {!isFuture(balanceItem.date) ? <span className='input-add-on'>{currencySymbol}</span> : null}
                       </Col>
                     </li>
                   );

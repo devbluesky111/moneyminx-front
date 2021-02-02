@@ -170,7 +170,7 @@ const AccountDetail: React.FC = () => {
         setBalanceData(data);
       }
     })();
-  }, [accountId, tableType, baseCurrency]);
+  }, [accountId, tableType, baseCurrency, refreshCounter]);
 
   const handleRefresh = () => setRefreshCounter((c) => c + 1);
 
