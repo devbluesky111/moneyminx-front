@@ -14,16 +14,19 @@ import { getYear, groupBalanceByYear } from 'account/account.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { getAccountDetailBalances, putBalanceAccountDetails } from 'api/request.api';
 import {
+  isToday,
   isFuture,
   dateToString,
   getFullMonth,
+  getLastDateOfMonth,
   parseDateFromString,
   getPreviousYearFirstDate,
 } from 'common/moment.helper';
 
 interface IAccountBalanceModal {
-  accountBalanceModal: ModalType;
   account?: Account;
+  currencySymbol: string;
+  accountBalanceModal: ModalType;
 }
 
 export interface IFormBalance {
@@ -33,7 +36,7 @@ export interface IFormBalance {
 
 export type TFormBalances = IFormBalance[] | undefined;
 
-const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceModal, account }) => {
+const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceModal, account, currencySymbol }) => {
   const [loading, setLoading] = useState(false);
   const [balanceData, setBalanceData] = useState<IBalanceData>();
   const accountId = account?.id;
@@ -52,9 +55,19 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
     })();
   }, [accountId]);
 
+  const getFormattedDate = (interval: string): Date => {
+    const parsedDate = parseDateFromString(interval);
+
+    if (isToday(parsedDate)) {
+      return parsedDate;
+    }
+
+    return getLastDateOfMonth(parsedDate);
+  };
+
   const balances = balanceData?.balances;
   const formBalances: TFormBalances = balances?.map((balanceItem) => ({
-    date: dateToString(parseDateFromString(balanceItem.interval)),
+    date: dateToString(getFormattedDate(balanceItem.interval)),
     balance: balanceItem.balance || 0,
   }));
 
@@ -124,6 +137,9 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
                     <li className='form-row' key={balanceItem.date}>
                       <Label sm='7'>{getFullMonth(balanceItem.date)}</Label>
                       <Col sm='5'>
+                        {isFuture(balanceItem.date) ? (
+                          <span className='input-add-on left'>{currencySymbol || '$'}</span>
+                        ) : null}
                         <FormControl
                           disabled={isFuture(balanceItem.date)}
                           type='number'
@@ -132,9 +148,9 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
                           onChange={handleBalanceChange}
                           value={getFieldValue(balanceItem.date)}
                         />
-                        { !isFuture(balanceItem.date) ?
-                          <span className='input-add-on'>$</span>
-                          : null }
+                        {!isFuture(balanceItem.date) ? (
+                          <span className='input-add-on'>{currencySymbol || '$'}</span>
+                        ) : null}
                       </Col>
                     </li>
                   );
@@ -181,14 +197,14 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
                   className='mt-3'
                   style={{ maxWidth: tabTitles.length >= 4 ? '536.5px' : '403.5px' }}
                 >
-                {tabTitles.map((title, index) => {
-                  return (
-                    <Tab eventKey={title} title={title} key={title} onEnter={() => changeCurrentYear(title)}>
-                      <div className='yearly-form-wrapper'>{renderFormElements()}</div>
-                    </Tab>
-                  );
-                })}
-              </Tabs>
+                  {tabTitles.map((title, index) => {
+                    return (
+                      <Tab eventKey={title} title={title} key={title} onEnter={() => changeCurrentYear(title)}>
+                        <div className='yearly-form-wrapper'>{renderFormElements()}</div>
+                      </Tab>
+                    );
+                  })}
+                </Tabs>
               </div>
             );
           };

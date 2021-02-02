@@ -136,6 +136,9 @@ export const getPreviousYearFirstDate = (year: number) =>
 
 export const dateToString = (date: Date) => moment(date).format('YYYY-MM-DDTHH:mm:ss');
 
-export const getFullMonth = (date: string) => moment(date).format('MMMM');
+export const getFullMonth = (date: string) => (isToday(date) ? 'Today' : moment(date).format('MMMM'));
 
 export const isFuture = (date: string) => moment(date).isAfter();
+
+export const isToday = (date: string | Date) =>
+  moment(date).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD');

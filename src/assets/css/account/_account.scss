@@ -968,6 +968,12 @@
 
       .input-add-on {
         padding-top: 12px;
+
+        &.left {
+          position: absolute;
+          left: 1rem;
+          top: 1px;
+        }
       }
 
       .form-control {
@@ -989,6 +995,3 @@
     background: linear-gradient(90deg, #534cea0a 0%, #534cea08 100%);
   }
 }
-
-
-

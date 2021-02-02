@@ -21,6 +21,7 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, ac
   const hasHoldings = account?.hasHoldings;
 
   logger.log('balances', balanceData);
+  logger.log('account', account);
 
   const rowClasses = classNames(hasHoldings ? 'no-hover' : '');
 
@@ -56,7 +57,11 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, ac
           </div>
         </div>
       </div>
-      <AccountBalanceModal accountBalanceModal={accountBalanceModal} account={account} />
+      <AccountBalanceModal
+        accountBalanceModal={accountBalanceModal}
+        account={account}
+        currencySymbol={currencySymbol}
+      />
     </section>
   );
 };
