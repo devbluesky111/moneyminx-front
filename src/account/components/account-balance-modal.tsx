@@ -9,6 +9,7 @@ import { Formik } from 'formik';
 import { Account } from 'auth/auth.types';
 import useToast from 'common/hooks/useToast';
 import { IBalanceData } from 'account/account.type';
+import { numberWithCommas } from 'common/number.helper';
 import { Modal, ModalType } from 'common/components/modal';
 import { getYear, groupBalanceByYear } from 'account/account.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
@@ -27,6 +28,7 @@ interface IAccountBalanceModal {
   account?: Account;
   currencySymbol: string;
   accountBalanceModal: ModalType;
+  onSuccess: () => void;
 }
 
 export interface IFormBalance {
@@ -36,7 +38,12 @@ export interface IFormBalance {
 
 export type TFormBalances = IFormBalance[] | undefined;
 
-const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceModal, account, currencySymbol }) => {
+const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({
+  account,
+  onSuccess,
+  currencySymbol,
+  accountBalanceModal,
+}) => {
   const [loading, setLoading] = useState(false);
   const [balanceData, setBalanceData] = useState<IBalanceData>();
   const accountId = account?.id;
@@ -96,6 +103,8 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
             return mmToast('Error occurred on updating balance account', { type: 'error' });
           }
 
+          onSuccess();
+
           return accountBalanceModal.close();
         }}
       >
@@ -138,16 +147,20 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ accountBalanceMod
                       <Label sm='7'>{getFullMonth(balanceItem.date)}</Label>
                       <Col sm='5'>
                         {isFuture(balanceItem.date) ? (
-                          <span className='input-add-on left'>{currencySymbol || '$'}</span>
-                        ) : null}
-                        <FormControl
-                          disabled={isFuture(balanceItem.date)}
-                          type='number'
-                          step='0.01'
-                          name={balanceItem.date}
-                          onChange={handleBalanceChange}
-                          value={getFieldValue(balanceItem.date)}
-                        />
+                          <>
+                            <span className='input-add-on left'>{currencySymbol || '$'}</span>
+                            <span>{numberWithCommas(+balanceItem.balance! || 0)}</span>
+                          </>
+                        ) : (
+                          <FormControl
+                            disabled={isFuture(balanceItem.date)}
+                            type='number'
+                            step='0.01'
+                            name={balanceItem.date}
+                            onChange={handleBalanceChange}
+                            value={getFieldValue(balanceItem.date)}
+                          />
+                        )}
                         {!isFuture(balanceItem.date) ? (
                           <span className='input-add-on'>{currencySymbol || '$'}</span>
                         ) : null}

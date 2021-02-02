@@ -3,14 +3,13 @@ import Skeleton from 'react-loading-skeleton';
 import Table from 'react-bootstrap/esm/Table';
 
 import { gc } from 'common/interval-parser';
-import { parseAmount } from 'common/common-helper';
-import { IBalanceTable } from 'account/account.type';
-import { logger } from 'common/logger.helper';
 import classNames from 'common/classes.helper';
+import { parseAmount } from 'common/common-helper';
 import { useModal } from 'common/components/modal';
+import { IBalanceTable } from 'account/account.type';
 import AccountBalanceModal from 'account/components/account-balance-modal';
 
-const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, account }) => {
+const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, account, handleRefresh }) => {
   const accountBalanceModal = useModal();
 
   if (!balanceData) {
@@ -19,9 +18,6 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, ac
 
   const balances = balanceData.balances;
   const hasHoldings = account?.hasHoldings;
-
-  logger.log('balances', balanceData);
-  logger.log('account', account);
 
   const rowClasses = classNames(hasHoldings ? 'no-hover' : '');
 
@@ -61,6 +57,7 @@ const BalanceTable: React.FC<IBalanceTable> = ({ balanceData, currencySymbol, ac
         accountBalanceModal={accountBalanceModal}
         account={account}
         currencySymbol={currencySymbol}
+        onSuccess={handleRefresh}
       />
     </section>
   );

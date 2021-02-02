@@ -166,6 +166,7 @@ export interface IBalanceTable {
   balanceData?: IBalanceData;
   currencySymbol: string;
   account?: Account;
+  handleRefresh: () => void;
 }
 
 export interface IBalance {

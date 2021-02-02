@@ -793,7 +793,12 @@ const AccountDetail: React.FC = () => {
                   )}
 
                   {tableType === 'balance' ? (
-                    <BalanceTable balanceData={balanceData} currencySymbol={currencySymbol} account={AccountDetails} />
+                    <BalanceTable
+                      balanceData={balanceData}
+                      currencySymbol={currencySymbol}
+                      account={AccountDetails}
+                      handleRefresh={handleRefresh}
+                    />
                   ) : null}
 
                   {tableType === 'activity' && (
