@@ -101,11 +101,17 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     }
   };
 
+  /**
+   * not specific to holding id
+   */
   useEffect(() => {
     fetchClassification();
     fetchHoldingTypes();
   }, []);
 
+  /**
+   *
+   */
   useEffect(() => {
     const _years = [];
     for (let i = 0; i < holdingsDetails?.intervalValues.length; i++) {
@@ -178,6 +184,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
 
   return (
     <Formik
+      enableReinitialize
       initialValues={{
         holdingType: holdingsDetails?.holdingType || '',
         securityType: holdingsDetails?.securityType || '',
@@ -268,6 +275,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
               i--;
             }
           }
+
           for (let i = 0; i < value.length; i++) {
             if (value[i]) {
               _classifications.push(value[i]);
@@ -1931,9 +1939,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                               <span className='ml-1'>Saving...</span>
                             </>
                           ) : (
-                            <>
-                              Next
-                            </>
+                            <>Next</>
                           )}
                         </button>
                       </div>
