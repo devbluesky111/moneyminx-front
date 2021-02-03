@@ -100,7 +100,7 @@ const AccountDetail: React.FC = () => {
   const activityDetailsModal = useModal();
   const [fastlinkLoading, setFastlinkLoading] = useState(false);
   const [refreshCounter, setRefreshCounter] = useState(0);
-// start
+
   useEffect(() => {
     const fetchAccountDetails = async (accId: string, bCurrency: boolean) => {
       const { data, error } = await getAccountDetails(accId, bCurrency);
@@ -126,6 +126,7 @@ const AccountDetail: React.FC = () => {
         fetchAccountActivity(accountId, fromDate, toDate, timeInterval, baseCurrency);
       }
       if (tableType === 'balance') {
+        fetchAccountBalance(accountId, fromDate, toDate, timeInterval, baseCurrency);
         setFilterLoading(false);
         setLoading(false);
       }
@@ -156,20 +157,41 @@ const AccountDetail: React.FC = () => {
    * Get Balances if balance tab is selected
    * @if !balance return
    */
-  useEffect(() => {
-    (async () => {
-      if (tableType !== 'balance') {
-        return false;
-      }
-      setFilterLoading(true);
-      const { data, error } = await getAccountDetailBalances({ accountId, baseCurrency });
-      setFilterLoading(false);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (tableType !== 'balance') {
+  //       return false;
+  //     }
+  //     setFilterLoading(true);
+  //     const { data, error } = await getAccountDetailBalances({ accountId, baseCurrency });
+  //     setFilterLoading(false);
 
-      if (!error) {
-        setBalanceData(data);
-      }
-    })();
-  }, [accountId, tableType, baseCurrency]);
+  //     if (!error) {
+  //       setBalanceData(data);
+  //     }
+  //   })();
+  // }, [accountId, tableType, baseCurrency]);
+
+  // useEffect(() => {
+  //   (async (
+  //     accountId: string,
+  //     fromDate: any,
+  //     toDate: any,
+  //     timeInterval: string,
+  //     baseCurrency: boolean
+  //   ) => {
+  //     if (tableType !== 'balance') {
+  //       return false;
+  //     }
+  //     setFilterLoading(true);
+  //     const { data, error } = await getAccountDetailBalances({ accountId, fromDate, toDate, timeInterval, baseCurrency });
+  //     setFilterLoading(false);
+
+  //     if (!error) {
+  //       setBalanceData(data);
+  //     }
+  //   })();
+  // }, [accountId, tableType, fromDate, toDate, timeInterval, baseCurrency]);
 
   const handleRefresh = () => setRefreshCounter((c) => c + 1);
 
@@ -230,6 +252,21 @@ const AccountDetail: React.FC = () => {
       }
     }
   };
+
+  const fetchAccountBalance = async (
+    accountId: string,
+    fromDate: any,
+    toDate: any,
+    timeInterval: string,
+    baseCurrency: boolean
+  ) => {
+    const { data, error } = await getAccountDetailBalances({ accountId, fromDate, toDate, timeInterval, baseCurrency });
+    if (!error) {
+      setBalanceData(data);
+      setFilterLoading(false);
+    }
+  };
+
 
   const fetchAccountActivity = async (
     accountId: string,
