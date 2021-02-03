@@ -101,17 +101,12 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     }
   };
 
-  /**
-   * not specific to holding id
-   */
   useEffect(() => {
     fetchClassification();
     fetchHoldingTypes();
   }, []);
 
-  /**
-   *
-   */
+
   useEffect(() => {
     const _years = [];
     for (let i = 0; i < holdingsDetails?.intervalValues.length; i++) {
