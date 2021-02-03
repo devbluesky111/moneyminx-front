@@ -106,7 +106,6 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
     fetchHoldingTypes();
   }, []);
 
-
   useEffect(() => {
     const _years = [];
     for (let i = 0; i < holdingsDetails?.intervalValues.length; i++) {
@@ -564,6 +563,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='costBasis'
                                         value={values.costBasis || ''}
+                                        step='any'
                                       />
                                       <span className='input-add-on'>{currencySymbol}</span>
                                     </div>
@@ -794,6 +794,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='costBasis'
                                         value={values.costBasis || ''}
+                                        step='any'
                                       />
                                       <span className='input-add-on'>{currencySymbol}</span>
                                     </div>
@@ -879,6 +880,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='vestedQuantity'
                                         value={values.vestedQuantity || ''}
+                                        step='any'
                                       />
                                     </div>
                                   </div>
@@ -892,6 +894,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='vestedSharesExercisable'
                                         value={values.vestedSharesExercisable || ''}
+                                        step='any'
                                       />
                                     </div>
                                   </div>
@@ -905,6 +908,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='vestedValue'
                                         value={values.vestedValue || ''}
+                                        step='any'
                                       />
                                     </div>
                                   </div>
@@ -932,6 +936,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='unvestedQuantity'
                                         value={values.unvestedQuantity || ''}
+                                        step='any'
                                       />
                                     </div>
                                   </div>
@@ -945,6 +950,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='unvestedValue'
                                         value={values.unvestedValue || ''}
+                                        step='any'
                                       />
                                     </div>
                                   </div>
@@ -958,6 +964,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='exercisedQuantity'
                                         value={values.exercisedQuantity || ''}
+                                        step='any'
                                       />
                                     </div>
                                   </div>
@@ -995,6 +1002,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='strikePrice'
                                         value={values.strikePrice || ''}
+                                        step='any'
                                       />
                                       <span className='input-add-on'>{currencySymbol}</span>
                                     </div>
@@ -1014,6 +1022,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='couponRate'
                                         value={values.couponRate || ''}
+                                        step='any'
                                       />
                                     </div>
                                   </div>
@@ -1027,6 +1036,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='interestRate'
                                         value={values.interestRate || ''}
+                                        step='any'
                                       />
                                       <span className='input-add-on'>%</span>
                                     </div>
@@ -1064,6 +1074,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         name='contractQuantity'
                                         value={values.contractQuantity || ''}
+                                        step='any'
                                       />
                                     </div>
                                   </div>
@@ -1112,6 +1123,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                     type='number'
                                     name='costBasis'
                                     value={values.costBasis || ''}
+                                    step='any'
                                   />
                                   <span className='input-add-on'>{currencySymbol}</span>
                                 </div>
@@ -1417,6 +1429,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                         );
                                                   }}
                                                   type='number'
+                                                  step='any'
                                                 />
                                                 <span className='input-add-on'>{currencySymbol}</span>
                                               </>
@@ -1463,6 +1476,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                   handleMonthlyNewQuantityChange(`${monItem.substr(0, 3)} ${item}`, e)
                                                 }
                                                 type='number'
+                                                step='any'
                                               />
                                             )}
                                           </div>
@@ -1555,6 +1569,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                       handleMonthlyNewPriceChange(`${monItem.substr(0, 3)} ${item}`, e)
                                                     }
                                                     type='number'
+                                                    step='any'
                                                   />
                                                   <span className='input-add-on'>{currencySymbol}</span>
                                                 </>
@@ -1601,6 +1616,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                                     handleMonthlyNewQuantityChange(`${monItem.substr(0, 3)} ${item}`, e)
                                                   }
                                                   type='number'
+                                                  step='any'
                                                 />
                                               )}
                                             </div>
@@ -1769,6 +1785,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         value={item.allocation}
                                         id={item.classificationValue || ''}
+                                        step='any'
                                       />
                                       <span className='input-add-on'>%</span>
                                     </div>
@@ -1830,6 +1847,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         value={item.allocation}
                                         id={item.classificationValue || ''}
+                                        step='any'
                                       />
                                       <span className='input-add-on'>%</span>
                                     </div>
@@ -1891,6 +1909,7 @@ const HoldingsDetailsModal: React.FC<HoldingsDetailsModalProps> = ({
                                         type='number'
                                         value={item.allocation}
                                         id={item.classificationValue || ''}
+                                        step='any'
                                       />
                                       <span className='input-add-on'>%</span>
                                     </div>
