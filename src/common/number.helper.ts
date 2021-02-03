@@ -14,7 +14,9 @@ export const fNumber = (num: number | string, digits: any | 2) => {
 };
 
 export const numberWithCommas = (num: number | string) => {
-  const parsedNum = Number(num).toFixed(2);
+  if (isString(num)) {
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 
-  return parsedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };

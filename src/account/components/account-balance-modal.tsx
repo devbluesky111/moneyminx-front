@@ -5,6 +5,8 @@ import Label from 'react-bootstrap/esm/FormLabel';
 import React, { useEffect, useState } from 'react';
 import FormControl from 'react-bootstrap/esm/FormControl';
 
+import {fNumber} from 'common/number.helper'
+
 import { Formik } from 'formik';
 import useToast from 'common/hooks/useToast';
 import { Modal } from 'common/components/modal';
@@ -21,6 +23,8 @@ import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { getAccountDetailBalances, putBalanceAccountDetails } from 'api/request.api';
 import { IAccountBalanceModal, IBalanceData, TFormBalances } from 'account/account.type';
 import { isFuture, getFullMonth, getPreviousYearFirstDate } from 'common/moment.helper';
+
+
 
 const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ account, onSuccess, accountBalanceModal }) => {
   const [loading, setLoading] = useState(false);
@@ -125,10 +129,10 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ account, onSucces
                       <Label sm='7'>{getFullMonth(balanceItem.date)}</Label>
                       <Col sm='5'>
                         {isFuture(balanceItem.date) ? (
-                          <>
-                            <span className='input-add-on left'>{currencySymbol}</span>
-                            <span>{numberWithCommas(+balanceItem.balance! || 0)}</span>
-                          </>
+                          <span className='balance-value'>
+                            <span>{currencySymbol}</span>
+                            <span>{fNumber(numberWithCommas(+balanceItem.balance! || 0),2)}</span>
+                          </span>
                         ) : (
                           <FormControl
                             disabled={isFuture(balanceItem.date)}
