@@ -10,19 +10,17 @@ import useToast from 'common/hooks/useToast';
 import { Modal } from 'common/components/modal';
 import { numberWithCommas } from 'common/number.helper';
 import { getCurrencySymbol } from 'common/currency-helper';
-import { getYear, groupBalanceByYear } from 'account/account.helper';
+import {
+  getYear,
+  getBalanceDate,
+  parseBalanceData,
+  getBalanceUTCDate,
+  groupBalanceByYear,
+} from 'account/account.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
 import { getAccountDetailBalances, putBalanceAccountDetails } from 'api/request.api';
 import { IAccountBalanceModal, IBalanceData, TFormBalances } from 'account/account.type';
-import {
-  isToday,
-  isFuture,
-  dateToString,
-  getFullMonth,
-  getLastDateOfMonth,
-  parseDateFromString,
-  getPreviousYearFirstDate,
-} from 'common/moment.helper';
+import { isFuture, getFullMonth, getPreviousYearFirstDate } from 'common/moment.helper';
 
 const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ account, onSuccess, accountBalanceModal }) => {
   const [loading, setLoading] = useState(false);
@@ -49,19 +47,10 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ account, onSucces
     })();
   }, [accountId, refreshCounter, isOpen]);
 
-  const getFormattedDate = (interval: string): Date => {
-    const parsedDate = parseDateFromString(interval);
-
-    if (isToday(parsedDate)) {
-      return parsedDate;
-    }
-
-    return getLastDateOfMonth(parsedDate);
-  };
-
   const balances = balanceData?.balances;
   const formBalances: TFormBalances = balances?.map((balanceItem) => ({
-    date: dateToString(getFormattedDate(balanceItem.interval)),
+    date: getBalanceDate(balanceItem.interval),
+    dateUTC: getBalanceUTCDate(balanceItem.interval),
     balance: balanceItem.balance || 0,
   }));
 
@@ -82,7 +71,8 @@ const AccountBalanceModal: React.FC<IAccountBalanceModal> = ({ account, onSucces
         }}
         onSubmit={async (values, actions) => {
           setLoading(true);
-          const { error } = await putBalanceAccountDetails(`${accountId}`, { balances: values.balances });
+          const parsedBalanceData = parseBalanceData(values.balances);
+          const { error } = await putBalanceAccountDetails(`${accountId}`, { balances: parsedBalanceData });
           setLoading(false);
           actions.setSubmitting(false);
 

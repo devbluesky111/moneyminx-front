@@ -189,6 +189,7 @@ export interface IAccountBalanceModal {
 
 export interface IFormBalance {
   date: string;
+  dateUTC: string;
   balance: number | null;
 }
 
