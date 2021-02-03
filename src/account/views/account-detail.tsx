@@ -18,12 +18,12 @@ import FastLinkModal from 'yodlee/fast-link.modal';
 import { useModal } from 'common/components/modal';
 import { useAuthDispatch } from 'auth/auth.context';
 import useAnalytics from 'common/hooks/useAnalytics';
-import Popup from 'account/components/account-popup';
+// import Popup from 'account/components/account-popup';
 import { getRefreshedAccount } from 'auth/auth.service';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { EAccountType } from 'account/enum/account-type';
 import { TimeIntervalEnum } from 'networth/networth.enum';
-// import { ETableType } from 'account/enum/table-type.enum';
+import { ETableType } from 'account/enum/table-type.enum';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { Placeholder } from 'networth/views/inc/placeholder';
@@ -81,7 +81,7 @@ const AccountDetail: React.FC = () => {
   const [editActivityModalOpen, setEditActivityModalOpen] = useState<boolean>(false);
   const [baseCurrency, setBaseCurrency] = useState<boolean>(false);
   const [currencySymbol, setCurrencySymbol] = useState<string>('');
-  const [popup, setPopup] = useState<boolean>(false);
+  // const [popup, setPopup] = useState<boolean>(false);
   const [fDate, setFDate] = useState<string>('');
   const [fastLinkOptions, setFastLinkOptions] = useState<FastLinkOptionsType>({
     fastLinkURL: '',
@@ -345,25 +345,25 @@ const AccountDetail: React.FC = () => {
   };
 
   const renderChartAmount = () => {
-    // if (tableType === ETableType.HOLDINGS) {
-    //   const curHoldingValue = AccountHoldings?.charts.find((accountHolding) => accountHolding.interval === 'Today')
-    //     ?.value;
+    if (tableType === ETableType.HOLDINGS) {
+      const curHoldingValue = AccountHoldings?.charts.find((accountHolding) => accountHolding.interval === 'Today')
+        ?.value;
 
-    //   return parseAmount(curHoldingValue || 0, currencySymbol);
-    // }
-    // if (tableType === ETableType.BALANCE) {
+      return parseAmount(curHoldingValue || 0, currencySymbol);
+    }
+    if (tableType === ETableType.BALANCE) {
     const curBalanceAmount = balanceData?.balances?.find((balance) => balance.interval === 'Today')?.balance;
 
     return parseAmount(curBalanceAmount || 0, currencySymbol);
-    // }
-    // if (tableType === ETableType.ACTIVITY) {
-    //   const curAccountValue = (AccountActivity?.charts as any)?.find(
-    //     (accountActivity: any) => accountActivity.interval === 'Today'
-    //   )?.balance;
+    }
+    if (tableType === ETableType.ACTIVITY) {
+      const curAccountValue = (AccountActivity?.charts as any)?.find(
+        (accountActivity: any) => accountActivity.interval === 'Today'
+      )?.balance;
 
-    //   return parseAmount(curAccountValue || 0, currencySymbol);
-    // }
-    // return parseAmount(0, currencySymbol);
+      return parseAmount(curAccountValue || 0, currencySymbol);
+    }
+    return parseAmount(0, currencySymbol);
   };
 
   const hasChartData =
@@ -632,8 +632,8 @@ const AccountDetail: React.FC = () => {
                               ) : providerStatus === 'ATTENTION' || providerStatus === 'ATTENTION_WAIT' ? (
                                 <div
                                   className='attention-section'
-                                  onMouseEnter={() => setPopup(true)}
-                                  onMouseLeave={() => setPopup(false)}
+                                  // onMouseEnter={() => setPopup(true)}
+                                  // onMouseLeave={() => setPopup(false)}
                                 >
                                   <NeedsInfo />
                                   <span className='needsInfo'>Attention</span>
