@@ -41,5 +41,10 @@ export const parseIntervalText = (txt: string) => {
 
   const [month, year] = txt.split(' ');
 
-  return `${month} ${year?.slice(2)}`;
+  if (year === undefined) {
+    return `${month}`;
+  } else {
+    return `${month} ${year?.slice(2)}`;
+  }
+
 };
