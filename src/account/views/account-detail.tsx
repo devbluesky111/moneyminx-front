@@ -23,7 +23,7 @@ import { getRefreshedAccount } from 'auth/auth.service';
 import { FastLinkOptionsType } from 'yodlee/yodlee.type';
 import { EAccountType } from 'account/enum/account-type';
 import { TimeIntervalEnum } from 'networth/networth.enum';
-import { ETableType } from 'account/enum/table-type.enum';
+// import { ETableType } from 'account/enum/table-type.enum';
 import { appRouteConstants } from 'app/app-route.constant';
 import { getCurrencySymbol } from 'common/currency-helper';
 import { Placeholder } from 'networth/views/inc/placeholder';
@@ -73,7 +73,7 @@ const AccountDetail: React.FC = () => {
   const [dateToFilterOn, setDateToFilterOn] = useState<boolean>(false);
   const [intervalFilterOn, setIntervalFilterOn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [filterloading, setFilterLoading] = useState<boolean>(false);
+  // const [filterloading, setFilterLoading] = useState<boolean>(false);
   const [accSetting, setAccSetting] = useState<boolean>(false);
   const [newPositonModalOpen, setNewPositonModalOpen] = useState<boolean>(false);
   const [editPositonModalOpen, setEditPositonModalOpen] = useState<boolean>(false);
@@ -264,7 +264,7 @@ const AccountDetail: React.FC = () => {
     setToDate(undefined);
     setFromDate(undefined);
     setTimeInterval('Monthly');
-    setFilterLoading(false);
+    // setFilterLoading(false);
   };
 
   const closeSidebar = () => {
