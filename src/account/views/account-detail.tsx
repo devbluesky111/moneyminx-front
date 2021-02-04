@@ -49,7 +49,7 @@ import {
 import AccountTable from './account-table';
 import BalanceTable from './balance-table';
 import ActivityTable from './activity-table';
-// import ChartSkeleton from './chart-skeleton';
+import ChartSkeleton from './chart-skeleton';
 import AccountBarGraph from './account-bar-graph';
 import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
@@ -118,17 +118,18 @@ const AccountDetail: React.FC = () => {
       (fromDate === undefined && toDate === undefined) ||
       (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))
     ) {
-      // setFilterLoading(true);
+      setFilterLoading(true);
       if (tableType === 'holdings') {
         fetchAccountHoldings(accountId, fromDate, toDate, timeInterval, baseCurrency);
       }
       if (tableType === 'activity') {
         fetchAccountActivity(accountId, fromDate, toDate, timeInterval, baseCurrency);
       }
-      // if (tableType === 'balance') {
+      if (tableType === 'balance') {
         fetchAccountBalance(accountId, fromDate, toDate, timeInterval, baseCurrency);
-      // }
-      setLoading(false);
+        setFilterLoading(false);
+        setLoading(false);
+      }
     }
   }, [
     toDate,
@@ -152,6 +153,46 @@ const AccountDetail: React.FC = () => {
     }
   }, [AccountDetails]);
 
+  /**
+   * Get Balances if balance tab is selected
+   * @if !balance return
+   */
+
+  // useEffect(() => {
+  //   (async () => {
+  //     if (tableType !== 'balance') {
+  //       return false;
+  //     }
+  //     setFilterLoading(true);
+  //     const { data, error } = await getAccountDetailBalances({ accountId, baseCurrency });
+  //     setFilterLoading(false);
+
+  //     if (!error) {
+  //       setBalanceData(data);
+  //     }
+  //   })();
+  // }, [accountId, tableType, baseCurrency]);
+
+  // useEffect(() => {
+  //   (async (
+  //     accountId: string,
+  //     fromDate: any,
+  //     toDate: any,
+  //     timeInterval: string,
+  //     baseCurrency: boolean
+  //   ) => {
+  //     if (tableType !== 'balance') {
+  //       return false;
+  //     }
+  //     setFilterLoading(true);
+  //     const { data, error } = await getAccountDetailBalances({ accountId, fromDate, toDate, timeInterval, baseCurrency });
+  //     setFilterLoading(false);
+
+  //     if (!error) {
+  //       setBalanceData(data);
+  //     }
+  //   })();
+  // }, [accountId, tableType, fromDate, toDate, timeInterval, baseCurrency]);
 
   const handleRefresh = () => setRefreshCounter((c) => c + 1);
 
@@ -205,8 +246,8 @@ const AccountDetail: React.FC = () => {
     if (!error) {
       setFDate(data.charts?.[0].interval);
       setAccountHoldings(data);
-      // setLoading(false);
-      // setFilterLoading(false);
+      setLoading(false);
+      setFilterLoading(false);
       if (storage.get('isNew').data) {
         setAccSetting(true);
       }
@@ -223,7 +264,7 @@ const AccountDetail: React.FC = () => {
     const { data, error } = await getAccountDetailBalances({ accountId, fromDate, toDate, timeInterval, baseCurrency });
     if (!error) {
       setBalanceData(data);
-      // setFilterLoading(false);
+      setFilterLoading(false);
     }
   };
 
@@ -238,7 +279,7 @@ const AccountDetail: React.FC = () => {
     const { data, error } = await getAccountActivity({ accountId, fromDate, toDate, timeInterval, baseCurrency });
     if (!error) {
       setAccountActivity(data);
-      // setFilterLoading(false);
+      setFilterLoading(false);
     }
   };
 
@@ -298,44 +339,44 @@ const AccountDetail: React.FC = () => {
   };
 
   const renderChart = () => {
-    // const hasHoldingChart =
-    //   AccountHoldings && AccountHoldings.charts?.length && AccountHoldings.holdings.length && tableType === 'holdings';
-    // const hasActivityChart =
-    //   AccountActivity &&
-    //   AccountActivity.charts?.length &&
-    //   AccountActivity.transactions?.length &&
-    //   tableType === 'activity';
+    const hasHoldingChart =
+      AccountHoldings && AccountHoldings.charts?.length && AccountHoldings.holdings.length && tableType === 'holdings';
+    const hasActivityChart =
+      AccountActivity &&
+      AccountActivity.charts?.length &&
+      AccountActivity.transactions?.length &&
+      tableType === 'activity';
 
-    // const hasBalanceChart = balanceData?.balances?.length && tableType === 'balance';
+    const hasBalanceChart = balanceData?.balances?.length && tableType === 'balance';
 
-    // const hasEitherChart = hasHoldingChart || hasActivityChart || hasBalanceChart;
+    const hasEitherChart = hasHoldingChart || hasActivityChart || hasBalanceChart;
 
-    // if (!hasEitherChart || filterloading) {
-    //   return <ChartSkeleton />;
-    // }
+    if (!hasEitherChart || filterloading) {
+      return <ChartSkeleton />;
+    }
 
-    // if (hasHoldingChart) {
-      // const holdingChartData = AccountHoldings?.charts!;
+    if (hasHoldingChart) {
+      const holdingChartData = AccountHoldings?.charts!;
 
-      // return <div className='chartbox'>{renderCharItem(holdingChartData)}</div>;
-    // }
+      return <div className='chartbox'>{renderCharItem(holdingChartData)}</div>;
+    }
 
-    // if (hasActivityChart) {
-    //   const activityChartData = AccountActivity!.charts.map((b: any) => ({ ...b, value: b.balance || 0 }));
+    if (hasActivityChart) {
+      const activityChartData = AccountActivity!.charts.map((b: any) => ({ ...b, value: b.balance || 0 }));
 
-    //   return <div className='chartbox'>{renderCharItem(activityChartData)}</div>;
-    // }
+      return <div className='chartbox'>{renderCharItem(activityChartData)}</div>;
+    }
 
-    // if (hasBalanceChart) {
+    if (hasBalanceChart) {
       const balanceChartItem = balanceData!.balances.map((b) => ({
         ...b,
         value: isNumber(b.balance) ? +b.balance + 1 : 0,
       }));
 
       return <div className='chartbox'>{renderCharItem(balanceChartItem)}</div>;
-    // }
+    }
 
-    // return <ChartSkeleton />;
+    return <ChartSkeleton />;
   };
 
   const showHoldings = () => {
@@ -345,25 +386,25 @@ const AccountDetail: React.FC = () => {
   };
 
   const renderChartAmount = () => {
-    // if (tableType === ETableType.HOLDINGS) {
-    //   const curHoldingValue = AccountHoldings?.charts.find((accountHolding) => accountHolding.interval === 'Today')
-    //     ?.value;
+    if (tableType === ETableType.HOLDINGS) {
+      const curHoldingValue = AccountHoldings?.charts.find((accountHolding) => accountHolding.interval === 'Today')
+        ?.value;
 
-    //   return parseAmount(curHoldingValue || 0, currencySymbol);
-    // }
-    // if (tableType === ETableType.BALANCE) {
+      return parseAmount(curHoldingValue || 0, currencySymbol);
+    }
+    if (tableType === ETableType.BALANCE) {
       const curBalanceAmount = balanceData?.balances?.find((balance) => balance.interval === 'Today')?.balance;
 
       return parseAmount(curBalanceAmount || 0, currencySymbol);
-    // }
-    // if (tableType === ETableType.ACTIVITY) {
-    //   const curAccountValue = (AccountActivity?.charts as any)?.find(
-    //     (accountActivity: any) => accountActivity.interval === 'Today'
-    //   )?.balance;
+    }
+    if (tableType === ETableType.ACTIVITY) {
+      const curAccountValue = (AccountActivity?.charts as any)?.find(
+        (accountActivity: any) => accountActivity.interval === 'Today'
+      )?.balance;
 
-    //   return parseAmount(curAccountValue || 0, currencySymbol);
-    // }
-    // return parseAmount(0, currencySymbol);
+      return parseAmount(curAccountValue || 0, currencySymbol);
+    }
+    return parseAmount(0, currencySymbol);
   };
 
   const hasChartData =
@@ -404,10 +445,15 @@ const AccountDetail: React.FC = () => {
   }
 
   const providerLastUpdated =
-    AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString() !==null ?
-    'Last updated ' + getRelativeDate(AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString()) : 'Not yet updated';
+    AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString() !== null
+      ? 'Last updated ' + getRelativeDate(AccountDetails?.providerAccount?.dataset?.[0]?.lastUpdated?.toString())
+      : 'Not yet updated';
 
-  const providerStatusIssue = providerStatus === 'ERROR' || providerStatus === 'ERROR_NEW_CREDENTIALS' ||providerStatus === 'ATTENTION' || providerStatus === 'ATTENTION_WAIT';
+  const providerStatusIssue =
+    providerStatus === 'ERROR' ||
+    providerStatus === 'ERROR_NEW_CREDENTIALS' ||
+    providerStatus === 'ATTENTION' ||
+    providerStatus === 'ATTENTION_WAIT';
 
   return (
     <div className='mm-setting'>
@@ -429,9 +475,7 @@ const AccountDetail: React.FC = () => {
           <div className='connection-issue-left'>
             <div className='connection-label-container'>
               <span className='label'>Connection Lost</span>
-              <span className='time'>
-                {providerLastUpdated}
-              </span>
+              <span className='time'>{providerLastUpdated}</span>
             </div>
             <div className='connection-error-msg'>
               {providerStatus === 'ERROR_NEW_CREDENTIALS' ? (
@@ -459,9 +503,7 @@ const AccountDetail: React.FC = () => {
           <div className='connection-issue-left'>
             <div className='connection-label-container'>
               <span className='label'>Refresh Connection</span>
-              <span className='time'>
-                {providerLastUpdated}
-              </span>
+              <span className='time'>{providerLastUpdated}</span>
             </div>
             <div className='connection-error-msg'>
               {providerStatus === 'ATTENTION_WAIT' ? (
@@ -788,7 +830,12 @@ const AccountDetail: React.FC = () => {
                   )}
 
                   {tableType === 'balance' ? (
-                    <BalanceTable balanceData={balanceData} currencySymbol={currencySymbol} />
+                    <BalanceTable
+                      balanceData={balanceData}
+                      currencySymbol={currencySymbol}
+                      account={AccountDetails}
+                      handleRefresh={handleRefresh}
+                    />
                   ) : null}
 
                   {tableType === 'activity' && (
