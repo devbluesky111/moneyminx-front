@@ -49,7 +49,7 @@ import {
 import AccountTable from './account-table';
 import BalanceTable from './balance-table';
 import ActivityTable from './activity-table';
-// import ChartSkeleton from './chart-skeleton';
+import ChartSkeleton from './chart-skeleton';
 import AccountBarGraph from './account-bar-graph';
 import ActivityDetailsModal from './activity-details.modal';
 import AccountSubNavigation from './account-sub-navigation';
@@ -73,7 +73,7 @@ const AccountDetail: React.FC = () => {
   const [dateToFilterOn, setDateToFilterOn] = useState<boolean>(false);
   const [intervalFilterOn, setIntervalFilterOn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  // const [filterloading, setFilterLoading] = useState<boolean>(false);
+  const [filterloading, setFilterLoading] = useState<boolean>(false);
   const [accSetting, setAccSetting] = useState<boolean>(false);
   const [newPositonModalOpen, setNewPositonModalOpen] = useState<boolean>(false);
   const [editPositonModalOpen, setEditPositonModalOpen] = useState<boolean>(false);
@@ -118,7 +118,7 @@ const AccountDetail: React.FC = () => {
       (fromDate === undefined && toDate === undefined) ||
       (fromDate !== undefined && toDate !== undefined && new Date(toDate) >= new Date(fromDate))
     ) {
-      // setFilterLoading(true);
+      setFilterLoading(true);
       if (tableType === 'holdings') {
         fetchAccountHoldings(accountId, fromDate, toDate, timeInterval, baseCurrency);
       }
@@ -206,7 +206,7 @@ const AccountDetail: React.FC = () => {
       setFDate(data.charts?.[0].interval);
       setAccountHoldings(data);
       // setLoading(false);
-      // setFilterLoading(false);
+      setFilterLoading(false);
       if (storage.get('isNew').data) {
         setAccSetting(true);
       }
@@ -223,7 +223,7 @@ const AccountDetail: React.FC = () => {
     const { data, error } = await getAccountDetailBalances({ accountId, fromDate, toDate, timeInterval, baseCurrency });
     if (!error) {
       setBalanceData(data);
-      // setFilterLoading(false);
+      setFilterLoading(false);
     }
   };
 
@@ -238,7 +238,7 @@ const AccountDetail: React.FC = () => {
     const { data, error } = await getAccountActivity({ accountId, fromDate, toDate, timeInterval, baseCurrency });
     if (!error) {
       setAccountActivity(data);
-      // setFilterLoading(false);
+      setFilterLoading(false);
     }
   };
 
@@ -264,7 +264,7 @@ const AccountDetail: React.FC = () => {
     setToDate(undefined);
     setFromDate(undefined);
     setTimeInterval('Monthly');
-    // setFilterLoading(false);
+    setFilterLoading(false);
   };
 
   const closeSidebar = () => {
@@ -310,9 +310,9 @@ const AccountDetail: React.FC = () => {
 
     // const hasEitherChart = hasHoldingChart || hasActivityChart || hasBalanceChart;
 
-    // if (!hasEitherChart || filterloading) {
-    //   return <ChartSkeleton />;
-    // }
+    if (filterloading) {
+      return <ChartSkeleton />;
+    }
 
     // if (hasHoldingChart) {
     // const holdingChartData = AccountHoldings?.charts!;
