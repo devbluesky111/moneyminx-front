@@ -3,6 +3,7 @@ import React from 'react';
 import { Account } from 'auth/auth.types';
 import { getRelativeDate } from 'common/moment.helper';
 import CircularSpinner from 'common/components/spinner/circular-spinner';
+import { accountFetchingMessageArray } from '@mm/data/loading-message';
 
 export interface PopupProps {
   AccountDetails?: Account;
@@ -11,11 +12,9 @@ export interface PopupProps {
 }
 
 const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount, providerStatus }) => {
-  if (!AccountDetails) {
-    return <CircularSpinner />;
-  }
 
   return (
+    { AccountDetails && (AccountDetails.length > 0) ?
     <div className='popup'>
       <span className='pb-2'>Connection Status</span>
       <span className='pb-2'>
@@ -34,7 +33,8 @@ const Popup: React.FC<PopupProps> = ({ AccountDetails, handleConnectAccount, pro
           Fix Connection
         </button>
       ) : null}
-    </div>
+    </div> : <CircularSpinner />
+    }
   );
 };
 
