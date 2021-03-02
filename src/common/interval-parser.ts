@@ -42,7 +42,7 @@ export const parseIntervalText = (txt: string) => {
   const [month, year] = txt.split(' ');
 
   if (year === undefined) {
-    return `${month}`;
+    return `${month}`; // if year == undefined, then year value goes into month parameter.
   } else {
     return `${month} ${year?.slice(2)}`;
   }
